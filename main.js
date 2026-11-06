@@ -579,7 +579,41 @@ function createWindow() {
   return win;
 }
 
-const STEALTH_SCRIPT = `(() => { try { Object.defineProperty(navigator, 'webdriver', { get: () => undefined }); } catch (_) {} })();`;
+const STEALTH_SCRIPT = `(() => {
+  try {
+    Object.defineProperty(navigator, 'webdriver', { get: () => false, configurable: true });
+    if (window.HTMLCanvasElement && HTMLCanvasElement.prototype.toDataURL) {
+      const origToDataURL = HTMLCanvasElement.prototype.toDataURL;
+      HTMLCanvasElement.prototype.toDataURL = function (...args) {
+        try {
+          const ctx = this.getContext && this.getContext('2d');
+          if (ctx && this.width > 0 && this.height > 0) {
+            const img = ctx.getImageData(0, 0, 1, 1);
+            img.data[0] = (img.data[0] + 1) & 255;
+            ctx.putImageData(img, 0, 0);
+          }
+        } catch (_) {}
+        return origToDataURL.apply(this, args);
+      };
+    }
+    if (window.WebGLRenderingContext && WebGLRenderingContext.prototype.getParameter) {
+      const origGetParam = WebGLRenderingContext.prototype.getParameter;
+      WebGLRenderingContext.prototype.getParameter = function (param) {
+        if (param === 37445) return 'NVIDIA Corporation';
+        if (param === 37446) return 'NVIDIA GeForce RTX 5070 Ti/PCIe/SSE2';
+        return origGetParam.apply(this, arguments);
+      };
+    }
+    if (window.AudioBuffer && AudioBuffer.prototype.getChannelData) {
+      const origChannelData = AudioBuffer.prototype.getChannelData;
+      AudioBuffer.prototype.getChannelData = function () {
+        const data = origChannelData.apply(this, arguments);
+        if (data && data.length > 0) data[0] = data[0] + 1e-7;
+        return data;
+      };
+    }
+  } catch (_) {}
+})();`;
 
 async function attachAndEnableCDP(wc) {
   const wcId = wc.id;
@@ -1714,6 +1748,7 @@ function registerIpc() {
 
   const FREE_OMNI_MODELS = [
     'nvidia/nemotron-3.5-super-vl:free',
+    'nvidia/nemotron-3-ultra-550b-a55b:free',
     'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
     'google/gemma-4-31b-it:free',
     'google/gemma-4-26b-a4b-it:free',

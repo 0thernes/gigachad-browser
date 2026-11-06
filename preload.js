@@ -67,7 +67,7 @@ const ALLOWED_INVOKE = new Set([
 
 const ALLOWED_ON = new Set(['adblock-tick', 'open-url', 'command', 'permission-request', 'download-update', 'context-action', 'openrouter-oauth-complete', 'ai-thinking-step']);
 
-contextBridge.exposeInMainWorld('gigachad', {
+const gigachadBridgeApi = {
   invoke(channel, ...args) {
     if (!ALLOWED_INVOKE.has(channel)) {
       return Promise.reject(new Error('IPC channel is not exposed: ' + channel));
@@ -80,4 +80,7 @@ contextBridge.exposeInMainWorld('gigachad', {
     ipcRenderer.on(channel, wrapped);
     return () => ipcRenderer.removeListener(channel, wrapped);
   }
-});
+};
+
+contextBridge.exposeInMainWorld('gigachad', gigachadBridgeApi);
+contextBridge.exposeInMainWorld('gigachadBridge', gigachadBridgeApi);

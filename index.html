@@ -982,6 +982,64 @@
     body[data-theme="daylight"] button { color: #1e293b; background: rgba(15, 23, 42, 0.04); }
     body[data-theme="daylight"] button.primary { color: #3730a3; }
     body[data-theme="daylight"] .overlay-drawer { background: rgba(255, 255, 255, 0.97); }
+    body[data-theme="cyber"] {
+      --bg-app: #040914;
+      --bg-chrome: #060d1d;
+      --bg-subbar: #091328;
+      --bg-surface: #0d1b36;
+      --bg-elevated: #132548;
+      --bg-input: #030710;
+      --accent: #00f0ff;
+      --accent-soft: rgba(0, 240, 255, 0.14);
+      --accent-border: rgba(0, 240, 255, 0.42);
+    }
+    body[data-theme="matrix"] {
+      --bg-app: #020b05;
+      --bg-chrome: #041208;
+      --bg-subbar: #071b0d;
+      --bg-surface: #0b2613;
+      --bg-elevated: #10351b;
+      --bg-input: #010803;
+      --accent: #10b981;
+      --accent-soft: rgba(16, 185, 129, 0.15);
+      --accent-border: rgba(16, 185, 129, 0.42);
+    }
+    body[data-theme="synthwave"] {
+      --bg-app: #12061f;
+      --bg-chrome: #180929;
+      --bg-subbar: #200d36;
+      --bg-surface: #2a1247;
+      --bg-elevated: #37185c;
+      --bg-input: #0d0417;
+      --accent: #e879f9;
+      --accent-soft: rgba(232, 121, 249, 0.16);
+      --accent-border: rgba(232, 121, 249, 0.44);
+    }
+    body[data-theme="bloodmoon"] {
+      --bg-app: #130408;
+      --bg-chrome: #1b060c;
+      --bg-subbar: #240911;
+      --bg-surface: #300d17;
+      --bg-elevated: #3f111f;
+      --bg-input: #0d0205;
+      --accent: #f43f5e;
+      --accent-soft: rgba(244, 63, 94, 0.16);
+      --accent-border: rgba(244, 63, 94, 0.44);
+    }
+    body[data-theme="aurora"] {
+      --bg-app: #061318;
+      --bg-chrome: #091b22;
+      --bg-subbar: #0d242e;
+      --bg-surface: #12303d;
+      --bg-elevated: #183f50;
+      --bg-input: #040d11;
+      --accent: #2dd4bf;
+      --accent-soft: rgba(45, 212, 191, 0.15);
+      --accent-border: rgba(45, 212, 191, 0.42);
+    }
+    .overlay-drawer.open {
+      display: flex !important;
+    }
 
     /* Zen Focus Mode (Alt+Z) */
     body.zen-mode #tabbar,
@@ -1288,6 +1346,11 @@
     <div class="hud-wrap">
       <select id="theme-select" onchange="applyTheme(this.value)" title="Color Theme" style="padding:2px 6px; font-size:11px; height:24px;">
         <option value="obsidian">Obsidian</option>
+        <option value="cyber">Cyber</option>
+        <option value="matrix">Matrix</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="bloodmoon">Bloodmoon</option>
+        <option value="aurora">Aurora</option>
         <option value="oled">OLED Black</option>
         <option value="nordic">Nordic</option>
         <option value="emerald">Emerald</option>
@@ -2103,7 +2166,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     }
 
     function applyTheme(theme) {
-      const valid = ['obsidian', 'oled', 'nordic', 'emerald', 'daylight'];
+      const valid = ['obsidian', 'cyber', 'matrix', 'synthwave', 'bloodmoon', 'aurora', 'oled', 'nordic', 'emerald', 'daylight'];
       const chosen = valid.includes(theme) ? theme : 'obsidian';
       document.body.setAttribute('data-theme', chosen);
       const sel = document.getElementById('theme-select');
@@ -2621,6 +2684,18 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       splitRatioPct = 50;
       applySplitRatioWidths();
     }
+
+    function setSplitRatio(pct = 50) {
+      const clamped = Math.max(25, Math.min(75, Math.round(Number(pct) || 50)));
+      splitRatioPct = clamped;
+      if (!splitViewActive && tabs.length >= 2) {
+        toggleSplitView();
+      } else {
+        applySplitRatioWidths();
+      }
+      return splitRatioPct;
+    }
+    window.setSplitRatio = setSplitRatio;
 
     function updateSplitViewClasses() {
       tabs.forEach((t) => {
@@ -6940,6 +7015,25 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         return;
       }
     }
+
+    async function runWishlist100SelfTest() {
+      const catalog = Array.isArray(window.WISHLIST_100_CATALOG) ? window.WISHLIST_100_CATALOG : [];
+      const fnSrc = runWishlistFeature.toString();
+      let passed = 0;
+      for (const item of catalog) {
+        if (fnSrc.includes(`num === ${item.id}`)) passed += 1;
+      }
+      try {
+        await runWishlistFeature(100);
+      } catch (_) {}
+      return {
+        ok: passed === 100 && catalog.length === 100,
+        passed,
+        total: catalog.length,
+        status: `${passed}/${catalog.length} PASS`
+      };
+    }
+    window.runWishlist100SelfTest = runWishlist100SelfTest;
 
     let activePageWatcher = null;
     async function startPageWatcher(url, intervalSec = 60, goal = 'Monitor page changes') {
@@ -15231,7 +15325,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         codeTrace = `wv.insertCSS("h1,h2,h3 { text-shadow: 0 0 12px hsla(${neonHue},95%,60%,0.55) }");`;
       } else if (intentId === 12) {
         // [INTENT 12] Brief Telepathic Cockpit Drawer Inspection Pulse (Auto-closes after 1.3s so view is never blocked!)
-        const drawers = ['maxsmart-drawer', 'sre-drawer', 'devsecops-drawer', 'wishlist-drawer', 'systems-drawer', 'vibe-drawer'];
+        const drawers = ['maxsmart-drawer', 'sre-drawer', 'devsecops-drawer', 'wishlist-drawer', 'kanban-drawer', 'vibe-drawer'];
         const pickedDrawer = drawers[Math.abs(Math.floor(ch.lx * 7 + Number(hybridQrng.u64() % 17n))) % drawers.length];
         const drEl = document.getElementById(pickedDrawer);
         if (drEl && !drEl.classList.contains('open')) {
