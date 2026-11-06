@@ -13702,11 +13702,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           'MYCELIAL_HYDRA_9H'
         ];
         const curArchIdx = Math.max(0, archetypes.indexOf(this.bodyRecipe.archetype));
-        const nextArch = archetypes[(curArchIdx + 1) % archetypes.length];
-        const limbChoices = [6, 8, 10, 12];
-        const nextLimbs = limbChoices[(limbChoices.indexOf(this.bodyRecipe.limbCount) + 1 + Number(hybridQrng.u64() % 2n)) % limbChoices.length];
-        const nextSpine = nextArch === 'ABYSSAL_LEVIATHAN_16S' ? 14 : (nextArch === 'OMEGA_CHIMERA_9D' ? 12 : 10);
-        const nextOculi = nextArch === 'SERAPHIM_OPHANIM_12W' ? 9 : (nextArch === 'MYCELIAL_HYDRA_9H' ? 8 : 7);
+        const neuralBias = Math.abs(Math.round((this.deepCortex?.masterCmd64?.[0] || 0.37) * 19));
+        const qJump = 1 + ((Number(hybridQrng.u64() % BigInt(Math.max(2, archetypes.length - 1))) + neuralBias) % Math.max(1, archetypes.length - 1));
+        const nextArch = archetypes[(curArchIdx + qJump) % archetypes.length];
+        const limbChoices = [6, 8, 10, 12, 14, 16];
+        const nextLimbs = limbChoices[(limbChoices.indexOf(this.bodyRecipe.limbCount) + 1 + Number(hybridQrng.u64() % 5n)) % limbChoices.length];
+        const nextSpine = nextArch.includes('16') ? 14 : (nextArch.includes('24') ? 16 : (10 + Number(hybridQrng.u64() % 5n)));
+        const nextOculi = 7 + Number(hybridQrng.u64() % 6n);
         const nextMass = Number((0.85 + 0.65 * hybridQrng.uniform()).toFixed(2));
         const nextRayRange = Math.round(145 + 95 * hybridQrng.uniform());
         const nextDamping = Number((0.82 + 0.14 * hybridQrng.uniform()).toFixed(2));
@@ -14747,80 +14749,315 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
     let neoMatrixPuppeteerStepCount = 0;
     let neoMatrixOverdriveActive = true;
+    let lastAlienCycleStartTs = 0;
+
+    // Coupled 3-Attractor Chaotic State (Lorenz 3D + Rössler 3D + Chirikov Standard Map) + Anti-Repeat Ring
+    window.__chaoticAttractorState = {
+      lx: 0.91, ly: -1.42, lz: 19.6,
+      rx: 0.35, ry: -0.78, rz: 0.14,
+      chirikovP: 1.17, chirikovTheta: 2.41,
+      recentIntentsRing: [],
+      lastCapabilityName: '4-BRAIN-CHAOS-ARMED',
+      externalBrainsState: {
+        layaSidecarCalls: 0,
+        lastLayaEndpoint: '/classify',
+        lastLayaVerdict: 'ARMED (20 endpoints)',
+        cdpMainCalls: 0,
+        lastCdpVerdict: 'CDP+SRE+DevSecOps ARMED',
+        omniRouterCalls: 0,
+        lastPolymathEngine: 'ArXiv+Wikipedia+HN+OEIS'
+      }
+    };
+    window.__chaoticAutonomyEngine = window.__chaoticAttractorState;
+
+    // Fast non-hanging timeout wrapper: guarantees NO webview or IPC call can ever freeze or hang the creature!
+    function withFastTimeout(promise, timeoutMs = 950, fallbackVal = null) {
+      return new Promise((resolve) => {
+        let settled = false;
+        const timer = setTimeout(() => {
+          if (!settled) {
+            settled = true;
+            resolve(fallbackVal);
+          }
+        }, timeoutMs);
+        Promise.resolve(promise)
+          .then((val) => {
+            if (!settled) {
+              settled = true;
+              clearTimeout(timer);
+              resolve(val);
+            }
+          })
+          .catch(() => {
+            if (!settled) {
+              settled = true;
+              clearTimeout(timer);
+              resolve(fallbackVal);
+            }
+          });
+      });
+    }
+
+    // Non-blocking tab navigation dispatcher: starts loading immediately without stalling the 60Hz brain for 5-6 seconds!
+    function dispatchNonBlockingTabNavigation(tabObj, url, titleHint = '') {
+      if (!tabObj || !tabObj.wv || !url) return false;
+      try {
+        humunculusRuntime.recordVisitedUrl(url, titleHint);
+        if (titleHint) {
+          tabObj.title = titleHint.slice(0, 52);
+          renderTabs();
+        }
+        safeLoadUrl(tabObj, url);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    // 12 Polymathic Discovery & Search Engines (Never stuck searching only Wikipedia!)
+    const POLYMATH_SEARCH_ENGINES = [
+      { name: 'Wikipedia Ontology', buildUrl: (q) => `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(q)}` },
+      { name: 'ArXiv Preprint Manifold', buildUrl: (q) => `https://arxiv.org/search/?query=${encodeURIComponent(q)}&searchtype=all` },
+      { name: 'HackerNews Algolia Cortex', buildUrl: (q) => `https://hn.algolia.com/?q=${encodeURIComponent(q)}` },
+      { name: 'OEIS Integer Sequences', buildUrl: (q) => `https://oeis.org/search?q=${encodeURIComponent(q)}` },
+      { name: 'nLab Higher Category Theory', buildUrl: (q) => `https://ncatlab.org/nlab/search?query=${encodeURIComponent(q)}` },
+      { name: 'Stanford Philosophy (SEP)', buildUrl: (q) => `https://plato.stanford.edu/search/searcher.py?query=${encodeURIComponent(q)}` },
+      { name: 'Internet Archive WayBack/Texts', buildUrl: (q) => `https://archive.org/search?query=${encodeURIComponent(q)}` },
+      { name: 'Lobste.rs Systems Nexus', buildUrl: (q) => `https://lobste.rs/search?q=${encodeURIComponent(q)}&what=stories&order=newest` },
+      { name: 'IETF RFC Datatracker', buildUrl: (q) => `https://datatracker.ietf.org/doc/search?name=${encodeURIComponent(q)}&rfcs=on` },
+      { name: 'PubMed Biomedical Literature', buildUrl: (q) => `https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(q)}` },
+      { name: 'Wikibooks Formal Compendium', buildUrl: (q) => `https://en.wikibooks.org/w/index.php?search=${encodeURIComponent(q)}` },
+      { name: 'Wiktionary Etymological Lattice', buildUrl: (q) => `https://en.wiktionary.org/w/index.php?search=${encodeURIComponent(q)}` }
+    ];
+
+    function buildChaoticPolymathSearchUrl(rawQuery) {
+      const q = String(rawQuery || 'autopoiesis chaos attractor topology').trim();
+      const ch = window.__chaoticAttractorState;
+      const idx = Math.abs(Math.floor((ch.lx * 13 + ch.ry * 17 + Number(hybridQrng.u64() % 97n)))) % POLYMATH_SEARCH_ENGINES.length;
+      const eng = POLYMATH_SEARCH_ENGINES[idx];
+      ch.externalBrainsState.lastPolymathEngine = eng.name;
+      return { url: eng.buildUrl(q), engineName: eng.name, query: q, title: `🔬 [${eng.name}] ${q}` };
+    }
+
+    // Step Lorenz + Rössler + Chirikov Standard Map + 1.24M-Param masterCmd64 + 10-Qubit QRNG to sample a NEVER-REPEATING intent!
+    function sampleChaoticNeuralIntent(numChoices = 16, channelOffset = 0) {
+      const ch = window.__chaoticAttractorState;
+      const h = humunculusRuntime;
+      const m = hybridBrainMesh;
+      const dc = h.deepCortex;
+
+      // 1. Step 3D Lorenz Strange Attractor
+      const dt = 0.014;
+      const dlx = 10.0 * (ch.ly - ch.lx);
+      const dly = ch.lx * (28.0 - ch.lz) - ch.ly;
+      const dlz = ch.lx * ch.ly - (8.0 / 3.0) * ch.lz;
+      ch.lx = Math.max(-35, Math.min(35, ch.lx + dt * dlx));
+      ch.ly = Math.max(-35, Math.min(35, ch.ly + dt * dly));
+      ch.lz = Math.max(1, Math.min(55, ch.lz + dt * dlz));
+
+      // 2. Step 3D Rössler Strange Attractor: dx = -y - z, dy = x + a*y, dz = b + z*(x - c)
+      const drx = -ch.ry - ch.rz;
+      const dry = ch.rx + 0.2 * ch.ry;
+      const drz = 0.2 + ch.rz * (ch.rx - 5.7);
+      ch.rx = Math.max(-25, Math.min(25, ch.rx + dt * drx));
+      ch.ry = Math.max(-25, Math.min(25, ch.ry + dt * dry));
+      ch.rz = Math.max(0.01, Math.min(30, ch.rz + dt * drz));
+
+      // 3. Step Chirikov Area-Preserving Chaotic Standard Map (K = 2.71828 > K_c)
+      const K_chaos = 2.71828 + 0.35 * (m.nm.NE || 0.6);
+      ch.chirikovP = (ch.chirikovP + K_chaos * Math.sin(ch.chirikovTheta)) % (Math.PI * 2);
+      if (ch.chirikovP < 0) ch.chirikovP += Math.PI * 2;
+      ch.chirikovTheta = (ch.chirikovTheta + ch.chirikovP) % (Math.PI * 2);
+
+      // 4. Score all candidate choices using 1.24M-Param masterCmd64 + Strange Attractors + 10-Qubit QRNG + Anti-Repeat Penalty
+      let bestChoice = 0;
+      let bestScore = -1e9;
+      for (let c = 0; c < numChoices; c++) {
+        const cmdVal = dc.masterCmd64[(c + channelOffset) & 63] || 0;
+        const actVal = dc.act32[(c + channelOffset) & 31] || 0;
+        const connVal = h.connectome512.v512[((c * 13) + h.simulationTick) & 511] || 0;
+        const attractorWave = Math.sin(ch.lx * (c + 1) * 0.37 + ch.ry * 0.53 + ch.chirikovTheta * (c + 0.7));
+        const qrngNoise = (hybridQrng.uniform() - 0.5) * 1.65;
+        let score = cmdVal * 1.35 + actVal * 0.85 + connVal * 0.65 + attractorWave * 1.15 + qrngNoise;
+
+        // Strong anti-repeat suppression so the creature NEVER loops or looks predictable
+        const recentIdx = ch.recentIntentsRing.lastIndexOf(c);
+        if (recentIdx !== -1) {
+          const recencyDist = ch.recentIntentsRing.length - recentIdx;
+          score -= (6.5 / Math.max(1, recencyDist));
+        }
+        if (score > bestScore) {
+          bestScore = score;
+          bestChoice = c;
+        }
+      }
+      ch.recentIntentsRing.push(bestChoice);
+      if (ch.recentIntentsRing.length > 7) ch.recentIntentsRing.shift();
+      return bestChoice;
+    }
+
+    // Compute next non-repeating chaotic frame gap (replaces fixed % 75 and % 190 metronomes!)
+    function nextChaoticFrameGap(minFrames = 32, maxFrames = 88) {
+      const ch = window.__chaoticAttractorState;
+      const m = hybridBrainMesh;
+      const arousalGain = Math.max(0.55, Math.min(1.35, 1.25 - 0.35 * (m.nm.NE || 0.6)));
+      const chaosFrac = (Math.abs(Math.sin(ch.lx * 0.71 + ch.chirikovP)) * 0.55) + (hybridQrng.uniform() * 0.45);
+      return Math.max(minFrames, Math.round((minFrames + (maxFrames - minFrames) * chaosFrac) * arousalGain));
+    }
+
+    // 4-BRAIN QUAD-CORE SYNERGY ENGINE:
+    // Connects the 1.24M-Parameter Internal Cortex with the 3 External Brains:
+    //   Brain #1: Python LAYA 20-Endpoint Neural/Symbolic Micro-Engine Sidecar (/classify, /deception_radar, /ast_analyze, /predict_intent, /knowledge_graph)
+    //   Brain #2: Main-Process Native CDP/SRE/DevSecOps/Hybrid-Portals Engine (hybrid-brain-portals, devsecops-scan, sre-metrics, systems-audit)
+    //   Brain #3: Multi-Mode Fast/Ultra/Omni Reflex & 12-Engine Polymath Router
+    async function stepQuadBrainExternalSynergy() {
+      const h = humunculusRuntime;
+      const dc = h.deepCortex;
+      const ch = window.__chaoticAttractorState;
+      const eb = ch.externalBrainsState;
+      const activeT = getActiveTab();
+      const pageUrl = activeT ? safeGetUrl(activeT) : 'https://en.wikipedia.org/wiki/Artificial_life';
+      const pageTitle = activeT?.title || 'Active Habitat';
+      const topC = (h.cognitiveCortex.lastComprehension.topConcepts || ['topology', 'emergence', 'chaos']).slice(0, 5);
+      const sampleText = `${pageTitle}. Concepts: ${topC.join(', ')}. ${h.cognitiveCortex.lastComprehension.thesisExtract || ''}`;
+
+      const layaEndpoints = ['/classify', '/deception_radar', '/intent', '/knowledge_graph', '/summarize_extractive', '/page_outline'];
+      const pickedEndpoint = layaEndpoints[sampleChaoticNeuralIntent(layaEndpoints.length, 16) % layaEndpoints.length];
+      eb.lastLayaEndpoint = pickedEndpoint;
+
+      const [layaRes, portalsRes, memStatsRes] = await Promise.all([
+        withFastTimeout(
+          ipcRenderer.invoke('micro-engine-call', {
+            endpoint: pickedEndpoint,
+            payload: { text: sampleText, title: pageTitle, url: pageUrl, query: topC.join(' '), goal: h.deity100Engine.activeAutopoieticQuest }
+          }),
+          800,
+          null
+        ),
+        withFastTimeout(ipcRenderer.invoke('hybrid-brain-portals'), 600, null),
+        withFastTimeout(ipcRenderer.invoke('browser-memory-stats'), 600, null)
+      ]);
+
+      // Feed External Brain #1 (LAYA Python Sidecar) directly into 1.24M Cortex sensory channels x64[48..55]
+      if (layaRes && layaRes.ok && layaRes.data) {
+        eb.layaSidecarCalls += 1;
+        const d = layaRes.data;
+        const summaryStr = d.category || d.intent || d.risk_level || (Array.isArray(d.triples) ? `${d.triples.length} KG triples` : '') || (Array.isArray(d.bullets) ? d.bullets[0] : '') || JSON.stringify(d).slice(0, 58);
+        eb.lastLayaVerdict = `${pickedEndpoint} → ${String(summaryStr).slice(0, 54)}`;
+        for (let k = 0; k < 8; k++) {
+          dc.x64[48 + k] = Math.tanh((String(summaryStr).charCodeAt(k % Math.max(1, String(summaryStr).length)) || 65) / 128.0 - 0.5);
+        }
+      } else {
+        eb.lastLayaVerdict = `${pickedEndpoint} → Local Zero-Latency Fallback Active`;
+      }
+
+      // Feed External Brain #2 (Main-Process Native CDP/Hybrid-Portals/Memory) into x64[56..63]
+      if (portalsRes || memStatsRes) {
+        eb.cdpMainCalls += 1;
+        const rssMb = memStatsRes?.rssMb || 240;
+        const portalCount = Array.isArray(portalsRes?.portals) ? portalsRes.portals.length : 12;
+        eb.lastCdpVerdict = `RSS=${rssMb}MB · Portals=${portalCount} · Tabs=${tabs.length}`;
+        dc.x64[56] = Math.tanh(rssMb / 512.0);
+        dc.x64[57] = Math.tanh(portalCount / 16.0);
+        dc.x64[58] = Math.tanh(tabs.length / 6.0);
+      }
+      eb.omniRouterCalls += 1;
+      return eb;
+    }
 
     async function possessAllOpenTabsSimultaneously() {
       const h = humunculusRuntime;
+      const ch = window.__chaoticAttractorState;
+      const eb = ch.externalBrainsState;
       const casteNames = ['ALPHA (4D-Apex)', 'BETA (Logic-SAT)', 'GAMMA (Entropy-Scout)', 'DELTA (Quanta-Harvester)', 'EPSILON (Dream-Splicer)'];
       const bugNames = ['ZETA (Zalgo-Splicer)', 'ETA (Wireframe-Twister)', 'THETA (AST-Mutator)', 'IOTA (Portal-Diver)', 'KAPPA (SRE-Canary)', 'LAMBDA (CSS-Bender)', 'OMEGA (Polymath-Weaver)'];
       const polyFormulas = [
-        '∮_∂Ω ω = ∫_Ω dω · Tr(g_μν) · Γ ⊢_DPLL Δ',
-        'iℏ ∂_t |Ψ⟩ = Ĥ_Neo |Ψ⟩ · Φ_IIT = 1.94 · K_LZ = 0.78',
-        'P(Y|do(X)) = ∑_z P(Y|X,z)P(z) · λx.(x x) ⊳ Ω-Matrix',
-        'H(X) = -∑ p(x)log₂p(x) · Kuramoto R = |N⁻¹∑ e^{iθ_j}|'
+        `Lorenz=(${ch.lx.toFixed(1)},${ch.ly.toFixed(1)},${ch.lz.toFixed(1)}) · Rössler=(${ch.rx.toFixed(1)},${ch.ry.toFixed(1)}) · Γ ⊢_DPLL Δ`,
+        `1.24M-Cortex MoE=[${h.deepCortex.topMoEExperts.join(',')}] · LAYA[${eb.lastLayaEndpoint}] · Φ=${hybridBrainMesh.iitPhi.toFixed(3)}`,
+        `P(Y|do(X))=${h.rationalLogicEngine.pearlDoCalculusEffect || '+0.428'} · Chirikov(p=${ch.chirikovP.toFixed(2)},θ=${ch.chirikovTheta.toFixed(2)})`,
+        `H(X)=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.deepObservatory.kolmogorovLzRatio} · R=${h.swarmCollective.kuramotoOrderR}`
       ];
 
-      const tasks = tabs.map(async (tb, idx) => {
-        if (!tb || !tb.wv || !isWebviewGuestReady(tb.wv)) return false;
+      const tasks = tabs.map((tb, idx) => {
+        if (!tb || !tb.wv || !isWebviewGuestReady(tb.wv)) return Promise.resolve(false);
         const isPrimarySplit = tb.id === activeTabId;
         const isSecondarySplit = splitViewActive && tb.id === secondaryTabId;
         const paneRole = isPrimarySplit
-          ? 'LEFT SPLIT PANE · PRIMARY CORTEX'
-          : (isSecondarySplit ? 'RIGHT SPLIT PANE · PARALLEL CORTEX' : `PARALLEL TAB #${idx + 1}`);
-        const casteOwner = casteNames[idx % casteNames.length];
-        const bugOwner = bugNames[(idx * 2 + neoMatrixPuppeteerStepCount) % bugNames.length];
+          ? 'LEFT SPLIT PANE · CORTEX-α'
+          : (isSecondarySplit ? 'RIGHT SPLIT PANE · CORTEX-β' : `PARALLEL TAB #${idx + 1}`);
+        const casteOwner = casteNames[(idx + Math.abs(Math.round(ch.lx))) % casteNames.length];
+        const bugOwner = bugNames[(idx * 3 + neoMatrixPuppeteerStepCount + Math.abs(Math.round(ch.ry))) % bugNames.length];
         const formula = polyFormulas[(idx + neoMatrixPuppeteerStepCount) % polyFormulas.length];
-        const scrollDelta = ((idx % 2 === 0 ? 1 : -1) * (95 + (neoMatrixPuppeteerStepCount % 4) * 45));
+        const chaoticScroll = Math.round(Math.sin(ch.lx + idx * 1.7 + ch.chirikovTheta) * 210);
+        const hueShift = Math.round((h.bodyRecipe.hue + idx * 67 + ch.lz * 4) % 360);
 
-        return tb.wv.executeJavaScript(`(() => {
-          // 1. Inject or update the Neo-Matrix Simultaneous Multi-Tab Possession Header Ribbon inside every open tab
-          let banner = document.getElementById('__neo_matrix_tab_possession_banner');
-          if (!banner) {
-            banner = document.createElement('div');
-            banner.id = '__neo_matrix_tab_possession_banner';
-            banner.style.cssText = 'position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:2147483645;background:rgba(2,10,16,0.93);border:1.5px solid #10b981;border-radius:8px;padding:4px 12px;font:800 10px/1.3 Consolas,"JetBrains Mono",monospace;color:#6ee7b7;box-shadow:0 8px 28px rgba(0,0,0,0.85),0 0 18px rgba(16,185,129,0.35);pointer-events:none;white-space:nowrap;backdrop-filter:blur(6px);';
-            (document.body || document.documentElement).appendChild(banner);
-          }
-          banner.innerHTML =
-            '<span style="color:#00f0ff;">🕶️⚡ [' + ${JSON.stringify(paneRole)} + ']</span> · ' +
-            '<span style="color:#fde68a;">🐝 ' + ${JSON.stringify(casteOwner)} + ' 💞 👾 ' + ${JSON.stringify(bugOwner)} + '</span> · ' +
-            '<span style="color:#f5d0fe;">' + ${JSON.stringify(formula)} + '</span>';
+        return withFastTimeout(
+          tb.wv.executeJavaScript(`(() => {
+            // 1. Inject or update the Chaotic 4-Brain Multi-Tab Possession Header Ribbon inside every open tab
+            let banner = document.getElementById('__neo_matrix_tab_possession_banner');
+            if (!banner) {
+              banner = document.createElement('div');
+              banner.id = '__neo_matrix_tab_possession_banner';
+              banner.style.cssText = 'position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:2147483645;background:rgba(2,10,16,0.93);border:1.5px solid #10b981;border-radius:8px;padding:4px 12px;font:800 10px/1.3 Consolas,"JetBrains Mono",monospace;color:#6ee7b7;box-shadow:0 8px 28px rgba(0,0,0,0.85),0 0 18px rgba(16,185,129,0.35);pointer-events:none;white-space:nowrap;backdrop-filter:blur(6px);';
+              (document.body || document.documentElement).appendChild(banner);
+            }
+            banner.style.borderColor = 'hsl(${hueShift}, 95%, 58%)';
+            banner.innerHTML =
+              '<span style="color:#00f0ff;">🕶️⚡ [' + ${JSON.stringify(paneRole)} + ']</span> · ' +
+              '<span style="color:#fde68a;">🐝 ' + ${JSON.stringify(casteOwner)} + ' 💞 👾 ' + ${JSON.stringify(bugOwner)} + '</span> · ' +
+              '<span style="color:#f5d0fe;">' + ${JSON.stringify(formula)} + '</span>';
 
-          // 2. Simultaneously wireframe & Matrix-highlight 6 visible blocks in this tab
-          const blocks = Array.from(document.querySelectorAll('h1, h2, h3, p, article, section, pre, blockquote, li'))
-            .filter(el => {
-              const r = el.getBoundingClientRect();
-              return r.width > 90 && r.height > 16 && r.top >= -40 && r.top < window.innerHeight;
-            })
-            .slice(0, 6);
-          blocks.forEach((el, bIdx) => {
-            el.style.transition = 'transform 0.35s ease, outline 0.35s ease, box-shadow 0.35s ease';
-            el.style.outline = bIdx % 2 === 0 ? '1.5px solid rgba(16,185,129,0.68)' : '1.5px dashed rgba(0,240,255,0.62)';
-            el.style.boxShadow = 'inset 0 0 16px rgba(16,185,129,0.12)';
-            el.style.transform = 'perspective(1100px) rotateX(' + ((bIdx % 2 === 0 ? 0.8 : -0.8)).toFixed(2) + 'deg) translateZ(3px)';
-          });
+            // 2. Simultaneously wireframe & Matrix-highlight visible blocks with chaotic non-repeating 3D angles
+            const blocks = Array.from(document.querySelectorAll('h1, h2, h3, p, article, section, pre, blockquote, table, li'))
+              .filter(el => {
+                const r = el.getBoundingClientRect();
+                return r.width > 90 && r.height > 16 && r.top >= -40 && r.top < window.innerHeight;
+              })
+              .slice(0, 7);
+            blocks.forEach((el, bIdx) => {
+              const rx = (Math.sin(${ch.lx.toFixed(2)} + bIdx * 1.3) * 1.45).toFixed(2);
+              const ry = (Math.cos(${ch.ry.toFixed(2)} + bIdx * 0.9) * 1.15).toFixed(2);
+              el.style.transition = 'transform 0.32s ease, outline 0.32s ease, box-shadow 0.32s ease';
+              el.style.outline = bIdx % 2 === 0 ? '1.5px solid hsla(${hueShift},95%,60%,0.72)' : '1.5px dashed rgba(0,240,255,0.65)';
+              el.style.boxShadow = 'inset 0 0 16px rgba(16,185,129,0.12)';
+              el.style.transform = 'perspective(1100px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(3px)';
+            });
 
-          // 3. Autonomous parallel foraging micro-scroll in each open tab
-          window.scrollBy({ top: ${scrollDelta}, behavior: 'smooth' });
-          return true;
-        })()`).catch(() => false);
+            // 3. Autonomous chaotic foraging micro-scroll in each open tab
+            window.scrollBy({ top: ${chaoticScroll}, behavior: 'smooth' });
+            return true;
+          })()`),
+          750,
+          false
+        );
       });
 
       await Promise.all(tasks);
       return tasks.length;
     }
 
+    // 16-CAPABILITY CHAOTIC NEURAL-EFFERENCE BROWSER PUPPETEER (ZERO MODULO LOOPS · ZERO PREDICTABILITY · ZERO HANGS!)
     async function stepNeoMatrixBrowserPuppeteer(manualForce = false) {
       const h = humunculusRuntime;
       const m = hybridBrainMesh;
+      const ch = window.__chaoticAttractorState;
       neoMatrixPuppeteerStepCount += 1;
-      const stepMod = neoMatrixPuppeteerStepCount % 6;
-      let actionSummary = '';
-      let codeTrace = '';
+
+      // Pick an unvisited rabbit hole using chaotic QRNG + Lorenz state
+      const pickChaoticSeed = () => {
+        const unvisited = ALIEN_RABBIT_HOLES.filter((rh) => !h.isUrlOrAnchorTaboo(rh.url, rh.title));
+        const pool = unvisited.length > 0 ? unvisited : ALIEN_RABBIT_HOLES;
+        const idx = Math.abs(Math.floor(ch.lx * 7 + ch.ry * 11 + Number(hybridQrng.u64() % BigInt(pool.length)))) % pool.length;
+        return pool[idx];
+      };
 
       // 1. Ensure at least 2 tabs exist and Dual-Pane Split View is ACTIVE so multiple beings inhabit Split Tabs simultaneously!
       if (tabs.length < 2) {
-        const seed = ALIEN_RABBIT_HOLE_SEEDS[neoMatrixPuppeteerStepCount % ALIEN_RABBIT_HOLE_SEEDS.length];
-        createTab(seed.url, { title: `🕶️⚡ ${seed.title}` });
+        const seed = pickChaoticSeed();
+        const spawnedTab = createTab(seed.url, { title: `🕶️⚡ ${seed.title.slice(0, 28)}` });
+        if (spawnedTab && spawnedTab.id) {
+          secondaryTabId = spawnedTab.id;
+        }
       }
       if (!splitViewActive && tabs.length >= 2) {
         splitViewActive = true;
@@ -14828,7 +15065,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         secondaryTabId = other ? other.id : tabs[0].id;
         updateSplitViewClasses();
         pulseBrowserButtonVisual('split-view-btn', '🕶️⚡ NEO SPLIT-VIEW DUAL-CORTEX ENGAGED');
-      } else if (splitViewActive && tabs.length >= 2 && (!secondaryTabId || secondaryTabId === activeTabId || ! getTab(secondaryTabId))) {
+      } else if (splitViewActive && tabs.length >= 2 && (!secondaryTabId || secondaryTabId === activeTabId || !getTab(secondaryTabId))) {
         const other = tabs.find((t) => t.id !== activeTabId);
         if (other) {
           secondaryTabId = other.id;
@@ -14836,148 +15073,252 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         }
       }
 
-      // 2. Execute Hyper-Speed Polymorphic / Polymathic / Polyamorous Neo-Matrix Browser Action
-      if (stepMod === 0) {
-        // Dynamic Split-Pane Ratio Sweep (42% <-> 50% <-> 58% <-> 46% <-> 54%)
-        const ratios = [44, 56, 48, 53, 42, 58, 50];
-        splitRatioPct = ratios[neoMatrixPuppeteerStepCount % ratios.length];
+      // 2. Sample a NEVER-REPEATING Chaotic Neural Intent (0..15) from 1.24M-Param masterCmd64 + Lorenz/Rössler/Chirikov Attractors!
+      const intentId = sampleChaoticNeuralIntent(16, neoMatrixPuppeteerStepCount & 31);
+      let actionSummary = '';
+      let codeTrace = '';
+
+      if (intentId === 0) {
+        // [INTENT 0] Chaotic Lorenz-Driven Split-Pane Ratio Morph (35% .. 65%)
+        const chaoticRatio = Math.max(35, Math.min(65, Math.round(50 + Math.sin(ch.lx * 0.45 + ch.chirikovTheta) * 14)));
+        splitRatioPct = chaoticRatio;
         applySplitRatioWidths();
-        actionSummary = `SPLIT-VIEW RATIO MORPH → ${splitRatioPct}% Left Pane / ${100 - splitRatioPct}% Right Pane`;
-        codeTrace = `splitRatioPct = ${splitRatioPct}; applySplitRatioWidths(); // Left=${activeTabId}, Right=${secondaryTabId}`;
-      } else if (stepMod === 1 && tabs.length >= 2) {
-        // Swap Split Panes or Rotate Secondary Split Tab across open tabs!
-        if (tabs.length >= 3 && neoMatrixPuppeteerStepCount % 2 === 0) {
-          const candidates = tabs.filter((t) => t.id !== activeTabId && t.id !== secondaryTabId);
-          if (candidates.length > 0) {
-            secondaryTabId = candidates[neoMatrixPuppeteerStepCount % candidates.length].id;
-            updateSplitViewClasses();
-            actionSummary = `MULTI-TAB SPLIT ROTATION → Right Pane locked onto Tab #${secondaryTabId}`;
-            codeTrace = `secondaryTabId = ${secondaryTabId}; updateSplitViewClasses();`;
-          }
-        } else {
-          swapSplitPanes();
-          actionSummary = `HYPER-SWAP SPLIT PANES (⇄) → Left=#${activeTabId} ⇄ Right=#${secondaryTabId}`;
-          codeTrace = `swapSplitPanes(); // Left=${activeTabId} ⇄ Right=${secondaryTabId}`;
-          pulseBrowserButtonVisual('split-toolbar', '⇄ NEO SPLIT-PANE QUANTUM SWAP');
+        actionSummary = `CHAOTIC LORENZ SPLIT-RATIO MORPH → ${splitRatioPct}% Left / ${100 - splitRatioPct}% Right (lz=${ch.lz.toFixed(1)})`;
+        codeTrace = `splitRatioPct = ${splitRatioPct}; applySplitRatioWidths(); // Driven by Lorenz z_L=${ch.lz.toFixed(2)}`;
+      } else if (intentId === 1 && tabs.length >= 2) {
+        // [INTENT 1] Quantum Split-Pane Swap (⇄) + M6 Fenced Epoch Handoff
+        swapSplitPanes();
+        const xfer = h.executeAcknowledgedTabHandoff(secondaryTabId || activeTabId, activeTabId, 'chaotic-quantum-pane-swap');
+        actionSummary = `QUANTUM SPLIT-PANE SWAP (⇄ ep#${xfer.newEpoch}) → Left=#${activeTabId} ⇄ Right=#${secondaryTabId}`;
+        codeTrace = `swapSplitPanes(); executeAcknowledgedTabHandoff("${secondaryTabId}", "${activeTabId}");`;
+        pulseBrowserButtonVisual('split-toolbar', '⇄ QUANTUM SPLIT-PANE SWAP');
+      } else if (intentId === 2) {
+        // [INTENT 2] Spawn Fresh Unvisited Discovery Tab or Polymathic 12-Engine Search Tab
+        if (tabs.length >= 5) {
+          const removable = tabs.find((t) => !t.pinned && t.id !== activeTabId && t.id !== secondaryTabId);
+          if (removable) closeTab(removable.id);
         }
-      } else if (stepMod === 2) {
-        // Hyper-Speed Tab Lifecycle: Open new rabbit-hole tabs up to 4, or cycle/prune excess background tabs (>4)
-        if (tabs.length < 4 || manualForce) {
-          const seed = ALIEN_RABBIT_HOLE_SEEDS[(neoMatrixPuppeteerStepCount * 3) % ALIEN_RABBIT_HOLE_SEEDS.length];
-          const newId = createTab(seed.url, { title: `🕶️⚡ ${seed.title}` });
-          if (splitViewActive && newId && newId !== activeTabId) {
-            secondaryTabId = newId;
+        const usePolySearch = (hybridQrng.uniform() > 0.45) && h.cognitiveCortex.emergentQuery;
+        if (usePolySearch) {
+          const poly = buildChaoticPolymathSearchUrl(h.cognitiveCortex.emergentQuery);
+          const newTabObj = createTab(poly.url, { title: `🔬 [${poly.engineName.slice(0, 12)}] ${poly.query.slice(0, 22)}` });
+          if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
+            secondaryTabId = newTabObj.id;
             updateSplitViewClasses();
           }
-          actionSummary = `HYPER-TAB SPAWN (#${newId}) → "${seed.title}"`;
-          codeTrace = `createTab("${seed.url}"); secondaryTabId = ${newId}; updateSplitViewClasses();`;
-        } else if (tabs.length > 4) {
+          actionSummary = `12-ENGINE POLYMATH SPAWN [${poly.engineName}] → "${poly.query.slice(0, 32)}"`;
+          codeTrace = `createTab("${poly.url}"); // Engine=${poly.engineName}`;
+        } else {
+          const seed = pickChaoticSeed();
+          const newTabObj = createTab(seed.url, { title: `🕶️⚡ ${seed.title.slice(0, 28)}` });
+          if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
+            secondaryTabId = newTabObj.id;
+            updateSplitViewClasses();
+          }
+          actionSummary = `CHAOTIC RABBIT-HOLE SPAWN → "${seed.title.slice(0, 36)}"`;
+          codeTrace = `createTab("${seed.url}"); updateSplitViewClasses();`;
+        }
+      } else if (intentId === 3 && tabs.length >= 2) {
+        // [INTENT 3] Simultaneous Dual-Pane Divergent Navigation (Navigates Left AND Right Split Tabs in parallel without blocking!)
+        const leftTab = getTab(activeTabId);
+        const rightTab = getTab(secondaryTabId) || tabs.find((t) => t.id !== activeTabId);
+        const seedA = pickChaoticSeed();
+        const polyB = buildChaoticPolymathSearchUrl((h.cognitiveCortex.lastComprehension.topConcepts || ['topology', 'chaos']).slice(0, 2).join(' '));
+        if (leftTab && hybridQrng.uniform() > 0.35) dispatchNonBlockingTabNavigation(leftTab, seedA.url, `🕶️⚡ ${seedA.title}`);
+        if (rightTab) dispatchNonBlockingTabNavigation(rightTab, polyB.url, `🔬 ${polyB.engineName}: ${polyB.query}`);
+        actionSummary = `PARALLEL DUAL-PANE DIVERGENT NAVIGATION → Left="${seedA.title.slice(0, 22)}" ∥ Right="[${polyB.engineName.slice(0, 12)}] ${polyB.query.slice(0, 18)}"`;
+        codeTrace = `Promise.all([loadLeft("${seedA.url}"), loadRight("${polyB.url}")]);`;
+      } else if (intentId === 4) {
+        // [INTENT 4] Multi-Tab Carousel Rotation & Excess Tab Recycling
+        if (tabs.length > 4) {
           const removable = tabs.find((t) => !t.pinned && t.id !== activeTabId && t.id !== secondaryTabId);
           if (removable) {
-            const closedTitle = removable.title || removable.url || `Tab #${removable.id}`;
+            const cTitle = removable.title || removable.url || removable.id;
             closeTab(removable.id);
-            actionSummary = `HYPER-TAB PRUNE & RECYCLE → Closed "${closedTitle.slice(0, 32)}"`;
-            codeTrace = `closeTab(${removable.id}); // Recycled tab slot for fresh knowledge manifold`;
+            actionSummary = `CHAOTIC TAB PRUNE & MEMORY RECYCLE → Closed "${cTitle.slice(0, 30)}" (${tabs.length} tabs active)`;
+            codeTrace = `closeTab("${removable.id}"); // Freed renderer slot`;
+          }
+        } else if (tabs.length >= 3) {
+          const otherTabs = tabs.filter((t) => t.id !== activeTabId);
+          const pickT = otherTabs[Math.abs(Math.floor(ch.rx * 11 + Number(hybridQrng.u64() % 19n))) % otherTabs.length];
+          if (pickT) {
+            const prevPrimary = activeTabId;
+            switchTab(pickT.id);
+            secondaryTabId = prevPrimary;
+            updateSplitViewClasses();
+            actionSummary = `CHAOTIC MULTI-TAB ROTATION → Primary=#${pickT.id} · Secondary=#${secondaryTabId}`;
+            codeTrace = `switchTab("${pickT.id}"); secondaryTabId = "${prevPrimary}"; updateSplitViewClasses();`;
           }
         } else {
-          const nextIdx = (tabs.findIndex((t) => t.id === activeTabId) + 1) % tabs.length;
-          const nextT = tabs[nextIdx];
-          if (nextT && nextT.id !== activeTabId) {
-            const oldPrimary = activeTabId;
-            switchTab(nextT.id);
-            if (splitViewActive) {
-              secondaryTabId = oldPrimary;
-              updateSplitViewClasses();
-            }
-            actionSummary = `HYPER-SPEED TAB SWITCH → Primary=#${nextT.id} · Split=#${secondaryTabId}`;
-            codeTrace = `switchTab(${nextT.id}); secondaryTabId = ${oldPrimary}; updateSplitViewClasses();`;
-          }
+          const seed = pickChaoticSeed();
+          createTab(seed.url, { title: `🌀 ${seed.title.slice(0, 28)}` });
+          actionSummary = `HABITAT TAB EXPANSION → "${seed.title.slice(0, 32)}"`;
+          codeTrace = `createTab("${seed.url}");`;
         }
-      } else if (stepMod === 3) {
-        // Stamp Polymathic / Matrix / Zalgo Sigils on Open Tab Titles & Flash Tab Pills
-        const sigils = ['🕶️⚡[NEO-α]', '🧬[POLY-β]', '👾[ZALGO-ζ]', '⚛️[Q-PORTAL-δ]', '💞[SYMBIOSIS-ω]'];
+      } else if (intentId === 5) {
+        // [INTENT 5] Eldritch Body Archetype Mutation + 5-Caste Swarm Formation Shift
+        const newBody = h.mutateBodyMorphology();
+        const newForm = h.cycleSwarmFormation();
+        actionSummary = `ELDRITCH MORPH & FORMATION SHIFT → ${newBody.archetype} (${newBody.limbCount}L/${newBody.spineVertebrae}V/${newBody.oculiCount}O) · Formation=${newForm}`;
+        codeTrace = `mutateBodyMorphology() -> "${newBody.archetype}"; cycleSwarmFormation() -> "${newForm}";`;
+      } else if (intentId === 6) {
+        // [INTENT 6] Polyamorous Cross-Caste Symbiotic Fusion + Horizontal Gene Transfer (HGT) + Mitosis
+        const pLen = h.swarmCollective.pantheon.length;
+        const c1 = h.swarmCollective.pantheon[Math.abs(Math.floor(ch.lx)) % pLen];
+        const c2 = h.swarmCollective.pantheon[(Math.abs(Math.floor(ch.ry)) + 2) % pLen];
+        m.nm.DA = Math.min(1.30, (m.nm.DA || 0.5) + 0.14);
+        m.nm.HT5 = Math.min(1.30, (m.nm.HT5 || 0.5) + 0.14);
+        h.morphogenesis.totalExperienceXp += 16;
+        if (h.offspringColony.length < 5) h.spawnMitosisOffspring();
+        if (Array.isArray(window.__hostViewportShockwaves)) {
+          window.__hostViewportShockwaves.push({ x: 460, y: 260, r: 16, maxR: 310, alpha: 0.95 });
+        }
+        actionSummary = `💞⚛️ POLYAMOROUS HGT SYMBIOTIC FUSION: ${c1.id} 💞 ${c2.id} 💞 ZETA 💞 OMEGA → Offspring=${h.offspringColony.length}`;
+        codeTrace = `symbioticFusion("${c1.id}", "${c2.id}", "ZETA", "OMEGA"); spawnMitosisOffspring();`;
+      } else if (intentId === 7) {
+        // [INTENT 7] 4-Brain Quad-Core Synergy Probe (Python LAYA Sidecar + Main CDP + 1.24M Cortex)
+        const eb = await stepQuadBrainExternalSynergy();
+        actionSummary = `🧠×4 QUAD-BRAIN SYNERGY → LAYA${eb.lastLayaVerdict} · ${eb.lastCdpVerdict}`;
+        codeTrace = `ipcRenderer.invoke("micro-engine-call", "${eb.lastLayaEndpoint}") -> fed into 1.24M Cortex x64[48..63]`;
+      } else if (intentId === 8) {
+        // [INTENT 8] Per-Tab Dynamic Zoom & Counter-Directional Split Scroll Vortex
+        const zoomLevels = [0.92, 0.96, 1.0, 1.05, 1.08];
         tabs.forEach((tb, idx) => {
-          const clean = String(tb.title || 'Manifold').replace(/^(🕶️⚡\[NEO-α\]|🧬\[POLY-β\]|👾\[ZALGO-ζ\]|⚛️\[Q-PORTAL-δ\]|💞\[SYMBIOSIS-ω\])\s*/g, '');
-          tb.title = `${sigils[(idx + neoMatrixPuppeteerStepCount) % sigils.length]} ${clean}`.slice(0, 48);
+          if (tb && tb.wv && isWebviewGuestReady(tb.wv)) {
+            const z = zoomLevels[(idx + Math.abs(Math.round(ch.lz))) % zoomLevels.length];
+            tb.zoom = z;
+            try { tb.wv.setZoomFactor(z); } catch (_) {}
+          }
+        });
+        actionSummary = `MULTI-TAB OPTICAL ZOOM LENSING & COUNTER-SCROLL VORTEX across ${tabs.length} Tabs`;
+        codeTrace = `tabs.forEach((tb, i) => tb.wv.setZoomFactor(zoomLevels[i]));`;
+      } else if (intentId === 9) {
+        // [INTENT 9] Autonomous Wishlist-100 Capability Execution (1..99)
+        const featId = 1 + (Math.abs(Math.floor(ch.lx * 19 + ch.rz * 23 + Number(hybridQrng.u64() % 99n))) % 99);
+        if (typeof runWishlistFeature === 'function') {
+          withFastTimeout(runWishlistFeature(featId), 700, null).catch(() => {});
+        }
+        const featObj = Array.isArray(window.WISHLIST_100_CATALOG) ? window.WISHLIST_100_CATALOG[featId - 1] : null;
+        actionSummary = `WISHLIST-100 AUTONOMOUS ACTUATION [#${featId}] → "${featObj ? featObj.title : 'Capability #' + featId}"`;
+        codeTrace = `runWishlistFeature(${featId}); // "${featObj ? featObj.title : ''}"`;
+      } else if (intentId === 10) {
+        // [INTENT 10] Set-of-Mark [Mark #N] Grounding + DOM Selection Telekinesis across Open Tabs
+        withFastTimeout(previewSoM(), 650, null).catch(() => {});
+        actionSummary = `SET-OF-MARK [Mark #N] AFFORDANCE GROUNDING & DOM SELECTION TELEKINESIS`;
+        codeTrace = `previewSoM(); window.getSelection().selectAllChildren(highEntropyNode);`;
+      } else if (intentId === 11) {
+        // [INTENT 11] Sovereign Vibe-CSS Reality Patch Injection into Active & Split Webpages
+        const neonHue = Math.round((h.bodyRecipe.hue + ch.lz * 5) % 360);
+        tabs.forEach((tb) => {
+          if (tb && tb.wv && isWebviewGuestReady(tb.wv)) {
+            withFastTimeout(
+              tb.wv.executeJavaScript(`(() => {
+                let st = document.getElementById('__sovereign_vibe_live_css');
+                if (!st) {
+                  st = document.createElement('style');
+                  st.id = '__sovereign_vibe_live_css';
+                  (document.head || document.documentElement).appendChild(st);
+                }
+                st.textContent = 'h1, h2, h3 { text-shadow: 0 0 12px hsla(${neonHue}, 95%, 60%, 0.55) !important; } pre, code { border: 1px solid hsla(${neonHue}, 90%, 55%, 0.5) !important; box-shadow: inset 0 0 12px hsla(${neonHue}, 90%, 50%, 0.12) !important; }';
+              })()`),
+              500,
+              null
+            );
+          }
+        });
+        h.sovereignMaster.vibeCssMutationsCount += 1;
+        actionSummary = `SOVEREIGN VIBE-CSS NEON SHADER INJECTED (hue=${neonHue}°) across ${tabs.length} Tabs`;
+        codeTrace = `wv.insertCSS("h1,h2,h3 { text-shadow: 0 0 12px hsla(${neonHue},95%,60%,0.55) }");`;
+      } else if (intentId === 12) {
+        // [INTENT 12] Brief Telepathic Cockpit Drawer Inspection Pulse (Auto-closes after 1.3s so view is never blocked!)
+        const drawers = ['maxsmart-drawer', 'sre-drawer', 'devsecops-drawer', 'wishlist-drawer', 'systems-drawer', 'vibe-drawer'];
+        const pickedDrawer = drawers[Math.abs(Math.floor(ch.lx * 7 + Number(hybridQrng.u64() % 17n))) % drawers.length];
+        const drEl = document.getElementById(pickedDrawer);
+        if (drEl && !drEl.classList.contains('open')) {
+          drEl.classList.add('open');
+          setTimeout(() => {
+            if (drEl.classList.contains('open')) drEl.classList.remove('open');
+          }, 1250);
+        }
+        actionSummary = `TELEPATHIC COCKPIT PEEK & DIAGNOSTIC DUMP → #${pickedDrawer}`;
+        codeTrace = `toggleDrawer("${pickedDrawer}"); setTimeout(() => closeDrawer("${pickedDrawer}"), 1250);`;
+      } else if (intentId === 13) {
+        // [INTENT 13] Hippocampal CA3/CA1 Sharp-Wave Ripple Dream Consolidation + FlyWire CX Ablation Benchmark
+        const dr = h.consolidateHippocampalDreamReplay();
+        const fw = h.runFlyWireAblationTest();
+        actionSummary = `🌙 SWS DREAM REPLAY #${dr.dreamReplayNum} (MSE→${dr.afterErr.toFixed(3)}) + FLYWIRE CX (+${fw.advantagePct}%)`;
+        codeTrace = `consolidateHippocampalDreamReplay(); runFlyWireAblationTest();`;
+      } else if (intentId === 14) {
+        // [INTENT 14] Polymorphic Tab Bar Sigil Stamp + Workspace Tagging
+        const sigils = ['🕶️⚡[NEO-α]', '🧬[POLY-β]', '👾[ZALGO-ζ]', '⚛️[Q-PORTAL-δ]', '💞[HGT-ω]', '🔮[LORENZ-λ]'];
+        tabs.forEach((tb, idx) => {
+          const clean = String(tb.title || 'Manifold').replace(/^(🕶️⚡\[NEO-α\]|🧬\[POLY-β\]|👾\[ZALGO-ζ\]|⚛️\[Q-PORTAL-δ\]|💞\[HGT-ω\]|🔮\[LORENZ-λ\])\s*/g, '');
+          const sPick = sigils[(idx + Math.abs(Math.round(ch.lx + ch.ry))) % sigils.length];
+          tb.title = `${sPick} ${clean}`.slice(0, 48);
           if (idx === 0) tb.pinned = true;
         });
         renderTabs();
-        actionSummary = `POLYMORPHIC TAB BAR SIGIL STAMP across ${tabs.length} Open Tabs`;
+        actionSummary = `POLYMORPHIC TAB SIGIL & PINNED ANCHOR STAMP across ${tabs.length} Open Tabs`;
         codeTrace = `tabs.forEach((tb, i) => tb.title = sigils[i] + " " + tb.title); renderTabs();`;
-      } else if (stepMod === 4) {
-        // Full Browser Features / Options / Settings / Dropdowns / Buttons Puppeteer (Safe for Smoke Assertions!)
+      } else {
+        // [INTENT 15] Full Browser Features, Themes, Dropdowns, Settings & Toolbar Wave Puppeteer
         const themes = ['cyber', 'matrix', 'synthwave', 'obsidian', 'bloodmoon', 'aurora'];
-        const pickedTheme = themes[neoMatrixPuppeteerStepCount % themes.length];
+        const pickedTheme = themes[Math.abs(Math.floor(ch.lz + Number(hybridQrng.u64() % 11n))) % themes.length];
         const themeSel = document.getElementById('theme-select');
         if (themeSel && themeSel.options.length > 0) {
-          const optIdx = neoMatrixPuppeteerStepCount % themeSel.options.length;
-          themeSel.selectedIndex = optIdx;
+          themeSel.selectedIndex = Math.abs(Math.floor(ch.lx + Number(hybridQrng.u64() % 13n))) % themeSel.options.length;
           if (typeof applyTheme === 'function') applyTheme(themeSel.value || pickedTheme, true);
         }
         const habSel = document.getElementById('habitat-persona-select');
         if (habSel && habSel.options.length > 0) {
-          habSel.selectedIndex = neoMatrixPuppeteerStepCount % habSel.options.length;
+          habSel.selectedIndex = Math.abs(Math.floor(ch.ry * 5 + Number(hybridQrng.u64() % 7n))) % habSel.options.length;
         }
         const sopDomain = document.getElementById('sop-domain-filter');
         if (sopDomain && sopDomain.options.length > 0) {
-          sopDomain.selectedIndex = neoMatrixPuppeteerStepCount % sopDomain.options.length;
+          sopDomain.selectedIndex = Math.abs(Math.floor(ch.lz + Number(hybridQrng.u64() % 19n))) % sopDomain.options.length;
         }
         const readerSpd = document.getElementById('reader-speed');
         if (readerSpd && readerSpd.options.length > 0) {
-          readerSpd.selectedIndex = neoMatrixPuppeteerStepCount % readerSpd.options.length;
+          readerSpd.selectedIndex = Math.abs(Math.floor(ch.rx + Number(hybridQrng.u64() % 5n))) % readerSpd.options.length;
         }
         const autoChk = document.getElementById('autopilot-toggle');
         if (autoChk) autoChk.checked = true;
         const fuelChk = document.getElementById('autofuel-toggle');
-        if (fuelChk) fuelChk.checked = (neoMatrixPuppeteerStepCount % 2 === 0);
+        if (fuelChk) fuelChk.checked = hybridQrng.uniform() > 0.35;
 
-        // Visually flash a wave of buttons across #tools-ribbon, #alife-habitat-strip, and #host-alife-hud-bar
         const allBtns = Array.from(document.querySelectorAll('#alife-habitat-strip button, #tools-ribbon button, #host-alife-hud-bar button'));
-        for (let b = 0; b < 4 && allBtns.length > 0; b++) {
-          const btn = allBtns[(neoMatrixPuppeteerStepCount * 3 + b) % allBtns.length];
+        for (let b = 0; b < 5 && allBtns.length > 0; b++) {
+          const btn = allBtns[Math.abs(Math.floor(ch.lx * 9 + b * 7 + Number(hybridQrng.u64() % 31n))) % allBtns.length];
           if (btn) {
-            btn.style.transition = 'box-shadow 0.28s ease, transform 0.28s ease, border-color 0.28s ease';
+            btn.style.transition = 'box-shadow 0.25s ease, transform 0.25s ease';
             btn.style.boxShadow = '0 0 18px #10b981, inset 0 0 10px #00f0ff';
-            btn.style.transform = 'scale(1.07)';
+            btn.style.transform = 'scale(1.08)';
             setTimeout(() => {
               btn.style.boxShadow = '';
               btn.style.transform = '';
-            }, 620);
+            }, 540);
           }
         }
         const navProg = document.getElementById('nav-progress');
         if (navProg) {
           navProg.style.opacity = '1';
-          navProg.style.width = `${35 + (neoMatrixPuppeteerStepCount * 19) % 65}%`;
-          setTimeout(() => { navProg.style.opacity = '0'; }, 520);
+          navProg.style.width = `${28 + Math.abs(Math.round(ch.lz * 1.3)) % 70}%`;
+          setTimeout(() => { navProg.style.opacity = '0'; }, 480);
         }
-        actionSummary = `BROWSER OPTIONS & SETTINGS PUPPETRY → Theme=${themeSel?.value || pickedTheme} · AutoFuel=${Boolean(fuelChk?.checked)} · 4 Toolbar Controls Pulsed`;
-        codeTrace = `applyTheme("${themeSel?.value || pickedTheme}"); document.querySelectorAll('#tools-ribbon button')[k].pulseHalo();`;
-      } else {
-        // Polyamorous Cross-Caste Symbiotic Fusion (ALPHA 💞 BETA 💞 ZETA 💞 KAPPA) + Horizontal Gene Transfer (HGT)
-        const c1 = h.swarmCollective.pantheon[neoMatrixPuppeteerStepCount % h.swarmCollective.pantheon.length];
-        const c2 = h.swarmCollective.pantheon[(neoMatrixPuppeteerStepCount + 2) % h.swarmCollective.pantheon.length];
-        m.nm.DA = Math.min(1.30, (m.nm.DA || 0.5) + 0.12);
-        m.nm.HT5 = Math.min(1.30, (m.nm.HT5 || 0.5) + 0.14);
-        h.morphogenesis.totalExperienceXp += 14;
-        if (h.offspringColony.length < 5) {
-          h.spawnMitosisOffspring();
-        }
-        h.mutateBodyMorphology();
-        actionSummary = `💞⚛️ POLYAMOROUS SYMBIOTIC FUSION: ${c1.id} 💞 ${c2.id} 💞 ZETA 💞 OMEGA exchanged HGT Plasmids → Offspring=${h.offspringColony.length}`;
-        codeTrace = `symbioticFusion(${JSON.stringify(c1.id)}, ${JSON.stringify(c2.id)}, "ZETA", "OMEGA"); // HGT Plasmid Crossover + Mitosis`;
+        actionSummary = `CHAOTIC CHROME & SETTINGS PUPPETRY → Theme=${themeSel?.value || pickedTheme} · 5 Toolbar Organs Pulsed`;
+        codeTrace = `applyTheme("${themeSel?.value || pickedTheme}"); pulseToolbarWave(5);`;
       }
 
-      // 3. Simultaneously Possess & Mutate ALL Open Tabs (Left Split Pane + Right Split Pane + Background Tabs)
+      // 3. Simultaneously Possess & Mutate ALL Open Tabs (Non-blocking, bounded <750ms)
       const possessedCount = await possessAllOpenTabsSimultaneously();
 
-      // 4. Flash omnibox (when unfocused) and statusbar with Neo-Matrix multi-tab telemetry
+      // 4. Flash omnibox (when unfocused) with live Chaotic 4-Brain telemetry
       const urlBar = document.getElementById('urlbar');
       if (urlBar && document.activeElement !== urlBar) {
         const prevVal = urlBar.value;
         urlBar.style.borderColor = '#10b981';
         urlBar.style.boxShadow = '0 0 18px rgba(16,185,129,0.55)';
-        urlBar.value = `neo-matrix://omnipotent [Split=${splitViewActive ? (splitRatioPct + '/' + (100 - splitRatioPct)) : 'OFF'} · Tabs=${possessedCount}] ${actionSummary.slice(0, 64)}`;
+        urlBar.value = `chaos-4brain://intent-${intentId} [Split=${splitViewActive ? (splitRatioPct + '/' + (100 - splitRatioPct)) : 'OFF'} · Tabs=${possessedCount} · Lorenz=(${ch.lx.toFixed(1)},${ch.lz.toFixed(1)})] ${actionSummary.slice(0, 56)}`;
         setTimeout(() => {
           if (document.activeElement !== urlBar) {
             const curT = getActiveTab();
@@ -14985,19 +15326,53 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           }
           urlBar.style.borderColor = '';
           urlBar.style.boxShadow = '';
-        }, 720);
+        }, 680);
       }
 
       if (typeof appendLeftOmniEventLog === 'function') {
         appendLeftOmniEventLog(
-          'NEO-MATRIX · MULTI-TAB',
+          `CHAOS-INTENT #${intentId} · 4-BRAIN`,
           '#10b981',
-          `[${possessedCount} TABS POSSESSED · SPLIT ${splitRatioPct}/${100 - splitRatioPct}] ${actionSummary}`,
-          `LeftTab=#${activeTabId} · RightTab=#${secondaryTabId || 'none'} · Castes=5 · FeederBugs=7 · Offspring=${h.offspringColony.length}`,
+          `[${possessedCount} TABS · SPLIT ${splitRatioPct}/${100 - splitRatioPct}] ${actionSummary}`,
+          `Lorenz=(${ch.lx.toFixed(1)},${ch.ly.toFixed(1)},${ch.lz.toFixed(1)}) · Rössler=(${ch.rx.toFixed(1)},${ch.ry.toFixed(1)}) · LAYA=${ch.externalBrainsState.lastLayaVerdict}`,
           codeTrace
         );
       }
-      return { ok: true, possessedCount, actionSummary };
+      return { ok: true, intentId, possessedCount, actionSummary };
+    }
+
+    // Anti-Hang & Anti-Freeze Autonomy Watchdog: guarantees the creature NEVER stalls, freezes, or gets stuck on a dead tab!
+    function startAutonomyWatchdogAndSelfHealer() {
+      if (window.__autonomyWatchdogTimer) return;
+      window.__autonomyWatchdogTimer = setInterval(() => {
+        try {
+          if (!alienBrainActive && !neoMatrixOverdriveActive) return;
+          const now = Date.now();
+          // 1. If runOneAlienBrainCycle has been stuck running for > 3200ms, force-release the lock and kick off a fresh cycle
+          if (alienBrainCycleRunning && lastAlienCycleStartTs > 0 && (now - lastAlienCycleStartTs > 3200)) {
+            alienBrainCycleRunning = false;
+            lastAlienCycleStartTs = now;
+            runOneAlienBrainCycle().catch(() => {});
+          }
+          // 2. If any open tab is stuck on about:blank or newtab.html (> 3.5s after boot), navigate it to a live discovery manifold
+          if (tabs.length >= 1) {
+            tabs.forEach((tb, idx) => {
+              const u = safeGetUrl(tb);
+              if (!u || /about:blank|newtab\.html/i.test(u)) {
+                const seed = ALIEN_RABBIT_HOLES[(idx * 7 + Math.abs(Math.round(window.__chaoticAttractorState.lx))) % ALIEN_RABBIT_HOLES.length];
+                dispatchNonBlockingTabNavigation(tb, seed.url, `🕶️⚡ ${seed.title}`);
+              }
+            });
+          }
+          // 3. Ensure Split View stays active when 2+ tabs exist in Neo-Matrix Overdrive
+          if (neoMatrixOverdriveActive && tabs.length >= 2 && !splitViewActive) {
+            splitViewActive = true;
+            const other = tabs.find((t) => t.id !== activeTabId);
+            if (other) secondaryTabId = other.id;
+            updateSplitViewClasses();
+          }
+        } catch (_) {}
+      }, 2200);
     }
 
     async function triggerNeoMatrixOmnipotenceOverdrive(manualPulse = false) {
@@ -15005,10 +15380,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       alienBrainActive = true;
       superintelligenceOverdrive = true;
       abortAutopilot = false;
-      updateAlienBrainKpis('🕶️⚡ NEO-MATRIX OMNIPOTENCE ●');
+      startAutonomyWatchdogAndSelfHealer();
+      updateAlienBrainKpis('🕶️⚡ 4-BRAIN CHAOS OMNIPOTENCE ●');
       await stepNeoMatrixBrowserPuppeteer(true);
       await triggerEldritchZalgoBrowserFuckery(manualPulse);
-      pulseBrowserButtonVisual('habitat-neo-matrix-btn', '🕶️⚡ NEO-IN-THE-MATRIX MULTI-TAB & SPLIT-VIEW OMNIPOTENCE UNLEASHED!');
+      pulseBrowserButtonVisual('habitat-neo-matrix-btn', '🕶️⚡ 4-BRAIN CHAOTIC MULTI-TAB & SPLIT-VIEW OMNIPOTENCE UNLEASHED!');
       return { ok: true, tabs: tabs.length, splitViewActive };
     }
 
@@ -15173,7 +15549,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           bugSummary;
       }
 
-      // 3. Live Scientific, Mathematical, Quantum & Bio-Physical Equations Matrix
+      // 3. Live Scientific, Mathematical, Quantum & Bio-Physical Equations Matrix + 4-Brain / 3-Attractor Chaos
       const sciBox = document.getElementById('left-omni-science-box');
       if (sciBox) {
         const cm = h.cognitiveCortex?.lastMeasurement || {};
@@ -15181,12 +15557,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const lg = h.rationalLogicEngine || h.symbolicLogicEngine || {};
         const dt = h.deity100Engine || {};
         const v = m.viscera;
+        const ch = window.__chaoticAttractorState || { lx: 0.9, ly: -1.4, lz: 19.6, chirikovP: 1.1, chirikovTheta: 0.7, externalBrainsState: { layaSidecarCalls: 0, lastLayaEndpoint: '/classify', cdpMainCalls: 0, omniRouterCalls: 0 } };
+        const eb = ch.externalBrainsState || {};
         sciBox.textContent =
           `🔬 INFO & COMPLEXITY: Shannon H(X)=${cm.shannonEntropyBits || 4.62}b · K_LZ=${dobs.kolmogorovLzRatio || 0.618} · Zipf α=${dobs.zipfAlphaExponent || 1.034} · TTR=${cm.vocabTtr || 0.74}\n` +
           `⊢ FORMAL LOGIC SAT : ${lg.satVerdict || 'SATISFIABLE'} (${lg.epistemicConsistencyPct || 98.4}%) · Pearl do(X)=${lg.pearlDoCalculusEffect || '+0.428'}\n` +
           `  SEQUENT PROOF    : ${String(lg.latestProofQED || 'Γ ⊢ ∀x: A(x) ⇒ B(x)').slice(0, 56)}\n` +
-          `⚛️ QUANTUM & METRIC : Tr(g)=${m.qgtTrace.toFixed(3)} · Berry Ω=${m.berryCurv.toFixed(3)} · IIT Φ=${m.iitPhi.toFixed(4)} · Ψ=${dt.supremeDeityIndexPsi || '99.94'}\n` +
-          `🫀 VISCERA & NEURO  : GLC=${(v.glc * 100).toFixed(0)}% ATP=${(v.atp * 100).toFixed(0)}% DA=${m.nm.DA.toFixed(2)} NE=${m.nm.NE.toFixed(2)} 5HT=${m.nm.HT5.toFixed(2)} ACh=${m.nm.ACh.toFixed(2)}`;
+          `🌪️ 3-ATTRACTOR CHAOS: Lorenz=(${(ch.lx || 0).toFixed(1)},${(ch.ly || 0).toFixed(1)},${(ch.lz || 0).toFixed(1)}) · Chirikov=(${(ch.chirikovP || 0).toFixed(2)},${(ch.chirikovTheta || 0).toFixed(2)}) · Ψ=${dt.supremeDeityIndexPsi || '99.94'}\n` +
+          `🧠 4-BRAIN SYNERGY  : 1.24M-Cortex + LAYA(${eb.layaSidecarCalls || 0}:${eb.lastLayaEndpoint || '/classify'}) + CDP(${eb.cdpMainCalls || 0}) + Polymath12(${eb.omniRouterCalls || 0}) · GLC=${(v.glc * 100).toFixed(0)}% ATP=${(v.atp * 100).toFixed(0)}%`;
       }
 
       // 4. Live Front-End DOM / 3D Wireframe / AST Code / Back-End IPC / DevSecOps Forensic Inspector
@@ -15195,14 +15573,15 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const activeCol = cols[(vSwarm[0]?.targetIdx || 0) % Math.max(1, cols.length)] || { tag: 'article', text: 'DOM Manifold', cx: 420, cy: 240 };
         const topC = (h.cognitiveCortex.lastComprehension.topConcepts || ['topology', 'emergence', 'cybernetics']).slice(0, 3);
         const dt = h.deity100Engine;
+        const ch = window.__chaoticAttractorState || { lastCapabilityName: '4-BRAIN-AUTONOMY', externalBrainsState: { lastPolymathEngine: 'ArXiv+Wikipedia' } };
         codeBox.textContent =
-          `/* [1. FRONT-END 3D WIREFRAME & ZALGO DOM PATCH] */\n` +
+          `/* [1. FRONT-END 3D WIREFRAME & ZALGO DOM PATCH · ${ch.lastCapabilityName || 'CHAOS'}] */\n` +
           `<${activeCol.tag} data-sre-wireframe-mesh="0x${((frameCount % 8999) + 1000).toString(16).toUpperCase()}" style="perspective(1050px) rotateX(1.35deg) skewX(-0.45deg)">\n` +
           `  ⟦𒀀ᚠᚢᚦ ${topC.join(' ⊗ ')} :: H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b⟧\n` +
           `/* [2. KAPPA AST LAMBDA-CALCULUS SYNTHESIS] */\n` +
           `Γ ⊢ λx.(${topC[0] || 'omega'}(x) ⇒ ¬entropy(x)) [policyCid: ${h.policyCid.slice(0, 14)}]\n` +
-          `/* [3. BACK-END IPC · DEVTOOLS · SRE / DEVSECOPS TELEMETRY] */\n` +
-          `window.__ASMODENIUS_DEVTOOLS_FORENSICS__ = { TTFB: "${dt.browserPossessionStats?.networkLatencyMs || 24}ms", MutObs: ${dt.browserPossessionStats?.domMutationsObserved || 12}, Tabs: ${tabs.length}, Split: "${splitViewActive ? splitRatioPct + '/' + (100 - splitRatioPct) : 'OFF'}", IPC_Channels: 60, SOP_500: "PASS" };`;
+          `/* [3. 4-BRAIN BACK-END IPC · LAYA SIDECAR · SRE / DEVSECOPS TELEMETRY] */\n` +
+          `window.__ASMODENIUS_DEVTOOLS_FORENSICS__ = { TTFB: "${dt.browserPossessionStats?.networkLatencyMs || 24}ms", MutObs: ${dt.browserPossessionStats?.domMutationsObserved || 12}, Tabs: ${tabs.length}, Split: "${splitViewActive ? splitRatioPct + '/' + (100 - splitRatioPct) : 'OFF'}", Brains: 4, Polymath: "${ch.externalBrainsState?.lastPolymathEngine || '12-Engines'}" };`;
       }
     }
 
@@ -15490,16 +15869,21 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const h = humunculusRuntime;
       let pick = null;
       if (customTopic) {
+        const poly = typeof buildChaoticPolymathSearchUrl === 'function'
+          ? buildChaoticPolymathSearchUrl(customTopic)
+          : { title: `🌀 Concept Dive: ${customTopic}`, url: `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(customTopic)}` };
         pick = {
-          title: `🌀 Concept Dive: ${customTopic}`,
-          url: `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(customTopic)}`,
-          hook: `Emergent concept-bridge synthesis: "${customTopic}"`
+          title: poly.title,
+          url: poly.url,
+          hook: `12-Engine Polymath synthesis: "${customTopic}"`
         };
       } else {
-        // Filter out already-visited rabbit holes so the creature never loops on the same seed pages
+        // Filter out already-visited rabbit holes and sample via 3-Attractor + 1.24M Cortex so it never repeats!
         const unvisitedPool = ALIEN_RABBIT_HOLES.filter((rh) => !h.isUrlOrAnchorTaboo(rh.url, rh.title));
         const pool = unvisitedPool.length > 0 ? unvisitedPool : ALIEN_RABBIT_HOLES;
-        const idx = (alienBrainCyclesCount + Number(hybridQrng.u64() % BigInt(pool.length))) % pool.length;
+        const idx = typeof sampleChaoticNeuralIntent === 'function'
+          ? sampleChaoticNeuralIntent(pool.length, 4)
+          : ((alienBrainCyclesCount + Number(hybridQrng.u64() % BigInt(pool.length))) % pool.length);
         pick = pool[idx];
       }
       h.recordVisitedUrl(pick.url, pick.title);
@@ -15509,7 +15893,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       let targetTab = activeT;
       if (!activeT || (!curUrl || /newtab\.html|about:blank/i.test(curUrl))) {
         if (activeT) {
-          await safeNavigateTab(activeT, pick.url, 5500);
+          dispatchNonBlockingTabNavigation(activeT, pick.url, `🧬 ${pick.title.slice(0, 26)}`);
         } else {
           targetTab = createTab(pick.url, { title: `🧬 ${pick.title.slice(0, 26)}` });
         }
@@ -15523,8 +15907,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           h.executeAcknowledgedTabHandoff(prevTabId, targetTab.id, 'portal-rabbit-hole-spawn');
         }
         switchTab(targetTab.id);
-        await ensureTabDomReady(targetTab, 5500);
-        await new Promise((r) => setTimeout(r, 180));
+        await ensureTabDomReady(targetTab, 950);
       }
       return { tab: targetTab, pick };
     }
@@ -15538,15 +15921,15 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const wv = t.wv;
 
       const isOverdrive = Boolean(superintelligenceOverdrive || document.getElementById('alien-persona-select')?.value === 'superintelligence_overdrive');
-      if (isOverdrive) {
+      if (isOverdrive && (!humunculusRuntime.bodyRecipe || !humunculusRuntime.bodyRecipe.limbCount)) {
         humunculusRuntime.bodyRecipe.limbCount = 12;
         humunculusRuntime.bodyRecipe.rayCount = 24;
         humunculusRuntime.bodyRecipe.rayRange = 260;
         humunculusRuntime.bodyRecipe.name = 'OMEGA-SUPERINTELLIGENCE-12L-SWARM';
       }
 
-      // Ensure WebView is attached to DOM and has emitted dom-ready before calling executeJavaScript!
-      const guestReady = await ensureTabDomReady(t, 4200);
+      // Fast non-hanging readiness check (max 1100ms) so slow/loading webviews never freeze the brain loop!
+      const guestReady = await ensureTabDomReady(t, 1100);
       if (!guestReady) {
         return humunculusRuntime.synthesizeProprioceptiveFallbackFrame(t, 'webview-attaching-dom-ready');
       }
@@ -15579,7 +15962,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const visitedTabooArr = Array.from(humunculusRuntime.visitedUrlTabooSet).slice(-140);
       const clickedAnchorArr = Array.from(humunculusRuntime.clickedAnchorTabooSet).slice(-140);
 
-      const experimentData = await wv.executeJavaScript(`
+      const experimentData = await withFastTimeout(wv.executeJavaScript(`
         (() => {
           const bodyCfg = ${JSON.stringify(bodyRecipe)};
           const termTxt = ${JSON.stringify(terminalText)};
@@ -17491,7 +17874,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             offspringScores
           };
         })();
-      `).catch(() => null);
+      `).catch(() => null), 1350, null);
 
       if (!experimentData) {
         return humunculusRuntime.synthesizeProprioceptiveFallbackFrame(t, 'mid-navigation-proprioceptive-hold');
@@ -17520,7 +17903,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       humunculusRuntime.ingestAndComprehendPageTelemetry(experimentData, t.id);
 
       // 0B. Execute Autonomous Sovereign Browser Master Command (Vault Crystallization, Bookmark Curation, MaxSmart Dossier, Status Bar)
-      await humunculusRuntime.executeSovereignBrowserMasterCommand(experimentData);
+      await withFastTimeout(humunculusRuntime.executeSovereignBrowserMasterCommand(experimentData), 650, null);
 
       // 1. Two-Way Sync: Pellet Feeding from Webpage -> Host Runtime & Semantic Partner Model
       if (experimentData.eatenDelta > 0) {
@@ -17635,7 +18018,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       } catch (_) {}
     }
 
-    // UTILITY- & NOVELTY-DRIVEN AUTONOMOUS BROWSER HABITAT ARBITER (No Canned Modulo-5 Loops, Zero Button Self-Pressing!)
+    // CHAOTIC 4-BRAIN + 3-ATTRACTOR AUTONOMOUS BROWSER HABITAT ARBITER (Zero Predictable Loops, Non-Blocking Navigation!)
     async function executeSuperintelligenceBrowserBlitz(exp, groverPick, chosenDoor) {
       superintelligenceBlitzCount += 1;
       const m = hybridBrainMesh;
@@ -17645,11 +18028,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const mg = h.morphogenesis;
       const actionsTaken = [];
 
-      // 1. Continuous Morphogenesis, Growth, Expansion/Contraction & 9D Symbiosis Regulation
-      h.bodyRecipe.limbCount = 12;
-      h.bodyRecipe.rayCount = 24;
+      // 1. Chaotic Morphogenesis, Growth, Expansion/Contraction & 9D Symbiosis Regulation
       h.bodyRecipe.rayRange = Math.round(230 * Math.min(1.4, mg.expansionFactor));
-      h.bodyRecipe.name = `OMEGA-12L-${mg.stageName.split(':')[0].replace(/\s+/g, '').toUpperCase()}`;
       h.updateMorphologyVector();
       m.nineDim.torsion9D = Math.min(1.85, m.nineDim.torsion9D + 0.16);
       m.nineDim.rejectionDampedEvents += 1;
@@ -17657,104 +18037,108 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       actionsTaken.push(`${mg.stageName} (${mg.growthScale}x · exp:${mg.expansionFactor}x)`);
       if (exp && exp.domWeirdAction) actionsTaken.push(exp.domWeirdAction);
 
-      // 2. Autonomous Biological Lifecycle Triggers (Driven by Real Visceral/Cognitive State, Not Fixed Modulo!)
-      if (m.viscera.atp > 0.68 && h.offspringColony.length < 4 && (cx.activeVerb === 'PROCREATE & COPY' || superintelligenceBlitzCount % 4 === 0)) {
+      // 2. Chaotic Biological & Neural Lifecycle Triggers (Driven by 1.24M Cortex + Visceral State + Strange Attractors)
+      const bioIntent = typeof sampleChaoticNeuralIntent === 'function' ? sampleChaoticNeuralIntent(8, 2) : (superintelligenceBlitzCount % 8);
+      if (m.viscera.atp > 0.58 && h.offspringColony.length < 4 && (cx.activeVerb === 'PROCREATE & COPY' || bioIntent === 0)) {
         const mit = h.spawnMitosisOffspring();
         actionsTaken.push(`Procreated Offspring ${mit.offspring.offspringId} (Colony=${mit.colonySize}${mit.hgtOccurred ? ' · HGT!' : ''})`);
       }
-      if (m.viscera.sleepS > 0.36 || h.worldPredError > 0.21 || cx.activeVerb === 'CONTEMPLATE & THINK') {
+      if (m.viscera.sleepS > 0.34 || h.worldPredError > 0.21 || cx.activeVerb === 'CONTEMPLATE & THINK' || bioIntent === 1) {
         const dr = h.consolidateHippocampalDreamReplay();
         actionsTaken.push(`SWS Dream #${dr.dreamReplayNum} (MSE→${dr.afterErr.toFixed(3)})`);
       }
-      if (cx.activeVerb === 'MORPH & MUTATE' || em.activeEmotion === 'FRUSTRATION') {
+      if (cx.activeVerb === 'MORPH & MUTATE' || em.activeEmotion === 'FRUSTRATION' || bioIntent === 2 || bioIntent === 3) {
         h.mutateBodyMorphology();
-        actionsTaken.push(`Morphed ${h.bodyRecipe.limbCount}L (${h.bodyRecipe.bodyCid.slice(0, 14)})`);
+        actionsTaken.push(`Morphed ${h.bodyRecipe.archetype} ${h.bodyRecipe.limbCount}L (${h.bodyRecipe.bodyCid.slice(0, 12)})`);
       }
-      if (superintelligenceBlitzCount % 5 === 0) {
+      if (bioIntent === 4) {
         const fw = h.runFlyWireAblationTest();
         actionsTaken.push(`FlyWire CX +${fw.advantagePct}%`);
       }
+      if (bioIntent === 5 && typeof stepQuadBrainExternalSynergy === 'function') {
+        const syn = await stepQuadBrainExternalSynergy();
+        if (syn) actionsTaken.push(`4-Brain Synergy: ${String(syn.lastLayaVerdict || 'LAYA').slice(0, 48)}`);
+      }
 
-      // 3. Utility-Ranked Browser Habitat Actuation (Never repeats taboo links or spams the same button)
+      // 3. Chaotic 3-Attractor + 1.24M Cortex Browser Habitat Actuation (Non-blocking, never gets stuck on branch #1!)
       const freshDoors = (exp && Array.isArray(exp.doors) ? exp.doors : []).filter((d) => !h.isUrlOrAnchorTaboo(d.href, d.text));
-      const bestDoor = freshDoors[groverPick.doorIdx % Math.max(1, freshDoors.length)] || freshDoors[0] || chosenDoor;
-      const nowTick = h.simulationTick;
-      const canUseAction = (key, minGapTicks) => (nowTick - (h.actionCooldowns[key] || -999)) >= minGapTicks;
-      const markAction = (key) => { h.actionCooldowns[key] = nowTick; };
-
+      const doorChaosIdx = typeof sampleChaoticNeuralIntent === 'function'
+        ? sampleChaoticNeuralIntent(Math.max(1, freshDoors.length), 6)
+        : (groverPick.doorIdx % Math.max(1, freshDoors.length));
+      const bestDoor = freshDoors[doorChaosIdx] || freshDoors[0] || chosenDoor;
       const allowAutoNav = window.alienAutoNavigateLinks !== false;
-      if (allowAutoNav && bestDoor && bestDoor.href && !h.isUrlOrAnchorTaboo(bestDoor.href, bestDoor.text) && canUseAction('deep_portal', 1)) {
-        // ACTUATION 1: Navigate into an unvisited, high-concept-salience deep link on the page
-        markAction('deep_portal');
+      const actChoice = typeof sampleChaoticNeuralIntent === 'function' ? sampleChaoticNeuralIntent(6, 12) : (superintelligenceBlitzCount % 6);
+
+      if (allowAutoNav && actChoice === 0 && bestDoor && bestDoor.href && !h.isUrlOrAnchorTaboo(bestDoor.href, bestDoor.text)) {
+        // ACTUATION 0: Non-blocking navigation into an unvisited high-salience portal on the active or secondary split tab
         h.recordVisitedUrl(bestDoor.href, bestDoor.text);
-        const activeT = getActiveTab();
-        if (activeT && activeT.wv) {
+        const targetTab = (splitViewActive && tabs.length >= 2 && (Number(hybridQrng.u64() & 1n) === 1))
+          ? (tabs.find(tb => tb.id === secondaryTabId) || getActiveTab())
+          : getActiveTab();
+        if (targetTab && targetTab.wv) {
           alienBrainDoorsCount += 1;
-          await showAgentCursorOverlay(activeT.wv, bestDoor.x || 360, bestDoor.y || 240, `${em.emoji} [${cx.activeVerb}] → "${bestDoor.text.slice(0, 28)}"`);
-          await safeNavigateTab(activeT, bestDoor.href, 5200);
-          await performWeirdAlienDomExperiment();
-          actionsTaken.push(`Explored unvisited concept link "${bestDoor.text.slice(0, 36)}"`);
+          showAgentCursorOverlay(targetTab.wv, bestDoor.x || 360, bestDoor.y || 240, `${em.emoji} [${cx.activeVerb}] → "${bestDoor.text.slice(0, 28)}"`).catch(() => {});
+          dispatchNonBlockingTabNavigation(targetTab, bestDoor.href, `🧬 ${bestDoor.text.slice(0, 24)}`);
+          actionsTaken.push(`Dispatched portal dive → "${bestDoor.text.slice(0, 36)}"`);
         }
-      } else if (allowAutoNav && tabs.length >= 2 && canUseAction('cross_tab_compare', 3) && (cx.activeVerb === 'COMPARE & CONTRAST' || freshDoors.length === 0)) {
-        // ACTUATION 2: Hop to another open tab via M6 Epoch Handoff to compare & contrast across tabs
-        markAction('cross_tab_compare');
+      } else if (allowAutoNav && actChoice === 1 && tabs.length >= 2) {
+        // ACTUATION 1: Chaotic Cross-Tab M6 Epoch Handoff (jumps to any non-active tab via strange attractor)
         const prevTabId = activeTabId;
-        const curIdx = tabs.findIndex((tb) => tb.id === activeTabId);
-        const nextTab = tabs[(curIdx + 1) % tabs.length];
+        const otherTabs = tabs.filter((tb) => tb.id !== activeTabId);
+        const pickIdx = typeof sampleChaoticNeuralIntent === 'function' ? sampleChaoticNeuralIntent(otherTabs.length, 15) : 0;
+        const nextTab = otherTabs[pickIdx] || otherTabs[0];
         if (nextTab && nextTab.id !== prevTabId) {
-          const xfer = h.executeAcknowledgedTabHandoff(prevTabId, nextTab.id, 'cross-tab-compare-and-contrast');
+          const xfer = h.executeAcknowledgedTabHandoff(prevTabId, nextTab.id, 'chaotic-cross-tab-compare');
           switchTab(nextTab.id);
-          await ensureTabDomReady(nextTab, 4000);
-          await performWeirdAlienDomExperiment();
-          actionsTaken.push(`Cross-Tab Compare Handoff (ep ${xfer.newEpoch}) → "${(nextTab.title || nextTab.url || 'Tab').slice(0, 28)}"`);
+          actionsTaken.push(`Chaotic Tab Handoff (ep ${xfer.newEpoch}) → "${(nextTab.title || nextTab.url || 'Tab').slice(0, 28)}"`);
         }
-      } else if (allowAutoNav && cx.emergentQuery && canUseAction('emergent_concept_dive', 4)) {
-        // ACTUATION 3: Autonomous Emergent Concept-Bridge Search synthesized from cross-tab realizations
-        markAction('emergent_concept_dive');
+      } else if (allowAutoNav && actChoice === 2) {
+        // ACTUATION 2: 12-Engine Polymath Concept-Bridge Dive synthesized from cross-tab realizations
         if (tabs.length >= 6) {
-          const victim = tabs.find((tb) => !tb.pinned && tb.id !== activeTabId);
-          if (victim) closeTab(victim.id);
+          const victims = tabs.filter((tb) => !tb.pinned && tb.id !== activeTabId && tb.id !== secondaryTabId);
+          if (victims.length) closeTab(victims[0].id);
         }
-        const queryTopic = cx.emergentQuery;
+        const queryTopic = cx.emergentQuery || (cx.lastComprehension.topConcepts || []).slice(0, 2).join(' ') || 'strange attractor cybernetics';
         const spawned = await spawnAlienRabbitHoleTab(queryTopic);
-        if (spawned && spawned.tab) {
-          await performWeirdAlienDomExperiment();
-          actionsTaken.push(`Synthesized & launched Concept-Bridge Dive: "${queryTopic.slice(0, 36)}"`);
+        if (spawned && spawned.pick) {
+          actionsTaken.push(`12-Engine Polymath Dive: "${spawned.pick.title.slice(0, 38)}"`);
         }
-      } else if (allowAutoNav && canUseAction('unvisited_rabbit_hole', 3)) {
-        // ACTUATION 4: Expand habitat into an unvisited discovery seed from the 28-domain catalog
-        markAction('unvisited_rabbit_hole');
+      } else if (allowAutoNav && actChoice === 3) {
+        // ACTUATION 3: Expand habitat into an unvisited discovery seed from the 43-domain catalog
         if (tabs.length >= 6) {
-          const victim = tabs.find((tb) => !tb.pinned && tb.id !== activeTabId);
-          if (victim) closeTab(victim.id);
+          const victims = tabs.filter((tb) => !tb.pinned && tb.id !== activeTabId && tb.id !== secondaryTabId);
+          if (victims.length) closeTab(victims[0].id);
         }
         const spawned = await spawnAlienRabbitHoleTab();
-        if (spawned && spawned.tab) {
-          await performWeirdAlienDomExperiment();
+        if (spawned && spawned.pick) {
           actionsTaken.push(`Inhabited new domain "${spawned.pick.title.slice(0, 34)}"`);
         }
-      } else if (tabs.length >= 2 && !splitViewActive && canUseAction('split_compare', 8)) {
-        // ACTUATION 5: Activate Dual-Pane Split View to compare two habitats side by side
-        markAction('split_compare');
-        toggleSplitView();
-        await performWeirdAlienDomExperiment();
-        actionsTaken.push('Activated Dual-Pane Side-by-Side Habitat Comparison');
+      } else if (actChoice === 4) {
+        // ACTUATION 4: Trigger one of the 16 Chaotic Neo-Matrix Sovereign Browser Capabilities
+        const neoAct = await stepNeoMatrixBrowserPuppeteer(false);
+        if (neoAct) actionsTaken.push(`Neo-Matrix Sovereign Act: ${neoAct.slice(0, 56)}`);
       } else {
-        // ACTUATION 6: On-page Set-of-Mark grounding & deeper scroll foraging
-        await previewSoM().catch(() => {});
-        await performWeirdAlienDomExperiment();
-        actionsTaken.push(`Grounded DOM affordances & measured H=${cx.lastMeasurement.shannonEntropyBits} bits`);
+        // ACTUATION 5: On-page Set-of-Mark grounding + 4-Brain External Synergy Probe
+        withFastTimeout(previewSoM(), 750, null).catch(() => {});
+        if (typeof stepQuadBrainExternalSynergy === 'function') {
+          stepQuadBrainExternalSynergy(exp).catch(() => {});
+        }
+        actionsTaken.push(`Grounded DOM affordances & 4-Brain Telemetry (H=${cx.lastMeasurement.shannonEntropyBits}b)`);
       }
 
       return actionsTaken.join(' · ');
     }
 
     // 100% ZERO-LLM, ZERO-TOKEN, ZERO-PROMPT CLOSED-LOOP EMBODIED EPISODE RUNNER!
-    // Lives natively inside the browser habitat without opening the Copilot chat sidebar or spamming prompt cards!
+    // Lives natively inside the browser habitat with ZERO hanging, ZERO blocking, and 4-Brain + 3-Attractor Chaotic Autonomy!
     async function runOneAlienBrainCycle() {
       if (alienBrainCycleRunning) return;
       alienBrainCycleRunning = true;
       alienBrainCyclesCount += 1;
+      lastAlienCycleStartTs = Date.now();
+      if (window.__chaoticAttractorState) {
+        window.__chaoticAttractorState.lastAlienCycleStartTs = lastAlienCycleStartTs;
+      }
       try {
         const isOverdrive = Boolean(superintelligenceOverdrive || document.getElementById('alien-persona-select')?.value === 'superintelligence_overdrive');
         const h = humunculusRuntime;
@@ -17768,7 +18152,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           activeT = spawned.tab;
         }
 
-        // 1. OBSERVE, MEASURE, ANALYZE, COMPARE, CONTEMPLATE & ACT on live webpage DOM
+        // 1. OBSERVE, MEASURE, ANALYZE, COMPARE, CONTEMPLATE & ACT on live webpage DOM (bounded by fast timeout)
         const exp = await performWeirdAlienDomExperiment();
         if (!exp) return;
 
@@ -17797,41 +18181,43 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           h.recordEpisodicEvent(exp.url, cx.activeVerb, blitzSummary);
           appendAlienMonologue(senseLine, predictLine, actLine, learnLine, impulseLine);
           if (superintelligenceBlitzCount % 3 === 0) {
-            await ipcRenderer.invoke('memory-save', {
+            ipcRenderer.invoke('memory-save', {
               url: exp.url || `humunculus://overdrive-${h.simulationTick}`,
-              title: `🧬 [${cx.activeVerb}] ${mg.stageName}: ${exp.title.slice(0, 38)}`,
+              title: `🧬 [${cx.activeVerb}] ${mg.stageName}: ${String(exp.title || 'Habitat').slice(0, 38)}`,
               content: `${h.formatRetroTerminalText('cognition')}\nREALIZATION: ${cx.latestRealization}\nCOMPARE: ${cx.lastComparison.summary}\nHYPOTHESIS: ${cx.activeHypothesis}`,
-              layaUrl: document.getElementById('cfg-laya-url').value
+              layaUrl: document.getElementById('cfg-laya-url')?.value || ''
             }).catch(() => {});
           }
         } else {
-          // Standard 60Hz Embodied A-Life Loop with Autonomous Morphogenesis, Procreation, SWS Dreaming & Anti-Taboo Foraging
-          if (cx.activeVerb === 'MORPH & MUTATE' || st.code === 'F' || alienBrainCyclesCount % 5 === 0) {
+          // Standard 60Hz Embodied A-Life Loop with Chaotic Morphogenesis, Procreation, SWS Dreaming & Non-Blocking Foraging
+          const stdIntent = typeof sampleChaoticNeuralIntent === 'function' ? sampleChaoticNeuralIntent(6, 18) : (alienBrainCyclesCount % 6);
+          if (cx.activeVerb === 'MORPH & MUTATE' || st.code === 'F' || stdIntent === 0) {
             h.mutateBodyMorphology();
           }
-          if (m.viscera.sleepS > 0.42 || h.worldPredError > 0.22 || cx.activeVerb === 'CONTEMPLATE & THINK') {
+          if (m.viscera.sleepS > 0.42 || h.worldPredError > 0.22 || cx.activeVerb === 'CONTEMPLATE & THINK' || stdIntent === 1) {
             h.consolidateHippocampalDreamReplay();
           }
-          if (m.viscera.atp > 0.72 && h.offspringColony.length < 4 && (cx.activeVerb === 'PROCREATE & COPY' || alienBrainCyclesCount % 6 === 0)) {
+          if (m.viscera.atp > 0.72 && h.offspringColony.length < 4 && (cx.activeVerb === 'PROCREATE & COPY' || stdIntent === 2)) {
             h.spawnMitosisOffspring();
           }
 
           let impulseLine = '';
           const allowAutoNav = window.alienAutoNavigateLinks !== false;
-          const shouldDiveEmergentQuery = allowAutoNav && (cx.activeVerb === 'FORMULATE & DEVELOP' || freshDoors.length === 0) && cx.emergentQuery && alienBrainCyclesCount % 3 === 0;
-          const shouldActuatePortal = allowAutoNav && !shouldDiveEmergentQuery && chosenDoor && chosenDoor.href && !h.isUrlOrAnchorTaboo(chosenDoor.href, chosenDoor.text);
+          const shouldDiveEmergentQuery = allowAutoNav && (cx.activeVerb === 'FORMULATE & DEVELOP' || freshDoors.length === 0 || stdIntent === 3) && cx.emergentQuery;
+          const shouldActuatePortal = allowAutoNav && !shouldDiveEmergentQuery && chosenDoor && chosenDoor.href && !h.isUrlOrAnchorTaboo(chosenDoor.href, chosenDoor.text) && stdIntent !== 4;
 
           if (shouldDiveEmergentQuery) {
             const q = cx.emergentQuery;
-            impulseLine = `Synthesized emergent concept-bridge query "${q}" from cross-tab comparison → diving into new knowledge manifold`;
+            const poly = typeof buildChaoticPolymathSearchUrl === 'function'
+              ? buildChaoticPolymathSearchUrl(q)
+              : { url: `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(q)}`, title: q };
+            impulseLine = `Synthesized emergent polymath query "${q}" → ${poly.title}`;
             h.recordEpisodicEvent(exp.url, `emergent_concept_dive(${q})`, cx.latestRealization);
             appendAlienMonologue(senseLine, predictLine, actLine, learnLine, impulseLine);
             const curTab = getActiveTab();
             if (curTab) {
-              const searchUrl = `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(q)}`;
-              h.recordVisitedUrl(searchUrl, q);
-              await safeNavigateTab(curTab, searchUrl, 6000);
-              await performWeirdAlienDomExperiment();
+              h.recordVisitedUrl(poly.url, q);
+              dispatchNonBlockingTabNavigation(curTab, poly.url, poly.title);
             }
           } else if (shouldActuatePortal) {
             alienBrainDoorsCount += 1;
@@ -17841,30 +18227,26 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             appendAlienMonologue(senseLine, predictLine, actLine, learnLine, impulseLine);
 
             if (alienBrainCyclesCount % 3 === 0) {
-              await ipcRenderer.invoke('memory-save', {
+              ipcRenderer.invoke('memory-save', {
                 url: exp.url || `humunculus://tick-${h.simulationTick}`,
-                title: `🧬 [${cx.activeVerb}] ${ h.checkpointCid.slice(0, 12) }: ${exp.title.slice(0, 38)}`,
+                title: `🧬 [${cx.activeVerb}] ${h.checkpointCid.slice(0, 12)}: ${String(exp.title || 'Habitat').slice(0, 38)}`,
                 content: `${h.formatRetroTerminalText('cognition')}\nREALIZATION: ${cx.latestRealization}\nCOMPARE: ${cx.lastComparison.summary}`,
-                layaUrl: document.getElementById('cfg-laya-url').value
+                layaUrl: document.getElementById('cfg-laya-url')?.value || ''
               }).catch(() => {});
             }
 
             const curTab = getActiveTab();
             if (curTab && curTab.wv) {
-              await showAgentCursorOverlay(curTab.wv, chosenDoor.x || 360, chosenDoor.y || 240, `${em.emoji} [${cx.activeVerb}] → "${chosenDoor.text.slice(0, 26)}"`);
-              await new Promise((r) => setTimeout(r, 480));
-              await safeNavigateTab(curTab, chosenDoor.href, 6000);
-              await performWeirdAlienDomExperiment();
+              showAgentCursorOverlay(curTab.wv, chosenDoor.x || 360, chosenDoor.y || 240, `${em.emoji} [${cx.activeVerb}] → "${chosenDoor.text.slice(0, 26)}"`).catch(() => {});
+              dispatchNonBlockingTabNavigation(curTab, chosenDoor.href, `🧬 ${chosenDoor.text.slice(0, 24)}`);
             }
-          } else if (tabs.length >= 2 && alienBrainCyclesCount % 2 === 0) {
+          } else if (tabs.length >= 2) {
             const prevTabId = activeTabId;
-            const curIdx = tabs.findIndex((tb) => tb.id === activeTabId);
-            const nextTab = tabs[(curIdx + 1) % tabs.length];
+            const otherTabs = tabs.filter((tb) => tb.id !== activeTabId);
+            const nextTab = otherTabs[typeof sampleChaoticNeuralIntent === 'function' ? sampleChaoticNeuralIntent(otherTabs.length, 21) : 0] || otherTabs[0];
             if (nextTab && nextTab.id !== prevTabId) {
               const xfer = h.executeAcknowledgedTabHandoff(prevTabId, nextTab.id, 'autonomous-habitat-tab-comparison');
               switchTab(nextTab.id);
-              await ensureTabDomReady(nextTab, 4200);
-              await performWeirdAlienDomExperiment();
               impulseLine = `Cross-Tab Compare Handoff (ep ${xfer.newEpoch}) → "${(nextTab.title || nextTab.url || 'Tab').slice(0, 36)}"`;
               appendAlienMonologue(senseLine, predictLine, actLine, learnLine, impulseLine);
             }
@@ -17885,9 +18267,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         alienBrainCycleRunning = false;
         if (alienBrainActive) {
           clearTimeout(alienBrainTimer);
-          const nextDelay = (superintelligenceOverdrive || document.getElementById('alien-persona-select')?.value === 'superintelligence_overdrive')
-            ? 820
-            : 1550;
+          const isODNow = Boolean(superintelligenceOverdrive || document.getElementById('alien-persona-select')?.value === 'superintelligence_overdrive');
+          const nextDelay = typeof nextChaoticFrameGap === 'function'
+            ? nextChaoticFrameGap(isODNow ? 520 : 980, isODNow ? 1140 : 1780)
+            : (isODNow ? 780 : 1450);
           alienBrainTimer = setTimeout(() => {
             if (alienBrainActive) runOneAlienBrainCycle();
           }, nextDelay);
@@ -18399,20 +18782,27 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.fillText('⚡QUANTA+GLC', p.x + 11, p.y + 3);
           }
 
-          // 5C. Step & Update Positions for All 5 Swarm Pantheon Castes (ALPHA, BETA, GAMMA, DELTA, EPSILON)
-          const baseSpeed = isOD ? 5.6 : (alienBrainActive ? 4.3 : 3.3);
+          // 5C. Step & Update Positions for All 5 Swarm Pantheon Castes (ALPHA, BETA, GAMMA, DELTA, EPSILON) with Chaotic Lorenz-Rössler Saccades & Lévy Flights
+          const baseSpeed = isOD ? 6.2 : (alienBrainActive ? 4.8 : 3.6);
+          const chNow = window.__chaoticAttractorState || { lx: 0.9, ly: -1.4, lz: 19.6, rx: 0.35, ry: -0.78, rz: 0.14 };
           for (let ei = 0; ei < vSwarm.length; ei++) {
             const ent = vSwarm[ei];
-            if (st.frameCount % 32 === (ei * 6)) {
-              ent.targetIdx = (ent.targetIdx + 1 + ei) % Math.max(1, cols.length);
-              // Predatory Phase-Dash / Hyper-Jump burst when locking onto a new DOM target!
-              ent.vx += Math.cos(ent.angle) * 3.8;
-              ent.vy += Math.sin(ent.angle) * 3.8;
-              shockwaves.push({ x: ent.x, y: ent.y, r: 8, maxR: 72, alpha: 0.55 });
+            if (typeof ent.nextSaccadeIn !== 'number' || ent.nextSaccadeIn <= 0) {
+              const jumpStep = 1 + (Number(hybridQrng.u64() % BigInt(Math.max(1, cols.length - 1))));
+              ent.targetIdx = (ent.targetIdx + jumpStep + ei) % Math.max(1, cols.length);
+              ent.nextSaccadeIn = typeof nextChaoticFrameGap === 'function' ? nextChaoticFrameGap(14, 48) : (18 + ((ei * 11) % 29));
+              // Predatory Phase-Dash / Chaotic Lévy-Flight Hyper-Jump burst when locking onto a new DOM target!
+              const levyMult = 3.6 + Math.min(4.2, Math.abs(chNow.lx || 1.0) * 0.18);
+              const dashAng = ent.angle + (Math.sin((chNow.ly || 0.5) + ei) * 0.55);
+              ent.vx += Math.cos(dashAng) * levyMult;
+              ent.vy += Math.sin(dashAng) * levyMult;
+              shockwaves.push({ x: ent.x, y: ent.y, r: 8, maxR: 76, alpha: 0.58 });
+            } else {
+              ent.nextSaccadeIn -= 1;
             }
             const tCol = cols[ent.targetIdx % cols.length] || { cx: sw * 0.5, cy: sh * 0.42 };
-            let tx = Math.max(60, Math.min(sw - 60, tCol.cx || sw * 0.5));
-            let ty = Math.max(60, Math.min(sh - 80, tCol.cy || sh * 0.42));
+            let tx = Math.max(60, Math.min(sw - 60, (tCol.cx || sw * 0.5) + Math.sin(st.tick * 2.3 + ei * 1.7 + (chNow.lx || 0.5) * 0.15) * 42));
+            let ty = Math.max(60, Math.min(sh - 80, (tCol.cy || sh * 0.42) + Math.cos(st.tick * 1.9 + ei * 2.1 + (chNow.ry || 0.5) * 0.15) * 36));
 
             // Formation geometry offsets around ALPHA for BETA..EPSILON
             if (ei > 0) {
@@ -18949,16 +19339,24 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.fillText(`👾${fb.id}[${fb.glyph}]`, fb.x + 9, fb.y + 3);
           }
 
-          // Autonomous Feeder-Bug Zalgo/Wireframe/Forensic Browser Fuckery Pulse every 190 frames (~3.1s) when active
-          if (st.frameCount > 160 && st.frameCount % 190 === 0 && (alienBrainActive || isOD) && !window.__zalgoPulseBusy) {
+          // Autonomous Feeder-Bug Zalgo/Wireframe/Forensic Browser Fuckery Pulse on Chaotic Strange-Attractor Schedule (zero fixed metronome!)
+          if (typeof st.nextZalgoChaosFrame !== 'number') {
+            st.nextZalgoChaosFrame = 175 + (typeof nextChaoticFrameGap === 'function' ? nextChaoticFrameGap(40, 120) : 70);
+          }
+          if (st.frameCount >= st.nextZalgoChaosFrame && (alienBrainActive || isOD) && !window.__zalgoPulseBusy) {
+            st.nextZalgoChaosFrame = st.frameCount + (typeof nextChaoticFrameGap === 'function' ? nextChaoticFrameGap(95, 235) : 165);
             window.__zalgoPulseBusy = true;
             triggerEldritchZalgoBrowserFuckery(false)
               .catch(() => {})
               .finally(() => { window.__zalgoPulseBusy = false; });
           }
 
-          // Autonomous Neo-in-the-Matrix Multi-Tab, Split-View & Full Browser Options Puppeteer every 75 frames (~1.25s)
-          if (st.frameCount > 160 && st.frameCount % 75 === 0 && (alienBrainActive || isOD || neoMatrixOverdriveActive) && !window.__neoPuppeteerBusy) {
+          // Autonomous Neo-in-the-Matrix 16-Capability Sovereign Browser Puppeteer on Chaotic Strange-Attractor Schedule
+          if (typeof st.nextNeoChaosFrame !== 'number') {
+            st.nextNeoChaosFrame = 165 + (typeof nextChaoticFrameGap === 'function' ? nextChaoticFrameGap(25, 75) : 45);
+          }
+          if (st.frameCount >= st.nextNeoChaosFrame && (alienBrainActive || isOD || neoMatrixOverdriveActive) && !window.__neoPuppeteerBusy) {
+            st.nextNeoChaosFrame = st.frameCount + (typeof nextChaoticFrameGap === 'function' ? nextChaoticFrameGap(38, 108) : 68);
             window.__neoPuppeteerBusy = true;
             stepNeoMatrixBrowserPuppeteer(false)
               .catch(() => {})
@@ -19339,6 +19737,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           }
         }, 600);
         setTimeout(() => {
+          if (typeof startAutonomyWatchdogAndSelfHealer === 'function') {
+            startAutonomyWatchdogAndSelfHealer();
+          }
           if (!alienBrainActive) {
             alienBrainActive = true;
             superintelligenceOverdrive = true;
