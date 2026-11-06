@@ -1,0 +1,240 @@
+#!/usr/bin/env python3
+"""Start the sidecar on a spare port and check that its APIs are honest."""
+
+import json
+import os
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.request
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PORT = int(os.environ.get("GIGACHAD_SMOKE_PORT", "8766"))
+BASE = f"http://127.0.0.1:{PORT}"
+BANNED = (
+    "EmbeddingGemma",
+    "embeddinggemma",
+    "GLiNER",
+    "BGE-Reranker",
+    "DeBERTa",
+    "GraphRAG",
+    "NuExtract",
+    "Tree-sitter",
+    "TreeSitter",
+    "Paradee",
+    "Kokoro-82M",
+    "Laya-421",
+    "Nemotron",
+)
+
+
+def request(method, path, payload=None):
+    data = None if payload is None else json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        BASE + path,
+        data=data,
+        method=method,
+        headers={"Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=5) as res:
+            body = res.read().decode("utf-8")
+            return res.status, json.loads(body)
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8")
+        try:
+            parsed = json.loads(body)
+        except json.JSONDecodeError:
+            parsed = {"raw": body}
+        return exc.code, parsed
+
+
+def assert_honest(payload, where):
+    blob = json.dumps(payload)
+    for word in BANNED:
+        if word in blob:
+            raise SystemExit(f"{where} claimed {word}: {blob[:400]}")
+
+
+def main():
+    env = os.environ.copy()
+    env["GIGACHAD_SIDECAR_PORT"] = str(PORT)
+    env["GIGACHAD_SIDECAR_HOST"] = "127.0.0.1"
+    env.pop("GIGACHAD_EMBED_MODEL", None)
+    env.pop("GIGACHAD_NER_MODEL", None)
+    proc = subprocess.Popen(
+        [sys.executable, os.path.join(ROOT, "laya_sidecar.py")],
+        cwd=ROOT,
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    try:
+        deadline = time.time() + 8
+        health = None
+        while time.time() < deadline:
+            if proc.poll() is not None:
+                log = proc.stdout.read() if proc.stdout else ""
+                raise SystemExit(f"sidecar exited early: {log}")
+            try:
+                status, health = request("GET", "/health")
+                if status == 200:
+                    break
+            except Exception:
+                time.sleep(0.1)
+        else:
+            raise SystemExit("sidecar /health did not come up")
+
+        assert health["status"] == "ok"
+        assert health["backends"]["embeddings"]["implementation"] == "hashing-trick"
+        assert health["backends"]["embeddings"]["neural"] is False
+        assert health["backends"]["embeddings"]["model"] is None
+        assert health["backends"]["ner_pii"]["implementation"] == "regex"
+        assert health["backends"]["seo_accessibility_audit"]["implementation"] == "wcag-seo-auditor"
+        assert health["backends"]["table_to_markdown"]["implementation"] == "table-compiler"
+        assert health["backends"]["tts"]["implementation"] in {"none", "windows-sapi", "kokoro"}
+        assert_honest(health, "/health")
+
+        status, embed = request("POST", "/embed", {"input": "local smoke"})
+        assert status == 200, embed
+        assert embed["implementation"] == "hashing-trick"
+        assert embed["neural"] is False
+        assert len(embed["embedding"]) == 768
+        assert_honest(embed, "/embed")
+
+        status, route = request("POST", "/route", {"prompt": "click the search box", "page_length": 20, "allow_cloud": False})
+        assert status == 200 and route["target"] == "local", route
+        status, visual = request("POST", "/route", {"prompt": "describe this screenshot", "page_length": 20, "allow_cloud": True})
+        assert visual["target"] == "omni", visual
+        status, cloud = request("POST", "/route", {"prompt": "cross-reference all tabs", "page_length": 20, "allow_cloud": False})
+        assert cloud["target"] == "local", cloud
+        status, cloud_ok = request("POST", "/route", {"prompt": "cross-reference all tabs", "page_length": 20, "allow_cloud": True})
+        assert cloud_ok["target"] == "ultra", cloud_ok
+
+        status, classified = request("POST", "/classify", {"url": "https://example.com", "text": "A short technical note about ports."})
+        assert status == 200 and classified["implementation"] == "regex-heuristic", classified
+        assert isinstance(classified["signal_score"], int)
+
+        status, pii = request("POST", "/ner_pii", {"text": "Mail ada@example.com about sk-abc1234567890xyzXYZ today."})
+        assert status == 200 and pii["implementation"] == "regex", pii
+        assert pii["pii_redacted_count"] >= 2
+        assert "ada@example.com" not in pii["redacted_text"]
+        assert "sk-abc1234567890xyzXYZ" not in pii["redacted_text"]
+
+        status, missing = request("POST", "/not-a-model", {})
+        assert status == 404, missing
+        status, bad = request("POST", "/route", None)
+        # empty object is valid; send broken JSON via a raw call below
+        raw = urllib.request.Request(BASE + "/route", data=b"{", method="POST", headers={"Content-Type": "application/json"})
+        try:
+            urllib.request.urlopen(raw, timeout=5)
+            raise SystemExit("invalid JSON should fail")
+        except urllib.error.HTTPError as exc:
+            assert exc.code == 400
+
+        status, tts = request("POST", "/tts", {"text": "hello"})
+        assert status in {200, 503}, tts
+        if status == 503:
+            assert tts["implementation"] == "none"
+        assert_honest(tts, "/tts")
+
+        status, reflex = request("POST", "/reflex/dom", {"candidates": [{"text": "Reject all", "selector": "#r", "x": 1, "y": 2}]})
+        assert status == 200 and reflex["recommended_action"]["type"] == "click", reflex
+
+        status, reflex_goal = request("POST", "/reflex/dom", {
+            "goal": "search for gpu benchmarks",
+            "top_k": 3,
+            "elements": [
+                {"id": 1, "tag": "button", "label": "Delete Account [DANGER: confirm with user]", "x": 10, "y": 10},
+                {"id": 2, "tag": "input", "label": "Search GPU benchmarks and specs", "x": 120, "y": 40},
+                {"id": 3, "tag": "a", "label": "About company footer", "x": 100, "y": 800}
+            ]
+        })
+        assert status == 200 and isinstance(reflex_goal.get("candidates"), list) and len(reflex_goal["candidates"]) == 2, reflex_goal
+        assert reflex_goal["candidates"][0]["id"] == 2, reflex_goal
+        assert all(c["id"] != 1 for c in reflex_goal["candidates"]), reflex_goal
+
+        status, plan_extract = request("POST", "/agent_plan", {
+            "goal": "Extract all pricing table rows and copy to clipboard",
+            "url": "https://example.com/pricing",
+            "title": "Pricing"
+        })
+        assert status == 200 and plan_extract["archetype"] == "structured_data_harvest" and len(plan_extract["subgoals"]) >= 3, plan_extract
+        assert_honest(plan_extract, "/agent_plan")
+
+        status, plan_search = request("POST", "/agent_plan", {
+            "goal": "Search for WebGPU specs and open the first result",
+            "url": "https://example.com",
+            "title": "Home"
+        })
+        assert status == 200 and plan_search["archetype"] == "web_search_and_synthesize" and len(plan_search["subgoals"]) >= 3, plan_search
+        assert_honest(plan_search, "/agent_plan")
+
+        status, summary = request("POST", "/summarize_extractive", {
+            "title": "System Architecture",
+            "text": "The loopback server binds strictly to 127.0.0.1 for local security. Guests run inside sandboxed webviews with contextIsolation enabled. Tracker blocking filters 50 patterns at the network layer.",
+            "max_sentences": 2
+        })
+        assert status == 200 and summary["implementation"] == "sentence-centrality", summary
+        assert len(summary["bullets"]) >= 1 and summary["word_count"] > 10
+        assert isinstance(summary.get("reading_level"), str) and isinstance(summary.get("grade_level"), (int, float))
+        assert_honest(summary, "/summarize_extractive")
+
+        status, outline = request("POST", "/page_outline", {
+            "headings": [{"level": 1, "text": "Overview"}, {"level": 2, "text": "Security"}],
+            "codeCount": 3,
+            "tableCount": 1,
+            "linkCount": 12
+        })
+        assert status == 200 and outline["heading_count"] == 2 and outline["code_blocks"] == 3, outline
+        assert outline["stats"]["h1_count"] == 1 and outline["stats"]["h2_count"] == 1 and outline["stats"]["code_blocks"] == 3, outline
+        assert_honest(outline, "/page_outline")
+
+        status, mem = request("POST", "/query_memory", {
+            "query": "sandboxed webview",
+            "notes": [
+                {"id": 1, "title": "Security notes", "url": "https://example.com/sec", "summary": "Every tab is a sandboxed webview guest."},
+                {"id": 2, "title": "Cooking recipe", "url": "https://example.com/food", "summary": "Boil water and add pasta."}
+            ]
+        })
+        assert status == 200 and len(mem["results"]) >= 1 and mem["results"][0]["id"] == 1, mem
+        assert_honest(mem, "/query_memory")
+
+        status, seo = request("POST", "/seo_accessibility_audit", {
+            "title": "Gigachad Enterprise Browser Architecture Specification",
+            "metaDescription": "Full-stack AI web browser with context-isolated sandboxing, local sidecar micro-engines, and hybrid LLM routing.",
+            "canonical": "https://example.com/spec",
+            "lang": "en",
+            "og_tags": 3,
+            "headings": [{"level": 1, "text": "Spec"}],
+            "imagesTotal": 4,
+            "imagesMissingAlt": 0,
+            "unlabeledControls": 0,
+            "emptyLinks": 0,
+            "landmarks": 3
+        })
+        assert status == 200 and seo["grade"] == "A" and seo["seo_score"] == 100 and seo["a11y_score"] == 100, seo
+        assert isinstance(seo["seo_issues"], list) and isinstance(seo["a11y_issues"], list) and seo["metrics"]["h1_count"] == 1, seo
+        assert_honest(seo, "/seo_accessibility_audit")
+
+        status, tbl = request("POST", "/table_to_markdown", {
+            "table_name": "models_bench",
+            "tables": [{"headers": ["Model", "Speed"], "rows": [["LFM2.5-1.2B", "132 tok/s"], ["Qwen3.5-4B", "68 tok/s"]]}]
+        })
+        assert status == 200 and tbl["row_count"] == 2 and "CREATE TABLE models_bench" in tbl["sql"] and "| LFM2.5-1.2B |" in tbl["markdown"], tbl
+        assert isinstance(tbl["tables"], list) and len(tbl["tables"]) == 1 and tbl["tables"][0]["row_count"] == 2, tbl
+        assert_honest(tbl, "/table_to_markdown")
+
+        print("sidecar smoke passed")
+    finally:
+        proc.terminate()
+        try:
+            proc.wait(timeout=3)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,19 @@
+{
+  "name": "gigachad-browser",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local Electron browser with a Python sidecar, an OpenAI-compatible LLM hookup, and CDP page actions.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "sidecar": "python laya_sidecar.py",
+    "smoke": "node scripts/smoke.js",
+    "ci": "node scripts/smoke.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "electron": "42.11.18"
+  }
+}

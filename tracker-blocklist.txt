@@ -1,0 +1,59 @@
+# Lowercase substrings matched against request URLs.
+# This is a short ad and tracker list, not a full EasyList copy.
+# A line starting with @@ is an exception and wins over a block.
+# Extra rules can live in tracker-blocklist.local.txt (gitignored).
+# Exceptions can also live in tracker-allowlist.txt or tracker-allowlist.local.txt.
+# Restart the browser after editing.
+#
+# googletagmanager.com is not blocked. Many sites use it for more than ads.
+# connect.facebook.net is not blocked, because it also hosts login buttons.
+# The Facebook pixel script is still blocked via fbevents.js.
+
+doubleclick.net
+googlesyndication.com
+google-analytics.com
+googleadservices.com
+adservice.google.
+imasdk.googleapis.com
+fbevents.js
+taboola.com
+outbrain.com
+scorecardresearch.com
+hotjar.com
+clarity.ms
+amazon-adsystem.com
+criteo.com
+quantserve.com
+adsrvr.org
+adnxs.com
+rubiconproject.com
+pubmatic.com
+openx.net
+moatads.com
+demdex.net
+bluekai.com
+exelator.com
+tapad.com
+casalemedia.com
+ads.twitter.com
+analytics.tiktok.com
+bat.bing.com
+mc.yandex.ru
+doubleverify.com
+serving-sys.com
+adform.net
+smartadserver.com
+media.net
+sharethrough.com
+yieldmo.com
+contextweb.com
+rlcdn.com
+adroll.com
+mathtag.com
+bidswitch.net
+lijit.com
+3lift.com
+teads.tv
+adsafeprotected.com
+ads.yahoo.com
+ads.linkedin.com

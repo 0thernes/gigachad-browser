@@ -1,0 +1,5 @@
+# Allow patterns are lowercase substrings. A match here is not blocked.
+# Put personal exceptions in tracker-allowlist.local.txt so this file can be updated.
+#
+# accounts.google.com
+# @@ is not required in this file. In tracker-blocklist.txt, prefix exceptions with @@.

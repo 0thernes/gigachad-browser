@@ -1,0 +1,2 @@
+# The sidecar boots on the Python 3.11+ standard library.
+# Optional packages live in requirements-optional.txt.

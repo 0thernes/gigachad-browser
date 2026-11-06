@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>New Tab</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-base: #0c0e14;
+      --bg-card: rgba(22, 26, 37, 0.72);
+      --bg-card-hover: rgba(30, 36, 50, 0.88);
+      --border-subtle: rgba(255, 255, 255, 0.065);
+      --border-hover: rgba(124, 155, 255, 0.32);
+      --text-primary: #eef2f8;
+      --text-secondary: #8e98b0;
+      --text-muted: #5e677d;
+      --accent: #7c9bff;
+      --accent-soft: rgba(124, 155, 255, 0.12);
+    }
+    html[data-theme="oled"] {
+      --bg-base: #000000;
+      --bg-card: rgba(12, 14, 19, 0.88);
+      --bg-card-hover: rgba(22, 26, 36, 0.94);
+      --accent: #818cf8;
+    }
+    html[data-theme="nordic"] {
+      --bg-base: #0a101d;
+      --bg-card: rgba(16, 25, 43, 0.78);
+      --bg-card-hover: rgba(24, 38, 64, 0.92);
+      --accent: #38bdf8;
+    }
+    html[data-theme="emerald"] {
+      --bg-base: #071310;
+      --bg-card: rgba(12, 29, 24, 0.78);
+      --bg-card-hover: rgba(18, 42, 35, 0.92);
+      --accent: #34d399;
+    }
+    html[data-theme="daylight"] {
+      color-scheme: light;
+      --bg-base: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --border-subtle: rgba(15, 23, 42, 0.09);
+      --border-hover: rgba(79, 70, 229, 0.35);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent: #4f46e5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 28px;
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(ellipse 75% 45% at 50% -5%, rgba(124, 155, 255, 0.11), transparent),
+        radial-gradient(ellipse 50% 40% at 85% 95%, rgba(94, 234, 212, 0.05), transparent);
+      color: var(--text-primary);
+      font-family: 'Inter', 'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+    main {
+      width: min(860px, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .hero {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 4px;
+    }
+    .greeting-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+    .sub {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+    .clock-box {
+      text-align: right;
+    }
+    #clock-time {
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1.05;
+      font-variant-numeric: tabular-nums;
+    }
+    #clock-date {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+
+    /* Search Omnibox */
+    .search-shell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 8px 7px 16px;
+      border-radius: 14px;
+      background: rgba(18, 22, 32, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+    .search-shell:focus-within {
+      border-color: rgba(124, 155, 255, 0.45);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(124, 155, 255, 0.14);
+    }
+    .search-icon {
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      padding: 8px 0;
+    }
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+    .engine-select {
+      background: rgba(255, 255, 255, 0.045);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-family: inherit;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+    }
+    .search-btn {
+      padding: 9px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(124, 155, 255, 0.3);
+      background: rgba(124, 155, 255, 0.15);
+      color: #dbe4ff;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.14s ease, border-color 0.14s ease;
+    }
+    .search-btn:hover {
+      background: rgba(124, 155, 255, 0.24);
+      border-color: rgba(124, 155, 255, 0.5);
+    }
+
+    /* Speed Dial Header & Grid */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+      margin-bottom: -12px;
+    }
+    .section-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .section-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .mini-btn {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.14s ease;
+    }
+    .mini-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--border-hover);
+      background: rgba(124, 155, 255, 0.1);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 11px;
+    }
+    @media (max-width: 680px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .tile {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: transform 0.14s ease, background 0.14s ease, border-color 0.14s ease;
+    }
+    .tile:hover {
+      transform: translateY(-1.5px);
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+    }
+    .tile-remove {
+      position: absolute;
+      top: 6px;
+      right: 7px;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.12s ease, background 0.12s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tile:hover .tile-remove {
+      opacity: 1;
+    }
+    .tile-remove:hover {
+      background: rgba(248, 113, 113, 0.18);
+      color: #fca5a5;
+    }
+    .tile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--accent);
+    }
+    .tile-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+    .tile-title {
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tile-desc {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Add Tile Inline Form */
+    #add-tile-form {
+      display: none;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(18, 22, 32, 0.85);
+      border: 1px solid var(--border-hover);
+      align-items: center;
+    }
+    #add-tile-form input {
+      flex: 1;
+      background: rgba(11, 14, 21, 0.9);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12.5px;
+      outline: none;
+    }
+
+    /* Bottom Row: Scratchpad + Shortcuts */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 720px) {
+      .bottom-grid { grid-template-columns: 1fr; }
+    }
+    .shortcuts-bar, .scratchpad-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 13px 15px;
+      border-radius: 12px;
+      background: rgba(18, 22, 31, 0.58);
+      border: 1px solid var(--border-subtle);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .shortcut-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 11px 14px;
+    }
+    .shortcut-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    kbd {
+      font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+      font-size: 11px;
+      color: #cad3e8;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      padding: 2px 6px;
+    }
+    #scratchpad {
+      width: 100%;
+      min-height: 46px;
+      max-height: 90px;
+      resize: vertical;
+      background: rgba(10, 12, 18, 0.65);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-family: inherit;
+      font-size: 12px;
+      outline: none;
+    }
+    #scratchpad:focus {
+      border-color: var(--border-hover);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="hero">
+      <div class="greeting-wrap">
+        <div class="eyebrow"><span class="status-dot"></span> Gigachad Workspace</div>
+        <h1 id="greeting-title">Good afternoon</h1>
+        <p class="sub">Private local AI workspace, tracker shields, and multi-model research tools.</p>
+      </div>
+      <div class="clock-box">
+        <div id="clock-time">--:--</div>
+        <div id="clock-date">Loading date...</div>
+      </div>
+    </div>
+
+    <form class="search-shell" id="sform">
+      <span class="search-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </span>
+      <input class="search-input" id="q" type="text" placeholder="Search the web or enter any URL..." autofocus />
+      <select class="engine-select" id="engine" title="Search engine">
+        <option value="ddg">DuckDuckGo</option>
+        <option value="google">Google</option>
+        <option value="perplexity">Perplexity</option>
+        <option value="github">GitHub</option>
+        <option value="arxiv">ArXiv</option>
+        <option value="scholar">Semantic Scholar</option>
+        <option value="stackoverflow">StackOverflow</option>
+      </select>
+      <button class="search-btn" type="submit">Open</button>
+    </form>
+
+    <div class="section-head">
+      <span class="section-label">Quick Launch</span>
+      <div class="section-actions">
+        <button type="button" class="mini-btn" id="toggle-add-tile">+ Add Shortcut</button>
+        <button type="button" class="mini-btn" id="reset-tiles">Reset</button>
+      </div>
+    </div>
+
+    <form id="add-tile-form">
+      <input id="new-tile-title" type="text" placeholder="Title (e.g. Lobsters)" required />
+      <input id="new-tile-url" type="text" placeholder="https://lobste.rs" required />
+      <input id="new-tile-desc" type="text" placeholder="Short description (optional)" />
+      <button type="submit" class="mini-btn" style="color:#dbe4ff; border-color:rgba(124,155,255,0.4);">Save</button>
+    </form>
+
+    <div class="grid" id="tiles-grid"></div>
+
+    <div class="bottom-grid">
+      <div class="shortcuts-bar">
+        <span class="section-label">Keyboard Shortcuts</span>
+        <div class="shortcut-group">
+          <span class="shortcut-item"><kbd>Ctrl+L</kbd> Address Bar</span>
+          <span class="shortcut-item"><kbd>Ctrl+K</kbd> Command Palette</span>
+          <span class="shortcut-item"><kbd>Ctrl+T</kbd> New Tab</span>
+          <span class="shortcut-item"><kbd>Ctrl+Shift+T</kbd> Reopen Tab</span>
+          <span class="shortcut-item"><kbd>Ctrl+F</kbd> Find</span>
+          <span class="shortcut-item"><kbd>Ctrl+Shift+F</kbd> Passages</span>
+          <span class="shortcut-item"><kbd>Ctrl+P</kbd> Save PDF</span>
+          <span class="shortcut-item"><kbd>Alt+G</kbd> Ghostwriter</span>
+          <span class="shortcut-item"><kbd>Alt+Z</kbd> Zen Mode</span>
+        </div>
+      </div>
+
+      <div class="scratchpad-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="section-label">Quick Scratchpad (Local)</span>
+          <span id="scratch-status" style="font-size:10.5px; color:var(--text-muted);">Auto-saved</span>
+        </div>
+        <textarea id="scratchpad" placeholder="Jot down a note, prompt, or snippet..."></textarea>
+      </div>
+    </div>
+
+    <article class="shortcuts-bar" style="border-color:rgba(0,240,255,0.22); background:linear-gradient(145deg, rgba(10,16,28,0.78), rgba(6,18,22,0.82));">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <h3 style="font-size:12.5px; font-weight:700; color:#6ee7b7; letter-spacing:0.03em;">👁️‍🗨️⚡ SOVEREIGN A-LIFE HABITAT &amp; EPISTEMIC MANIFOLD (OMEGA-100 × DEITY-100)</h3>
+        <span style="font-size:11px; color:#38bdf8; font-family:Consolas,monospace;">Ψ_DEITY = 99.4 · Φ_IIT ≥ 0.45 · R_Kuramoto = 0.94 · 1.24M FP32 Params</span>
+      </div>
+      <p style="font-size:11.8px; line-height:1.48; color:var(--text-secondary);">
+        If Kuramoto phase synchronization R ≥ 0.85 across the 5-caste swarm pantheon then Global Neuronal Workspace integration Φ increases and minimizes variational free energy F = D_KL[q(s)||p(s,o)] ≤ 0.42 bits. Autopoietic morphogenesis couples 6-iteration Gauss-Seidel Verlet limb kinematics with 3-factor dopamine-modulated STDP synaptic plasticity across 512 spiking connectome neurons.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:2px;">
+        <a href="https://en.wikipedia.org/wiki/Artificial_life" style="font-size:11px; color:#00f0ff; text-decoration:none; padding:3px 8px; border-radius:6px; background:rgba(0,240,255,0.08); border:1px solid rgba(0,240,255,0.28);">🧬 Artificial Life &amp; Autopoiesis</a>
+        <a href="https://en.wikipedia.org/wiki/Free_energy_principle" style="font-size:11px; color:#e879f9; text-decoration:none; padding:3px 8px; border-radius:6px; background:rgba(232,121,249,0.08); border:1px solid rgba(232,121,249,0.28);">🧠 Active Inference &amp; Free Energy G(π)</a>
+        <a href="https://en.wikipedia.org/wiki/Connectome" style="font-size:11px; color:#fbbf24; text-decoration:none; padding:3px 8px; border-radius:6px; background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.28);">🪰 Biological Connectomics &amp; Synapses</a>
+        <a href="https://en.wikipedia.org/wiki/Strange_loop" style="font-size:11px; color:#34d399; text-decoration:none; padding:3px 8px; border-radius:6px; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.28);">🌀 Hofstadter Strange Loops &amp; Gödel</a>
+        <a href="https://en.wikipedia.org/wiki/Tesseract" style="font-size:11px; color:#fda4af; text-decoration:none; padding:3px 8px; border-radius:6px; background:rgba(244,63,94,0.08); border:1px solid rgba(244,63,94,0.28);">💠 4D Tesseract Hypercube Geometry</a>
+      </div>
+      <details style="font-size:11.2px; color:var(--text-secondary); margin-top:2px;">
+        <summary style="cursor:pointer; color:#cbd5e1; font-weight:600;">Formal Axiom &amp; Causal Theorem Ledger (Γ ⊢ Δ · DPLL SAT &amp; Pearl do-Calculus)</summary>
+        <p style="margin-top:4px; line-height:1.45;">
+          Theorem 1: Sensorimotor predictive coding reduces surprise H(X) while maximizing empowerment I(A; S'). Theorem 2: Kanerva 1,024-D hyperdimensional vector binding V_A ⊗ V_B preserves cosine orthogonality across multi-tab analogical inference. Click anywhere on the viewport to drop Quantum Glucose Pellets (+GLC/+DA) or double-click to trigger a 9D Cherenkov startle shockwave.
+        </p>
+      </details>
+    </article>
+  </main>
+
+  <script>
+    function syncStartTheme() {
+      try {
+        var t = localStorage.getItem('gigachad_theme_v1') || 'obsidian';
+        if (t && t !== 'obsidian') document.documentElement.setAttribute('data-theme', t);
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (_) {}
+    }
+    syncStartTheme();
+    window.addEventListener('storage', syncStartTheme);
+    var DEFAULT_TILES = [
+      { code: 'GH', color: '#7c9bff', title: 'GitHub', desc: 'Code & repositories', url: 'https://github.com' },
+      { code: 'HF', color: '#7c9bff', title: 'Hugging Face', desc: 'Local GGUF & models', url: 'https://huggingface.co/models?sort=modified' },
+      { code: 'OR', color: '#7c9bff', title: 'OpenRouter', desc: 'Free frontier models', url: 'https://openrouter.ai/models?max_price=0' },
+      { code: 'YC', color: '#f59e0b', title: 'Hacker News', desc: 'Engineering frontpage', url: 'https://news.ycombinator.com' },
+      { code: 'AX', color: '#f87171', title: 'ArXiv CS.AI', desc: 'Research preprints', url: 'https://arxiv.org/list/cs.AI/recent' },
+      { code: 'YT', color: '#fb7185', title: 'YouTube', desc: 'Video & media stream', url: 'https://www.youtube.com' },
+      { code: 'WK', color: '#cbd5e1', title: 'Wikipedia', desc: 'Encyclopedia & facts', url: 'https://en.wikipedia.org' },
+      { code: 'DD', color: '#34d399', title: 'DevDocs', desc: 'API documentation', url: 'https://devdocs.io' }
+    ];
+
+    function esc(s) {
+      return String(s || '').replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function loadTiles() {
+      try {
+        var raw = localStorage.getItem('gigachad_speed_dial_v1');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length) return parsed;
+        }
+      } catch (_) {}
+      return DEFAULT_TILES.slice();
+    }
+
+    function saveTiles(list) {
+      try { localStorage.setItem('gigachad_speed_dial_v1', JSON.stringify(list)); } catch (_) {}
+    }
+
+    function renderTiles() {
+      var list = loadTiles();
+      var grid = document.getElementById('tiles-grid');
+      grid.innerHTML = list.map(function (t, idx) {
+        var code = (t.code || t.title.slice(0, 2)).toUpperCase();
+        var color = t.color || '#7c9bff';
+        return '<a class="tile" href="' + esc(t.url) + '">' +
+          '<button type="button" class="tile-remove" data-remove="' + idx + '" title="Remove shortcut">×</button>' +
+          '<div class="tile-icon" style="color:' + esc(color) + ';">' + esc(code) + '</div>' +
+          '<div class="tile-meta">' +
+            '<span class="tile-title">' + esc(t.title) + '</span>' +
+            '<span class="tile-desc">' + esc(t.desc || t.url) + '</span>' +
+          '</div>' +
+        '</a>';
+      }).join('');
+      grid.querySelectorAll('[data-remove]').forEach(function (btn) {
+        btn.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          var idx = Number(btn.getAttribute('data-remove'));
+          var next = loadTiles();
+          next.splice(idx, 1);
+          saveTiles(next);
+          renderTiles();
+        });
+      });
+    }
+
+    document.getElementById('toggle-add-tile').addEventListener('click', function () {
+      var form = document.getElementById('add-tile-form');
+      form.style.display = form.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    document.getElementById('reset-tiles').addEventListener('click', function () {
+      saveTiles(DEFAULT_TILES);
+      renderTiles();
+    });
+
+    document.getElementById('add-tile-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var title = document.getElementById('new-tile-title').value.trim();
+      var url = document.getElementById('new-tile-url').value.trim();
+      var desc = document.getElementById('new-tile-desc').value.trim();
+      if (!title || !url) return;
+      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      var list = loadTiles();
+      list.push({ code: title.slice(0, 2).toUpperCase(), color: '#7c9bff', title: title, desc: desc || url, url: url });
+      saveTiles(list);
+      renderTiles();
+      document.getElementById('add-tile-form').reset();
+      document.getElementById('add-tile-form').style.display = 'none';
+    });
+
+    var scratch = document.getElementById('scratchpad');
+    try { scratch.value = localStorage.getItem('gigachad_scratchpad_v1') || ''; } catch (_) {}
+    scratch.addEventListener('input', function () {
+      try {
+        localStorage.setItem('gigachad_scratchpad_v1', scratch.value);
+        document.getElementById('scratch-status').textContent = 'Saved ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      } catch (_) {}
+    });
+
+    function updateClock() {
+      var now = new Date();
+      var h = now.getHours();
+      var m = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clock-time').textContent = String(h).padStart(2, '0') + ':' + m;
+      document.getElementById('clock-date').textContent = now.toLocaleDateString(undefined, {
+        weekday: 'short', month: 'short', day: 'numeric'
+      });
+      var greet = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+      document.getElementById('greeting-title').textContent = greet;
+    }
+    updateClock();
+    setInterval(updateClock, 10000);
+    renderTiles();
+
+    document.getElementById('sform').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var raw = (document.getElementById('q').value || '').trim();
+      if (!raw) return;
+      if (/^https?:\/\//i.test(raw)) { window.location.href = raw; return; }
+      if (!raw.includes(' ') && raw.includes('.')) { window.location.href = 'https://' + raw; return; }
+      var eng = document.getElementById('engine').value;
+      var q = encodeURIComponent(raw);
+      if (eng === 'google') window.location.href = 'https://www.google.com/search?q=' + q;
+      else if (eng === 'perplexity') window.location.href = 'https://www.perplexity.ai/search?q=' + q;
+      else if (eng === 'github') window.location.href = 'https://github.com/search?q=' + q;
+      else if (eng === 'arxiv') window.location.href = 'https://arxiv.org/search/?query=' + q + '&searchtype=all';
+      else if (eng === 'scholar') window.location.href = 'https://www.semanticscholar.org/search?q=' + q;
+      else if (eng === 'stackoverflow') window.location.href = 'https://stackoverflow.com/search?q=' + q;
+      else window.location.href = 'https://duckduckgo.com/?q=' + q;
+    });
+  </script>
+</body>
+</html>

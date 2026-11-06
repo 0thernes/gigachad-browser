@@ -1,0 +1,23 @@
+{
+  "pythonPath": "",
+  "sidecarHost": "127.0.0.1",
+  "sidecarPort": 8000,
+  "autoStartSidecar": true,
+  "llmBaseUrl": "http://127.0.0.1:11434/v1",
+  "llmApiKey": "",
+  "localModel": "",
+  "omniModel": "",
+  "openRouterBaseUrl": "https://openrouter.ai/api/v1",
+  "openRouterModel": "nvidia/nemotron-3.5-super-vl:free",
+  "openRouterKey": "",
+  "elevenLabsKey": "",
+  "llamaAutoStart": false,
+  "llamaServerPath": "",
+  "llamaModelPath": "",
+  "llamaPort": 11434,
+  "llamaContext": 8192,
+  "llamaGpuLayers": 99,
+  "ytdlpPath": "",
+  "piiFirewall": true,
+  "stealthCloak": false
+}

@@ -1,0 +1,13 @@
+# Optional. Nothing here is required to start the browser or the sidecar.
+# yt-dlp is used by the media downloader when this package or a binary is present.
+yt-dlp>=2024.8.6
+
+# Real embeddings. Weights download on first use only if GIGACHAD_EMBED_MODEL is set.
+# sentence-transformers>=3.0.0
+
+# Neural NER. Used only if GIGACHAD_NER_MODEL is set.
+# gliner>=0.2.16
+
+# Neural TTS. The sidecar labels the engine "kokoro" only when these import.
+# kokoro>=0.9.4
+# soundfile>=0.12.1
