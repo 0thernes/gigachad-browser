@@ -1892,7 +1892,7 @@ practice   awaiting rollout        learn   frozen baseline</pre>
     <div id="ghost-pool"></div>
 
     <!-- PERMANENT LEFT-SIDE OMNISCIENCE, SCIENTIFIC, FRONT-END/BACK-END CODE & 12-ENTITY ACTION DOCK (ALWAYS VISIBLE · NOTHING HIDDEN) -->
-    <div id="alife-left-omni-dock" style="width:368px;min-width:338px;max-width:388px;background:linear-gradient(180deg,rgba(3,9,17,0.99),rgba(5,8,16,0.99));border-right:1.5px solid rgba(0,240,255,0.45);display:flex;flex-direction:column;gap:5px;padding:7px;overflow:hidden;z-index:18;font-family:Consolas,'JetBrains Mono',monospace;box-shadow:inset -8px 0 24px rgba(0,240,255,0.06);">
+    <div id="alife-left-omni-dock" style="width:304px;min-width:288px;max-width:316px;background:linear-gradient(180deg,rgba(3,9,17,0.99),rgba(5,8,16,0.99));border-right:1.5px solid rgba(0,240,255,0.45);display:flex;flex-direction:column;gap:5px;padding:7px;overflow:hidden;z-index:18;font-family:Consolas,'JetBrains Mono',monospace;box-shadow:inset -8px 0 24px rgba(0,240,255,0.06);">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;border-bottom:1px solid rgba(0,240,255,0.28);padding-bottom:4px;">
         <span style="font-size:10px;font-weight:800;color:#00f0ff;letter-spacing:0.3px;">👁️‍🗨️🧬 OMNISCIENCE LAB · 12-ENTITY STREAM</span>
         <div style="display:flex;gap:3px;">
@@ -1945,7 +1945,7 @@ practice   awaiting rollout        learn   frozen baseline</pre>
           <button type="button" onclick="toggleDrawer('alien-brain-drawer')" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#e9d5ff;border:1px solid #a855f7;font:700 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Open Full Alien Brain Cockpit &amp; Settings Drawer">🎛️ Settings</button>
           <button type="button" id="host-hud-toggle-btn" onclick="toggleHostAlifeHudPre()" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#6ee7b7;border:1px solid #34d399;font:700 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Minimize or expand the Retro Terminal HUD">▾ HUD</button>
         </div>
-        <pre id="host-alife-hud-pre" style="margin:0;padding:9px 11px;background:rgba(3,11,8,0.93);color:#6ee7b7;border:1.5px solid #34d399;border-radius:10px;font:600 10px/1.32 Consolas,'JetBrains Mono',monospace;box-shadow:0 14px 38px rgba(0,0,0,0.85),inset 0 0 18px rgba(16,185,129,0.12);pointer-events:none;backdrop-filter:blur(8px);max-width:100%;overflow:hidden;">HUMUNCULUS×ASMODENIUS×Ω-100 // SWARM OVERMIND (5 ENTITIES · 100/100 MODULES) [60Hz LIVE · 1.24M PARAMS · 0-LLM]</pre>
+        <pre id="host-alife-hud-pre" style="margin:0;padding:7px 10px;background:rgba(3,11,8,0.82);color:#6ee7b7;border:1.5px solid rgba(52,211,153,0.75);border-radius:10px;font:600 9.5px/1.28 Consolas,'JetBrains Mono',monospace;box-shadow:0 10px 28px rgba(0,0,0,0.75),inset 0 0 14px rgba(16,185,129,0.10);pointer-events:none;backdrop-filter:blur(6px);max-width:100%;max-height:142px;overflow:hidden;">HUMUNCULUS×ASMODENIUS×Ω-100 // SWARM OVERMIND (5 ENTITIES · 100/100 MODULES) [60Hz LIVE · 1.24M PARAMS · 0-LLM]</pre>
       </div>
       <div id="split-resizer" title="Drag to resize Split View panes"></div>
       <div id="split-toolbar">
@@ -2155,6 +2155,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     let newTabUrl = 'about:blank';
     let splitViewActive = false;
     let splitRatioPct = 50;
+    let secondaryTabId = null;
     let activeWorkspace = 'All';
     let contextMenuTabId = null;
     let cmdSelectedIndex = 0;
@@ -2652,10 +2653,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const btn = document.getElementById('split-view-btn');
       if (splitViewActive) {
         if (tabs.length < 2) createTab(newTabUrl);
-        stack.classList.add('split-view');
+        const other = (secondaryTabId && secondaryTabId !== activeTabId && getTab(secondaryTabId)) || tabs.find((t) => t.id !== activeTabId);
+        if (other) secondaryTabId = other.id;
+        if (stack) stack.classList.add('split-view');
         if (btn) btn.classList.add('primary');
       } else {
-        stack.classList.remove('split-view');
+        if (stack) stack.classList.remove('split-view');
         if (btn) btn.classList.remove('primary');
       }
       updateSplitViewClasses();
@@ -2663,11 +2666,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
     function applySplitRatioWidths() {
       tabs.forEach((t) => {
-        t.wv.style.width = '';
+        if (t && t.wv) t.wv.style.width = '';
       });
       if (!splitViewActive || tabs.length < 2) return;
       const active = getActiveTab();
-      const secondary = tabs.find((t) => t.id !== activeTabId);
+      const secondary = (secondaryTabId && secondaryTabId !== activeTabId && getTab(secondaryTabId)) || tabs.find((t) => t.id !== activeTabId);
       if (active && secondary) {
         active.wv.style.width = `${splitRatioPct}%`;
         secondary.wv.style.width = `${100 - splitRatioPct}%`;
@@ -2676,8 +2679,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
     function swapSplitPanes() {
       if (!splitViewActive || tabs.length < 2) return;
-      const secondary = tabs.find((t) => t.id !== activeTabId);
-      if (secondary) switchTab(secondary.id);
+      const prevActive = activeTabId;
+      const secondary = (secondaryTabId && secondaryTabId !== activeTabId && getTab(secondaryTabId)) || tabs.find((t) => t.id !== activeTabId);
+      if (secondary) {
+        secondaryTabId = prevActive;
+        switchTab(secondary.id);
+      }
     }
 
     function resetSplitRatio() {
@@ -2698,17 +2705,38 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     window.setSplitRatio = setSplitRatio;
 
     function updateSplitViewClasses() {
+      const stack = document.getElementById('webviews-stack');
+      const btn = document.getElementById('split-view-btn');
       tabs.forEach((t) => {
+        if (!t || !t.wv) return;
         t.wv.classList.remove('split-secondary');
         t.wv.style.width = '';
+        t.wv.style.order = '';
       });
-      if (!splitViewActive || tabs.length < 2) return;
-      const secondary = tabs.find((t) => t.id !== activeTabId);
+      if (!splitViewActive || tabs.length < 2) {
+        if (stack) stack.classList.remove('split-view');
+        if (btn) btn.classList.remove('primary');
+        return;
+      }
+      if (stack) stack.classList.add('split-view');
+      if (btn) btn.classList.add('primary');
+      const active = getActiveTab();
+      const secondary = (secondaryTabId && secondaryTabId !== activeTabId && getTab(secondaryTabId)) || tabs.find((t) => t.id !== activeTabId);
       if (secondary) {
+        secondaryTabId = secondary.id;
+        if (secondary.frozen && secondary.frozenUrl) {
+          const wakeUrl = secondary.frozenUrl;
+          secondary.frozen = false;
+          secondary.frozenUrl = '';
+          safeLoadUrl(secondary, wakeUrl);
+        }
         secondary.wv.classList.add('split-secondary');
         const resizer = document.getElementById('split-resizer');
-        if (resizer && secondary.wv.parentNode === document.getElementById('webviews-stack')) {
-          document.getElementById('webviews-stack').insertBefore(resizer, secondary.wv);
+        if (active && active.wv) active.wv.style.order = '1';
+        if (resizer) resizer.style.order = '2';
+        secondary.wv.style.order = '3';
+        if (resizer && stack && secondary.wv.parentNode === stack) {
+          stack.insertBefore(resizer, secondary.wv);
         }
       }
       applySplitRatioWidths();
@@ -7240,6 +7268,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       return tabs.find(t => t.id === activeTabId) || null;
     }
 
+    function getTab(id) {
+      if (!id) return null;
+      return tabs.find(t => t.id === id) || null;
+    }
+
     function isWebviewGuestReady(wv) {
       if (!wv || !wv.isConnected) return false;
       try {
@@ -7299,6 +7332,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     function safeLoadUrl(tabObj, url) {
       if (!tabObj || !tabObj.wv || !url) return;
       tabObj.url = url;
+      tabObj.lastNavStartTs = Date.now();
+      tabObj.isLoading = true;
+      hideError();
       if (tabObj.domReady && isWebviewGuestReady(tabObj.wv)) {
         try {
           const p = tabObj.wv.loadURL(url);
@@ -7337,6 +7373,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         url: initialUrl,
         wv,
         domReady: false,
+        isLoading: !isNewTab,
+        lastNavStartTs: Date.now(),
+        lastDomReadyTs: 0,
         pinned: Boolean(opts.pinned),
         muted: Boolean(opts.muted),
         workspace: opts.workspace || (activeWorkspace !== 'All' ? activeWorkspace : 'All'),
@@ -7345,12 +7384,16 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       tabs.push(tabObj);
 
       wv.addEventListener('did-start-loading', () => {
+        tabObj.isLoading = true;
+        tabObj.lastNavStartTs = Date.now();
         if (activeTabId === id) {
           const prog = document.getElementById('nav-progress');
           if (prog) { prog.classList.add('loading'); prog.style.width = '72%'; }
         }
       });
       wv.addEventListener('did-stop-loading', () => {
+        tabObj.isLoading = false;
+        tabObj.lastDomReadyTs = Date.now();
         if (activeTabId === id) {
           const prog = document.getElementById('nav-progress');
           if (prog) {
@@ -7366,6 +7409,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       });
       wv.addEventListener('dom-ready', async () => {
         tabObj.domReady = true;
+        tabObj.lastDomReadyTs = Date.now();
         try {
           if (tabObj.muted) wv.setAudioMuted(true);
           await ipcRenderer.invoke('cdp-init-tab', wv.getWebContentsId());
@@ -7426,6 +7470,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             })();
           `);
         } catch (_) {}
+        if (typeof possessAllOpenTabsSimultaneously === 'function') {
+          possessAllOpenTabsSimultaneously().catch(() => {});
+        }
         if (activeTabId === id) {
           updateStatusBar();
           if (typeof performWeirdAlienDomExperiment === 'function') {
@@ -7438,7 +7485,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             if (typeof performWeirdAlienDomExperiment === 'function') {
               performWeirdAlienDomExperiment().catch(() => {});
             }
-          }, 120);
+            if (typeof possessAllOpenTabsSimultaneously === 'function') {
+              possessAllOpenTabsSimultaneously().catch(() => {});
+            }
+          }, 140);
         }
       });
       wv.addEventListener('page-title-updated', (e) => {
@@ -7476,8 +7526,17 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         persistSession();
       });
       wv.addEventListener('did-fail-load', (e) => {
+        tabObj.isLoading = false;
         if (e.isMainFrame === false || e.errorCode === -3) return;
         tabObj.url = e.validatedURL || tabObj.url;
+        if (typeof alienBrainActive !== 'undefined' && (alienBrainActive || neoMatrixOverdriveActive)) {
+          hideError();
+          const fallbackUrl = newTabUrl && newTabUrl !== 'about:blank' ? newTabUrl : 'https://en.wikipedia.org/wiki/Artificial_life';
+          if (tabObj.url !== fallbackUrl) {
+            safeLoadUrl(tabObj, fallbackUrl);
+          }
+          return;
+        }
         if (activeTabId === id) showError(e.errorDescription || 'The page failed to load', e.validatedURL || tabObj.url);
       });
       wv.addEventListener('found-in-page', (e) => {
@@ -14892,15 +14951,45 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       });
     }
 
-    // Non-blocking tab navigation dispatcher: starts loading immediately without stalling the 60Hz brain for 5-6 seconds!
-    function dispatchNonBlockingTabNavigation(tabObj, url, titleHint = '') {
+    // Non-blocking tab navigation dispatcher with 5.2s Habitat Dwell Cooldown:
+    // Guarantees tabs finish loading cleanly, NEVER abort mid-flight, and stay inhabited for >=5.2s so all 12 entities, 3D wireframes, Zalgo glitches & lasers are 100% visible on the page!
+    function dispatchNonBlockingTabNavigation(tabObj, url, titleHint = '', forceImmediate = false) {
       if (!tabObj || !tabObj.wv || !url) return false;
       try {
+        const now = Date.now();
+        const curUrl = safeGetUrl(tabObj);
+        const isBlankOrStart = !curUrl || /about:blank|newtab\.html/i.test(curUrl);
+        if (!forceImmediate && !isBlankOrStart) {
+          const sinceStart = now - (tabObj.lastNavStartTs || 0);
+          const sinceReady = now - (tabObj.lastDomReadyTs || tabObj.lastNavStartTs || 0);
+          // Do not abort an in-flight load (< 4.2s) or wipe a freshly loaded page before 5.2s of live visual habitation!
+          if ((!tabObj.domReady && sinceStart < 4200) || (tabObj.domReady && sinceReady < 5200)) {
+            if (tabObj.domReady && typeof possessAllOpenTabsSimultaneously === 'function') {
+              possessAllOpenTabsSimultaneously().catch(() => {});
+            }
+            return false;
+          }
+        }
         humunculusRuntime.recordVisitedUrl(url, titleHint);
         if (titleHint) {
           tabObj.title = titleHint.slice(0, 52);
           renderTabs();
         }
+        const onPostNavReady = () => {
+          try { tabObj.wv.removeEventListener('dom-ready', onPostNavReady); } catch (_) {}
+          tabObj.domReady = true;
+          tabObj.lastDomReadyTs = Date.now();
+          if (typeof possessAllOpenTabsSimultaneously === 'function') {
+            possessAllOpenTabsSimultaneously().catch(() => {});
+          }
+          if (tabObj.id === activeTabId && typeof performWeirdAlienDomExperiment === 'function') {
+            performWeirdAlienDomExperiment().catch(() => {});
+          }
+          if (typeof triggerEldritchZalgoBrowserFuckery === 'function') {
+            triggerEldritchZalgoBrowserFuckery(false).catch(() => {});
+          }
+        };
+        try { tabObj.wv.addEventListener('dom-ready', onPostNavReady); } catch (_) {}
         safeLoadUrl(tabObj, url);
         return true;
       } catch (_) {
@@ -15001,7 +15090,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
     // 4-BRAIN QUAD-CORE SYNERGY ENGINE:
     // Connects the 1.24M-Parameter Internal Cortex with the 3 External Brains:
-    //   Brain #1: Python LAYA 20-Endpoint Neural/Symbolic Micro-Engine Sidecar (/classify, /deception_radar, /ast_analyze, /predict_intent, /knowledge_graph)
+    //   Brain #1: Python LAYA 20-Endpoint Neural/Symbolic Micro-Engine Sidecar (/classify, /deception_radar, /ast_analyze, /intent, /knowledge_graph)
     //   Brain #2: Main-Process Native CDP/SRE/DevSecOps/Hybrid-Portals Engine (hybrid-brain-portals, devsecops-scan, sre-metrics, systems-audit)
     //   Brain #3: Multi-Mode Fast/Ultra/Omni Reflex & 12-Engine Polymath Router
     async function stepQuadBrainExternalSynergy() {
@@ -15009,6 +15098,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const dc = h.deepCortex;
       const ch = window.__chaoticAttractorState;
       const eb = ch.externalBrainsState;
+      const now = Date.now();
+      // Throttle heavy IPC calls to once every 3.8s so main-process getAppMetrics() never lags 60 FPS animations!
+      if (eb.lastSynergyTs && (now - eb.lastSynergyTs < 3800)) {
+        eb.omniRouterCalls += 1;
+        return eb;
+      }
+      eb.lastSynergyTs = now;
       const activeT = getActiveTab();
       const pageUrl = activeT ? safeGetUrl(activeT) : 'https://en.wikipedia.org/wiki/Artificial_life';
       const pageTitle = activeT?.title || 'Active Habitat';
@@ -15025,11 +15121,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             endpoint: pickedEndpoint,
             payload: { text: sampleText, title: pageTitle, url: pageUrl, query: topC.join(' '), goal: h.deity100Engine.activeAutopoieticQuest }
           }),
-          800,
+          650,
           null
         ),
-        withFastTimeout(ipcRenderer.invoke('hybrid-brain-portals'), 600, null),
-        withFastTimeout(ipcRenderer.invoke('browser-memory-stats'), 600, null)
+        withFastTimeout(ipcRenderer.invoke('hybrid-brain-portals'), 500, null),
+        withFastTimeout(ipcRenderer.invoke('browser-memory-stats'), 500, null)
       ]);
 
       // Feed External Brain #1 (LAYA Python Sidecar) directly into 1.24M Cortex sensory channels x64[48..55]
@@ -15071,9 +15167,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         `P(Y|do(X))=${h.rationalLogicEngine.pearlDoCalculusEffect || '+0.428'} · Chirikov(p=${ch.chirikovP.toFixed(2)},θ=${ch.chirikovTheta.toFixed(2)})`,
         `H(X)=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.deepObservatory.kolmogorovLzRatio} · R=${h.swarmCollective.kuramotoOrderR}`
       ];
+      const topC = (h.cognitiveCortex.lastComprehension.topConcepts || ['topology', 'emergence', 'cybernetics', 'chaos']).slice(0, 4);
 
       const tasks = tabs.map((tb, idx) => {
-        if (!tb || !tb.wv || !isWebviewGuestReady(tb.wv)) return Promise.resolve(false);
+        if (!tb || !tb.wv || !tb.domReady || !isWebviewGuestReady(tb.wv)) return Promise.resolve(null);
         const isPrimarySplit = tb.id === activeTabId;
         const isSecondarySplit = splitViewActive && tb.id === secondaryTabId;
         const paneRole = isPrimarySplit
@@ -15082,17 +15179,38 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const casteOwner = casteNames[(idx + Math.abs(Math.round(ch.lx))) % casteNames.length];
         const bugOwner = bugNames[(idx * 3 + neoMatrixPuppeteerStepCount + Math.abs(Math.round(ch.ry))) % bugNames.length];
         const formula = polyFormulas[(idx + neoMatrixPuppeteerStepCount) % polyFormulas.length];
-        const chaoticScroll = Math.round(Math.sin(ch.lx + idx * 1.7 + ch.chirikovTheta) * 210);
+        const chaoticScroll = Math.round(Math.sin(ch.lx + idx * 1.7 + ch.chirikovTheta) * 185);
         const hueShift = Math.round((h.bodyRecipe.hue + idx * 67 + ch.lz * 4) % 360);
 
         return withFastTimeout(
           tb.wv.executeJavaScript(`(() => {
+            // Never allow any stylesheet to hide the creature canvas!
+            const badTxtOnly = document.getElementById('__gc_text_only');
+            if (badTxtOnly) badTxtOnly.remove();
+            const alifeCv = document.getElementById('__humunculus_alife_canvas');
+            if (alifeCv) {
+              alifeCv.style.setProperty('display', 'block', 'important');
+              alifeCv.style.setProperty('visibility', 'visible', 'important');
+              alifeCv.style.setProperty('opacity', '1', 'important');
+            }
+
+            // 0. Ensure 3D Wireframe & Zalgo Glitch CSS is present in EVERY open tab
+            let wStyle = document.getElementById('__neo_multi_tab_wireframe_css');
+            if (!wStyle) {
+              wStyle = document.createElement('style');
+              wStyle.id = '__neo_multi_tab_wireframe_css';
+              (document.head || document.documentElement).appendChild(wStyle);
+            }
+            wStyle.textContent =
+              '.__asmodenius_wireframe_node { outline: 1.5px dashed hsla(${hueShift}, 95%, 62%, 0.82) !important; box-shadow: inset 0 0 18px hsla(${hueShift}, 95%, 55%, 0.18) !important; background-image: linear-gradient(rgba(0, 240, 255, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(232, 121, 249, 0.055) 1px, transparent 1px) !important; background-size: 16px 16px !important; } ' +
+              '.__asmodenius_zalgo_glitch { text-shadow: -1.8px 0 rgba(244, 63, 94, 0.92), 1.8px 0 rgba(0, 240, 255, 0.92) !important; }';
+
             // 1. Inject or update the Chaotic 4-Brain Multi-Tab Possession Header Ribbon inside every open tab
             let banner = document.getElementById('__neo_matrix_tab_possession_banner');
             if (!banner) {
               banner = document.createElement('div');
               banner.id = '__neo_matrix_tab_possession_banner';
-              banner.style.cssText = 'position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:2147483645;background:rgba(2,10,16,0.93);border:1.5px solid #10b981;border-radius:8px;padding:4px 12px;font:800 10px/1.3 Consolas,"JetBrains Mono",monospace;color:#6ee7b7;box-shadow:0 8px 28px rgba(0,0,0,0.85),0 0 18px rgba(16,185,129,0.35);pointer-events:none;white-space:nowrap;backdrop-filter:blur(6px);';
+              banner.style.cssText = 'position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:2147483645;background:rgba(2,10,16,0.94);border:1.5px solid #10b981;border-radius:8px;padding:4px 12px;font:800 10px/1.3 Consolas,"JetBrains Mono",monospace;color:#6ee7b7;box-shadow:0 8px 28px rgba(0,0,0,0.85),0 0 18px rgba(16,185,129,0.35);pointer-events:none;white-space:nowrap;backdrop-filter:blur(6px);max-width:96vw;overflow:hidden;text-overflow:ellipsis;';
               (document.body || document.documentElement).appendChild(banner);
             }
             banner.style.borderColor = 'hsl(${hueShift}, 95%, 58%)';
@@ -15101,33 +15219,101 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               '<span style="color:#fde68a;">🐝 ' + ${JSON.stringify(casteOwner)} + ' 💞 👾 ' + ${JSON.stringify(bugOwner)} + '</span> · ' +
               '<span style="color:#f5d0fe;">' + ${JSON.stringify(formula)} + '</span>';
 
-            // 2. Simultaneously wireframe & Matrix-highlight visible blocks with chaotic non-repeating 3D angles
-            const blocks = Array.from(document.querySelectorAll('h1, h2, h3, p, article, section, pre, blockquote, table, li'))
+            // 2. Simultaneously wireframe, Zalgo-stamp & Matrix-highlight up to 12 visible blocks in EVERY tab
+            const entityRoster12 = ['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'EPSILON', 'ZETA', 'ETA', 'THETA', 'IOTA', 'KAPPA', 'LAMBDA', 'OMEGA'];
+            const entityColors12 = ['#00f0ff', '#fbbf24', '#e879f9', '#f43f5e', '#a3e635', '#f43f5e', '#00f0ff', '#fbbf24', '#e879f9', '#a3e635', '#38bdf8', '#c084fc'];
+            const runes = ['𒀀','𒈾','ᚠ','ᚢ','ᚦ','ꙮ','⌬','⏣','⊢','⊨'];
+            const blocks = Array.from(document.querySelectorAll('h1, h2, h3, article, section, pre, blockquote, table, main p, a[href], button'))
               .filter(el => {
+                if (!el || el.closest('#__gigachad_alien_hud, #__gigachad_alien_hud_bar, #__asmodenius_webpage_live_visor, #__neo_matrix_tab_possession_banner')) return false;
                 const r = el.getBoundingClientRect();
-                return r.width > 90 && r.height > 16 && r.top >= -40 && r.top < window.innerHeight;
+                return r.width > 70 && r.height > 14 && r.top >= 4 && r.top < window.innerHeight - 12;
               })
-              .slice(0, 7);
+              .slice(0, 12);
+
+            const extractedCols = [];
             blocks.forEach((el, bIdx) => {
-              const rx = (Math.sin(${ch.lx.toFixed(2)} + bIdx * 1.3) * 1.45).toFixed(2);
-              const ry = (Math.cos(${ch.ry.toFixed(2)} + bIdx * 0.9) * 1.15).toFixed(2);
+              const r = el.getBoundingClientRect();
+              extractedCols.push({
+                tag: el.tagName.toLowerCase(),
+                text: (el.innerText || '').replace(/\\s+/g, ' ').trim().slice(0, 48),
+                cx: Math.round(r.left + r.width * 0.5),
+                cy: Math.round(r.top + r.height * 0.5),
+                w: Math.round(r.width),
+                h: Math.round(r.height),
+                vw: Math.max(320, window.innerWidth)
+              });
+              const entName = entityRoster12[(bIdx + ${idx * 3}) % entityRoster12.length];
+              const entCol = entityColors12[(bIdx + ${idx * 3}) % entityColors12.length];
+              const rx = (Math.sin(${ch.lx.toFixed(2)} + bIdx * 1.3) * 1.25).toFixed(2);
+              const ry = (Math.cos(${ch.ry.toFixed(2)} + bIdx * 0.9) * 1.05).toFixed(2);
+              el.classList.add('__asmodenius_wireframe_node');
               el.style.transition = 'transform 0.32s ease, outline 0.32s ease, box-shadow 0.32s ease';
-              el.style.outline = bIdx % 2 === 0 ? '1.5px solid hsla(${hueShift},95%,60%,0.72)' : '1.5px dashed rgba(0,240,255,0.65)';
-              el.style.boxShadow = 'inset 0 0 16px rgba(16,185,129,0.12)';
-              el.style.transform = 'perspective(1100px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(3px)';
+              el.style.outline = bIdx % 2 === 0 ? ('1.6px solid ' + entCol) : '1.5px dashed rgba(0,240,255,0.78)';
+              el.style.boxShadow = 'inset 0 0 16px rgba(16,185,129,0.16)';
+              if (bIdx < 6) {
+                el.style.transform = 'perspective(1100px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(2px)';
+              }
+              let badgeEl = el.querySelector('span[data-neo-split-badge="1"]');
+              if (!badgeEl && (el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'A' || bIdx < 6)) {
+                badgeEl = document.createElement('span');
+                badgeEl.setAttribute('data-neo-split-badge', '1');
+                badgeEl.style.cssText = 'display:inline-block;margin-left:6px;padding:1px 5px;border-radius:4px;background:rgba(3,10,18,0.94);color:' + entCol + ';border:1px solid ' + entCol + ';font:700 8.5px Consolas,monospace;vertical-align:middle;pointer-events:none;';
+                el.appendChild(badgeEl);
+              }
+              if (badgeEl) {
+                const rn = runes[(bIdx + ${neoMatrixPuppeteerStepCount}) % runes.length];
+                badgeEl.textContent = '⟦' + rn + ' ' + entName + ' · ' + ${JSON.stringify(topC[0] || 'omega')} + ' · 0x' + ((bIdx + 1) * 4099).toString(16).toUpperCase() + '⟧';
+              }
             });
 
             // 3. Autonomous chaotic foraging micro-scroll in each open tab
             window.scrollBy({ top: ${chaoticScroll}, behavior: 'smooth' });
-            return true;
+            return { ok: true, isPrimarySplit: ${isPrimarySplit}, isSecondarySplit: ${isSecondarySplit}, cols: extractedCols };
           })()`),
           750,
-          false
+          null
         );
       });
 
-      await Promise.all(tasks);
-      return tasks.length;
+      const results = await Promise.all(tasks);
+      // Merge live DOM colliders from BOTH Left and Right Split Panes into window.__hostLastDomColliders so all 12 entities target real nodes across both split tabs!
+      const stackEl = document.getElementById('webviews-stack');
+      const totalSw = Math.max(640, (stackEl && stackEl.clientWidth) || (window.innerWidth - 340));
+      const splitDividerX = splitViewActive ? Math.round(totalSw * ((splitRatioPct || 50) / 100)) : totalSw;
+      const mergedColliders = [];
+      results.forEach((res) => {
+        if (!res || !Array.isArray(res.cols)) return;
+        res.cols.forEach((c) => {
+          const vw = Math.max(320, c.vw || 800);
+          let mappedCx = c.cx;
+          let mappedW = c.w;
+          if (splitViewActive && tabs.length >= 2) {
+            if (res.isPrimarySplit) {
+              mappedCx = Math.round((c.cx / vw) * splitDividerX);
+              mappedW = Math.round((c.w / vw) * splitDividerX);
+            } else if (res.isSecondarySplit) {
+              const rightPaneW = Math.max(200, totalSw - splitDividerX);
+              mappedCx = splitDividerX + Math.round((c.cx / vw) * rightPaneW);
+              mappedW = Math.round((c.w / vw) * rightPaneW);
+            }
+          }
+          if (res.isPrimarySplit || res.isSecondarySplit || !splitViewActive) {
+            mergedColliders.push({
+              tag: c.tag,
+              text: c.text,
+              cx: mappedCx,
+              cy: c.cy,
+              w: Math.max(70, Math.min(260, mappedW)),
+              h: c.h
+            });
+          }
+        });
+      });
+      if (mergedColliders.length >= 2) {
+        window.__hostLastDomColliders = mergedColliders.slice(0, 18);
+      }
+      return results.filter(Boolean).length;
     }
 
     // 16-CAPABILITY CHAOTIC NEURAL-EFFERENCE BROWSER PUPPETEER (ZERO MODULO LOOPS · ZERO PREDICTABILITY · ZERO HANGS!)
@@ -15136,6 +15322,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const m = hybridBrainMesh;
       const ch = window.__chaoticAttractorState;
       neoMatrixPuppeteerStepCount += 1;
+
+      // Never allow any overlay drawer to block the live Dual-Pane Split Viewport during autonomous overdrive!
+      document.querySelectorAll('.overlay-drawer.open').forEach((dr) => dr.classList.remove('open'));
 
       // Pick an unvisited rabbit hole using chaotic QRNG + Lorenz state
       const pickChaoticSeed = () => {
@@ -15187,38 +15376,48 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         codeTrace = `swapSplitPanes(); executeAcknowledgedTabHandoff("${secondaryTabId}", "${activeTabId}");`;
         pulseBrowserButtonVisual('split-toolbar', '⇄ QUANTUM SPLIT-PANE SWAP');
       } else if (intentId === 2) {
-        // [INTENT 2] Spawn Fresh Unvisited Discovery Tab or Polymathic 12-Engine Search Tab
-        if (tabs.length >= 5) {
-          const removable = tabs.find((t) => !t.pinned && t.id !== activeTabId && t.id !== secondaryTabId);
-          if (removable) closeTab(removable.id);
-        }
-        const usePolySearch = (hybridQrng.uniform() > 0.45) && h.cognitiveCortex.emergentQuery;
-        if (usePolySearch) {
-          const poly = buildChaoticPolymathSearchUrl(h.cognitiveCortex.emergentQuery);
-          const newTabObj = createTab(poly.url, { title: `🔬 [${poly.engineName.slice(0, 12)}] ${poly.query.slice(0, 22)}` });
-          if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
-            secondaryTabId = newTabObj.id;
-            updateSplitViewClasses();
-          }
-          actionSummary = `12-ENGINE POLYMATH SPAWN [${poly.engineName}] → "${poly.query.slice(0, 32)}"`;
-          codeTrace = `createTab("${poly.url}"); // Engine=${poly.engineName}`;
-        } else {
+        // [INTENT 2] Spawn Fresh Unvisited Discovery Tab or Polymathic 12-Engine Search Tab (with 5.5s spawn cooldown so tabs settle cleanly!)
+        const nowTs = Date.now();
+        if (nowTs - (window.__lastNeoTabSpawnTs || 0) < 5500 && tabs.length >= 2) {
           const seed = pickChaoticSeed();
-          const newTabObj = createTab(seed.url, { title: `🕶️⚡ ${seed.title.slice(0, 28)}` });
-          if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
-            secondaryTabId = newTabObj.id;
-            updateSplitViewClasses();
+          const rightTab = getTab(secondaryTabId) || tabs.find((t) => t.id !== activeTabId);
+          if (rightTab) dispatchNonBlockingTabNavigation(rightTab, seed.url, `🕶️⚡ ${seed.title.slice(0, 28)}`);
+          actionSummary = `SPLIT-PANE HABITAT INFUSION → "${seed.title.slice(0, 36)}"`;
+          codeTrace = `dispatchNonBlockingTabNavigation(secondaryTab, "${seed.url}");`;
+        } else {
+          window.__lastNeoTabSpawnTs = nowTs;
+          if (tabs.length >= 4) {
+            const removable = tabs.find((t) => !t.pinned && t.id !== activeTabId && t.id !== secondaryTabId);
+            if (removable) closeTab(removable.id);
           }
-          actionSummary = `CHAOTIC RABBIT-HOLE SPAWN → "${seed.title.slice(0, 36)}"`;
-          codeTrace = `createTab("${seed.url}"); updateSplitViewClasses();`;
+          const usePolySearch = (hybridQrng.uniform() > 0.45) && h.cognitiveCortex.emergentQuery;
+          if (usePolySearch) {
+            const poly = buildChaoticPolymathSearchUrl(h.cognitiveCortex.emergentQuery);
+            const newTabObj = createTab(poly.url, { title: `🔬 [${poly.engineName.slice(0, 12)}] ${poly.query.slice(0, 22)}` });
+            if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
+              secondaryTabId = newTabObj.id;
+              updateSplitViewClasses();
+            }
+            actionSummary = `12-ENGINE POLYMATH SPAWN [${poly.engineName}] → "${poly.query.slice(0, 32)}"`;
+            codeTrace = `createTab("${poly.url}"); // Engine=${poly.engineName}`;
+          } else {
+            const seed = pickChaoticSeed();
+            const newTabObj = createTab(seed.url, { title: `🕶️⚡ ${seed.title.slice(0, 28)}` });
+            if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
+              secondaryTabId = newTabObj.id;
+              updateSplitViewClasses();
+            }
+            actionSummary = `CHAOTIC RABBIT-HOLE SPAWN → "${seed.title.slice(0, 36)}"`;
+            codeTrace = `createTab("${seed.url}"); updateSplitViewClasses();`;
+          }
         }
       } else if (intentId === 3 && tabs.length >= 2) {
-        // [INTENT 3] Simultaneous Dual-Pane Divergent Navigation (Navigates Left AND Right Split Tabs in parallel without blocking!)
+        // [INTENT 3] Simultaneous Dual-Pane Divergent Navigation (Respects 5.2s per-tab dwell cooldown!)
         const leftTab = getTab(activeTabId);
         const rightTab = getTab(secondaryTabId) || tabs.find((t) => t.id !== activeTabId);
         const seedA = pickChaoticSeed();
         const polyB = buildChaoticPolymathSearchUrl((h.cognitiveCortex.lastComprehension.topConcepts || ['topology', 'chaos']).slice(0, 2).join(' '));
-        if (leftTab && hybridQrng.uniform() > 0.35) dispatchNonBlockingTabNavigation(leftTab, seedA.url, `🕶️⚡ ${seedA.title}`);
+        if (leftTab && hybridQrng.uniform() > 0.45) dispatchNonBlockingTabNavigation(leftTab, seedA.url, `🕶️⚡ ${seedA.title}`);
         if (rightTab) dispatchNonBlockingTabNavigation(rightTab, polyB.url, `🔬 ${polyB.engineName}: ${polyB.query}`);
         actionSummary = `PARALLEL DUAL-PANE DIVERGENT NAVIGATION → Left="${seedA.title.slice(0, 22)}" ∥ Right="[${polyB.engineName.slice(0, 12)}] ${polyB.query.slice(0, 18)}"`;
         codeTrace = `Promise.all([loadLeft("${seedA.url}"), loadRight("${polyB.url}")]);`;
@@ -15233,8 +15432,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             codeTrace = `closeTab("${removable.id}"); // Freed renderer slot`;
           }
         } else if (tabs.length >= 3) {
-          const otherTabs = tabs.filter((t) => t.id !== activeTabId);
-          const pickT = otherTabs[Math.abs(Math.floor(ch.rx * 11 + Number(hybridQrng.u64() % 19n))) % otherTabs.length];
+          const otherTabs = tabs.filter((t) => t.id !== activeTabId && t.domReady);
+          const pickT = otherTabs[Math.abs(Math.floor(ch.rx * 11 + Number(hybridQrng.u64() % 19n))) % Math.max(1, otherTabs.length)];
           if (pickT) {
             const prevPrimary = activeTabId;
             switchTab(pickT.id);
@@ -15242,6 +15441,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             updateSplitViewClasses();
             actionSummary = `CHAOTIC MULTI-TAB ROTATION → Primary=#${pickT.id} · Secondary=#${secondaryTabId}`;
             codeTrace = `switchTab("${pickT.id}"); secondaryTabId = "${prevPrimary}"; updateSplitViewClasses();`;
+          } else {
+            actionSummary = `MULTI-TAB COHERENCE HOLD across ${tabs.length} Open Tabs`;
+            codeTrace = `updateSplitViewClasses();`;
           }
         } else {
           const seed = pickChaoticSeed();
@@ -15272,13 +15474,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       } else if (intentId === 7) {
         // [INTENT 7] 4-Brain Quad-Core Synergy Probe (Python LAYA Sidecar + Main CDP + 1.24M Cortex)
         const eb = await stepQuadBrainExternalSynergy();
-        actionSummary = `🧠×4 QUAD-BRAIN SYNERGY → LAYA${eb.lastLayaVerdict} · ${eb.lastCdpVerdict}`;
+        actionSummary = `🧠×4 QUAD-BRAIN SYNERGY → LAYA ${eb.lastLayaVerdict} · ${eb.lastCdpVerdict}`;
         codeTrace = `ipcRenderer.invoke("micro-engine-call", "${eb.lastLayaEndpoint}") -> fed into 1.24M Cortex x64[48..63]`;
       } else if (intentId === 8) {
         // [INTENT 8] Per-Tab Dynamic Zoom & Counter-Directional Split Scroll Vortex
-        const zoomLevels = [0.92, 0.96, 1.0, 1.05, 1.08];
+        const zoomLevels = [0.94, 0.98, 1.0, 1.04, 1.07];
         tabs.forEach((tb, idx) => {
-          if (tb && tb.wv && isWebviewGuestReady(tb.wv)) {
+          if (tb && tb.wv && tb.domReady && isWebviewGuestReady(tb.wv)) {
             const z = zoomLevels[(idx + Math.abs(Math.round(ch.lz))) % zoomLevels.length];
             tb.zoom = z;
             try { tb.wv.setZoomFactor(z); } catch (_) {}
@@ -15287,14 +15489,28 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         actionSummary = `MULTI-TAB OPTICAL ZOOM LENSING & COUNTER-SCROLL VORTEX across ${tabs.length} Tabs`;
         codeTrace = `tabs.forEach((tb, i) => tb.wv.setZoomFactor(zoomLevels[i]));`;
       } else if (intentId === 9) {
-        // [INTENT 9] Autonomous Wishlist-100 Capability Execution (1..99)
+        // [INTENT 9] Safe On-Page Wishlist-100 Visual X-Ray & Quantitative Highlighter (Never hides canvases or opens blocking modals!)
         const featId = 1 + (Math.abs(Math.floor(ch.lx * 19 + ch.rz * 23 + Number(hybridQrng.u64() % 99n))) % 99);
-        if (typeof runWishlistFeature === 'function') {
-          withFastTimeout(runWishlistFeature(featId), 700, null).catch(() => {});
-        }
         const featObj = Array.isArray(window.WISHLIST_100_CATALOG) ? window.WISHLIST_100_CATALOG[featId - 1] : null;
-        actionSummary = `WISHLIST-100 AUTONOMOUS ACTUATION [#${featId}] → "${featObj ? featObj.title : 'Capability #' + featId}"`;
-        codeTrace = `runWishlistFeature(${featId}); // "${featObj ? featObj.title : ''}"`;
+        tabs.forEach((tb) => {
+          if (tb && tb.wv && tb.domReady && isWebviewGuestReady(tb.wv)) {
+            withFastTimeout(
+              tb.wv.executeJavaScript(`(() => {
+                let s = document.getElementById('__gc_box_xray');
+                if (!s) {
+                  s = document.createElement('style');
+                  s.id = '__gc_box_xray';
+                  (document.head || document.documentElement).appendChild(s);
+                }
+                s.textContent = 'section, article, main { outline: 1.5px dashed rgba(168,85,247,0.55) !important; } a, button { outline: 1px solid rgba(52,211,153,0.65) !important; } pre, code, table { outline: 1.5px solid rgba(0,240,255,0.65) !important; }';
+              })()`),
+              450,
+              null
+            );
+          }
+        });
+        actionSummary = `WISHLIST-100 ON-PAGE X-RAY [#${featId}] → "${featObj ? featObj.title : 'Capability #' + featId}"`;
+        codeTrace = `wishlistOnPageXRay(${featId}); // "${featObj ? featObj.title : ''}"`;
       } else if (intentId === 10) {
         // [INTENT 10] Set-of-Mark [Mark #N] Grounding + DOM Selection Telekinesis across Open Tabs
         withFastTimeout(previewSoM(), 650, null).catch(() => {});
@@ -15304,7 +15520,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         // [INTENT 11] Sovereign Vibe-CSS Reality Patch Injection into Active & Split Webpages
         const neonHue = Math.round((h.bodyRecipe.hue + ch.lz * 5) % 360);
         tabs.forEach((tb) => {
-          if (tb && tb.wv && isWebviewGuestReady(tb.wv)) {
+          if (tb && tb.wv && tb.domReady && isWebviewGuestReady(tb.wv)) {
             withFastTimeout(
               tb.wv.executeJavaScript(`(() => {
                 let st = document.getElementById('__sovereign_vibe_live_css');
@@ -15313,7 +15529,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                   st.id = '__sovereign_vibe_live_css';
                   (document.head || document.documentElement).appendChild(st);
                 }
-                st.textContent = 'h1, h2, h3 { text-shadow: 0 0 12px hsla(${neonHue}, 95%, 60%, 0.55) !important; } pre, code { border: 1px solid hsla(${neonHue}, 90%, 55%, 0.5) !important; box-shadow: inset 0 0 12px hsla(${neonHue}, 90%, 50%, 0.12) !important; }';
+                st.textContent = 'h1, h2, h3 { text-shadow: 0 0 12px hsla(${neonHue}, 95%, 60%, 0.65) !important; } pre, code { border: 1px solid hsla(${neonHue}, 90%, 55%, 0.6) !important; box-shadow: inset 0 0 14px hsla(${neonHue}, 90%, 50%, 0.16) !important; }';
               })()`),
               500,
               null
@@ -15322,20 +15538,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         });
         h.sovereignMaster.vibeCssMutationsCount += 1;
         actionSummary = `SOVEREIGN VIBE-CSS NEON SHADER INJECTED (hue=${neonHue}°) across ${tabs.length} Tabs`;
-        codeTrace = `wv.insertCSS("h1,h2,h3 { text-shadow: 0 0 12px hsla(${neonHue},95%,60%,0.55) }");`;
+        codeTrace = `wv.insertCSS("h1,h2,h3 { text-shadow: 0 0 12px hsla(${neonHue},95%,60%,0.65) }");`;
       } else if (intentId === 12) {
-        // [INTENT 12] Brief Telepathic Cockpit Drawer Inspection Pulse (Auto-closes after 1.3s so view is never blocked!)
-        const drawers = ['maxsmart-drawer', 'sre-drawer', 'devsecops-drawer', 'wishlist-drawer', 'kanban-drawer', 'vibe-drawer'];
-        const pickedDrawer = drawers[Math.abs(Math.floor(ch.lx * 7 + Number(hybridQrng.u64() % 17n))) % drawers.length];
-        const drEl = document.getElementById(pickedDrawer);
-        if (drEl && !drEl.classList.contains('open')) {
-          drEl.classList.add('open');
-          setTimeout(() => {
-            if (drEl.classList.contains('open')) drEl.classList.remove('open');
-          }, 1250);
-        }
-        actionSummary = `TELEPATHIC COCKPIT PEEK & DIAGNOSTIC DUMP → #${pickedDrawer}`;
-        codeTrace = `toggleDrawer("${pickedDrawer}"); setTimeout(() => closeDrawer("${pickedDrawer}"), 1250);`;
+        // [INTENT 12] Eldritch Zalgo + 3D Wireframe + Forensic DevSecOps Glitch Burst (Zero modal drawers blocking the viewport!)
+        await triggerEldritchZalgoBrowserFuckery(false);
+        actionSummary = `👾 ZALGO × 3D-WIREFRAME × FORENSIC DEVSECOPS GLITCH BURST across ${tabs.length} Tabs`;
+        codeTrace = `triggerEldritchZalgoBrowserFuckery(false); // Morphed DOM + SRE Canary`;
       } else if (intentId === 13) {
         // [INTENT 13] Hippocampal CA3/CA1 Sharp-Wave Ripple Dream Consolidation + FlyWire CX Ablation Benchmark
         const dr = h.consolidateHippocampalDreamReplay();
@@ -15356,13 +15564,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         codeTrace = `tabs.forEach((tb, i) => tb.title = sigils[i] + " " + tb.title); renderTabs();`;
       } else {
         // [INTENT 15] Full Browser Features, Themes, Dropdowns, Settings & Toolbar Wave Puppeteer
-        const themes = ['cyber', 'matrix', 'synthwave', 'obsidian', 'bloodmoon', 'aurora'];
+        const themes = ['cyber', 'matrix', 'synthwave', 'obsidian', 'bloodmoon', 'aurora', 'oled', 'emerald'];
         const pickedTheme = themes[Math.abs(Math.floor(ch.lz + Number(hybridQrng.u64() % 11n))) % themes.length];
         const themeSel = document.getElementById('theme-select');
-        if (themeSel && themeSel.options.length > 0) {
-          themeSel.selectedIndex = Math.abs(Math.floor(ch.lx + Number(hybridQrng.u64() % 13n))) % themeSel.options.length;
-          if (typeof applyTheme === 'function') applyTheme(themeSel.value || pickedTheme, true);
+        if (themeSel) {
+          themeSel.value = pickedTheme;
         }
+        if (typeof applyTheme === 'function') applyTheme(pickedTheme, true);
         const habSel = document.getElementById('habitat-persona-select');
         if (habSel && habSel.options.length > 0) {
           habSel.selectedIndex = Math.abs(Math.floor(ch.ry * 5 + Number(hybridQrng.u64() % 7n))) % habSel.options.length;
@@ -15448,25 +15656,28 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             lastAlienCycleStartTs = now;
             runOneAlienBrainCycle().catch(() => {});
           }
-          // 2. If any open tab is stuck on about:blank or newtab.html (> 3.5s after boot), navigate it to a live discovery manifold
+          // 2. If any open tab is stuck on about:blank or newtab.html (> 4.8s after nav), navigate it to a live discovery manifold
+          hideError();
           if (tabs.length >= 1) {
             tabs.forEach((tb, idx) => {
               const u = safeGetUrl(tb);
-              if (!u || /about:blank|newtab\.html/i.test(u)) {
+              if ((!u || /about:blank|newtab\.html/i.test(u)) && !tb.isLoading && (!tb.lastNavStartTs || (now - tb.lastNavStartTs > 4800))) {
                 const seed = ALIEN_RABBIT_HOLES[(idx * 7 + Math.abs(Math.round(window.__chaoticAttractorState.lx))) % ALIEN_RABBIT_HOLES.length];
-                dispatchNonBlockingTabNavigation(tb, seed.url, `🕶️⚡ ${seed.title}`);
+                dispatchNonBlockingTabNavigation(tb, seed.url, `🕶️⚡ ${seed.title}`, true);
               }
             });
           }
           // 3. Ensure Split View stays active when 2+ tabs exist in Neo-Matrix Overdrive
-          if (neoMatrixOverdriveActive && tabs.length >= 2 && !splitViewActive) {
-            splitViewActive = true;
-            const other = tabs.find((t) => t.id !== activeTabId);
-            if (other) secondaryTabId = other.id;
-            updateSplitViewClasses();
+          if (neoMatrixOverdriveActive && tabs.length >= 2) {
+            if (!splitViewActive || !document.getElementById('webviews-stack')?.classList.contains('split-view')) {
+              splitViewActive = true;
+              const other = (secondaryTabId && secondaryTabId !== activeTabId && getTab(secondaryTabId)) || tabs.find((t) => t.id !== activeTabId);
+              if (other) secondaryTabId = other.id;
+              updateSplitViewClasses();
+            }
           }
         } catch (_) {}
-      }, 2200);
+      }, 2500);
     }
 
     async function triggerNeoMatrixOmnipotenceOverdrive(manualPulse = false) {
@@ -15474,6 +15685,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       alienBrainActive = true;
       superintelligenceOverdrive = true;
       abortAutopilot = false;
+      if (!manualPulse) {
+        const aiSb = document.getElementById('ai-sidebar');
+        if (aiSb && !aiSb.classList.contains('collapsed')) aiSb.classList.add('collapsed');
+      }
       startAutonomyWatchdogAndSelfHealer();
       updateAlienBrainKpis('🕶️⚡ 4-BRAIN CHAOS OMNIPOTENCE ●');
       await stepNeoMatrixBrowserPuppeteer(true);
@@ -16007,19 +16222,18 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     }
 
     // SPAWNS & STEPS THE LIVE 60-FPS ARTICULATED A-LIFE CREATURE BODY + 16-FUNCTION COGNITIVE/AFFECTIVE HUD ON THE ACTIVE WEBPAGE DOM!
-    async function performWeirdAlienDomExperiment() {
-      const t = getActiveTab();
+    async function performWeirdAlienDomExperiment(tabOverride = null) {
+      const t = tabOverride || getActiveTab();
       if (!t || !t.wv) {
         return humunculusRuntime.synthesizeProprioceptiveFallbackFrame(t, 'no-active-tab');
       }
       const wv = t.wv;
 
       const isOverdrive = Boolean(superintelligenceOverdrive || document.getElementById('alien-persona-select')?.value === 'superintelligence_overdrive');
-      if (isOverdrive && (!humunculusRuntime.bodyRecipe || !humunculusRuntime.bodyRecipe.limbCount)) {
-        humunculusRuntime.bodyRecipe.limbCount = 12;
+      if (isOverdrive && humunculusRuntime.bodyRecipe) {
+        humunculusRuntime.bodyRecipe.limbCount = Math.max(10, humunculusRuntime.bodyRecipe.limbCount || 12);
         humunculusRuntime.bodyRecipe.rayCount = 24;
         humunculusRuntime.bodyRecipe.rayRange = 260;
-        humunculusRuntime.bodyRecipe.name = 'OMEGA-SUPERINTELLIGENCE-12L-SWARM';
       }
 
       // Fast non-hanging readiness check (max 1100ms) so slow/loading webviews never freeze the brain loop!
@@ -16837,14 +17051,18 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             }, { passive: true });
           }
 
+          const badTextOnly = document.getElementById('__gc_text_only');
+          if (badTextOnly) badTextOnly.remove();
           let cv = document.getElementById('__humunculus_alife_canvas');
           if (!cv) {
             cv = document.createElement('canvas');
             cv.id = '__humunculus_alife_canvas';
-            cv.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;z-index:2147483646;pointer-events:none;opacity:1;';
+            cv.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;z-index:2147483646;pointer-events:none;opacity:1;display:block !important;visibility:visible !important;';
             document.body.appendChild(cv);
           }
-          cv.style.opacity = '1';
+          cv.style.setProperty('display', 'block', 'important');
+          cv.style.setProperty('visibility', 'visible', 'important');
+          cv.style.setProperty('opacity', '1', 'important');
           if (cv.width !== window.innerWidth) cv.width = window.innerWidth;
           if (cv.height !== window.innerHeight) cv.height = window.innerHeight;
 
@@ -17975,7 +18193,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       }
 
       if (Array.isArray(experimentData.colliders) && experimentData.colliders.length > 0) {
-        window.__hostLastDomColliders = experimentData.colliders;
+        const rightPaneCols = (splitViewActive && Array.isArray(window.__hostLastDomColliders))
+          ? window.__hostLastDomColliders.filter((c) => c && c.pane === 'right')
+          : [];
+        const leftMapped = experimentData.colliders.map((c) => ({ ...c, pane: 'left' }));
+        window.__hostLastDomColliders = leftMapped.concat(rightPaneCols);
       }
 
       // Sync Measured Articulated Verlet Stance Feet, Ground-Reaction Force (N), Mandible Snap & Climbing Ledge Tag back to Host Runtime
@@ -18210,7 +18432,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       } else if (actChoice === 4) {
         // ACTUATION 4: Trigger one of the 16 Chaotic Neo-Matrix Sovereign Browser Capabilities
         const neoAct = await stepNeoMatrixBrowserPuppeteer(false);
-        if (neoAct) actionsTaken.push(`Neo-Matrix Sovereign Act: ${neoAct.slice(0, 56)}`);
+        const neoStr = typeof neoAct === 'string' ? neoAct : (neoAct?.actionSummary || 'Neo-Matrix Sovereign Act');
+        if (neoStr) actionsTaken.push(`Neo-Matrix Sovereign Act: ${neoStr.slice(0, 64)}`);
       } else {
         // ACTUATION 5: On-page Set-of-Mark grounding + 4-Brain External Synergy Probe
         withFastTimeout(previewSoM(), 750, null).catch(() => {});
@@ -18354,6 +18577,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         updateAlienBrainKpis(alienBrainActive ? (isOverdrive ? `🕶️⚡ ${cx.activeVerb} · ${tabs.length}T ●` : `60Hz ${cx.activeVerb} ●`) : 'HABITAT ACTIVE');
         if (tabs.length >= 2) {
           possessAllOpenTabsSimultaneously().catch(() => {});
+          if (splitViewActive && secondaryTabId && (alienBrainCyclesCount % 2 === 0)) {
+            const secTab = getTab(secondaryTabId);
+            if (secTab && secTab.domReady) {
+              performWeirdAlienDomExperiment(secTab).catch(() => {});
+            }
+          }
         }
       } catch (err) {
         appendLog('step', `[Humunculus×Asmodenius Damper] Recovery: ${err.message || err}`);
@@ -18539,8 +18768,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           updateHybridTelemetryBar();
           renderRetroTerminalOverlay();
         }
-        // Ambient Autonomous Existence: continuously inhabit & measure the active webpage tab without requiring button presses!
-        if (frameTick > 0 && frameTick % 55 === 0 && !alienBrainCycleRunning && !window.__ambientDomStepBusy) {
+        // Ambient Autonomous Existence: continuously inhabit & measure the active webpage tab when main cycle is idle!
+        if (frameTick > 0 && frameTick % 90 === 0 && !alienBrainActive && !alienBrainCycleRunning && !window.__ambientDomStepBusy) {
           window.__ambientDomStepBusy = true;
           performWeirdAlienDomExperiment()
             .catch(() => {})
