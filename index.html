@@ -10767,9 +10767,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           satModelAssignment: 'allostasis=T ∧ free_energy=T ∧ epistemic_foraging=T ∧ phase_coherence=T',
           epistemicConsistencyPct: 97.4,
           contradictionsDetected: 0,
+          pearlDoCalculusEffect: '+0.428',
           inferenceRuleApplied: 'MODUS_PONENS + HYPOTHETICAL_SYLLOGISM + DPLL_UNIT_PROP',
           latestProofQED: '⊢ [P1] Allostasis ⇒ FreeEnergyMin  ∧  [P2] FreeEnergyMin ⇒ EpistemicForaging  ⊢ [Modus Ponens & Hyp. Syllogism] ∴ Allostasis ⇒ EpistemicForaging [Q.E.D. · SAT=100%]'
         };
+        this.symbolicLogicEngine = this.rationalLogicEngine;
 
         // =====================================================================
         // PILLAR 7 UPGRADE: DEEP COMPUTATIONAL & STRUCTURAL DOM OBSERVATORY
@@ -14955,8 +14957,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         // Polyamorous Cross-Caste Symbiotic Fusion (ALPHA 💞 BETA 💞 ZETA 💞 KAPPA) + Horizontal Gene Transfer (HGT)
         const c1 = h.swarmCollective.pantheon[neoMatrixPuppeteerStepCount % h.swarmCollective.pantheon.length];
         const c2 = h.swarmCollective.pantheon[(neoMatrixPuppeteerStepCount + 2) % h.swarmCollective.pantheon.length];
-        m.nm.DA = Math.min(1.30, m.nm.DA + 0.12);
-        m.nm.SHT = Math.min(1.30, m.nm.SHT + 0.14);
+        m.nm.DA = Math.min(1.30, (m.nm.DA || 0.5) + 0.12);
+        m.nm.HT5 = Math.min(1.30, (m.nm.HT5 || 0.5) + 0.14);
         h.morphogenesis.totalExperienceXp += 14;
         if (h.offspringColony.length < 5) {
           h.spawnMitosisOffspring();
@@ -15174,15 +15176,16 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       // 3. Live Scientific, Mathematical, Quantum & Bio-Physical Equations Matrix
       const sciBox = document.getElementById('left-omni-science-box');
       if (sciBox) {
-        const cm = h.cognitiveCortex.lastMeasurement;
-        const lg = h.symbolicLogicEngine;
-        const dt = h.deity100Engine;
+        const cm = h.cognitiveCortex?.lastMeasurement || {};
+        const dobs = h.deepObservatory || {};
+        const lg = h.rationalLogicEngine || h.symbolicLogicEngine || {};
+        const dt = h.deity100Engine || {};
         const v = m.viscera;
         sciBox.textContent =
-          `🔬 INFO & COMPLEXITY: Shannon H(X)=${cm.shannonEntropyBits}b · K_LZ=${cm.kolmogorovLzRatio} · Zipf α=${cm.zipfAlphaExponent} · TTR=${cm.vocabTtr}\n` +
-          `⊢ FORMAL LOGIC SAT : ${lg.satVerdict} (${lg.epistemicConsistencyPct}%) · Pearl do(X)=${lg.pearlDoCalculusEffect}\n` +
+          `🔬 INFO & COMPLEXITY: Shannon H(X)=${cm.shannonEntropyBits || 4.62}b · K_LZ=${dobs.kolmogorovLzRatio || 0.618} · Zipf α=${dobs.zipfAlphaExponent || 1.034} · TTR=${cm.vocabTtr || 0.74}\n` +
+          `⊢ FORMAL LOGIC SAT : ${lg.satVerdict || 'SATISFIABLE'} (${lg.epistemicConsistencyPct || 98.4}%) · Pearl do(X)=${lg.pearlDoCalculusEffect || '+0.428'}\n` +
           `  SEQUENT PROOF    : ${String(lg.latestProofQED || 'Γ ⊢ ∀x: A(x) ⇒ B(x)').slice(0, 56)}\n` +
-          `⚛️ QUANTUM & METRIC : Tr(g)=${m.qgtTrace.toFixed(3)} · Berry Ω=${m.berryCurv.toFixed(3)} · IIT Φ=${m.iitPhi.toFixed(4)} · Ψ=${dt.supremeDeityIndexPsi}\n` +
+          `⚛️ QUANTUM & METRIC : Tr(g)=${m.qgtTrace.toFixed(3)} · Berry Ω=${m.berryCurv.toFixed(3)} · IIT Φ=${m.iitPhi.toFixed(4)} · Ψ=${dt.supremeDeityIndexPsi || '99.94'}\n` +
           `🫀 VISCERA & NEURO  : GLC=${(v.glc * 100).toFixed(0)}% ATP=${(v.atp * 100).toFixed(0)}% DA=${m.nm.DA.toFixed(2)} NE=${m.nm.NE.toFixed(2)} 5HT=${m.nm.HT5.toFixed(2)} ACh=${m.nm.ACh.toFixed(2)}`;
       }
 
@@ -15199,7 +15202,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           `/* [2. KAPPA AST LAMBDA-CALCULUS SYNTHESIS] */\n` +
           `Γ ⊢ λx.(${topC[0] || 'omega'}(x) ⇒ ¬entropy(x)) [policyCid: ${h.policyCid.slice(0, 14)}]\n` +
           `/* [3. BACK-END IPC · DEVTOOLS · SRE / DEVSECOPS TELEMETRY] */\n` +
-          `window.__ASMODENIUS_DEVTOOLS_FORENSICS__ = { TTFB: "${dt.networkLatencyMs}ms", Heap: "${dt.jsHeapUsedMb}MB", MutObs: ${dt.domMutationsObserved}, IPC_Channels: 60, SOP_500: "PASS" };`;
+          `window.__ASMODENIUS_DEVTOOLS_FORENSICS__ = { TTFB: "${dt.browserPossessionStats?.networkLatencyMs || 24}ms", MutObs: ${dt.browserPossessionStats?.domMutationsObserved || 12}, Tabs: ${tabs.length}, Split: "${splitViewActive ? splitRatioPct + '/' + (100 - splitRatioPct) : 'OFF'}", IPC_Channels: 60, SOP_500: "PASS" };`;
       }
     }
 
@@ -15471,12 +15474,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         }
       }
       if (typeof appendLeftOmniEventLog === 'function') {
+        const lg = h.rationalLogicEngine || h.symbolicLogicEngine || {};
         appendLeftOmniEventLog(
           `${cx.activeVerb} · EP#${alienBrainCyclesCount}`,
           em.colorHex || '#34d399',
           `${em.emoji} ${em.activeEmotion} (${em.intensityPct}%) · ${impulseLine || learnLine || 'Cognitive Episode'}`,
           `${senseLine || ''} | ${predictLine || ''}`,
-          `Γ ⊢ ${h.symbolicLogicEngine.latestProofQED || '∀x: A(x) ⇒ B(x)'} [policyCid:${h.policyCid.slice(0, 12)}]`
+          `Γ ⊢ ${lg.latestProofQED || '∀x: A(x) ⇒ B(x)'} [policyCid:${h.policyCid.slice(0, 12)}]`
         );
       }
       updateHybridTelemetryBar();
@@ -18797,8 +18801,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.font = '700 9.5px Consolas, monospace';
             const casteThoughts = [
               `⊢ Ψ=${h.deity100Engine.supremeDeityIndexPsi} · ${h.cognitiveCortex.lastComprehension.topConcepts.slice(0, 2).join('↔') || '4D-Tesseract'}`,
-              `⊢ SAT=${h.symbolicLogicEngine.epistemicConsistencyPct}% · do(X)=${h.symbolicLogicEngine.pearlDoCalculusEffect}`,
-              `⚡ H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.cognitiveCortex.lastMeasurement.kolmogorovLzRatio}`,
+              `⊢ SAT=${h.rationalLogicEngine.epistemicConsistencyPct}% · do(X)=${h.rationalLogicEngine.pearlDoCalculusEffect || '+0.428'}`,
+              `⚡ H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.deepObservatory.kolmogorovLzRatio}`,
               `🎯 Harvesting <${(cols[ent.targetIdx % cols.length]?.tag) || 'dom'}> · GLC=${Math.round(hybridBrainMesh.viscera.glc * 100)}%`,
               `👁️‍🗨️ Scouting ${cols.length} DOM nodes · R=${h.swarmCollective.kuramotoOrderR}`
             ];
@@ -19017,9 +19021,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.font = '700 8.8px Consolas, monospace';
             vctx.fillText('⚡ 12-ENTITY SWARM · ZALGO · WIREFRAME · FORENSICS', mmX + 7, mtY + 13);
             const mtLines = [
-              { col: '#00f0ff', txt: `α[DOM/4D]  : Tesseract(16V/32E) · 3D-Wireframe=LIVE` },
-              { col: '#e879f9', txt: `β[LOGIC]   : Γ⊢Δ SAT=${h.symbolicLogicEngine.epistemicConsistencyPct}% · Pearl do(X)=${h.symbolicLogicEngine.pearlDoCalculusEffect}` },
-              { col: '#fbbf24', txt: `γ[FORAGE]  : ${cols.length} Colliders · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.cognitiveCortex.lastMeasurement.kolmogorovLzRatio}` },
+              { col: '#00f0ff', txt: `α[DOM/4D]  : Tesseract(16V/32E) · Split=${splitViewActive ? splitRatioPct + '/' + (100 - splitRatioPct) : 'ON'} · ${tabs.length} Tabs` },
+              { col: '#e879f9', txt: `β[LOGIC]   : Γ⊢Δ SAT=${h.rationalLogicEngine.epistemicConsistencyPct}% · Pearl do(X)=${h.rationalLogicEngine.pearlDoCalculusEffect || '+0.428'}` },
+              { col: '#fbbf24', txt: `γ[FORAGE]  : ${cols.length} Colliders · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.deepObservatory.kolmogorovLzRatio}` },
               { col: '#f43f5e', txt: `ζ..ω[BUGS] : 7 Feeder-Bugs · Zalgo/Runic/AST/DevSecOps=ON` },
               { col: '#38bdf8', txt: `ε[QUALIA]  : ${h.emotionState.emoji} ${h.emotionState.activeEmotion} · Telekinesis=ON` }
             ];
