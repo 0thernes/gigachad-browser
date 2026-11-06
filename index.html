@@ -15553,8 +15553,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             document.body.appendChild(cv);
           }
           cv.style.opacity = '1';
-          cv.width = window.innerWidth;
-          cv.height = window.innerHeight;
+          if (cv.width !== window.innerWidth) cv.width = window.innerWidth;
+          if (cv.height !== window.innerHeight) cv.height = window.innerHeight;
 
           if (!window.__humunculusCreatureState) {
             window.__humunculusCreatureState = {
@@ -15574,9 +15574,20 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
           if (!window.__humunculusAnimRunning) {
             window.__humunculusAnimRunning = true;
-            const stepCreature60Hz = () => {
+            let lastGuestFrameTs = 0;
+            const stepCreature60Hz = (nowTs = 0) => {
               const cEl = document.getElementById('__humunculus_alife_canvas');
               if (!cEl) { window.__humunculusAnimRunning = false; return; }
+              if (document.hidden) {
+                requestAnimationFrame(stepCreature60Hz);
+                return;
+              }
+              const minIntervalMs = document.hasFocus() ? 32 : 220;
+              if (nowTs - lastGuestFrameTs < minIntervalMs) {
+                requestAnimationFrame(stepCreature60Hz);
+                return;
+              }
+              lastGuestFrameTs = nowTs;
               const ctx = cEl.getContext('2d');
               const st = window.__humunculusCreatureState;
               const cfg = window.__humunculusBodyCfg || bodyCfg;
@@ -17199,18 +17210,32 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
       renderRetroTerminalOverlay();
 
-      const stepChromeCrawler = () => {
+      let lastHostFrameTs = 0;
+      const stepChromeCrawler = (nowTs = 0) => {
+        if (document.hidden) {
+          requestAnimationFrame(stepChromeCrawler);
+          return;
+        }
+        const isFocused = document.hasFocus();
+        const minFrameInterval = isFocused ? 30 : 220;
+        if (nowTs > 0 && (nowTs - lastHostFrameTs) < minFrameInterval) {
+          requestAnimationFrame(stepChromeCrawler);
+          return;
+        }
+        lastHostFrameTs = nowTs;
+
         const cv = document.getElementById('alife-chrome-crawler');
         const st = chromeCrawlerState;
         const h = humunculusRuntime;
         const mg = h.morphogenesis;
         const isOD = Boolean(superintelligenceOverdrive);
 
+        st.frameCount = (st.frameCount || 0) + 1;
         st.tick += isOD ? 0.075 : 0.038;
 
-        // Step background 1.24M Deep Cortex, 512-Node Connectome, 10-Qubit Register, Kuramoto Swarm & Omega-100 Matrix continuously
-        const frameTick = Math.floor(st.tick * 25);
-        if (frameTick % 18 === 0 && !alienBrainCycleRunning) {
+        // Step background 1.24M Deep Cortex, 512-Node Connectome, 10-Qubit Register, Kuramoto Swarm & Omega-100 Matrix at paced intervals
+        const frameTick = st.frameCount;
+        if (frameTick % 36 === 0 && !alienBrainCycleRunning) {
           h.stepClosedLoop({
             specimensCount: 8,
             doorsCount: 8,
@@ -17220,10 +17245,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           h.stepKuramotoSwarmCollective({});
           h.stepOmega100OmniscienceEngine({});
           updateHybridTelemetryBar();
-          renderRetroTerminalOverlay();
+          const alienDrawerEl = document.getElementById('alien-drawer');
+          if ((alienDrawerEl && alienDrawerEl.classList.contains('open')) || frameTick % 144 === 0) {
+            renderRetroTerminalOverlay();
+          }
         }
-        // Ambient Autonomous Existence: automatically inhabit & measure the active webpage tab without requiring button presses!
-        if (frameTick > 0 && frameTick % 65 === 0 && !alienBrainCycleRunning && !window.__ambientDomStepBusy) {
+        // Ambient Autonomous Existence: automatically inhabit & measure the active webpage tab when focused or active
+        if (frameTick > 0 && frameTick % 150 === 0 && (isFocused || alienBrainActive) && !alienBrainCycleRunning && !window.__ambientDomStepBusy) {
           window.__ambientDomStepBusy = true;
           performWeirdAlienDomExperiment()
             .catch(() => {})
