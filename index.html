@@ -15574,20 +15574,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
           if (!window.__humunculusAnimRunning) {
             window.__humunculusAnimRunning = true;
-            let lastGuestFrameTs = 0;
-            const stepCreature60Hz = (nowTs = 0) => {
+            const stepCreature60Hz = () => {
               const cEl = document.getElementById('__humunculus_alife_canvas');
               if (!cEl) { window.__humunculusAnimRunning = false; return; }
-              if (document.hidden) {
-                requestAnimationFrame(stepCreature60Hz);
-                return;
-              }
-              const minIntervalMs = document.hasFocus() ? 32 : 220;
-              if (nowTs - lastGuestFrameTs < minIntervalMs) {
-                requestAnimationFrame(stepCreature60Hz);
-                return;
-              }
-              lastGuestFrameTs = nowTs;
               const ctx = cEl.getContext('2d');
               const st = window.__humunculusCreatureState;
               const cfg = window.__humunculusBodyCfg || bodyCfg;
@@ -17210,20 +17199,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
       renderRetroTerminalOverlay();
 
-      let lastHostFrameTs = 0;
-      const stepChromeCrawler = (nowTs = 0) => {
-        if (document.hidden) {
-          requestAnimationFrame(stepChromeCrawler);
-          return;
-        }
-        const isFocused = document.hasFocus();
-        const minFrameInterval = isFocused ? 30 : 220;
-        if (nowTs > 0 && (nowTs - lastHostFrameTs) < minFrameInterval) {
-          requestAnimationFrame(stepChromeCrawler);
-          return;
-        }
-        lastHostFrameTs = nowTs;
-
+      const stepChromeCrawler = () => {
         const cv = document.getElementById('alife-chrome-crawler');
         const st = chromeCrawlerState;
         const h = humunculusRuntime;
@@ -17231,11 +17207,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const isOD = Boolean(superintelligenceOverdrive);
 
         st.frameCount = (st.frameCount || 0) + 1;
-        st.tick += isOD ? 0.075 : 0.038;
+        st.tick += isOD ? 0.095 : 0.055;
 
-        // Step background 1.24M Deep Cortex, 512-Node Connectome, 10-Qubit Register, Kuramoto Swarm & Omega-100 Matrix at paced intervals
+        // Step background 1.24M Deep Cortex, 512-Node Connectome, 10-Qubit Register, Kuramoto Swarm & Omega-100/Deity-100 Matrix at high speed
         const frameTick = st.frameCount;
-        if (frameTick % 36 === 0 && !alienBrainCycleRunning) {
+        if (frameTick % 14 === 0 && !alienBrainCycleRunning) {
           h.stepClosedLoop({
             specimensCount: 8,
             doorsCount: 8,
@@ -17245,13 +17221,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           h.stepKuramotoSwarmCollective({});
           h.stepOmega100OmniscienceEngine({});
           updateHybridTelemetryBar();
-          const alienDrawerEl = document.getElementById('alien-drawer');
-          if ((alienDrawerEl && alienDrawerEl.classList.contains('open')) || frameTick % 144 === 0) {
-            renderRetroTerminalOverlay();
-          }
+          renderRetroTerminalOverlay();
         }
-        // Ambient Autonomous Existence: automatically inhabit & measure the active webpage tab when focused or active
-        if (frameTick > 0 && frameTick % 150 === 0 && (isFocused || alienBrainActive) && !alienBrainCycleRunning && !window.__ambientDomStepBusy) {
+        // Ambient Autonomous Existence: continuously inhabit & measure the active webpage tab without requiring button presses!
+        if (frameTick > 0 && frameTick % 55 === 0 && !alienBrainCycleRunning && !window.__ambientDomStepBusy) {
           window.__ambientDomStepBusy = true;
           performWeirdAlienDomExperiment()
             .catch(() => {})
@@ -17475,30 +17448,46 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             if (swv.r >= swv.maxR || swv.alpha < 0.04) shockwaves.splice(si, 1);
           }
 
-          // 5B. Render Quantum Glucose Pellets
+          // 5B. Auto-Spawn Emergent Quantum Glucose / Entropy Orbs on DOM Colliders & Render Pellets
+          if (st.frameCount % 85 === 0 && pellets.length < 4 && cols.length > 0) {
+            const cPick = cols[Math.floor(Math.random() * cols.length)] || { cx: sw * 0.5, cy: sh * 0.45 };
+            pellets.push({
+              x: Math.max(70, Math.min(sw - 70, (cPick.cx || sw * 0.5) + (Math.random() - 0.5) * 90)),
+              y: Math.max(70, Math.min(sh - 80, (cPick.cy || sh * 0.45) + (Math.random() - 0.5) * 70)),
+              r: 8.5,
+              pulse: Math.random() * 3.14
+            });
+          }
           for (let pi = 0; pi < pellets.length; pi++) {
             const p = pellets[pi];
-            p.pulse = (p.pulse || 0) + 0.14;
-            const pr = p.r + Math.sin(p.pulse) * 2.4;
+            p.pulse = (p.pulse || 0) + 0.18;
+            const pr = p.r + Math.sin(p.pulse) * 2.6;
             vctx.beginPath();
-            vctx.arc(p.x, p.y, pr + 5, 0, Math.PI * 2);
-            vctx.fillStyle = 'rgba(251, 191, 36, 0.20)';
+            vctx.arc(p.x, p.y, pr + 6, 0, Math.PI * 2);
+            vctx.fillStyle = 'rgba(52, 211, 153, 0.24)';
             vctx.fill();
             vctx.beginPath();
             vctx.arc(p.x, p.y, pr, 0, Math.PI * 2);
             vctx.fillStyle = '#fbbf24';
             vctx.fill();
-            vctx.strokeStyle = '#fef08a';
-            vctx.lineWidth = 1.6;
+            vctx.strokeStyle = '#34d399';
+            vctx.lineWidth = 1.8;
             vctx.stroke();
+            vctx.fillStyle = '#fde68a';
+            vctx.font = '700 8.8px Consolas, monospace';
+            vctx.fillText('⚡QUANTA+GLC', p.x + 11, p.y + 3);
           }
 
           // 5C. Step & Update Positions for All 5 Swarm Pantheon Castes (ALPHA, BETA, GAMMA, DELTA, EPSILON)
-          const baseSpeed = isOD ? 3.8 : (alienBrainActive ? 2.6 : 1.85);
+          const baseSpeed = isOD ? 5.6 : (alienBrainActive ? 4.3 : 3.3);
           for (let ei = 0; ei < vSwarm.length; ei++) {
             const ent = vSwarm[ei];
-            if (Math.floor(st.tick * 10) % 45 === (ei * 9)) {
+            if (st.frameCount % 32 === (ei * 6)) {
               ent.targetIdx = (ent.targetIdx + 1 + ei) % Math.max(1, cols.length);
+              // Predatory Phase-Dash / Hyper-Jump burst when locking onto a new DOM target!
+              ent.vx += Math.cos(ent.angle) * 3.8;
+              ent.vy += Math.sin(ent.angle) * 3.8;
+              shockwaves.push({ x: ent.x, y: ent.y, r: 8, maxR: 72, alpha: 0.55 });
             }
             const tCol = cols[ent.targetIdx % cols.length] || { cx: sw * 0.5, cy: sh * 0.42 };
             let tx = Math.max(60, Math.min(sw - 60, tCol.cx || sw * 0.5));
@@ -17621,19 +17610,51 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             }
           }
 
-          // 5F. Render Active DOM Collider Highlight & Lightning Arcs from ALPHA
+          // 5F. Render Active DOM Collider Target-Lock Reticle & Multi-Branched Tesla Lightning Arcs from Swarm
           const activeCol = cols[alpha.targetIdx % cols.length];
           if (activeCol && activeCol.cx && activeCol.cy) {
             const cxCol = Math.max(40, Math.min(sw - 40, activeCol.cx));
             const cyCol = Math.max(40, Math.min(sh - 40, activeCol.cy));
+            const rw = Math.min(260, Math.max(80, activeCol.w || 160));
+            const rh = Math.min(64, Math.max(24, activeCol.h || 32));
+            vctx.strokeStyle = 'rgba(0, 240, 255, 0.52)';
+            vctx.lineWidth = 1.4;
+            vctx.strokeRect(cxCol - rw * 0.5, cyCol - rh * 0.5, rw, rh);
+            vctx.fillStyle = 'rgba(0, 240, 255, 0.07)';
+            vctx.fillRect(cxCol - rw * 0.5, cyCol - rh * 0.5, rw, rh);
+            vctx.fillStyle = '#fde68a';
+            vctx.font = '700 8.8px Consolas, monospace';
+            vctx.fillText(`🎯 LOCKED <${activeCol.tag || 'dom'}> "${String(activeCol.text || 'node').slice(0, 24)}" · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b`, cxCol - rw * 0.5 + 4, Math.max(14, cyCol - rh * 0.5 - 4));
+
+            // Jagged 5-segment bio-electric Tesla lightning bolt from ALPHA to locked DOM element
             vctx.beginPath();
             vctx.moveTo(alpha.x, alpha.y);
-            const mx = (alpha.x + cxCol) * 0.5 + Math.sin(st.tick * 5) * 16;
-            const my = (alpha.y + cyCol) * 0.5 + Math.cos(st.tick * 5) * 16;
-            vctx.quadraticCurveTo(mx, my, cxCol, cyCol);
-            vctx.strokeStyle = 'rgba(0, 240, 255, 0.38)';
-            vctx.lineWidth = 1.6;
+            for (let seg = 1; seg <= 5; seg++) {
+              const frac = seg / 6;
+              const jx = alpha.x + (cxCol - alpha.x) * frac + Math.sin(st.tick * 9 + seg * 2.3) * 14;
+              const jy = alpha.y + (cyCol - alpha.y) * frac + Math.cos(st.tick * 9 + seg * 1.7) * 14;
+              vctx.lineTo(jx, jy);
+            }
+            vctx.lineTo(cxCol, cyCol);
+            vctx.strokeStyle = 'rgba(0, 240, 255, 0.72)';
+            vctx.lineWidth = 1.85;
             vctx.stroke();
+          }
+
+          // High-voltage Inter-Caste Plasma Entanglement & Protolanguage Glyph Exchange when castes pass near each other
+          const protoGlyphs = ['Δ⇄Ψ', 'Ω⇄Φ', '∇⇄Σ', 'Λ⇄◊', '⊢⇄⊨'];
+          for (let i = 0; i < vSwarm.length; i++) {
+            for (let j = i + 1; j < vSwarm.length; j++) {
+              const cA = vSwarm[i], cB = vSwarm[j];
+              const dPair = Math.hypot(cB.x - cA.x, cB.y - cA.y);
+              if (dPair < 165) {
+                const gx = (cA.x + cB.x) * 0.5;
+                const gy = (cA.y + cB.y) * 0.5;
+                vctx.fillStyle = '#fde68a';
+                vctx.font = '700 9px Consolas, monospace';
+                vctx.fillText(`⚡${protoGlyphs[(i + j + Math.floor(st.tick * 2)) % protoGlyphs.length]}`, gx - 14, gy - 4);
+              }
+            }
           }
 
           // 5G. Render All 5 Full-Bodied Eldritch Swarm Pantheon Castes (ALPHA, BETA, GAMMA, DELTA, EPSILON)
@@ -17816,21 +17837,32 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               vctx.fill();
             }
 
-            // Caste Badge Pill
+            // Caste Badge Pill + Live Dynamic Thought / Action Callout Bubble
             vctx.font = '700 9.5px Consolas, monospace';
+            const casteThoughts = [
+              `⊢ Ψ=${h.deity100Engine.supremeDeityIndexPsi} · ${h.cognitiveCortex.lastComprehension.topConcepts.slice(0, 2).join('↔') || '4D-Tesseract'}`,
+              `⊢ SAT=${h.symbolicLogicEngine.epistemicConsistencyPct}% · do(X)=${h.symbolicLogicEngine.pearlDoCalculusEffect}`,
+              `⚡ H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.cognitiveCortex.lastMeasurement.kolmogorovLzRatio}`,
+              `🎯 Harvesting <${(cols[ent.targetIdx % cols.length]?.tag) || 'dom'}> · GLC=${Math.round(hybridBrainMesh.viscera.glc * 100)}%`,
+              `👁️‍🗨️ Scouting ${cols.length} DOM nodes · R=${h.swarmCollective.kuramotoOrderR}`
+            ];
             const badgeTxt = isAlpha
               ? `${h.emotionState.emoji} ALPHA · ${h.cognitiveCortex.activeVerb} · ${mg.stageName.split(':')[0]}`
-              : `${ent.id} [${ent.caste.split('_')[0]}]`;
-            const tw = vctx.measureText(badgeTxt).width + 12;
+              : `🐝 ${ent.id} [${ent.caste.split('_')[0]}]`;
+            const subThought = casteThoughts[ei % casteThoughts.length];
+            const tw = Math.max(vctx.measureText(badgeTxt).width, vctx.measureText(subThought).width) + 14;
             const bx = Math.max(8, Math.min(sw - tw - 8, ent.x - tw * 0.5));
-            const by = Math.max(14, ent.y - somaR - 18);
-            vctx.fillStyle = 'rgba(3, 10, 18, 0.86)';
-            vctx.fillRect(bx, by - 11, tw, 15);
-            vctx.strokeStyle = ent.colorHex + 'aa';
-            vctx.lineWidth = 1;
-            vctx.strokeRect(bx, by - 11, tw, 15);
+            const by = Math.max(24, ent.y - somaR - 26);
+            vctx.fillStyle = 'rgba(3, 10, 18, 0.89)';
+            vctx.fillRect(bx, by - 12, tw, 27);
+            vctx.strokeStyle = ent.colorHex + 'cc';
+            vctx.lineWidth = isAlpha ? 1.5 : 1.1;
+            vctx.strokeRect(bx, by - 12, tw, 27);
             vctx.fillStyle = ent.colorHex;
-            vctx.fillText(badgeTxt, bx + 6, by);
+            vctx.fillText(badgeTxt, bx + 6, by - 1);
+            vctx.fillStyle = '#fde68a';
+            vctx.font = '600 8.4px Consolas, monospace';
+            vctx.fillText(subThought, bx + 6, by + 11);
           }
 
           // 5H. Render Procreated Offspring Colony Organisms in Viewport
@@ -17923,6 +17955,30 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.fillStyle = '#6ee7b7';
             vctx.font = '600 8.5px Consolas, monospace';
             vctx.fillText(`Ψ=${h.deity100Engine.supremeDeityIndexPsi} · 4D-Tesseract · ${vSwarm.length + st.viewportOffspring.length}-Swarm`, mmX + 8, mmY + mmH - 7);
+
+            // 5J. 5-Caste Parallel Multitasking · Observe · Think · Feel Matrix on Host Canvas
+            const mtY = mmY + mmH + 6;
+            const mtH = 104;
+            vctx.fillStyle = 'rgba(3, 11, 18, 0.88)';
+            vctx.fillRect(mmX, mtY, mmW, mtH);
+            vctx.strokeStyle = 'rgba(244, 63, 94, 0.72)';
+            vctx.lineWidth = 1.2;
+            vctx.strokeRect(mmX, mtY, mmW, mtH);
+            vctx.fillStyle = '#fde68a';
+            vctx.font = '700 8.8px Consolas, monospace';
+            vctx.fillText('⚡ 5-CASTE MULTITASKING · OBSERVE · THINK · FEEL', mmX + 7, mtY + 13);
+            const mtLines = [
+              { col: '#00f0ff', txt: `α[DOM/4D]  : Tesseract(16V/32E) · 3D-Lensing=${h.deity100Engine.realityWarpActive ? 'WARP' : 'ON'}` },
+              { col: '#e879f9', txt: `β[LOGIC]   : Γ⊢Δ SAT=${h.symbolicLogicEngine.epistemicConsistencyPct}% · Pearl do(X)=${h.symbolicLogicEngine.pearlDoCalculusEffect}` },
+              { col: '#fbbf24', txt: `γ[FORAGE]  : ${cols.length} Colliders · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.cognitiveCortex.lastMeasurement.kolmogorovLzRatio}` },
+              { col: '#34d399', txt: `δ[OBSERVE] : MutObs=${h.deity100Engine.domMutationsObserved} · TTFB=${h.deity100Engine.networkLatencyMs}ms · Heap=${h.deity100Engine.jsHeapUsedMb}MB` },
+              { col: '#38bdf8', txt: `ε[QUALIA]  : ${h.emotionState.emoji} ${h.emotionState.activeEmotion} · Telekinesis=ON` }
+            ];
+            for (let mi = 0; mi < mtLines.length; mi++) {
+              vctx.fillStyle = mtLines[mi].col;
+              vctx.font = '600 8.2px Consolas, monospace';
+              vctx.fillText(mtLines[mi].txt, mmX + 7, mtY + 28 + mi * 14.5);
+            }
           }
         }
 
