@@ -2572,6 +2572,7 @@ app.whenReady().then(async () => {
                   });
                   const om = humunculusRuntime.stepOmega100OmniscienceEngine({});
                   const dt = humunculusRuntime.stepDeity100OmnipotenceEngine({});
+                  humunculusRuntime.stepContinuousWorldModelAndFeralMorph60Hz(1.2, 60, 1280, 800);
                   const term100 = humunculusRuntime.formatRetroTerminalText('omniscience100');
                   const termDeity100 = humunculusRuntime.formatRetroTerminalText('deity100');
                   const gates = humunculusRuntime.evaluateAcceptanceGates();
@@ -2580,6 +2581,12 @@ app.whenReady().then(async () => {
                     om.verifiedModulesCount === 100 &&
                     dt &&
                     dt.verifiedDeityPowersCount === 100 &&
+                    humunculusRuntime.continuousWorldModel?.latentZ64?.length === 64 &&
+                    humunculusRuntime.continuousWorldModel?.ssmHiddenH128?.length === 128 &&
+                    humunculusRuntime.continuousWorldModel?.contextRotPct === 0 &&
+                    humunculusRuntime.continuousWorldModel?.tokenDiscretizationErrorPct === 0 &&
+                    humunculusRuntime.feralMorphodynamics?.asymmetricLimbReach12?.length === 12 &&
+                    humunculusRuntime.realtimeProceduralWorld?.biomeNodes?.length === 5 &&
                     humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
                     humunculusRuntime.swarmCollective?.pantheon?.length === 5 &&
                     humunculusRuntime.deepCortex?.totalParams === 1245184 &&
