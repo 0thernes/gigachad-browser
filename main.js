@@ -2670,6 +2670,15 @@ app.whenReady().then(async () => {
                   const term100 = humunculusRuntime.formatRetroTerminalText('omniscience100');
                   const termDeity100 = humunculusRuntime.formatRetroTerminalText('deity100');
                   const gates = humunculusRuntime.evaluateAcceptanceGates();
+                  const drawerEl = document.getElementById('alien-brain-drawer');
+                  const prevDrawerDisp = drawerEl ? drawerEl.style.display : 'none';
+                  if (drawerEl) drawerEl.style.display = 'flex';
+                  if (typeof setHybridMeshZoomTier === 'function') {
+                    setHybridMeshZoomTier(5);
+                    setHybridMeshZoomTier(6);
+                    setHybridMeshZoomTier(1);
+                  }
+                  if (drawerEl) drawerEl.style.display = prevDrawerDisp;
                   const alifeChecks = {
                     omOk: Boolean(om && om.verifiedModulesCount === 100),
                     dtOk: Boolean(dt && dt.verifiedDeityPowersCount === 100),
@@ -2706,10 +2715,13 @@ app.whenReady().then(async () => {
                       humunculusRuntime.decursiveSelfDeduplicator?.ssmEigenRepulsionsCount >= 1 &&
                       humunculusRuntime.neuralSubstrateTelemetry?.perelmanWEntropy > 0 &&
                       humunculusRuntime.neuralSubstrateTelemetry?.ryuTakayanagiBulkEntropy > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.adsCftDualityRatio > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.ntkTraceNorm > 0 &&
                       humunculusRuntime.neuralSubstrateTelemetry?.hodgeHarmonicFlowPct > 0
                     ),
                     metaOk: Boolean(
                       document.getElementById('hybrid-tier-btn-5') &&
+                      document.getElementById('hybrid-tier-btn-6') &&
                       humunculusRuntime.multivectorMetacognitionEngine?.cliffordMultivector16?.length === 16 &&
                       humunculusRuntime.multivectorMetacognitionEngine?.metacognitiveGrid8x8?.length === 64 &&
                       humunculusRuntime.multivectorMetacognitionEngine?.omnigradientNaturalGrad64?.length === 64 &&
