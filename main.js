@@ -2599,6 +2599,10 @@ app.whenReady().then(async () => {
                     humunculusRuntime.decursiveSelfDeduplicator?.auctionPrices16?.length === 16 &&
                     humunculusRuntime.decursiveSelfDeduplicator?.chebyshevScratch64?.length === 64 &&
                     humunculusRuntime.decursiveSelfDeduplicator?.chiralLimbParity12?.length === 12 &&
+                    humunculusRuntime.multivectorMetacognitionEngine?.cliffordMultivector16?.length === 16 &&
+                    humunculusRuntime.multivectorMetacognitionEngine?.metacognitiveGrid8x8?.length === 64 &&
+                    humunculusRuntime.multivectorMetacognitionEngine?.omnigradientNaturalGrad64?.length === 64 &&
+                    typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
                     typeof triggerPrimarkDecursiveSelfDeduplicationBurst === 'function' &&
                     humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
                     humunculusRuntime.swarmCollective?.pantheon?.length === 5 &&
