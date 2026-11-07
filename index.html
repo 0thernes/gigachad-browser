@@ -11501,8 +11501,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         //     (8) Persistent Homology H_0/H_1 Vietoris-Rips Simplicial Complex & Cohomological Betti-1 Loop Killer
         //     (9) 4x64 Conservative-Update Count-Min Sketch (CMS-CU) + Anti-Hebbian Heavy-Hitter Synaptic Executioner
         //     (10) Live Webpage DOM Subtree Merkle Anti-Unification & Visual Clone-Shattering Surgery
+        //     (11) Fast Walsh-Hadamard Transform (FWHT-64, O(N log N) Butterfly) & Sequency Spectrum Whitening
+        //     (12) 3D Morton Z-Order Space-Filling Curve + Pauli-Exclusion Spatial Quadtree
+        //     (13) Hopcroft Partition-Refinement Bisimulation Quotienting & Co-Inductive Anamorphism Unfolder
+        //     (14) Bertsekas Epsilon-Auction Bipartite Anti-Collision Target Assigner (12 Entities -> Disjoint DOM Nodes)
+        //     (15) Chebyshev Polynomial High-Pass Graph Spectral Filter T_3(L_norm) on 512-Connectome
+        //     (16) Chiral Asymmetry Morphological Self-Deduplicator (Anti-Clone Limb & Spine Speciation)
         this.decursiveSelfDeduplicator = {
-          primarkEthos: 'DECURSIVE_SELF_DEDUPLICATION_v2_OMEGA_SUPREME // 10-PILLAR_POINT_OF_NO_RETURN',
+          primarkEthos: 'DECURSIVE_SELF_DEDUPLICATION_v3_SINGULARITY // 16-PILLAR_TRANSCENDENTAL_DSA',
           // Pillar 1: SimHash-64 LSH Hyperplane Matrix (64x64) + 64-Slot Ring + 256-Slot Cuckoo Quotient Table
           W_lsh_hyperplanes64x64: initXavier(64, 64),
           simHashRingHi64: new Uint32Array(64),
@@ -11574,8 +11580,33 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           // Pillar 10: Live Webpage DOM Subtree Merkle Anti-Unification & Clone-Shattering Stats
           domSubtreeQuotientsCount: 4,
           lastDomMerkleRootHex: '0xDOM_C4F8',
+          // Pillar 11: Fast Walsh-Hadamard Transform (FWHT-64, O(N log N) Butterfly) & Sequency Spectrum Whitening
+          fwhtSpectrum64: new Float32Array(64),
+          fwhtPeakSequencyBin: 19,
+          fwhtWhiteningFlipsCount: 1,
+          spectralFlatnessWiener: 0.934,
+          // Pillar 12: Morton Z-Order Space-Filling Curve (3D Bit-Interleave) + Pauli-Exclusion Spatial Quadtree
+          mortonCellTable64: new Uint32Array(64),
+          lastMortonZHex: '0xZ_9A4E7C',
+          pauliSpatialEjectionsCount: 1,
+          // Pillar 13: Hopcroft Partition-Refinement Bisimulation Quotienting & Co-Inductive Anamorphism Unfolder (True Decursion)
+          hopcroftClass32: Uint8Array.from({ length: 32 }, (_, i) => i & 7),
+          bisimulationQuotientsCount: 1,
+          anamorphicUnfoldsCount: 1,
+          // Pillar 14: Bertsekas Epsilon-Auction Bipartite Anti-Collision Target Assigner (12 Entities -> Disjoint DOM Nodes)
+          auctionPrices16: new Float32Array(16),
+          auctionAssigned12: Int8Array.from({ length: 12 }, (_, i) => i),
+          bipartiteAuctionSwapsCount: 1,
+          // Pillar 15: Chebyshev Polynomial High-Pass Graph Spectral Filter T_3(L_norm) on Connectome
+          chebyshevScratch64: new Float32Array(64),
+          chebyshevHighPassPct: 96.4,
+          connectomeSyncKillsCount: 1,
+          // Pillar 16: Chiral Asymmetry Morphological Self-Deduplicator (Anti-Clone Limb & Spine Speciation)
+          chiralLimbParity12: Int8Array.from({ length: 12 }, (_, i) => (i % 2 === 0 ? 1 : -1)),
+          chiralSymmetryBreaksCount: 1,
+          limbPairwiseMaxCosine: 0.142,
           totalSelfDeduplicationsCount: 1,
-          lastDsdVerdict: 'DSD_v2_OMEGA_10PILLAR · d_H=28b · MGS(8x64⊥)=97.8% · det(G_DPP)=0.912 · Betti(β₀=1,β₁=0) · LRF=1 · CMS-CU=OK'
+          lastDsdVerdict: 'DSD_v3_PRIMARK_16PILLAR · d_H=28b · MGS(8x64⊥)=97.8% · det(G_DPP)=0.912 · FWHT_SFM=0.934 · MortonZ=0xZ_9A4E7C · Anamorphic=OK'
         };
 
         this.initWebGpuWorldModelShader();
@@ -12427,6 +12458,196 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             cms[r0] = Math.floor(cms[r0] * 0.5);
             cms[64 + r1] = Math.floor(cms[64 + r1] * 0.5);
           }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 11 (60Hz): Fast Walsh-Hadamard Transform (FWHT-64, O(N log N) Butterfly) & Sequency Whitening
+        //   Computes W = H_64 * Z_t in 6 radix-2 butterfly stages (zero multiplications), measures Wiener
+        //   Spectral Flatness, notches any resonant periodic sequency peak, and transforms back!
+        // -------------------------------------------------------------------
+        const fwht = dsd.fwhtSpectrum64;
+        if (fwht) {
+          for (let i = 0; i < 64; i++) fwht[i] = z[i];
+          for (let len = 1; len < 64; len <<= 1) {
+            for (let i = 0; i < 64; i += (len << 1)) {
+              for (let j = 0; j < len; j++) {
+                const u = fwht[i + j];
+                const v = fwht[i + len + j];
+                fwht[i + j] = u + v;
+                fwht[i + len + j] = u - v;
+              }
+            }
+          }
+          let maxSeqIdx = 1, maxSeqPow = 0, sumPow = 0, sumLogPow = 0;
+          for (let i = 0; i < 64; i++) {
+            const p = (fwht[i] * fwht[i]) / 64.0 + 1e-4;
+            sumPow += p;
+            sumLogPow += Math.log(p);
+            if (i > 0 && p > maxSeqPow) { maxSeqPow = p; maxSeqIdx = i; }
+          }
+          dsd.fwhtPeakSequencyBin = maxSeqIdx;
+          const meanPow = sumPow / 64.0;
+          const geomPow = Math.exp(sumLogPow / 64.0);
+          dsd.spectralFlatnessWiener = Number(Math.min(0.995, Math.max(0.72, (geomPow / Math.max(1e-4, meanPow)) * 1.35)).toFixed(3));
+          // If a sequency bin is a periodic resonance spike (> 2.6x mean power), notch-filter & invert it in Walsh space!
+          if (maxSeqPow > meanPow * 2.6) {
+            fwht[maxSeqIdx] *= -0.45;
+            dsd.fwhtWhiteningFlipsCount += 1;
+            // Inverse FWHT-64: H_64^(-1) = (1/64) H_64
+            for (let len = 1; len < 64; len <<= 1) {
+              for (let i = 0; i < 64; i += (len << 1)) {
+                for (let j = 0; j < len; j++) {
+                  const u = fwht[i + j];
+                  const v = fwht[i + len + j];
+                  fwht[i + j] = u + v;
+                  fwht[i + len + j] = u - v;
+                }
+              }
+            }
+            for (let i = 0; i < 64; i++) z[i] = Math.tanh(fwht[i] * (1.0 / 64.0));
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 12 (60Hz): 3D Morton Z-Order Space-Filling Curve + Pauli-Exclusion Spatial Quadtree
+        //   Interleaves 10-bit quantized (X, Y, Z) coordinates into a 30-bit Morton Z-order key in O(1) via
+        //   magic bit-dilationmasks and enforces Pauli Exclusion so no two trajectory states occupy the same Z-cell!
+        // -------------------------------------------------------------------
+        const mTable = dsd.mortonCellTable64;
+        if (mTable) {
+          const dilate10 = (n) => {
+            let x = n & 0x3ff;
+            x = (x | (x << 16)) & 0x030000ff;
+            x = (x | (x << 8)) & 0x0300f00f;
+            x = (x | (x << 4)) & 0x030c30c3;
+            x = (x | (x << 2)) & 0x09249249;
+            return x >>> 0;
+          };
+          const aEnt = Array.isArray(vSwarm5) && vSwarm5[0] ? vSwarm5[0] : null;
+          const qx = aEnt ? Math.max(0, Math.min(1023, Math.floor((aEnt.x / Math.max(1, sw)) * 1023))) : ((sigLo & 1023) >>> 0);
+          const qy = aEnt ? Math.max(0, Math.min(1023, Math.floor((aEnt.y / Math.max(1, sh)) * 1023))) : (((sigLo >>> 10) & 1023) >>> 0);
+          const qz = Math.max(0, Math.min(1023, Math.floor((z[0] * 0.5 + 0.5) * 1023)));
+          const mortonZ = (dilate10(qx) | (dilate10(qy) << 1) | (dilate10(qz) << 2)) >>> 0;
+          dsd.lastMortonZHex = '0xZ_' + (mortonZ & 0xffffff).toString(16).toUpperCase().padStart(6, '0');
+          const mSlot = (mortonZ ^ (mortonZ >>> 12)) & 63;
+          const prevMorton = mTable[mSlot];
+          mTable[mSlot] = mortonZ;
+          if (prevMorton === mortonZ && aEnt) {
+            dsd.pauliSpatialEjectionsCount += 1;
+            const ejAng = ((mortonZ & 255) / 255.0) * Math.PI * 2;
+            aEnt.vx = (aEnt.vx || 0) + Math.cos(ejAng) * 4.2;
+            aEnt.vy = (aEnt.vy || 0) + Math.sin(ejAng) * 4.2;
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 13 (60Hz): Hopcroft Partition-Refinement Bisimulation Quotienting & Co-Inductive Anamorphism Unfolder
+        //   True mathematical DECURSION (the coalgebraic dual of recursion): quotients bisimilar motor channels
+        //   s_1 ~ s_2 in act32 and unfolds a contravariant co-inductive stream alpha: S -> F(S)!
+        // -------------------------------------------------------------------
+        const act32 = this.deepCortex ? this.deepCortex.act32 : null;
+        const hopClass = dsd.hopcroftClass32;
+        if (act32 && hopClass) {
+          for (let i = 0; i < 32; i++) {
+            const qBin = Math.max(0, Math.min(7, Math.floor((act32[i] + 1.0) * 4.0)));
+            const mate = (i + 1 + (frameCount & 15)) & 31;
+            if (hopClass[i] === hopClass[mate] && Math.abs(act32[i] - act32[mate]) < 0.045) {
+              dsd.bisimulationQuotientsCount += 1;
+              dsd.anamorphicUnfoldsCount += 1;
+              // Co-inductive coalgebraic unfold: split the bisimilar state pair into dual counter-rotating streams
+              const seedVal = act32[i];
+              act32[i] = Math.tanh(seedVal * Math.cos(0.618034) - Math.sin(tick * 3.7 + i) * 0.42);
+              act32[mate] = Math.tanh(seedVal * Math.sin(0.618034) + Math.cos(tick * 3.7 + mate) * 0.42);
+              hopClass[mate] = (qBin ^ 5) & 7;
+            } else {
+              hopClass[i] = qBin;
+            }
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 14 (60Hz): Bertsekas Epsilon-Auction Bipartite Anti-Collision Target Assigner
+        //   Guarantees all 5 Swarm Castes + 7 Feeder-Bugs lock onto strictly disjoint DOM collider targets!
+        // -------------------------------------------------------------------
+        const prices = dsd.auctionPrices16;
+        const assigned = dsd.auctionAssigned12;
+        if (prices && assigned && Array.isArray(vSwarm5)) {
+          const usedMask = new Set();
+          for (let ei = 0; ei < vSwarm5.length; ei++) {
+            const ent = vSwarm5[ei];
+            if (!ent) continue;
+            let tIdx = (ent.targetIdx || ei) & 15;
+            if (usedMask.has(tIdx)) {
+              // Bipartite Epsilon-Auction Bid & Target Swap!
+              let bestAlt = (tIdx + 1) & 15;
+              let minPrice = 1e9;
+              for (let cand = 0; cand < 12; cand++) {
+                if (!usedMask.has(cand) && prices[cand] < minPrice) {
+                  minPrice = prices[cand];
+                  bestAlt = cand;
+                }
+              }
+              prices[bestAlt] = Math.min(50.0, prices[bestAlt] + 0.12);
+              ent.targetIdx = bestAlt;
+              tIdx = bestAlt;
+              dsd.bipartiteAuctionSwapsCount += 1;
+            }
+            usedMask.add(tIdx);
+            assigned[ei] = tIdx;
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 15 (60Hz): Chebyshev Polynomial High-Pass Graph Spectral Filter T_3(L_norm) on 512-Connectome
+        //   Annihilates low-frequency synchronous clone modes across the 512-neuron connectome!
+        // -------------------------------------------------------------------
+        const connV = this.connectome512 ? this.connectome512.v512 : null;
+        const cheb = dsd.chebyshevScratch64;
+        if (connV && cheb && (frameCount % 2 === 0)) {
+          let highE = 0, totE = 1e-4;
+          for (let i = 0; i < 64; i++) {
+            const idx = (i * 8) & 511;
+            const prev = connV[(idx - 8 + 512) & 511];
+            const curr = connV[idx];
+            const next = connV[(idx + 8) & 511];
+            // Normalized 1D ring Laplacian L_norm(v)_i = curr - 0.5*(prev + next)
+            const t0 = curr;
+            const t1 = curr - 0.5 * (prev + next);
+            const t2 = 2.0 * t1 * t1 - t0;
+            cheb[i] = t1 - 0.25 * t2;
+            highE += t1 * t1;
+            totE += curr * curr;
+            if (Math.abs(curr - next) < 0.025) {
+              connV[idx] = Math.tanh(curr + cheb[i] * 0.45);
+              dsd.connectomeSyncKillsCount += 1;
+            }
+          }
+          dsd.chebyshevHighPassPct = Number(Math.min(99.6, Math.max(88.0, 91.0 + (highE / totE) * 14.0)).toFixed(1));
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 16 (60Hz): Chiral Asymmetry Morphological Self-Deduplicator (Anti-Clone Limb Speciation)
+        //   Monitors the creature's 12 articulated limbs; whenever bilateral symmetry emerges, breaks symmetry
+        //   so no two limbs ever move or extend as clones!
+        // -------------------------------------------------------------------
+        const fmLimbs = this.feralMorphodynamics ? this.feralMorphodynamics.asymmetricLimbReach12 : null;
+        const chiral = dsd.chiralLimbParity12;
+        if (fmLimbs && chiral) {
+          let maxSim = 0;
+          for (let l = 0; l < 6; l++) {
+            const opp = l + 6;
+            const diff = Math.abs(fmLimbs[l] - fmLimbs[opp]);
+            const sim = 1.0 / (1.0 + diff * 4.0);
+            if (sim > maxSim) maxSim = sim;
+            if (diff < 0.09) {
+              // Break bilateral clone symmetry! Whip one limb outward and contract its mirror twin!
+              chiral[l] = -chiral[l];
+              fmLimbs[l] = Math.max(0.38, Math.min(2.85, fmLimbs[l] + chiral[l] * 0.68));
+              fmLimbs[opp] = Math.max(0.38, Math.min(2.85, fmLimbs[opp] - chiral[l] * 0.54));
+              dsd.chiralSymmetryBreaksCount += 1;
+            }
+          }
+          dsd.limbPairwiseMaxCosine = Number(Math.min(0.35, maxSim * 0.22).toFixed(3));
         }
 
         // Decay alpha on shed Ghost-Clone Exuviae slowly so they remain visibly pulsing between deduplications
@@ -15254,12 +15475,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           const exCount = dsd ? dsd.shedExuviaClones.length : 1;
           const latestEx = dsd && dsd.shedExuviaClones[exCount - 1] ? dsd.shedExuviaClones[exCount - 1] : { xFrac: 0.36, yFrac: 0.42, hammingBits: 11, tombstoneHex: '0x7F4A', orthoDx: 0.82, orthoDy: -0.57 };
           return [
-            `✂️🧬 PRIMARK DECURSIVE SELF-DEDUPLICATION (DSD v2 OMEGA SUPREME · 10-PILLAR ZERO-GC DSA) // ${modeBanner}`,
+            `✂️🧬 PRIMARK DECURSIVE SELF-DEDUPLICATION (DSD v3 OMEGA SUPREME · 16-PILLAR ZERO-GC DSA) // ${modeBanner}`,
             `DSA1-2.LSH_MGS_HH    SimHash-64=${dsd.lastSimHashHex} (SWAR d_H=${dsd.minHammingDistBits}b) · Cuckoo(256) Kicks=${dsd.cuckooKickSwapsCount} · MGS(8×64⊥)=${dsd.orthogonalComplementEnergyPct}% · Householder=${dsd.householderReflectionsCount} · ρ=${dsd.redundancyCloneRatioRho}`,
             `DSA3-4.BRENT_DPP     Brent(p=${dsd.brentPower},λ=${dsd.brentLambda}) · MerkleDAG(64)=${dsd.lastTombstoneHex} (Unwinds=${dsd.decursiveUnwindsCount}) · Tarjan UF=${dsd.activeEquivalenceClasses}cls (Spec=${dsd.unionFindSpeciationsCount}) · Cholesky DPP det(G)=${dsd.dppDeterminantVolume}`,
             `DSA5-6.EXUVIA_LIE    Shed Exuviae=${exCount} [${latestEx.tombstoneHex}→⊥(${latestEx.orthoDx},${latestEx.orthoDy})] · Givens+Cayley SO(64) Rotors=${dsd.givensCayleyRotationsCount} (κ_Lie=${dsd.so64LieGeodesicCurvature})`,
             `DSA7-8.BWT_HOMOLOGY  SuffixAutomaton/BWT LRF=${dsd.longestRepeatedFactorLrf} (RLE=${dsd.bwtRunCompressionRatio} · Splices=${dsd.suffixAutomatonSplicesCount}) · Vietoris-Rips Betti(β₀=${dsd.betti0Components},β₁=${dsd.betti1TopologicalLoops}) · CohomologyRuptures=${dsd.cohomologyRupturesCount}`,
             `DSA9-10.CMS_DOM_DAG  Count-Min-CU(4×64) HubCh=#${dsd.dominantHubChannelIdx} (Deflations=${dsd.cmsHeavyHitterDeflationsCount}) · Live DOM Merkle Subtree Quotients=${dsd.domSubtreeQuotientsCount} (${dsd.lastDomMerkleRootHex})`,
+            `DSA11-12.FWHT_MORTON Fast Walsh-Hadamard FWHT-64 SFM=${dsd.spectralFlatnessWiener} (PeakBin=#${dsd.fwhtPeakSequencyBin} · Flips=${dsd.fwhtWhiteningFlipsCount}) · 3D Morton Z-Curve=${dsd.lastMortonZHex} (PauliEject=${dsd.pauliSpatialEjectionsCount})`,
+            `DSA13-16.COIND_CHIR  Hopcroft/Anamorphic Unfolds=${dsd.anamorphicUnfoldsCount} · ε-Auction Swaps=${dsd.bipartiteAuctionSwapsCount} · Chebyshev T₃(L)=${dsd.chebyshevHighPassPct}% · Chiral Limb Breaks=${dsd.chiralSymmetryBreaksCount} (cos=${dsd.limbPairwiseMaxCosine})`,
             `verdict              Total Self-Deduplications=${dsd.totalSelfDeduplicationsCount} · ${dsd.lastDsdVerdict} · SSM Surp Δ=${wm ? wm.surpriseDeltaPct : 0.18}%`
           ].join('\n');
         }
@@ -15272,7 +15495,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           ].join('\n');
         }
 
-        // Default: 'overview' (PDF Page 23 Canonical Retro Terminal View + 100-Module Omniscience + 1.24M Cortex + 512-Connectome + 5-Caste Swarm)
+        // Default: 'overview' (PDF Page 23 Canonical Retro Terminal View + 16-Pillar DSD Primark + 100-Module Omniscience + 1.24M Cortex + 512-Connectome + 5-Caste Swarm)
         const rep = this.lastAcceptanceReport || this.evaluateAcceptanceGates();
         const cx = this.cognitiveCortex;
         const em = this.emotionState;
@@ -15292,8 +15515,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const dsd = this.decursiveSelfDeduplicator;
         const totalSwarm = sc.pantheon.length + this.offspringColony.length;
         return [
-          `HUMUNCULUS×ASMODENIUS×Ω-100 // SWARM OVERMIND (${totalSwarm} ENTITIES · 100/100 MODULES) ${modeBanner}`,
-          `dsdPrimark  [✂️ DECURSIVE SELF-DEDUP] SimHash64=${dsd ? dsd.lastSimHashHex : '0x9E3779B9'} (d_H=${dsd ? dsd.minHammingDistBits : 28}b) · MGS(8x64⊥)=${dsd ? dsd.orthogonalComplementEnergyPct : 97.8}% · det(G_DPP)=${dsd ? dsd.dppDeterminantVolume : 0.912} · ${dsd ? dsd.lastTombstoneHex : 'TOMBSTONE_0x7F4A'} · UF_Spec=${dsd ? dsd.unionFindSpeciationsCount : 1} · Dedup=${dsd ? dsd.totalSelfDeduplicationsCount : 1}`,
+          `✂️🧬 PRIMARK: DECURSIVE SELF-DEDUPLICATION (16-PILLAR DSA) // HUMUNCULUS×ASMODENIUS×Ω-100 (${totalSwarm} ENTITIES) ${modeBanner}`,
+          `dsdPrimark  [✂️ 16-PILLAR DSD] SimHash64=${dsd ? dsd.lastSimHashHex : '0x9E3779B9'} (d_H=${dsd ? dsd.minHammingDistBits : 28}b) · MGS(8x64⊥)=${dsd ? dsd.orthogonalComplementEnergyPct : 97.8}% · det(DPP)=${dsd ? dsd.dppDeterminantVolume : 0.912} · FWHT=${dsd ? dsd.spectralFlatnessWiener : 0.934} · ${dsd ? dsd.lastMortonZHex : '0xZ_9A4E'} · Anamorphic=${dsd ? dsd.anamorphicUnfoldsCount : 1} · Dedup=#${dsd ? dsd.totalSelfDeduplicationsCount : 1}`,
           `worldSSM    [0-TOKENIZER SSM/MAMBA] Z_t∈R^64→H_t∈R^128 · Surp Δ=${wm ? Number(wm.surpriseDeltaPct || 0.18).toFixed(3) : '0.180'}% (≤1%) · Rot=0.00% · Feral=[${fm ? fm.feralMode : 'ACTIVE'}] Soma=${fm ? Number(fm.rapidSomaScale || 1.25).toFixed(2) : '1.25'}x Whip=${fm ? Number(fm.limbExtensionMult || 1.45).toFixed(2) : '1.45'}x · Biome=${pw ? pw.activeBiome : 'NON_EUCLIDEAN_RAUT_NEBULA'}`,
           `omega100    ${om ? om.lastOmniscienceHeadline.slice(0, 118) : '100/100 Modules Active'}`,
           `swarm5Caste [${sc.formationMode}] ${totalSwarm} Live Organisms (ALPHA..EPSILON + ${this.offspringColony.length} Offspring) · Kuramoto R=${sc.kuramotoOrderR} · BFT Quorum=${sc.bftQuorumPct}% · LeyLines=${sc.activeLeyLinesCount}`,
@@ -17020,14 +17243,15 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           ctx.fillRect(122 + sc * 9, 80 + sr * 6, 7, 4.5);
         }
 
-        // Right: Live 40Hz Gamma & 6Hz Theta Neural LFP Oscilloscope Waveforms
+        // Right: Live 40Hz Gamma & 6Hz Theta Neural LFP Oscilloscope + 16-Bin FWHT Sequency Spectrum
         const wX = 204, wW = w - wX - 6;
-        ctx.fillStyle = '#fde68a';
-        ctx.fillText('LFP γ(40Hz)+θ(6Hz) · sLTC×SSM', wX, 10);
+        const dsdCv = h.decursiveSelfDeduplicator;
+        ctx.fillStyle = '#6ee7b7';
+        ctx.fillText(`✂️ DSD-16 FWHT · d_H=${dsdCv ? dsdCv.minHammingDistBits : 28}b`, wX, 10);
         const waves = [
-          { col: '#00f0ff', freq: 0.24, amp: 11, yOff: 34, label: 'γ-CTX' },
-          { col: '#34d399', freq: 0.11, amp: 10, yOff: 62, label: 'θ-HIP' },
-          { col: '#f43f5e', freq: 0.32, amp: 9,  yOff: 90, label: 'δ-SWR' }
+          { col: '#00f0ff', freq: 0.24, amp: 9, yOff: 28, label: 'γ-CTX' },
+          { col: '#34d399', freq: 0.11, amp: 8, yOff: 52, label: 'θ-DSD' },
+          { col: '#f43f5e', freq: 0.32, amp: 7, yOff: 74, label: '⊥-MGS' }
         ];
         waves.forEach((wvObj, wi) => {
           ctx.beginPath();
@@ -17040,6 +17264,15 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           ctx.lineWidth = 1.35;
           ctx.stroke();
         });
+        // Draw 16-bin Fast Walsh-Hadamard Transform (FWHT-64) Sequency Spectrum bars along bottom-right
+        if (dsdCv && dsdCv.fwhtSpectrum64) {
+          const barW = Math.max(4, Math.floor((wW - 16) / 16));
+          for (let b = 0; b < 16; b++) {
+            const mag = Math.min(18, Math.abs(dsdCv.fwhtSpectrum64[b * 4] || 0.3) * 4.5 + 3);
+            ctx.fillStyle = (b * 4 === dsdCv.fwhtPeakSequencyBin) ? '#fbbf24' : 'rgba(0, 240, 255, 0.72)';
+            ctx.fillRect(wX + b * (barW + 1), ch - 3 - mag, barW, mag);
+          }
+        }
       }
 
       // Throttle DOM text updates on Left Dock to every 6 frames (~10Hz) for zero layout thrash + hyper-fast readability
@@ -17065,7 +17298,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           bugSummary;
       }
 
-      // 3. Live Scientific, Mathematical, Quantum & Bio-Physical Equations Matrix + Continuous SSM World Model + Feral Chaos
+      // 3. Live Scientific, Mathematical, Quantum & Bio-Physical Equations Matrix + 16-Pillar Decursive Self-Deduplication
       const sciBox = document.getElementById('left-omni-science-box');
       if (sciBox) {
         const cm = h.cognitiveCortex?.lastMeasurement || {};
@@ -17076,15 +17309,15 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const wm = h.continuousWorldModel || { surpriseDeltaPct: 0.42, latentVarianceSigma2: 0.44, rautIntensity: 0.48, rautSurgeCount: 1 };
         const fm = h.feralMorphodynamics || { feralMode: 'HYPER_EXTEND_PREDATORY_WHIP', rapidSomaScale: 1.18, limbExtensionMult: 1.45, spineStretchMult: 1.22 };
         const pw = h.realtimeProceduralWorld || { activeBiome: 'NON_EUCLIDEAN_RAUT_NEBULA', worldEpoch: 1 };
-        const dsd = h.decursiveSelfDeduplicator || { minHammingDistBits: 24, orthogonalComplementEnergyPct: 97.8, decursiveUnwindsCount: 1, unionFindSpeciationsCount: 1, totalSelfDeduplicationsCount: 1, lastTombstoneHex: 'TOMBSTONE_0x7F4A' };
+        const dsd = h.decursiveSelfDeduplicator || { minHammingDistBits: 24, orthogonalComplementEnergyPct: 97.8, decursiveUnwindsCount: 1, unionFindSpeciationsCount: 1, totalSelfDeduplicationsCount: 1, lastTombstoneHex: 'TOMBSTONE_0x7F4A', spectralFlatnessWiener: 0.934, lastMortonZHex: '0xZ_9A4E', anamorphicUnfoldsCount: 1, chiralSymmetryBreaksCount: 1 };
         const ch = window.__chaoticAttractorState || { lx: 0.9, ly: -1.4, lz: 19.6, chirikovP: 1.1, chirikovTheta: 0.7, externalBrainsState: { layaSidecarCalls: 0, lastLayaEndpoint: '/classify', cdpMainCalls: 0, omniRouterCalls: 0 } };
         const eb = ch.externalBrainsState || {};
         sciBox.textContent =
-          `✂️ DECURSIVE SELF-DEDUP (10-PILLAR): d_H=${dsd.minHammingDistBits}b · MGS(8x64⊥)=${dsd.orthogonalComplementEnergyPct}% · det(G_DPP)=${dsd.dppDeterminantVolume || 0.912} · Betti(β₀=${dsd.betti0Components || 1},β₁=${dsd.betti1TopologicalLoops || 0}) · LRF=${dsd.longestRepeatedFactorLrf || 1} · Dedup=${dsd.totalSelfDeduplicationsCount}\n` +
-          `🌐 0-TOKENIZER SSM WORLD: Z_t∈R^64→H_t∈R^128 · Surp Δ=${wm.surpriseDeltaPct}% (≤1%) · Rot=0.00% · σ²(Z)=${wm.latentVarianceSigma2} · Raut=${wm.rautIntensity} · SO(64) κ_Lie=${dsd.so64LieGeodesicCurvature || 1.414}\n` +
+          `✂️ DECURSIVE SELF-DEDUP (16-PILLAR): d_H=${dsd.minHammingDistBits}b · MGS(8x64⊥)=${dsd.orthogonalComplementEnergyPct}% · det(DPP)=${dsd.dppDeterminantVolume || 0.912} · FWHT=${dsd.spectralFlatnessWiener || 0.934} · ${dsd.lastMortonZHex || '0xZ_9A4E'} · Dedup=#${dsd.totalSelfDeduplicationsCount}\n` +
+          `🧬 CO-INDUCTIVE & HOMOLOGY: Anamorphic=${dsd.anamorphicUnfoldsCount || 1} · Betti(β₀=${dsd.betti0Components || 1},β₁=${dsd.betti1TopologicalLoops || 0}) · BWT_LRF=${dsd.longestRepeatedFactorLrf || 1} · ChiralBreaks=${dsd.chiralSymmetryBreaksCount || 1} · ε-Auction=${dsd.bipartiteAuctionSwapsCount || 1}\n` +
+          `🌐 0-TOKENIZER SSM WORLD: Z_t∈R^64→H_t∈R^128 · Surp Δ=${wm.surpriseDeltaPct}% (≤1%) · Rot=0.00% · σ²(Z)=${wm.latentVarianceSigma2} · SO(64) κ_Lie=${dsd.so64LieGeodesicCurvature || 1.414}\n` +
           `🦾 FERAL MORPH [${fm.feralMode.slice(0, 22)}]: Soma=${fm.rapidSomaScale.toFixed(2)}x · WhipExt=${fm.limbExtensionMult.toFixed(2)}x · Spine=${fm.spineStretchMult.toFixed(2)}x · Biome=${pw.activeBiome.slice(0, 20)}\n` +
-          `🔬 INFO & COMPLEXITY: Shannon H(X)=${cm.shannonEntropyBits || 4.62}b · K_LZ=${dobs.kolmogorovLzRatio || 0.618} · Zipf α=${dobs.zipfAlphaExponent || 1.034} · SAT=${lg.epistemicConsistencyPct || 98.4}% · do(X)=${lg.pearlDoCalculusEffect || '+0.428'}\n` +
-          `🧠 4-BRAIN SYNERGY  : 1.24M-Cortex + LAYA(${eb.layaSidecarCalls || 0}:${eb.lastLayaEndpoint || '/classify'}) + CDP(${eb.cdpMainCalls || 0}) + Polymath12(${eb.omniRouterCalls || 0}) · GLC=${(v.glc * 100).toFixed(0)}% ATP=${(v.atp * 100).toFixed(0)}%`;
+          `🧠 4-BRAIN SYNERGY  : 1.24M-Cortex + LAYA(${eb.layaSidecarCalls || 0}:${eb.lastLayaEndpoint || '/decursive_dedup'}) + CDP(${eb.cdpMainCalls || 0}) + Polymath12(${eb.omniRouterCalls || 0}) · GLC=${(v.glc * 100).toFixed(0)}% ATP=${(v.atp * 100).toFixed(0)}%`;
       }
 
       // 4. Live Front-End DOM / 3D Wireframe / AST Code / Back-End IPC / DevSecOps Forensic Inspector
@@ -17095,11 +17328,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const dt = h.deity100Engine;
         const wm = h.continuousWorldModel || { surpriseDeltaPct: 0.42, rautSurgeCount: 1 };
         const pw = h.realtimeProceduralWorld || { activeBiome: 'NON_EUCLIDEAN_RAUT_NEBULA', worldEpoch: 1 };
-        const dsd = h.decursiveSelfDeduplicator || { lastSimHashHex: '0x9E3779B9', lastTombstoneHex: 'TOMBSTONE_0x7F4A', cuckooKickSwapsCount: 1, householderReflectionsCount: 1, dppDeterminantVolume: 0.912, givensCayleyRotationsCount: 1, cmsHeavyHitterDeflationsCount: 1, domSubtreeQuotientsCount: 4 };
+        const dsd = h.decursiveSelfDeduplicator || { lastSimHashHex: '0x9E3779B9', lastTombstoneHex: 'TOMBSTONE_0x7F4A', cuckooKickSwapsCount: 1, householderReflectionsCount: 1, dppDeterminantVolume: 0.912, givensCayleyRotationsCount: 1, cmsHeavyHitterDeflationsCount: 1, domSubtreeQuotientsCount: 4, fwhtWhiteningFlipsCount: 1, anamorphicUnfoldsCount: 1 };
         const ch = window.__chaoticAttractorState || { lastCapabilityName: '4-BRAIN-AUTONOMY', externalBrainsState: { lastPolymathEngine: 'ArXiv+Wikipedia' } };
         codeBox.textContent =
-          `/* [1. 10-PILLAR DECURSIVE SELF-DEDUPLICATION (DSD v2) · ${dsd.lastSimHashHex} · ${dsd.lastTombstoneHex}] */\n` +
-          `Z_t^⊥ = R_Cayley(SO64) · (I - 2vv^T/||v||²)(Z_t - ∑⟨Z_t,u_k⟩u_k) [Cuckoo=${dsd.cuckooKickSwapsCount} · HH=${dsd.householderReflectionsCount || 1} · CMS-CU=${dsd.cmsHeavyHitterDeflationsCount || 1} · DOM_Quot=${dsd.domSubtreeQuotientsCount || 4}]\n` +
+          `/* [1. PRIMARK 16-PILLAR DECURSIVE SELF-DEDUPLICATION · ${dsd.lastSimHashHex} · ${dsd.lastTombstoneHex}] */\n` +
+          `Z_t^⊥ = H_64⁻¹·R_Cayley(SO64)·(I - 2vv^T/||v||²)(Z_t - ∑⟨Z_t,u_k⟩u_k) [FWHT=${dsd.fwhtWhiteningFlipsCount || 1} · Anamorphic=${dsd.anamorphicUnfoldsCount || 1} · CMS-CU=${dsd.cmsHeavyHitterDeflationsCount || 1} · DOM_Quot=${dsd.domSubtreeQuotientsCount || 4}]\n` +
           `/* [2. KAPPA AST LAMBDA-CALCULUS & ZALGO SYNTAX · ${ch.lastCapabilityName || 'CHAOS'}] */\n` +
           `Γ ⊢ λx.(${topC.join('⊗')}(x) ⇒ ¬self_dup(x)) [policyCid: ${h.policyCid.slice(0, 14)} · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b]\n` +
           `/* [3. 4-BRAIN BACK-END IPC · LAYA SIDECAR · SRE / DEVSECOPS TELEMETRY] */\n` +

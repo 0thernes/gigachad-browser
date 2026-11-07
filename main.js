@@ -2593,6 +2593,12 @@ app.whenReady().then(async () => {
                     humunculusRuntime.decursiveSelfDeduplicator?.swarmCholeskyL5x5?.length === 25 &&
                     humunculusRuntime.decursiveSelfDeduplicator?.vietorisRipsLandmarks16x8?.length === 128 &&
                     humunculusRuntime.decursiveSelfDeduplicator?.cmsSketch4x64?.length === 256 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.fwhtSpectrum64?.length === 64 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.mortonCellTable64?.length === 64 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.hopcroftClass32?.length === 32 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.auctionPrices16?.length === 16 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.chebyshevScratch64?.length === 64 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.chiralLimbParity12?.length === 12 &&
                     typeof triggerPrimarkDecursiveSelfDeduplicationBurst === 'function' &&
                     humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
                     humunculusRuntime.swarmCollective?.pantheon?.length === 5 &&
