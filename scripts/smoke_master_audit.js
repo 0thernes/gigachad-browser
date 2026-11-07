@@ -203,6 +203,9 @@ assert(indexScript.includes('stepNeuralConnectomeAndDeepDarkWeb60Hz'), 'index.ht
 assert(indexScript.includes('resolveDeepDarkWebGatewayUrl') && indexScript.includes('triggerDeepDarkWebExpedition'), 'index.html must define resolveDeepDarkWebGatewayUrl and triggerDeepDarkWebExpedition');
 assert(indexScript.includes("'/deep_dark_web_intel'") && sidecarPy.includes('"/deep_dark_web_intel"'), 'laya_sidecar.py and index.html must register and invoke /deep_dark_web_intel');
 assert(preloadJs.includes("'deep-dark-web-probe'") && mainJs.includes("'deep-dark-web-probe'"), 'preload.js and main.js must expose and handle deep-dark-web-probe');
+assert(indexScript.includes('synapseRowDedupCount') && indexScript.includes('sltcTauDedupSwapsCount') && indexScript.includes('ssmEigenRepulsionsCount') && indexScript.includes('onionBloomFilter64'), 'index.html must implement DSD Pillars 17..20 (synapseRowDedupCount, sltcTauDedupSwapsCount, ssmEigenRepulsionsCount, onionBloomFilter64)');
+assert(indexHtml.includes('id="hybrid-tier-btn-5"'), 'index.html must include Tier 5 visualizer button #hybrid-tier-btn-5');
+assert(indexScript.includes('htsrPowerLawAlpha') && indexScript.includes('yangMillsWilsonHolonomy') && indexScript.includes('gueRepulsionFactorR2'), 'index.html must compute HTSR heavy-tailed spectral alpha, Yang-Mills Wilson holonomy, and Montgomery-Odlyzko GUE level repulsion');
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +

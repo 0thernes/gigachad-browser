@@ -2689,6 +2689,11 @@ app.whenReady().then(async () => {
                     humunculusRuntime.decursiveSelfDeduplicator?.auctionPrices16?.length === 16 &&
                     humunculusRuntime.decursiveSelfDeduplicator?.chebyshevScratch64?.length === 64 &&
                     humunculusRuntime.decursiveSelfDeduplicator?.chiralLimbParity12?.length === 12 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.onionBloomFilter64?.length === 64 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.synapseRowDedupCount >= 1 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.sltcTauDedupSwapsCount >= 1 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.ssmEigenRepulsionsCount >= 1 &&
+                    document.getElementById('hybrid-tier-btn-5') &&
                     humunculusRuntime.multivectorMetacognitionEngine?.cliffordMultivector16?.length === 16 &&
                     humunculusRuntime.multivectorMetacognitionEngine?.metacognitiveGrid8x8?.length === 64 &&
                     humunculusRuntime.multivectorMetacognitionEngine?.omnigradientNaturalGrad64?.length === 64 &&
