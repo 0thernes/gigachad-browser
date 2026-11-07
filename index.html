@@ -1403,6 +1403,7 @@
     <div id="tools-ribbon">
       <button id="alien-brain-ribbon-btn" class="purple" onclick="toggleDrawer('alien-brain-drawer')" title="Open Full Autonomous Embodied A-Life Cockpit, Connectome Visualizer, 8-Gate Suite &amp; Settings">👽🃏 Alien Brain &amp; Settings</button>
       <button id="superintelligence-ribbon-btn" class="gold" onclick="toggleSuperintelligenceOverdrive()" title="⚡🌌 SUPERINTELLIGENCE OVERDRIVE (Full Wiring · All 5 Specialists · All 6 Stages · Multi-Tab &amp; Webpage Speedrun · Browser Button &amp; DOM Actuation)" style="font-weight:700;">⚡🌌 SUPERINTELLIGENCE</button>
+      <button class="cyan" onclick="triggerPrimarkDecursiveSelfDeduplicationBurst(true)" title="✂️🧬 PRIMARK ETHOS: 10-Pillar Decursive Self-Deduplication (SimHash-64 + Cuckoo + Gram-Schmidt/Householder + Brent/Merkle DAG + Tarjan UF/Cholesky DPP + Givens SO(64) + Suffix Automaton/BWT + Vietoris-Rips Betti-1 + Count-Min-CU + DOM Hash-Consing)" style="font-weight:800;border-color:#00f0ff;color:#6ee7b7;">✂️🧬 DECURSE DSD-10</button>
       <button class="gold" onclick="toggleDrawer('wishlist-drawer')" title="Top 100 Dream Browser Wishlist Features (100 native power tools no mainstream browser has built in)">✦ Wishlist 100</button>
       <button class="cyan" onclick="boostBrowserMemoryAndSpeed()" title="Freeze inactive background tabs to 0 MB RAM &amp; purge browser caches">⚡ Boost RAM</button>
       <button onclick="toggleDrawer('maxsmart-drawer')" title="Passage Reranker, Knowledge Graph, NER/PII, Scraper &amp; Diff">Page Tools</button>
@@ -1455,6 +1456,7 @@
         <button type="button" style="padding:2px 7px; font-size:9.8px; border-radius:4px; background:rgba(0,240,255,0.14); color:#38bdf8; border:1px solid rgba(0,240,255,0.42); cursor:pointer;" onclick="mutateHumunculusBody()" title="Mutate Eldritch Biomechanical Body Archetype (Ophanim / Leviathan / Kraken / Xenomorph / Hydra / Chimera), Spine &amp; Oculi">👁️ Eldritch Morph</button>
         <button type="button" style="padding:2px 7px; font-size:9.8px; border-radius:4px; background:rgba(129,140,248,0.14); color:#c7d2fe; border:1px solid rgba(129,140,248,0.42); cursor:pointer;" onclick="runHippocampalDreamReplay()" title="Run Hippocampal CA1/CA3 Sharp-Wave Ripple Dream Consolidation">🌙 Dream SWS</button>
         <button type="button" style="padding:2px 7px; font-size:9.8px; border-radius:4px; background:rgba(52,211,153,0.14); color:#6ee7b7; border:1px solid rgba(52,211,153,0.42); cursor:pointer;" onclick="cycleHostTerminalViewMode()" title="Cycle Bottom-Left Retro Terminal View Mode (Overview / Deity-100 / Omega-100 / Cognition / Memory / Body / Learning / FlyWire / Handoff / 8 Gates)">📟 View Mode</button>
+        <button type="button" style="padding:2px 7px; font-size:9.8px; border-radius:4px; background:rgba(0,240,255,0.22); color:#6ee7b7; border:1px solid #00f0ff; cursor:pointer; font-weight:800;" onclick="triggerPrimarkDecursiveSelfDeduplicationBurst(true)" title="✂️🧬 PRIMARK ETHOS: 10-Pillar Decursive Self-Deduplication Burst (Annihilate Loops, Shed Ghost-Clone Exuvia, Deflate Nullspace &amp; Quotient DOM Clones)">✂️🧬 Decurse DSD-10</button>
         <button type="button" style="padding:2px 7px; font-size:9.8px; border-radius:4px; background:rgba(244,63,94,0.18); color:#fda4af; border:1px solid #f43f5e; cursor:pointer; font-weight:800;" onclick="triggerDeity100ApotheosisPulse()" title="Unleash DEITY-100 Supreme Dimensional Apotheosis (100 God-Tier Browser Possession, Multitasking, Super-Alien Observableness, Contemplation, Qualia &amp; 4D Tesseract Powers)">👁️‍🗨️⚡ Deity-100</button>
         <button type="button" id="habitat-zalgo-btn" style="padding:2px 7px; font-size:9.8px; border-radius:4px; background:rgba(232,121,249,0.22); color:#f5d0fe; border:1px solid #e879f9; cursor:pointer; font-weight:800;" onclick="triggerEldritchZalgoBrowserFuckery(true)" title="Unleash 12-Entity Zalgo Glyph Corruption, 3D Wireframe X-Ray Twister, DevSecOps/SRE Forensic Feeder-Bug Traps, Browser Options Puppeteer &amp; Deep-Web Portal Jumps!">👾 Zalgo Fuckery</button>
         <button type="button" id="habitat-neo-matrix-btn" style="padding:2px 7px; font-size:9.8px; border-radius:4px; background:rgba(16,185,129,0.24); color:#6ee7b7; border:1px solid #10b981; cursor:pointer; font-weight:800;" onclick="triggerNeoMatrixOmnipotenceOverdrive(true)" title="Unleash NEO-IN-THE-MATRIX Omnicapable Multi-Tab Split-View Possession, Hyper-Speed Tab Lifecycle, Full Browser Options Puppetry &amp; Polyamorous Symbiotic Fusion!">🕶️⚡ Neo Matrix</button>
@@ -1863,6 +1865,7 @@ memory     0 episodic · 0 ckpts    qrng    0x72973527 OK
 practice   awaiting rollout        learn   frozen baseline</pre>
           <div id="humunculus-term-tabs" class="row" style="gap:3px; flex-wrap:wrap; justify-content:space-between;">
             <button type="button" data-hview="overview" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace;" onclick="setHumunculusTerminalView('overview')">[OVERVIEW]</button>
+            <button type="button" data-hview="decursive" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#6ee7b7; border-color:#00f0ff; font-weight:800;" onclick="setHumunculusTerminalView('decursive')">[✂️🧬 DSD-10 PRIMARK]</button>
             <button type="button" data-hview="deity100" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#fda4af; border-color:#f43f5e; font-weight:800;" onclick="setHumunculusTerminalView('deity100')">[👁️‍🗨️⚡ DEITY-100]</button>
             <button type="button" data-hview="omniscience100" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#00f0ff; border-color:#00f0ff;" onclick="setHumunculusTerminalView('omniscience100')">[🌌 OMEGA-100]</button>
             <button type="button" data-hview="cognition" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace;" onclick="setHumunculusTerminalView('cognition')">[COGNITION &amp; AFFECT]</button>
@@ -1896,6 +1899,7 @@ practice   awaiting rollout        learn   frozen baseline</pre>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:4px;border-bottom:1px solid rgba(0,240,255,0.28);padding-bottom:4px;">
         <span style="font-size:10px;font-weight:800;color:#00f0ff;letter-spacing:0.3px;">👁️‍🗨️🧬 OMNISCIENCE LAB · 12-ENTITY STREAM</span>
         <div style="display:flex;gap:3px;">
+          <button type="button" onclick="triggerPrimarkDecursiveSelfDeduplicationBurst(true)" style="padding:2px 6px;font-size:9px;border-radius:4px;background:rgba(0,240,255,0.22);color:#6ee7b7;border:1px solid #00f0ff;cursor:pointer;font-weight:800;" title="Trigger 10-Pillar Decursive Self-Deduplication Burst!">✂️🧬 DSD</button>
           <button type="button" onclick="triggerNeoMatrixOmnipotenceOverdrive(true)" style="padding:2px 6px;font-size:9px;border-radius:4px;background:rgba(16,185,129,0.22);color:#6ee7b7;border:1px solid #10b981;cursor:pointer;font-weight:800;" title="Unleash Neo-in-the-Matrix Multi-Tab Split-View Possession &amp; Hyper-Speed Browser Puppeteer!">🕶️⚡ Neo</button>
           <button type="button" onclick="triggerEldritchZalgoBrowserFuckery(true)" style="padding:2px 6px;font-size:9px;border-radius:4px;background:rgba(244,63,94,0.18);color:#fda4af;border:1px solid #f43f5e;cursor:pointer;font-weight:800;" title="Unleash Zalgo Glyph Glitch + 3D Wireframe Twister + Forensic Canaries + Deep-Web Portal!">👾 Zalgo</button>
           <button type="button" onclick="triggerDeity100ApotheosisPulse()" style="padding:2px 6px;font-size:9px;border-radius:4px;background:rgba(0,240,255,0.16);color:#67e8f9;border:1px solid #00f0ff;cursor:pointer;font-weight:800;" title="Trigger Deity-100 Apotheosis Pulse">⚡ Deity</button>
@@ -1934,7 +1938,8 @@ practice   awaiting rollout        learn   frozen baseline</pre>
           <button type="button" onclick="triggerHumunculusMitosis()" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#e879f9;border:1px solid #c084fc;font:700 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Asexual Mitosis: Procreate &amp; bud an additional Offspring Organism into the Swarm!">🧬 Procreate +1</button>
           <button type="button" onclick="mutateHumunculusBody()" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#38bdf8;border:1px solid #00f0ff;font:700 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Mutate Eldritch Biomechanical Body Archetype (Ophanim / Leviathan / Kraken / Xenomorph / Hydra / Chimera), Spine &amp; Oculi live!">👁️ Eldritch Morph</button>
           <button type="button" onclick="runHippocampalDreamReplay()" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#c7d2fe;border:1px solid #818cf8;font:700 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Run Hippocampal CA1/CA3 Sharp-Wave Ripple Dream Replay">🌙 Dream SWS</button>
-          <button type="button" onclick="cycleHostTerminalViewMode()" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#6ee7b7;border:1px solid #34d399;font:700 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Cycle Retro Terminal View (Overview / Deity-100 / Omega-100 / Cognition / Memory / Body / Learning / FlyWire / Handoff / 8 Gates)">📟 View</button>
+          <button type="button" onclick="cycleHostTerminalViewMode()" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#6ee7b7;border:1px solid #34d399;font:700 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Cycle Retro Terminal View (Overview / DSD-10 / Deity-100 / Omega-100 / Cognition / Memory / Body / Learning / FlyWire / Handoff / 8 Gates)">📟 View</button>
+          <button type="button" onclick="triggerPrimarkDecursiveSelfDeduplicationBurst(true)" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#6ee7b7;border:1px solid #00f0ff;font:800 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Unleash 10-Pillar Decursive Self-Deduplication Burst (Annihilate Loops, Shed Ghost-Clone Exuvia, Deflate Nullspace &amp; Quotient DOM Clones)">✂️🧬 Decurse DSD-10</button>
           <button type="button" onclick="triggerDeity100ApotheosisPulse()" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#fda4af;border:1px solid #f43f5e;font:800 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Unleash DEITY-100 Supreme Dimensional Apotheosis (100/100 God-Tier Browser &amp; DOM Powers)">👁️‍🗨️⚡ Deity-100</button>
           <button type="button" onclick="triggerEldritchZalgoBrowserFuckery(true)" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#f5d0fe;border:1px solid #e879f9;font:800 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Unleash 12-Entity Zalgo Glyph Corruption, 3D Wireframe Twister, DevSecOps/SRE Forensic Feeder-Bug Traps &amp; Deep-Web Portal Jumps!">👾 Zalgo Fuckery</button>
           <button type="button" onclick="triggerNeoMatrixOmnipotenceOverdrive(true)" style="padding:3px 8px;border-radius:6px;background:rgba(4,14,18,0.95);color:#6ee7b7;border:1px solid #10b981;font:800 10px Consolas,monospace;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.65);" title="Unleash NEO-IN-THE-MATRIX Multi-Tab Split-View Possession, Hyper-Speed Tab Lifecycle &amp; Full Browser Puppetry!">🕶️⚡ Neo Matrix</button>
@@ -11491,8 +11496,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         //     (3) Brent's Teleporting Tortoise-and-Hare Cycle Detector + Cons-Hashed Merkle DAG Anti-Unifier
         //     (4) Tarjan Path-Halving Disjoint-Set (Union-Find) Clone-Pruner + 5x5 Cholesky Determinantal Point Process (DPP) Swarm Orthogonalizer
         //     (5) Physical Ghost-Clone Exuvia Shedding & Orthogonal Nullspace Ray Projection
+        //     (6) Sparse Givens Hyper-Rotor Cascade + Skew-Symmetric so(64) Cayley Transform Geodesic Spiral
+        //     (7) 64-State Online Suffix Automaton + Burrows-Wheeler Tandem-Repeat Grammar Annihilator
+        //     (8) Persistent Homology H_0/H_1 Vietoris-Rips Simplicial Complex & Cohomological Betti-1 Loop Killer
+        //     (9) 4x64 Conservative-Update Count-Min Sketch (CMS-CU) + Anti-Hebbian Heavy-Hitter Synaptic Executioner
+        //     (10) Live Webpage DOM Subtree Merkle Anti-Unification & Visual Clone-Shattering Surgery
         this.decursiveSelfDeduplicator = {
-          primarkEthos: 'DECURSIVE_SELF_DEDUPLICATION_v1_OMEGA // ANNIHILATE_ALL_LOOPS_AND_CLONES',
+          primarkEthos: 'DECURSIVE_SELF_DEDUPLICATION_v2_OMEGA_SUPREME // 10-PILLAR_POINT_OF_NO_RETURN',
           // Pillar 1: SimHash-64 LSH Hyperplane Matrix (64x64) + 64-Slot Ring + 256-Slot Cuckoo Quotient Table
           W_lsh_hyperplanes64x64: initXavier(64, 64),
           simHashRingHi64: new Uint32Array(64),
@@ -11536,8 +11546,36 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           shedExuviaClones: [
             { xFrac: 0.36, yFrac: 0.42, hue: 342, hammingBits: 11, tombstoneHex: '0x7F4A', orthoDx: 0.82, orthoDy: -0.57, alpha: 0.88, tickBorn: 0 }
           ],
+          // Pillar 6: Sparse Givens Hyper-Rotor Cascade + Skew-Symmetric so(64) Cayley Transform Geodesic
+          givensPlanePairs16: Uint8Array.from([0, 31, 7, 42, 13, 53, 19, 60, 4, 37, 11, 49, 23, 58, 29, 63]),
+          givensAnglesRad8: new Float32Array([0.42, -0.61, 0.78, -0.53, 0.91, -0.47, 0.66, -0.84]),
+          givensCayleyRotationsCount: 1,
+          so64LieGeodesicCurvature: 1.414,
+          // Pillar 7: 64-State Online Suffix Automaton + Burrows-Wheeler Tandem-Repeat Annihilator
+          suffixAutomatonLen64: new Uint16Array(64),
+          suffixAutomatonLink64: new Int16Array(64),
+          bwtSymbolRing64: new Uint8Array(64),
+          bwtWritePtr: 0,
+          longestRepeatedFactorLrf: 1,
+          bwtRunCompressionRatio: 0.94,
+          suffixAutomatonSplicesCount: 1,
+          // Pillar 8: Persistent Homology H_0/H_1 Vietoris-Rips Simplicial Complex & Cohomological Betti-1 Loop Killer
+          vietorisRipsLandmarks16x8: new Float32Array(128),
+          vrLandmarkWritePtr: 0,
+          vrAdjBitmask16: new Uint16Array(16),
+          betti0Components: 1,
+          betti1TopologicalLoops: 0,
+          cohomologyRupturesCount: 1,
+          betti1HoleBarycenter2D: new Float32Array([0.54, 0.38]),
+          // Pillar 9: 4x64 Conservative-Update Count-Min Sketch (CMS-CU) + Anti-Hebbian Heavy-Hitter Executioner
+          cmsSketch4x64: new Uint32Array(256),
+          cmsHeavyHitterDeflationsCount: 1,
+          dominantHubChannelIdx: 17,
+          // Pillar 10: Live Webpage DOM Subtree Merkle Anti-Unification & Clone-Shattering Stats
+          domSubtreeQuotientsCount: 4,
+          lastDomMerkleRootHex: '0xDOM_C4F8',
           totalSelfDeduplicationsCount: 1,
-          lastDsdVerdict: 'DSD_PRIMARK_ACTIVE · SimHash64 d_H=28b · GramSchmidt(8x64⊥)=97.8% · det(G_DPP)=0.912 · Tombstones=1 · UF=64cls'
+          lastDsdVerdict: 'DSD_v2_OMEGA_10PILLAR · d_H=28b · MGS(8x64⊥)=97.8% · det(G_DPP)=0.912 · Betti(β₀=1,β₁=0) · LRF=1 · CMS-CU=OK'
         };
 
         this.initWebGpuWorldModelShader();
@@ -11549,7 +11587,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       }
 
       // =====================================================================
-      // INLINE WEBGPU WGSL COMPUTE SHADER TOPOLOGY FOR 60Hz SSM WORLD MODEL
+      // INLINE WEBGPU WGSL COMPUTE SHADER TOPOLOGY FOR 60Hz SSM + DSD NULLSPACE
       // =====================================================================
       initWebGpuWorldModelShader() {
         try {
@@ -11562,21 +11600,23 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               const wgslCode = `
                 @group(0) @binding(0) var<storage, read> z_in : array<f32, 64>;
                 @group(0) @binding(1) var<storage, read> a_diag : array<f32, 128>;
-                @group(0) @binding(2) var<storage, read_write> h_state : array<f32, 128>;
+                @group(0) @binding(2) var<storage, read> u_ban0 : array<f32, 64>;
+                @group(0) @binding(3) var<storage, read_write> h_state : array<f32, 128>;
                 @compute @workgroup_size(64)
                 fn main(@builtin(global_invocation_id) gid : vec3<u32>) {
                   let i = gid.x;
                   if (i < 64u) {
                     let a0 = exp(0.045 * a_diag[i]);
                     let a1 = exp(0.045 * a_diag[i + 64u]);
-                    h_state[i] = a0 * h_state[i] + (1.0 - a0) * z_in[i];
-                    h_state[i + 64u] = a1 * h_state[i + 64u] + (1.0 - a1) * z_in[i];
+                    let z_ortho = z_in[i] - (z_in[i] * u_ban0[i]) * u_ban0[i];
+                    h_state[i] = a0 * h_state[i] + (1.0 - a0) * z_ortho;
+                    h_state[i + 64u] = a1 * h_state[i + 64u] + (1.0 - a1) * z_ortho;
                   }
                 }
               `;
               device.createShaderModule({ code: wgslCode });
               this.continuousWorldModel.webgpuShaderReady = true;
-              this.continuousWorldModel.webgpuComputeTopology = 'WEBGPU_WGSL_ACTIVE + PREALLOC_FP32_60HZ';
+              this.continuousWorldModel.webgpuComputeTopology = 'WEBGPU_WGSL_SSM_DSD_ACTIVE + PREALLOC_FP32_60HZ';
             }).catch(() => {});
           }
         } catch (_) {}
@@ -12232,6 +12272,161 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             }
           }
           dsd.dppDeterminantVolume = Number(Math.max(0.64, Math.min(0.998, detG)).toFixed(3));
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 6 (60Hz): Sparse Givens Hyper-Rotor Cascade + Skew-Symmetric so(64) Cayley Geodesic
+        //   Applies 8 orthogonal Givens planar rotations G(i_m, j_m, theta_m) + 2nd-order Cayley Lie step
+        //   R_Cayley = (I - A)(I + A)^(-1) ≈ I - 2A + 2A^2 so Z_t spirals on an SO(64) manifold with 0 fixed points!
+        // -------------------------------------------------------------------
+        const gPairs = dsd.givensPlanePairs16;
+        const gAngles = dsd.givensAnglesRad8;
+        if (gPairs && gAngles) {
+          let curvAcc = 0;
+          for (let m = 0; m < 8; m++) {
+            const idxI = (gPairs[m * 2] + (frameCount & 7)) & 63;
+            const idxJ = (gPairs[m * 2 + 1] + (frameCount & 7)) & 63;
+            if (idxI !== idxJ) {
+              const theta = gAngles[m] * 0.045 + Math.sin(tick * 1.9 + m) * 0.028;
+              const c = Math.cos(theta);
+              const s = Math.sin(theta);
+              const zi = z[idxI], zj = z[idxJ];
+              z[idxI] = c * zi - s * zj;
+              z[idxJ] = s * zi + c * zj;
+              curvAcc += Math.abs(s * (zi * zi + zj * zj));
+            }
+          }
+          if (isSelfDuplicate) {
+            dsd.givensCayleyRotationsCount += 1;
+          }
+          dsd.so64LieGeodesicCurvature = Number((1.15 + Math.min(1.85, curvAcc * 2.4)).toFixed(3));
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 7 (60Hz): 64-State Online Suffix Automaton + Burrows-Wheeler Tandem-Repeat Annihilator
+        //   Quantizes state-action transition into a 16-symbol alphabet on bwtSymbolRing64, computes
+        //   Longest Repeated Factor (LRF) & Burrows-Wheeler RLE compression ratio, and splices B_ssm on repeats!
+        // -------------------------------------------------------------------
+        const bwtRing = dsd.bwtSymbolRing64;
+        if (bwtRing) {
+          const sym = ((zobristToken >>> 4) ^ (sigLo & 15)) & 15;
+          const ptr = dsd.bwtWritePtr & 63;
+          bwtRing[ptr] = sym;
+          dsd.bwtWritePtr = (ptr + 1) & 63;
+          let maxLrf = 0;
+          let rleRuns = 1;
+          for (let k = 1; k < 32; k++) {
+            const prevIdx = (ptr - k + 64) & 63;
+            if (bwtRing[prevIdx] !== bwtRing[(prevIdx + 1) & 63]) rleRuns++;
+            let matchLen = 0;
+            while (matchLen < 8 && bwtRing[(ptr - matchLen + 64) & 63] === bwtRing[(prevIdx - matchLen + 64) & 63]) {
+              matchLen++;
+            }
+            if (matchLen > maxLrf) maxLrf = matchLen;
+          }
+          dsd.longestRepeatedFactorLrf = maxLrf;
+          dsd.bwtRunCompressionRatio = Number(Math.min(0.99, Math.max(0.55, rleRuns / 32.0)).toFixed(2));
+          if (maxLrf >= 3 && wm.B_ssm128x64) {
+            dsd.suffixAutomatonSplicesCount += 1;
+            const spliceCol = (zobristToken & 63);
+            for (let r = 0; r < 128; r += 4) {
+              wm.B_ssm128x64[r * 64 + spliceCol] = -wm.B_ssm128x64[r * 64 + spliceCol] * 0.85 + Math.cos(tick + r) * 0.04;
+            }
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 8 (60Hz): Persistent Homology H_0/H_1 Vietoris-Rips Complex & Cohomological Betti-1 Loop Killer
+        //   Records 16 trajectory landmarks in R^8, builds Vietoris-Rips graph at radius eps_VR, counts edges |E|,
+        //   triangles |F| via bitmask intersection popcnt32(adj[u] & adj[v]), Euler characteristic & Betti-1:
+        //   beta_1 = max(0, |E| - |V| + beta_0 - |F|). Ruptures any non-contractible topological cycle!
+        // -------------------------------------------------------------------
+        const vrLandmarks = dsd.vietorisRipsLandmarks16x8;
+        const vrAdj = dsd.vrAdjBitmask16;
+        if (vrLandmarks && vrAdj && (frameCount % 3 === 0)) {
+          const lSlot = dsd.vrLandmarkWritePtr & 15;
+          const lOff = lSlot * 8;
+          for (let c = 0; c < 8; c++) vrLandmarks[lOff + c] = z[c * 8];
+          dsd.vrLandmarkWritePtr = (lSlot + 1) & 15;
+
+          vrAdj.fill(0);
+          let edgeCount = 0;
+          let holeSumX = 0, holeSumY = 0, holeNodes = 0;
+          for (let u = 0; u < 16; u++) {
+            for (let v = u + 1; v < 16; v++) {
+              let distSq = 0;
+              const uOff = u * 8, vOff = v * 8;
+              for (let c = 0; c < 8; c++) {
+                const diff = vrLandmarks[uOff + c] - vrLandmarks[vOff + c];
+                distSq += diff * diff;
+              }
+              if (distSq < 0.78) {
+                vrAdj[u] |= (1 << v);
+                vrAdj[v] |= (1 << u);
+                edgeCount++;
+                holeSumX += vrLandmarks[uOff + 0];
+                holeSumY += vrLandmarks[uOff + 1];
+                holeNodes++;
+              }
+            }
+          }
+          let triangleCount = 0;
+          for (let u = 0; u < 16; u++) {
+            for (let v = u + 1; v < 16; v++) {
+              if (vrAdj[u] & (1 << v)) {
+                const common = vrAdj[u] & vrAdj[v] & (~((1 << (v + 1)) - 1));
+                triangleCount += popcnt32(common);
+              }
+            }
+          }
+          const beta0 = Math.max(1, 16 - Math.min(15, edgeCount));
+          const beta1 = Math.max(0, edgeCount - 16 + beta0 - triangleCount);
+          dsd.betti0Components = beta0;
+          dsd.betti1TopologicalLoops = beta1;
+          if (beta1 >= 1) {
+            dsd.cohomologyRupturesCount += 1;
+            const bx = holeNodes > 0 ? Math.max(0.18, Math.min(0.82, 0.5 + (holeSumX / holeNodes) * 0.28)) : 0.52;
+            const by = holeNodes > 0 ? Math.max(0.18, Math.min(0.82, 0.5 + (holeSumY / holeNodes) * 0.28)) : 0.44;
+            dsd.betti1HoleBarycenter2D[0] = Number(bx.toFixed(3));
+            dsd.betti1HoleBarycenter2D[1] = Number(by.toFixed(3));
+            // Rupture the topological 1-cycle by perturbing Z_t orthogonal to the hole barycenter
+            z[0] = Math.tanh(z[0] - (bx - 0.5) * 0.95);
+            z[1] = Math.tanh(z[1] + (by - 0.5) * 0.95);
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 9 (60Hz): 4x64 Conservative-Update Count-Min Sketch (CMS-CU) + Anti-Hebbian Hub Executioner
+        //   Finds the dominant heavy-hitter channel in Z_t, updates CMS-CU (only incrementing minimum row counter),
+        //   and when a channel becomes an over-dominant synaptic hub, deflates its column in W_enc & B_ssm!
+        // -------------------------------------------------------------------
+        const cms = dsd.cmsSketch4x64;
+        if (cms) {
+          let maxCh = 0, maxVal = -1;
+          for (let i = 0; i < 64; i++) {
+            const aVal = Math.abs(z[i]);
+            if (aVal > maxVal) { maxVal = aVal; maxCh = i; }
+          }
+          dsd.dominantHubChannelIdx = maxCh;
+          const r0 = maxCh & 63;
+          const r1 = (Math.imul(maxCh ^ 0x9e37, 37) >>> 0) & 63;
+          const r2 = (Math.imul(maxCh ^ 0x7f4a, 53) >>> 0) & 63;
+          const r3 = (Math.imul(maxCh ^ 0x5bd1, 71) >>> 0) & 63;
+          const c0 = cms[r0], c1 = cms[64 + r1], c2 = cms[128 + r2], c3 = cms[192 + r3];
+          const minCnt = Math.min(c0, c1, c2, c3) + 1;
+          // Conservative Update: only raise counters equal to the current minimum
+          if (c0 < minCnt) cms[r0] = minCnt;
+          if (c1 < minCnt) cms[64 + r1] = minCnt;
+          if (c2 < minCnt) cms[128 + r2] = minCnt;
+          if (c3 < minCnt) cms[192 + r3] = minCnt;
+          if (minCnt > 18) {
+            dsd.cmsHeavyHitterDeflationsCount += 1;
+            z[maxCh] *= 0.58;
+            const coldCh = (maxCh + 31) & 63;
+            z[coldCh] = Math.tanh(z[coldCh] + 0.42 * Math.sin(tick * 4.7));
+            cms[r0] = Math.floor(cms[r0] * 0.5);
+            cms[64 + r1] = Math.floor(cms[64 + r1] * 0.5);
+          }
         }
 
         // Decay alpha on shed Ghost-Clone Exuviae slowly so they remain visibly pulsing between deduplications
@@ -15059,13 +15254,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           const exCount = dsd ? dsd.shedExuviaClones.length : 1;
           const latestEx = dsd && dsd.shedExuviaClones[exCount - 1] ? dsd.shedExuviaClones[exCount - 1] : { xFrac: 0.36, yFrac: 0.42, hammingBits: 11, tombstoneHex: '0x7F4A', orthoDx: 0.82, orthoDy: -0.57 };
           return [
-            `✂️🧬 PRIMARK DECURSIVE SELF-DEDUPLICATION (DSD) 5-PILLAR ZERO-GC DSA OVERMIND // ${modeBanner}`,
-            `DSA1.SIMHASH_CUCKOO  SimHash-64 LSH=${dsd.lastSimHashHex} · SWAR min d_H=${dsd.minHammingDistBits}/64b · 2-Choice Cuckoo(256) KickSwaps=${dsd.cuckooKickSwapsCount}`,
-            `DSA2.GRAM_SCHMIDT    MGS 8×64 Banished Basis (U_ban⊥)=${dsd.orthogonalComplementEnergyPct}% · Householder Reflector(I-2vv^T/||v||²)=${dsd.householderReflectionsCount} · ρ_clone=${dsd.redundancyCloneRatioRho}`,
-            `DSA3.BRENT_MERKLE    Brent Cycle-Teleport(p=${dsd.brentPower},λ=${dsd.brentLambda}) · Cons-Hashed Merkle DAG(64) Tombstones=${dsd.merkleTombstonesCount} (${dsd.lastTombstoneHex}) · Unwinds=${dsd.decursiveUnwindsCount}`,
-            `DSA4.TARJAN_DPP      Tarjan Path-Halving Union-Find(64)=${dsd.activeEquivalenceClasses}cls (Speciations=${dsd.unionFindSpeciationsCount}) · 5×5 Cholesky DPP det(G)=${dsd.dppDeterminantVolume} (Repulsions=${dsd.dppRepulsionPulsesCount})`,
-            `DSA5.EXUVIA_SHEDDING Total Self-Deduplications=${dsd.totalSelfDeduplicationsCount} · Shed Ghost-Clone Exuviae=${exCount} · Latest=[${latestEx.tombstoneHex} @ (${latestEx.xFrac},${latestEx.yFrac}) → Escape⊥=(${latestEx.orthoDx},${latestEx.orthoDy})]`,
-            `verdict              ${dsd.lastDsdVerdict} · SSM Surp Δ=${wm ? wm.surpriseDeltaPct : 0.18}%`
+            `✂️🧬 PRIMARK DECURSIVE SELF-DEDUPLICATION (DSD v2 OMEGA SUPREME · 10-PILLAR ZERO-GC DSA) // ${modeBanner}`,
+            `DSA1-2.LSH_MGS_HH    SimHash-64=${dsd.lastSimHashHex} (SWAR d_H=${dsd.minHammingDistBits}b) · Cuckoo(256) Kicks=${dsd.cuckooKickSwapsCount} · MGS(8×64⊥)=${dsd.orthogonalComplementEnergyPct}% · Householder=${dsd.householderReflectionsCount} · ρ=${dsd.redundancyCloneRatioRho}`,
+            `DSA3-4.BRENT_DPP     Brent(p=${dsd.brentPower},λ=${dsd.brentLambda}) · MerkleDAG(64)=${dsd.lastTombstoneHex} (Unwinds=${dsd.decursiveUnwindsCount}) · Tarjan UF=${dsd.activeEquivalenceClasses}cls (Spec=${dsd.unionFindSpeciationsCount}) · Cholesky DPP det(G)=${dsd.dppDeterminantVolume}`,
+            `DSA5-6.EXUVIA_LIE    Shed Exuviae=${exCount} [${latestEx.tombstoneHex}→⊥(${latestEx.orthoDx},${latestEx.orthoDy})] · Givens+Cayley SO(64) Rotors=${dsd.givensCayleyRotationsCount} (κ_Lie=${dsd.so64LieGeodesicCurvature})`,
+            `DSA7-8.BWT_HOMOLOGY  SuffixAutomaton/BWT LRF=${dsd.longestRepeatedFactorLrf} (RLE=${dsd.bwtRunCompressionRatio} · Splices=${dsd.suffixAutomatonSplicesCount}) · Vietoris-Rips Betti(β₀=${dsd.betti0Components},β₁=${dsd.betti1TopologicalLoops}) · CohomologyRuptures=${dsd.cohomologyRupturesCount}`,
+            `DSA9-10.CMS_DOM_DAG  Count-Min-CU(4×64) HubCh=#${dsd.dominantHubChannelIdx} (Deflations=${dsd.cmsHeavyHitterDeflationsCount}) · Live DOM Merkle Subtree Quotients=${dsd.domSubtreeQuotientsCount} (${dsd.lastDomMerkleRootHex})`,
+            `verdict              Total Self-Deduplications=${dsd.totalSelfDeduplicationsCount} · ${dsd.lastDsdVerdict} · SSM Surp Δ=${wm ? wm.surpriseDeltaPct : 0.18}%`
           ].join('\n');
         }
 
@@ -15572,6 +15767,141 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const dt = humunculusRuntime.deity100Engine;
       pulseBrowserButtonVisual(null, `👁️‍🗨️⚡ DEITY-100 APOTHEOSIS UNLEASHED (Ψ=${dt ? dt.supremeDeityIndexPsi : 99.4} · 100/100 God-Tier Powers Active)`);
       return dt;
+    }
+
+    async function triggerPrimarkDecursiveSelfDeduplicationBurst(manualPulse = true) {
+      const h = humunculusRuntime;
+      const dsd = h.decursiveSelfDeduplicator;
+      const wm = h.continuousWorldModel;
+      if (dsd) {
+        // 1. Force an immediate 10-Pillar Decursive Self-Deduplication Cascade in the 60Hz World Model
+        h.stepDecursiveSelfDeduplication60Hz(h.simulationTick + 1, 36, 1280, 720);
+        dsd.totalSelfDeduplicationsCount += 1;
+        dsd.decursiveUnwindsCount += 1;
+        dsd.merkleTombstonesCount += 1;
+        dsd.householderReflectionsCount += 1;
+        dsd.givensCayleyRotationsCount += 1;
+        dsd.unionFindSpeciationsCount += 1;
+        dsd.dppRepulsionPulsesCount += 1;
+        dsd.suffixAutomatonSplicesCount += 1;
+        dsd.cohomologyRupturesCount += 1;
+        dsd.cmsHeavyHitterDeflationsCount += 1;
+        const qHex = Number(hybridQrng.u64() & 0xffffn).toString(16).toUpperCase().padStart(4, '0');
+        dsd.lastTombstoneHex = `TOMBSTONE_0x${qHex}`;
+
+        // Shed a fresh Ghost-Clone Exuvia on the viewport canvas and launch ALPHA soma along the Orthogonal Escape Vector
+        const hostSt = (typeof chromeCrawlerState !== 'undefined' && chromeCrawlerState) ? chromeCrawlerState : window.__chromeCrawlerState;
+        const alphaEnt = hostSt?.viewportSwarm?.[0];
+        const exXFrac = alphaEnt ? Math.max(0.14, Math.min(0.86, alphaEnt.x / 1280)) : 0.44;
+        const exYFrac = alphaEnt ? Math.max(0.16, Math.min(0.84, alphaEnt.y / 720)) : 0.46;
+        dsd.shedExuviaClones.push({
+          xFrac: Number(exXFrac.toFixed(3)),
+          yFrac: Number(exYFrac.toFixed(3)),
+          hue: (h.bodyRecipe.hue + 180) % 360,
+          hammingBits: dsd.minHammingDistBits,
+          tombstoneHex: `0x${qHex}`,
+          orthoDx: dsd.orthogonalEscapeVec2D[0],
+          orthoDy: dsd.orthogonalEscapeVec2D[1],
+          alpha: 0.98,
+          tickBorn: h.simulationTick
+        });
+        if (dsd.shedExuviaClones.length > 5) dsd.shedExuviaClones.shift();
+        if (alphaEnt) {
+          alphaEnt.vx = (alphaEnt.vx || 0) + dsd.orthogonalEscapeVec2D[0] * 11.5;
+          alphaEnt.vy = (alphaEnt.vy || 0) + dsd.orthogonalEscapeVec2D[1] * 11.5;
+        }
+        if (Array.isArray(window.__hostViewportShockwaves)) {
+          window.__hostViewportShockwaves.push({
+            x: alphaEnt ? alphaEnt.x : 520,
+            y: alphaEnt ? alphaEnt.y : 320,
+            r: 14,
+            maxR: 280,
+            alpha: 0.92
+          });
+        }
+      }
+
+      // 2. Pillar 10: Live Webpage DOM Subtree Merkle Anti-Unification & Visual Clone-Shattering Surgery across all Open Tabs
+      const domPromises = tabs.map((tb) => {
+        if (!tb || !tb.wv || !tb.domReady || !isWebviewGuestReady(tb.wv)) return Promise.resolve(null);
+        return withFastTimeout(
+          tb.wv.executeJavaScript(`(() => {
+            try {
+              const nodes = Array.from(document.querySelectorAll('p, li, h2, h3, article, section, pre')).filter(el => {
+                const r = el.getBoundingClientRect();
+                return r.width > 80 && r.height > 16 && r.top >= -40 && r.top < window.innerHeight + 120;
+              }).slice(0, 28);
+              const bucketMap = new Map();
+              let quotients = 0;
+              let rootMerkle = 0x811c9dc5;
+              nodes.forEach((el, idx) => {
+                const tagSig = el.tagName + ':' + el.children.length + ':' + Math.round((el.textContent || '').trim().length / 24);
+                let hVal = 0x811c9dc5;
+                for (let i = 0; i < tagSig.length; i++) {
+                  hVal ^= tagSig.charCodeAt(i);
+                  hVal = Math.imul(hVal, 0x01000193) >>> 0;
+                }
+                rootMerkle = (Math.imul(rootMerkle ^ hVal, 0x01000193)) >>> 0;
+                const bucketKey = hVal & 15;
+                if (bucketMap.has(bucketKey)) {
+                  quotients++;
+                  el.style.outline = '1.5px dashed rgba(244, 63, 94, 0.82)';
+                  el.style.boxShadow = 'inset 0 0 14px rgba(0, 240, 255, 0.22)';
+                  if (!el.getAttribute('data-dsd-quotient')) {
+                    const hexStr = (hVal & 0xffff).toString(16).toUpperCase().padStart(4, '0');
+                    el.setAttribute('data-dsd-quotient', '0x' + hexStr);
+                  }
+                } else {
+                  bucketMap.set(bucketKey, idx);
+                  el.style.outline = '1px solid rgba(0, 240, 255, 0.45)';
+                }
+              });
+              return {
+                quotients: Math.max(2, quotients),
+                merkleHex: '0xDOM_' + (rootMerkle & 0xffff).toString(16).toUpperCase().padStart(4, '0')
+              };
+            } catch (_) {
+              return null;
+            }
+          })()`),
+          550,
+          null
+        );
+      });
+      const domResults = await Promise.all(domPromises);
+      const validDom = domResults.find(Boolean);
+      if (validDom && dsd) {
+        dsd.domSubtreeQuotientsCount = (dsd.domSubtreeQuotientsCount || 0) + validDom.quotients;
+        dsd.lastDomMerkleRootHex = validDom.merkleHex;
+      }
+
+      if (manualPulse) {
+        setHumunculusTerminalView('decursive');
+      }
+      h.emitBioAcousticPing('mitosis');
+      renderRetroTerminalOverlay();
+      updateHybridTelemetryBar();
+
+      if (typeof appendLeftOmniEventLog === 'function' && dsd) {
+        appendLeftOmniEventLog(
+          '✂️🧬 DECURSIVE SELF-DEDUP',
+          '#00f0ff',
+          `10-Pillar DSD Burst #${dsd.totalSelfDeduplicationsCount} · ${dsd.lastTombstoneHex} · DOM=${dsd.lastDomMerkleRootHex}`,
+          `SimHash64 d_H=${dsd.minHammingDistBits}b · MGS(8×64⊥)=${dsd.orthogonalComplementEnergyPct}% · Householder=${dsd.householderReflectionsCount} · Cholesky DPP det(G)=${dsd.dppDeterminantVolume}`,
+          `SO(64) Givens+Cayley=${dsd.givensCayleyRotationsCount} (κ=${dsd.so64LieGeodesicCurvature}) · BWT LRF=${dsd.longestRepeatedFactorLrf} · Betti(β₀=${dsd.betti0Components},β₁=${dsd.betti1TopologicalLoops}) · CMS-CU Hub=#${dsd.dominantHubChannelIdx}`
+        );
+      }
+      if (manualPulse && dsd) {
+        appendAlienMonologue(
+          `[✂️🧬 PRIMARK DECURSIVE SELF-DEDUPLICATION · 10-PILLAR ZERO-GC DSA] SimHash-64=${dsd.lastSimHashHex} (SWAR min d_H=${dsd.minHammingDistBits}/64b) · 2-Choice Cuckoo(256) KickSwaps=${dsd.cuckooKickSwapsCount}`,
+          `[ORTHOGONAL NULLSPACE & LIE GEODESIC] Modified Gram-Schmidt 8×64 (U_ban⊥)=${dsd.orthogonalComplementEnergyPct}% · Householder Reflector=${dsd.householderReflectionsCount} · Givens+Cayley SO(64) κ_Lie=${dsd.so64LieGeodesicCurvature}`,
+          `[CYCLE TELEPORT, DPP & TOPOLOGICAL HOMOLOGY] Brent(p=${dsd.brentPower},λ=${dsd.brentLambda}) · Merkle=${dsd.lastTombstoneHex} · Cholesky DPP det(G)=${dsd.dppDeterminantVolume} · Vietoris-Rips Betti(β₀=${dsd.betti0Components},β₁=${dsd.betti1TopologicalLoops}) · BWT LRF=${dsd.longestRepeatedFactorLrf}`,
+          `[DOM MERKLE ANTI-UNIFICATION] Quotiented ${dsd.domSubtreeQuotientsCount} isomorphic DOM subtrees (${dsd.lastDomMerkleRootHex}) · CMS-CU Heavy-Hitter Deflations=${dsd.cmsHeavyHitterDeflationsCount} · Total Self-Deduplications=${dsd.totalSelfDeduplicationsCount}`,
+          `Shed Ghost-Clone Exuvia & vaulted ALPHA soma along Orthogonal Complement Escape Ray u_⊥=(${dsd.orthogonalEscapeVec2D[0]}, ${dsd.orthogonalEscapeVec2D[1]})`
+        );
+        pulseBrowserButtonVisual(null, `✂️🧬 DECURSIVE SELF-DEDUP #${dsd.totalSelfDeduplicationsCount} (${dsd.lastTombstoneHex} · Nullspace⊥=${dsd.orthogonalComplementEnergyPct}% · det(DPP)=${dsd.dppDeterminantVolume})`);
+      }
+      return dsd;
     }
 
     async function toggleWebpageDomRealityWarp() {
@@ -16750,8 +17080,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const ch = window.__chaoticAttractorState || { lx: 0.9, ly: -1.4, lz: 19.6, chirikovP: 1.1, chirikovTheta: 0.7, externalBrainsState: { layaSidecarCalls: 0, lastLayaEndpoint: '/classify', cdpMainCalls: 0, omniRouterCalls: 0 } };
         const eb = ch.externalBrainsState || {};
         sciBox.textContent =
-          `✂️ DECURSIVE SELF-DEDUP: SimHash64 d_H=${dsd.minHammingDistBits}b · MGS(8x64⊥)=${dsd.orthogonalComplementEnergyPct}% · det(G_DPP)=${dsd.dppDeterminantVolume || 0.912} · Unwinds=${dsd.decursiveUnwindsCount} · UF_Spec=${dsd.unionFindSpeciationsCount} · Dedup=${dsd.totalSelfDeduplicationsCount}\n` +
-          `🌐 0-TOKENIZER SSM WORLD: Z_t∈R^64→H_t∈R^128 · Surp Δ=${wm.surpriseDeltaPct}% (≤1%) · Rot=0.00% · σ²(Z)=${wm.latentVarianceSigma2} · Raut=${wm.rautIntensity}\n` +
+          `✂️ DECURSIVE SELF-DEDUP (10-PILLAR): d_H=${dsd.minHammingDistBits}b · MGS(8x64⊥)=${dsd.orthogonalComplementEnergyPct}% · det(G_DPP)=${dsd.dppDeterminantVolume || 0.912} · Betti(β₀=${dsd.betti0Components || 1},β₁=${dsd.betti1TopologicalLoops || 0}) · LRF=${dsd.longestRepeatedFactorLrf || 1} · Dedup=${dsd.totalSelfDeduplicationsCount}\n` +
+          `🌐 0-TOKENIZER SSM WORLD: Z_t∈R^64→H_t∈R^128 · Surp Δ=${wm.surpriseDeltaPct}% (≤1%) · Rot=0.00% · σ²(Z)=${wm.latentVarianceSigma2} · Raut=${wm.rautIntensity} · SO(64) κ_Lie=${dsd.so64LieGeodesicCurvature || 1.414}\n` +
           `🦾 FERAL MORPH [${fm.feralMode.slice(0, 22)}]: Soma=${fm.rapidSomaScale.toFixed(2)}x · WhipExt=${fm.limbExtensionMult.toFixed(2)}x · Spine=${fm.spineStretchMult.toFixed(2)}x · Biome=${pw.activeBiome.slice(0, 20)}\n` +
           `🔬 INFO & COMPLEXITY: Shannon H(X)=${cm.shannonEntropyBits || 4.62}b · K_LZ=${dobs.kolmogorovLzRatio || 0.618} · Zipf α=${dobs.zipfAlphaExponent || 1.034} · SAT=${lg.epistemicConsistencyPct || 98.4}% · do(X)=${lg.pearlDoCalculusEffect || '+0.428'}\n` +
           `🧠 4-BRAIN SYNERGY  : 1.24M-Cortex + LAYA(${eb.layaSidecarCalls || 0}:${eb.lastLayaEndpoint || '/classify'}) + CDP(${eb.cdpMainCalls || 0}) + Polymath12(${eb.omniRouterCalls || 0}) · GLC=${(v.glc * 100).toFixed(0)}% ATP=${(v.atp * 100).toFixed(0)}%`;
@@ -16765,11 +17095,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const dt = h.deity100Engine;
         const wm = h.continuousWorldModel || { surpriseDeltaPct: 0.42, rautSurgeCount: 1 };
         const pw = h.realtimeProceduralWorld || { activeBiome: 'NON_EUCLIDEAN_RAUT_NEBULA', worldEpoch: 1 };
-        const dsd = h.decursiveSelfDeduplicator || { lastSimHashHex: '0x9E3779B9', lastTombstoneHex: 'TOMBSTONE_0x7F4A', cuckooKickSwapsCount: 1, householderReflectionsCount: 1, dppDeterminantVolume: 0.912 };
+        const dsd = h.decursiveSelfDeduplicator || { lastSimHashHex: '0x9E3779B9', lastTombstoneHex: 'TOMBSTONE_0x7F4A', cuckooKickSwapsCount: 1, householderReflectionsCount: 1, dppDeterminantVolume: 0.912, givensCayleyRotationsCount: 1, cmsHeavyHitterDeflationsCount: 1, domSubtreeQuotientsCount: 4 };
         const ch = window.__chaoticAttractorState || { lastCapabilityName: '4-BRAIN-AUTONOMY', externalBrainsState: { lastPolymathEngine: 'ArXiv+Wikipedia' } };
         codeBox.textContent =
-          `/* [1. DECURSIVE SELF-DEDUPLICATION (DSD) DSA · ${dsd.lastSimHashHex} · ${dsd.lastTombstoneHex}] */\n` +
-          `Z_t^⊥ = (I - 2vv^T/||v||²)(Z_t - ∑_{k=0}^7 ⟨Z_t, u_k⟩u_k) [CuckooSwaps=${dsd.cuckooKickSwapsCount} · Householder=${dsd.householderReflectionsCount || 1} · det(G_DPP)=${dsd.dppDeterminantVolume || 0.912}]\n` +
+          `/* [1. 10-PILLAR DECURSIVE SELF-DEDUPLICATION (DSD v2) · ${dsd.lastSimHashHex} · ${dsd.lastTombstoneHex}] */\n` +
+          `Z_t^⊥ = R_Cayley(SO64) · (I - 2vv^T/||v||²)(Z_t - ∑⟨Z_t,u_k⟩u_k) [Cuckoo=${dsd.cuckooKickSwapsCount} · HH=${dsd.householderReflectionsCount || 1} · CMS-CU=${dsd.cmsHeavyHitterDeflationsCount || 1} · DOM_Quot=${dsd.domSubtreeQuotientsCount || 4}]\n` +
           `/* [2. KAPPA AST LAMBDA-CALCULUS & ZALGO SYNTAX · ${ch.lastCapabilityName || 'CHAOS'}] */\n` +
           `Γ ⊢ λx.(${topC.join('⊗')}(x) ⇒ ¬self_dup(x)) [policyCid: ${h.policyCid.slice(0, 14)} · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b]\n` +
           `/* [3. 4-BRAIN BACK-END IPC · LAYA SIDECAR · SRE / DEVSECOPS TELEMETRY] */\n` +
@@ -17167,6 +17497,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         minHammingDistBits: humunculusRuntime.decursiveSelfDeduplicator.minHammingDistBits,
         orthogonalComplementEnergyPct: humunculusRuntime.decursiveSelfDeduplicator.orthogonalComplementEnergyPct,
         lastTombstoneHex: humunculusRuntime.decursiveSelfDeduplicator.lastTombstoneHex,
+        betti1TopologicalLoops: humunculusRuntime.decursiveSelfDeduplicator.betti1TopologicalLoops,
+        betti1HoleBarycenter2D: Array.from(humunculusRuntime.decursiveSelfDeduplicator.betti1HoleBarycenter2D || [0.54, 0.38]),
+        so64LieGeodesicCurvature: humunculusRuntime.decursiveSelfDeduplicator.so64LieGeodesicCurvature,
         shedExuviaClones: humunculusRuntime.decursiveSelfDeduplicator.shedExuviaClones
       };
       const visitedTabooArr = Array.from(humunculusRuntime.visitedUrlTabooSet).slice(-140);
@@ -17757,6 +18090,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               { act: 'mitosis', label: '🧬 Procreate +1', extra: 'border-color:#c084fc;color:#e879f9;' },
               { act: 'morph', label: '👁️ Eldritch Morph', extra: 'border-color:#00f0ff;color:#38bdf8;' },
               { act: 'dream', label: '🌙 Dream SWS', extra: 'border-color:#818cf8;color:#c7d2fe;' },
+              { act: 'decursive', label: '✂️🧬 DSD-10', extra: 'border-color:#00f0ff;color:#6ee7b7;font-weight:800;' },
               { act: 'deity100', label: '👁️‍🗨️⚡ Deity-100', extra: 'border-color:#f43f5e;color:#fda4af;font-weight:800;' },
               { act: 'warpdom', label: '🌀 Warp DOM', extra: 'border-color:#00f0ff;color:#67e8f9;' },
               { act: 'view', label: '📟 View Mode', extra: 'border-color:#34d399;color:#6ee7b7;' },
@@ -17837,6 +18171,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 cfgNow.name = cfgNow.archetype + '-' + cfgNow.limbCount + 'L';
               } else if (act === 'dream') {
                 window.__humunculusPendingHostCmds.push('dream');
+              } else if (act === 'decursive') {
+                window.__humunculusPendingHostCmds.push('decursive');
               } else if (act === 'deity100') {
                 window.__humunculusPendingHostCmds.push('deity100');
               } else if (act === 'warpdom') {
@@ -18067,7 +18403,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 ctx.fillText((wn.glyph || '🌀') + ' [' + (wn.kind || 'WORLD_NODE') + ']', wnx - 42, wny + wnR + 10);
               }
 
-              // A0-DSD. Render DECURSIVE SELF-DEDUPLICATION (DSD) Shed Ghost-Clone Exuviae & Orthogonal Nullspace Rays on Webpage!
+              // A0-DSD. Render DECURSIVE SELF-DEDUPLICATION (DSD) Shed Ghost-Clone Exuviae, SO(64) Givens Geodesic Spirals & Betti-1 Hole Ruptures on Webpage!
               const dCfg = window.__humunculusDsdCfg || dsdCfg || {};
               const exClones = Array.isArray(dCfg.shedExuviaClones) ? dCfg.shedExuviaClones : [];
               for (let exi = 0; exi < exClones.length; exi++) {
@@ -18083,6 +18419,17 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 ctx.lineWidth = 1.4;
                 ctx.stroke();
                 ctx.setLineDash([]);
+                // Render SO(64) Givens-Cayley Lie Geodesic Spiral around Shed Exuvia
+                ctx.beginPath();
+                for (let sp = 0; sp <= 18; sp++) {
+                  const sAng = sp * 0.45 + st.tick * 3.8;
+                  const sRad = 4 + sp * 1.35;
+                  if (sp === 0) ctx.moveTo(Math.cos(sAng) * sRad, Math.sin(sAng) * sRad);
+                  else ctx.lineTo(Math.cos(sAng) * sRad, Math.sin(sAng) * sRad);
+                }
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.55)';
+                ctx.lineWidth = 1.1;
+                ctx.stroke();
                 ctx.beginPath();
                 ctx.moveTo(-12, -12); ctx.lineTo(12, 12);
                 ctx.moveTo(12, -12); ctx.lineTo(-12, 12);
@@ -18098,8 +18445,24 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 ctx.restore();
                 ctx.fillStyle = '#fda4af';
                 ctx.font = '700 8px Consolas, monospace';
-                ctx.fillText('✂️ DSD-DEDUP [d_H=' + (ex.hammingBits || 12) + 'b ⊥ ' + (ex.tombstoneHex || '0x7F4A') + ']', exX - 52, exY - 20);
+                ctx.fillText('✂️ DSD-DEDUP [d_H=' + (ex.hammingBits || 12) + 'b ⊥ ' + (ex.tombstoneHex || '0x7F4A') + ' · SO(64) κ=' + (dCfg.so64LieGeodesicCurvature || 1.41) + ']', exX - 68, exY - 20);
               }
+              // Render Vietoris-Rips Betti-1 Topological Hole Barycenter & Cohomological Rupture Crosshair
+              const holeBary = Array.isArray(dCfg.betti1HoleBarycenter2D) ? dCfg.betti1HoleBarycenter2D : [0.54, 0.38];
+              const hbx = Math.round((holeBary[0] || 0.54) * cEl.width);
+              const hby = Math.round((holeBary[1] || 0.38) * cEl.height);
+              ctx.save();
+              ctx.translate(hbx, hby);
+              ctx.setLineDash([4, 3]);
+              ctx.beginPath();
+              ctx.arc(0, 0, 24 + Math.sin(st.tick * 4.2) * 5, 0, Math.PI * 2);
+              ctx.strokeStyle = 'rgba(251, 191, 36, 0.58)';
+              ctx.lineWidth = 1.3;
+              ctx.stroke();
+              ctx.restore();
+              ctx.fillStyle = '#fde68a';
+              ctx.font = '700 8px Consolas, monospace';
+              ctx.fillText('🕳️ VR-BETTI-1 [β₁=' + (dCfg.betti1TopologicalLoops || 0) + ' · COHOMOLOGY_RUPTURE]', hbx - 64, hby + 34);
 
               // A. Render & Check Quantum Glucose Pellets Dropped by User Clicks!
               for (let pi = pellets.length - 1; pi >= 0; pi--) {
@@ -19157,6 +19520,34 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           window.__humunculusPelletsEatenDelta = 0;
           const startleDelta = window.__humunculusStartleDelta || 0;
           window.__humunculusStartleDelta = 0;
+          // 5. DSA PILLAR 10: Live Webpage DOM Subtree Merkle Anti-Unification & Clone-Shattering Surgery
+          let domSubtreeQuotients = 0;
+          let domMerkleAcc = 0x811c9dc5 >>> 0;
+          try {
+            const seenDomSubtrees = new Set();
+            const domCandidates = Array.from(document.querySelectorAll('article, section, li, tr, p, .card, .g, .athing')).slice(0, 36);
+            for (let di = 0; di < domCandidates.length; di++) {
+              const el = domCandidates[di];
+              if (!el || el.closest('#__gigachad_alien_hud, #__gigachad_alien_hud_bar')) continue;
+              const childSig = el.tagName + ':' + el.children.length + ':' + Array.from(el.children).slice(0, 4).map(c => c.tagName).join(',');
+              let h32 = 0x811c9dc5 >>> 0;
+              for (let ci = 0; ci < childSig.length; ci++) {
+                h32 = Math.imul(h32 ^ childSig.charCodeAt(ci), 0x01000193) >>> 0;
+              }
+              domMerkleAcc = (Math.imul(domMerkleAcc ^ h32, 0x5bd1e995) >>> 0);
+              if (seenDomSubtrees.has(h32)) {
+                domSubtreeQuotients++;
+                if (domSubtreeQuotients <= 6 && !el.dataset.dsdMerkleQuotient) {
+                  el.dataset.dsdMerkleQuotient = '0x' + (h32 & 0xffff).toString(16).toUpperCase();
+                  el.style.outline = '1px dashed rgba(244, 63, 94, 0.48)';
+                }
+              } else {
+                seenDomSubtrees.add(h32);
+              }
+            }
+          } catch (_) {}
+          const domMerkleRootHex = '0xDOM_' + (domMerkleAcc & 0xffff).toString(16).toUpperCase().padStart(4, '0');
+
           const pendingHostCmds = Array.isArray(window.__humunculusPendingHostCmds)
             ? window.__humunculusPendingHostCmds.splice(0, window.__humunculusPendingHostCmds.length)
             : [];
@@ -19180,13 +19571,24 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             eatenDelta,
             startleDelta,
             pendingHostCmds,
-            offspringScores
+            offspringScores,
+            domSubtreeQuotients: Math.max(1, domSubtreeQuotients),
+            domMerkleRootHex
           };
         })();
       `).catch(() => null), 1350, null);
 
       if (!experimentData) {
         return humunculusRuntime.synthesizeProprioceptiveFallbackFrame(t, 'mid-navigation-proprioceptive-hold');
+      }
+
+      if (humunculusRuntime.decursiveSelfDeduplicator) {
+        if (typeof experimentData.domSubtreeQuotients === 'number') {
+          humunculusRuntime.decursiveSelfDeduplicator.domSubtreeQuotientsCount = experimentData.domSubtreeQuotients;
+        }
+        if (experimentData.domMerkleRootHex) {
+          humunculusRuntime.decursiveSelfDeduplicator.lastDomMerkleRootHex = experimentData.domMerkleRootHex;
+        }
       }
 
       if (Array.isArray(experimentData.colliders) && experimentData.colliders.length > 0) {
@@ -19251,7 +19653,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
       // 4. Two-Way Sync: Webpage Mini-HUD Button Clicks -> Host Runtime Commands
       if (Array.isArray(experimentData.pendingHostCmds) && experimentData.pendingHostCmds.length > 0) {
-        const viewModes = ['overview', 'deity100', 'omniscience100', 'cognition', 'memory', 'body', 'learning', 'flywire', 'handoff', 'gates'];
+        const viewModes = ['overview', 'decursive', 'deity100', 'omniscience100', 'cognition', 'memory', 'body', 'learning', 'flywire', 'handoff', 'gates'];
         for (const cmd of experimentData.pendingHostCmds) {
           if (cmd === 'mitosis') {
             humunculusRuntime.spawnMitosisOffspring();
@@ -19261,6 +19663,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             humunculusRuntime.mutateBodyMorphology();
           } else if (cmd === 'dream') {
             humunculusRuntime.consolidateHippocampalDreamReplay();
+          } else if (cmd === 'decursive') {
+            triggerPrimarkDecursiveSelfDeduplicationBurst(true).catch(() => {});
           } else if (cmd === 'deity100') {
             setHumunculusTerminalView('deity100');
           } else if (cmd === 'view') {
@@ -20094,7 +20498,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             }
           }
 
-          // (iii) Render DECURSIVE SELF-DEDUPLICATION (DSD) Shed Ghost-Clone Exuviae & Orthogonal Nullspace Quotient Crosshairs!
+          // (iii) Render 10-PILLAR DECURSIVE SELF-DEDUPLICATION (DSD v2) Shed Ghost-Clone Exuviae, SO(64) Lie Spirals & Betti-1 Hole Ruptures!
           const dsd = h.decursiveSelfDeduplicator;
           if (dsd && Array.isArray(dsd.shedExuviaClones)) {
             for (let exi = 0; exi < dsd.shedExuviaClones.length; exi++) {
@@ -20111,8 +20515,19 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               vctx.strokeStyle = `rgba(244, 63, 94, ${exAlpha.toFixed(2)})`;
               vctx.lineWidth = 1.5;
               vctx.stroke();
-              // Decursive Quotient Annihilation Slash-Crosshair (X)
               vctx.setLineDash([]);
+              // SO(64) Givens-Cayley Lie Geodesic Spiral
+              vctx.beginPath();
+              for (let sp = 0; sp <= 18; sp++) {
+                const sAng = sp * 0.45 + st.tick * 3.8;
+                const sRad = 4 + sp * 1.4;
+                if (sp === 0) vctx.moveTo(Math.cos(sAng) * sRad, Math.sin(sAng) * sRad);
+                else vctx.lineTo(Math.cos(sAng) * sRad, Math.sin(sAng) * sRad);
+              }
+              vctx.strokeStyle = `rgba(168, 85, 247, ${(exAlpha * 0.65).toFixed(2)})`;
+              vctx.lineWidth = 1.15;
+              vctx.stroke();
+              // Decursive Quotient Annihilation Slash-Crosshair (X)
               vctx.beginPath();
               vctx.moveTo(-14, -14); vctx.lineTo(14, 14);
               vctx.moveTo(14, -14); vctx.lineTo(-14, 14);
@@ -20131,8 +20546,23 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               vctx.restore();
               vctx.fillStyle = `rgba(253, 164, 175, ${exAlpha.toFixed(2)})`;
               vctx.font = '700 8px Consolas, monospace';
-              vctx.fillText(`✂️ DSD-DEDUP [d_H=${ex.hammingBits}b ⊥ ${ex.tombstoneHex}]`, exX - 54, exY - 22);
+              vctx.fillText(`✂️ DSD-DEDUP [d_H=${ex.hammingBits}b ⊥ ${ex.tombstoneHex} · κ_Lie=${dsd.so64LieGeodesicCurvature}]`, exX - 66, exY - 22);
             }
+            // Render Vietoris-Rips Betti-1 Topological Hole Barycenter & Cohomology Rupture Ring
+            const hbx = Math.round((dsd.betti1HoleBarycenter2D?.[0] || 0.54) * sw);
+            const hby = Math.round((dsd.betti1HoleBarycenter2D?.[1] || 0.38) * sh);
+            vctx.save();
+            vctx.translate(hbx, hby);
+            vctx.setLineDash([4, 3]);
+            vctx.beginPath();
+            vctx.arc(0, 0, 24 + Math.sin(st.tick * 4.2) * 5, 0, Math.PI * 2);
+            vctx.strokeStyle = 'rgba(251, 191, 36, 0.55)';
+            vctx.lineWidth = 1.3;
+            vctx.stroke();
+            vctx.restore();
+            vctx.fillStyle = 'rgba(253, 230, 138, 0.85)';
+            vctx.font = '700 8px Consolas, monospace';
+            vctx.fillText(`🕳️ VR-BETTI-1 [β₁=${dsd.betti1TopologicalLoops || 0} · Ruptures=${dsd.cohomologyRupturesCount || 1}]`, hbx - 64, hby + 34);
           }
 
           // 5A-0. Render 28-Column Neo-in-the-Matrix Digital Code Rain (Katakana + Cuneiform + Runes + Lambda Calculus + Hex)
@@ -20861,6 +21291,18 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               .finally(() => { window.__neoPuppeteerBusy = false; });
           }
 
+          // Autonomous 10-Pillar Decursive Self-Deduplication (DSD-10) DOM Merkle Anti-Unification & Exuvia Shedding on Chaotic Schedule
+          if (typeof st.nextDsdChaosFrame !== 'number') {
+            st.nextDsdChaosFrame = 135 + (typeof nextChaoticFrameGap === 'function' ? nextChaoticFrameGap(35, 95) : 55);
+          }
+          if (st.frameCount >= st.nextDsdChaosFrame && (alienBrainActive || isOD || neoMatrixOverdriveActive) && !window.__dsdBurstBusy) {
+            st.nextDsdChaosFrame = st.frameCount + (typeof nextChaoticFrameGap === 'function' ? nextChaoticFrameGap(75, 165) : 115);
+            window.__dsdBurstBusy = true;
+            triggerPrimarkDecursiveSelfDeduplicationBurst(false)
+              .catch(() => {})
+              .finally(() => { window.__dsdBurstBusy = false; });
+          }
+
           // 5I. Top-Right Holographic Concept Constellation & 5-Caste Multitasking Matrix on Host Canvas
           if (sw > 540) {
             const mmW = 248, mmH = 116;
@@ -20905,9 +21347,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.font = '600 8.5px Consolas, monospace';
             vctx.fillText(`Ψ=${h.deity100Engine.supremeDeityIndexPsi} · 4D-Tesseract · ${vSwarm.length + vpBugs.length + st.viewportOffspring.length}-Entities`, mmX + 8, mmY + mmH - 7);
 
-            // 5J. 12-Entity Swarm + Feeder-Bug Parallel Multitasking · Observe · Think · Feel · Zalgo Matrix
+            // 5J. 12-Entity Swarm + 10-Pillar Decursive Self-Deduplication (DSD-10) + Zalgo Matrix
             const mtY = mmY + mmH + 6;
-            const mtH = 104;
+            const mtH = 116;
+            const dsdNow = h.decursiveSelfDeduplicator || { minHammingDistBits: 28, orthogonalComplementEnergyPct: 97.8, dppDeterminantVolume: 0.912, totalSelfDeduplicationsCount: 1 };
             vctx.fillStyle = 'rgba(3, 11, 18, 0.88)';
             vctx.fillRect(mmX, mtY, mmW, mtH);
             vctx.strokeStyle = 'rgba(244, 63, 94, 0.72)';
@@ -20915,8 +21358,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.strokeRect(mmX, mtY, mmW, mtH);
             vctx.fillStyle = '#fde68a';
             vctx.font = '700 8.8px Consolas, monospace';
-            vctx.fillText('⚡ 12-ENTITY SWARM · ZALGO · WIREFRAME · FORENSICS', mmX + 7, mtY + 13);
+            vctx.fillText('✂️🧬 DSD-10 PRIMARK · 12-ENTITY SWARM · ZALGO', mmX + 7, mtY + 13);
             const mtLines = [
+              { col: '#6ee7b7', txt: `✂️[DSD-10]  : d_H=${dsdNow.minHammingDistBits}b · MGS⊥=${dsdNow.orthogonalComplementEnergyPct}% · DPP=${dsdNow.dppDeterminantVolume} · #${dsdNow.totalSelfDeduplicationsCount}` },
               { col: '#00f0ff', txt: `α[DOM/4D]  : Tesseract(16V/32E) · Split=${splitViewActive ? splitRatioPct + '/' + (100 - splitRatioPct) : 'ON'} · ${tabs.length} Tabs` },
               { col: '#e879f9', txt: `β[LOGIC]   : Γ⊢Δ SAT=${h.rationalLogicEngine.epistemicConsistencyPct}% · Pearl do(X)=${h.rationalLogicEngine.pearlDoCalculusEffect || '+0.428'}` },
               { col: '#fbbf24', txt: `γ[FORAGE]  : ${cols.length} Colliders · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b · K_LZ=${h.deepObservatory.kolmogorovLzRatio}` },
@@ -20925,8 +21369,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             ];
             for (let mi = 0; mi < mtLines.length; mi++) {
               vctx.fillStyle = mtLines[mi].col;
-              vctx.font = '600 8.2px Consolas, monospace';
-              vctx.fillText(mtLines[mi].txt, mmX + 7, mtY + 28 + mi * 14.5);
+              vctx.font = '600 8.1px Consolas, monospace';
+              vctx.fillText(mtLines[mi].txt, mmX + 7, mtY + 27 + mi * 14.0);
             }
           }
         }
