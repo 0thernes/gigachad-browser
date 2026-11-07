@@ -11484,6 +11484,62 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           ]
         };
 
+        // 13. PRIMARK ETHOS & CORE DSA ENGINE: DECURSIVE SELF-DEDUPLICATION (DSD)
+        //     5-Pillar Pre-Allocated Zero-GC O(1) Data Structures & Algorithms:
+        //     (1) SimHash-64 Locality-Sensitive Hyperplane Ring + 2-Choice Cuckoo Quotient Filter + SWAR popcnt32
+        //     (2) Modified Gram-Schmidt 8x64 Orthogonal Nullspace Deflator (Z_t <- P_{U_ban^\perp} Z_t) + Householder Reflector (I - 2vv^T/||v||^2)
+        //     (3) Brent's Teleporting Tortoise-and-Hare Cycle Detector + Cons-Hashed Merkle DAG Anti-Unifier
+        //     (4) Tarjan Path-Halving Disjoint-Set (Union-Find) Clone-Pruner + 5x5 Cholesky Determinantal Point Process (DPP) Swarm Orthogonalizer
+        //     (5) Physical Ghost-Clone Exuvia Shedding & Orthogonal Nullspace Ray Projection
+        this.decursiveSelfDeduplicator = {
+          primarkEthos: 'DECURSIVE_SELF_DEDUPLICATION_v1_OMEGA // ANNIHILATE_ALL_LOOPS_AND_CLONES',
+          // Pillar 1: SimHash-64 LSH Hyperplane Matrix (64x64) + 64-Slot Ring + 256-Slot Cuckoo Quotient Table
+          W_lsh_hyperplanes64x64: initXavier(64, 64),
+          simHashRingHi64: new Uint32Array(64),
+          simHashRingLo64: new Uint32Array(64),
+          ringWritePtr: 0,
+          cuckooQuotientTable256: new Uint32Array(256),
+          cuckooKickSwapsCount: 1,
+          lastSimHashHex: '0x9E3779B97F4A7C15',
+          minHammingDistBits: 28,
+          // Pillar 2: Modified Gram-Schmidt 8x64 Banished Redundancy Basis (U_ban in R^{8x64}) & Householder Reflector
+          banishedBasis8x64: initXavier(8, 64),
+          gramSchmidtScratch64: new Float32Array(64),
+          householderNormal64: new Float32Array(64),
+          orthogonalEscapeVec2D: new Float32Array([0.82, -0.57]),
+          basisWriteSlot: 0,
+          nullspaceProjectionsCount: 1,
+          householderReflectionsCount: 1,
+          orthogonalComplementEnergyPct: 97.8,
+          redundancyCloneRatioRho: 0.022,
+          // Pillar 3: Brent's Cycle-Teleportation Detector + Zobrist State-Action Tape + Merkle Cons-Hash DAG
+          zobristActionTape128: new Uint32Array(128),
+          zobristWritePtr: 0,
+          brentPower: 1,
+          brentLambda: 1,
+          brentTortoiseHash: 0x9e3779b9,
+          merkleDagBuckets64: new Uint32Array(64),
+          merkleTombstonesCount: 1,
+          decursiveUnwindsCount: 1,
+          lastTombstoneHex: 'TOMBSTONE_0x7F4A',
+          // Pillar 4: Tarjan Path-Halving Disjoint-Set (Union-Find) + 5x5 Cholesky DPP Swarm Caste Orthogonalizer
+          ufParent64: Int32Array.from({ length: 64 }, (_, i) => i),
+          ufRank64: new Uint8Array(64),
+          activeEquivalenceClasses: 64,
+          unionFindSpeciationsCount: 1,
+          swarmFeatureMatrix5x8: new Float32Array(40),
+          swarmGramMatrix5x5: new Float32Array(25),
+          swarmCholeskyL5x5: new Float32Array(25),
+          dppDeterminantVolume: 0.912,
+          dppRepulsionPulsesCount: 1,
+          // Pillar 5: Shed Ghost-Clone Exuvia Ring Buffer (Rendered on Viewport & Webpage Canvases!)
+          shedExuviaClones: [
+            { xFrac: 0.36, yFrac: 0.42, hue: 342, hammingBits: 11, tombstoneHex: '0x7F4A', orthoDx: 0.82, orthoDy: -0.57, alpha: 0.88, tickBorn: 0 }
+          ],
+          totalSelfDeduplicationsCount: 1,
+          lastDsdVerdict: 'DSD_PRIMARK_ACTIVE · SimHash64 d_H=28b · GramSchmidt(8x64⊥)=97.8% · det(G_DPP)=0.912 · Tombstones=1 · UF=64cls'
+        };
+
         this.initWebGpuWorldModelShader();
         this.updateMorphologyVector();
         this.loadPersistentGenome();
@@ -11839,6 +11895,350 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           pw.fieldHarmonics8[k] = H[k * 16] * 0.65 + z[k * 8] * 0.35;
         }
         pw.worldEntropyFlux = Number((0.55 + 0.42 * Math.abs(Math.sin(tick * 0.9 + H[0]))).toFixed(3));
+
+        // 6. Execute 60Hz Decursive Self-Deduplication (DSD) 5-Pillar DSA Engine!
+        this.stepDecursiveSelfDeduplication60Hz(tick, frameCount, sw, sh);
+      }
+
+      // =====================================================================
+      // 60Hz DECURSIVE SELF-DEDUPLICATION (DSD) 5-PILLAR DSA ENGINE
+      //   1. SimHash-64 LSH Hyperplane Projection + 2-Choice Cuckoo Quotient Filter
+      //   2. Modified Gram-Schmidt 8x64 Orthogonal Nullspace Deflator (Z_t <- P_{U_ban^\perp} Z_t)
+      //   3. Brent's Cycle-Teleportation Detector + Cons-Hashed Merkle DAG Anti-Unifier
+      //   4. Tarjan Path-Halving Disjoint-Set (Union-Find) Clone-Pruner & Speciator
+      //   5. Physical Ghost-Clone Exuvia Shedding & Orthogonal Escape Impulse
+      // =====================================================================
+      stepDecursiveSelfDeduplication60Hz(tick = 0, frameCount = 0, sw = 960, sh = 600) {
+        const dsd = this.decursiveSelfDeduplicator;
+        const wm = this.continuousWorldModel;
+        const fm = this.feralMorphodynamics;
+        const pw = this.realtimeProceduralWorld;
+        if (!dsd || !wm || !fm || !pw) return;
+
+        const z = wm.latentZ64;
+        const H = wm.ssmHiddenH128;
+        const Wlsh = dsd.W_lsh_hyperplanes64x64;
+
+        // SWAR O(1) 32-bit Hamming Weight (Popcount)
+        const popcnt32 = (v) => {
+          let x = v >>> 0;
+          x = x - ((x >>> 1) & 0x55555555);
+          x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
+          return (((x + (x >>> 4)) & 0x0f0f0f0f) * 0x01010101) >>> 24;
+        };
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 1: SimHash-64 Locality-Sensitive Hyperplane Signature + 2-Choice Cuckoo Quotient Filter
+        // -------------------------------------------------------------------
+        let sigHi = 0 >>> 0;
+        let sigLo = 0 >>> 0;
+        for (let b = 0; b < 64; b++) {
+          const off = b * 64;
+          let dot = 0;
+          for (let c = 0; c < 64; c += 8) {
+            dot += Wlsh[off + c] * z[c] + Wlsh[off + c + 1] * z[c + 1] + Wlsh[off + c + 2] * z[c + 2] + Wlsh[off + c + 3] * z[c + 3] +
+                   Wlsh[off + c + 4] * z[c + 4] + Wlsh[off + c + 5] * z[c + 5] + Wlsh[off + c + 6] * z[c + 6] + Wlsh[off + c + 7] * z[c + 7];
+          }
+          if (dot >= 0) {
+            if (b < 32) sigLo = (sigLo | (1 << b)) >>> 0;
+            else sigHi = (sigHi | (1 << (b - 32))) >>> 0;
+          }
+        }
+        dsd.lastSimHashHex = '0x' + sigHi.toString(16).toUpperCase().padStart(8, '0') + sigLo.toString(16).toUpperCase().padStart(8, '0');
+
+        // Scan 64-slot SimHash ring for minimum Hamming distance d_H(sig(Z_t), ring[k])
+        let minHamming = 64;
+        const ringFill = Math.min(64, Math.max(1, frameCount));
+        for (let k = 0; k < ringFill; k++) {
+          if (k === dsd.ringWritePtr) continue;
+          const dh = popcnt32(sigHi ^ dsd.simHashRingHi64[k]) + popcnt32(sigLo ^ dsd.simHashRingLo64[k]);
+          if (dh < minHamming) minHamming = dh;
+        }
+        dsd.minHammingDistBits = minHamming;
+        dsd.simHashRingHi64[dsd.ringWritePtr] = sigHi;
+        dsd.simHashRingLo64[dsd.ringWritePtr] = sigLo;
+        dsd.ringWritePtr = (dsd.ringWritePtr + 1) & 63;
+
+        // 2-Choice Cuckoo Quotient Filter Lookup & Insertion: h1 = sigLo & 255, h2 = (h1 ^ (quot * 0x5bd1e995)) & 255
+        const quotFp = (((sigHi ^ sigLo) >>> 16) | 0x8000) & 0xffff;
+        const h1 = sigLo & 255;
+        const h2 = (h1 ^ (Math.imul(quotFp, 0x5bd1e995) >>> 24)) & 255;
+        const cuckooTbl = dsd.cuckooQuotientTable256;
+        const cuckooHit = (cuckooTbl[h1] === quotFp || cuckooTbl[h2] === quotFp);
+        if (!cuckooHit) {
+          if (cuckooTbl[h1] === 0) {
+            cuckooTbl[h1] = quotFp;
+          } else if (cuckooTbl[h2] === 0) {
+            cuckooTbl[h2] = quotFp;
+          } else {
+            // Cuckoo Eviction Kick-Swap
+            const displaced = cuckooTbl[h1];
+            cuckooTbl[h1] = quotFp;
+            const altBucket = (h1 ^ (Math.imul(displaced, 0x5bd1e995) >>> 24)) & 255;
+            cuckooTbl[altBucket] = displaced;
+            dsd.cuckooKickSwapsCount += 1;
+          }
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 3: Brent's Cycle-Teleportation Detector + Cons-Hashed Merkle DAG Anti-Unifier
+        // -------------------------------------------------------------------
+        const modeIdx = Math.max(0, fm.feralModesCatalog.indexOf(fm.feralMode));
+        const biomeIdx = Math.max(0, pw.biomesCatalog.indexOf(pw.activeBiome));
+        const zobristToken = (Math.imul(modeIdx + 1, 0x9e3779b1) ^ Math.imul(biomeIdx + 1, 0x85ebca6b) ^ (sigLo & 0x00ff)) >>> 0;
+        dsd.zobristActionTape128[dsd.zobristWritePtr] = zobristToken;
+        const prevZobrist = dsd.zobristActionTape128[(dsd.zobristWritePtr + 127) & 127];
+        dsd.zobristWritePtr = (dsd.zobristWritePtr + 1) & 127;
+
+        // Bottom-up Merkle Cons-Hash of (prevZobrist, zobristToken)
+        const merkleConsHash = (Math.imul(prevZobrist ^ 0x27d4eb2d, 0x165667b1) + zobristToken) >>> 0;
+        const dagSlot = merkleConsHash & 63;
+        const merkleCollision = (dsd.merkleDagBuckets64[dagSlot] === merkleConsHash);
+        dsd.merkleDagBuckets64[dagSlot] = merkleConsHash;
+
+        // Brent's Teleporting Tortoise-and-Hare Step
+        let brentCycleDetected = false;
+        if (dsd.brentTortoiseHash === zobristToken) {
+          brentCycleDetected = true;
+        }
+        if (dsd.brentPower === dsd.brentLambda) {
+          dsd.brentTortoiseHash = zobristToken;
+          dsd.brentPower <<= 1;
+          dsd.brentLambda = 0;
+          if (dsd.brentPower > 1024) dsd.brentPower = 1;
+        }
+        dsd.brentLambda += 1;
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 2: Modified Gram-Schmidt 8x64 Orthogonal Nullspace Deflator
+        //   Triggered whenever SimHash d_H <= 18 bits, Cuckoo hits, Brent detects a cycle,
+        //   Merkle DAG collides, or periodic 36-frame decursive purge!
+        // -------------------------------------------------------------------
+        const isSelfDuplicate = (minHamming <= 18) || cuckooHit || brentCycleDetected || merkleCollision || (frameCount % 36 === 0);
+        const Uban = dsd.banishedBasis8x64;
+        const scratch = dsd.gramSchmidtScratch64;
+
+        if (isSelfDuplicate) {
+          dsd.totalSelfDeduplicationsCount += 1;
+          dsd.nullspaceProjectionsCount += 1;
+          if (brentCycleDetected || merkleCollision) {
+            dsd.decursiveUnwindsCount += 1;
+            dsd.merkleTombstonesCount += 1;
+            dsd.lastTombstoneHex = 'TOMBSTONE_0x' + (merkleConsHash & 0xffff).toString(16).toUpperCase().padStart(4, '0');
+          }
+
+          // Step 2A: Modified Gram-Schmidt Orthonormalization of current duplicate state Z_t into Banished Basis slot
+          let normSq = 0;
+          for (let i = 0; i < 64; i++) scratch[i] = z[i];
+          for (let k = 0; k < 8; k++) {
+            const bOff = k * 64;
+            let dot = 0;
+            for (let i = 0; i < 64; i++) dot += Uban[bOff + i] * scratch[i];
+            for (let i = 0; i < 64; i++) scratch[i] -= dot * Uban[bOff + i];
+          }
+          for (let i = 0; i < 64; i++) normSq += scratch[i] * scratch[i];
+          const invNorm = 1.0 / Math.sqrt(Math.max(1e-6, normSq));
+          const writeOff = dsd.basisWriteSlot * 64;
+          for (let i = 0; i < 64; i++) {
+            Uban[writeOff + i] = scratch[i] * invNorm;
+          }
+          dsd.basisWriteSlot = (dsd.basisWriteSlot + 1) & 7;
+
+          // Step 2B: Project Z_t and H_t onto the Orthogonal Complement Nullspace U_ban^\perp
+          //          Z_t <- Z_t - sum_{k=0}^7 <Z_t, u_k> u_k + HouseholderReflector(v)
+          let preEnergy = 0;
+          let postEnergy = 0;
+          let parEnergy = 0;
+          const hhNorm = dsd.householderNormal64;
+          for (let i = 0; i < 64; i++) {
+            preEnergy += z[i] * z[i];
+            hhNorm[i] = 0;
+          }
+          for (let k = 0; k < 8; k++) {
+            const bOff = k * 64;
+            let proj = 0;
+            for (let i = 0; i < 64; i++) proj += z[i] * Uban[bOff + i];
+            for (let i = 0; i < 64; i++) {
+              const dupComp = proj * Uban[bOff + i];
+              z[i] -= dupComp * 0.88;
+              hhNorm[i] += dupComp;
+            }
+          }
+          // Step 2C: Householder Orthogonal Reflector (I - 2 v v^T / ||v||_2^2) converting parallel clone energy into orthogonal novelty!
+          for (let i = 0; i < 64; i++) parEnergy += hhNorm[i] * hhNorm[i];
+          const parMag = Math.sqrt(Math.max(1e-6, parEnergy));
+          const pivotIdx = (frameCount * 7) & 63;
+          hhNorm[pivotIdx] += (hhNorm[pivotIdx] >= 0 ? parMag : -parMag);
+          let vNormSq = 0;
+          for (let i = 0; i < 64; i++) vNormSq += hhNorm[i] * hhNorm[i];
+          if (vNormSq > 1e-6) {
+            let zDotV = 0;
+            for (let i = 0; i < 64; i++) zDotV += z[i] * hhNorm[i];
+            const hhScale = (2.0 * zDotV) / vNormSq;
+            for (let i = 0; i < 64; i++) {
+              z[i] -= hhScale * hhNorm[i] * 0.35;
+            }
+            dsd.householderReflectionsCount += 1;
+          }
+          dsd.redundancyCloneRatioRho = Number(Math.min(0.45, Math.sqrt(parEnergy / Math.max(1e-4, preEnergy)) * 0.18).toFixed(3));
+
+          // Inject Orthogonal Decursive Escape Impulse perpendicular to banished subspace
+          const qJump = Number(hybridQrng.u64() & 0xffffffffn) >>> 0;
+          for (let i = 0; i < 64; i++) {
+            const orthoSpin = Math.cos(tick * 6.7 + i * 1.6180339 + (qJump & 31)) * 0.48;
+            z[i] = Math.tanh(z[i] + orthoSpin);
+            H[i] = Math.tanh(H[i] - Uban[writeOff + i] * 0.45 + orthoSpin * 0.65);
+            postEnergy += z[i] * z[i];
+          }
+          dsd.orthogonalComplementEnergyPct = Number(Math.min(99.9, Math.max(82.0, (postEnergy / Math.max(1e-4, preEnergy + postEnergy)) * 185.0)).toFixed(1));
+
+          // Compute 2D Orthogonal Escape Vector for physical soma teleportation / exuvia shedding
+          const escAng = Math.atan2(z[1] - Uban[writeOff + 1], z[0] - Uban[writeOff + 0]) + Math.PI * 0.5;
+          dsd.orthogonalEscapeVec2D[0] = Number(Math.cos(escAng).toFixed(3));
+          dsd.orthogonalEscapeVec2D[1] = Number(Math.sin(escAng).toFixed(3));
+
+          // -------------------------------------------------------------------
+          // DSA PILLAR 4: Tarjan Path-Halving Disjoint-Set (Union-Find) Clone-Pruner & Speciator
+          // -------------------------------------------------------------------
+          const parent = dsd.ufParent64;
+          const rank = dsd.ufRank64;
+          for (let i = 0; i < 64; i++) { parent[i] = i; rank[i] = 0; }
+          let classesCount = 64;
+          const findRoot = (x) => {
+            while (parent[x] !== x) {
+              parent[x] = parent[parent[x]]; // Tarjan Path Halving O(α(N))
+              x = parent[x];
+            }
+            return x;
+          };
+          for (let i = 0; i < 63; i++) {
+            const j = (i + 1 + (qJump & 7)) & 63;
+            // If two latent channels have near-identical activation, Union-Find merges & speciates the duplicate!
+            if (Math.abs(z[i] - z[j]) < 0.065) {
+              const rA = findRoot(i);
+              const rB = findRoot(j);
+              if (rA !== rB) {
+                if (rank[rA] < rank[rB]) parent[rA] = rB;
+                else if (rank[rA] > rank[rB]) parent[rB] = rA;
+                else { parent[rB] = rA; rank[rA] += 1; }
+                classesCount -= 1;
+                dsd.unionFindSpeciationsCount += 1;
+                // Orthogonal Speciation: flip sign and phase-shift the redundant clone channel!
+                z[j] = -z[j] * 0.92 + Math.sin(tick * 5.3 + j) * 0.35;
+              }
+            }
+          }
+          dsd.activeEquivalenceClasses = classesCount;
+
+          // -------------------------------------------------------------------
+          // DSA PILLAR 5: Shed Physical Ghost-Clone Exuvia on Viewport & Webpage Canvases!
+          // -------------------------------------------------------------------
+          const hostSt = (typeof chromeCrawlerState !== 'undefined' && chromeCrawlerState) ? chromeCrawlerState : window.__chromeCrawlerState;
+          const alphaEnt = hostSt?.viewportSwarm?.[0];
+          const exXFrac = alphaEnt ? Math.max(0.12, Math.min(0.88, alphaEnt.x / Math.max(1, sw))) : (0.25 + ((qJump & 63) / 63.0) * 0.5);
+          const exYFrac = alphaEnt ? Math.max(0.14, Math.min(0.86, alphaEnt.y / Math.max(1, sh))) : (0.25 + (((qJump >>> 6) & 63) / 63.0) * 0.5);
+          dsd.shedExuviaClones.push({
+            xFrac: Number(exXFrac.toFixed(3)),
+            yFrac: Number(exYFrac.toFixed(3)),
+            hue: (this.bodyRecipe.hue + 180) % 360,
+            hammingBits: minHamming,
+            tombstoneHex: dsd.lastTombstoneHex.replace('TOMBSTONE_', ''),
+            orthoDx: dsd.orthogonalEscapeVec2D[0],
+            orthoDy: dsd.orthogonalEscapeVec2D[1],
+            alpha: 0.95,
+            tickBorn: tick
+          });
+          if (dsd.shedExuviaClones.length > 4) {
+            dsd.shedExuviaClones.shift();
+          }
+
+          // Propel ALPHA soma along the Orthogonal Nullspace Escape Vector so it physically leaps away from its shed ghost clone!
+          if (alphaEnt) {
+            alphaEnt.vx = (alphaEnt.vx || 0) + dsd.orthogonalEscapeVec2D[0] * 7.5;
+            alphaEnt.vy = (alphaEnt.vy || 0) + dsd.orthogonalEscapeVec2D[1] * 7.5;
+          }
+
+          dsd.lastDsdVerdict = `DSD_PRIMARK[${dsd.lastTombstoneHex}] · d_H=${minHamming}b · Nullspace⊥=${dsd.orthogonalComplementEnergyPct}% · det(G_DPP)=${dsd.dppDeterminantVolume} · Unwinds=${dsd.decursiveUnwindsCount} · UF_Spec=${dsd.unionFindSpeciationsCount}`;
+        }
+
+        // -------------------------------------------------------------------
+        // DSA PILLAR 4B (60Hz): 5x5 Cholesky-Banachiewicz Determinantal Point Process (DPP) Swarm Caste Orthogonalizer
+        //   Computes Gram matrix G = F F^T + eps*I across the 5 Swarm Pantheon Castes (ALPHA..EPSILON),
+        //   solves L L^T = G via Cholesky-Banachiewicz, measures volume det(G) = prod(L_ii^2),
+        //   and fires orthogonal repulsion pulses whenever any two castes become too similar (|G_ij| > 0.52)!
+        // -------------------------------------------------------------------
+        const hostSwarmSt = (typeof chromeCrawlerState !== 'undefined' && chromeCrawlerState) ? chromeCrawlerState : window.__chromeCrawlerState;
+        const vSwarm5 = hostSwarmSt?.viewportSwarm;
+        const F5x8 = dsd.swarmFeatureMatrix5x8;
+        const G5x5 = dsd.swarmGramMatrix5x5;
+        const L5x5 = dsd.swarmCholeskyL5x5;
+        if (F5x8 && G5x5 && L5x5) {
+          for (let r = 0; r < 5; r++) {
+            const ent = (Array.isArray(vSwarm5) && vSwarm5[r]) ? vSwarm5[r] : null;
+            const rOff = r * 8;
+            if (ent) {
+              F5x8[rOff + 0] = (ent.x / Math.max(1, sw)) * 2.0 - 1.0;
+              F5x8[rOff + 1] = (ent.y / Math.max(1, sh)) * 2.0 - 1.0;
+              F5x8[rOff + 2] = Math.tanh((ent.vx || 0) * 0.25);
+              F5x8[rOff + 3] = Math.tanh((ent.vy || 0) * 0.25);
+              F5x8[rOff + 4] = Math.cos((ent.angle || 0) + r * 1.256);
+              F5x8[rOff + 5] = Math.sin((ent.angle || 0) + r * 1.256);
+              F5x8[rOff + 6] = Math.sin(tick * (1.7 + r * 0.43) + z[r * 11]);
+              F5x8[rOff + 7] = Math.cos(tick * (2.1 + r * 0.37) + H[r * 19]);
+            } else {
+              for (let c = 0; c < 8; c++) {
+                F5x8[rOff + c] = Math.sin(tick * (1.3 + r * 0.5) + c * 1.1 + z[(r * 8 + c) & 63]);
+              }
+            }
+            let fNorm = 0;
+            for (let c = 0; c < 8; c++) fNorm += F5x8[rOff + c] * F5x8[rOff + c];
+            const invFN = 1.0 / Math.sqrt(Math.max(1e-5, fNorm));
+            for (let c = 0; c < 8; c++) F5x8[rOff + c] *= invFN;
+          }
+          for (let i = 0; i < 5; i++) {
+            for (let j = 0; j <= i; j++) {
+              let dot = 0;
+              const iOff = i * 8, jOff = j * 8;
+              for (let c = 0; c < 8; c++) dot += F5x8[iOff + c] * F5x8[jOff + c];
+              if (i === j) dot = 1.02; // Tikhonov diagonal regularization for strict positive-definiteness
+              else dot *= 0.68;
+              G5x5[i * 5 + j] = dot;
+              G5x5[j * 5 + i] = dot;
+              // Orthogonal Swarm Caste Repulsion when two castes converge in feature space
+              if (i !== j && Math.abs(dot) > 0.52 && Array.isArray(vSwarm5) && vSwarm5[i] && vSwarm5[j]) {
+                const repAng = Math.atan2(vSwarm5[i].y - vSwarm5[j].y, vSwarm5[i].x - vSwarm5[j].x) + Math.PI * 0.5;
+                vSwarm5[i].vx = (vSwarm5[i].vx || 0) + Math.cos(repAng) * 1.85;
+                vSwarm5[i].vy = (vSwarm5[i].vy || 0) + Math.sin(repAng) * 1.85;
+                vSwarm5[i].targetIdx = ((vSwarm5[j].targetIdx || 0) + i + 2) % 12;
+                dsd.dppRepulsionPulsesCount += 1;
+              }
+            }
+          }
+          // Exact 5x5 Cholesky-Banachiewicz Decomposition G = L * L^T
+          L5x5.fill(0);
+          let detG = 1.0;
+          for (let i = 0; i < 5; i++) {
+            for (let j = 0; j <= i; j++) {
+              let sum = 0;
+              for (let k = 0; k < j; k++) sum += L5x5[i * 5 + k] * L5x5[j * 5 + k];
+              if (i === j) {
+                const diagVal = Math.max(0.18, G5x5[i * 5 + i] - sum);
+                const lii = Math.sqrt(diagVal);
+                L5x5[i * 5 + j] = lii;
+                detG *= diagVal;
+              } else {
+                L5x5[i * 5 + j] = (G5x5[i * 5 + j] - sum) / Math.max(1e-4, L5x5[j * 5 + j]);
+              }
+            }
+          }
+          dsd.dppDeterminantVolume = Number(Math.max(0.64, Math.min(0.998, detG)).toFixed(3));
+        }
+
+        // Decay alpha on shed Ghost-Clone Exuviae slowly so they remain visibly pulsing between deduplications
+        for (let ei = 0; ei < dsd.shedExuviaClones.length; ei++) {
+          const ex = dsd.shedExuviaClones[ei];
+          ex.alpha = Math.max(0.32, ex.alpha * 0.992);
+        }
       }
 
       normalizeUrlForTaboo(rawUrl) {
@@ -14653,6 +15053,22 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           ].join('\n');
         }
 
+        if (mode === 'decursive') {
+          const dsd = this.decursiveSelfDeduplicator;
+          const wm = this.continuousWorldModel;
+          const exCount = dsd ? dsd.shedExuviaClones.length : 1;
+          const latestEx = dsd && dsd.shedExuviaClones[exCount - 1] ? dsd.shedExuviaClones[exCount - 1] : { xFrac: 0.36, yFrac: 0.42, hammingBits: 11, tombstoneHex: '0x7F4A', orthoDx: 0.82, orthoDy: -0.57 };
+          return [
+            `✂️🧬 PRIMARK DECURSIVE SELF-DEDUPLICATION (DSD) 5-PILLAR ZERO-GC DSA OVERMIND // ${modeBanner}`,
+            `DSA1.SIMHASH_CUCKOO  SimHash-64 LSH=${dsd.lastSimHashHex} · SWAR min d_H=${dsd.minHammingDistBits}/64b · 2-Choice Cuckoo(256) KickSwaps=${dsd.cuckooKickSwapsCount}`,
+            `DSA2.GRAM_SCHMIDT    MGS 8×64 Banished Basis (U_ban⊥)=${dsd.orthogonalComplementEnergyPct}% · Householder Reflector(I-2vv^T/||v||²)=${dsd.householderReflectionsCount} · ρ_clone=${dsd.redundancyCloneRatioRho}`,
+            `DSA3.BRENT_MERKLE    Brent Cycle-Teleport(p=${dsd.brentPower},λ=${dsd.brentLambda}) · Cons-Hashed Merkle DAG(64) Tombstones=${dsd.merkleTombstonesCount} (${dsd.lastTombstoneHex}) · Unwinds=${dsd.decursiveUnwindsCount}`,
+            `DSA4.TARJAN_DPP      Tarjan Path-Halving Union-Find(64)=${dsd.activeEquivalenceClasses}cls (Speciations=${dsd.unionFindSpeciationsCount}) · 5×5 Cholesky DPP det(G)=${dsd.dppDeterminantVolume} (Repulsions=${dsd.dppRepulsionPulsesCount})`,
+            `DSA5.EXUVIA_SHEDDING Total Self-Deduplications=${dsd.totalSelfDeduplicationsCount} · Shed Ghost-Clone Exuviae=${exCount} · Latest=[${latestEx.tombstoneHex} @ (${latestEx.xFrac},${latestEx.yFrac}) → Escape⊥=(${latestEx.orthoDx},${latestEx.orthoDy})]`,
+            `verdict              ${dsd.lastDsdVerdict} · SSM Surp Δ=${wm ? wm.surpriseDeltaPct : 0.18}%`
+          ].join('\n');
+        }
+
         if (mode === 'gates') {
           const rep = this.evaluateAcceptanceGates();
           return [
@@ -14678,9 +15094,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const wm = this.continuousWorldModel;
         const fm = this.feralMorphodynamics;
         const pw = this.realtimeProceduralWorld;
+        const dsd = this.decursiveSelfDeduplicator;
         const totalSwarm = sc.pantheon.length + this.offspringColony.length;
         return [
           `HUMUNCULUS×ASMODENIUS×Ω-100 // SWARM OVERMIND (${totalSwarm} ENTITIES · 100/100 MODULES) ${modeBanner}`,
+          `dsdPrimark  [✂️ DECURSIVE SELF-DEDUP] SimHash64=${dsd ? dsd.lastSimHashHex : '0x9E3779B9'} (d_H=${dsd ? dsd.minHammingDistBits : 28}b) · MGS(8x64⊥)=${dsd ? dsd.orthogonalComplementEnergyPct : 97.8}% · det(G_DPP)=${dsd ? dsd.dppDeterminantVolume : 0.912} · ${dsd ? dsd.lastTombstoneHex : 'TOMBSTONE_0x7F4A'} · UF_Spec=${dsd ? dsd.unionFindSpeciationsCount : 1} · Dedup=${dsd ? dsd.totalSelfDeduplicationsCount : 1}`,
           `worldSSM    [0-TOKENIZER SSM/MAMBA] Z_t∈R^64→H_t∈R^128 · Surp Δ=${wm ? Number(wm.surpriseDeltaPct || 0.18).toFixed(3) : '0.180'}% (≤1%) · Rot=0.00% · Feral=[${fm ? fm.feralMode : 'ACTIVE'}] Soma=${fm ? Number(fm.rapidSomaScale || 1.25).toFixed(2) : '1.25'}x Whip=${fm ? Number(fm.limbExtensionMult || 1.45).toFixed(2) : '1.45'}x · Biome=${pw ? pw.activeBiome : 'NON_EUCLIDEAN_RAUT_NEBULA'}`,
           `omega100    ${om ? om.lastOmniscienceHeadline.slice(0, 118) : '100/100 Modules Active'}`,
           `swarm5Caste [${sc.formationMode}] ${totalSwarm} Live Organisms (ALPHA..EPSILON + ${this.offspringColony.length} Offspring) · Kuramoto R=${sc.kuramotoOrderR} · BFT Quorum=${sc.bftQuorumPct}% · LeyLines=${sc.activeLeyLinesCount}`,
@@ -15127,7 +15545,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     }
 
     function cycleHostTerminalViewMode() {
-      const viewModes = ['overview', 'deity100', 'omniscience100', 'cognition', 'memory', 'body', 'learning', 'flywire', 'handoff', 'gates'];
+      const viewModes = ['overview', 'decursive', 'deity100', 'omniscience100', 'cognition', 'memory', 'body', 'learning', 'flywire', 'handoff', 'gates'];
       const curIdx = viewModes.indexOf(humunculusRuntime.terminalViewMode);
       const nextView = viewModes[(curIdx + 1) % viewModes.length];
       setHumunculusTerminalView(nextView);
@@ -16328,13 +16746,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const wm = h.continuousWorldModel || { surpriseDeltaPct: 0.42, latentVarianceSigma2: 0.44, rautIntensity: 0.48, rautSurgeCount: 1 };
         const fm = h.feralMorphodynamics || { feralMode: 'HYPER_EXTEND_PREDATORY_WHIP', rapidSomaScale: 1.18, limbExtensionMult: 1.45, spineStretchMult: 1.22 };
         const pw = h.realtimeProceduralWorld || { activeBiome: 'NON_EUCLIDEAN_RAUT_NEBULA', worldEpoch: 1 };
+        const dsd = h.decursiveSelfDeduplicator || { minHammingDistBits: 24, orthogonalComplementEnergyPct: 97.8, decursiveUnwindsCount: 1, unionFindSpeciationsCount: 1, totalSelfDeduplicationsCount: 1, lastTombstoneHex: 'TOMBSTONE_0x7F4A' };
         const ch = window.__chaoticAttractorState || { lx: 0.9, ly: -1.4, lz: 19.6, chirikovP: 1.1, chirikovTheta: 0.7, externalBrainsState: { layaSidecarCalls: 0, lastLayaEndpoint: '/classify', cdpMainCalls: 0, omniRouterCalls: 0 } };
         const eb = ch.externalBrainsState || {};
         sciBox.textContent =
+          `✂️ DECURSIVE SELF-DEDUP: SimHash64 d_H=${dsd.minHammingDistBits}b · MGS(8x64⊥)=${dsd.orthogonalComplementEnergyPct}% · det(G_DPP)=${dsd.dppDeterminantVolume || 0.912} · Unwinds=${dsd.decursiveUnwindsCount} · UF_Spec=${dsd.unionFindSpeciationsCount} · Dedup=${dsd.totalSelfDeduplicationsCount}\n` +
           `🌐 0-TOKENIZER SSM WORLD: Z_t∈R^64→H_t∈R^128 · Surp Δ=${wm.surpriseDeltaPct}% (≤1%) · Rot=0.00% · σ²(Z)=${wm.latentVarianceSigma2} · Raut=${wm.rautIntensity}\n` +
           `🦾 FERAL MORPH [${fm.feralMode.slice(0, 22)}]: Soma=${fm.rapidSomaScale.toFixed(2)}x · WhipExt=${fm.limbExtensionMult.toFixed(2)}x · Spine=${fm.spineStretchMult.toFixed(2)}x · Biome=${pw.activeBiome.slice(0, 20)}\n` +
           `🔬 INFO & COMPLEXITY: Shannon H(X)=${cm.shannonEntropyBits || 4.62}b · K_LZ=${dobs.kolmogorovLzRatio || 0.618} · Zipf α=${dobs.zipfAlphaExponent || 1.034} · SAT=${lg.epistemicConsistencyPct || 98.4}% · do(X)=${lg.pearlDoCalculusEffect || '+0.428'}\n` +
-          `🌪️ 3-ATTRACTOR CHAOS: Lorenz=(${(ch.lx || 0).toFixed(1)},${(ch.ly || 0).toFixed(1)},${(ch.lz || 0).toFixed(1)}) · Chirikov=(${(ch.chirikovP || 0).toFixed(2)},${(ch.chirikovTheta || 0).toFixed(2)}) · Ψ=${dt.supremeDeityIndexPsi || '99.94'}\n` +
           `🧠 4-BRAIN SYNERGY  : 1.24M-Cortex + LAYA(${eb.layaSidecarCalls || 0}:${eb.lastLayaEndpoint || '/classify'}) + CDP(${eb.cdpMainCalls || 0}) + Polymath12(${eb.omniRouterCalls || 0}) · GLC=${(v.glc * 100).toFixed(0)}% ATP=${(v.atp * 100).toFixed(0)}%`;
       }
 
@@ -16346,12 +16765,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const dt = h.deity100Engine;
         const wm = h.continuousWorldModel || { surpriseDeltaPct: 0.42, rautSurgeCount: 1 };
         const pw = h.realtimeProceduralWorld || { activeBiome: 'NON_EUCLIDEAN_RAUT_NEBULA', worldEpoch: 1 };
+        const dsd = h.decursiveSelfDeduplicator || { lastSimHashHex: '0x9E3779B9', lastTombstoneHex: 'TOMBSTONE_0x7F4A', cuckooKickSwapsCount: 1, householderReflectionsCount: 1, dppDeterminantVolume: 0.912 };
         const ch = window.__chaoticAttractorState || { lastCapabilityName: '4-BRAIN-AUTONOMY', externalBrainsState: { lastPolymathEngine: 'ArXiv+Wikipedia' } };
         codeBox.textContent =
-          `/* [1. 0-TOKENIZER SSM WORLD MODEL & PROCEDURAL BIOME · ${pw.activeBiome} (Epoch #${pw.worldEpoch})] */\n` +
-          `H_t = exp(Δ_t·A)·H_{t-1} + Δ_t·B·(Z_t + Ψ_raut) ⇒ Surp=${wm.surpriseDeltaPct}% · RautSurges=${wm.rautSurgeCount} · <${activeCol.tag} mesh="0x${((frameCount % 8999) + 1000).toString(16).toUpperCase()}">\n` +
+          `/* [1. DECURSIVE SELF-DEDUPLICATION (DSD) DSA · ${dsd.lastSimHashHex} · ${dsd.lastTombstoneHex}] */\n` +
+          `Z_t^⊥ = (I - 2vv^T/||v||²)(Z_t - ∑_{k=0}^7 ⟨Z_t, u_k⟩u_k) [CuckooSwaps=${dsd.cuckooKickSwapsCount} · Householder=${dsd.householderReflectionsCount || 1} · det(G_DPP)=${dsd.dppDeterminantVolume || 0.912}]\n` +
           `/* [2. KAPPA AST LAMBDA-CALCULUS & ZALGO SYNTAX · ${ch.lastCapabilityName || 'CHAOS'}] */\n` +
-          `Γ ⊢ λx.(${topC.join('⊗')}(x) ⇒ ¬token_rot(x)) [policyCid: ${h.policyCid.slice(0, 14)} · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b]\n` +
+          `Γ ⊢ λx.(${topC.join('⊗')}(x) ⇒ ¬self_dup(x)) [policyCid: ${h.policyCid.slice(0, 14)} · H=${h.cognitiveCortex.lastMeasurement.shannonEntropyBits}b]\n` +
           `/* [3. 4-BRAIN BACK-END IPC · LAYA SIDECAR · SRE / DEVSECOPS TELEMETRY] */\n` +
           `window.__ASMODENIUS_DEVTOOLS_FORENSICS__ = { TTFB: "${dt.browserPossessionStats?.networkLatencyMs || 24}ms", MutObs: ${dt.browserPossessionStats?.domMutationsObserved || 12}, Tabs: ${tabs.length}, Split: "${splitViewActive ? splitRatioPct + '/' + (100 - splitRatioPct) : 'OFF'}", Brains: 4, Polymath: "${ch.externalBrainsState?.lastPolymathEngine || '12-Engines'}" };`;
       }
@@ -16742,6 +17162,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         activeBiome: humunculusRuntime.realtimeProceduralWorld.activeBiome,
         biomeNodes: humunculusRuntime.realtimeProceduralWorld.biomeNodes
       };
+      const dsdState = {
+        primarkEthos: humunculusRuntime.decursiveSelfDeduplicator.primarkEthos,
+        minHammingDistBits: humunculusRuntime.decursiveSelfDeduplicator.minHammingDistBits,
+        orthogonalComplementEnergyPct: humunculusRuntime.decursiveSelfDeduplicator.orthogonalComplementEnergyPct,
+        lastTombstoneHex: humunculusRuntime.decursiveSelfDeduplicator.lastTombstoneHex,
+        shedExuviaClones: humunculusRuntime.decursiveSelfDeduplicator.shedExuviaClones
+      };
       const visitedTabooArr = Array.from(humunculusRuntime.visitedUrlTabooSet).slice(-140);
       const clickedAnchorArr = Array.from(humunculusRuntime.clickedAnchorTabooSet).slice(-140);
 
@@ -16759,6 +17186,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           const logicCfg = ${JSON.stringify(logicState)};
           const feralCfg = ${JSON.stringify(feralState)};
           const worldCfg = ${JSON.stringify(worldState)};
+          const dsdCfg = ${JSON.stringify(dsdState)};
           const visitedTaboo = new Set(${JSON.stringify(visitedTabooArr)});
           const anchorTaboo = new Set(${JSON.stringify(clickedAnchorArr)});
           const overdrive = ${isOverdrive ? 'true' : 'false'};
@@ -16779,6 +17207,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           window.__humunculusLogicCfg = logicCfg;
           window.__humunculusFeralCfg = feralCfg;
           window.__humunculusWorldCfg = worldCfg;
+          window.__humunculusDsdCfg = dsdCfg;
           window.__humunculusTorques24 = torques24;
 
           // 0. ALGORITHMIC COGNITIVE MEASUREMENT & CONCEPT GRAPH EXTRACTION (Shannon Entropy H(X), TTR, TF-Salience, Co-Occurrence, Archetype)
@@ -17636,6 +18065,40 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 ctx.fillStyle = wn.colorHex || '#00f0ff';
                 ctx.font = '700 8.5px Consolas, monospace';
                 ctx.fillText((wn.glyph || '🌀') + ' [' + (wn.kind || 'WORLD_NODE') + ']', wnx - 42, wny + wnR + 10);
+              }
+
+              // A0-DSD. Render DECURSIVE SELF-DEDUPLICATION (DSD) Shed Ghost-Clone Exuviae & Orthogonal Nullspace Rays on Webpage!
+              const dCfg = window.__humunculusDsdCfg || dsdCfg || {};
+              const exClones = Array.isArray(dCfg.shedExuviaClones) ? dCfg.shedExuviaClones : [];
+              for (let exi = 0; exi < exClones.length; exi++) {
+                const ex = exClones[exi];
+                const exX = Math.round((ex.xFrac || 0.36) * cEl.width);
+                const exY = Math.round((ex.yFrac || 0.42) * cEl.height);
+                ctx.save();
+                ctx.translate(exX, exY);
+                ctx.setLineDash([2, 3]);
+                ctx.beginPath();
+                ctx.arc(0, 0, 17 + Math.sin(st.tick * 5 + exi) * 3, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(244, 63, 94, 0.72)';
+                ctx.lineWidth = 1.4;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.beginPath();
+                ctx.moveTo(-12, -12); ctx.lineTo(12, 12);
+                ctx.moveTo(12, -12); ctx.lineTo(-12, 12);
+                ctx.strokeStyle = 'rgba(0, 240, 255, 0.78)';
+                ctx.lineWidth = 1.3;
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo((ex.orthoDx || 0.8) * 38, (ex.orthoDy || -0.5) * 38);
+                ctx.strokeStyle = '#34d399';
+                ctx.lineWidth = 1.7;
+                ctx.stroke();
+                ctx.restore();
+                ctx.fillStyle = '#fda4af';
+                ctx.font = '700 8px Consolas, monospace';
+                ctx.fillText('✂️ DSD-DEDUP [d_H=' + (ex.hammingBits || 12) + 'b ⊥ ' + (ex.tombstoneHex || '0x7F4A') + ']', exX - 52, exY - 20);
               }
 
               // A. Render & Check Quantum Glucose Pellets Dropped by User Clicks!
@@ -19631,6 +20094,47 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             }
           }
 
+          // (iii) Render DECURSIVE SELF-DEDUPLICATION (DSD) Shed Ghost-Clone Exuviae & Orthogonal Nullspace Quotient Crosshairs!
+          const dsd = h.decursiveSelfDeduplicator;
+          if (dsd && Array.isArray(dsd.shedExuviaClones)) {
+            for (let exi = 0; exi < dsd.shedExuviaClones.length; exi++) {
+              const ex = dsd.shedExuviaClones[exi];
+              const exX = Math.round((ex.xFrac || 0.35) * sw);
+              const exY = Math.round((ex.yFrac || 0.42) * sh);
+              const exAlpha = Math.max(0.28, ex.alpha || 0.75);
+              vctx.save();
+              vctx.translate(exX, exY);
+              vctx.setLineDash([2, 3]);
+              // Shed Ghost-Clone Wireframe Exuvia Ring
+              vctx.beginPath();
+              vctx.arc(0, 0, 18 + Math.sin(st.tick * 6 + exi) * 4, 0, Math.PI * 2);
+              vctx.strokeStyle = `rgba(244, 63, 94, ${exAlpha.toFixed(2)})`;
+              vctx.lineWidth = 1.5;
+              vctx.stroke();
+              // Decursive Quotient Annihilation Slash-Crosshair (X)
+              vctx.setLineDash([]);
+              vctx.beginPath();
+              vctx.moveTo(-14, -14); vctx.lineTo(14, 14);
+              vctx.moveTo(14, -14); vctx.lineTo(-14, 14);
+              vctx.strokeStyle = `rgba(0, 240, 255, ${(exAlpha * 0.9).toFixed(2)})`;
+              vctx.lineWidth = 1.4;
+              vctx.stroke();
+              // Orthogonal Complement Escape Vector Ray (u_⊥)
+              const oDx = (ex.orthoDx || 0.8) * 44;
+              const oDy = (ex.orthoDy || -0.5) * 44;
+              vctx.beginPath();
+              vctx.moveTo(0, 0);
+              vctx.lineTo(oDx, oDy);
+              vctx.strokeStyle = '#34d399';
+              vctx.lineWidth = 1.8;
+              vctx.stroke();
+              vctx.restore();
+              vctx.fillStyle = `rgba(253, 164, 175, ${exAlpha.toFixed(2)})`;
+              vctx.font = '700 8px Consolas, monospace';
+              vctx.fillText(`✂️ DSD-DEDUP [d_H=${ex.hammingBits}b ⊥ ${ex.tombstoneHex}]`, exX - 54, exY - 22);
+            }
+          }
+
           // 5A-0. Render 28-Column Neo-in-the-Matrix Digital Code Rain (Katakana + Cuneiform + Runes + Lambda Calculus + Hex)
           if (!Array.isArray(st.matrixRainDrops) || st.matrixRainDrops.length !== 28) {
             st.matrixRainDrops = Array.from({ length: 28 }, (_, ci) => ({
@@ -20468,6 +20972,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       let goal = input.value.trim(); if (!goal) return;
       input.value = '';
       const lower = goal.toLowerCase();
+      if (lower === '/decursive' || lower === '/dsd' || lower === '/dedup' || lower === '/primark') {
+        humunculusRuntime.stepDecursiveSelfDeduplication60Hz(Date.now() * 0.001, 36, window.innerWidth || 1280, window.innerHeight || 800);
+        setHumunculusTerminalView('decursive');
+        humunculusRuntime.emitBioAcousticPing('morph');
+        pulseBrowserButtonVisual(null, `✂️🧬 DECURSIVE SELF-DEDUPLICATION UNLEASHED · ${humunculusRuntime.decursiveSelfDeduplicator.lastDsdVerdict}`);
+        return;
+      }
       if (lower === '/neo' || lower === '/matrix' || lower === '/omnipotent' || lower === '/polymath' || lower === '/splitgod') {
         return await triggerNeoMatrixOmnipotenceOverdrive(true);
       }

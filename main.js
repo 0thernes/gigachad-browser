@@ -2587,6 +2587,10 @@ app.whenReady().then(async () => {
                     humunculusRuntime.continuousWorldModel?.tokenDiscretizationErrorPct === 0 &&
                     humunculusRuntime.feralMorphodynamics?.asymmetricLimbReach12?.length === 12 &&
                     humunculusRuntime.realtimeProceduralWorld?.biomeNodes?.length === 5 &&
+                    String(humunculusRuntime.decursiveSelfDeduplicator?.primarkEthos || '').startsWith('DECURSIVE_SELF_DEDUPLICATION_v1_OMEGA') &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.banishedBasis8x64?.length === 512 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.cuckooQuotientTable256?.length === 256 &&
+                    humunculusRuntime.decursiveSelfDeduplicator?.swarmCholeskyL5x5?.length === 25 &&
                     humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
                     humunculusRuntime.swarmCollective?.pantheon?.length === 5 &&
                     humunculusRuntime.deepCortex?.totalParams === 1245184 &&
