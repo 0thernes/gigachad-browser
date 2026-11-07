@@ -2640,11 +2640,17 @@ app.whenReady().then(async () => {
                 if (typeof humunculusRuntime === 'object' && humunculusRuntime) {
                   await performWeirdAlienDomExperiment();
                   const activeT = typeof getActiveTab === 'function' ? getActiveTab() : null;
-                  let guestHudCheck = null;
-                  if (activeT && activeT.wv) {
-                    guestHudCheck = await activeT.wv.executeJavaScript(
-                      '({ hasCanvas: Boolean(document.getElementById("__humunculus_alife_canvas")), canvasOpacity: getComputedStyle(document.getElementById("__humunculus_alife_canvas")).opacity, hasHud: Boolean(document.getElementById("__gigachad_alien_hud")), hudOpacity: getComputedStyle(document.getElementById("__gigachad_alien_hud")).opacity, hasBar: Boolean(document.getElementById("__gigachad_alien_hud_bar")), peersCount: Array.isArray(window.__humunculusPantheonPeers) ? window.__humunculusPantheonPeers.length : -1 })'
+                  const readGuestHud = async (tObj) => {
+                    if (!tObj || !tObj.wv) return null;
+                    return await tObj.wv.executeJavaScript(
+                      '({ hasCanvas: Boolean(document.getElementById("__humunculus_alife_canvas")), canvasOpacity: document.getElementById("__humunculus_alife_canvas") ? getComputedStyle(document.getElementById("__humunculus_alife_canvas")).opacity : "0", hasHud: Boolean(document.getElementById("__gigachad_alien_hud")), hudOpacity: document.getElementById("__gigachad_alien_hud") ? getComputedStyle(document.getElementById("__gigachad_alien_hud")).opacity : "0", hasBar: Boolean(document.getElementById("__gigachad_alien_hud_bar")), peersCount: Array.isArray(window.__humunculusPantheonPeers) ? window.__humunculusPantheonPeers.length : -1 })'
                     ).catch(() => null);
+                  };
+                  let guestHudCheck = await readGuestHud(activeT);
+                  if (!guestHudCheck || !guestHudCheck.hasCanvas) {
+                    await new Promise((r) => setTimeout(r, 320));
+                    await performWeirdAlienDomExperiment();
+                    guestHudCheck = await readGuestHud(typeof getActiveTab === 'function' ? getActiveTab() : activeT);
                   }
                   humunculusRuntime.ingestAndComprehendPageTelemetry({
                     url: 'https://en.wikipedia.org/wiki/Artificial_life',

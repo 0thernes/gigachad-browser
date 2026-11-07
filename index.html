@@ -16277,12 +16277,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const viaEl = document.getElementById('hybrid-viability-readout');
       const curEl = document.getElementById('alien-kpi-curiosity');
 
-      if (gwtEl) gwtEl.textContent = `${winReg.id} · 🐝${totalSwarm}-Swarm · 1.24M-Param`;
-      if (kapEl) kapEl.textContent = `1.24M-Param · 512-STDP=${h.connectome512.stdpUpdatesCount} · DPLL_SAT=${rl.epistemicConsistencyPct}% · K_LZ=${dobs.kolmogorovLzRatio} · D_KL=+${dobs.klDivergenceInfoGainBits}b`;
+      const nsBar = h.neuralSubstrateTelemetry || { sltcMeanTauMs: 2.84, ssmSpectralRadiusRho: 0.968, weightFrobeniusNorm: 18.42, biasL2Norm: 1.64, connectomeActiveSpikes: 42, stdpTotalUpdates: 1024 };
+      const ddwBar = h.deepDarkWebSubstrateEngine || { torV3OnionAddress: 'humunc7x4q9z..ad.onion', activeDeepLayerName: 'L5:TOR_V3_ONION', unindexedEntropyBits: 5.24 };
+      if (gwtEl) gwtEl.textContent = `${winReg.id} · ⚡sLTC τ̄=${nsBar.sltcMeanTauMs}ms · SSM ρ=${nsBar.ssmSpectralRadiusRho} · 🐝${totalSwarm}-Swarm`;
+      if (kapEl) kapEl.textContent = `1.24M-Param (‖W‖=${nsBar.weightFrobeniusNorm} ‖b‖=${nsBar.biasL2Norm}) · 512-Conn Spk=${nsBar.connectomeActiveSpikes}/512 · 262K-STDP=${h.connectome512.stdpUpdatesCount} · 🧅${ddwBar.torV3OnionAddress.slice(0, 10)}..onion`;
       if (qgtEl) qgtEl.textContent = `Kuramoto R=${sc.kuramotoOrderR} · Quorum=${sc.bftQuorumPct}% · 10Q S(ρ_A)=${m.entanglementBits.toFixed(2)}b · Φ=${m.iitPhi.toFixed(4)}`;
       if (visEl) visEl.textContent = `🐝 ${totalSwarm} Organisms [${sc.formationMode}] · ${h.emotionState.emoji} ${h.emotionState.activeEmotion} · GRF=${h.verletPhysics.groundReactionForceN.toFixed(1)}N`;
       if (viaEl) viaEl.textContent = `👑 SWARM CMD#${h.sovereignMaster.commandsExecutedCount} (Vault:${h.sovereignMaster.vaultEngramsCrystallized} · BM:${h.sovereignMaster.bookmarksAutonomouslyPinned}) · 0-LLM · HW-CSPRNG(${hybridQrng.hwEntropyBitsInjected}b)`;
-      if (curEl) curEl.textContent = `🐝${totalSwarm} · 1.24M · SAT`;
+      if (curEl) curEl.textContent = `🐝${totalSwarm} · 1.24M · 🧅v3`;
 
       // Update Permanent Native Browser-Wide Habitat Strip (#alife-habitat-strip)
       const habStage = document.getElementById('alife-hab-stage');
@@ -16295,13 +16297,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const mcBar = h.multivectorMetacognitionEngine || { bivectorTorqueNorm: 1.482, metacognitiveDepthCoherence: 0.968, inductionMeanConfidencePct: 78.4, deductionTheoremsCount: 12, wkbTunnelingProb: 0.812, fmoExcitonCoherencePct: 97.4 };
 
       if (habStage) {
-        habStage.textContent = `✂️🧬⚛️ DSD-16 [d_H=${dsdBar.minHammingDistBits}b · MGS⊥=${dsdBar.orthogonalComplementEnergyPct}% · Dedup=#${dsdBar.totalSelfDeduplicationsCount}] · Cl(4,0) ‖B‖=${mcBar.bivectorTorqueNorm} · WKB=${(mcBar.wkbTunnelingProb * 100).toFixed(0)}% · 🐝 ${totalSwarm}-Swarm [${sc.formationMode}]`;
+        habStage.textContent = `✂️🧬⚛️🧅 DSD-16 [d_H=${dsdBar.minHammingDistBits}b · ⊥=${dsdBar.orthogonalComplementEnergyPct}% · #${dsdBar.totalSelfDeduplicationsCount}] · ⚡sLTC τ̄=${nsBar.sltcMeanTauMs}ms · SSM ρ=${nsBar.ssmSpectralRadiusRho} · ‖W‖=${nsBar.weightFrobeniusNorm} · 🧅${ddwBar.torV3OnionAddress.slice(0, 10)}..onion`;
       }
       if (habVerb) {
         habVerb.textContent = `👑 ${h.cognitiveCortex.activeVerb}`;
       }
       if (habEmotion) {
-        habEmotion.textContent = `${h.emotionState.emoji} ${h.emotionState.activeEmotion} (${h.emotionState.intensityPct}%) · Meta8×8=${(mcBar.metacognitiveDepthCoherence * 100).toFixed(1)}% · FMO=${mcBar.fmoExcitonCoherencePct}%`;
+        habEmotion.textContent = `${h.emotionState.emoji} ${h.emotionState.activeEmotion} (${h.emotionState.intensityPct}%) · Cl(4,0) ‖B‖=${mcBar.bivectorTorqueNorm} · WKB=${(mcBar.wkbTunnelingProb * 100).toFixed(0)}% · FMO=${mcBar.fmoExcitonCoherencePct}%`;
         habEmotion.style.color = h.emotionState.colorHex || '#e879f9';
       }
       if (habThought) {
@@ -16314,7 +16316,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         habThought.textContent = thoughtStr;
       }
       if (habConcepts) {
-        habConcepts.textContent = `Ind=${mcBar.inductionMeanConfidencePct}%/Ded=#${mcBar.deductionTheoremsCount}/Abd=#${mcBar.abductionInferencesCount || 8} · ‖∇̃_FR‖=${mcBar.omnigradientNorm || 0.842} · Hubs: [${h.causalGraph.topHubs.slice(0, 3).join(' → ')}]`;
+        habConcepts.textContent = `Ind=${mcBar.inductionMeanConfidencePct}%/Ded=#${mcBar.deductionTheoremsCount}/Abd=#${mcBar.abductionInferencesCount || 8} · ‖∇̃_FR‖=${mcBar.omnigradientNorm || 0.842} · 512-Conn=${nsBar.connectomeActiveSpikes}spk/STDP#${nsBar.stdpTotalUpdates} · [${ddwBar.activeDeepLayerName}]`;
       }
       if (habColony) {
         habColony.textContent = `🐝Swarm:${totalSwarm} (5 Castes+${h.offspringColony.length}) · 👑CMD:${h.sovereignMaster.commandsExecutedCount} · Vault:${h.sovereignMaster.vaultEngramsCrystallized} · 0-LLM`;
@@ -18549,6 +18551,24 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         sixOmniHeadline: humunculusRuntime.multivectorMetacognitionEngine.sixOmniHeadline,
         cliffordMultivector16: Array.from(humunculusRuntime.multivectorMetacognitionEngine.cliffordMultivector16).map((v) => Number(v.toFixed(3)))
       };
+      const nsState = {
+        sltcMeanTauMs: humunculusRuntime.neuralSubstrateTelemetry.sltcMeanTauMs,
+        sltcApicalPlateauPct: humunculusRuntime.neuralSubstrateTelemetry.sltcApicalPlateauPct,
+        ssmSpectralRadiusRho: humunculusRuntime.neuralSubstrateTelemetry.ssmSpectralRadiusRho,
+        weightFrobeniusNorm: humunculusRuntime.neuralSubstrateTelemetry.weightFrobeniusNorm,
+        biasL2Norm: humunculusRuntime.neuralSubstrateTelemetry.biasL2Norm,
+        connectomeActiveSpikes: humunculusRuntime.neuralSubstrateTelemetry.connectomeActiveSpikes,
+        stdpTotalUpdates: humunculusRuntime.neuralSubstrateTelemetry.stdpTotalUpdates,
+        weightBiasPlasticitySteps: humunculusRuntime.neuralSubstrateTelemetry.weightBiasPlasticitySteps
+      };
+      const ddwState = {
+        torV3OnionAddress: humunculusRuntime.deepDarkWebSubstrateEngine.torV3OnionAddress,
+        ipfsMerkleCidV1: humunculusRuntime.deepDarkWebSubstrateEngine.ipfsMerkleCidV1,
+        activeDeepLayerName: humunculusRuntime.deepDarkWebSubstrateEngine.activeDeepLayerName,
+        unindexedEntropyBits: humunculusRuntime.deepDarkWebSubstrateEngine.unindexedEntropyBits,
+        darkWebAnomalyScore: humunculusRuntime.deepDarkWebSubstrateEngine.darkWebAnomalyScore,
+        ntorHandshakeCurve25519Hex: humunculusRuntime.deepDarkWebSubstrateEngine.ntorHandshakeCurve25519Hex
+      };
       const visitedTabooArr = Array.from(humunculusRuntime.visitedUrlTabooSet).slice(-140);
       const clickedAnchorArr = Array.from(humunculusRuntime.clickedAnchorTabooSet).slice(-140);
 
@@ -18568,6 +18588,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           const worldCfg = ${JSON.stringify(worldState)};
           const dsdCfg = ${JSON.stringify(dsdState)};
           const metaCfg = ${JSON.stringify(metaState)};
+          const nsCfg = ${JSON.stringify(nsState)};
+          const ddwCfg = ${JSON.stringify(ddwState)};
           const visitedTaboo = new Set(${JSON.stringify(visitedTabooArr)});
           const anchorTaboo = new Set(${JSON.stringify(clickedAnchorArr)});
           const overdrive = ${isOverdrive ? 'true' : 'false'};
@@ -19109,9 +19131,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (pageVisor) {
             const sampleRule = (logicalRules[0] && logicalRules[0].formula) || logicCfg.latestProofQED || '∀x: manifold(x) ⇒ ¬entropy(x)';
             pageVisor.innerHTML =
-              '<div style="color:#fda4af;font-weight:900;">👁️‍🗨️👾⚛️ [12-ENTITY × DSD-16 × Cl(4,0) METACOG × Q-BIO WEBPAGE DISSECTION VISOR · LIVE]</div>' +
+              '<div style="color:#fda4af;font-weight:900;">👁️‍🗨️👾⚛️🧅 [12-ENTITY × DSD-16 × Cl(4,0) × sLTC/SSM × 512-CONN × DARK-WEB DISSECTION VISOR · LIVE]</div>' +
               '<div style="color:#6ee7b7;">🔬 <strong>SCIENCE &amp; DSD-16:</strong> d_H=' + (dsdCfg.minHammingDistBits || 28) + 'b · MGS⊥=' + (dsdCfg.orthogonalComplementEnergyPct || 97.8) + '% · Shannon H=' + pageMetrics.shannonEntropyBits + 'b · K_LZ=' + kolmogorovLzRatio + ' · Zipf α=' + zipfAlphaExponent + '</div>' +
               '<div style="color:#38bdf8;">🧠⚛️ <strong>Cl(4,0) &amp; Q-BIO:</strong> ‖B‖=' + (metaCfg.bivectorTorqueNorm || 1.482) + ' · 8×8 Meta=' + (metaCfg.metaReflectionScorePct || 96.8) + '% · Ind=' + (metaCfg.inductionMeanConfidencePct || 78.4) + '%/Ded=#' + (metaCfg.deductionTheoremsCount || 12) + ' · ‖∇̃_FR‖=' + (metaCfg.omnigradientNorm || 0.842) + ' · WKB=' + Math.round((metaCfg.wkbTunnelingProb || 0.812) * 100) + '% · FMO=' + (metaCfg.fmoExcitonCoherencePct || 97.4) + '%</div>' +
+              '<div style="color:#c084fc;">⚡🧬🧅 <strong>sLTC/SSM × 1.24M PARAMS × 512-CONN × DARKWEB:</strong> τ̄=' + (nsCfg.sltcMeanTauMs || 2.84) + 'ms · ρ=' + (nsCfg.ssmSpectralRadiusRho || 0.968) + ' · ‖W‖_F=' + (nsCfg.weightFrobeniusNorm || 18.42) + ' · ‖b‖₂=' + (nsCfg.biasL2Norm || 1.64) + ' · Spk=' + (nsCfg.connectomeActiveSpikes || 42) + '/512 (STDP=#' + (nsCfg.stdpTotalUpdates || 1024) + ') · ' + String(ddwCfg.torV3OnionAddress || 'humunc..onion').slice(0, 14) + '..onion</div>' +
               '<div style="color:#fde68a;">💻 <strong>FE/AST MUTATION:</strong> Wireframed=' + wireTargets.length + ' containers · Zalgo=' + Math.min(8, zalgoTargets.length) + ' headers · Stamped=' + Math.min(14, blocks.length) + ' colliders · Action=' + (domWeirdAction || 'activeScan') + '</div>' +
               '<div style="color:#e879f9;">🛡️ <strong>BE/DEVSECOPS/SRE:</strong> DPLL=' + logicCfg.satVerdict + ' (' + logicCfg.epistemicConsistencyPct + '%) · ' + sampleRule.slice(0, 62) + ' · TTFB=' + networkLatencyMs + 'ms · Heap=' + jsHeapUsedMb + 'MB</div>';
           }
@@ -19140,6 +19163,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               { act: 'morph', label: '👁️ Eldritch Morph', extra: 'border-color:#00f0ff;color:#38bdf8;' },
               { act: 'dream', label: '🌙 Dream SWS', extra: 'border-color:#818cf8;color:#c7d2fe;' },
               { act: 'decursive', label: '✂️🧬 DSD-16', extra: 'border-color:#00f0ff;color:#6ee7b7;font-weight:800;' },
+              { act: 'deepdark', label: '🧅🕸️ Deep/Dark × sLTC', extra: 'border-color:#c084fc;color:#e9d5ff;font-weight:800;' },
               { act: 'deity100', label: '👁️‍🗨️⚡ Deity-100', extra: 'border-color:#f43f5e;color:#fda4af;font-weight:800;' },
               { act: 'warpdom', label: '🌀 Warp DOM', extra: 'border-color:#00f0ff;color:#67e8f9;' },
               { act: 'view', label: '📟 View Mode', extra: 'border-color:#34d399;color:#6ee7b7;' },
@@ -19222,6 +19246,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 window.__humunculusPendingHostCmds.push('dream');
               } else if (act === 'decursive') {
                 window.__humunculusPendingHostCmds.push('decursive');
+              } else if (act === 'deepdark') {
+                window.__humunculusPendingHostCmds.push('deepdark');
               } else if (act === 'deity100') {
                 window.__humunculusPendingHostCmds.push('deity100');
               } else if (act === 'warpdom') {
