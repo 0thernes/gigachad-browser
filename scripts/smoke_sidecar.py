@@ -227,6 +227,19 @@ def main():
         assert isinstance(tbl["tables"], list) and len(tbl["tables"]) == 1 and tbl["tables"][0]["row_count"] == 2, tbl
         assert_honest(tbl, "/table_to_markdown")
 
+        status, mq = request("POST", "/metacognition_quantum", {
+            "multivector": [0.9, 0.4, -0.3, 0.2, 0.5, 0.7, -0.2, 0.6, 0.3, -0.4, 0.5, 0.2, -0.1, 0.3, 0.4, 0.8],
+            "latent_head": [0.5, -0.25, 0.75, 0.1, -0.4, 0.6, 0.3, -0.2],
+            "surprise": 0.18,
+            "novelty": 0.92,
+            "orthogonality": 0.96,
+            "dpp_det": 0.88
+        })
+        assert status == 200 and mq["status"] == "OK" and mq["algebra"] == "Cl(4,0)_R16", mq
+        assert mq["bivector_energy"] > 0 and 0.0 <= mq["fmo_exciton_coherence"] <= 1.0, mq
+        assert "omniscient_sheaf_pct" in mq.get("six_omni", {}), mq
+        assert_honest(mq, "/metacognition_quantum")
+
         print("sidecar smoke passed")
     finally:
         proc.terminate()

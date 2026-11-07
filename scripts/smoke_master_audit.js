@@ -192,6 +192,13 @@ assert(!indexHtml.includes("require('electron')"), 'index.html must not call req
 assert(mainJs.includes('contextIsolation: true'), 'main.js must enforce contextIsolation: true');
 assert(mainJs.includes('nodeIntegration: false'), 'main.js must enforce nodeIntegration: false');
 
+// 8. Verify DSD-16 + Continuous World Model + Multivector Metacognition + Quantum Biomimeticry + 6-Omni Hard-Wiring
+assert(indexScript.includes('multivectorMetacognitionEngine'), 'index.html must initialize multivectorMetacognitionEngine');
+assert(indexScript.includes('stepMultivectorMetacognition60Hz'), 'index.html must define and run stepMultivectorMetacognition60Hz at 60Hz');
+assert(indexScript.includes('scoreDoorByDsdAndMetacognition'), 'index.html must define scoreDoorByDsdAndMetacognition for DOM door selection');
+assert(indexScript.includes('sixOmniMatrix'), 'index.html must expose sixOmniMatrix (Omniscient, Omnipotent, Omnigradient, Omnilogical, Omnirational, Omniphilosophical)');
+assert(indexScript.includes("'/metacognition_quantum'") && sidecarPy.includes('"/metacognition_quantum"'), 'laya_sidecar.py and index.html must register and invoke /metacognition_quantum');
+
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +
   `${indexDomAudit.idCount} HTML IDs (${indexDomAudit.queriedCount} queried), ${indexDomAudit.fnCount} JS functions, ` +

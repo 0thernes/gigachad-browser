@@ -2602,6 +2602,8 @@ app.whenReady().then(async () => {
                     humunculusRuntime.multivectorMetacognitionEngine?.cliffordMultivector16?.length === 16 &&
                     humunculusRuntime.multivectorMetacognitionEngine?.metacognitiveGrid8x8?.length === 64 &&
                     humunculusRuntime.multivectorMetacognitionEngine?.omnigradientNaturalGrad64?.length === 64 &&
+                    Boolean(humunculusRuntime.sixOmniMatrix?.sixOmniHeadline) &&
+                    humunculusRuntime.formatRetroTerminalText('metacognition').includes('SUPREME MULTIVECTOR METACOGNITION') &&
                     typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
                     typeof triggerPrimarkDecursiveSelfDeduplicationBurst === 'function' &&
                     humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
