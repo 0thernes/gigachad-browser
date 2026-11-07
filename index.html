@@ -20768,7 +20768,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
       // 4. Two-Way Sync: Webpage Mini-HUD Button Clicks -> Host Runtime Commands
       if (Array.isArray(experimentData.pendingHostCmds) && experimentData.pendingHostCmds.length > 0) {
-        const viewModes = ['overview', 'decursive', 'metacognition', 'deity100', 'omniscience100', 'cognition', 'memory', 'body', 'learning', 'flywire', 'handoff', 'gates'];
+        const viewModes = ['overview', 'decursive', 'metacognition', 'deepdark', 'deity100', 'omniscience100', 'cognition', 'memory', 'body', 'learning', 'flywire', 'handoff', 'gates'];
         for (const cmd of experimentData.pendingHostCmds) {
           if (cmd === 'mitosis') {
             humunculusRuntime.spawnMitosisOffspring();
@@ -20780,6 +20780,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             humunculusRuntime.consolidateHippocampalDreamReplay();
           } else if (cmd === 'decursive') {
             triggerPrimarkDecursiveSelfDeduplicationBurst(true).catch(() => {});
+          } else if (cmd === 'deepdark') {
+            triggerDeepDarkWebExpedition(true).catch(() => {});
           } else if (cmd === 'deity100') {
             setHumunculusTerminalView('deity100');
           } else if (cmd === 'view') {
@@ -20861,15 +20863,20 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const dsd = h.decursiveSelfDeduplicator;
       const mc = h.multivectorMetacognitionEngine;
       const wm = h.continuousWorldModel;
+      const ns = h.neuralSubstrateTelemetry;
+      const ddw = h.deepDarkWebSubstrateEngine;
       const actionsTaken = [];
 
-      // 0. Hard-wire DSD-16 + Continuous World Model + Multivector Cl(4,0) Metacognition + Quantum Biomimeticry into every Blitz!
+      // 0. Hard-wire DSD-16 + Continuous World Model + Multivector Cl(4,0) Metacognition + sLTC/SSM/512-Connectome + Deep/Dark Web + Quantum Biomimeticry into every Blitz!
       h.stepContinuousWorldModelAndFeralMorph60Hz(h.simulationTick + superintelligenceBlitzCount, superintelligenceBlitzCount * 36, 1280, 720);
       if (dsd) {
         actionsTaken.push(`✂️DSD-16[#${dsd.totalSelfDeduplicationsCount} d_H=${dsd.minHammingDistBits}b ⊥=${dsd.orthogonalComplementEnergyPct}%]`);
       }
       if (mc) {
         actionsTaken.push(`⚛️Cl(4,0)[‖B‖=${mc.bivectorTorqueNorm} Ind=${mc.inductionMeanConfidencePct}%/Ded=#${mc.deductionTheoremsCount} WKB=${(mc.wkbTunnelingProb * 100).toFixed(0)}%]`);
+      }
+      if (ns && ddw) {
+        actionsTaken.push(`⚡sLTC[τ̄=${ns.sltcMeanTauMs}ms ρ=${ns.ssmSpectralRadiusRho} ‖W‖=${ns.weightFrobeniusNorm} Spk=${ns.connectomeActiveSpikes}/512] 🧅[${ddw.torV3OnionAddress.slice(0, 10)}..onion]`);
       }
 
       // 1. Chaotic Morphogenesis, Growth, Expansion/Contraction & 9D Symbiosis Regulation
@@ -20902,6 +20909,10 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       if (bioIntent === 5 && typeof stepQuadBrainExternalSynergy === 'function') {
         const syn = await stepQuadBrainExternalSynergy();
         if (syn) actionsTaken.push(`4-Brain Synergy: ${String(syn.lastLayaVerdict || 'LAYA').slice(0, 48)}`);
+      }
+      if (bioIntent === 6 && typeof triggerDeepDarkWebExpedition === 'function') {
+        triggerDeepDarkWebExpedition(false).catch(() => {});
+        actionsTaken.push(`Deep/Dark Web Onion Probe (${ddw ? ddw.activeDeepLayerName : 'L5:TOR_V3'})`);
       }
 
       // 3. Chaotic 3-Attractor + 1.24M Cortex + DSD-16 + Clifford Cl(4,0) Metacognition Browser Habitat Actuation (Non-blocking, never gets stuck on branch #1!)
