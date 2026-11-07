@@ -2638,19 +2638,23 @@ app.whenReady().then(async () => {
               let alifeOmega100Ok = false;
               try {
                 if (typeof humunculusRuntime === 'object' && humunculusRuntime) {
-                  await performWeirdAlienDomExperiment();
-                  const activeT = typeof getActiveTab === 'function' ? getActiveTab() : null;
                   const readGuestHud = async (tObj) => {
                     if (!tObj || !tObj.wv) return null;
                     return await tObj.wv.executeJavaScript(
                       '({ hasCanvas: Boolean(document.getElementById("__humunculus_alife_canvas")), canvasOpacity: document.getElementById("__humunculus_alife_canvas") ? getComputedStyle(document.getElementById("__humunculus_alife_canvas")).opacity : "0", hasHud: Boolean(document.getElementById("__gigachad_alien_hud")), hudOpacity: document.getElementById("__gigachad_alien_hud") ? getComputedStyle(document.getElementById("__gigachad_alien_hud")).opacity : "0", hasBar: Boolean(document.getElementById("__gigachad_alien_hud_bar")), peersCount: Array.isArray(window.__humunculusPantheonPeers) ? window.__humunculusPantheonPeers.length : -1 })'
                     ).catch(() => null);
                   };
-                  let guestHudCheck = await readGuestHud(activeT);
-                  if (!guestHudCheck || !guestHudCheck.hasCanvas) {
+                  let guestHudCheck = null;
+                  for (let attempt = 0; attempt < 4; attempt++) {
+                    const readyT = (typeof tabs !== 'undefined' && Array.isArray(tabs))
+                      ? (tabs.find((tb) => tb && tb.domReady && /newtab\.html/i.test(tb.url || '')) || tabs.find((tb) => tb && tb.domReady) || (typeof getActiveTab === 'function' ? getActiveTab() : null))
+                      : (typeof getActiveTab === 'function' ? getActiveTab() : null);
+                    await performWeirdAlienDomExperiment(readyT);
+                    guestHudCheck = await readGuestHud(readyT);
+                    if (guestHudCheck && guestHudCheck.hasCanvas && guestHudCheck.hasHud && guestHudCheck.hasBar && guestHudCheck.peersCount === 4) {
+                      break;
+                    }
                     await new Promise((r) => setTimeout(r, 320));
-                    await performWeirdAlienDomExperiment();
-                    guestHudCheck = await readGuestHud(typeof getActiveTab === 'function' ? getActiveTab() : activeT);
                   }
                   humunculusRuntime.ingestAndComprehendPageTelemetry({
                     url: 'https://en.wikipedia.org/wiki/Artificial_life',
@@ -2666,74 +2670,94 @@ app.whenReady().then(async () => {
                   const term100 = humunculusRuntime.formatRetroTerminalText('omniscience100');
                   const termDeity100 = humunculusRuntime.formatRetroTerminalText('deity100');
                   const gates = humunculusRuntime.evaluateAcceptanceGates();
-                  alifeOmega100Ok = Boolean(
-                    om &&
-                    om.verifiedModulesCount === 100 &&
-                    dt &&
-                    dt.verifiedDeityPowersCount === 100 &&
-                    humunculusRuntime.continuousWorldModel?.latentZ64?.length === 64 &&
-                    humunculusRuntime.continuousWorldModel?.ssmHiddenH128?.length === 128 &&
-                    humunculusRuntime.continuousWorldModel?.contextRotPct === 0 &&
-                    humunculusRuntime.continuousWorldModel?.tokenDiscretizationErrorPct === 0 &&
-                    humunculusRuntime.feralMorphodynamics?.asymmetricLimbReach12?.length === 12 &&
-                    humunculusRuntime.realtimeProceduralWorld?.biomeNodes?.length === 5 &&
-                    String(humunculusRuntime.decursiveSelfDeduplicator?.primarkEthos || '').startsWith('DECURSIVE_SELF_DEDUPLICATION_') &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.banishedBasis8x64?.length === 512 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.cuckooQuotientTable256?.length === 256 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.swarmCholeskyL5x5?.length === 25 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.vietorisRipsLandmarks16x8?.length === 128 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.cmsSketch4x64?.length === 256 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.fwhtSpectrum64?.length === 64 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.mortonCellTable64?.length === 64 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.hopcroftClass32?.length === 32 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.auctionPrices16?.length === 16 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.chebyshevScratch64?.length === 64 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.chiralLimbParity12?.length === 12 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.onionBloomFilter64?.length === 64 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.synapseRowDedupCount >= 1 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.sltcTauDedupSwapsCount >= 1 &&
-                    humunculusRuntime.decursiveSelfDeduplicator?.ssmEigenRepulsionsCount >= 1 &&
-                    document.getElementById('hybrid-tier-btn-5') &&
-                    humunculusRuntime.multivectorMetacognitionEngine?.cliffordMultivector16?.length === 16 &&
-                    humunculusRuntime.multivectorMetacognitionEngine?.metacognitiveGrid8x8?.length === 64 &&
-                    humunculusRuntime.multivectorMetacognitionEngine?.omnigradientNaturalGrad64?.length === 64 &&
-                    Boolean(humunculusRuntime.sixOmniMatrix?.sixOmniHeadline) &&
-                    humunculusRuntime.formatRetroTerminalText('metacognition').includes('SUPREME MULTIVECTOR METACOGNITION') &&
-                    Boolean(humunculusRuntime.deepDarkWebSubstrateEngine?.torV3OnionAddress?.endsWith('.onion')) &&
-                    humunculusRuntime.neuralSubstrateTelemetry?.sltcMeanTauMs > 0 &&
-                    humunculusRuntime.deepWebAndSltcConnectomeEngine?.sltcState64?.length === 64 &&
-                    humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
-                    typeof resolveDeepDarkWebGatewayUrl === 'function' &&
-                    typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
-                    typeof triggerPrimarkDecursiveSelfDeduplicationBurst === 'function' &&
-                    humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
-                    humunculusRuntime.swarmCollective?.pantheon?.length === 5 &&
-                    humunculusRuntime.deepCortex?.totalParams === 1245184 &&
-                    term100.includes('100/100 ACTIVE') &&
-                    termDeity100.includes('100/100 ACTIVE') &&
-                    typeof triggerDeity100ApotheosisPulse === 'function' &&
-                    gates &&
-                    gates.allPassed === true &&
-                    document.getElementById('host-alife-viewport-canvas') &&
-                    document.getElementById('host-alife-hud-dock') &&
-                    document.getElementById('host-alife-hud-bar') &&
-                    document.getElementById('host-alife-hud-pre') &&
-                    document.getElementById('habitat-unleash-btn') &&
-                    document.getElementById('habitat-overdrive-btn') &&
-                    document.getElementById('habitat-persona-select') &&
-                    document.getElementById('habitat-autonav-chk') &&
-                    typeof syncCreaturePersonaMode === 'function' &&
-                    typeof cycleCreatureSwarmFormation === 'function' &&
-                    typeof cycleHostTerminalViewMode === 'function' &&
-                    typeof toggleHostAlifeHudPre === 'function' &&
-                    guestHudCheck &&
-                    guestHudCheck.hasCanvas &&
-                    guestHudCheck.canvasOpacity === '1' &&
-                    guestHudCheck.hasHud &&
-                    guestHudCheck.hudOpacity === '1' &&
-                    guestHudCheck.hasBar &&
-                    guestHudCheck.peersCount === 4
-                  );
+                  const alifeChecks = {
+                    omOk: Boolean(om && om.verifiedModulesCount === 100),
+                    dtOk: Boolean(dt && dt.verifiedDeityPowersCount === 100),
+                    wmOk: Boolean(
+                      humunculusRuntime.continuousWorldModel?.latentZ64?.length === 64 &&
+                      humunculusRuntime.continuousWorldModel?.ssmHiddenH128?.length === 128 &&
+                      humunculusRuntime.continuousWorldModel?.contextRotPct === 0 &&
+                      humunculusRuntime.continuousWorldModel?.tokenDiscretizationErrorPct === 0
+                    ),
+                    feralOk: Boolean(
+                      humunculusRuntime.feralMorphodynamics?.asymmetricLimbReach12?.length === 12 &&
+                      humunculusRuntime.realtimeProceduralWorld?.biomeNodes?.length === 5
+                    ),
+                    dsdOk: Boolean(
+                      String(humunculusRuntime.decursiveSelfDeduplicator?.primarkEthos || '').startsWith('DECURSIVE_SELF_DEDUPLICATION_') &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.banishedBasis8x64?.length === 512 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.cuckooQuotientTable256?.length === 256 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.swarmCholeskyL5x5?.length === 25 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.vietorisRipsLandmarks16x8?.length === 128 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.cmsSketch4x64?.length === 256 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.fwhtSpectrum64?.length === 64 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.mortonCellTable64?.length === 64 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.hopcroftClass32?.length === 32 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.auctionPrices16?.length === 16 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.chebyshevScratch64?.length === 64 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.chiralLimbParity12?.length === 12 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.onionBloomFilter64?.length === 64 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.synapseRowDedupCount >= 1 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.sltcTauDedupSwapsCount >= 1 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.ssmEigenRepulsionsCount >= 1
+                    ),
+                    metaOk: Boolean(
+                      document.getElementById('hybrid-tier-btn-5') &&
+                      humunculusRuntime.multivectorMetacognitionEngine?.cliffordMultivector16?.length === 16 &&
+                      humunculusRuntime.multivectorMetacognitionEngine?.metacognitiveGrid8x8?.length === 64 &&
+                      humunculusRuntime.multivectorMetacognitionEngine?.omnigradientNaturalGrad64?.length === 64 &&
+                      Boolean(humunculusRuntime.sixOmniMatrix?.sixOmniHeadline) &&
+                      humunculusRuntime.formatRetroTerminalText('metacognition').includes('SUPREME MULTIVECTOR METACOGNITION')
+                    ),
+                    ddwNsOk: Boolean(
+                      Boolean(humunculusRuntime.deepDarkWebSubstrateEngine?.torV3OnionAddress?.endsWith('.onion')) &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.sltcMeanTauMs > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.htsrPowerLawAlpha >= 2.0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.yangMillsWilsonHolonomy > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.navierStokesEnstrophy > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.gueRepulsionFactorR2 > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.riemannZetaZeros16?.length === 16 &&
+                      humunculusRuntime.deepWebAndSltcConnectomeEngine?.sltcState64?.length === 64 &&
+                      humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
+                      typeof resolveDeepDarkWebGatewayUrl === 'function' &&
+                      typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
+                      typeof triggerPrimarkDecursiveSelfDeduplicationBurst === 'function'
+                    ),
+                    coreOk: Boolean(
+                      humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
+                      humunculusRuntime.swarmCollective?.pantheon?.length === 5 &&
+                      humunculusRuntime.deepCortex?.totalParams === 1245184 &&
+                      term100.includes('100/100 ACTIVE') &&
+                      termDeity100.includes('100/100 ACTIVE') &&
+                      typeof triggerDeity100ApotheosisPulse === 'function' &&
+                      gates &&
+                      gates.allPassed === true
+                    ),
+                    domOk: Boolean(
+                      document.getElementById('host-alife-viewport-canvas') &&
+                      document.getElementById('host-alife-hud-dock') &&
+                      document.getElementById('host-alife-hud-bar') &&
+                      document.getElementById('host-alife-hud-pre') &&
+                      document.getElementById('habitat-unleash-btn') &&
+                      document.getElementById('habitat-overdrive-btn') &&
+                      document.getElementById('habitat-persona-select') &&
+                      document.getElementById('habitat-autonav-chk') &&
+                      typeof syncCreaturePersonaMode === 'function' &&
+                      typeof cycleCreatureSwarmFormation === 'function' &&
+                      typeof cycleHostTerminalViewMode === 'function' &&
+                      typeof toggleHostAlifeHudPre === 'function'
+                    ),
+                    guestOk: Boolean(
+                      guestHudCheck &&
+                      guestHudCheck.hasCanvas &&
+                      guestHudCheck.canvasOpacity === '1' &&
+                      guestHudCheck.hasHud &&
+                      guestHudCheck.hudOpacity === '1' &&
+                      guestHudCheck.hasBar &&
+                      guestHudCheck.peersCount === 4
+                    )
+                  };
+                  alifeOmega100Ok = Object.values(alifeChecks).every(Boolean);
                 }
               } catch (_) {
                 alifeOmega100Ok = false;

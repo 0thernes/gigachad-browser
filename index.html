@@ -10215,7 +10215,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         this.t = 0;
 
         // Neuromodulators (Yu & Dayan 2005; Schultz 1997)
-        this.nm = { DA: 0.54, ACh: 0.62, NE: 0.44, S5: 0.42 };
+        this.nm = { DA: 0.54, ACh: 0.62, NE: 0.44, S5: 0.42, HT5: 0.42 };
 
         // Tier-1 Macro State
         this.macroV    = new Float32Array(N_HYB_MACRO);
@@ -10578,6 +10578,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         this.nm.ACh = Math.max(0.1, Math.min(1.2, 0.96 * this.nm.ACh + 0.04 * (0.42 + 0.7 * this.macroRate[7])));
         this.nm.NE  = Math.max(0.1, Math.min(1.2, 0.96 * this.nm.NE  + 0.04 * (0.32 + 0.8 * this.macroRate[5] + 0.12 * Math.max(0, this.feltKappa))));
         this.nm.S5  = Math.max(0.1, Math.min(1.2, 0.96 * this.nm.S5  + 0.04 * (0.36 + 0.6 * this.macroRate[8])));
+        this.nm.HT5 = this.nm.S5;
         const pragmaticTerm = this.confidence * 1.45 + 0.35 * v.glc;
         const epistemicTerm = 0.45 * this.iitPhi + 0.30 * Math.abs(this.berry01) + 0.25 * v.agRP;
         this.efeFreeEnergy = -(pragmaticTerm + epistemicTerm - 0.22 * Math.abs(this.feltKappa));
@@ -11903,17 +11904,17 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         for (let i = 0; i < 16; i++) {
           raw[24 + i] = epg[i] || 0;
         }
-        raw[40] = m.viscera.glc * 2.0 - 1.0;
-        raw[41] = m.viscera.atp * 2.0 - 1.0;
-        raw[42] = m.viscera.agRP * 2.0 - 1.0;
-        raw[43] = m.viscera.cortisol * 2.0 - 1.0;
-        raw[44] = Math.tanh(m.nm.DA - 0.5);
-        raw[45] = Math.tanh(m.nm.ACh - 0.5);
-        raw[46] = Math.tanh(m.nm.NE - 0.5);
-        raw[47] = Math.tanh(m.nm.HT5 - 0.5);
-        raw[48] = Math.tanh(m.kappa * 0.4);
-        raw[49] = m.iitPhi * 2.0 - 1.0;
-        raw[50] = Math.tanh(m.criticalitySigma - 1.0);
+        raw[40] = (m.viscera.glc || 0.84) * 2.0 - 1.0;
+        raw[41] = (m.viscera.atp || 0.91) * 2.0 - 1.0;
+        raw[42] = (m.viscera.agRP || 0.58) * 2.0 - 1.0;
+        raw[43] = (m.viscera.cortisol || 0.24) * 2.0 - 1.0;
+        raw[44] = Math.tanh((m.nm.DA || 0.54) - 0.5);
+        raw[45] = Math.tanh((m.nm.ACh || 0.62) - 0.5);
+        raw[46] = Math.tanh((m.nm.NE || 0.44) - 0.5);
+        raw[47] = Math.tanh(((m.nm.S5 ?? m.nm.HT5) || 0.42) - 0.5);
+        raw[48] = Math.tanh((m.kappa || 0.42) * 0.4);
+        raw[49] = (m.iitPhi || 0.57) * 2.0 - 1.0;
+        raw[50] = Math.tanh((m.criticalitySigma || 1.0) - 1.0);
         raw[51] = Math.tanh((m.entanglementBits || 3.5) / 5.0);
 
         const meas = this.cognitiveCortex.lastMeasurement;
@@ -11936,6 +11937,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         raw[61] = Math.tanh((ch.ly || -1.0) * 0.08);
         raw[62] = Math.tanh((ch.rx || 0.5) * 0.14);
         raw[63] = Math.sin(ch.chirikovTheta || 1.7);
+        for (let i = 0; i < 64; i++) {
+          if (!Number.isFinite(raw[i])) raw[i] = 0.0;
+        }
 
         // 2. Spatial Encoder + Latent Space Clamping (Riemannian Variance-Bounding Bottleneck)
         const Wenc = wm.W_spatial_enc;
@@ -17339,12 +17343,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       try {
         const now = Date.now();
         const curUrl = safeGetUrl(tabObj);
-        const isBlankOrStart = !curUrl || /about:blank|newtab\.html/i.test(curUrl);
-        if (!forceImmediate && !isBlankOrStart) {
+        const isBlank = !curUrl || /^about:blank/i.test(curUrl);
+        if (!forceImmediate && !isBlank) {
           const sinceStart = now - (tabObj.lastNavStartTs || 0);
           const sinceReady = now - (tabObj.lastDomReadyTs || tabObj.lastNavStartTs || 0);
-          // Do not abort an in-flight load (< 4.2s) or wipe a freshly loaded page before 5.2s of live visual habitation!
-          if ((!tabObj.domReady && sinceStart < 4200) || (tabObj.domReady && sinceReady < 5200)) {
+          const minDwellMs = /newtab\.html/i.test(curUrl) ? 2600 : 5200;
+          // Do not abort an in-flight load (< 4.2s) or wipe a freshly loaded page before live visual habitation!
+          if ((!tabObj.domReady && sinceStart < 4200) || (tabObj.domReady && sinceReady < minDwellMs)) {
             if (tabObj.domReady && typeof possessAllOpenTabsSimultaneously === 'function') {
               possessAllOpenTabsSimultaneously().catch(() => {});
             }
@@ -17757,9 +17762,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
       // 1. Ensure at least 2 tabs exist and Dual-Pane Split View is ACTIVE so multiple beings inhabit Split Tabs simultaneously!
       if (tabs.length < 2) {
+        const prevPrimaryId = activeTabId;
         const seed = pickChaoticSeed();
         const spawnedTab = createTab(seed.url, { title: `🕶️⚡ ${seed.title.slice(0, 28)}` });
         if (spawnedTab && spawnedTab.id) {
+          if (prevPrimaryId && prevPrimaryId !== spawnedTab.id) {
+            switchTab(prevPrimaryId);
+          }
           secondaryTabId = spawnedTab.id;
         }
       }
@@ -17790,8 +17799,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         actionSummary = `CHAOTIC LORENZ SPLIT-RATIO MORPH → ${splitRatioPct}% Left / ${100 - splitRatioPct}% Right (lz=${ch.lz.toFixed(1)})`;
         codeTrace = `splitRatioPct = ${splitRatioPct}; applySplitRatioWidths(); // Driven by Lorenz z_L=${ch.lz.toFixed(2)}`;
       } else if (intentId === 1 && tabs.length >= 2) {
-        // [INTENT 1] Quantum Split-Pane Swap (⇄) + M6 Fenced Epoch Handoff
-        swapSplitPanes();
+        // [INTENT 1] Quantum Split-Pane Swap (⇄) + M6 Fenced Epoch Handoff (only when secondary pane is domReady)
+        const secT = getTab(secondaryTabId);
+        if (secT && secT.domReady) {
+          swapSplitPanes();
+        }
         const xfer = h.executeAcknowledgedTabHandoff(secondaryTabId || activeTabId, activeTabId, 'chaotic-quantum-pane-swap');
         actionSummary = `QUANTUM SPLIT-PANE SWAP (⇄ ep#${xfer.newEpoch}) → Left=#${activeTabId} ⇄ Right=#${secondaryTabId}`;
         codeTrace = `swapSplitPanes(); executeAcknowledgedTabHandoff("${secondaryTabId}", "${activeTabId}");`;
@@ -17807,6 +17819,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           codeTrace = `dispatchNonBlockingTabNavigation(secondaryTab, "${seed.url}");`;
         } else {
           window.__lastNeoTabSpawnTs = nowTs;
+          const prevPrimaryId = activeTabId;
           if (tabs.length >= 4) {
             const removable = tabs.find((t) => !t.pinned && t.id !== activeTabId && t.id !== secondaryTabId);
             if (removable) closeTab(removable.id);
@@ -17815,7 +17828,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (usePolySearch) {
             const poly = buildChaoticPolymathSearchUrl(h.cognitiveCortex.emergentQuery);
             const newTabObj = createTab(poly.url, { title: `🔬 [${poly.engineName.slice(0, 12)}] ${poly.query.slice(0, 22)}` });
-            if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
+            if (prevPrimaryId && getTab(prevPrimaryId)?.domReady && newTabObj && newTabObj.id !== prevPrimaryId) {
+              switchTab(prevPrimaryId);
               secondaryTabId = newTabObj.id;
               updateSplitViewClasses();
             }
@@ -17824,7 +17838,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           } else {
             const seed = pickChaoticSeed();
             const newTabObj = createTab(seed.url, { title: `🕶️⚡ ${seed.title.slice(0, 28)}` });
-            if (splitViewActive && newTabObj && newTabObj.id !== activeTabId) {
+            if (prevPrimaryId && getTab(prevPrimaryId)?.domReady && newTabObj && newTabObj.id !== prevPrimaryId) {
+              switchTab(prevPrimaryId);
               secondaryTabId = newTabObj.id;
               updateSplitViewClasses();
             }
@@ -18763,6 +18778,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       if (!t || !t.wv) {
         return humunculusRuntime.synthesizeProprioceptiveFallbackFrame(t, 'no-active-tab');
       }
+      if (t._domExpBusyPromise) {
+        return await t._domExpBusyPromise;
+      }
+      t._domExpBusyPromise = (async () => {
+        try {
       const wv = t.wv;
 
       const isOverdrive = Boolean(superintelligenceOverdrive || document.getElementById('alien-persona-select')?.value === 'superintelligence_overdrive');
@@ -18847,7 +18867,18 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         biasL2Norm: humunculusRuntime.neuralSubstrateTelemetry.biasL2Norm,
         connectomeActiveSpikes: humunculusRuntime.neuralSubstrateTelemetry.connectomeActiveSpikes,
         stdpTotalUpdates: humunculusRuntime.neuralSubstrateTelemetry.stdpTotalUpdates,
-        weightBiasPlasticitySteps: humunculusRuntime.neuralSubstrateTelemetry.weightBiasPlasticitySteps
+        weightBiasPlasticitySteps: humunculusRuntime.neuralSubstrateTelemetry.weightBiasPlasticitySteps,
+        htsrPowerLawAlpha: humunculusRuntime.neuralSubstrateTelemetry.htsrPowerLawAlpha || 2.48,
+        stiefelOrthogonalizationsCount: humunculusRuntime.neuralSubstrateTelemetry.stiefelOrthogonalizationsCount || 1,
+        yangMillsWilsonHolonomy: humunculusRuntime.neuralSubstrateTelemetry.yangMillsWilsonHolonomy || 0.942,
+        navierStokesEnstrophy: humunculusRuntime.neuralSubstrateTelemetry.navierStokesEnstrophy || 1.84,
+        gueRepulsionFactorR2: humunculusRuntime.neuralSubstrateTelemetry.gueRepulsionFactorR2 || 0.916,
+        sltcWave16: humunculusRuntime.deepWebAndSltcConnectomeEngine?.sltcState64
+          ? Array.from(humunculusRuntime.deepWebAndSltcConnectomeEngine.sltcState64.subarray(0, 16)).map((v) => Number(v.toFixed(3)))
+          : [0.3, -0.2, 0.5, 0.1, -0.4, 0.6, -0.1, 0.4, 0.2, -0.5, 0.3, 0.7, -0.3, 0.2, 0.5, -0.2],
+        neuropilRates6: humunculusRuntime.connectome512?.v512
+          ? Array.from(humunculusRuntime.connectome512.v512.subarray(0, 6)).map((v) => Number(v.toFixed(3)))
+          : [0.62, 0.54, 0.71, 0.68, 0.49, 0.77]
       };
       const ddwState = {
         torV3OnionAddress: humunculusRuntime.deepDarkWebSubstrateEngine.torV3OnionAddress,
@@ -19422,7 +19453,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               '<div style="color:#fda4af;font-weight:900;">👁️‍🗨️👾⚛️🧅 [12-ENTITY × DSD-16 × Cl(4,0) × sLTC/SSM × 512-CONN × DARK-WEB DISSECTION VISOR · LIVE]</div>' +
               '<div style="color:#6ee7b7;">🔬 <strong>SCIENCE &amp; DSD-16:</strong> d_H=' + (dsdCfg.minHammingDistBits || 28) + 'b · MGS⊥=' + (dsdCfg.orthogonalComplementEnergyPct || 97.8) + '% · Shannon H=' + pageMetrics.shannonEntropyBits + 'b · K_LZ=' + kolmogorovLzRatio + ' · Zipf α=' + zipfAlphaExponent + '</div>' +
               '<div style="color:#38bdf8;">🧠⚛️ <strong>Cl(4,0) &amp; Q-BIO:</strong> ‖B‖=' + (metaCfg.bivectorTorqueNorm || 1.482) + ' · 8×8 Meta=' + (metaCfg.metaReflectionScorePct || 96.8) + '% · Ind=' + (metaCfg.inductionMeanConfidencePct || 78.4) + '%/Ded=#' + (metaCfg.deductionTheoremsCount || 12) + ' · ‖∇̃_FR‖=' + (metaCfg.omnigradientNorm || 0.842) + ' · WKB=' + Math.round((metaCfg.wkbTunnelingProb || 0.812) * 100) + '% · FMO=' + (metaCfg.fmoExcitonCoherencePct || 97.4) + '%</div>' +
-              '<div style="color:#c084fc;">⚡🧬🧅 <strong>sLTC/SSM × 1.24M PARAMS × 512-CONN × DARKWEB:</strong> τ̄=' + (nsCfg.sltcMeanTauMs || 2.84) + 'ms · ρ=' + (nsCfg.ssmSpectralRadiusRho || 0.968) + ' · ‖W‖_F=' + (nsCfg.weightFrobeniusNorm || 18.42) + ' · ‖b‖₂=' + (nsCfg.biasL2Norm || 1.64) + ' · Spk=' + (nsCfg.connectomeActiveSpikes || 42) + '/512 (STDP=#' + (nsCfg.stdpTotalUpdates || 1024) + ') · ' + String(ddwCfg.torV3OnionAddress || 'humunc..onion').slice(0, 14) + '..onion</div>' +
+              '<div style="color:#c084fc;">⚡🧬🧅 <strong>sLTC/SSM × 1.24M PARAMS × 512-CONN × DARKWEB:</strong> τ̄=' + (nsCfg.sltcMeanTauMs || 2.84) + 'ms · ρ=' + (nsCfg.ssmSpectralRadiusRho || 0.968) + ' · ‖W‖_F=' + (nsCfg.weightFrobeniusNorm || 18.42) + ' · α_HTSR=' + (nsCfg.htsrPowerLawAlpha || 2.48) + ' · YM W_C=' + (nsCfg.yangMillsWilsonHolonomy || 0.942) + ' · ζ_GUE=' + (nsCfg.gueRepulsionFactorR2 || 0.916) + ' · Spk=' + (nsCfg.connectomeActiveSpikes || 42) + '/512 · ' + String(ddwCfg.torV3OnionAddress || 'humunc..onion').slice(0, 12) + '..onion</div>' +
               '<div style="color:#fde68a;">💻 <strong>FE/AST MUTATION:</strong> Wireframed=' + wireTargets.length + ' containers · Zalgo=' + Math.min(8, zalgoTargets.length) + ' headers · Stamped=' + Math.min(14, blocks.length) + ' colliders · Action=' + (domWeirdAction || 'activeScan') + '</div>' +
               '<div style="color:#e879f9;">🛡️ <strong>BE/DEVSECOPS/SRE:</strong> DPLL=' + logicCfg.satVerdict + ' (' + logicCfg.epistemicConsistencyPct + '%) · ' + sampleRule.slice(0, 62) + ' · TTFB=' + networkLatencyMs + 'ms · Heap=' + jsHeapUsedMb + 'MB</div>';
           }
@@ -20561,20 +20592,50 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 ctx.fillStyle = '#a3e635';
                 ctx.fill();
               }
-              // 3-Hop Tor v3 .onion Relay Circuit Triangle (GUARD -> MIDDLE -> RENDEZVOUS_HSDir) & 6-Neuropil Connectome Ring
+              // 3-Hop Tor v3 .onion Relay Circuit Triangle (GUARD -> MIDDLE -> RENDEZVOUS_HSDir), Animated ntor Packet, & 16-Channel sLTC Liquid Wave Ring
+              const nsGuest = window.__humunculusNsCfg || nsCfg || {};
+              const hopVerts = [];
               ctx.beginPath();
               for (let hop = 0; hop <= 3; hop++) {
                 const hAng = (hop % 3) * (Math.PI * 2 / 3) + st.tick * 0.95;
                 const hx = Math.cos(hAng) * (somaR + 31);
                 const hy = Math.sin(hAng) * (somaR + 31);
+                if (hop < 3) hopVerts.push([hx, hy]);
                 if (hop === 0) ctx.moveTo(hx, hy);
                 else ctx.lineTo(hx, hy);
               }
               ctx.strokeStyle = 'rgba(192, 132, 252, 0.55)';
               ctx.lineWidth = 1.25;
               ctx.stroke();
+              // Animated ntor Curve25519 packet moving along the 3-hop triangle
+              if (hopVerts.length === 3) {
+                const pSeg = (st.tick * 1.65) % 3;
+                const segIdx = Math.floor(pSeg);
+                const segFrac = pSeg - segIdx;
+                const vA = hopVerts[segIdx % 3];
+                const vB = hopVerts[(segIdx + 1) % 3];
+                ctx.beginPath();
+                ctx.arc(vA[0] + (vB[0] - vA[0]) * segFrac, vA[1] + (vB[1] - vA[1]) * segFrac, 2.8, 0, Math.PI * 2);
+                ctx.fillStyle = '#fde047';
+                ctx.fill();
+              }
+              // 16-Channel sLTC Liquid ODE Waveform Ring
+              const wave16 = nsGuest.sltcWave16 || [0.3, -0.2, 0.5, 0.1, -0.4, 0.6, -0.1, 0.4, 0.2, -0.5, 0.3, 0.7, -0.3, 0.2, 0.5, -0.2];
+              ctx.beginPath();
+              for (let wi = 0; wi <= 16; wi++) {
+                const wAng = (wi % 16) * (Math.PI * 2 / 16) - st.tick * 0.45;
+                const wAmp = (somaR + 36) + (wave16[wi % 16] || 0) * 6.5;
+                const wx = Math.cos(wAng) * wAmp;
+                const wy = Math.sin(wAng) * wAmp;
+                if (wi === 0) ctx.moveTo(wx, wy);
+                else ctx.lineTo(wx, wy);
+              }
+              ctx.strokeStyle = 'rgba(56, 189, 248, 0.52)';
+              ctx.lineWidth = 1.15;
+              ctx.stroke();
               ctx.restore();
               window.__humunculusMetaCfg = metaCfg;
+              window.__humunculusNsCfg = nsCfg;
 
               // [DEITY-100 #61] 4D Rotating Tesseract (Hypercube) 16-Vertex / 32-Edge Projection around ALPHA Soma
               {
@@ -21103,6 +21164,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       }
       updateHybridTelemetryBar();
       return experimentData;
+        } finally {
+          t._domExpBusyPromise = null;
+        }
+      })();
+      return await t._domExpBusyPromise;
     }
 
     // NON-INTRUSIVE HABITAT TOAST NOTIFICATION (Never pulses/re-presses the Alien Brain or Superintelligence buttons!)
