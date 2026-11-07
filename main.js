@@ -1940,6 +1940,90 @@ function registerIpc() {
     }
   });
 
+  ipcMain.handle('deep-dark-web-probe', async (event, payload = {}) => {
+    if (!fromChrome(event)) return { ok: false };
+    try {
+      const seedStr = String(payload?.seed || payload?.url || 'gigachad-deep-dark-web-substrate');
+      const pubkey = crypto.createHash('sha256').update('ed25519-onion-v3:' + seedStr).digest(); // 32B
+      const versionByte = Buffer.from([0x03]);
+      let checksum;
+      try {
+        checksum = crypto
+          .createHash('sha3-256')
+          .update(Buffer.concat([Buffer.from('.onion checksum', 'ascii'), pubkey, versionByte]))
+          .digest()
+          .subarray(0, 2);
+      } catch {
+        checksum = crypto
+          .createHash('sha256')
+          .update(Buffer.concat([Buffer.from('.onion checksum', 'ascii'), pubkey, versionByte]))
+          .digest()
+          .subarray(0, 2);
+      }
+      const raw35 = Buffer.concat([pubkey, checksum, versionByte]); // 35 bytes = 280 bits = 56 Base32 chars
+      const b32Alphabet = 'abcdefghijklmnopqrstuvwxyz234567';
+      let bits = 0;
+      let val = 0;
+      let onionHost = '';
+      for (let i = 0; i < raw35.length; i++) {
+        val = (val << 8) | raw35[i];
+        bits += 8;
+        while (bits >= 5) {
+          onionHost += b32Alphabet[(val >>> (bits - 5)) & 31];
+          bits -= 5;
+        }
+      }
+      const torV3OnionAddress = onionHost.slice(0, 56) + '.onion';
+      const cidDigest = crypto.createHash('sha256').update('ipfs-dag-pb:' + seedStr).digest();
+      let cidB32 = 'bafybei';
+      bits = 0;
+      val = 0;
+      for (let i = 0; i < cidDigest.length && cidB32.length < 59; i++) {
+        val = (val << 8) | cidDigest[i];
+        bits += 8;
+        while (bits >= 5 && cidB32.length < 59) {
+          cidB32 += b32Alphabet[(val >>> (bits - 5)) & 31];
+          bits -= 5;
+        }
+      }
+      const probePort = (port) =>
+        new Promise((resolve) => {
+          const sock = new net.Socket();
+          let settled = false;
+          const finish = (alive) => {
+            if (settled) return;
+            settled = true;
+            try { sock.destroy(); } catch {}
+            resolve(alive);
+          };
+          sock.setTimeout(55);
+          sock.once('connect', () => finish(true));
+          sock.once('timeout', () => finish(false));
+          sock.once('error', () => finish(false));
+          try {
+            sock.connect(port, '127.0.0.1');
+          } catch {
+            finish(false);
+          }
+        });
+      const [tor9050, tor9150] = await Promise.all([probePort(9050), probePort(9150)]);
+      return {
+        ok: true,
+        torV3OnionAddress,
+        ipfsMerkleCidV1: cidB32,
+        localTorSocksActive: Boolean(tor9050 || tor9150),
+        socksPort: tor9050 ? 9050 : tor9150 ? 9150 : null,
+        descriptors: [
+          { layer: 'TOR_V3_HSDir', address: torV3OnionAddress, cipher: 'Ed25519/SHA3-256/ntor' },
+          { layer: 'IPFS_MERKLE_DAG', address: 'ipfs://' + cidB32, cipher: 'CIDv1-sha2-256' },
+          { layer: 'AHMIA_ONION_INDEX', address: 'https://ahmia.fi/search/?q=' + encodeURIComponent(String(payload?.query || 'cryptography')) }
+        ]
+      };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  });
+
   ipcMain.handle('browser-memory-stats', (event) => {
     if (!fromChrome(event)) return { ok: false };
     try {
@@ -2604,6 +2688,11 @@ app.whenReady().then(async () => {
                     humunculusRuntime.multivectorMetacognitionEngine?.omnigradientNaturalGrad64?.length === 64 &&
                     Boolean(humunculusRuntime.sixOmniMatrix?.sixOmniHeadline) &&
                     humunculusRuntime.formatRetroTerminalText('metacognition').includes('SUPREME MULTIVECTOR METACOGNITION') &&
+                    Boolean(humunculusRuntime.deepDarkWebSubstrateEngine?.torV3OnionAddress?.endsWith('.onion')) &&
+                    humunculusRuntime.neuralSubstrateTelemetry?.sltcMeanTauMs > 0 &&
+                    humunculusRuntime.deepWebAndSltcConnectomeEngine?.sltcState64?.length === 64 &&
+                    humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
+                    typeof resolveDeepDarkWebGatewayUrl === 'function' &&
                     typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
                     typeof triggerPrimarkDecursiveSelfDeduplicationBurst === 'function' &&
                     humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&

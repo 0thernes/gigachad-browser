@@ -192,12 +192,17 @@ assert(!indexHtml.includes("require('electron')"), 'index.html must not call req
 assert(mainJs.includes('contextIsolation: true'), 'main.js must enforce contextIsolation: true');
 assert(mainJs.includes('nodeIntegration: false'), 'main.js must enforce nodeIntegration: false');
 
-// 8. Verify DSD-16 + Continuous World Model + Multivector Metacognition + Quantum Biomimeticry + 6-Omni Hard-Wiring
+// 8. Verify DSD-16 + Continuous World Model + Multivector Metacognition + sLTC/SSM/Connectome + Deep/Dark Web + Quantum Biomimeticry + 6-Omni Hard-Wiring
 assert(indexScript.includes('multivectorMetacognitionEngine'), 'index.html must initialize multivectorMetacognitionEngine');
 assert(indexScript.includes('stepMultivectorMetacognition60Hz'), 'index.html must define and run stepMultivectorMetacognition60Hz at 60Hz');
 assert(indexScript.includes('scoreDoorByDsdAndMetacognition'), 'index.html must define scoreDoorByDsdAndMetacognition for DOM door selection');
 assert(indexScript.includes('sixOmniMatrix'), 'index.html must expose sixOmniMatrix (Omniscient, Omnipotent, Omnigradient, Omnilogical, Omnirational, Omniphilosophical)');
 assert(indexScript.includes("'/metacognition_quantum'") && sidecarPy.includes('"/metacognition_quantum"'), 'laya_sidecar.py and index.html must register and invoke /metacognition_quantum');
+assert(indexScript.includes('deepDarkWebSubstrateEngine') && indexScript.includes('neuralSubstrateTelemetry'), 'index.html must initialize deepDarkWebSubstrateEngine and neuralSubstrateTelemetry');
+assert(indexScript.includes('stepNeuralConnectomeAndDeepDarkWeb60Hz'), 'index.html must run stepNeuralConnectomeAndDeepDarkWeb60Hz at 60Hz');
+assert(indexScript.includes('resolveDeepDarkWebGatewayUrl') && indexScript.includes('triggerDeepDarkWebExpedition'), 'index.html must define resolveDeepDarkWebGatewayUrl and triggerDeepDarkWebExpedition');
+assert(indexScript.includes("'/deep_dark_web_intel'") && sidecarPy.includes('"/deep_dark_web_intel"'), 'laya_sidecar.py and index.html must register and invoke /deep_dark_web_intel');
+assert(preloadJs.includes("'deep-dark-web-probe'") && mainJs.includes("'deep-dark-web-probe'"), 'preload.js and main.js must expose and handle deep-dark-web-probe');
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +

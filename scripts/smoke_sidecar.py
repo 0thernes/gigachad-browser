@@ -240,6 +240,14 @@ def main():
         assert "omniscient_sheaf_pct" in mq.get("six_omni", {}), mq
         assert_honest(mq, "/metacognition_quantum")
 
+        status, ddw = request("POST", "/deep_dark_web_intel", {
+            "url": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/",
+            "text": "Tor v3 hidden service Ed25519 SHA3-256 checksum IPFS Merkle DAG cryptography zero-knowledge"
+        })
+        assert status == 200 and ddw["ok"] is True and ddw["tor_v3_onion_address"].endswith(".onion") and len(ddw["tor_v3_onion_address"]) == 62, ddw
+        assert ddw["ipfs_merkle_cid_v1"].startswith("bafybei") and len(ddw["circuit_hops"]) == 3, ddw
+        assert_honest(ddw, "/deep_dark_web_intel")
+
         print("sidecar smoke passed")
     finally:
         proc.terminate()

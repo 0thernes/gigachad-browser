@@ -62,7 +62,8 @@ const ALLOWED_INVOKE = new Set([
   'browser-memory-stats',
   'browser-memory-purge',
   'wishlist-api-fetch',
-  'hybrid-brain-portals'
+  'hybrid-brain-portals',
+  'deep-dark-web-probe'
 ]);
 
 const ALLOWED_ON = new Set(['adblock-tick', 'open-url', 'command', 'permission-request', 'download-update', 'context-action', 'openrouter-oauth-complete', 'ai-thinking-step']);
