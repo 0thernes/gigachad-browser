@@ -16318,7 +16318,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       const topC = (h.cognitiveCortex.lastComprehension.topConcepts || ['topology', 'emergence', 'chaos']).slice(0, 5);
       const sampleText = `${pageTitle}. Concepts: ${topC.join(', ')}. ${h.cognitiveCortex.lastComprehension.thesisExtract || ''}`;
 
-      const layaEndpoints = ['/classify', '/deception_radar', '/intent', '/knowledge_graph', '/summarize_extractive', '/page_outline'];
+      const layaEndpoints = ['/decursive_dedup', '/classify', '/deception_radar', '/intent', '/knowledge_graph', '/summarize_extractive', '/page_outline'];
       const pickedEndpoint = layaEndpoints[sampleChaoticNeuralIntent(layaEndpoints.length, 16) % layaEndpoints.length];
       eb.lastLayaEndpoint = pickedEndpoint;
 

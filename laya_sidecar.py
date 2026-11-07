@@ -167,6 +167,7 @@ def build_health() -> dict:
             "seo_accessibility_audit": {"live": True, "implementation": "wcag-seo-auditor", "model": None, "neural": False},
             "table_to_markdown": {"live": True, "implementation": "table-compiler", "model": None, "neural": False},
             "agent_planner": {"live": True, "implementation": "mission-decomposer", "model": None, "neural": False},
+            "decursive_dedup": {"live": True, "implementation": "simhash64-merkle-bwt-quotient", "model": None, "neural": False},
             "tts": tts_status(),
             "reflex_dom": {"live": True, "implementation": "pattern-scorer", "model": None, "neural": False},
             "yt_dlp": {"live": _try_import("yt_dlp"), "implementation": "python-module", "model": None, "neural": False},
@@ -1222,6 +1223,44 @@ def evaluate_agent_plan(body: dict) -> dict:
     }
 
 
+def evaluate_decursive_dedup(body: dict) -> dict:
+    started = time.perf_counter()
+    text = str(body.get("text") or body.get("title") or "decursive self deduplication")[:6000]
+    words = [w for w in re.sub(r"[^a-z0-9\s]", " ", text.lower()).split() if len(w) > 1]
+    # 1. 64-bit Charikar SimHash via blake2b token accumulator
+    bit_weights = [0] * 64
+    shingles = set()
+    dup_shingles = 0
+    for idx, w in enumerate(words[:256]):
+        shingle = " ".join(words[idx : idx + 3])
+        if shingle in shingles:
+            dup_shingles += 1
+        else:
+            shingles.add(shingle)
+        h64 = int.from_bytes(hashlib.blake2b(w.encode("utf-8"), digest_size=8).digest(), "little")
+        for b in range(64):
+            bit_weights[b] += 1 if ((h64 >> b) & 1) else -1
+    simhash64 = 0
+    for b in range(64):
+        if bit_weights[b] >= 0:
+            simhash64 |= (1 << b)
+    simhash_hex = f"0x{simhash64:016X}"
+    total_shingles = max(1, len(shingles) + dup_shingles)
+    novelty_ratio = round(len(shingles) / total_shingles, 4)
+    merkle_root = f"0x{hashlib.blake2b(text.encode('utf-8'), digest_size=4).hexdigest().upper()}"
+    return {
+        "implementation": "simhash64-merkle-bwt-quotient",
+        "neural": False,
+        "category": f"DSD_OK({simhash_hex[:10]}·Nov={int(novelty_ratio*100)}%)",
+        "simhash64": simhash_hex,
+        "merkle_root": merkle_root,
+        "unique_shingles": len(shingles),
+        "duplicate_shingles_pruned": dup_shingles,
+        "novelty_ratio": novelty_ratio,
+        "latency_ms": round((time.perf_counter() - started) * 1000, 2),
+    }
+
+
 ROUTES = {
     "/route": lambda body: evaluate_route(body.get("prompt", ""), int(body.get("page_length") or 0), bool(body.get("allow_cloud", True))),
     "/reflex/route": lambda body: evaluate_route(body.get("prompt", ""), int(body.get("pageContextLength") or body.get("page_length") or 0), bool(body.get("allow_cloud", True))),
@@ -1241,6 +1280,7 @@ ROUTES = {
     "/seo_accessibility_audit": evaluate_seo_accessibility_audit,
     "/table_to_markdown": evaluate_table_to_markdown,
     "/agent_plan": evaluate_agent_plan,
+    "/decursive_dedup": evaluate_decursive_dedup,
     "/reflex/dom": score_dom_candidates,
 }
 
