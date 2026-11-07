@@ -209,6 +209,9 @@ assert(indexScript.includes('htsrPowerLawAlpha') && indexScript.includes('yangMi
 assert(indexScript.includes('poincareDiskCoords24') && indexScript.includes('wlColorHash32') && indexScript.includes('sinkhornTransport4x4') && indexScript.includes('lz78PhraseRing64'), 'index.html must implement DSD Pillars 21..24 (poincareDiskCoords24, wlColorHash32, sinkhornTransport4x4, lz78PhraseRing64)');
 assert(indexScript.includes('perelmanWEntropy') && indexScript.includes('ryuTakayanagiBulkEntropy') && indexScript.includes('hodgeHarmonicFlowPct') && indexScript.includes('astrocyteMeanCaUm'), 'index.html must compute Perelman Ricci W-entropy, Ryu-Takayanagi bulk entanglement entropy, Hodge-de Rham harmonic flow, and astrocyte Ca2+ waves');
 assert(newtabHtml.includes('id="newtab-neural-strip-canvas"'), 'pages/newtab.html must include #newtab-neural-strip-canvas');
+assert(!/Structured Liquid/i.test(indexHtml) && !/Structured Liquid/i.test(newtabHtml), 'Must use Spiking Liquid Time-Constant (sLTC), never Structured Liquid');
+assert(indexScript.includes('trainableAlifeNeuralHub') && indexScript.includes('stepTrainableAlifeNeuralHub60Hz'), 'index.html must initialize trainableAlifeNeuralHub and stepTrainableAlifeNeuralHub60Hz');
+assert(indexScript.includes('f64InterIntraCoupling16x16') && indexScript.includes('b158TernaryMorphism256') && indexScript.includes('fp16PersistentWeights256'), 'index.html must include Multi-Precision Float64 16x16 Inter/Intra coupling, BitNet b1.58 ternary morphisms, and FP16 storage');
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +

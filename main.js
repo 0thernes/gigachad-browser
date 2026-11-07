@@ -2741,11 +2741,15 @@ app.whenReady().then(async () => {
                       humunculusRuntime.deepWebAndSltcConnectomeEngine?.sltcSurrogateGrad64?.length === 64 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.f64TrajectoryCurr16 instanceof Float64Array &&
                       humunculusRuntime.trainableAlifeNeuralHub?.int8QuantizedWeights256 instanceof Int8Array &&
+                      humunculusRuntime.trainableAlifeNeuralHub?.b158TernaryMorphism256 instanceof Int8Array &&
+                      humunculusRuntime.trainableAlifeNeuralHub?.fp16PersistentWeights256 instanceof Uint16Array &&
+                      humunculusRuntime.trainableAlifeNeuralHub?.f64InterIntraCoupling16x16 instanceof Float64Array &&
                       humunculusRuntime.trainableAlifeNeuralHub?.u64SpikeTrainLanes8 instanceof BigUint64Array &&
                       humunculusRuntime.trainableAlifeNeuralHub?.totalBackpropStepsTrained >= 1 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.thoughtCurvatureKappa > 0 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.diffusionScoreLossMse > 0 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.ganDiscRealProb > 0 &&
+                      humunculusRuntime.trainableAlifeNeuralHub?.interIntraCoherenceScore > 0 &&
                       humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
                       typeof resolveDeepDarkWebGatewayUrl === 'function' &&
                       typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&

@@ -23996,29 +23996,31 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             vctx.font = '600 8.5px Consolas, monospace';
             vctx.fillText(`Ψ=${h.deity100Engine.supremeDeityIndexPsi} · 4D-Tesseract · ${vSwarm.length + vpBugs.length + st.viewportOffspring.length}-Entities`, mmX + 8, mmY + mmH - 7);
 
-            // 5J. 12-Entity Swarm + 16-Pillar DSD + Multivector Cl(4,0) Metacognition + sLTC/SSM/Connectome + Deep/Dark Web + Quantum Biomimeticry Matrix
+            // 5J. 12-Entity Swarm + 24-Pillar DSD + Spiking-sLTC × DDPM Diffusion × GAN × Float64 Thought Curvature + Deep/Dark Web Matrix
             const mtY = mmY + mmH + 6;
             const mtH = 144;
             const dsdNow = h.decursiveSelfDeduplicator || { minHammingDistBits: 28, orthogonalComplementEnergyPct: 97.8, dppDeterminantVolume: 0.912, totalSelfDeduplicationsCount: 1 };
             const mcNow = h.multivectorMetacognitionEngine || { bivectorTorqueNorm: 1.482, metacognitiveDepthCoherence: 0.968, inductionMeanConfidencePct: 78.4, deductionTheoremsCount: 12, omnigradientNorm: 0.842, wkbTunnelingProb: 0.812, fmoExcitonCoherencePct: 97.4 };
             const nsNow = h.neuralSubstrateTelemetry || { sltcMeanTauMs: 2.84, ssmSpectralRadiusRho: 0.968, weightFrobeniusNorm: 18.42, biasL2Norm: 1.64, connectomeActiveSpikes: 42, stdpTotalUpdates: 1024 };
             const ddwNow = h.deepDarkWebSubstrateEngine || { torV3OnionAddress: 'humunc7x4q9z..ad.onion', activeDeepLayerName: 'L5:TOR_V3_ONION', unindexedEntropyBits: 5.24 };
+            const hubNow = h.trainableAlifeNeuralHub || { thoughtCurvatureKappa: 1.284, diffusionScoreLossMse: 0.051, ganDiscRealProb: 0.68, ganDiscFakeProb: 0.44, selfCriticismScorePct: 93.4, interIntraCoherenceScore: 0.968, totalBackpropStepsTrained: 1 };
+            const sltcNow = h.deepWebAndSltcConnectomeEngine || { sltcActiveSpikesCount: 18, sltcSurrogateGradNorm: 1.42 };
             vctx.fillStyle = 'rgba(3, 11, 18, 0.88)';
             vctx.fillRect(mmX, mtY, mmW, mtH);
             vctx.strokeStyle = 'rgba(244, 63, 94, 0.72)';
             vctx.lineWidth = 1.2;
             vctx.strokeRect(mmX, mtY, mmW, mtH);
             vctx.fillStyle = '#fde68a';
-            vctx.font = '700 8.6px Consolas, monospace';
-            vctx.fillText('✂️🧬⚛️🧅 DSD-16 × Cl(4,0) × sLTC/SSM × DARK-WEB', mmX + 7, mtY + 13);
+            vctx.font = '700 8.4px Consolas, monospace';
+            vctx.fillText('✂️🔥🧠 DSD-24 × SPIKING-sLTC × DDPM × GAN × κ', mmX + 7, mtY + 13);
             const mtLines = [
-              { col: '#6ee7b7', txt: `✂️[DSD-16]  : d_H=${dsdNow.minHammingDistBits}b · MGS⊥=${dsdNow.orthogonalComplementEnergyPct}% · DPP=${dsdNow.dppDeterminantVolume} · #${dsdNow.totalSelfDeduplicationsCount}` },
-              { col: '#00f0ff', txt: `🧠[Cl(4,0)] : ‖B‖=${mcNow.bivectorTorqueNorm} · 8×8 Meta=${(mcNow.metacognitiveDepthCoherence * 100).toFixed(1)}% · ‖∇̃_FR‖=${mcNow.omnigradientNorm}` },
-              { col: '#a3e635', txt: `⚡[sLTC/SSM]: τ̄=${nsNow.sltcMeanTauMs}ms · ρ=${nsNow.ssmSpectralRadiusRho} · ‖W‖=${nsNow.weightFrobeniusNorm} · ‖b‖=${nsNow.biasL2Norm}` },
-              { col: '#c084fc', txt: `🧬[512-CONN]: Spk=${nsNow.connectomeActiveSpikes}/512 · 262K-Syn STDP=#${nsNow.stdpTotalUpdates}` },
+              { col: '#6ee7b7', txt: `✂️[DSD-24]  : d_H=${dsdNow.minHammingDistBits}b · MGS⊥=${dsdNow.orthogonalComplementEnergyPct}% · DPP=${dsdNow.dppDeterminantVolume} · #${dsdNow.totalSelfDeduplicationsCount}` },
+              { col: '#a3e635', txt: `⚡[Spk-sLTC]: Spk=${sltcNow.sltcActiveSpikesCount}/64 · ‖ψ‖=${sltcNow.sltcSurrogateGradNorm} · τ̄=${nsNow.sltcMeanTauMs}ms · ρ=${nsNow.ssmSpectralRadiusRho}` },
+              { col: '#00f0ff', txt: `📐[F64-κ/Cl]: κ_thought=${hubNow.thoughtCurvatureKappa} · ‖B‖=${mcNow.bivectorTorqueNorm} · 16×16=${hubNow.interIntraCoherenceScore}` },
+              { col: '#fbbf24', txt: `🔥[DDPM/GAN]: L_diff=${hubNow.diffusionScoreLossMse} · GAN=${hubNow.ganDiscRealProb}/${hubNow.ganDiscFakeProb} · Critic=${hubNow.selfCriticismScorePct}%` },
+              { col: '#c084fc', txt: `🧬[1.24M/CN]: Spk=${nsNow.connectomeActiveSpikes}/512 · STDP=#${nsNow.stdpTotalUpdates} · BP=#${hubNow.totalBackpropStepsTrained}` },
               { col: '#38bdf8', txt: `🧅[DARKWEB] : ${ddwNow.torV3OnionAddress.slice(0, 12)}..onion · H_d=${ddwNow.unindexedEntropyBits}b` },
-              { col: '#e879f9', txt: `⊢[TRI-LOG] : Ind=${mcNow.inductionMeanConfidencePct}% · Ded=#${mcNow.deductionTheoremsCount} · SAT=${h.rationalLogicEngine.epistemicConsistencyPct}%` },
-              { col: '#fbbf24', txt: `⚛️[Q-BIO]   : WKB=${(mcNow.wkbTunnelingProb * 100).toFixed(0)}% · FMO=${mcNow.fmoExcitonCoherencePct}% · Omnipotent=#${mcNow.omnipotentActsCount || 16}` }
+              { col: '#e879f9', txt: `⊢[TRI/QBIO]: Ind=${mcNow.inductionMeanConfidencePct}% · Ded=#${mcNow.deductionTheoremsCount} · WKB=${(mcNow.wkbTunnelingProb * 100).toFixed(0)}%` }
             ];
             for (let mi = 0; mi < mtLines.length; mi++) {
               vctx.fillStyle = mtLines[mi].col;
@@ -24029,7 +24031,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             // 5K. LIVE 512-CONNECTOME SPIKE RASTER × sLTC/SSM SPECTRUM × 3-HOP TOR .ONION CIRCUIT
             const mkY = mtY + mtH + 6;
             const mkH = 88;
-            if (mkY + mkH < vh - 12) {
+            if (mkY + mkH < sh - 12) {
               vctx.fillStyle = 'rgba(4, 9, 19, 0.90)';
               vctx.fillRect(mmX, mkY, mmW, mkH);
               vctx.strokeStyle = 'rgba(232, 121, 249, 0.72)';
