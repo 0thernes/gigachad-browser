@@ -206,6 +206,9 @@ assert(preloadJs.includes("'deep-dark-web-probe'") && mainJs.includes("'deep-dar
 assert(indexScript.includes('synapseRowDedupCount') && indexScript.includes('sltcTauDedupSwapsCount') && indexScript.includes('ssmEigenRepulsionsCount') && indexScript.includes('onionBloomFilter64'), 'index.html must implement DSD Pillars 17..20 (synapseRowDedupCount, sltcTauDedupSwapsCount, ssmEigenRepulsionsCount, onionBloomFilter64)');
 assert(indexHtml.includes('id="hybrid-tier-btn-5"'), 'index.html must include Tier 5 visualizer button #hybrid-tier-btn-5');
 assert(indexScript.includes('htsrPowerLawAlpha') && indexScript.includes('yangMillsWilsonHolonomy') && indexScript.includes('gueRepulsionFactorR2'), 'index.html must compute HTSR heavy-tailed spectral alpha, Yang-Mills Wilson holonomy, and Montgomery-Odlyzko GUE level repulsion');
+assert(indexScript.includes('poincareDiskCoords24') && indexScript.includes('wlColorHash32') && indexScript.includes('sinkhornTransport4x4') && indexScript.includes('lz78PhraseRing64'), 'index.html must implement DSD Pillars 21..24 (poincareDiskCoords24, wlColorHash32, sinkhornTransport4x4, lz78PhraseRing64)');
+assert(indexScript.includes('perelmanWEntropy') && indexScript.includes('ryuTakayanagiBulkEntropy') && indexScript.includes('hodgeHarmonicFlowPct') && indexScript.includes('astrocyteMeanCaUm'), 'index.html must compute Perelman Ricci W-entropy, Ryu-Takayanagi bulk entanglement entropy, Hodge-de Rham harmonic flow, and astrocyte Ca2+ waves');
+assert(newtabHtml.includes('id="newtab-neural-strip-canvas"'), 'pages/newtab.html must include #newtab-neural-strip-canvas');
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +

@@ -2697,9 +2697,16 @@ app.whenReady().then(async () => {
                       humunculusRuntime.decursiveSelfDeduplicator?.chebyshevScratch64?.length === 64 &&
                       humunculusRuntime.decursiveSelfDeduplicator?.chiralLimbParity12?.length === 12 &&
                       humunculusRuntime.decursiveSelfDeduplicator?.onionBloomFilter64?.length === 64 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.poincareDiskCoords24?.length === 24 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.wlColorHash32?.length === 32 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.sinkhornTransport4x4?.length === 16 &&
+                      humunculusRuntime.decursiveSelfDeduplicator?.lz78PhraseRing64?.length === 64 &&
                       humunculusRuntime.decursiveSelfDeduplicator?.synapseRowDedupCount >= 1 &&
                       humunculusRuntime.decursiveSelfDeduplicator?.sltcTauDedupSwapsCount >= 1 &&
-                      humunculusRuntime.decursiveSelfDeduplicator?.ssmEigenRepulsionsCount >= 1
+                      humunculusRuntime.decursiveSelfDeduplicator?.ssmEigenRepulsionsCount >= 1 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.perelmanWEntropy > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.ryuTakayanagiBulkEntropy > 0 &&
+                      humunculusRuntime.neuralSubstrateTelemetry?.hodgeHarmonicFlowPct > 0
                     ),
                     metaOk: Boolean(
                       document.getElementById('hybrid-tier-btn-5') &&
