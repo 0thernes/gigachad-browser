@@ -14439,8 +14439,39 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
           // 8C. Pathak Intrinsic Curiosity Module (ICM) Reward = Forward Physics Prediction Error + Spatial Unvisited Novelty
           hub.icmCuriosityReward = Number(Math.min(1.5, 0.35 + hub.worldDynamicsLossMse * 3.5 + spatialNovelty * 0.38).toFixed(4));
-          const extrinsicReward = (this.mesh?.viscera?.glc || 0.75) * 0.45;
-          hub.tdAdvantageDelta = Number(((extrinsicReward + hub.icmCuriosityReward) - (dc.criticValue || 0.64)).toFixed(4));
+          const extrinsicReward = Number(((this.mesh?.viscera?.glc || 0.75) * 0.45).toFixed(4));
+          hub.extrinsicForagingReward = extrinsicReward;
+          const curVal = dc.criticValue || 0.64;
+          const prevVal = hub.robotPrevValueEstimate || 0.62;
+          const tdDelta = (extrinsicReward + hub.icmCuriosityReward + 0.96 * curVal) - prevVal;
+          hub.robotPrevValueEstimate = curVal;
+          hub.tdAdvantageDelta = Number(Math.max(-1.5, Math.min(1.5, tdDelta)).toFixed(4));
+
+          // 8D. Continuous Robot Motor Policy Gradient (LAM Actor-Critic update on W_robot_actor & dc.W_actor/W_critic)
+          const wAct = dc.W_actor;
+          const wCrit = dc.W_critic;
+          for (let mAxis = 0; mAxis < 2; mAxis++) {
+            let sMotor = hub.b_robot_actor[mAxis];
+            const rOff = mAxis * 16;
+            for (let c = 0; c < 16; c++) {
+              const feat = 0.65 * hub.zPerc16[c] + 0.35 * (hub.samSpatialAffordance16[c] || 0);
+              sMotor += hub.W_robot_actor[rOff + c] * feat;
+            }
+            const thrustOut = Math.tanh(sMotor);
+            hub.learnedMotorThrust2D[mAxis] = Number(thrustOut.toFixed(4));
+            const pgGrad = hub.tdAdvantageDelta * (1.0 - thrustOut * thrustOut);
+            hub.b_robot_actor[mAxis] = Math.max(-1.2, Math.min(1.2, hub.b_robot_actor[mAxis] + lr * pgGrad));
+            for (let c = 0; c < 16; c++) {
+              const feat = 0.65 * hub.zPerc16[c] + 0.35 * (hub.samSpatialAffordance16[c] || 0);
+              hub.W_robot_actor[rOff + c] = Math.max(-2.0, Math.min(2.0, hub.W_robot_actor[rOff + c] + lr * pgGrad * feat));
+              if (wAct) wAct[rOff + c] = Math.max(-1.8, Math.min(1.8, wAct[rOff + c] * 0.9995 + lr * 0.5 * pgGrad * feat));
+            }
+          }
+          if (wCrit) {
+            for (let c = 0; c < 16; c++) {
+              wCrit[c] = Math.max(-1.8, Math.min(1.8, wCrit[c] * 0.9995 + lr * 0.25 * hub.tdAdvantageDelta * hub.zPerc16[c]));
+            }
+          }
           hub.embodiedRoboticsHeadline = `ICM_CURIOSITY[L_fwd=${hub.worldDynamicsLossMse} · L_inv=${hub.inversePhysicsLossMse} · r_curiosity=+${hub.icmCuriosityReward} · TD_δ=${hub.tdAdvantageDelta >= 0 ? '+' : ''}${hub.tdAdvantageDelta} · VisionDOM_8x8=${hub.spatialExplorationCoveragePct}%]`;
         }
 
@@ -23423,11 +23454,74 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             const dy = ty - ent.y;
             const dist = Math.hypot(dx, dy) + 1e-4;
             const eSpeed = ei === 0 ? baseSpeed : baseSpeed * 0.92;
-            ent.vx = (ent.vx + (dx / dist) * 0.24 * eSpeed + sepX + Math.sin(st.tick * 1.9 + ei) * 0.18) * 0.91;
-            ent.vy = (ent.vy + (dy / dist) * 0.24 * eSpeed + sepY + Math.cos(st.tick * 1.5 + ei) * 0.18) * 0.91;
+            const rHub = h.trainableAlifeNeuralHub;
+            let learnedVx = 0, learnedVy = 0;
+            if (rHub && rHub.learnedMotorThrust2D) {
+              learnedVx = (rHub.learnedMotorThrust2D[0] || 0) * (ei === 0 ? 0.55 : 0.35);
+              learnedVy = (rHub.learnedMotorThrust2D[1] || 0) * (ei === 0 ? 0.55 : 0.35);
+            }
+            ent.vx = (ent.vx + (dx / dist) * 0.24 * eSpeed + sepX + learnedVx + Math.sin(st.tick * 1.9 + ei) * 0.18) * 0.91;
+            ent.vy = (ent.vy + (dy / dist) * 0.24 * eSpeed + sepY + learnedVy + Math.cos(st.tick * 1.5 + ei) * 0.18) * 0.91;
             ent.x = Math.max(44, Math.min(sw - 44, ent.x + ent.vx));
             ent.y = Math.max(44, Math.min(sh - 56, ent.y + ent.vy));
             ent.angle = Math.atan2(ent.vy, ent.vx);
+
+            // For Lead Robot ALPHA (ei === 0): Compute 16-Ray Vision-DOM SAM Affordance Map & Render Forward Action-Physics Trajectory Ghost!
+            if (ei === 0 && rHub && rHub.samSpatialAffordance16) {
+              let bestSec = 0, bestAff = -1e9;
+              for (let s = 0; s < 16; s++) {
+                const rayAng = (s / 16) * Math.PI * 2;
+                const rx = Math.cos(rayAng), ry = Math.sin(rayAng);
+                let aff = 0.0;
+                for (let ci = 0; ci < Math.min(8, cols.length); ci++) {
+                  const cN = cols[ci];
+                  if (!cN || !cN.cx || !cN.cy) continue;
+                  const cdx = cN.cx - ent.x, cdy = cN.cy - ent.y;
+                  const cDist = Math.hypot(cdx, cdy) + 1.0;
+                  const align = (cdx * rx + cdy * ry) / cDist;
+                  if (align > 0.72) aff += (align * 180.0) / (cDist + 60.0);
+                }
+                const wallDist = Math.min(
+                  rx > 0.1 ? (sw - ent.x) / rx : (rx < -0.1 ? -ent.x / rx : 999),
+                  ry > 0.1 ? (sh - ent.y) / ry : (ry < -0.1 ? -ent.y / ry : 999)
+                );
+                if (wallDist < 90) aff -= (90 - wallDist) / 90.0;
+                const clampedAff = Math.max(-1.0, Math.min(1.0, aff));
+                rHub.samSpatialAffordance16[s] = Number(clampedAff.toFixed(3));
+                if (clampedAff > bestAff) {
+                  bestAff = clampedAff;
+                  bestSec = s;
+                }
+                if ((s & 1) === 0) {
+                  const rLen = 28 + Math.max(0, clampedAff) * 38;
+                  vctx.beginPath();
+                  vctx.moveTo(ent.x, ent.y);
+                  vctx.lineTo(ent.x + rx * rLen, ent.y + ry * rLen);
+                  vctx.strokeStyle = s === bestSec ? 'rgba(52, 211, 153, 0.55)' : 'rgba(0, 240, 255, 0.20)';
+                  vctx.lineWidth = s === bestSec ? 1.5 : 0.9;
+                  vctx.stroke();
+                }
+              }
+              rHub.samBestSectorIdx = bestSec;
+              const predX = Math.max(48, Math.min(sw - 48, ent.x + ent.vx * 15 + (rHub.zPredNext16[0] || 0) * 34));
+              const predY = Math.max(48, Math.min(sh - 58, ent.y + ent.vy * 15 + (rHub.zPredNext16[1] || 0) * 34));
+              rHub.predictedFuturePos2D[0] = Math.round(predX);
+              rHub.predictedFuturePos2D[1] = Math.round(predY);
+              vctx.save();
+              vctx.setLineDash([4, 3]);
+              vctx.beginPath();
+              vctx.moveTo(ent.x, ent.y);
+              vctx.lineTo(predX, predY);
+              vctx.strokeStyle = 'rgba(250, 204, 21, 0.68)';
+              vctx.lineWidth = 1.4;
+              vctx.stroke();
+              vctx.beginPath();
+              vctx.arc(predX, predY, 6.5, 0, Math.PI * 2);
+              vctx.strokeStyle = '#fde047';
+              vctx.lineWidth = 1.3;
+              vctx.stroke();
+              vctx.restore();
+            }
           }
 
           // 5D. Render Burst Particles

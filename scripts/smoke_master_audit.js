@@ -212,6 +212,7 @@ assert(newtabHtml.includes('id="newtab-neural-strip-canvas"'), 'pages/newtab.htm
 assert(!/Structured Liquid/i.test(indexHtml) && !/Structured Liquid/i.test(newtabHtml), 'Must use Spiking Liquid Time-Constant (sLTC), never Structured Liquid');
 assert(indexScript.includes('trainableAlifeNeuralHub') && indexScript.includes('stepTrainableAlifeNeuralHub60Hz'), 'index.html must initialize trainableAlifeNeuralHub and stepTrainableAlifeNeuralHub60Hz');
 assert(indexScript.includes('f64InterIntraCoupling16x16') && indexScript.includes('b158TernaryMorphism256') && indexScript.includes('fp16PersistentWeights256'), 'index.html must include Multi-Precision Float64 16x16 Inter/Intra coupling, BitNet b1.58 ternary morphisms, and FP16 storage');
+assert(indexScript.includes('visionDomGrid8x8') && indexScript.includes('samSpatialAffordance16') && indexScript.includes('W_icm_inv') && indexScript.includes('icmCuriosityReward') && indexScript.includes('learnedMotorThrust2D'), 'index.html must include Embodied Robot Vision-DOM SAM + Action-Physics ICM/LAM + Intrinsic Curiosity Actor-Critic');
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +
