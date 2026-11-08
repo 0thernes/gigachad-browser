@@ -213,6 +213,9 @@ assert(!/Structured Liquid/i.test(indexHtml) && !/Structured Liquid/i.test(newta
 assert(indexScript.includes('trainableAlifeNeuralHub') && indexScript.includes('stepTrainableAlifeNeuralHub60Hz'), 'index.html must initialize trainableAlifeNeuralHub and stepTrainableAlifeNeuralHub60Hz');
 assert(indexScript.includes('f64InterIntraCoupling16x16') && indexScript.includes('b158TernaryMorphism256') && indexScript.includes('fp16PersistentWeights256'), 'index.html must include Multi-Precision Float64 16x16 Inter/Intra coupling, BitNet b1.58 ternary morphisms, and FP16 storage');
 assert(indexScript.includes('visionDomGrid8x8') && indexScript.includes('samSpatialAffordance16') && indexScript.includes('W_icm_inv') && indexScript.includes('icmCuriosityReward') && indexScript.includes('learnedMotorThrust2D'), 'index.html must include Embodied Robot Vision-DOM SAM + Action-Physics ICM/LAM + Intrinsic Curiosity Actor-Critic');
+const frontierEngineJs = readFile('alife_neural_cyber_engine.js');
+assert(indexHtml.includes('<script src="alife_neural_cyber_engine.js"></script>'), 'index.html must load external alife_neural_cyber_engine.js');
+assert(frontierEngineJs.includes('UNPRECEDENTED_25_CATALOG') && frontierEngineJs.includes('compileInMemoryWasmNeuralKernel') && frontierEngineJs.includes('alife-neural-weights-sync'), 'alife_neural_cyber_engine.js must define UNPRECEDENTED_25_CATALOG, in-memory Wasm JIT kernel, and disk binary weight sync');
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +

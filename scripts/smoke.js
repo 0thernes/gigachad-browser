@@ -39,6 +39,7 @@ run(process.execPath, ['--check', 'config.js']);
 run(process.execPath, ['--check', 'blocklist.js']);
 run(process.execPath, ['--check', 'browser-data.js']);
 run(process.execPath, ['--check', 'agent-actions.js']);
+run(process.execPath, ['--check', 'alife_neural_cyber_engine.js']);
 run(process.execPath, ['--check', 'systems/erd-schema.js']);
 run(process.execPath, ['--check', 'systems/erm-risk-engine.js']);
 run(process.execPath, ['--check', 'systems/erp-resource-planner.js']);

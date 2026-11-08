@@ -2152,6 +2152,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
   </div>
 
   <script src="agent-actions.js"></script>
+  <script src="alife_neural_cyber_engine.js"></script>
+  <script src="systems/alife-25-bleeding-edge-models.js"></script>
   <script>
     if (!window.gigachad || typeof window.gigachad.invoke !== 'function') {
       throw new Error('Preload bridge missing');
@@ -12025,9 +12027,23 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           embodiedRoboticsHeadline: 'ICM_CURIOSITY[L_fwd=0.038 · L_inv=0.034 · r_curiosity=+0.642 · TD_δ=+0.128 · VisionDOM_8x8=68.5%]'
         };
 
+        // 13G. External Frontier Neural & 7-Spectrum Cyber Hat Master Engine (alife_neural_cyber_engine.js + systems/alife-25-bleeding-edge-models.js + Disk Binary Weights)
+        this.frontierNeuralCyberEngine = typeof window !== 'undefined' && typeof window.GigachadAlifeNeuralCyberEngine === 'function'
+          ? new window.GigachadAlifeNeuralCyberEngine()
+          : null;
+        this.bleedingEdge25Engine = typeof window !== 'undefined' && typeof window.BleedEdge25AlifeEngine === 'function'
+          ? new window.BleedEdge25AlifeEngine()
+          : null;
+
         this.initWebGpuWorldModelShader();
         this.updateMorphologyVector();
         this.loadPersistentGenome();
+        if (this.frontierNeuralCyberEngine && typeof ipcRenderer !== 'undefined') {
+          this.frontierNeuralCyberEngine.loadWeightsFromDisk(this, ipcRenderer).catch(() => {});
+          ipcRenderer.invoke('alife-neural-weights-sync', { action: 'status' }).catch(() => {});
+          ipcRenderer.invoke('cortex-binary-weights-sync', { action: 'load' }).catch(() => {});
+          ipcRenderer.invoke('cyber-hat-inspect', { url: 'https://en.wikipedia.org', proxyMode: 'auto' }).catch(() => {});
+        }
         this.stepOmega100OmniscienceEngine({});
         this.saveCheckpoint('init-baseline');
         this.evaluateAcceptanceGates();
@@ -14483,6 +14499,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         }
         for (let i = 0; i < 16; i++) {
           wm.latentZ64[i] = Math.tanh(wm.latentZ64[i] * 0.78 + hub.zPerc16[i] * 0.10 + hub.diffusedIdeaVec16[i] * 0.07 + fDrv[i] * 0.05);
+        }
+
+        // 9. Step External Frontier Models (Selective Mamba-ZOH, Multi-Horizon I-JEPA EMA, Flow-Matching ODE, Fast-Weight Hypernetwork, Wasm JIT & Disk Sync)
+        if (this.frontierNeuralCyberEngine) {
+          this.frontierNeuralCyberEngine.stepFrontierModels60Hz(this);
+          if ((frame % 180) === 12 && typeof ipcRenderer !== 'undefined') {
+            this.frontierNeuralCyberEngine.syncWeightsToDisk(this, ipcRenderer).catch(() => {});
+          }
         }
       }
 

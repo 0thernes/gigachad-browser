@@ -23,6 +23,12 @@ const { evaluateErmPosture } = require('./systems/erm-risk-engine');
 const { evaluateErpPlan } = require('./systems/erp-resource-planner');
 const { summarizeSop500 } = require('./systems/sop-500-checklist');
 const { run100PassAudit } = require('./systems/pass-100-verifier');
+const {
+  configureDeepWebChromiumProxy,
+  saveBinaryCortexWeights,
+  loadBinaryCortexWeights,
+  inspectTargetDomainCyberHat
+} = require('./systems/cortex-neural-cyber-engine');
 
 const SMOKE = process.argv.includes('--smoke') || process.env.GIGACHAD_SMOKE === '1';
 const ROOT = __dirname;
@@ -2007,17 +2013,98 @@ function registerIpc() {
           }
         });
       const [tor9050, tor9150] = await Promise.all([probePort(9050), probePort(9150)]);
+      const activeTorPort = tor9050 ? 9050 : tor9150 ? 9150 : null;
+      let torPacApplied = false;
+      if (activeTorPort || payload?.configureTorPac) {
+        try {
+          const pacScript = `function FindProxyForURL(url, host) { if (shExpMatch(host, "*.onion")) return "SOCKS5 127.0.0.1:${activeTorPort || 9050}; SOCKS5 127.0.0.1:9150; DIRECT"; return "DIRECT"; }`;
+          const pacDataUrl = 'data:application/x-ns-proxy-autoconfig;base64,' + Buffer.from(pacScript, 'utf8').toString('base64');
+          await session.defaultSession.setProxy({ pacScript: pacDataUrl }).catch(() => {});
+          await session.fromPartition('persist:gigachad_vault').setProxy({ pacScript: pacDataUrl }).catch(() => {});
+          torPacApplied = true;
+        } catch (_) {}
+      }
       return {
         ok: true,
         torV3OnionAddress,
         ipfsMerkleCidV1: cidB32,
         localTorSocksActive: Boolean(tor9050 || tor9150),
-        socksPort: tor9050 ? 9050 : tor9150 ? 9150 : null,
+        socksPort: activeTorPort,
+        torPacApplied,
         descriptors: [
           { layer: 'TOR_V3_HSDir', address: torV3OnionAddress, cipher: 'Ed25519/SHA3-256/ntor' },
           { layer: 'IPFS_MERKLE_DAG', address: 'ipfs://' + cidB32, cipher: 'CIDv1-sha2-256' },
           { layer: 'AHMIA_ONION_INDEX', address: 'https://ahmia.fi/search/?q=' + encodeURIComponent(String(payload?.query || 'cryptography')) }
         ]
+      };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('alife-neural-weights-sync', (event, payload) => {
+    if (!fromChrome(event)) return { ok: false, error: 'unauthorized' };
+    try {
+      const binPath = userFile('alife_cortex_weights.bin');
+      const metaPath = userFile('alife_cortex_meta.json');
+      const act = String(payload?.action || 'status');
+      if (act === 'save' && typeof payload?.weightsBase64 === 'string' && payload.weightsBase64.length > 0) {
+        const buf = Buffer.from(payload.weightsBase64, 'base64');
+        fs.writeFileSync(binPath, buf);
+        const sha256Hex = '0x' + crypto.createHash('sha256').update(buf).digest('hex').slice(0, 16);
+        const savedAt = new Date().toISOString();
+        const metaObj = {
+          ...(payload?.meta && typeof payload.meta === 'object' ? payload.meta : {}),
+          byteLength: buf.byteLength,
+          sha256Prefix: sha256Hex,
+          savedAt
+        };
+        saveJson(metaPath, metaObj);
+        return { ok: true, action: 'save', byteLength: buf.byteLength, sha256Prefix: sha256Hex, savedAt };
+      }
+      if (act === 'load') {
+        if (!fs.existsSync(binPath)) return { ok: false, reason: 'no_checkpoint_yet' };
+        const buf = fs.readFileSync(binPath);
+        const sha256Hex = '0x' + crypto.createHash('sha256').update(buf).digest('hex').slice(0, 16);
+        const metaObj = loadJson(metaPath, {});
+        return {
+          ok: true,
+          action: 'load',
+          weightsBase64: buf.toString('base64'),
+          byteLength: buf.byteLength,
+          sha256Prefix: sha256Hex,
+          meta: metaObj
+        };
+      }
+      return { ok: true, exists: fs.existsSync(binPath) };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('cortex-binary-weights-sync', (event, payload = {}) => {
+    if (!fromChrome(event)) return { ok: false, error: 'unauthorized' };
+    const gchadPath = userFile('cortex_weights_1.24M.gchad');
+    if (payload.action === 'load') {
+      return loadBinaryCortexWeights(gchadPath);
+    }
+    return saveBinaryCortexWeights(gchadPath, payload);
+  });
+
+  ipcMain.handle('cyber-hat-inspect', async (event, payload = {}) => {
+    if (!fromChrome(event)) return { ok: false, error: 'unauthorized' };
+    try {
+      const targetUrl = String(payload?.url || 'https://en.wikipedia.org');
+      const [recon, proxyConfig] = await Promise.all([
+        inspectTargetDomainCyberHat(targetUrl),
+        configureDeepWebChromiumProxy([
+          session.defaultSession,
+          session.fromPartition('persist:gigachad_vault')
+        ], payload?.proxyMode || 'auto')
+      ]);
+      return {
+        ...recon,
+        proxyConfig
       };
     } catch (err) {
       return { ok: false, error: err.message };
@@ -2753,6 +2840,10 @@ app.whenReady().then(async () => {
                       humunculusRuntime.trainableAlifeNeuralHub?.visionDomGrid8x8?.length === 64 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.inversePhysicsLossMse > 0 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.icmCuriosityReward > 0 &&
+                      humunculusRuntime.frontierNeuralCyberEngine?.unprecedented25Catalog?.length === 25 &&
+                      humunculusRuntime.frontierNeuralCyberEngine?.wasmKernel?.active === true &&
+                      humunculusRuntime.frontierNeuralCyberEngine?.jepaMultiHorizonLoss > 0 &&
+                      humunculusRuntime.frontierNeuralCyberEngine?.flowMatchingLossMse > 0 &&
                       humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
                       typeof resolveDeepDarkWebGatewayUrl === 'function' &&
                       typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
