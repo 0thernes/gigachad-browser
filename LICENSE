@@ -1,53 +1,54 @@
 GIGACHAD BROWSER — PROPRIETARY DOWNLOAD-AND-USE-ONLY LICENSE
-Copyright (c) 2026 Alexander ("Alex") Donahue / GIGACHAD BROWSER Project.
-All Rights Reserved.
+============================================================
 
-================================================================================
-SUMMARY OF TERMS (DOWNLOAD & PERSONAL USE ONLY — NO MODIFICATION OR COMMERCIAL USE)
-================================================================================
-GIGACHAD BROWSER (including all source code, HTML/JS/CSS/Python/Zig/WebAssembly
-modules, neural network architectures, 1,245,184-parameter cortex tensors,
-262,144-synapse connectomes, AoT/ToT/GoT corecursive-decursive engines, DSD-24
-self-deduplicators, and bundled sibling brains in `brains/`) is made available
-SOLELY for personal download and local execution ("Download and Use Only").
+Copyright (c) 2026 Alexander ("Alex") & Gigachad Browser Project. All Rights Reserved.
 
-1. PERMITTED USE (DOWNLOAD AND USE ONLY):
-   You are granted a limited, revocable, non-exclusive, non-transferable,
-   royalty-free license to download, install, and run GIGACHAD BROWSER in its
-   unmodified original form for personal, non-commercial use, research, and
-   evaluation on your own computing devices.
+IMPORTANT — READ CAREFULLY BEFORE DOWNLOADING, INSTALLING, OR RUNNING THIS SOFTWARE:
 
-2. STRICTLY PROHIBITED ACTIONS:
-   Without prior express written permission from the Copyright Holder, you
-   MAY NOT:
-   (a) COMMERCIAL USE: Sell, lease, rent, sublicense, monetize, host as a paid
-       or commercial service (SaaS), or use any part of GIGACHAD BROWSER or its
-       neural/connectome engines for commercial gain or business operations.
-   (b) MODIFICATION OR EDITING: Modify, edit, alter, patch, translate, refactor,
-       decompile, or create derivative works based upon GIGACHAD BROWSER or any
-       of its files, neural architectures, shaders, or WebAssembly kernels.
-   (c) CLAIMING AUTHORSHIP OR OWNERSHIP (PLAGIARISM / MISATTRIBUTION): Remove,
-       obscure, or alter any copyright, trademark, or provenance notice, or
-       claim GIGACHAD BROWSER, its architectures, or its code as your own work.
-   (d) REDISTRIBUTION OF MODIFIED COPIES: Distribute, publish, mirror, or push
-       modified, edited, or rebranded versions of this repository or its files.
+This Software (including the Gigachad Browser application, the 1,245,184-Parameter Spiking
+Liquid Time-Constant (sLTC) & Selective State-Space (SSM) Deep Cortex, the 512-Node / 262,144-Synapse
+Bio-Connectome, the AoT ⇄ ToT ⇄ GoT Corecursive-Decursive Reasoning Engine, the DSD-24 Nullspace
+Deduplicator, the 7-Tier Heterogeneous Precision Tensor Arena, the 10 Fork-Ported Multiverse Brains
+in `brains/` and `systems/`, the Zig 0.17.0 WebAssembly Kernels, and all accompanying documentation)
+is proprietary and protected by copyright and intellectual property laws.
 
-3. OWNERSHIP & INTELLECTUAL PROPERTY:
-   GIGACHAD BROWSER is licensed, not sold. All title, ownership rights, and
-   intellectual property rights in and to GIGACHAD BROWSER (including all
-   embodied A-Life neural networks, sLTC/SSM models, AoT/ToT/GoT engines,
-   DSD-24 algorithms, and ported sibling brains) remain exclusively with the
-   Copyright Holder.
+1. PERMITTED USE (DOWNLOAD AND PERSONAL EXECUTION ONLY)
+-------------------------------------------------------
+You are granted a limited, non-exclusive, non-transferable, revocable license strictly to
+DOWNLOAD and USE (execute/run) the unmodified Software on your personal computer for personal,
+non-commercial evaluation and browsing purposes only.
 
-4. TERMINATION:
-   Any breach of Clauses 1 or 2 automatically and immediately terminates your
-   license to download or use GIGACHAD BROWSER.
+2. STRICT PROHIBITIONS (NO COMMERCIAL USE, NO MODIFICATION, NO CLAIMING AS YOUR OWN)
+------------------------------------------------------------------------------------
+Under NO circumstances may you, or any third party acting on your behalf:
 
-5. DISCLAIMER OF WARRANTY & LIMITATION OF LIABILITY:
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-   AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
-   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
-   FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-   DEALINGS IN THE SOFTWARE.
+  (a) NO COMMERCIAL USE:
+      Use, deploy, host, sell, rent, lease, sublicense, monetize, or integrate this Software
+      (or any subsystem, neural architecture, weight checkpoint, or documentation thereof)
+      in any commercial product, paid service, enterprise environment, or revenue-generating activity.
+
+  (b) NO MODIFICATION OR EDITING (NO DERIVATIVE WORKS):
+      Modify, edit, alter, patch, refactor, translate, reverse-engineer, decompile, Fork-for-Edit,
+      or create any derivative works based upon the source code, shaders, WebAssembly binaries,
+      neural network topologies, or documentation of this Software.
+
+  (c) NO PLAGIARISM, REBRANDING, OR CLAIMING AS YOUR OWN:
+      Remove, obscure, or alter any copyright, attribution, or license notices, or claim authorship,
+      invention, or ownership of Gigachad Browser or any of its constituent Artificial Life (A-Life)
+      brains, connectomes, or mathematical engines as your own work.
+
+  (d) NO UNAUTHORIZED REDISTRIBUTION:
+      Redistribute modified or rebranded copies of this repository or its compiled binaries.
+
+3. AUTOMATIC TERMINATION
+------------------------
+Any breach of Section 2 immediately and automatically terminates your license to download or use
+this Software, without prejudice to any equitable or legal remedies available to the Copyright Holder.
+
+4. DISCLAIMER OF WARRANTY
+-------------------------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM,
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

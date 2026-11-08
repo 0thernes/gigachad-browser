@@ -15,11 +15,15 @@ const erm = require('./erm-risk-engine');
 const erp = require('./erp-resource-planner');
 const sop = require('./sop-500-checklist');
 const pass100 = require('./pass-100-verifier');
+const portedMultiverse = require('./ported-multiverse-brains');
+const forensic25x10 = require('./forensic-25-pass-10-iteration-auditor');
 
 module.exports = {
   ...erd,
   ...erm,
   ...erp,
   ...sop,
-  ...pass100
+  ...pass100,
+  ...portedMultiverse,
+  ...forensic25x10
 };

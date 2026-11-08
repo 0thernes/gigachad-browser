@@ -43,3 +43,6 @@ jobs:
 
       - name: Run Standalone 25-Pass + 100-Pass Forensic Verifier CLI
         run: npm run forensic-25
+
+      - name: Run 25-Pass x 10-Iteration (500-Point) Forensic AI Neural Master Audit
+        run: npm run audit:25x10

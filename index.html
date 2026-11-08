@@ -1842,6 +1842,7 @@
         <button type="button" class="cyan" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('omega')" title="Open standalone Dimension-Omega v2.1 3D Raymarched Singularity in a Browser Tab">🌌 Dimension-&Omega; 3D ↗</button>
         <button type="button" class="gold" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('asmodensius')" title="Open standalone Asmodensius v40 Creature #001 Lab in a Browser Tab">🧬 Asmodensius v40 ↗</button>
         <button type="button" class="purple" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('cqm-xylos')" title="Open standalone CQM-Xylos Cosmogonic Quantum Mechalogodrom (Zig 0.17 Wasm) in a Browser Tab">⚛️ CQM-Xylos Wasm ↗</button>
+        <button type="button" class="cyan" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('glitchling')" title="Open standalone Glitchling 4-Flaw Adversarial Resilience Brain in a Browser Tab">👾 Glitchling ↗</button>
         <button type="button" class="cyan" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('cqm-bible')" title="Open standalone CQM-Xylos Cosmological &amp; Mathematical Bible in a Browser Tab">📜 CQM Bible ↗</button>
         <button type="button" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('manifold3d')" title="Open standalone 3D Quantum Neural Manifold in a Browser Tab">🔮 3D Manifold ↗</button>
       </div>
@@ -1872,7 +1873,7 @@ practice   awaiting rollout        learn   frozen baseline</pre>
             <button type="button" data-hview="overview" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace;" onclick="setHumunculusTerminalView('overview')">[OVERVIEW]</button>
             <button type="button" data-hview="decursive" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#6ee7b7; border-color:#00f0ff; font-weight:800;" onclick="setHumunculusTerminalView('decursive')">[✂️🧬 DSD-16 PRIMARK]</button>
             <button type="button" data-hview="aottotgot" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#a7f3d0; border-color:#10b981; font-weight:800;" onclick="setHumunculusTerminalView('aottotgot')">[🌳🕸️⚛️ AoT·ToT·GoT]</button>
-            <button type="button" data-hview="brainfusion" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#c4b5fd; border-color:#8b5cf6; font-weight:800;" onclick="setHumunculusTerminalView('brainfusion')">[🧬⚛️ 4-BRAIN × 6-PREC]</button>
+            <button type="button" data-hview="brainfusion" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#c4b5fd; border-color:#8b5cf6; font-weight:800;" onclick="setHumunculusTerminalView('brainfusion')">[🧬⚛️ 10-BRAIN × 7-PREC]</button>
             <button type="button" data-hview="metacognition" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#fde68a; border-color:#fbbf24; font-weight:800;" onclick="setHumunculusTerminalView('metacognition')">[⚛️🧠 Cl(4,0) × Q-BIO]</button>
             <button type="button" data-hview="deepdark" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#f5d0fe; border-color:#e879f9; font-weight:800;" onclick="setHumunculusTerminalView('deepdark')">[🕸️🧅 DEEP/DARK × sLTC/SSM]</button>
             <button type="button" data-hview="deity100" style="padding:2px 6px; font-size:9.5px; font-family:Consolas,monospace; color:#fda4af; border-color:#f43f5e; font-weight:800;" onclick="setHumunculusTerminalView('deity100')">[👁️‍🗨️⚡ DEITY-100]</button>
@@ -2159,7 +2160,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
   <script src="agent-actions.js"></script>
   <script src="alife_neural_cyber_engine.js"></script>
+  <script src="systems/ported-multiverse-brains.js"></script>
   <script src="systems/alife-25-bleeding-edge-models.js"></script>
+  <script src="systems/forensic-25-pass-10-iteration-auditor.js"></script>
   <script>
     if (!window.gigachad || typeof window.gigachad.invoke !== 'function') {
       throw new Error('Preload bridge missing');
@@ -17508,6 +17511,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             hdcHammingSimilarityPct: 84.4
           };
           const sbf = (be && be.siblingBrainFusion) || null;
+          const pmb = (sbf && sbf.multiverse10Pantheon) || this.portedMultiverseBrains || null;
+          const snap = (pmb && pmb.latestSnapshot) || null;
           const cqm = (sbf && sbf.cqmMetrics) || {
             minSrUpdateNorm: 0.0137,
             minSrEnergyMean: -1.546,
@@ -17543,14 +17548,15 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             geodesicVelocityNorm: 0.428
           };
           return [
-            `🧬⚛️ 4-BRAIN SIBLING FUSION × 6-TIER MULTI-PRECISION ARENA (BEYOND FLOAT32 · ZERO-LLM) // ${modeBanner}`,
-            `1.MULTI_PREC  64KB Shared ArrayBuffer: Float64 τ_ODE=${mp.f64OdeMeanTau}s · BigInt64 Z[ζ₈] Norm=${mp.cyclotomicNormExactI64} · Uint16(fp16) Err=${mp.fp16CompressionMaxErr} · Int8 Scale=${mp.int8ScaleMean} · Uint8(BitNet-b1.58 0-Mul)=${mp.ternaryBitNetZeroMulOut0} · Uint32(HDC POPCNT)=${mp.hdcHammingSimilarityPct}%`,
+            `🧬⚛️ 10-BRAIN MULTIVERSE PANTHEON × 7-TIER HETEROGENEOUS PRECISION ARENA (BEYOND FLOAT32 · ZERO-LLM) // ${modeBanner}`,
+            `1.7-TIER_PREC 128KB+64KB Arena: Float64 τ_ODE=${mp.f64OdeMeanTau}s · BigInt64 Z[ζ₈] Norm=${mp.cyclotomicNormExactI64} · Uint16(FP16/BF16) Err=${mp.fp16CompressionMaxErr} · Int8 Stochastic_Round=#${pmb ? pmb.precisionArena.stochasticRoundUpdatesCount : 4096} · Uint8(BitNet-b1.58 0-Mul)=${mp.ternaryBitNetZeroMulOut0} · Uint32(HDC POPCNT)=${mp.hdcHammingSimilarityPct}%`,
             `2.CQM_ZIG_WASM cqm_kernels.wasm (${sbf && sbf.cqmWasmLoaded ? '18 ZIG EXPORTS LIVE' : 'READY'}) · MinSR_Cholesky ||Δθ||=${cqm.minSrUpdateNorm} (⟨E⟩=${cqm.minSrEnergyMean}) · DBSP_Δ(AB) Cross=${cqm.dbspCrossTermNorm} (Res=${cqm.dbspExactnessResidual}) · Hebb=${cqm.glyphHebbianEnergy}`,
             `3.TOPOLOGICAL QWZ Lattice Chern C=${cqm.qwzChernNumber} · BdG Skyrmion MZM=2|Q|=${cqm.bdgSkyrmionMzmCount} · QGTL Tr(g)=${cqm.qgtTraceG} · Berry Ω=${cqm.qgtBerryCurvature} · Bogomolny=${cqm.qgtBogomolnyRatio}`,
-            `4.ASMODENSIUS Larkum 2-Comp Pyramidal Sheet: NMDA_Burst=${asm.nmdaBurstFractionPct}% · Payeur Apical-Basal Mismatch MSE=${asm.apicalBasalMismatchMse} · TRN Winner=#${asm.trnWinnerAreaIdx} (GWT=${asm.gwtIgnitionActive ? 'IGNITED' : 'GATED'})`,
-            `5.ALLOSTASIS  Hypothalamic Opponent Drives: AgRP(Forage)=${asm.agrpForagingDrive} vs POMC(Satiety)=${asm.pomcSatietyDrive} · Yu-Dayan Neuromodulators [DA=${asm.daRewardPredError} | NE=${asm.neSurpriseGain} | ACh=${asm.achExpectedUncertainty}]`,
-            `6.C_ELEGANS   Empirical Hermaphrodite Connectome (${sbf ? sbf.celegansUniqueNeurons : 302} Neurons / ${sbf ? sbf.celegansTotalEdges : 7379} Edges: ${sbf ? sbf.celegansChemicalEdges : 6393} Chem + ${sbf ? sbf.celegansGapJunctionEdges : 986} Gap) · AVB-AVA=${cel.commandAvaAvbBalance} · DV_Wave=${cel.dorsalVentralWavePhase} · I_chem=${cel.chemicalSynapseCurrent}/I_gap=${cel.gapJunctionSyncCurrent}`,
-            `7.DIM_OMEGA   3D Riemannian Manifold det(g_μν)=${dom.fubiniStudyDetG} · Ricci Curvature R=${dom.ricciCurvatureScalarR} · Geodesic ||v||=${dom.geodesicVelocityNorm}`
+            `4.ASMODENSIUS 272-Neuron CNS+ENS · Larkum NMDA_Burst=${asm.nmdaBurstFractionPct}% · Payeur Mismatch=${asm.apicalBasalMismatchMse} · RLS_MSE=${snap ? snap.asmodensius.rlsMse : 0.0142} · Kalman_R=${snap ? snap.asmodensius.kalmanR : 0.048} · TRN=#${asm.trnWinnerAreaIdx} (${asm.gwtIgnitionActive ? 'IGNITED' : 'GATED'})`,
+            `5.GLITCHLING  4-Flaw Resilience · Marr-Albus Cerebellar Un-Mirroring MSE=${snap ? snap.glitchling.efferenceMismatchMse : 0.0184} (Gain=${snap ? snap.glitchling.cerebellarGainDiag : -0.85}) · Gated-DeltaNet ||S||=${snap ? snap.glitchling.deltaNetNorm : 0.342} · Stochastic_Int8=#${snap ? snap.glitchling.stochasticInt8Updates : 64}`,
+            `6.CQM_PANTHEON SuperMind[Var#${snap ? snap.cqmSuperMind.winningVariantIdx : 0} Q=${snap ? snap.cqmSuperMind.winningScore : 0.812} · AD_||∇||=${snap ? snap.cqmSuperMind.adGradNorm : 0.048}] · ApexHydra[11-Organ · λ₁=${snap ? snap.apexHydra.lyapunovLambda1 : 0.384} · Gödel=${snap ? snap.apexHydra.godelResidual : 0.0042}] · Xenomimic[‖ψ‖=${snap ? snap.xenomimic.wavepacketNorm : 1.0} · Mimic=${snap ? snap.xenomimic.mimicPolarity : 0.84}]`,
+            `7.MECH_DABUS  Xylos[48-Foci GWT#${snap ? snap.xylosManifold.winningGwtGroup : 0}] · Mechalogodrom[10-Shell Dom=${snap ? snap.mechalogodrom.dominantShell : 'MobiusTorsion'}] · Glyph25K[FP16_E=${snap ? snap.glyphPantheon.fastWeightEnergy : 0.412}] · Thaler_DABUS[Cusp_Ξ=${snap ? snap.thalerDabus.cuspXi : 0.28} · Val=${snap ? snap.thalerDabus.hotButtonValence : 0.78}]`,
+            `8.C_ELEGANS+Ω Empirical Connectome (${sbf ? sbf.celegansUniqueNeurons : 302}N/${sbf ? sbf.celegansTotalEdges : 7379}S: ${sbf ? sbf.celegansChemicalEdges : 6393} Chem + ${sbf ? sbf.celegansGapJunctionEdges : 986} Gap · AVB-AVA=${cel.commandAvaAvbBalance}) · Dim-Ω[det(g)=${dom.fubiniStudyDetG} · R=${dom.ricciCurvatureScalarR}] · GOAP=${snap ? snap.graphCrystal.goapPlan : 'FORAGE_PORTAL_SYNTHESIS'}`
           ].join('\n');
         }
 
@@ -17815,6 +17821,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       } else if (which === 'cqm-docs' && res.cqmDocsUrl) {
         targetUrl = res.cqmDocsUrl;
         tabTitle = '📚 CQM-Xylos Documentation';
+      } else if (which === 'glitchling' && res.glitchlingUrl) {
+        targetUrl = res.glitchlingUrl;
+        tabTitle = '👾 Glitchling 4-Flaw Resilience Brain';
       }
       if (!targetUrl) {
         appendLog('step', `⚠️ Portal file for ${which} not found on disk.`);

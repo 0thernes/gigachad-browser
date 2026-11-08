@@ -1952,7 +1952,8 @@ function registerIpc() {
         cqmXylosUrl: resolvePortal(['cqm-xylos', 'index.html'], ['Cosmogonic Quantum Mechalogodrom', 'index.html']),
         cqmBibleUrl: resolvePortal(['cqm-xylos', 'bible.html'], ['Cosmogonic Quantum Mechalogodrom', 'bible.html']),
         cqmSpecsUrl: resolvePortal(['cqm-xylos', 'specs.html'], ['Cosmogonic Quantum Mechalogodrom', 'specs.html']),
-        cqmDocsUrl: resolvePortal(['cqm-xylos', 'docs.html'], ['Cosmogonic Quantum Mechalogodrom', 'docs.html'])
+        cqmDocsUrl: resolvePortal(['cqm-xylos', 'docs.html'], ['Cosmogonic Quantum Mechalogodrom', 'docs.html']),
+        glitchlingUrl: resolvePortal(['glitchling', 'index.html'], ['glitchling-jam', 'index.html'])
       };
     } catch (err) {
       return { ok: false, error: err.message };

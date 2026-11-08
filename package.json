@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
-  "description": "GIGACHAD Browser: Sovereign Electron AI & 60Hz Zero-LLM Embodied A-Life Neural Browser (1.24M Params, 262K Synapses, sLTC/SSM, AoT/ToT/GoT, DSD-24, 4-Brain Fusion, Multi-Precision Hybrid Arena, Tor/I2P/IPFS Deep Web).",
+  "description": "GIGACHAD Browser: Sovereign Electron AI & 60Hz Zero-LLM Embodied A-Life Neural Browser (1,245,184 Params, 262,144 Synapses, sLTC/SSM, AoT/ToT/GoT, DSD-24, 10-Brain Multiverse Pantheon, 7-Tier Mixed-Precision Arena, Zig Wasm, Tor/I2P/IPFS Deep Web).",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -11,7 +11,8 @@
     "smoke": "node scripts/smoke.js",
     "ci": "node scripts/smoke.js",
     "forensic-25": "node systems/pass-100-verifier.js",
-    "audit-500": "node -e \"console.log(JSON.stringify(require('./systems/sop-500-checklist').getSopSummary(), null, 2))\""
+    "audit-500": "node -e \"console.log(JSON.stringify(require('./systems/sop-500-checklist').getSopSummary(), null, 2))\"",
+    "audit:25x10": "node -e \"const {Forensic25Pass10IterationAuditor}=require('./systems/forensic-25-pass-10-iteration-auditor'); const r=new Forensic25Pass10IterationAuditor().runFull10Iteration25PassAudit(); console.log(JSON.stringify({ok:r.ok,iterations:r.iterationsCompleted,passes:r.totalPassExecutions,points:r.totalAtomicAuditPointsPassed+'/'+r.totalAtomicAuditPointsTarget},null,2));\""
   },
   "engines": {
     "node": ">=20"

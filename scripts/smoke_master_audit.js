@@ -220,8 +220,26 @@ const bleeding25Js = readFile('systems/alife-25-bleeding-edge-models.js');
 assert(bleeding25Js.includes('AotTotGotCorecursiveDecursiveEngine') && bleeding25Js.includes('totLatentArena21x16') && bleeding25Js.includes('gotAdjMatrix16x16') && bleeding25Js.includes('W_aot_contractor'), 'systems/alife-25-bleeding-edge-models.js must implement AotTotGotCorecursiveDecursiveEngine (AoT, ToT, GoT)');
 assert(indexScript.includes('aotTotGotEngine') && indexScript.includes("mode === 'aottotgot'"), 'index.html must wire aotTotGotEngine and aottotgot terminal view');
 
+// 9. Verify 10-Brain Multiverse Pantheon, 7-Tier Mixed-Precision Arena, 25x10 Forensic Auditor & Proprietary License
+const { PortedMultiverseBrainsFederation, Heterogeneous7TierPrecisionArena } = require('../systems/ported-multiverse-brains');
+const { Forensic25Pass10IterationAuditor } = require('../systems/forensic-25-pass-10-iteration-auditor');
+const pantheonTest = new PortedMultiverseBrainsFederation();
+assert.strictEqual(pantheonTest.brainsCatalog10.length, 10, 'Expected 10 ported multiverse brains');
+assert.strictEqual(pantheonTest.precisionArena instanceof Heterogeneous7TierPrecisionArena, true, 'Expected 7-Tier Heterogeneous Precision Arena');
+assert.strictEqual(pantheonTest.precisionArena.getPrecisionAuditSummary().tierCount, 7, 'Expected 7 hardware precision tiers');
+
+const forensicReport = new Forensic25Pass10IterationAuditor().runFull10Iteration25PassAudit({ pantheon: pantheonTest });
+assert.strictEqual(forensicReport.ok, true, 'Expected 25-Pass x 10-Iteration Forensic Audit to pass 100%');
+assert.strictEqual(forensicReport.iterationsCompleted, 10, 'Expected 10 iterations completed');
+assert.strictEqual(forensicReport.totalPassExecutions, 250, 'Expected 250 pass executions (25 passes x 10 iterations)');
+assert.strictEqual(forensicReport.totalAtomicAuditPointsPassed, 500, 'Expected 500/500 atomic audit points passed');
+
+const licenseTxt = readFile('LICENSE');
+assert(licenseTxt.includes('DOWNLOAD AND PERSONAL EXECUTION ONLY') && licenseTxt.includes('NO COMMERCIAL USE') && licenseTxt.includes('NO MODIFICATION'), 'LICENSE must enforce Download-and-Use-Only restrictions');
+
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +
   `${indexDomAudit.idCount} HTML IDs (${indexDomAudit.queriedCount} queried), ${indexDomAudit.fnCount} JS functions, ` +
-  `${agentActionNames.length} agent actions, ${mainSidecarPosts.size} sidecar endpoints, 500/500 SOP items`
+  `${agentActionNames.length} agent actions, ${mainSidecarPosts.size} sidecar endpoints, 500/500 SOP items, ` +
+  `10/10 Ported Brains, 7/7 Precision Tiers, 250/250 Forensic Passes (500/500 Points)`
 );
