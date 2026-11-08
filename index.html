@@ -16210,6 +16210,19 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             if (Array.isArray(sl.sltcRecWeights64) && sl.sltcRecWeights64.length === 64) eng.sltcRecWeights64.set(sl.sltcRecWeights64);
             if (Array.isArray(sl.sltcBias64) && sl.sltcBias64.length === 64) eng.sltcBias64.set(sl.sltcBias64);
           }
+          if (data.aotTotGotLearned && this.aotTotGotEngine) {
+            const atgData = data.aotTotGotLearned;
+            const atg = this.aotTotGotEngine;
+            if (Array.isArray(atgData.W_aot_contractor) && atg.W_aot_contractor && atgData.W_aot_contractor.length === atg.W_aot_contractor.length) {
+              atg.W_aot_contractor.set(atgData.W_aot_contractor);
+            }
+            if (Array.isArray(atgData.W_tot_branch4x16x16) && atg.W_tot_branch4x16x16 && atgData.W_tot_branch4x16x16.length === atg.W_tot_branch4x16x16.length) {
+              atg.W_tot_branch4x16x16.set(atgData.W_tot_branch4x16x16);
+            }
+            if (Array.isArray(atgData.W_got_attn) && atg.W_got_attn && atgData.W_got_attn.length === atg.W_got_attn.length) {
+              atg.W_got_attn.set(atgData.W_got_attn);
+            }
+          }
           this.updateMorphologyVector();
           return true;
         } catch (_) {
@@ -16273,6 +16286,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               sltcWeights64: Array.from(this.deepWebAndSltcConnectomeEngine.sltcWeights64).map((v) => Number(v.toFixed(4))),
               sltcRecWeights64: Array.from(this.deepWebAndSltcConnectomeEngine.sltcRecWeights64).map((v) => Number(v.toFixed(4))),
               sltcBias64: Array.from(this.deepWebAndSltcConnectomeEngine.sltcBias64).map((v) => Number(v.toFixed(4)))
+            } : null,
+            aotTotGotLearned: (this.aotTotGotEngine && this.aotTotGotEngine.W_aot_contractor) ? {
+              W_aot_contractor: Array.from(this.aotTotGotEngine.W_aot_contractor).map((v) => Number(v.toFixed(4))),
+              W_tot_branch4x16x16: Array.from(this.aotTotGotEngine.W_tot_branch4x16x16).map((v) => Number(v.toFixed(4))),
+              W_got_attn: Array.from(this.aotTotGotEngine.W_got_attn).map((v) => Number(v.toFixed(4)))
             } : null,
             savedAt: new Date().toISOString()
           };

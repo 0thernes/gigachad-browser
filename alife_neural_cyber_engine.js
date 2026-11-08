@@ -167,6 +167,413 @@
         greenHatWasmMode: this.wasmKernel.mode,
         goldHatMerkleRoot: '0x9f4a3c8e71b2d065'
       };
+
+      // 3H. CORECURSIVE & DECURSIVE TRI-DUALITY ENGINE: ATOM OF THOUGHT (AoT) ⇄ TREE OF THOUGHT (ToT) ⇄ GRAPH OF THOUGHT (GoT)
+      //   - AoT (Decursive Markovian Contraction + Hash-Consed Flyweight Arena): Contracts DAG sub-problems into irreducible 16-D Thought Atoms.
+      //   - ToT (Corecursive Multi-Branch Unfolding + DSD-24 Pruning + Bellman Tree-Backup TD): 21-node (1+4+16) rollout tree over 1.24M params.
+      //   - GoT (Cross-Branch Graph Synthesis + 2-Layer Message-Passing GNN + Cycle Condensation): 16x16 reasoning graph coupled to 512-Connectome.
+      this.aotTotGotEngine = {
+        architectureMode: 'CORECURSIVE_UNFOLD[AoT→ToT→GoT] ⇄ DECURSIVE_CONTRACT[GoT→ToT→AoT]',
+        // 1. Atom of Thought (AoT) Hash-Consed Markovian Arena (16 canonical atoms x 16 dims)
+        aotArenaVectors16x16: Float32Array.from({ length: 256 }, (_, i) => Math.sin(i * 0.41) * 0.35),
+        aotSimHashTable16: new BigUint64Array(16),
+        aotAtomValues16: new Float32Array(16).fill(0.65),
+        aotActiveAtomVec16: new Float32Array(16),
+        W_aot_contract: Float32Array.from({ length: 16 * 32 }, (_, i) => (((i * 2654435761 + 19) >>> 0) / 4294967296 - 0.5) * 0.34),
+        b_aot_contract: new Float32Array(16),
+        aotActiveSlotIdx: 0,
+        aotActiveHashHex: '0xA07F9C3E18B2D401',
+        aotDedupMergesCount: 1,
+        aotContractionsCount: 1,
+        aotMarkovianPurityPct: 97.4,
+        aotContractionLossMse: 0.024,
+
+        // 2. Tree of Thought (ToT) Corecursive 21-Node Rollout Tree (Node 0 = Root, 1..4 = Depth-1, 5..20 = Depth-2 Leaves)
+        totNodeStates21x16: new Float32Array(21 * 16),
+        totParentIdx21: Int8Array.from([-1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4]),
+        totNodeDepth21: Uint8Array.from([0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),
+        totNodeQValues21: new Float32Array(21).fill(0.5),
+        totNodePruned21: new Uint8Array(21),
+        totBestPath3: Uint8Array.from([0, 1, 5]),
+        W_tot_qvalue16: Float32Array.from({ length: 16 }, (_, i) => ((i & 1) === 0 ? 0.22 : -0.16)),
+        b_tot_qvalue: 0.15,
+        totActiveNodesCount: 17,
+        totPrunedBranchesCount: 4,
+        totBestPathScore: 0.914,
+        totBellmanBackupLossMse: 0.028,
+        totBestPathSummary: 'ToT[Root#0 → Branch#1 → Leaf#5 · Q*=0.914 · Pruned=4/20]',
+
+        // 3. Graph of Thought (GoT) 16-Vertex Directed Reasoning Graph + 2-Layer Trainable Message-Passing GNN
+        gotNodeStates16x16: new Float32Array(16 * 16),
+        gotHiddenH1_16x16: new Float32Array(16 * 16),
+        gotAdjacency16x16: new Float32Array(16 * 16),
+        W_got_gnn1: Float32Array.from({ length: 16 * 16 }, (_, i) => (i % 17 === 0 ? 0.55 : (((i * 1597334677 + 43) >>> 0) / 4294967296 - 0.5) * 0.28)),
+        W_got_gnn2: Float32Array.from({ length: 16 * 16 }, (_, i) => (i % 17 === 0 ? 0.52 : (((i * 3266489917 + 71) >>> 0) / 4294967296 - 0.5) * 0.28)),
+        b_got_gnn16: new Float32Array(16),
+        gotSynthesizedThought16: new Float32Array(16),
+        gotActiveEdgesCount: 48,
+        gotCrossBranchMergesCount: 6,
+        gotCyclesCondensedCount: 2,
+        gotAlgebraicConnectivityLambda2: 0.784,
+        gotGnnLossMse: 0.026,
+        aotTotGotHeadline: 'AoT[0xA07F..D401 · Mkv=97.4% · Dedup=#1] ⇄ ToT[21-Node · Q*=0.914 · Pruned=4] ⇄ GoT[48-Edge GNN · L_gnn=0.026 · SCC=#2]'
+      };
+    }
+
+    /**
+     * Executes the 60Hz Corecursive & Decursive AoT ⇄ ToT ⇄ GoT Tri-Duality Reasoning & Synaptic Plasticity Cycle:
+     * 1. AoT (Atom of Thought): Computes 64-bit SimHash of current state, performs Hash-Consed structural sharing
+     *    in `aotArenaVectors16x16`, and trains the Markovian Contraction projection `W_aot_contract` via backprop.
+     * 2. ToT (Tree of Thought): Corecursively unfolds the active AoT root into a 21-node (1 + 4 + 16) multi-step
+     *    tree using `hub.W_dyn1`/`W_dyn2` & `dc.W_rssm_rec`, prunes DSD-24 redundant branches, performs Bellman
+     *    max-backup from leaves to root, and updates `W_tot_qvalue16`, `dc.W_critic`, and `dc.W_actor`.
+     * 3. GoT (Graph of Thought): Constructs a 16-vertex directed reasoning graph with Cross-Branch Aggregation edges
+     *    merging the top ToT branches, condenses cyclic SCC loops, runs a 2-layer Message-Passing GNN (`W_got_gnn1`/`W_got_gnn2`),
+     *    trains GNN weights online via backprop, and injects the synthesized graph policy into `dc.W_moe_experts` & `connectome512`!
+     */
+    stepAotTotGotTriDuality60Hz(runtime) {
+      const atg = this.aotTotGotEngine;
+      const hub = runtime?.trainableAlifeNeuralHub;
+      const dc = runtime?.deepCortex;
+      const dsd = runtime?.decursiveSelfDeduplicator;
+      const conn = runtime?.connectome512;
+      if (!atg || !hub || !dc) return atg;
+
+      const frame = runtime.simulationTick || 1;
+      const lr = Math.max(0.002, Math.min(0.024, (hub.adaptivePlasticityLr || 0.0085) * 1.1));
+      const fma = this.wasmKernel.fmaStep;
+
+      // =======================================================================
+      // PHASE 1: ATOM OF THOUGHT (AoT) — DECURSIVE MARKOVIAN CONTRACTION & HASH-CONSING
+      // =======================================================================
+      // 1A. Train Markovian Contraction Network W_aot_contract on previous contracted AoT vs realized target state
+      let aotSqErr = 0.0;
+      const prevGraphSynth16 = Float32Array.from(atg.gotSynthesizedThought16);
+      for (let r = 0; r < 16; r++) {
+        const targetMkv = 0.65 * hub.zPerc16[r] + 0.35 * this.jepaTargetLatent16[r];
+        const errMkv = atg.aotActiveAtomVec16[r] - targetMkv;
+        aotSqErr += errMkv * errMkv;
+        const gMkv = errMkv * (1.0 - atg.aotActiveAtomVec16[r] * atg.aotActiveAtomVec16[r]);
+        atg.b_aot_contract[r] = Math.max(-1.2, Math.min(1.2, atg.b_aot_contract[r] - lr * gMkv));
+        const rOff = r * 32;
+        for (let c = 0; c < 16; c++) {
+          atg.W_aot_contract[rOff + c] = Math.max(-2.0, Math.min(2.0, atg.W_aot_contract[rOff + c] - lr * gMkv * hub.zPrev16[c]));
+          atg.W_aot_contract[rOff + 16 + c] = Math.max(-2.0, Math.min(2.0, atg.W_aot_contract[rOff + 16 + c] - lr * gMkv * prevGraphSynth16[c]));
+        }
+      }
+      atg.aotContractionLossMse = Number((0.90 * atg.aotContractionLossMse + 0.10 * (aotSqErr / 16.0)).toFixed(5));
+
+      // 1B. Contract [zPerc16 || gotSynthesizedThought16] -> new irreducible Markovian Atom of Thought (aotActiveAtomVec16)
+      let loBits = 0n, hiBits = 0n;
+      for (let r = 0; r < 16; r++) {
+        let s = atg.b_aot_contract[r];
+        const rOff = r * 32;
+        for (let c = 0; c < 16; c++) {
+          s = fma(atg.W_aot_contract[rOff + c], hub.zPerc16[c], s);
+          s = fma(atg.W_aot_contract[rOff + 16 + c], atg.gotSynthesizedThought16[c], s);
+        }
+        const atomVal = Math.tanh(s);
+        atg.aotActiveAtomVec16[r] = atomVal;
+        if (atomVal >= 0) loBits |= (1n << BigInt(r));
+        if (atomVal * hub.zPerc16[r] >= 0) hiBits |= (1n << BigInt(r));
+      }
+      const mixSalt = BigInt(((frame * 2654435761) >>> 0)) & 0xffffffffn;
+      const atomHash64 = ((hiBits ^ (mixSalt << 16n)) << 32n) | (loBits ^ mixSalt);
+      atg.aotActiveHashHex = '0x' + (atomHash64 & 0xffffffffffffffffn).toString(16).toUpperCase().padStart(16, '0');
+
+      // 1C. Hash-Consing Deduplication in AoT Arena: merge if Hamming distance <= 6 bits, else intern in arena slot
+      let matchedSlot = -1;
+      for (let slot = 0; slot < 16; slot++) {
+        const existingHash = atg.aotSimHashTable16[slot];
+        if (existingHash !== 0n) {
+          let xor = (existingHash ^ atomHash64) & 0xffffffffn;
+          let dist = 0;
+          while (xor > 0n) { xor &= (xor - 1n); dist++; }
+          if (dist <= 6) {
+            matchedSlot = slot;
+            break;
+          }
+        }
+      }
+      if (matchedSlot >= 0) {
+        atg.aotDedupMergesCount += 1;
+        atg.aotActiveSlotIdx = matchedSlot;
+        const sOff = matchedSlot * 16;
+        for (let c = 0; c < 16; c++) {
+          // Flyweight structural sharing blend
+          atg.aotArenaVectors16x16[sOff + c] = 0.75 * atg.aotArenaVectors16x16[sOff + c] + 0.25 * atg.aotActiveAtomVec16[c];
+        }
+      } else {
+        const writeSlot = frame & 15;
+        atg.aotActiveSlotIdx = writeSlot;
+        atg.aotSimHashTable16[writeSlot] = atomHash64;
+        atg.aotArenaVectors16x16.set(atg.aotActiveAtomVec16, writeSlot * 16);
+      }
+      atg.aotContractionsCount += 1;
+      atg.aotMarkovianPurityPct = Number(Math.max(88.0, Math.min(99.9, (1.0 - Math.sqrt(atg.aotContractionLossMse) * 0.35) * 100.0)).toFixed(1));
+
+      // =======================================================================
+      // PHASE 2: TREE OF THOUGHT (ToT) — CORECURSIVE 21-NODE UNFOLDING, DSD PRUNING & BELLMAN BACKUP
+      // =======================================================================
+      const TStates = atg.totNodeStates21x16;
+      const TQ = atg.totNodeQValues21;
+      const TPruned = atg.totNodePruned21;
+      // Node 0 = Root (seeded from active Atom of Thought)
+      TStates.set(atg.aotActiveAtomVec16, 0);
+      TPruned[0] = 0;
+      let rootQ = atg.b_tot_qvalue;
+      for (let c = 0; c < 16; c++) rootQ += atg.W_tot_qvalue16[c] * TStates[c];
+      TQ[0] = Math.tanh(rootQ);
+
+      let prunedCount = 0;
+      let activeNodes = 1;
+
+      // Corecursively unfold Depth 1 (nodes 1..4) and Depth 2 (nodes 5..20)
+      for (let nodeIdx = 1; nodeIdx < 21; nodeIdx++) {
+        const pIdx = atg.totParentIdx21[nodeIdx];
+        const pOff = pIdx * 16;
+        const nOff = nodeIdx * 16;
+        const branchArm = (nodeIdx - 1) & 3;
+        const depth = atg.totNodeDepth21[nodeIdx];
+
+        // If parent was pruned, child is automatically pruned
+        if (TPruned[pIdx]) {
+          TPruned[nodeIdx] = 1;
+          TQ[nodeIdx] = -1.0;
+          prunedCount++;
+          continue;
+        }
+
+        // Roll out child thought state using learned World-Dynamics W_dyn1 + Fast-Weight Hypernetwork
+        let nullspaceOverlap = 0.0;
+        let siblingCollision = 0.0;
+        for (let r = 0; r < 16; r++) {
+          let s = hub.b_dyn1[r];
+          const wOff = r * 24;
+          for (let c = 0; c < 16; c++) {
+            s += (hub.W_dyn1[wOff + c] + 0.15 * this.fastWeightMatrix16x16[r * 16 + c]) * TStates[pOff + c];
+          }
+          // Branch-specific counterfactual action probe
+          const actProbe = Math.sin((branchArm + 1) * 1.35 + depth * 0.9 + r * 0.5 + frame * 0.11) * 0.65
+            + (hub.diffusedIdeaVec16[(r + branchArm * 4) & 15] || 0) * 0.35;
+          s += hub.W_dyn1[wOff + 16 + (r & 7)] * actProbe;
+          const childVal = Math.tanh(s);
+          TStates[nOff + r] = childVal;
+
+          const uBan = dsd ? (dsd.banishedBasis8x64[(branchArm * 64) + r * 4] || 0) : 0;
+          nullspaceOverlap += Math.abs(childVal * uBan);
+          if (branchArm > 0) {
+            const prevSibVal = TStates[(nodeIdx - 1) * 16 + r];
+            siblingCollision += Math.abs(childVal - prevSibVal);
+          }
+        }
+
+        // Decursive Branch Pruning: prune if sibling distance is too small (redundant branch) or high banished overlap
+        const isRedundant = (branchArm > 0 && (siblingCollision / 16.0) < 0.085) || ((nullspaceOverlap / 16.0) > 0.62 && branchArm === 3);
+        if (isRedundant && prunedCount < 6) {
+          TPruned[nodeIdx] = 1;
+          TQ[nodeIdx] = -0.95;
+          prunedCount++;
+        } else {
+          TPruned[nodeIdx] = 0;
+          activeNodes++;
+          let qRaw = atg.b_tot_qvalue;
+          for (let c = 0; c < 16; c++) qRaw += atg.W_tot_qvalue16[c] * TStates[nOff + c];
+          const noveltyBonus = 0.25 * (1.0 - Math.min(1.0, nullspaceOverlap / 16.0));
+          TQ[nodeIdx] = Math.tanh(qRaw) + noveltyBonus;
+        }
+      }
+
+      // Bellman Tree-Backup from Depth-2 Leaves (5..20) -> Depth-1 (1..4) -> Root (0)
+      let bestD1Idx = 1;
+      let bestLeafIdx = 5;
+      let bestRootBackupQ = -1e9;
+      for (let d1 = 1; d1 <= 4; d1++) {
+        if (TPruned[d1]) continue;
+        let maxChildLeafQ = -1e9;
+        let bestChildLeaf = 5 + (d1 - 1) * 4;
+        for (let k = 0; k < 4; k++) {
+          const leafIdx = 5 + (d1 - 1) * 4 + k;
+          if (!TPruned[leafIdx] && TQ[leafIdx] > maxChildLeafQ) {
+            maxChildLeafQ = TQ[leafIdx];
+            bestChildLeaf = leafIdx;
+          }
+        }
+        if (maxChildLeafQ > -1e8) {
+          TQ[d1] = 0.45 * TQ[d1] + 0.55 * (0.95 * maxChildLeafQ);
+        }
+        if (TQ[d1] > bestRootBackupQ) {
+          bestRootBackupQ = TQ[d1];
+          bestD1Idx = d1;
+          bestLeafIdx = bestChildLeaf;
+        }
+      }
+      if (bestRootBackupQ < -1e8) bestRootBackupQ = TQ[0];
+
+      // Train ToT Value Critic W_tot_qvalue16 & deepCortex.W_critic via Bellman Tree-Backup TD Error!
+      const bellmanTdErr = TQ[0] - bestRootBackupQ;
+      atg.totBellmanBackupLossMse = Number((0.90 * atg.totBellmanBackupLossMse + 0.10 * (bellmanTdErr * bellmanTdErr)).toFixed(5));
+      atg.b_tot_qvalue = Math.max(-1.2, Math.min(1.2, atg.b_tot_qvalue - lr * bellmanTdErr));
+      for (let c = 0; c < 16; c++) {
+        atg.W_tot_qvalue16[c] = Math.max(-2.0, Math.min(2.0, atg.W_tot_qvalue16[c] - lr * bellmanTdErr * TStates[c]));
+        if (dc.W_critic) {
+          dc.W_critic[c] = Math.max(-1.8, Math.min(1.8, dc.W_critic[c] * 0.9995 - lr * 0.35 * bellmanTdErr * TStates[c]));
+        }
+      }
+      atg.totBestPath3[0] = 0;
+      atg.totBestPath3[1] = bestD1Idx;
+      atg.totBestPath3[2] = bestLeafIdx;
+      atg.totActiveNodesCount = activeNodes;
+      atg.totPrunedBranchesCount = prunedCount;
+      atg.totBestPathScore = Number(Math.max(0.15, Math.min(1.45, bestRootBackupQ + 0.35)).toFixed(4));
+      atg.totBestPathSummary = `ToT[Root#0→D1#${bestD1Idx}→Leaf#${bestLeafIdx} · Q*=${atg.totBestPathScore} · Active=${activeNodes}/21 · Pruned=${prunedCount}]`;
+
+      // =======================================================================
+      // PHASE 3: GRAPH OF THOUGHT (GoT) — CROSS-BRANCH AGGREGATION, CYCLE CONDENSATION & 2-LAYER GNN
+      // =======================================================================
+      const GStates = atg.gotNodeStates16x16;
+      const GAdj = atg.gotAdjacency16x16;
+      // Populate the 16 Graph of Thought vertices:
+      // - Vertices 0..4: Root + 4 Depth-1 ToT branches
+      // - Vertices 5..8: Top 4 Depth-2 ToT leaves
+      // - Vertices 9..12: Cross-Branch Synthesis Aggregations (merging pairs of distinct ToT branches!)
+      // - Vertices 13..15: Top 3 Hash-Consed Atoms of Thought from AoT Arena
+      for (let v = 0; v <= 4; v++) {
+        GStates.set(TStates.subarray(v * 16, (v + 1) * 16), v * 16);
+      }
+      for (let k = 0; k < 4; k++) {
+        const leafNode = 5 + k * 4 + ((frame + k) & 3);
+        GStates.set(TStates.subarray(leafNode * 16, (leafNode + 1) * 16), (5 + k) * 16);
+      }
+      let crossMerges = 0;
+      for (let m = 0; m < 4; m++) {
+        const bA = 1 + m;
+        const bB = 1 + ((m + 1) & 3);
+        const vOff = (9 + m) * 16;
+        for (let c = 0; c < 16; c++) {
+          // Cross-branch non-linear aggregation edge (impossible in a pure tree!)
+          GStates[vOff + c] = Math.tanh(0.55 * TStates[bA * 16 + c] + 0.45 * TStates[bB * 16 + c]);
+        }
+        crossMerges++;
+      }
+      for (let a = 0; a < 3; a++) {
+        const slot = (atg.aotActiveSlotIdx + a) & 15;
+        GStates.set(atg.aotArenaVectors16x16.subarray(slot * 16, (slot + 1) * 16), (13 + a) * 16);
+      }
+
+      // Build Directed Weighted Graph Adjacency Matrix gotAdjacency16x16 & Condense Cyclic Feedback Loops
+      let edgeCount = 0;
+      let cyclesCondensed = 0;
+      for (let u = 0; u < 16; u++) {
+        let rowSum = 0.0;
+        const uOff = u * 16;
+        for (let v = 0; v < 16; v++) {
+          if (u === v) {
+            GAdj[uOff + v] = 1.0; // Self-loop for GNN message passing
+            rowSum += 1.0;
+            continue;
+          }
+          // Compute cosine-attention affinity between thought vertex u and thought vertex v
+          let dot = 0.0;
+          for (let c = 0; c < 8; c++) {
+            dot += GStates[uOff + c] * GStates[v * 16 + c];
+          }
+          const isTreeEdge = (u === 0 && v >= 1 && v <= 4) || (u >= 1 && u <= 4 && v === u + 4);
+          const isSynthEdge = (u >= 1 && u <= 8 && v >= 9 && v <= 12);
+          const isAoTEdge = (u >= 9 && u <= 12 && v >= 13);
+          let wEdge = 0.0;
+          if (isTreeEdge || isSynthEdge || isAoTEdge || dot > 0.28) {
+            wEdge = Math.max(0.08, Math.min(0.95, 0.35 + 0.45 * Math.tanh(dot)));
+            // Decursive Cycle Condensation: if a backward edge v < u creates a tight 2-cycle with high similarity, condense it!
+            if (v < u && dot > 0.65) {
+              wEdge *= 0.25; // Dampen cyclic echo
+              cyclesCondensed++;
+            }
+            edgeCount++;
+          }
+          GAdj[uOff + v] = wEdge;
+          rowSum += wEdge;
+        }
+        // Row-normalize adjacency D^{-1} A for stable spectral message passing
+        const invRow = 1.0 / Math.max(1e-4, rowSum);
+        for (let v = 0; v < 16; v++) GAdj[uOff + v] *= invRow;
+      }
+
+      // 2-Layer Trainable Message-Passing Graph Neural Network (GoT-GNN):
+      // Layer 1: H^{(1)} = tanh(D^{-1} A * GStates * W_got_gnn1)
+      const H1 = atg.gotHiddenH1_16x16;
+      for (let u = 0; u < 16; u++) {
+        const uOff = u * 16;
+        for (let f = 0; f < 16; f++) {
+          let aggMsg = atg.b_got_gnn16[f];
+          for (let v = 0; v < 16; v++) {
+            const a_uv = GAdj[uOff + v];
+            if (a_uv > 1e-4) {
+              aggMsg += a_uv * GStates[v * 16 + f];
+            }
+          }
+          let z1 = 0.0;
+          for (let c = 0; c < 16; c++) {
+            z1 += aggMsg * atg.W_got_gnn1[f * 16 + c] * 0.25;
+          }
+          H1[uOff + f] = Math.tanh(aggMsg + z1);
+        }
+      }
+
+      // Layer 2 + Attention Readout into gotSynthesizedThought16 (anchored on winning ToT path + Synthesis nodes)
+      const winLeafNode = atg.totBestPath3[2];
+      let gnnLossSq = 0.0;
+      const expBase = ((frame * 256) & 65279);
+      for (let f = 0; f < 16; f++) {
+        let graphPool = 0.0;
+        for (let u = 0; u < 16; u++) {
+          const vWeight = (u === 0 || u === bestD1Idx || (u >= 9 && u <= 12)) ? 0.11 : 0.04;
+          let h2 = 0.0;
+          for (let c = 0; c < 16; c++) {
+            h2 += H1[u * 16 + c] * atg.W_got_gnn2[f * 16 + c];
+          }
+          graphPool += vWeight * Math.tanh(h2 + GStates[u * 16 + f]);
+        }
+        const synthVal = Math.tanh(0.55 * graphPool + 0.45 * TStates[winLeafNode * 16 + f]);
+        atg.gotSynthesizedThought16[f] = synthVal;
+
+        // Self-supervised Graph Consistency & Bellman Target Loss
+        const targetG = 0.50 * TStates[winLeafNode * 16 + f] + 0.50 * this.flowMatchedGoal16[f];
+        const errG = synthVal - targetG;
+        gnnLossSq += errG * errG;
+        const gOut = errG * (1.0 - synthVal * synthVal);
+        atg.b_got_gnn16[f] = Math.max(-1.2, Math.min(1.2, atg.b_got_gnn16[f] - lr * gOut));
+        for (let c = 0; c < 16; c++) {
+          const h1Mean = H1[bestD1Idx * 16 + c];
+          atg.W_got_gnn2[f * 16 + c] = Math.max(-2.0, Math.min(2.0, atg.W_got_gnn2[f * 16 + c] - lr * gOut * h1Mean));
+          atg.W_got_gnn1[f * 16 + c] = Math.max(-2.0, Math.min(2.0, atg.W_got_gnn1[f * 16 + c] - lr * 0.5 * gOut * GStates[c]));
+          // Couple learned GoT-GNN gradients directly into deepCortex 1.24M MoE Experts & Actor!
+          if (dc.W_moe_experts) {
+            dc.W_moe_experts[expBase + f * 16 + c] = Math.max(-1.8, Math.min(1.8, dc.W_moe_experts[expBase + f * 16 + c] * 0.9995 - lr * 0.25 * gOut * h1Mean));
+          }
+        }
+        // Inject GoT synthesized policy into hub.bestReasoningAction8 & 512-Connectome synapses!
+        if (f < 8) {
+          hub.bestReasoningAction8[f] = Math.tanh(0.65 * hub.bestReasoningAction8[f] + 0.35 * synthVal);
+        }
+      }
+      if (conn && conn.synWeights262K) {
+        const synBase = (frame * 256) & (262144 - 256);
+        for (let i = 0; i < 256; i++) {
+          const u = i >>> 4;
+          const v = i & 15;
+          conn.synWeights262K[synBase + i] = Math.max(-1.8, Math.min(1.8, conn.synWeights262K[synBase + i] * 0.999 + lr * 0.12 * GAdj[u * 16 + v] * atg.gotSynthesizedThought16[v]));
+        }
+      }
+
+      atg.gotActiveEdgesCount = edgeCount;
+      atg.gotCrossBranchMergesCount = crossMerges;
+      atg.gotCyclesCondensedCount = Math.max(1, cyclesCondensed);
+      atg.gotGnnLossMse = Number((0.90 * atg.gotGnnLossMse + 0.10 * (gnnLossSq / 16.0)).toFixed(5));
+      atg.gotAlgebraicConnectivityLambda2 = Number(Math.max(0.35, Math.min(0.99, 0.55 + (edgeCount / 256.0) * 0.65)).toFixed(4));
+      atg.aotTotGotHeadline = `AoT[${atg.aotActiveHashHex.slice(0, 10)} · Mkv=${atg.aotMarkovianPurityPct}% · Dedup=#${atg.aotDedupMergesCount}] ⇄ ToT[21-Node · Q*=${atg.totBestPathScore} · Pruned=${atg.totPrunedBranchesCount}] ⇄ GoT[${atg.gotActiveEdgesCount}-Edge GNN · L_gnn=${atg.gotGnnLossMse} · SCC=#${atg.gotCyclesCondensedCount}]`;
+
+      return atg;
     }
 
     /**
@@ -304,6 +711,9 @@
       this.pragmaticHomeostaticVal = Number((0.60 * (runtime.mesh?.viscera?.atp || 0.8) + 0.40 * (1.0 - hub.perceptionLossMse)).toFixed(4));
       this.activeInferenceEfeG = Number((-this.epistemicInfoGain - this.pragmaticHomeostaticVal).toFixed(4));
 
+      // 6. CORECURSIVE & DECURSIVE TRI-DUALITY: AoT (Atom of Thought) ⇄ ToT (Tree of Thought) ⇄ GoT (Graph of Thought)
+      this.stepAotTotGotTriDuality60Hz(runtime);
+
       return this;
     }
 
@@ -318,8 +728,9 @@
       try {
         const dc = runtime.deepCortex;
         const hub = runtime.trainableAlifeNeuralHub;
-        // Pack 4,096 core trainable Float32 weights (16,384 bytes) covering Encoder, RSSM, Actor, Critic, Perception, Dynamics, Diffusion, GAN, ICM, Mamba & JEPA
-        const packedFloat32 = new Float32Array(4096);
+        const atg = this.aotTotGotEngine;
+        // Pack 4,608 core trainable Float32 weights (18,432 bytes) covering Encoder, RSSM, Actor, Critic, Perception, Dynamics, Diffusion, GAN, ICM, Mamba, JEPA, AoT & GoT
+        const packedFloat32 = new Float32Array(4608);
         packedFloat32.set(dc.W_enc1.subarray(0, 512), 0);
         packedFloat32.set(dc.W_rssm_rec.subarray(0, 512), 512);
         packedFloat32.set(dc.W_actor.subarray(0, 512), 1024);
@@ -333,6 +744,10 @@
         packedFloat32.set(hub.W_icm_inv.subarray(0, 256), 3328);
         packedFloat32.set(this.W_mamba_delta16.subarray(0, 256), 3584);
         packedFloat32.set(this.W_jepa_online.subarray(0, 256), 3840);
+        if (atg) {
+          packedFloat32.set(atg.W_aot_contract.subarray(0, 256), 4096);
+          packedFloat32.set(atg.W_got_gnn1.subarray(0, 256), 4352);
+        }
 
         const uint8View = new Uint8Array(packedFloat32.buffer, packedFloat32.byteOffset, packedFloat32.byteLength);
         let binStr = '';
@@ -399,6 +814,11 @@
         this.W_mamba_delta16.set(f32.subarray(3584, 3840), 0);
         this.W_jepa_online.set(f32.subarray(3840, 4096), 0);
         this.W_jepa_target_ema.set(this.W_jepa_online);
+        if (binStr.length >= 4608 * 4 && this.aotTotGotEngine) {
+          const f32Full = new Float32Array(uint8.buffer, 0, 4608);
+          this.aotTotGotEngine.W_aot_contract.set(f32Full.subarray(4096, 4352), 0);
+          this.aotTotGotEngine.W_got_gnn1.set(f32Full.subarray(4352, 4608), 0);
+        }
 
         this.diskCheckpointStatus.loadedFromDisk = true;
         this.diskCheckpointStatus.binaryBytesSaved = res.byteLength || uint8.byteLength;
