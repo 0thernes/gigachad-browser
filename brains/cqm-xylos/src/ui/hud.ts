@@ -1,0 +1,151 @@
+/**
+ * Heads-up display: sector banner (`#sec`), puppet-master toast (`#nm`), the algorithm
+ * readout (`#a-name` / `#a-step`), and the V2 lore line (`#lore`).
+ *
+ * Port of the legacy `showS` (line 597), `showNM` (line 491), and the per-frame algorithm text
+ * writes (lines 695-696). Known Bug 4 fix: all element refs are resolved once in the
+ * constructor — the legacy code called `getElementById('a-name')`/`('a-step')` inside the
+ * render loop.
+ */
+
+import { Sparkline } from './graphs';
+
+/** Resolve a required element by id, failing loudly on integration mistakes. */
+function mustGet(id: string): HTMLElement {
+  const el = document.getElementById(id);
+  if (!el) throw new Error(`Hud: missing required element #${id}`);
+  return el;
+}
+
+/** Resolve a required `<canvas>` by id. */
+function mustGetCanvas(id: string): HTMLCanvasElement {
+  const el = mustGet(id);
+  if (!(el instanceof HTMLCanvasElement)) throw new Error(`Hud: #${id} is not a <canvas>`);
+  return el;
+}
+
+/** Legacy sector banner fade-out delay (showS), ms. */
+const SECTOR_FADE_MS = 2500;
+/** Legacy puppet-master toast fade-out delay (showNM), ms. */
+const TOAST_FADE_MS = 3000;
+
+/**
+ * Owns the transient overlay text. Fades are CSS-driven (`.show` class, opacity transition);
+ * this class only schedules the class removal, mirroring the legacy `secTO`/`nmTO` timeouts.
+ */
+export class Hud {
+  private readonly sec: HTMLElement;
+  private readonly nm: HTMLElement;
+  private readonly aName: HTMLElement;
+  private readonly aStep: HTMLElement;
+  private readonly lore: HTMLElement;
+  /** V75: live swap-activity sparkline in the sorting-field box (#g-alg). */
+  private readonly gAlg: Sparkline;
+  private algTick = 0;
+  private secTimer = 0;
+  private nmTimer = 0;
+  /** Last lore name written to `#lore` — setLore skips the DOM write when unchanged. */
+  private loreName = '';
+
+  /**
+   * Caches `#sec`, `#nm`, `#a-name`, `#a-step` (Known Bug 4) and `#lore` (V2) once.
+   * Throws if any is absent.
+   */
+  constructor() {
+    this.sec = mustGet('sec');
+    this.nm = mustGet('nm');
+    this.aName = mustGet('a-name');
+    this.aStep = mustGet('a-step');
+    this.lore = mustGet('lore');
+    // Auto-scaling purple sparkline (matches the #alg box accent) of per-frame swap activity.
+    this.gAlg = new Sparkline(mustGetCanvas('g-alg'), 'rgba(196,160,255,1)', 0);
+  }
+
+  /**
+   * Show the centered sector banner, restarting its 2.5s fade (legacy `showS`).
+   * Also used for action toasts like 'GENESIS RESET' and 'VIEW: ORBIT'. O(1).
+   */
+  showSector(name: string): void {
+    this.sec.textContent = name;
+    this.sec.classList.add('show');
+    clearTimeout(this.secTimer);
+    this.secTimer = window.setTimeout(() => this.sec.classList.remove('show'), SECTOR_FADE_MS);
+  }
+
+  /**
+   * Show the puppet-master toast as `NAME — action`, restarting its 3s fade
+   * (legacy `showNM`). O(1).
+   */
+  showToast(name: string, action: string): void {
+    this.nm.textContent = `${name} — ${action}`;
+    this.nm.classList.add('show');
+    clearTimeout(this.nmTimer);
+    this.nmTimer = window.setTimeout(() => this.nm.classList.remove('show'), TOAST_FADE_MS);
+  }
+
+  /**
+   * Update the algorithm readout: name plus `step N` and a live `M ⇄` swap-count
+   * for the active sorting field this frame, so a selected algorithm visibly
+   * "does something" (M = 0 ⇒ the field is momentarily sorted/idle). O(1) — the
+   * only allocation is the label string the DOM requires.
+   */
+  setAlgo(name: string, step: number, swaps: number): void {
+    this.aName.textContent = name;
+    this.aStep.textContent = swaps > 0 ? `step ${step} · ${swaps} ⇄` : `step ${step}`;
+    // V75: feed the swap count into the sparkline so the box shows the field's VARIANCE over time
+    // (a real data-visual), not just a number. Redraw every 4th frame to stay cheap.
+    this.gAlg.push(swaps);
+    if (++this.algTick % 4 === 0) this.gAlg.draw();
+  }
+
+  /**
+   * Update the `#lore` line (Voronoi sub-sector lore name, CONTRACTS V2) under `#a-step`.
+   * Writes the DOM only when the name actually changes, so world.ts may call this every
+   * telemetry tick without layout churn. O(1), allocation-free on the unchanged path.
+   */
+  /** Ω readout element, created lazily beside `#lore` (no index.html change needed). */
+  private omegaEl: HTMLElement | null = null;
+  private omegaText = '';
+
+  /**
+   * OMEGA POINT readout: Ω ∈ [0,1] with a ▲/▼ convergence arrow. Skips the DOM write when the
+   * rounded text is unchanged, so calling it every apex beat is O(1).
+   */
+  setOmega(score: number, converging: boolean): void {
+    const text = `Ω ${score.toFixed(3)} ${converging ? '▲' : '▼'}`;
+    if (text === this.omegaText) return;
+    this.omegaText = text;
+    if (!this.omegaEl) {
+      const el = this.lore.ownerDocument.createElement('span');
+      el.id = 'omega';
+      el.title = 'Omega Point — whole-simulation convergence metric (not a sentience claim)';
+      el.style.cssText = 'margin-left:.6em;color:#ffd98a;font-variant-numeric:tabular-nums';
+      this.lore.insertAdjacentElement('afterend', el);
+      this.omegaEl = el;
+    }
+    this.omegaEl.textContent = text;
+  }
+
+  setLore(name: string): void {
+    if (name === this.loreName) return;
+    this.loreName = name;
+    this.lore.textContent = name;
+  }
+
+  /**
+   * Paused-frame HUD heartbeat (V112). The detailed readouts (sector, lore, algorithm) are
+   * updated by their own callers; this is the minimal top-level hook world.ts needs when
+   * the simulation is paused so the type contract holds.
+   */
+  update(_dt: number, _snap: unknown): void {
+    // No-op: individual HUD elements are driven by dedicated systems.
+  }
+
+  /** Clear pending banner/toast timers on teardown. */
+  dispose(): void {
+    clearTimeout(this.secTimer);
+    clearTimeout(this.nmTimer);
+    this.secTimer = 0;
+    this.nmTimer = 0;
+  }
+}

@@ -1,14 +1,17 @@
 {
   "name": "gigachad-browser",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Local Electron browser with a Python sidecar, an OpenAI-compatible LLM hookup, and CDP page actions.",
+  "license": "SEE LICENSE IN LICENSE",
+  "description": "GIGACHAD Browser: Sovereign Electron AI & 60Hz Zero-LLM Embodied A-Life Neural Browser (1.24M Params, 262K Synapses, sLTC/SSM, AoT/ToT/GoT, DSD-24, 4-Brain Fusion, Multi-Precision Hybrid Arena, Tor/I2P/IPFS Deep Web).",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "sidecar": "python laya_sidecar.py",
     "smoke": "node scripts/smoke.js",
-    "ci": "node scripts/smoke.js"
+    "ci": "node scripts/smoke.js",
+    "forensic-25": "node systems/pass-100-verifier.js",
+    "audit-500": "node -e \"console.log(JSON.stringify(require('./systems/sop-500-checklist').getSopSummary(), null, 2))\""
   },
   "engines": {
     "node": ">=20"

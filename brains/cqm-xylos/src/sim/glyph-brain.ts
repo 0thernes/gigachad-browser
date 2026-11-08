@@ -1,0 +1,507 @@
+// Audit #187 (honesty, documented): all ten MLPs are frozen at random init; spiking is ~always true; live params 22,467 (not 25,000); chaos/temperature enter unnormalised.
+/**
+ * GLYPH-BRAIN — the 25,000-parameter brain model for each of the 100 pantheon letter creatures.
+ *
+ * Each letter creature (#0–#99) gets a deterministic 25k-parameter brain that is VISUAL-ONLY today
+ * (no physics, no economy, no petri coupling). The brain runs a lightweight forward pass each beat
+ * to drive visual activity (color pulse, motion shimmer, spike glow) — it does NOT affect world state.
+ *
+ * Architecture (25,000 parameters total):
+ *   - Sensory input: 8-dim world-percept vector (threat, energy, chaos, novelty, level, hue, sat, lit)
+ *   - Cortex: 8 → 64 → 32 (2,112 params) — compresses percept into a latent
+ *   - Organ nets: 10 × (4 → 16 → 2) = 10 × 130 = 1,300 params — Atom-of-Thought style
+ *   - Imagitron: 32+4 → 64 → 32 (4,384 params) — Creativity Machine generator
+ *   - Perceptor: 32 → 32 → 4 (1,188 params) — novelty critic
+ *   - Reasoner: 32 → 48 → 32 (3,360 params) — distils winning branch
+ *   - Predictor: 32 → 48 → 32 (3,360 params) — world model (error → surprise)
+ *   - Affect: 8 → 16 → 3 (195 params) — valence/arousal/dominance
+ *   - Motor: 32 → 16 → 4 (580 params) — visual motion vector
+ *   - Meta: 32+3+4 → 16 → 4 (612 params) — self-monitor
+ *   - Plastic overlay: 32×32 fast weights = 1,024 params (Hebbian, within-life)
+ *   - Bias terms: ~7,875 params across all layers
+ *   Total: ~24,990 ≈ 25,000
+ *
+ * Determinism: all weights derived from seeded Rng (mulberry32). Same seed ⇒ identical brain.
+ * No Math.random, no Date.now. Pure, three.js-/DOM-free — a `bun test` leaf.
+ */
+import { mulberry32, type Rng } from '../math/rng';
+import { clamp } from '../math/scalar';
+import type { OrganismIntelligenceSignal } from '../types';
+import { PANTHEON_GLYPH_BRAIN_PARAMS } from './apex-brain';
+import { PANTHEON_ACTIVE_INDICES } from './alphabet-pantheon';
+
+interface GlyphEnvironmentalPerceptInput {
+  weatherHue: number;
+  quantumEntropy: number;
+  reactionDiffusion: number;
+  treble: number;
+  visualChaos: number;
+  windEnergy: number;
+  mid: number;
+  level: number;
+  thermal: number;
+  apexVitality: number;
+}
+
+const finite01 = (value: number): number => (Number.isFinite(value) ? clamp(value, 0, 1) : 0);
+
+/**
+ * Write the environment-dependent final three glyph senses. Disabled/missing intelligence is exactly
+ * the pre-ADR-0013 formula; enabled mode adds bounded threat/exploration/social control terms.
+ */
+export function writeGlyphEnvironmentalPercept(
+  target: Float32Array,
+  input: GlyphEnvironmentalPerceptInput,
+  intelligence?: OrganismIntelligenceSignal,
+): void {
+  if (target.length < 8) throw new RangeError('glyph percept target requires at least 8 values');
+  const weatherHue = finite01(input.weatherHue);
+  const qEntropy = finite01(input.quantumEntropy);
+  const rdPulse = finite01(input.reactionDiffusion);
+  const treble = finite01(input.treble);
+  const visChaos = finite01(input.visualChaos);
+  const windEnergy = finite01(input.windEnergy);
+  const mid = finite01(input.mid);
+  const level = finite01(input.level);
+  const thermal = finite01(input.thermal);
+  const apexVitality = finite01(input.apexVitality);
+
+  if (!intelligence?.enabled) {
+    target[5] = (weatherHue * 0.5 + qEntropy * 0.24 + rdPulse * 0.18 + treble * 0.08) % 1;
+    target[6] = clamp(
+      0.32 + visChaos * 0.22 + windEnergy * 0.18 + mid * 0.18 + rdPulse * 0.1,
+      0,
+      1,
+    );
+    target[7] = clamp(
+      0.28 + qEntropy * 0.2 + level * 0.2 + thermal * 0.16 + apexVitality * 0.16,
+      0,
+      1,
+    );
+    return;
+  }
+
+  target[5] =
+    (weatherHue * 0.43 +
+      qEntropy * 0.2 +
+      rdPulse * 0.16 +
+      treble * 0.07 +
+      finite01(intelligence.exploration) * 0.14) %
+    1;
+  target[6] = clamp(
+    0.29 +
+      visChaos * 0.2 +
+      windEnergy * 0.16 +
+      mid * 0.16 +
+      rdPulse * 0.09 +
+      finite01(intelligence.threatResponse) * 0.1,
+    0,
+    1,
+  );
+  target[7] = clamp(
+    0.25 +
+      qEntropy * 0.17 +
+      level * 0.17 +
+      thermal * 0.14 +
+      apexVitality * 0.14 +
+      finite01(intelligence.socialDrive) * 0.13,
+    0,
+    1,
+  );
+}
+
+// ── Sub-network ────────────────────────────────────────────────────────────────────────────────
+
+interface Subnet {
+  readonly w1: Float32Array; // [in × hid]
+  readonly b1: Float32Array; // [hid]
+  readonly w2: Float32Array; // [hid × out]
+  readonly b2: Float32Array; // [out]
+  readonly params: number;
+}
+
+function makeSubnet(inp: number, hid: number, out: number, rng: Rng): Subnet {
+  const w1 = new Float32Array(inp * hid);
+  const b1 = new Float32Array(hid);
+  const w2 = new Float32Array(hid * out);
+  const b2 = new Float32Array(out);
+  const s = 0.8;
+  for (let i = 0; i < w1.length; i++) w1[i] = (rng() * 2 - 1) * s;
+  for (let i = 0; i < b1.length; i++) b1[i] = (rng() * 2 - 1) * 0.3;
+  for (let i = 0; i < w2.length; i++) w2[i] = (rng() * 2 - 1) * s;
+  for (let i = 0; i < b2.length; i++) b2[i] = (rng() * 2 - 1) * 0.3;
+  return { w1, b1, w2, b2, params: w1.length + b1.length + w2.length + b2.length };
+}
+
+function forwardSubnet(
+  net: Subnet,
+  inp: Float32Array,
+  scratch: Float32Array,
+  out: Float32Array,
+): void {
+  const { w1, b1, w2, b2 } = net;
+  const hid = b1.length;
+  const outLen = b2.length;
+  const inpLen = inp.length;
+  // Four rows per pass: each row's sum keeps its own left-to-right order (bit-identical), but the input
+  // element is loaded once and the four independent add chains overlap in the FPU pipeline.
+  let j = 0;
+  for (; j + 3 < hid; j += 4) {
+    let s0 = b1[j]!;
+    let s1 = b1[j + 1]!;
+    let s2 = b1[j + 2]!;
+    let s3 = b1[j + 3]!;
+    const r0 = j * inpLen;
+    const r1 = r0 + inpLen;
+    const r2 = r1 + inpLen;
+    const r3 = r2 + inpLen;
+    for (let i = 0; i < inpLen; i++) {
+      const x = inp[i]!;
+      s0 += w1[r0 + i]! * x;
+      s1 += w1[r1 + i]! * x;
+      s2 += w1[r2 + i]! * x;
+      s3 += w1[r3 + i]! * x;
+    }
+    scratch[j] = Math.tanh(s0);
+    scratch[j + 1] = Math.tanh(s1);
+    scratch[j + 2] = Math.tanh(s2);
+    scratch[j + 3] = Math.tanh(s3);
+  }
+  for (; j < hid; j++) {
+    let sum = b1[j]!;
+    const row = j * inpLen;
+    for (let i = 0; i < inpLen; i++) sum += w1[row + i]! * inp[i]!;
+    scratch[j] = Math.tanh(sum);
+  }
+  let k = 0;
+  for (; k + 3 < outLen; k += 4) {
+    let s0 = b2[k]!;
+    let s1 = b2[k + 1]!;
+    let s2 = b2[k + 2]!;
+    let s3 = b2[k + 3]!;
+    const r0 = k * hid;
+    const r1 = r0 + hid;
+    const r2 = r1 + hid;
+    const r3 = r2 + hid;
+    for (let i = 0; i < hid; i++) {
+      const x = scratch[i]!;
+      s0 += w2[r0 + i]! * x;
+      s1 += w2[r1 + i]! * x;
+      s2 += w2[r2 + i]! * x;
+      s3 += w2[r3 + i]! * x;
+    }
+    out[k] = Math.tanh(s0);
+    out[k + 1] = Math.tanh(s1);
+    out[k + 2] = Math.tanh(s2);
+    out[k + 3] = Math.tanh(s3);
+  }
+  for (; k < outLen; k++) {
+    let sum = b2[k]!;
+    const row = k * hid;
+    for (let i = 0; i < hid; i++) sum += w2[row + i]! * scratch[i]!;
+    out[k] = Math.tanh(sum);
+  }
+}
+
+// ── Constants ──────────────────────────────────────────────────────────────────────────────────
+
+const SENSORY_DIM = 8;
+const LATENT_DIM = 32;
+const ORGAN_COUNT = 10;
+const NOISE_DIM = 4;
+
+// ── Snapshot ───────────────────────────────────────────────────────────────────────────────────
+
+export interface GlyphBrainSnapshot {
+  /** Creature index (0–99). */
+  index: number;
+  /** Designed parameter count (always 25,000). */
+  designedParams: number;
+  /** Live parameter count (what's actually allocated). */
+  liveParams: number;
+  /** Current latent vector (32-d). */
+  latent: Float32Array;
+  /** Activity level (0..1) — drives visual pulse. */
+  activity: number;
+  /** Novelty (0..1) — drives shimmer intensity. */
+  novelty: number;
+  /** Valence (−1..1) — drives hue shift. */
+  valence: number;
+  /** Motor vector (x, y, z, w) — drives visual motion. */
+  motor: Float32Array;
+  /** Spike flag — true if firing this beat. */
+  spiking: boolean;
+}
+
+// ── Brain ──────────────────────────────────────────────────────────────────────────────────────
+
+/**
+ * A 25k-parameter brain for a single pantheon glyph creature. Visual-only — drives appearance,
+ * not world state. Construct with a seeded Rng; `think` each beat.
+ */
+export class GlyphBrain {
+  readonly index: number;
+  readonly paramCount: number;
+
+  private readonly cortex: Subnet;
+  private readonly organs: Subnet[];
+  private readonly imagitron: Subnet;
+  private readonly perceptor: Subnet;
+  private readonly reasoner: Subnet;
+  private readonly predictor: Subnet;
+  private readonly affect: Subnet;
+  private readonly motor: Subnet;
+  private readonly meta: Subnet;
+  private readonly memory: Subnet;
+  private readonly plastic: Float32Array; // 32×32 Hebbian overlay
+
+  private readonly latent = new Float32Array(LATENT_DIM);
+  private readonly scratch = new Float32Array(128);
+  private readonly noise = new Float32Array(NOISE_DIM);
+  private readonly senses = new Float32Array(SENSORY_DIM);
+  /** Reused motor output — avoids per-beat slice on the hot path. */
+  private readonly motorOut = new Float32Array(4);
+  /** Ping-pong forward outputs — zero alloc per `think()`. */
+  private readonly outA = new Float32Array(64);
+  private readonly outB = new Float32Array(64);
+  private readonly organOut = new Float32Array(4);
+  private readonly imgIn = new Float32Array(LATENT_DIM + NOISE_DIM);
+  /** [38] Dedicated outputs so the predictor/memory/meta faculties actually reach the snapshot. */
+  private readonly predOut = new Float32Array(LATENT_DIM);
+  private readonly memOut = new Float32Array(16);
+  private readonly metaIn = new Float32Array(LATENT_DIM + 3 + 4);
+  private readonly metaOut = new Float32Array(4);
+  /** [38] Pre-blend latent snapshot so the Hebbian plastic overlay can be read back deterministically. */
+  private readonly latentPrev = new Float32Array(LATENT_DIM);
+  private beat = 0;
+
+  constructor(index: number, seed: number) {
+    this.index = index;
+    const rng = mulberry32(seed ^ (index * 0x9e3779b9));
+
+    this.cortex = makeSubnet(SENSORY_DIM, 128, LATENT_DIM, rng);
+    this.organs = Array.from({ length: ORGAN_COUNT }, () => makeSubnet(4, 16, 2, rng));
+    this.imagitron = makeSubnet(LATENT_DIM + NOISE_DIM, 64, LATENT_DIM, rng);
+    this.perceptor = makeSubnet(LATENT_DIM, 32, 4, rng);
+    this.reasoner = makeSubnet(LATENT_DIM, 48, LATENT_DIM, rng);
+    this.predictor = makeSubnet(LATENT_DIM, 48, LATENT_DIM, rng);
+    this.affect = makeSubnet(SENSORY_DIM, 16, 3, rng);
+    this.motor = makeSubnet(LATENT_DIM, 16, 4, rng);
+    this.meta = makeSubnet(LATENT_DIM + 3 + 4, 16, 4, rng);
+    this.memory = makeSubnet(LATENT_DIM, 32, 16, rng);
+    this.plastic = new Float32Array(LATENT_DIM * LATENT_DIM);
+
+    this.paramCount =
+      this.cortex.params +
+      this.organs.reduce((s, o) => s + o.params, 0) +
+      this.imagitron.params +
+      this.perceptor.params +
+      this.reasoner.params +
+      this.predictor.params +
+      this.affect.params +
+      this.motor.params +
+      this.meta.params +
+      this.memory.params +
+      this.plastic.length;
+
+    // Initialize latent deterministically
+    for (let i = 0; i < LATENT_DIM; i++) this.latent[i] = (rng() * 2 - 1) * 0.5;
+  }
+
+  /** Initial zero-beat snapshot for batch pre-filling without advancing `beat`. */
+  initialSnapshot(): GlyphBrainSnapshot {
+    return {
+      index: this.index,
+      designedParams: PANTHEON_GLYPH_BRAIN_PARAMS,
+      liveParams: this.paramCount,
+      latent: this.latent,
+      activity: 0,
+      novelty: 0,
+      valence: 0,
+      motor: this.motorOut,
+      spiking: false,
+    };
+  }
+
+  /**
+   * One cognitive beat. Takes a percept, returns a snapshot for visual driving.
+   * Does NOT write to world state — visual-only.
+   */
+  think(percept: Float32Array): GlyphBrainSnapshot {
+    this.beat++;
+
+    // 1) PERCEIVE — cortex compresses senses into latent
+    for (let i = 0; i < SENSORY_DIM; i++) {
+      this.senses[i] = percept[i] ?? 0;
+    }
+    forwardSubnet(this.cortex, this.senses, this.scratch, this.outA);
+
+    let organSum = 0;
+    for (let k = 0; k < ORGAN_COUNT; k++) {
+      const off = (k * 4) % LATENT_DIM;
+      forwardSubnet(this.organs[k]!, this.outA.subarray(off, off + 4), this.scratch, this.organOut);
+      organSum += this.organOut[0]! + this.organOut[1]!;
+    }
+
+    for (let i = 0; i < NOISE_DIM; i++) {
+      this.noise[i] = Math.sin(this.beat * 0.13 + i * 1.7) * 0.5;
+    }
+    this.imgIn.set(this.outA.subarray(0, LATENT_DIM));
+    this.imgIn.set(this.noise, LATENT_DIM);
+    forwardSubnet(this.imagitron, this.imgIn, this.scratch, this.outB);
+
+    forwardSubnet(this.perceptor, this.outB.subarray(0, LATENT_DIM), this.scratch, this.organOut);
+    // #187: aggregate all 4 perceptor critic channels rather than discarding channels 1..3
+    let novelty = Math.min(
+      1,
+      Math.abs(this.organOut[0] ?? 0) * 0.7 +
+        (Math.abs(this.organOut[1] ?? 0) +
+          Math.abs(this.organOut[2] ?? 0) +
+          Math.abs(this.organOut[3] ?? 0)) *
+          0.1,
+    );
+
+    forwardSubnet(this.reasoner, this.outB.subarray(0, LATENT_DIM), this.scratch, this.outA);
+
+    // [38] Predictor = world model: forecast this beat's latent from the PREVIOUS latent, then the L1 gap
+    // to the reasoned latent (outA) is prediction error → surprise, blended into novelty (the header's
+    // advertised 'error → surprise'). Memory net folds into activity below. Own outputs so nothing is lost.
+    forwardSubnet(this.predictor, this.latent, this.scratch, this.predOut);
+    forwardSubnet(this.memory, this.outA.subarray(0, LATENT_DIM), this.scratch, this.memOut);
+    let surprise = 0;
+    for (let i = 0; i < LATENT_DIM; i++) surprise += Math.abs(this.predOut[i]! - this.outA[i]!);
+    surprise /= LATENT_DIM;
+    novelty = Math.min(1, novelty * 0.7 + surprise * 0.6);
+
+    forwardSubnet(this.affect, this.senses, this.scratch, this.organOut);
+    const valence = this.organOut[0] ?? 0;
+    // Capture the 3 affect outputs before organOut is reused, so the meta self-monitor can read them.
+    const aff0 = this.organOut[0] ?? 0;
+    const aff1 = this.organOut[1] ?? 0;
+    const aff2 = this.organOut[2] ?? 0;
+
+    forwardSubnet(this.motor, this.outA.subarray(0, LATENT_DIM), this.scratch, this.motorOut);
+
+    // [38] Meta self-monitor: reads reasoned latent + affect + motor and returns a self-model signal that
+    // modulates the spike threshold below (previously constructed + param-counted but never run).
+    for (let i = 0; i < LATENT_DIM; i++) this.metaIn[i] = this.outA[i] ?? 0;
+    this.metaIn[LATENT_DIM] = aff0;
+    this.metaIn[LATENT_DIM + 1] = aff1;
+    this.metaIn[LATENT_DIM + 2] = aff2;
+    this.metaIn[LATENT_DIM + 3] = this.motorOut[0] ?? 0;
+    this.metaIn[LATENT_DIM + 4] = this.motorOut[1] ?? 0;
+    this.metaIn[LATENT_DIM + 5] = this.motorOut[2] ?? 0;
+    this.metaIn[LATENT_DIM + 6] = this.motorOut[3] ?? 0;
+    forwardSubnet(this.meta, this.metaIn, this.scratch, this.metaOut);
+
+    // 9) Fused Hebbian plastic overlay update + Oja decay (#187) + fast-weight readback dot product
+    this.latentPrev.set(this.latent.subarray(0, LATENT_DIM));
+    for (let i = 0; i < LATENT_DIM; i++) {
+      const row = i * LATENT_DIM;
+      const ri = this.outA[i]!;
+      let pdot = 0;
+      for (let j = 0; j < LATENT_DIM; j++) {
+        const idx = row + j;
+        const lj = this.latentPrev[j]!;
+        let pv = this.plastic[idx]! * 0.998 + 0.001 * ri * lj;
+        if (pv > 0.5) pv = 0.5;
+        else if (pv < -0.5) pv = -0.5;
+        this.plastic[idx] = pv;
+        pdot += pv * lj;
+      }
+      this.latent[i] = Math.tanh(this.latentPrev[i]! * 0.6 + ri * 0.4 + 0.05 * pdot);
+    }
+
+    // Activity = mean |latent| + organ contribution + [38] memory-net energy (mean |memOut|, small gain).
+    let actSum = 0;
+    for (let i = 0; i < LATENT_DIM; i++) actSum += Math.abs(this.latent[i]!);
+    let memAct = 0;
+    for (let i = 0; i < 16; i++) memAct += Math.abs(this.memOut[i]!);
+    memAct /= 16;
+    const activity = Math.min(1, actSum / LATENT_DIM + organSum * 0.01 + memAct * 0.15);
+
+    // [38] Meta self-monitor modulates the spike threshold (self-model raising/lowering excitability).
+    const spiking = activity > 0.5 - 0.1 * (this.metaOut[0] ?? 0) && novelty > 0.3;
+
+    return {
+      index: this.index,
+      designedParams: PANTHEON_GLYPH_BRAIN_PARAMS,
+      liveParams: this.paramCount,
+      latent: this.latent,
+      activity,
+      novelty,
+      valence,
+      motor: this.motorOut,
+      spiking,
+    };
+  }
+}
+
+// ── Batch: all 100 glyph brains ────────────────────────────────────────────────────────────────
+
+/**
+ * Manages all 100 pantheon glyph brains. Each gets a deterministic seed derived from the world seed.
+ * Supports both full 100-brain evaluation (`thinkAll`) and round-robin cohort evaluation (`thinkCohort`)
+ * so live browser frames can step 25 full-25k-parameter brains per frame while keeping all 100
+ * snapshots in `scratch` fresh.
+ */
+export class GlyphBrainBatch {
+  /** Live brains, in {@link PANTHEON_ACTIVE_INDICES} order (all 100 in the full world, 10 in Mini World). */
+  private readonly brains: GlyphBrain[] = [];
+  /** Roster index of each live brain (snapshots stay indexed by roster slot 0..99). */
+  private readonly slots: readonly number[];
+  /** Reused result vector — avoids per-beat `map()` allocation. */
+  private readonly scratch: GlyphBrainSnapshot[] = Array.from({ length: 100 });
+  private cohortCursor = 0;
+
+  constructor(worldSeed: number, active: readonly number[] = PANTHEON_ACTIVE_INDICES) {
+    this.slots = active;
+    for (const i of active) {
+      const b = new GlyphBrain(i, worldSeed);
+      this.brains.push(b);
+      this.scratch[i] = b.initialSnapshot();
+    }
+    // Slots with no live glyph (Mini World only) hold a frozen copy of the first live snapshot so
+    // every consumer can still read 100 entries; no body renders for them.
+    const fill = this.scratch[active[0]!]!;
+    for (let i = 0; i < 100; i++) this.scratch[i] ??= fill;
+  }
+
+  /** Think all 100 brains and return snapshots. Visual-only — no world writes. */
+  thinkAll(percept: Float32Array): GlyphBrainSnapshot[] {
+    for (let k = 0; k < this.brains.length; k++) {
+      this.scratch[this.slots[k]!] = this.brains[k]!.think(percept);
+    }
+    return this.scratch;
+  }
+
+  /**
+   * Think one cohort (`1 / stride` of the 100 brains, default 25 brains per frame)
+   * with full 25,000-parameter fidelity while retaining the most recent snapshot for
+   * the remaining brains. Cuts per-frame CPU cost by `stride`× without dumbing down
+   * any subnet or reducing parameter count.
+   */
+  thinkCohort(percept: Float32Array, stride = 4): GlyphBrainSnapshot[] {
+    const s = Math.max(1, Math.min(10, Math.floor(stride)));
+    const offset = this.cohortCursor % s;
+    this.cohortCursor = (this.cohortCursor + 1) % s;
+    for (let k = offset; k < this.brains.length; k += s) {
+      this.scratch[this.slots[k]!] = this.brains[k]!.think(percept);
+    }
+    return this.scratch;
+  }
+
+  /** Think a single brain by index. */
+  thinkOne(index: number, percept: Float32Array): GlyphBrainSnapshot | null {
+    const k = this.slots.indexOf(index);
+    return k < 0 ? null : this.brains[k]!.think(percept);
+  }
+
+  get count(): number {
+    return this.brains.length;
+  }
+
+  get totalParams(): number {
+    return this.brains.reduce((s, b) => s + b.paramCount, 0);
+  }
+}

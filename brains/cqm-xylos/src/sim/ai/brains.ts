@@ -1,0 +1,456 @@
+/**
+ * The deterministic classical-AI kernel (CONTRACTS V9 — "how AI was done before the transformer").
+ *
+ * This module is the running, tested embodiment of the pre-2016 game/A-Life AI toolbox the project
+ * is built around (see docs research): finite-state machines, utility/needs scoring, tiny
+ * fixed-weight neural nets, Markov chains, goal-oriented planning (GOAP), and bounded episodic
+ * memory. Every routine is a PURE function of its inputs (+ an injected seeded {@link Rng} when it
+ * needs a choice), performs NO `Math.random`/clock reads, and is allocation-free in steady state
+ * (callers pass scratch buffers; nothing here allocates per-frame). That is what lets a 10k-agent
+ * world stay bit-reproducible from one seed while each agent runs a recognizably different "mind".
+ *
+ * Leaf module: imports only the {@link Rng} type from `src/math`, nothing from the rest of `sim`,
+ * so it stays unit-testable under `bun test` with no DOM and no three.js, and the dependency graph
+ * stays acyclic (ARCHITECTURE-2026-06-26.md rule). Sentience tiers, factions, and the user-launched NHI beings
+ * all dispatch into these primitives.
+ */
+import type { Rng } from '../../math/rng';
+
+// ── Utility / needs-based AI (The Sims, 2000) ────────────────────────────────
+
+/**
+ * Argmax over a score list — the utility-AI decision: "do the highest-scoring thing". Ties resolve
+ * to the LOWEST index (a strict, deterministic order), so the choice is reproducible. Returns -1 for
+ * an empty list. O(n), allocation-free.
+ */
+export function utilityPick(scores: ArrayLike<number>): number {
+  let best = -1;
+  let bestVal = -Infinity;
+  for (let i = 0; i < scores.length; i++) {
+    const v = scores[i] ?? -Infinity;
+    if (v > bestVal) {
+      bestVal = v;
+      best = i;
+    }
+  }
+  return best;
+}
+
+/**
+ * Seeded softmax-weighted choice over `scores` (temperature `temp` > 0). Higher scores are more
+ * likely but not certain — the "fuzzy" decision that keeps a population from moving in lockstep.
+ * Deterministic given the same `rng` state. O(n), allocation-free (two passes, no temp array).
+ */
+export function softmaxPick(scores: ArrayLike<number>, rng: Rng, temp = 1): number {
+  const n = scores.length;
+  if (n === 0) return -1;
+  const t = temp > 1e-6 ? temp : 1e-6;
+  let max = -Infinity;
+  for (let i = 0; i < n; i++) max = Math.max(max, scores[i] ?? -Infinity);
+  let sum = 0;
+  for (let i = 0; i < n; i++) sum += Math.exp(((scores[i] ?? -Infinity) - max) / t);
+  let r = rng() * sum;
+  for (let i = 0; i < n; i++) {
+    r -= Math.exp(((scores[i] ?? -Infinity) - max) / t);
+    if (r <= 0) return i;
+  }
+  return n - 1; // float-shortfall fallback: the last bucket
+}
+
+// ── Tiny neural network (perceptron / MLP — 1958/1986; Creatures Norns, 1996) ─
+
+/**
+ * A tiny single-hidden-layer perceptron: `in → hidden(tanh) → out(tanh)`. Weights are a flat
+ * `Float32Array` laid out `[hidden×(in+1) bias-augmented] ++ [out×(hidden+1)]`, so a whole "brain"
+ * is a few hundred floats — small enough to be an inheritable GENE. `forward` writes into the
+ * caller's `hiddenScratch`/`out` buffers and allocates nothing.
+ */
+export class TinyMLP {
+  readonly nIn: number;
+  readonly nHidden: number;
+  readonly nOut: number;
+  /** `nHidden*(nIn+1) + nOut*(nHidden+1)` weights, bias-augmented per layer. */
+  readonly weights: Float32Array;
+
+  constructor(nIn: number, nHidden: number, nOut: number, weights?: Float32Array) {
+    this.nIn = nIn;
+    this.nHidden = nHidden;
+    this.nOut = nOut;
+    const size = nHidden * (nIn + 1) + nOut * (nHidden + 1);
+    // #153: a wrong-length weight vector used to be silently replaced by zeros (all-zero outputs).
+    if (weights && weights.length !== size) {
+      throw new RangeError(`TinyMLP: expected ${size} weights, got ${weights.length}`);
+    }
+    this.weights = weights ?? new Float32Array(size);
+  }
+
+  /** Total weight count for `(nIn, nHidden, nOut)` — the gene length a genome must carry. */
+  static weightCount(nIn: number, nHidden: number, nOut: number): number {
+    return nHidden * (nIn + 1) + nOut * (nHidden + 1);
+  }
+
+  /**
+   * Feed `inputs` (length nIn) forward, writing the hidden activations into `hiddenScratch`
+   * (length ≥ nHidden) and the outputs into `out` (length ≥ nOut). Pure, allocation-free.
+   * O(nIn·nHidden + nHidden·nOut).
+   */
+  forward(inputs: ArrayLike<number>, hiddenScratch: Float32Array, out: Float32Array): void {
+    const { nIn, nHidden, nOut, weights } = this;
+    // Four rows per pass: every row keeps its own bias-first, left-to-right add order (bit-identical),
+    // but each input is read once per four rows and the independent add chains overlap. All weight
+    // reads are in bounds (length checked in the constructor), so the former `?? 0` there was a no-op.
+    const s1 = nIn + 1;
+    let h = 0;
+    for (; h + 3 < nHidden; h += 4) {
+      const w0 = h * s1;
+      const w1 = w0 + s1;
+      const w2 = w1 + s1;
+      const w3 = w2 + s1;
+      let a0 = weights[w0]!;
+      let a1 = weights[w1]!;
+      let a2 = weights[w2]!;
+      let a3 = weights[w3]!;
+      for (let i = 0; i < nIn; i++) {
+        const x = inputs[i] ?? 0;
+        a0 += weights[w0 + 1 + i]! * x;
+        a1 += weights[w1 + 1 + i]! * x;
+        a2 += weights[w2 + 1 + i]! * x;
+        a3 += weights[w3 + 1 + i]! * x;
+      }
+      hiddenScratch[h] = Math.tanh(a0);
+      hiddenScratch[h + 1] = Math.tanh(a1);
+      hiddenScratch[h + 2] = Math.tanh(a2);
+      hiddenScratch[h + 3] = Math.tanh(a3);
+    }
+    for (; h < nHidden; h++) {
+      const w0 = h * s1;
+      let acc = weights[w0]!;
+      for (let i = 0; i < nIn; i++) acc += weights[w0 + 1 + i]! * (inputs[i] ?? 0);
+      hiddenScratch[h] = Math.tanh(acc);
+    }
+    const base = nHidden * s1;
+    const s2 = nHidden + 1;
+    let o = 0;
+    for (; o + 3 < nOut; o += 4) {
+      const w0 = base + o * s2;
+      const w1 = w0 + s2;
+      const w2 = w1 + s2;
+      const w3 = w2 + s2;
+      let a0 = weights[w0]!;
+      let a1 = weights[w1]!;
+      let a2 = weights[w2]!;
+      let a3 = weights[w3]!;
+      for (let k = 0; k < nHidden; k++) {
+        const x = hiddenScratch[k]!;
+        a0 += weights[w0 + 1 + k]! * x;
+        a1 += weights[w1 + 1 + k]! * x;
+        a2 += weights[w2 + 1 + k]! * x;
+        a3 += weights[w3 + 1 + k]! * x;
+      }
+      out[o] = Math.tanh(a0);
+      out[o + 1] = Math.tanh(a1);
+      out[o + 2] = Math.tanh(a2);
+      out[o + 3] = Math.tanh(a3);
+    }
+    for (; o < nOut; o++) {
+      const w0 = base + o * s2;
+      let acc = weights[w0]!;
+      for (let k = 0; k < nHidden; k++) acc += weights[w0 + 1 + k]! * hiddenScratch[k]!;
+      out[o] = Math.tanh(acc);
+    }
+  }
+}
+
+// ── Markov chain (Shannon 1948; the real shape of most pre-2016 "chatbots") ───
+
+/**
+ * A first-order Markov chain over `n` states, backed by a flat row-major `n×n` transition-weight
+ * matrix. `next` samples the successor of `state` proportional to its row weights, using the seeded
+ * {@link Rng} — deterministic. The Oracle faction "speaks"/acts by walking such a chain. O(n) per
+ * step, allocation-free.
+ */
+export class MarkovChain {
+  readonly n: number;
+  /** Row-major `n*n` non-negative transition weights. */
+  readonly weights: Float32Array;
+
+  constructor(n: number, weights?: Float32Array) {
+    this.n = n;
+    this.weights = weights && weights.length === n * n ? weights : new Float32Array(n * n);
+  }
+
+  /** Sample the next state after `state`. Falls back to `state` when the row is all-zero. */
+  next(state: number, rng: Rng): number {
+    const { n, weights } = this;
+    if (state < 0 || state >= n) return 0;
+    const base = state * n;
+    let sum = 0;
+    for (let j = 0; j < n; j++) sum += weights[base + j] ?? 0;
+    if (sum <= 0) return state; // dead row — stay put
+    let r = rng() * sum;
+    for (let j = 0; j < n; j++) {
+      r -= weights[base + j] ?? 0;
+      if (r <= 0) return j;
+    }
+    return n - 1;
+  }
+}
+
+// ── Finite-state machine (Pac-Man 1980 → everywhere) ─────────────────────────
+
+/** One FSM edge: in `from`, if `guard(signal)` holds, move to `to`. Lower index wins on ties. */
+export interface FsmEdge<Sig> {
+  from: number;
+  to: number;
+  guard: (signal: Sig) => boolean;
+}
+
+/**
+ * Evaluate one FSM tick: return the first edge's `to` whose `from === state` and whose guard
+ * passes, else stay in `state`. Edge order is the priority (deterministic). O(edges).
+ */
+export function fsmStep<Sig>(state: number, edges: readonly FsmEdge<Sig>[], signal: Sig): number {
+  for (let i = 0; i < edges.length; i++) {
+    const e = edges[i];
+    if (e && e.from === state && e.guard(signal)) return e.to;
+  }
+  return state;
+}
+
+// ── GOAP — goal-oriented action planning (F.E.A.R., 2005) ─────────────────────
+
+/**
+ * A planning action over a small symbolic world modeled as a bitmask of ≤31 boolean facts:
+ * `pre`/`preMask` say which facts must (not) hold to apply it, and `set`/`clear` say which it
+ * flips. `cost` drives the search toward cheap plans.
+ */
+export interface GoapAction {
+  /** Bits that must be SET for this action to apply. */
+  pre: number;
+  /** Bits that must be CLEAR for this action to apply. */
+  preClear: number;
+  /** Bits this action turns on. */
+  set: number;
+  /** Bits this action turns off. */
+  clear: number;
+  cost: number;
+}
+
+/**
+ * Plan a sequence of action indices that drives the world bitmask from `start` to satisfy every bit
+ * in `goal`, minimizing total cost (uniform-cost / Dijkstra over the reachable bitmask graph,
+ * bounded by `maxStates`). Writes the action indices into `outPlan` and returns the plan length, or
+ * -1 if no plan is found within the bound. Allocation note: uses small fixed scratch maps sized by
+ * `maxStates`; intended for SLOW-cadence planning (a few times per agent per second), not per-frame.
+ * Determinism: ties break by lower (cost, action-index, state), so the plan is reproducible.
+ */
+export function goapPlan(
+  start: number,
+  goal: number,
+  actions: readonly GoapAction[],
+  outPlan: Int32Array,
+  maxStates = 4096,
+): number {
+  const satisfied = (s: number): boolean => (s & goal) === goal;
+  if (satisfied(start)) return 0;
+  // Dijkstra over bitmask nodes. Visited cost + back-pointers in plain Maps (slow path).
+  const dist = new Map<number, number>();
+  const prevState = new Map<number, number>();
+  const prevAction = new Map<number, number>();
+  dist.set(start, 0);
+  // Simple array-as-frontier; pop the min-cost unvisited each round (states are small).
+  const frontier: number[] = [start];
+  const done = new Set<number>();
+  let guard = 0;
+  while (frontier.length > 0 && guard++ < maxStates) {
+    // Extract-min by cost (linear scan — state count stays small for these tiny fact sets).
+    let bi = 0;
+    let bcost = Infinity;
+    for (let i = 0; i < frontier.length; i++) {
+      const st = frontier[i] ?? 0;
+      const c = dist.get(st) ?? Infinity;
+      if (c < bcost) {
+        bcost = c;
+        bi = i;
+      }
+    }
+    const cur = frontier[bi] ?? start;
+    frontier.splice(bi, 1);
+    if (done.has(cur)) continue;
+    done.add(cur);
+    if (satisfied(cur)) {
+      // Reconstruct (reversed), bounded by outPlan length.
+      let len = 0;
+      let s = cur;
+      const tmp: number[] = [];
+      while (s !== start) {
+        const a = prevAction.get(s);
+        const p = prevState.get(s);
+        if (a === undefined || p === undefined) break;
+        tmp.push(a);
+        s = p;
+      }
+      for (let i = tmp.length - 1; i >= 0 && len < outPlan.length; i--)
+        outPlan[len++] = tmp[i] ?? 0;
+      return len;
+    }
+    for (let ai = 0; ai < actions.length; ai++) {
+      const a = actions[ai];
+      if (!a) continue;
+      if ((cur & a.pre) !== a.pre) continue;
+      if ((cur & a.preClear) !== 0) continue;
+      const nxt = (cur | a.set) & ~a.clear;
+      const nd = bcost + a.cost;
+      if (nd < (dist.get(nxt) ?? Infinity)) {
+        dist.set(nxt, nd);
+        prevState.set(nxt, cur);
+        prevAction.set(nxt, ai);
+        if (!done.has(nxt)) frontier.push(nxt);
+      }
+    }
+  }
+  return -1;
+}
+
+// ── Bounded episodic memory (Halo 2 blackboard / working memory, 2004) ────────
+
+/**
+ * A fixed-capacity ring of recent percepts (numbers) — an agent's short-term memory. Push is O(1)
+ * and allocation-free after construction; `recent(k)` reads the k-th most-recent entry. This is the
+ * "complex unique memory" each agent carries: last threat seen, last meal, last kin, etc.
+ */
+export class MemoryRing {
+  private readonly buf: Float32Array;
+  private head = 0;
+  private len = 0;
+
+  constructor(capacity: number) {
+    this.buf = new Float32Array(Math.max(1, capacity));
+  }
+
+  /** Append a value, evicting the oldest at capacity. O(1). */
+  push(v: number): void {
+    this.buf[this.head] = v;
+    this.head = (this.head + 1) % this.buf.length;
+    if (this.len < this.buf.length) this.len++;
+  }
+
+  /** Number of stored entries (≤ capacity). */
+  get size(): number {
+    return this.len;
+  }
+
+  /** The k-th most-recent value (0 = newest), or `undefined` when out of range. O(1). */
+  recent(k: number): number | undefined {
+    if (k < 0 || k >= this.len) return undefined;
+    return this.buf[(this.head - 1 - k + this.buf.length) % this.buf.length];
+  }
+
+  /** Mean of all stored values (0 when empty) — a cheap "running mood". O(size). */
+  mean(): number {
+    if (this.len === 0) return 0;
+    let s = 0;
+    for (let k = 0; k < this.len; k++) s += this.recent(k) ?? 0;
+    return s / this.len;
+  }
+
+  /** Forget everything (keeps capacity). O(1). */
+  clear(): void {
+    this.head = 0;
+    this.len = 0;
+  }
+}
+
+// ── Game theory (von Neumann 1928; iterated games — Axelrod 1984) ─────────────
+
+/**
+ * Best response to an opponent's mixed strategy: pick the row action `i` maximizing expected payoff
+ * `E[i] = Σ_j payoff[i*nCols + j] · oppMix[j]`. `payoff` is row-major `nRows×nCols` (the row player's
+ * payoff). Ties resolve to the LOWEST index (deterministic). O(nRows·nCols), allocation-free; -1 when
+ * `nRows < 1`. This is how an NHI picks the move that best exploits what it believes a rival will do.
+ */
+export function bestResponse(
+  payoff: ArrayLike<number>,
+  nRows: number,
+  nCols: number,
+  oppMix: ArrayLike<number>,
+): number {
+  let best = -1;
+  let bestVal = -Infinity;
+  for (let i = 0; i < nRows; i++) {
+    let ev = 0;
+    for (let j = 0; j < nCols; j++) ev += (payoff[i * nCols + j] ?? 0) * (oppMix[j] ?? 0);
+    if (ev > bestVal) {
+      bestVal = ev;
+      best = i;
+    }
+  }
+  return best;
+}
+
+/** Repeated-game strategies (Axelrod's tournament). The NHI assigns one per rival faction. */
+export const GameStrategy = {
+  /** Cooperate first, then mirror the opponent's last move. */
+  TIT_FOR_TAT: 0,
+  /** Cooperate until the FIRST betrayal, then defect forever (the grudge holder). */
+  GRUDGER: 1,
+  /** Never cooperate. */
+  ALWAYS_DEFECT: 2,
+  /** Tit-for-tat that forgives a defection with probability `forgiveP`. */
+  GENEROUS_TFT: 3,
+  /** Probe (defect, then cooperate twice); if the rival tolerates it, exploit them. */
+  PROBER: 4,
+} as const;
+
+/**
+ * One move of an iterated 2-action game — `0` = cooperate, `1` = defect — under `strategy`, given the
+ * opponent's last move (`oppLast`, `-1` on the first round), whether they have EVER betrayed
+ * (`everBetrayed`), the `round` index, and a seeded {@link Rng} (consumed only by GENEROUS_TFT).
+ * Deterministic. O(1), allocation-free.
+ */
+export function iteratedMove(
+  strategy: number,
+  oppLast: number,
+  everBetrayed: boolean,
+  round: number,
+  rng: Rng,
+  forgiveP = 0.3,
+): number {
+  switch (strategy) {
+    case GameStrategy.ALWAYS_DEFECT:
+      return 1;
+    case GameStrategy.GRUDGER:
+      return everBetrayed ? 1 : 0;
+    case GameStrategy.GENEROUS_TFT:
+      return oppLast === 1 ? (rng() < forgiveP ? 0 : 1) : 0;
+    case GameStrategy.PROBER:
+      if (round === 0) return 1;
+      if (round <= 2) return 0;
+      // #152 classic Prober (Axelrod): D,C,C opening; if the opponent never retaliated, keep
+      // exploiting it, otherwise fall back to Tit-for-Tat (mirror its last move).
+      if (!everBetrayed) return 1;
+      return oppLast === 1 ? 1 : 0;
+    case GameStrategy.TIT_FOR_TAT:
+    default:
+      return oppLast === 1 ? 1 : 0; // cooperate first (oppLast -1), then mirror
+  }
+}
+
+/**
+ * Regret-matching action choice (Hart & Mas-Colell, 2000): sample an action proportional to its
+ * POSITIVE cumulative regret, falling back to uniform when no regret is positive. In self-play the
+ * empirical distribution converges to a correlated equilibrium — the NHI's adaptive, hard-to-predict
+ * policy. Deterministic given `rng`. O(n), allocation-free; -1 when `n < 1`.
+ */
+export function regretMatch(cumRegret: ArrayLike<number>, n: number, rng: Rng): number {
+  if (n < 1) return -1;
+  let sum = 0;
+  for (let i = 0; i < n; i++) sum += Math.max(0, cumRegret[i] ?? 0);
+  if (sum <= 0) return Math.min(n - 1, Math.floor(rng() * n)); // no regret yet → explore uniformly
+  let r = rng() * sum;
+  for (let i = 0; i < n; i++) {
+    r -= Math.max(0, cumRegret[i] ?? 0);
+    if (r <= 0) return i;
+  }
+  return n - 1;
+}

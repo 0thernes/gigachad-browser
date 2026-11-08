@@ -1,0 +1,151 @@
+name	year	category	caps	reference	url
+Tierra	1991	digital evolution	E R D O	Ray, T. S. (1991). An approach to the synthesis of life. Artificial Life II.	https://en.wikipedia.org/wiki/Tierra_(computer_simulation)
+Avida	1994	digital evolution	E R M D O	Ofria & Wilke (2004). Avida: a software platform for research in computational evolutionary biology. Artificial Life 10(2).	https://doi.org/10.1162/106454604773563612
+Avida-ED	2008	digital evolution	E R M D W O	Pennock et al. Avida-ED, avida-ed.msu.edu	https://avida-ed.github.io/
+Core War	1984	digital evolution	E R D O	Dewdney, A. K. (1984). Computer Recreations. Scientific American.	https://en.wikipedia.org/wiki/Core_War
+Aevol	2007	digital evolution	E R D O	Knibbe et al. (2007). A long-term evolutionary pressure on the amount of noncoding DNA. Mol. Biol. Evol. 24(10).	https://doi.org/10.1093/molbev/msm165
+Chromaria	2014	digital evolution	E R B	Soros & Stanley (2014). Identifying necessary conditions for open-ended evolution through the artificial life world of Chromaria. ALIFE 14.	https://doi.org/10.7551/978-0-262-32621-6-ch128
+Geb	1999	digital evolution	E R N S	Channon & Damper (1998). Towards the evolutionary emergence of increasingly complex advantageous behaviours. IJSS 31(7).	https://doi.org/10.1080/002077200406570
+Darwinbots	2003	digital evolution	E R B M S O	Darwinbots project, darwinbots.com	http://wiki.darwinbots.com/w/Main_Page
+Polyworld	1994	agent ecology	E R B N L M S O	Yaeger, L. (1994). Computational genetics, physiology, metabolism, neural systems, learning, vision, and behavior or PolyWorld. ALife III.	https://en.wikipedia.org/wiki/Polyworld
+Echo	1995	agent ecology	E R M S	Holland, J. H. (1995). Hidden Order. Addison-Wesley.	https://en.wikipedia.org/wiki/John_Henry_Holland
+Sugarscape	1996	agent ecology	R M S O	Epstein & Axtell (1996). Growing Artificial Societies. MIT Press.	https://en.wikipedia.org/wiki/Sugarscape
+Framsticks	1996	evolved bodies	E B N R O	Komosinski & Ulatowski. Framsticks, framsticks.com; Komosinski (2003) The Framsticks system. ECAL.	https://en.wikipedia.org/wiki/Framsticks
+Karl Sims creatures	1994	evolved bodies	E B N	Sims, K. (1994). Evolving virtual creatures. SIGGRAPH '94.	https://doi.org/10.1145/192161.192167
+Breve	2003	agent ecology	E B N O	Klein, J. (2003). breve: a 3D environment for the simulation of decentralized systems. Artificial Life 9(3).	https://doi.org/10.1007/978-1-84882-285-6_4
+Golem project	2000	evolved bodies	E B N	Lipson & Pollack (2000). Automatic design and manufacture of robotic lifeforms. Nature 406.	https://doi.org/10.1038/35023115
+Xenobots	2020	evolved bodies	E B C	Kriegman et al. (2020). A scalable pipeline for designing reconfigurable organisms. PNAS 117(4).	https://doi.org/10.1073/pnas.1910837117
+Evosoro (VoxCAD)	2013	evolved bodies	E B O	Cheney et al. (2013). Unshackling evolution: evolving soft robots with multiple materials and a powerful generative encoding. GECCO.	https://doi.org/10.1145/2463372.2463404
+Evolution Gym	2021	evolved bodies	E B N L O	Bhatia et al. (2021). Evolution Gym: a large-scale benchmark for evolving soft robots. NeurIPS.	https://arxiv.org/abs/2201.09863
+DERL / UNIMAL	2021	evolved bodies	E B N L	Gupta et al. (2021). Embodied intelligence via learning and evolution. Nature Communications 12.	https://doi.org/10.1038/s41467-021-25874-z
+Neural MMO	2019	agent ecology	N L S O	Suarez et al. (2019). Neural MMO: a massively multiagent game environment. arXiv:1903.00784.	https://arxiv.org/abs/1903.00784
+Evolving Virtual Creatures (Lehman novelty)	2011	evolved bodies	E B N	Lehman & Stanley (2011). Evolving a diversity of virtual creatures through novelty search and local competition. GECCO.	https://doi.org/10.1145/2001576.2001606
+POET	2019	open-endedness	E B N L O	Wang et al. (2019). Paired Open-Ended Trailblazer. arXiv:1901.01753.	https://arxiv.org/abs/1901.01753
+Enhanced POET	2020	open-endedness	E B N L O	Wang et al. (2020). Enhanced POET. ICML.	https://arxiv.org/abs/2003.08536
+OMNI	2023	open-endedness	L	Zhang et al. (2023). OMNI: open-endedness via models of human notions of interestingness. arXiv:2306.01711.	https://arxiv.org/abs/2306.01711
+ASAL	2024	open-endedness	E D O	Kumar et al. (2024). Automating the search for artificial life with foundation models. arXiv:2412.17799.	https://arxiv.org/abs/2412.17799
+Lenia	2019	continuous CA	D W O	Chan, B. W.-C. (2019). Lenia: biology of artificial life. Complex Systems 28(3).	https://doi.org/10.25088/ComplexSystems.28.3.251
+Flow-Lenia	2023	continuous CA	E M D O	Plantec et al. (2023). Flow-Lenia: towards open-ended evolution in cellular automata through mass conservation. ALIFE.	https://arxiv.org/abs/2212.07906
+Particle Lenia	2022	continuous CA	D W O	Mordvintsev et al. (2022). Particle Lenia and the energy-based formulation. google-research.github.io/self-organising-systems	https://google-research.github.io/self-organising-systems/particle-lenia/
+SmoothLife	2011	continuous CA	D O	Rafler, S. (2011). Generalization of Conway's Game of Life to a continuous domain. arXiv:1111.1567.	https://arxiv.org/abs/1111.1567
+Game of Life	1970	cellular automata	D W O	Gardner, M. (1970). Mathematical Games. Scientific American 223.	https://en.wikipedia.org/wiki/Conway's_Game_of_Life
+Langton's loops	1984	cellular automata	R D O	Langton, C. G. (1984). Self-reproduction in cellular automata. Physica D 10.	https://doi.org/10.1016/0167-2789(84)90256-2
+Evoloops	1999	cellular automata	E R D O	Sayama, H. (1999). A new structurally dissolvable self-reproducing loop evolving in a simple cellular automata space. Artificial Life 5(4).	https://doi.org/10.1162/106454699568818
+Von Neumann universal constructor	1966	cellular automata	R D	von Neumann, J. (1966). Theory of Self-Reproducing Automata. Univ. Illinois Press.	https://en.wikipedia.org/wiki/Von_Neumann_universal_constructor
+Nobili-Pesavento constructor	1995	cellular automata	R D O	Pesavento, U. (1995). An implementation of von Neumann's self-reproducing machine. Artificial Life 2(4).	https://doi.org/10.1162/artl.1995.2.4.337
+Byl's loop	1989	cellular automata	R D	Byl, J. (1989). Self-reproduction in small cellular automata. Physica D 34.	https://doi.org/10.1016/0167-2789(89)90242-X
+Neural Cellular Automata (Growing NCA)	2020	continuous CA	L D W O	Mordvintsev et al. (2020). Growing neural cellular automata. Distill.	https://doi.org/10.23915/distill.00023
+Self-classifying MNIST NCA	2020	continuous CA	L D W O	Randazzo et al. (2020). Self-classifying MNIST digits. Distill.	https://doi.org/10.23915/distill.00027.002
+Texture NCA	2021	continuous CA	L D W O	Niklasson et al. (2021). Self-organising textures. Distill.	https://doi.org/10.23915/distill.00027.003
+Primordial particle system	2016	particle life	D O	Schmickl et al. (2016). How a life-like system emerges from a simplistic particle motion law. Scientific Reports 6.	https://doi.org/10.1038/srep37969
+Particle Life (Ventrella clusters)	2017	particle life	D W O	Ventrella, J. Clusters, ventrella.com/Clusters	https://www.ventrella.com/Clusters/
+Swarm chemistry	2009	particle life	E D O	Sayama, H. (2009). Swarm chemistry. Artificial Life 15(1).	https://doi.org/10.1162/artl.2009.15.1.15107
+Boids	1987	collective behavior	B S D O	Reynolds, C. W. (1987). Flocks, herds and schools: a distributed behavioral model. SIGGRAPH.	https://doi.org/10.1145/37401.37406
+Vicsek model	1995	collective behavior	S D	Vicsek et al. (1995). Novel type of phase transition in a system of self-driven particles. PRL 75.	https://doi.org/10.1103/PhysRevLett.75.1226
+Physarum transport networks	2010	collective behavior	M D O	Jones, J. (2010). Characteristics of pattern formation and evolution in approximations of Physarum transport networks. Artificial Life 16(2).	https://doi.org/10.1162/artl.2010.16.2.16202
+AlChemy	1994	artificial chemistry	E R D	Fontana & Buss (1994). What would be conserved if 'the tape were played twice'? PNAS 91.	https://doi.org/10.1073/pnas.91.2.757
+Squirm3	2003	artificial chemistry	E R	Hutton, T. J. (2002). Evolvable self-replicating molecules in an artificial chemistry. Artificial Life 8(4).	https://doi.org/10.1162/106454602321202417
+Hutton enzyme cells	2007	artificial chemistry	E R M	Hutton, T. J. (2007). Evolvable self-reproducing cells in a two-dimensional artificial chemistry. Artificial Life 13(1).	https://doi.org/10.1162/artl.2007.13.1.11
+Ono-Ikegami protocells	2000	artificial chemistry	R M	Ono & Ikegami (2000). Self-maintenance and self-reproduction in an abstract cell model. J. Theor. Biol. 206.	https://doi.org/10.1006/jtbi.2000.2121
+SCL autopoiesis	1974	artificial chemistry	M D	Varela, Maturana & Uribe (1974). Autopoiesis: the organization of living systems. BioSystems 5.	https://doi.org/10.1016/0303-2647(74)90031-8
+Chemical organization theory tools	2007	artificial chemistry	M D	Dittrich & Speroni di Fenizio (2007). Chemical organisation theory. Bull. Math. Biol. 69.	https://doi.org/10.1007/s11538-006-9130-8
+GARD model	2000	artificial chemistry	E R M	Segré, Ben-Eli & Lancet (2000). Compositional genomes: prebiotic information transfer in mutually catalytic noncovalent assemblies. PNAS 97.	https://doi.org/10.1073/pnas.97.8.4112
+Computational BF self-replicators	2024	artificial chemistry	E R D O	Agüera y Arcas et al. (2024). Computational life: how well-formed, self-replicating programs emerge from simple interaction. arXiv:2406.19108.	https://arxiv.org/abs/2406.19108
+Ludobots	2012	evolved bodies	E B N O	Bongard, J. Ludobots, reddit.com/r/ludobots	https://doi.org/10.1145/2492007.2493883
+Bongard resilient machines	2006	evolved bodies	B N L	Bongard, Zykov & Lipson (2006). Resilient machines through continuous self-modeling. Science 314.	https://doi.org/10.1126/science.1133687
+OpenWorm	2011	connectome-grounded	B N C O	Szigeti et al. (2014). OpenWorm: an open-science approach to modeling C. elegans. Front. Comput. Neurosci. 8.	https://doi.org/10.3389/fncom.2014.00137
+Sibernetic	2014	connectome-grounded	B C O	Palyanov et al. (2018). Three-dimensional simulation of the Caenorhabditis elegans body and muscle cells in liquids and gels. Phil. Trans. R. Soc. B 373.	https://doi.org/10.1098/rstb.2017.0376
+c302	2018	connectome-grounded	N C O	Gleeson et al. (2018). c302: a multiscale framework for modelling the nervous system of C. elegans. Phil. Trans. R. Soc. B 373.	https://doi.org/10.1098/rstb.2017.0379
+BAAIWorm	2024	connectome-grounded	B N C O	Zhao et al. (2024). An integrative data-driven model simulating C. elegans brain, body and environment interactions. Nature Computational Science 4.	https://doi.org/10.1038/s43588-024-00738-w
+NeuroMechFly	2022	connectome-grounded	B N C O	Lobato-Rios et al. (2022). NeuroMechFly, a neuromechanical model of adult Drosophila melanogaster. Nature Methods 19.	https://doi.org/10.1038/s41592-022-01466-7
+NeuroMechFly v2	2024	connectome-grounded	B N L C O	Wang-Chen et al. (2024). NeuroMechFly v2: simulating embodied sensorimotor control in adult Drosophila. Nature Methods 21.	https://doi.org/10.1038/s41592-024-02497-y
+FlyWire whole-brain LIF model	2024	connectome-grounded	N C O	Shiu et al. (2024). A Drosophila computational brain model reveals sensorimotor processing. Nature 634.	https://doi.org/10.1038/s41586-024-07763-9
+Whole-body fly (MuJoCo)	2025	connectome-grounded	B N L C O	Vaxenburg et al. (2025). Whole-body physics simulation of fruit fly locomotion. Nature.	https://doi.org/10.1038/s41586-025-09029-4
+Virtual rodent	2024	embodied neuroscience	B N L C	Aldarondo et al. (2024). A virtual rodent predicts the structure of neural activity across behaviours. Nature 632.	https://doi.org/10.1038/s41586-024-07633-4
+Blue Brain neocortical microcircuit	2015	connectome-grounded	N C O	Markram et al. (2015). Reconstruction and simulation of neocortical microcircuitry. Cell 163.	https://doi.org/10.1016/j.cell.2015.09.029
+Allen V1 model	2020	connectome-grounded	N C O	Billeh et al. (2020). Systematic integration of structural and functional data into multi-scale models of mouse primary visual cortex. Neuron 106.	https://doi.org/10.1016/j.neuron.2020.01.040
+Spaun	2012	brain model	N L C	Eliasmith et al. (2012). A large-scale model of the functioning brain. Science 338.	https://doi.org/10.1126/science.1225266
+Nengo	2014	brain model	N L O	Bekolay et al. (2014). Nengo: a Python tool for building large-scale functional brain models. Front. Neuroinform. 7.	https://doi.org/10.3389/fninf.2013.00048
+The Virtual Brain	2013	brain model	N C O	Sanz Leon et al. (2013). The Virtual Brain: a simulator of primate brain network dynamics. Front. Neuroinform. 7.	https://doi.org/10.3389/fninf.2013.00010
+NEST simulator	2007	brain model	N L D O	Gewaltig & Diesmann (2007). NEST (NEural Simulation Tool). Scholarpedia 2(4).	https://doi.org/10.4249/scholarpedia.1430
+Brian2	2019	brain model	N L D O	Stimberg, Brette & Goodman (2019). Brian 2, an intuitive and efficient neural simulator. eLife 8.	https://doi.org/10.7554/eLife.47314
+NEURON	1997	brain model	N C O	Hines & Carnevale (1997). The NEURON simulation environment. Neural Computation 9.	https://doi.org/10.1162/neco.1997.9.6.1179
+Darwin / NOMAD robots	1990	embodied neuroscience	B N L C	Edelman et al. (1992). Synthetic neural modeling applied to a real-world artifact. PNAS 89.	https://doi.org/10.1073/pnas.89.15.7267
+Braitenberg vehicles	1984	embodied agents	B N D	Braitenberg, V. (1984). Vehicles: Experiments in Synthetic Psychology. MIT Press.	https://en.wikipedia.org/wiki/Braitenberg_vehicle
+Creatures (Grand)	1996	game creatures	E R N L M S	Grand, Cliff & Malhotra (1997). Creatures: artificial life autonomous software agents for home entertainment. Agents '97.	https://doi.org/10.1145/267658.267663
+Creatures Docking Station	2001	game creatures	E R N L M S	Grand, S. (2000). Creation: Life and How to Make It. Harvard Univ. Press.	https://en.wikipedia.org/wiki/Creatures_(video_game_series)
+Spore	2008	game creatures	E B S	Maxis (2008). Spore. Electronic Arts. (Hecker et al. 2008, Real-time motion retargeting to highly varied user-created morphologies. SIGGRAPH.)	https://en.wikipedia.org/wiki/Spore_(2008_video_game)
+The Bibites	2020	agent ecology	E R B N M S	The Bibites, thebibites.com	https://thebibites.com/
+Biogenesis	2006	agent ecology	E R M S O	Biogenesis, biogenesis.sourceforge.net	https://biogenesis.sourceforge.net/
+Gene Pool	1997	agent ecology	E R B M S W O	Ventrella, J. Gene Pool, swimbots.com	https://www.swimbots.com/
+ALIEN	2008	artificial chemistry	E R B M S O	Heinemann, C. ALIEN – Artificial Life Environment, alien-project.org	https://alien-project.org/
+Life Engine	2020	agent ecology	E R M S W O	The Life Engine, thelifeengine.net	https://thelifeengine.net/
+Critterding	2007	agent ecology	E R B N M S O	Critterding, critterding.sourceforge.net	https://critterding.sourceforge.net/
+Biosim4	2021	agent ecology	E R N S D O	davidrmiller/biosim4, github.com/davidrmiller/biosim4	https://github.com/davidrmiller/biosim4
+OpenAI hide-and-seek	2019	multi-agent RL	B N L S	Baker et al. (2020). Emergent tool use from multi-agent autocurricula. ICLR.	https://arxiv.org/abs/1909.07528
+XLand	2021	multi-agent RL	B N L S	Open Ended Learning Team (2021). Open-ended learning leads to generally capable agents. arXiv:2107.12808.	https://arxiv.org/abs/2107.12808
+MineDojo / Voyager	2023	LLM agents	L	Wang et al. (2023). Voyager: an open-ended embodied agent with large language models. arXiv:2305.16291.	https://arxiv.org/abs/2305.16291
+Generative Agents	2023	LLM agents	L S O	Park et al. (2023). Generative agents: interactive simulacra of human behavior. UIST.	https://arxiv.org/abs/2304.03442
+Project Sid	2024	LLM agents	L S	Altera.AL (2024). Project Sid: many-agent simulations toward AI civilization. arXiv:2411.00114.	https://arxiv.org/abs/2411.00114
+AI Town	2023	LLM agents	S W O	a16z-infra/ai-town, github.com/a16z-infra/ai-town	https://github.com/a16z-infra/ai-town
+JaxLife	2024	agent ecology	E R N L M S O	Lu et al. (2024). JaxLife: an open-ended agentic simulator. ALIFE.	https://arxiv.org/abs/2409.00853
+EvoJAX	2022	neuroevolution	E N D O	Tang et al. (2022). EvoJAX: hardware-accelerated neuroevolution. GECCO.	https://arxiv.org/abs/2202.05008
+NEAT	2002	neuroevolution	E N O	Stanley & Miikkulainen (2002). Evolving neural networks through augmenting topologies. Evol. Comput. 10(2).	https://doi.org/10.1162/106365602320169811
+HyperNEAT	2009	neuroevolution	E N O	Stanley, D'Ambrosio & Gauci (2009). A hypercube-based encoding for evolving large-scale neural networks. Artificial Life 15(2).	https://doi.org/10.1162/artl.2009.15.2.15202
+Picbreeder	2008	neuroevolution	E W	Secretan et al. (2011). Picbreeder: a case study in collaborative evolutionary exploration of design space. Evol. Comput. 19(3).	https://doi.org/10.1162/EVCO_a_00030
+NERO	2005	neuroevolution	E N L	Stanley, Bryant & Miikkulainen (2005). Real-time neuroevolution in the NERO video game. IEEE TEC 9(6).	https://doi.org/10.1109/TEVC.2005.856210
+MAP-Elites	2015	open-endedness	E D O	Mouret & Clune (2015). Illuminating search spaces by mapping elites. arXiv:1504.04909.	https://arxiv.org/abs/1504.04909
+QDax	2022	open-endedness	E D O	Lim et al. (2022). Accelerated quality-diversity through massive parallelism. TMLR.	https://arxiv.org/abs/2202.01258
+Novelty search	2011	open-endedness	E N	Lehman & Stanley (2011). Abandoning objectives: evolution through the search for novelty alone. Evol. Comput. 19(2).	https://doi.org/10.1162/EVCO_a_00025
+Walker evolution (Hornby gait)	2005	evolved bodies	E B N	Hornby et al. (2005). Autonomous evolution of dynamic gaits with two quadruped robots. IEEE T-RO 21(3).	https://doi.org/10.1109/TRO.2004.839222
+Animats (Wilson)	1991	embodied agents	B N L	Wilson, S. W. (1991). The animat path to AI. SAB.	https://en.wikipedia.org/wiki/Animat
+Subsumption robots	1986	embodied agents	B	Brooks, R. A. (1986). A robust layered control system for a mobile robot. IEEE J. Robotics Autom. 2(1).	https://doi.org/10.1109/JRA.1986.1087032
+Cog humanoid	1999	embodied agents	B N L S	Brooks et al. (1999). The Cog project: building a humanoid robot. Computation for Metaphors, Analogy, and Agents.	https://doi.org/10.1007/3-540-48834-0_5
+Kismet	2000	social robots	B S	Breazeal, C. (2000). Sociable machines. PhD thesis, MIT.	https://en.wikipedia.org/wiki/Kismet_(robot)
+iCub	2008	embodied agents	B N L O	Metta et al. (2008). The iCub humanoid robot: an open platform for research in embodied cognition. PerMIS.	https://doi.org/10.1145/1774674.1774683
+LIDA	2006	cognitive architecture	N L	Franklin et al. (2016). LIDA: a systems-level architecture for cognition, emotion, and learning. IEEE TAMD 6(1).	https://doi.org/10.1109/TAMD.2013.2277589
+Soar	1987	cognitive architecture	L O	Laird, Newell & Rosenbloom (1987). SOAR: an architecture for general intelligence. Artificial Intelligence 33.	https://doi.org/10.1016/0004-3702(87)90050-6
+ACT-R	1993	cognitive architecture	L O	Anderson et al. (2004). An integrated theory of the mind. Psych. Review 111(4).	https://doi.org/10.1037/0033-295X.111.4.1036
+CLARION	2002	cognitive architecture	N L	Sun, R. (2006). The CLARION cognitive architecture. Cognition and Multi-Agent Interaction.	https://en.wikipedia.org/wiki/CLARION_(cognitive_architecture)
+OpenCog	2008	cognitive architecture	L O	Goertzel et al. (2014). Engineering General Intelligence. Atlantis Press.	https://en.wikipedia.org/wiki/OpenCog
+Global Workspace model (Dehaene)	1998	consciousness models	N I	Dehaene, Kerszberg & Changeux (1998). A neuronal model of a global workspace in effortful cognitive tasks. PNAS 95.	https://doi.org/10.1073/pnas.95.24.14529
+PyPhi	2018	consciousness models	D I O	Mayner et al. (2018). PyPhi: a toolbox for integrated information theory. PLoS Comput. Biol. 14(7).	https://doi.org/10.1371/journal.pcbi.1006343
+AST model (Graziano)	2018	consciousness models	N I	Wilterson & Graziano (2021). The attention schema theory in a neural network agent. PNAS 118.	https://doi.org/10.1073/pnas.2102421118
+Butlin et al. indicator audit	2023	consciousness models	I	Butlin et al. (2023). Consciousness in artificial intelligence: insights from the science of consciousness. arXiv:2308.08708.	https://arxiv.org/abs/2308.08708
+Active inference agents (pymdp)	2022	active inference	L D O	Heins et al. (2022). pymdp: a Python library for active inference in discrete state spaces. JOSS 7(73).	https://doi.org/10.21105/joss.04098
+Deep active inference (Fountas)	2020	active inference	N L	Fountas et al. (2020). Deep active inference agents using Monte-Carlo methods. NeurIPS.	https://arxiv.org/abs/2006.04176
+DishBrain	2022	biological hybrids	N L C	Kagan et al. (2022). In vitro neurons learn and exhibit sentience when embodied in a simulated game-world. Neuron 110.	https://doi.org/10.1016/j.neuron.2022.09.001
+Brainoware	2023	biological hybrids	N L C	Cai et al. (2023). Brain organoid reservoir computing for artificial intelligence. Nature Electronics 6.	https://doi.org/10.1038/s41928-023-01069-w
+Anthrobots	2023	biological hybrids	B C	Gumuskaya et al. (2024). Motile living biobots self-construct from adult human somatic progenitor seed cells. Advanced Science 11.	https://doi.org/10.1002/advs.202303575
+JCVI-syn3.0	2016	synthetic biology	R M C	Hutchison et al. (2016). Design and synthesis of a minimal bacterial genome. Science 351.	https://doi.org/10.1126/science.aad6253
+Minimal cell whole-cell model	2022	synthetic biology	M C	Thornburg et al. (2022). Fundamental behaviors emerge from simulations of a living minimal cell. Cell 185.	https://doi.org/10.1016/j.cell.2021.12.025
+M. genitalium whole-cell model	2012	synthetic biology	R M C	Karr et al. (2012). A whole-cell computational model predicts phenotype from genotype. Cell 150.	https://doi.org/10.1016/j.cell.2012.05.044
+E-CELL	1999	synthetic biology	M C O	Tomita et al. (1999). E-CELL: software environment for whole-cell simulation. Bioinformatics 15.	https://doi.org/10.1093/bioinformatics/15.1.72
+Gray-Scott self-replicating spots	1993	reaction-diffusion	R D	Pearson, J. E. (1993). Complex patterns in a simple system. Science 261.	https://doi.org/10.1126/science.261.5118.189
+Reaction-diffusion (Turing)	1952	reaction-diffusion	D	Turing, A. M. (1952). The chemical basis of morphogenesis. Phil. Trans. R. Soc. B 237.	https://doi.org/10.1098/rstb.1952.0012
+L-systems	1968	morphogenesis	D O	Lindenmayer, A. (1968). Mathematical models for cellular interactions in development. J. Theor. Biol. 18.	https://doi.org/10.1016/0022-5193(68)90079-9
+Algorithmic Botany (Prusinkiewicz)	1990	morphogenesis	D	Prusinkiewicz & Lindenmayer (1990). The Algorithmic Beauty of Plants. Springer.	http://algorithmicbotany.org/papers/#abop
+CompuCell3D	2004	morphogenesis	M C O	Swat et al. (2012). Multi-scale modeling of tissues using CompuCell3D. Methods Cell Biol. 110.	https://doi.org/10.1016/B978-0-12-388403-9.00013-8
+Morpheus	2014	morphogenesis	C O	Starruß et al. (2014). Morpheus: a user-friendly modeling environment. Bioinformatics 30(9).	https://doi.org/10.1093/bioinformatics/btt772
+PhysiCell	2018	morphogenesis	R M C O	Ghaffarizadeh et al. (2018). PhysiCell: an open source physics-based cell simulator. PLoS Comput. Biol. 14(2).	https://doi.org/10.1371/journal.pcbi.1005991
+Cellular Potts model	1992	morphogenesis	C	Graner & Glazier (1992). Simulation of biological cell sorting using a 2D extended Potts model. PRL 69.	https://doi.org/10.1103/PhysRevLett.69.2013
+GReaNs	2011	morphogenesis	E R	Joachimczak & Wróbel (2011). Evolution of the morphology and patterning of artificial embryos. ALIFE.	https://doi.org/10.1007/978-3-642-21283-3_5
+Bioelectric planaria model	2016	morphogenesis	C	Pietak & Levin (2016). Exploring instructive physiological signaling with the bioelectric tissue simulation engine (BETSE). Front. Bioeng. 4.	https://doi.org/10.3389/fbioe.2016.00055
+Artificial Fishes (Tu & Terzopoulos)	1994	embodied agents	B N L	Tu & Terzopoulos (1994). Artificial fishes: physics, locomotion, perception, behavior. SIGGRAPH.	https://doi.org/10.1145/192161.192170
+DeepMind Control Suite	2018	embodied RL	B N L D O	Tassa et al. (2018). DeepMind Control Suite. arXiv:1801.00690.	https://arxiv.org/abs/1801.00690
+MuJoCo	2012	physics engine	B D O	Todorov, Erez & Tassa (2012). MuJoCo: a physics engine for model-based control. IROS.	https://doi.org/10.1109/IROS.2012.6386109
+Brax	2021	physics engine	B D O	Freeman et al. (2021). Brax – a differentiable physics engine for large scale rigid body simulation. NeurIPS D&B.	https://arxiv.org/abs/2106.13281
+Isaac Gym	2021	physics engine	B N L	Makoviychuk et al. (2021). Isaac Gym: high performance GPU-based physics simulation for robot learning. NeurIPS D&B.	https://arxiv.org/abs/2108.10470
+Animal-AI Olympics	2019	embodied RL	B N L O	Crosby, Beyret & Halina (2019). The Animal-AI Olympics. Nature Machine Intelligence 1.	https://doi.org/10.1038/s42256-019-0050-3
+Unity ML-Agents	2018	embodied RL	B N L S O	Juliani et al. (2018). Unity: a general platform for intelligent agents. arXiv:1809.02627.	https://arxiv.org/abs/1809.02627
+Evolving bipedal locomotion (Geijtenbeek)	2013	evolved bodies	B N	Geijtenbeek, van de Panne & van der Stappen (2013). Flexible muscle-based locomotion for bipedal creatures. SIGGRAPH Asia.	https://doi.org/10.1145/2508363.2508399
+Markov Brains	2017	neuroevolution	E N D O	Hintze et al. (2017). Markov Brains: a technical introduction. arXiv:1709.05601.	https://arxiv.org/abs/1709.05601
+Animats with phi (Edlund)	2011	consciousness models	E N I	Edlund et al. (2011). Integrated information increases with fitness in the evolution of animats. PLoS Comput. Biol. 7(10).	https://doi.org/10.1371/journal.pcbi.1002236
+Evolved swarm robots (Swarm-bots)	2005	collective robotics	E B N S	Dorigo et al. (2004). Evolving self-organizing behaviors for a swarm-bot. Autonomous Robots 17.	https://doi.org/10.1023/B:AURO.0000033973.24945.f3
+Kilobots	2014	collective robotics	B S O	Rubenstein, Cornejo & Nagpal (2014). Programmable self-assembly in a thousand-robot swarm. Science 345.	https://doi.org/10.1126/science.1254295
+Homeostat	1948	embodied agents	L M	Ashby, W. R. (1952). Design for a Brain. Chapman & Hall.	https://en.wikipedia.org/wiki/Homeostat
+Daisyworld	1983	ecosystem models	M D	Watson & Lovelock (1983). Biological homeostasis of the global environment: the parable of Daisyworld. Tellus B 35.	https://doi.org/10.3402/tellusb.v35i4.14616
+Madingley model	2014	ecosystem models	R M S	Harfoot et al. (2014). Emergent global patterns of ecosystem structure and function from a mechanistic general ecosystem model. PLoS Biol. 12(4).	https://doi.org/10.1371/journal.pbio.1001841
+NetLogo	1999	agent modeling	S D W O	Wilensky, U. (1999). NetLogo. ccl.northwestern.edu/netlogo	https://ccl.northwestern.edu/netlogo/
+Mesa	2015	agent modeling	S D O	Masad & Kazil (2015). Mesa: an agent-based modeling framework. SciPy.	https://doi.org/10.25080/Majora-7b98e3ed-009
+StarLogo	1994	agent modeling	S D O	Resnick, M. (1994). Turtles, Termites, and Traffic Jams. MIT Press.	https://en.wikipedia.org/wiki/StarLogo

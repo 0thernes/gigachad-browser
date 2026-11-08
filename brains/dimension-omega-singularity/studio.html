@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autumn of the Shattered Manifold — Mathematical Generative Art Synthesizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --background: #05070B;
+      --card: #0C1018;
+      --foreground: #F1F5F9;
+      --muted-foreground: #94A3B8;
+      --border: #1E293B;
+      --primary: #0284C7;
+      --primary-foreground: #FFFFFF;
+      --secondary: #172030;
+      --secondary-foreground: #E2E8F0;
+    }
+    .math-serif {
+      font-family: "Cambria Math", "Latin Modern Math", "STIX Two Math", "Times New Roman", Georgia, serif;
+    }
+    .mono-code {
+      font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+    }
+    input[type="range"] {
+      accent-color: var(--primary);
+    }
+  </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-6">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- Header Banner -->
+    <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] mono-code">
+            PURE CODE + CLOSED-FORM MATH
+          </span>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-medium border border-[var(--border)] text-[var(--muted-foreground)] mono-code">
+            WEBGL2 GLSL + VECTOR DIAGNOSTIC HUD
+          </span>
+        </div>
+        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-[var(--foreground)]">
+          Autumn of the Shattered Manifold: Null-Token Singularity &amp; CFG Collapse
+        </h1>
+        <p class="text-sm text-[var(--muted-foreground)]">
+          A unified mathematical synthesis of <strong>Hamid Naderi Yeganeh’s closed-form arboreal equations</strong>,
+          <strong>The Null-Token Black Hole Diagnostic Blueprint</strong>, and <strong>Latent Manifold Voxel Shattering / CFG Overdrive</strong>.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <button id="btnToggleAnim" class="px-3.5 py-2 rounded-lg text-xs font-semibold border border-[var(--border)] bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:opacity-90 transition cursor-pointer mono-code">
+          ⏸ PAUSE PHASE FLOW
+        </button>
+        <button id="btnExportPoster" class="px-4 py-2 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 transition cursor-pointer mono-code shadow-sm">
+          ⬇ EXPORT HIGH-RES POSTER + EQUATIONS (.PNG)
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Studio Grid: Artwork Canvas (Left 7 cols) + Controls & Telemetry (Right 5 cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Left Column: Interactive Dual-Layer Canvas + Yeganeh Equation Plate -->
+      <div class="lg:col-span-7 bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-sm space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-xs font-semibold mono-code text-[var(--foreground)]">LIVE LATTICE RENDERER (m × n = 1200 × 1560)</span>
+          </div>
+          <span id="fpsCounter" class="text-xs mono-code text-[var(--muted-foreground)]">60 FPS • t = 0.00s</span>
+        </div>
+
+        <!-- Artwork Viewport Container -->
+        <div id="canvasWrapper" class="relative w-full mx-auto overflow-hidden rounded-lg border border-[var(--border)] shadow-inner" style="max-width: 640px; aspect-ratio: 10 / 13; background: #060709;">
+          <canvas id="glCanvas" width="1000" height="1300" class="w-full h-full block"></canvas>
+          <canvas id="hudCanvas" width="1000" height="1300" class="w-full h-full block absolute inset-0 cursor-crosshair"></canvas>
+        </div>
+
+        <!-- Live Hamid Naderi Yeganeh Style Mathematical Specification Sheet -->
+        <div class="rounded-lg border border-[var(--border)] p-4 space-y-2.5" style="background-color: #FAF8F2; color: #121212;">
+          <div class="text-center border-b border-stone-300 pb-2">
+            <h2 class="font-bold text-sm md:text-base math-serif tracking-wide" style="color: #111111;">
+              Autumn of the Shattered Manifold — Closed-Form Pixel Specification
+            </h2>
+            <p class="text-xs math-serif" style="color: #333333;">
+              For column <i>m</i> = 1, 2, …, 2000 and row <i>n</i> = 1, 2, …, 2600, with normalized coordinates
+              <i>x</i> = (<i>m</i> − 1000)/600 and <i>y</i> = (1301 − <i>n</i>)/600, the pixel color is:
+            </p>
+          </div>
+
+          <div class="space-y-2 text-xs math-serif leading-relaxed overflow-x-auto" style="color: #161616;">
+            <div class="p-2 rounded bg-stone-200/70mono-code text-center">
+              <b>rgb</b>(<i>F</i><sub>CFG</sub>(<i>H</i><sub>0</sub>(<i>x, y</i>)), <i>F</i><sub>CFG</sub>(<i>H</i><sub>1</sub>(<i>x, y</i>)), <i>F</i><sub>CFG</sub>(<i>H</i><sub>2</sub>(<i>x, y</i>))) · (1 − Ψ<sub>null</sub>(<i>x, y</i>))
+            </div>
+
+            <div>
+              <b>1. Yeganeh Clamp &amp; CFG Overdrive Folding:</b>
+              <i>F</i><sub>CFG</sub>(<i>z</i>) = ⌊ 255 · exp(−exp(−1000<i>z</i>)) · |<i>z</i>|<sup>exp(−exp(1000(<i>z</i>−1)))</sup>
+              + ω<sub>CFG</sub> · Θ(<i>z</i> − 1) · cos²(π·ω<sub>CFG</sub>·<i>z</i> + 2π<i>v</i>/3 + Δ<sub>VAE</sub>(<i>x, y</i>)) ⌋
+            </div>
+
+            <div>
+              <b>2. Null-Token Black Hole Singularity:</b>
+              Ψ<sub>null</sub>(<i>x, y</i>) = exp(−exp(−1000 · (<i>r</i><sub>0</sub> − max(|<i>x</i>|, |<i>y</i> − <i>y</i><sub>0</sub>|))))
+              &nbsp;⟹&nbsp; ∇<sub><b>x</b></sub> log <i>p</i><sub>θ</sub>(<b>x</b>|<i>c</i>) = <b>0</b> &nbsp;(<code>DNE / END</code>)
+            </div>
+
+            <div>
+              <b>3. Shattered Arboreal &amp; Chrome Jet Field:</b>
+              <i>H<sub>v</sub></i>(<i>x, y</i>) = (3−<i>v</i>)/20 + [(1 − Ξ<sub>vox</sub>(<i>q<sub>x</sub>, q<sub>y</sub></i>))/30] · (18 + 6<i>v</i>² − 6<i>v</i> + 5<i>y</i>)(1 − <i>G</i>(<i>x,y</i>))<i>Z</i><sub>8</sub>(<i>x,y</i>)
+              + (1/400)<i>W<sub>v</sub></i>(<i>q<sub>x</sub>, q<sub>y</sub></i>)[460<i>C</i>(<i>x,y</i>) + <i>J</i><sub>chrome,<i>v</i></sub>(<i>x,y</i>)(3 + 20<i>I</i>(<i>x,y</i>))]
+            </div>
+
+            <div>
+              <b>4. Voxel Manifold Fracture &amp; Yeganeh Tree Branches:</b>
+              <i>q<sub>y</sub></i> = ⌊<i>N<sub>y</sub> y</i>⌋ / <i>N<sub>y</sub></i>, &nbsp;
+              <i>q<sub>x</sub></i> = <i>x</i> + ξ<sub>vox</sub> · sin(127.1 <i>q<sub>y</sub></i>), &nbsp;
+              <i>L<sub>s</sub></i>(<i>x,y</i>) = <i>V<sub>s</sub></i>(<i>y</i>) − 1/10 − |<i>U<sub>s</sub></i>(<i>x</i>)|/5 + cos(3<i>x</i>+2<i>y</i>+1)/20, &nbsp;
+              <i>U<sub>s</sub></i>(<i>x</i>) = arctan(tan(7·10<sup>−<i>s</i>−1</sup>(15+cos(3<i>s</i>²))<sup><i>s</i></sup><i>x</i> − 3/2 + cos(9<i>s</i>²)/2))
+            </div>
+
+            <div>
+              <b>5. Autumn Fourier Foliage &amp; Wave-Function Tiles:</b>
+              <i>E</i>(<i>x,y</i>) = ∑<sub><i>s</i>=1</sub><sup>25</sup> (5/4)(9/10)<sup><i>s</i></sup> <i>D<sub>s</sub></i>(<i>x,y</i>), &nbsp;
+              Φ<sub>wave</sub>(<i>x̃, ỹ</i>) = cos(85<i>x̃</i>)cos(85<i>ỹ</i>)exp(−‖<b>x̃</b>‖<sub>4</sub><sup>4</sup>), &nbsp;
+              Φ<sub>dipole</sub>(<i>x̃, ỹ</i>) = cos(78<i>x̃</i>(1+0.4<i>ỹ</i>²))cos(64<i>ỹ</i>)(1 − exp(−‖<b>x̃</b>‖<sub><i>A</i></sub><sup>2</sup>))
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Synthesis Presets, Mathematical Parameter Sliders, Live Tensor Probe & Architecture Breakdown -->
+      <div class="lg:col-span-5 space-y-5">
+
+        <!-- Regime Presets -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm space-y-3">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-[var(--foreground)] mono-code">
+            1. Mathematical Regime Presets
+          </h3>
+          <p class="text-xs text-[var(--muted-foreground)]">
+            Isolate each of the 3 source mathematical architectures or fuse them into the unified singularity collapse:
+          </p>
+          <div class="grid grid-cols-1 gap-2">
+            <button data-preset="all" class="preset-btn text-left px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-semibold mono-code transition cursor-pointer flex items-center justify-between">
+              <span>★ TOTAL SYNTHESIS: All 3 Worlds Unified</span>
+              <span class="opacity-80">[1+2+3]</span>
+            </button>
+            <button data-preset="yeganeh" class="preset-btn text-left px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--secondary)] text-[var(--secondary-foreground)] text-xs font-medium mono-code hover:opacity-90 transition cursor-pointer flex items-center justify-between">
+              <span>I. Hamid Naderi Yeganeh — Pure Autumn Forest</span>
+              <span class="opacity-75">[Eq. 1]</span>
+            </button>
+            <button data-preset="blueprint" class="preset-btn text-left px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--secondary)] text-[var(--secondary-foreground)] text-xs font-medium mono-code hover:opacity-90 transition cursor-pointer flex items-center justify-between">
+              <span>II. Systemic Collapse Blueprint — Null Core &amp; Chrome Jets</span>
+              <span class="opacity-75">[Eq. 2]</span>
+            </button>
+            <button data-preset="shatter" class="preset-btn text-left px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--secondary)] text-[var(--secondary-foreground)] text-xs font-medium mono-code hover:opacity-90 transition cursor-pointer flex items-center justify-between">
+              <span>III. Manifold Shattering — Voxel Entity &amp; CFG Overdrive</span>
+              <span class="opacity-75">[Eq. 3]</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Equation Parameter Sliders -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-[var(--foreground)] mono-code">
+              2. Live Equation Operators
+            </h3>
+            <button id="btnResetParams" class="text-xs mono-code text-[var(--muted-foreground)] hover:text-[var(--foreground)] underline cursor-pointer">
+              Reset Defaults
+            </button>
+          </div>
+
+          <!-- Slider 1: Yeganeh Autumn Trees -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs mono-code">
+              <label for="slYeganeh" class="font-medium text-[var(--foreground)]">τ_yeganeh (Autumn Forest &amp; Branch Harmonics)</label>
+              <span id="valYeganeh" class="text-[var(--muted-foreground)]">0.90</span>
+            </div>
+            <input id="slYeganeh" type="range" min="0" max="1.2" step="0.01" value="0.90" class="w-full cursor-pointer" />
+          </div>
+
+          <!-- Slider 2: Null-Token Singularity Core -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs mono-code">
+              <label for="slNull" class="font-medium text-[var(--foreground)]">r₀ (Null-Token Black Square Singularity)</label>
+              <span id="valNull" class="text-[var(--muted-foreground)]">0.105</span>
+            </div>
+            <input id="slNull" type="range" min="0" max="0.22" step="0.005" value="0.105" class="w-full cursor-pointer" />
+          </div>
+
+          <!-- Slider 3: Extruded Topological Chrome Jets -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs mono-code">
+              <label for="slJets" class="font-medium text-[var(--foreground)]">γ_jet (4-Way Extruded Topological Chrome Jets)</label>
+              <span id="valJets" class="text-[var(--muted-foreground)]">0.92</span>
+            </div>
+            <input id="slJets" type="range" min="0" max="1.2" step="0.01" value="0.92" class="w-full cursor-pointer" />
+          </div>
+
+          <!-- Slider 4: Latent Manifold Voxel Shattering Entity -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs mono-code">
+              <label for="slShatter" class="font-medium text-[var(--foreground)]">ξ_vox (4-Armed Voxel Entity &amp; Phase Separation)</label>
+              <span id="valShatter" class="text-[var(--muted-foreground)]">0.95</span>
+            </div>
+            <input id="slShatter" type="range" min="0" max="1.2" step="0.01" value="0.95" class="w-full cursor-pointer" />
+          </div>
+
+          <!-- Slider 5: CFG Clipping & VAE Tiling Overdrive -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs mono-code">
+              <label for="slCFG" class="font-medium text-[var(--foreground)]">ω_CFG (CFG Scale Overdrive &amp; VAE Tile Glitch)</label>
+              <span id="valCFG" class="text-[var(--muted-foreground)]">0.85</span>
+            </div>
+            <input id="slCFG" type="range" min="0" max="1.3" step="0.01" value="0.85" class="w-full cursor-pointer" />
+          </div>
+
+          <!-- Slider 6: Diagnostic Zones & Hallucinated Glyphology -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs mono-code">
+              <label for="slDiag" class="font-medium text-[var(--foreground)]">η_UI (Diagnostic Partition Tiles &amp; DNE/END Glyphs)</label>
+              <span id="valDiag" class="text-[var(--muted-foreground)]">1.00</span>
+            </div>
+            <input id="slDiag" type="range" min="0" max="1.0" step="0.01" value="1.00" class="w-full cursor-pointer" />
+          </div>
+        </div>
+
+        <!-- Live Coordinate & Latent Tensor Telemetry Probe -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-[var(--foreground)] mono-code">
+              3. Live Latent Tensor Probe
+            </h3>
+            <span class="text-xs mono-code text-[var(--muted-foreground)]">Hover canvas to inspect</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5 text-xs mono-code">
+            <div class="p-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)]">
+              <div class="text-[var(--muted-foreground)]">PIXEL / LATTICE COORD</div>
+              <div id="probeCoord" class="font-semibold text-[var(--foreground)] mt-0.5">(x: +0.000, y: +0.020)</div>
+            </div>
+            <div class="p-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)]">
+              <div class="text-[var(--muted-foreground)]">SCORE NORM ‖∇ log p‖</div>
+              <div id="probeScore" class="font-semibold text-amber-500 mt-0.5">0.0000 (NULL CORE)</div>
+            </div>
+            <div class="p-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)]">
+              <div class="text-[var(--muted-foreground)]">PRE-CFG LATENT H_v(x,y)</div>
+              <div id="probeLatent" class="font-semibold text-[var(--foreground)] mt-0.5">[0.00, 0.00, 0.00]</div>
+            </div>
+            <div class="p-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)]">
+              <div class="text-[var(--muted-foreground)]">ACTIVE MANIFOLD ZONE</div>
+              <div id="probeZone" class="font-semibold text-rose-500 mt-0.5">NULL-TOKEN SINGULARITY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Architectural Post-Mortem Key -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm space-y-2.5 text-xs">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-[var(--foreground)] mono-code">
+            4. Anatomical Synthesis Map
+          </h3>
+          <ul class="space-y-2 text-[var(--muted-foreground)] leading-relaxed">
+            <li>
+              <strong class="text-[var(--foreground)]">• Yeganeh Implicit Forest (Image 1):</strong>
+              Closed-form sawtooth trunks <code>U_s(x) = arctan(tan(...))</code>, V-limbs <code>L_s(x,y)</code>, and 14-harmonic Fourier foliage <code>E(x,y)</code> form the perspective forest corridor.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">• Null-Token Singularity &amp; Chrome Jets (Image 2):</strong>
+              At <code>max(|x|, |y−0.02|) &lt; r₀</code>, conflicting attention heads cancel to <code>0.0</code>, erupting into 4 thin-film Fresnel liquid-chrome jets, a celestial sphere, wave-function sub-tiles, and <code>DNE / END</code> glyphs.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">• Manifold Shattering &amp; CFG Clipping (Image 3):</strong>
+              The 4-armed entity (and its phase-separated background echo) fractures along quantized voxel slices <code>⌊N·y⌋/N</code> inside a VAE-tiled corridor where overshot latent values wrap into oil-slick rainbow spectra.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // WEBGL2 FRAGMENT SHADER: PURE MATHEMATICAL SYNTHESIS OF ALL 3 REGIMES
+    // =========================================================================
+    const vsSource = `#version 300 es
+    in vec2 a_pos;
+    out vec2 v_uv;
+    void main() {
+      v_uv = a_pos;
+      gl_Position = vec4(a_pos, 0.0, 1.0);
+    }`;
+
+    const fsSource = `#version 300 es
+    precision highp float;
+    in vec2 v_uv;
+    out vec4 outColor;
+
+    uniform float u_time;
+    uniform float u_yeganeh;
+    uniform float u_nullR;
+    uniform float u_jets;
+    uniform float u_shatter;
+    uniform float u_cfg;
+    uniform float u_diag;
+
+    float hash11(float p) {
+      return fract(sin(p * 127.1 + 311.7) * 43758.5453123);
+    }
+
+    float hash21(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+    }
+
+    // Signed distance and parametric coords (dist, h, perp) to segment AB
+    vec3 sdSegment(vec2 p, vec2 a, vec2 b) {
+      vec2 pa = p - a, ba = b - a;
+      float denom = max(dot(ba, ba), 1e-6);
+      float h = clamp(dot(pa, ba) / denom, 0.0, 1.0);
+      vec2 d = pa - ba * h;
+      float dist = length(d);
+      float len = sqrt(denom);
+      float perp = (-pa.x * ba.y + pa.y * ba.x) / max(len, 1e-5);
+      return vec3(dist, h, perp);
+    }
+
+    // Evaluates the 4-armed voxel-shattered entity (and phase-separated echo)
+    vec4 evalShatteredEntity(vec2 p, float scale, float shatterFreq, bool isEcho, float t) {
+      vec2 e = p / scale;
+      float ySlice = floor(e.y * shatterFreq) / shatterFreq;
+      float rng1 = hash11(ySlice * 17.3 + floor(t * 1.5) * 0.01);
+      float rng2 = hash11(ySlice * 53.9 + 1.7);
+      float voxelShift = (rng1 - 0.5) * 0.11 * (1.0 + 0.85 * step(0.78, rng2)) * u_shatter;
+      vec2 q = vec2(e.x + voxelShift, e.y);
+
+      float minSdf = 10.0;
+      float fiber = 0.0;
+
+      // 14 anatomical capsule segments matching the 4-armed shattered entity
+      vec4 segsA[14] = vec4[14](
+        vec4(0.00, -0.26, 0.00, 0.24),
+        vec4(0.00, 0.24, -0.04, 0.46),
+        vec4(-0.11, 0.20, -0.34, 0.46),
+        vec4(-0.34, 0.46, -0.52, 0.72),
+        vec4(0.09, 0.24, 0.26, 0.50),
+        vec4(0.26, 0.50, 0.36, 0.74),
+        vec4(0.13, 0.14, 0.45, 0.38),
+        vec4(0.45, 0.38, 0.78, 0.60),
+        vec4(0.14, 0.08, 0.28, -0.22),
+        vec4(0.28, -0.22, 0.38, -0.68),
+        vec4(-0.07, -0.24, -0.18, -0.58),
+        vec4(-0.18, -0.58, -0.28, -0.98),
+        vec4(0.08, -0.24, 0.14, -0.58),
+        vec4(0.14, -0.58, 0.20, -0.98)
+      );
+      vec2 radii[14] = vec2[14](
+        vec2(0.13, 0.16),
+        vec2(0.08, 0.11),
+        vec2(0.065, 0.055),
+        vec2(0.055, 0.075),
+        vec2(0.055, 0.050),
+        vec2(0.050, 0.065),
+        vec2(0.075, 0.065),
+        vec2(0.065, 0.055),
+        vec2(0.065, 0.060),
+        vec2(0.060, 0.085),
+        vec2(0.095, 0.085),
+        vec2(0.085, 0.110),
+        vec2(0.105, 0.095),
+        vec2(0.095, 0.120)
+      );
+
+      for (int i = 0; i < 14; i++) {
+        vec3 dh = sdSegment(q, segsA[i].xy, segsA[i].zw);
+        float r = mix(radii[i].x, radii[i].y, dh.y);
+        float grooves = 0.018 * sin(dh.z * 140.0 + dh.y * 18.0) + 0.025 * (rng1 - 0.5);
+        float dLimb = dh.x - (r + grooves);
+        if (dLimb < minSdf) {
+          minSdf = dLimb;
+          fiber = sin(dh.z * 180.0 + dh.y * 12.0 + rng1 * 6.283);
+        }
+      }
+
+      float mask = smoothstep(0.012, -0.006, minSdf);
+      float slabStep = sin(e.y * shatterFreq * 6.28318 + fiber * 1.4);
+      float slabLight = 0.5 + 0.5 * tanh(2.5 * slabStep);
+      vec3 col = vec3(
+        0.28 + 0.42 * slabLight + 0.14 * fiber,
+        0.16 + 0.28 * slabLight + 0.08 * fiber,
+        0.14 + 0.22 * slabLight - 0.02 * fiber
+      );
+
+      if (!isEcho) {
+        // Glowing CFG chartreuse/emerald chest token bleed
+        float chestGlow = exp(-((q.x + 0.03)*(q.x + 0.03)/0.0075 + (q.y - 0.07)*(q.y - 0.07)/0.016));
+        col = mix(col, vec3(0.48, 0.98, 0.22), 0.68 * chestGlow);
+
+        // Rainbow CFG edge clipping along shattered voxel cliffs
+        float cliffEdge = smoothstep(-0.038, 0.0, minSdf) * mask * step(0.48, rng2);
+        col += 0.85 * cliffEdge * (0.5 + 0.5 * cos(e.y * 55.0 + vec3(0.0, 2.094, 4.188)));
+
+        // Dark shadow voxel fractures on legs & right shoulder
+        float darkFrac = step(0.56, rng1) * ((q.y < -0.38 || (q.x > 0.01 && q.y > -0.02)) ? 1.0 : 0.0);
+        col *= (1.0 - 0.82 * darkFrac);
+
+        // Hollow face visor void & single glowing cyan singularity eye
+        float faceVoid = exp(-((e.x + 0.05)*(e.x + 0.05)/0.0028 + (e.y - 0.41)*(e.y - 0.41)/0.0034));
+        col *= (1.0 - 0.95 * faceVoid);
+        float cyanEye = exp(-((e.x + 0.065)*(e.x + 0.065) + (e.y - 0.42)*(e.y - 0.42)) / 0.00022);
+        col += cyanEye * vec3(0.35, 0.98, 1.0);
+      } else {
+        col = vec3(0.62, 0.52, 0.68) * slabLight + vec3(0.24, 0.20, 0.28);
+      }
+
+      return vec4(clamp(col, 0.0, 1.0), mask);
+    }
+
+    void main() {
+      // Map v_uv in [-1, 1] to mathematical coordinates x in [-1, 1], y in [-1.3, 1.3]
+      vec2 p = vec2(v_uv.x, v_uv.y * 1.3);
+      float x = p.x;
+      float y = p.y;
+      float t = u_time;
+
+      // Base Obsidian Diagnostic Void
+      vec3 rgb = vec3(0.024, 0.026, 0.034);
+
+      // =======================================================================
+      // 1. HAMID NADERI YEGANEH AUTUMN FOLIAGE & PERSPECTIVE FOREST CORRIDOR
+      // =======================================================================
+      float E_xy = 0.0;
+      float amp = 1.25;
+      float freq = 2.2;
+      for (int s = 1; s <= 12; s++) {
+        float sf = float(s);
+        freq *= 1.22;
+        amp *= 0.86;
+        float s2 = sf * sf;
+        float c2 = cos(2.0 * s2), sn2 = sin(2.0 * s2);
+        float c7 = cos(7.0 * s2), sn7 = sin(7.0 * s2);
+        float c8 = cos(8.0 * s2), sn8 = sin(8.0 * s2);
+        float term1 = cos(freq * (c2 * x + sn2 * y)) + 2.2 * cos(freq * (c7 * x + sn7 * y)) + 1.2 * cos(5.0 * sf);
+        float term2 = cos(freq * (c2 * y - sn2 * x)) + 2.2 * cos(freq * (c8 * x + sn8 * y)) + 1.2 * cos(5.0 * sf);
+        E_xy += amp * term1 * term2;
+      }
+      float E_norm = 0.5 + 0.5 * tanh(0.18 * E_xy);
+
+      float trunkAccum = 0.0;
+      float foliageWarmth = 0.0;
+      float yTree = y - 0.05;
+      for (int s = 1; s <= 7; s++) {
+        float sf = float(s);
+        float scaleS = pow((15.0 + cos(3.0 * sf * sf)) / 10.0, sf);
+        float freqX = 0.55 * scaleS;
+        float phaseS = -1.5 + 0.5 * cos(9.0 * sf * sf);
+        // Periodic sawtooth U_s(x) = atan(tan(...))
+        float argU = freqX * x + phaseS;
+        float U_s = atan(sin(argU), cos(argU));
+        float V_s = 0.5 * scaleS * (yTree + 0.38);
+
+        float L_s = V_s - 0.12 - abs(U_s) / 2.6 + 0.05 * cos(4.0 * x * sf + 3.0 * y + sf);
+        float argR = 14.0 * L_s;
+        float R_s = argR - atan(sin(argR), cos(argR));
+        float T_s = 3.5 * abs(U_s) - 0.45 + 0.5 * cos(sf + R_s * R_s);
+
+        float trunkW = 0.11 / (0.7 + 0.35 * sf);
+        float isTrunk = smoothstep(trunkW, trunkW * 0.25, abs(U_s) / pow(scaleS, 0.35));
+        float isBranch = smoothstep(0.14, 0.02, abs(sin(6.5 * L_s))) * smoothstep(0.6, 0.0, abs(U_s));
+        float isTwig = smoothstep(0.18, 0.03, abs(sin(9.0 * T_s))) * smoothstep(0.8, 0.1, abs(L_s));
+
+        float layerBark = clamp(isTrunk + 0.75 * isBranch + 0.45 * isTwig, 0.0, 1.0);
+        float aboveGround = smoothstep(-0.42 - 0.05 * (8.0 - sf), -0.28, y + 0.25 * abs(x));
+        float dWeight = pow(0.88, sf - 1.0);
+        trunkAccum = max(trunkAccum, layerBark * aboveGround * dWeight);
+        foliageWarmth += dWeight * (0.5 + 0.5 * sin(3.0 * L_s + 0.4 * E_xy));
+      }
+      foliageWarmth = clamp(foliageWarmth / 3.8, 0.0, 1.0);
+
+      vec3 autumnCol = vec3(
+        clamp(0.78 + 0.32 * sin(1.8 * E_norm + foliageWarmth * 2.0), 0.15, 1.0),
+        clamp(0.14 + 0.58 * pow(E_norm, 1.7) * foliageWarmth, 0.03, 0.88),
+        clamp(0.18 + 0.38 * (1.0 - foliageWarmth) * pow(cos(E_norm * 3.14159), 2.0), 0.04, 0.65)
+      );
+
+      // Forest path vanishing cone
+      if (y < -0.15) {
+        float pathCone = smoothstep(0.0, 0.65, -0.15 - y) * smoothstep(0.95, 0.12, abs(x) / (max(-0.08 - y, 0.08) * 1.45));
+        float leafCarpet = 0.5 + 0.5 * sin(24.0 * x / max(-y, 0.15) + 0.8 * E_xy);
+        autumnCol.r = autumnCol.r * (1.0 - 0.45 * pathCone) + 0.35 * pathCone * leafCarpet;
+        autumnCol.g = autumnCol.g * (1.0 - 0.55 * pathCone) + 0.12 * pathCone * leafCarpet;
+        autumnCol.b = autumnCol.b * (1.0 - 0.50 * pathCone) + 0.14 * pathCone;
+      }
+
+      vec3 yeganehRgb = autumnCol * (1.0 - 0.86 * trunkAccum);
+
+      // =======================================================================
+      // 2. VAE TILING CORRIDOR & CFG CLIPPING OVERDRIVE
+      // =======================================================================
+      vec2 vp = vec2(x, y - 0.04);
+      float chebD = max(abs(vp.x) / 0.88, abs(vp.y) / 1.08);
+      float zPersp = 1.0 / max(chebD, 0.06);
+      float uWall = (abs(vp.x) / 0.88 > abs(vp.y) / 1.08) ? (vp.y / max(abs(vp.x), 1e-4)) : (vp.x / max(abs(vp.y), 1e-4));
+
+      vec2 tileId = vec2(floor(uWall * 5.0), floor(zPersp * 3.2));
+      float tileHash = hash21(tileId);
+      float scanline = sin(y * 520.0 + tileHash * 6.283 + t * 2.0);
+      float seamU = smoothstep(0.08, 0.01, abs(fract(uWall * 5.0) - 0.5) - 0.44);
+      float seamZ = smoothstep(0.08, 0.01, abs(fract(zPersp * 3.2) - 0.5) - 0.44);
+      float tileBorder = max(seamU, seamZ);
+
+      float cfgLatent = 2.4 * E_norm + 1.8 * tileHash + 0.65 * sin(zPersp * 2.8 - uWall * 3.5 + t * 0.4) + 0.28 * scanline;
+      float wCfg = 4.6 * max(u_cfg, 0.1);
+      vec3 cfgRgb = 0.5 + 0.5 * cos(wCfg * cfgLatent + vec3(0.0, 2.094, 4.188));
+
+      bool isCeiling = (vp.y > 0.12) && (abs(vp.y) / 1.08 >= abs(vp.x) / 0.88);
+      float ceilingGlow = isCeiling ? (0.35 + 0.45 * smoothstep(0.3, 0.9, tileHash)) : 0.12;
+      cfgRgb = clamp(cfgRgb * 0.9 + ceilingGlow, 0.0, 1.0);
+
+      float blackBlock = (x < -0.25 && y > 0.68 && tileHash > 0.48) ? 1.0 : 0.0;
+      cfgRgb *= (1.0 - 0.65 * tileBorder) * (1.0 - 0.92 * blackBlock);
+
+      // Fuse Yeganeh Forest & CFG Corridor
+      float corrMix = smoothstep(-0.15, 0.45, sin(3.5 * x + 2.2 * y + 0.5 * E_xy) + 0.35 * (y + 0.1)) * u_cfg;
+      vec3 corridorRgb = mix(yeganehRgb * u_yeganeh, cfgRgb, clamp(corrMix * 0.62, 0.0, 1.0));
+      corridorRgb *= (1.0 - 0.52 * trunkAccum * u_yeganeh);
+      float branchEdge = trunkAccum * (1.0 - trunkAccum) * 4.0;
+      corridorRgb += 0.42 * branchEdge * cfgRgb * u_cfg * u_yeganeh;
+
+      // =======================================================================
+      // 3. FRAME CORRIDOR & RENDER EXTRUDED TOPOLOGICAL CHROME JETS
+      // =======================================================================
+      float frameMargin = mix(1.35, 0.88, u_diag);
+      float viewportMask = smoothstep(-frameMargin, -frameMargin + 0.18, x)
+                         * smoothstep(frameMargin, frameMargin - 0.18, x)
+                         * smoothstep(mix(-1.35, -0.52, u_diag), mix(-1.30, -0.35, u_diag), y)
+                         * smoothstep(mix(1.35, 0.95, u_diag), mix(1.30, 0.62, u_diag), y);
+      rgb = mix(rgb, corridorRgb, viewportMask);
+
+      vec2 cNull = vec2(0.0, 0.02);
+      vec2 dc = p - cNull;
+      float chromeMaskTotal = 0.0;
+
+      if (u_jets > 0.01) {
+        vec2 jetTargets[5] = vec2[5](
+          vec2(-0.64, 0.64),
+          vec2(0.47, 0.81),
+          vec2(-0.56, -0.39),
+          vec2(0.57, -0.43),
+          vec2(0.78, 0.28)
+        );
+        vec4 jetParams[5] = vec4[5](
+          vec4(0.065, 0.23, 22.0, 1.25),
+          vec4(0.040, 0.085, 26.0, 1.00),
+          vec4(0.060, 0.16, 19.0, 1.15),
+          vec4(0.065, 0.21, 18.0, 1.25),
+          vec4(0.032, 0.25, 32.0, 1.80)
+        );
+
+        vec3 chromeRgbTotal = vec3(0.0);
+
+        for (int i = 0; i < 5; i++) {
+          vec3 dh = sdSegment(p, cNull, jetTargets[i]);
+          float r0 = jetParams[i].x, r1 = jetParams[i].y, rfreq = jetParams[i].z, fpow = jetParams[i].w;
+          float profile = (r0 + (r1 - r0) * pow(dh.y, fpow) + 0.020 * sin(dh.y * 14.0 + float(i)) * sin(dh.z * 28.0)) * u_jets;
+          float uTrans = dh.z / max(profile, 1e-5);
+          float inJet = smoothstep(1.02, 0.84, abs(uTrans)) * smoothstep(0.0, 0.05, dh.y) * smoothstep(1.02, 0.92, dh.y);
+
+          float psi = sqrt(max(1.0 - uTrans * uTrans, 0.0))
+                    + 0.34 * sin(uTrans * rfreq + 2.6 * sin(dh.y * 9.0 + E_norm * 1.2 - t * 0.8))
+                    + 0.18 * cos(uTrans * rfreq * 2.4 - dh.y * 16.0 + t * 0.6);
+
+          float dpsi = -uTrans / sqrt(max(1.0 - uTrans * uTrans, 0.04))
+                     + 0.34 * rfreq * cos(uTrans * rfreq + 2.6 * sin(dh.y * 9.0 - t * 0.8));
+          float nx = tanh(dpsi * 0.22);
+          float ny = sin(dh.y * 11.0 + uTrans * 5.0) * 0.38;
+          float nz = sqrt(max(1.0 - nx * nx - ny * ny, 0.04));
+
+          float reflBands = 0.5 + 0.5 * cos(nx * 14.0 + ny * 8.0 + sin(dh.y * 12.0 - t * 0.5));
+          float sharpSpec = pow(reflBands, 5.0) * 0.95 + pow(nz, 6.0) * 0.55;
+          float darkCore = 0.12 + 0.75 * smoothstep(0.2, 0.85, reflBands);
+          float fresnel = pow(1.0 - nz, 1.8);
+          float iridPhase = 5.8 * nx + 4.2 * dh.y + 1.6 * psi;
+          vec3 jCol;
+          if (i == 4) {
+            jCol = vec3(
+              0.72 + 0.26 * sharpSpec + 0.10 * cos(iridPhase),
+              0.78 + 0.22 * sharpSpec + 0.10 * cos(iridPhase + 0.8),
+              0.90 + 0.12 * sharpSpec + 0.08 * sin(iridPhase)
+            );
+          } else {
+            float goldC = pow(max(0.0, cos(iridPhase + 0.4)), 2.0);
+            float cyanC = pow(max(0.0, cos(iridPhase - 2.1)), 2.0);
+            jCol = vec3(
+              clamp(darkCore * 0.55 + sharpSpec + 0.65 * fresnel * goldC + 0.15 * cyanC, 0.04, 1.0),
+              clamp(darkCore * 0.62 + sharpSpec + 0.48 * fresnel * goldC + 0.45 * fresnel * cyanC, 0.05, 1.0),
+              clamp(darkCore * 0.75 + sharpSpec + 0.10 * goldC + 0.78 * fresnel * cyanC, 0.08, 1.0)
+            );
+          }
+          chromeRgbTotal = mix(chromeRgbTotal, jCol, inJet);
+          chromeMaskTotal = max(chromeMaskTotal, inJet);
+        }
+
+        rgb = mix(rgb, chromeRgbTotal, 0.92 * chromeMaskTotal * clamp(u_jets, 0.0, 1.0));
+      }
+
+      // =======================================================================
+      // 4. LATENT MANIFOLD SHATTERING: 4-ARMED VOXEL ENTITY (FOREGROUND) & ECHO
+      // =======================================================================
+      if (u_shatter > 0.01) {
+        vec4 echoEnt = evalShatteredEntity(p - vec2(-0.28, -0.02), 0.33, 90.0, true, t);
+        rgb = mix(rgb, echoEnt.rgb, 0.84 * echoEnt.a * clamp(u_shatter, 0.0, 1.0) * viewportMask);
+
+        vec4 mainEnt = evalShatteredEntity(p - vec2(0.02, -0.06), 0.80, 135.0, false, t);
+        float entBlend = mainEnt.a * (1.0 - 0.28 * chromeMaskTotal) * clamp(u_shatter, 0.0, 1.0) * viewportMask;
+        rgb = mix(rgb, mainEnt.rgb, entBlend);
+      }
+
+      if (u_jets > 0.01) {
+        // Accretion froth around Null-Token Square
+        float rCheb = max(abs(dc.x), abs(dc.y));
+        float frothRing = smoothstep(u_nullR * 0.85, u_nullR * 1.15, rCheb) * smoothstep(u_nullR * 2.5, u_nullR * 1.25, rCheb);
+        float frothTex = 0.5 + 0.5 * sin(52.0 * dc.x + 6.5 * E_xy) * cos(52.0 * dc.y - 6.5 * E_xy);
+        float frothMask = frothRing * smoothstep(0.32, 0.82, frothTex) * u_jets;
+        vec3 frothCol = vec3(0.78, 0.80, 0.86) + 0.18 * frothTex;
+        rgb = mix(rgb, frothCol, 0.88 * frothMask);
+
+        // Golden Plasma Waterfall & Spray Pool below the Null-Token Square
+        float streamStreaks = pow(cos(dc.x * 155.0), 8.0) * smoothstep(-0.48, -0.09, dc.y) * smoothstep(0.12, 0.015, abs(dc.x));
+        if (dc.y < -0.09 && dc.y > -0.48 && abs(dc.x) < 0.12) {
+          rgb += streamStreaks * vec3(0.92, 0.85, 0.72) * u_jets;
+        }
+        float rPool = length(vec2(dc.x / 0.21, (y + 0.44) / 0.12));
+        float poolNoise = hash21(floor(p * 320.0));
+        float poolGlow = exp(-rPool * rPool * 1.75) * (0.42 + 0.90 * step(0.34, poolNoise)) * u_jets;
+        vec3 poolCol = vec3(1.0, clamp(0.74 - 0.24 * rPool, 0.32, 0.96), clamp(0.20 + 0.38 * (1.0 - rPool), 0.05, 0.65));
+        rgb = clamp(rgb + poolGlow * poolCol, 0.0, 1.0);
+
+        // Upper-Right Supernova Dandelion Sphere at (0.48, 0.82)
+        vec2 dd = p - vec2(0.48, 0.82);
+        float dDand = length(dd);
+        float angDand = atan(dd.y, dd.x);
+        float dandRays = 0.5 + 0.5 * cos(angDand * 112.0 + sin(dDand * 75.0 - t));
+        float dandCoreDark = smoothstep(0.004, 0.018, dDand);
+        float dandMask = smoothstep(0.215, 0.015, dDand) * (0.50 + 0.50 * dandRays * smoothstep(0.0, 0.18, dDand)) * u_jets;
+        vec3 dandCol = vec3(
+          clamp(0.96 - 1.1 * dDand, 0.35, 1.0),
+          clamp(0.88 - 0.8 * dDand, 0.45, 0.96),
+          clamp(0.62 + 1.6 * dDand, 0.40, 1.0)
+        ) * dandCoreDark;
+        rgb = mix(rgb, dandCol, dandMask);
+      }
+
+      // =======================================================================
+      // 5. DIAGNOSTIC HEADER & BOTTOM PARTITION TILES (IMAGE 2)
+      // =======================================================================
+      if (u_diag > 0.01) {
+        // Top-Center Celestial Sphere at (0.0, 0.83)
+        vec2 sp = p - vec2(0.0, 0.83);
+        float sr = length(sp);
+        float rSph = 0.215;
+        float inSph = smoothstep(rSph + 0.005, rSph - 0.005, sr) * u_diag;
+        float sz = sqrt(max(1.0 - (sr / rSph)*(sr / rSph), 0.0));
+        float lat = sp.y / rSph;
+        vec3 sphCol = vec3(
+          clamp(0.52 + 0.45 * exp(-lat * lat * 12.0) + 0.25 * step(lat, -0.3) * (-lat), 0.1, 1.0),
+          clamp(0.58 + 0.42 * exp(-lat * lat * 9.0) - 0.25 * abs(lat), 0.15, 1.0),
+          clamp(0.75 + 0.25 * cos(lat * 3.0), 0.3, 1.0)
+        ) * (0.35 + 0.65 * pow(sz, 0.55));
+        rgb = mix(rgb, sphCol, inSph);
+
+        // Top-Left Polar Vector Burst Wheel at (-0.58, 0.83)
+        vec2 pw = p - vec2(-0.58, 0.83);
+        float prw = length(pw);
+        float pang = atan(pw.y, pw.x);
+        float numSpokes = 64.0;
+        float spokeId = floor((pang + 3.14159265) / 6.2831853 * numSpokes);
+        float spokeLen = 0.15 + 0.08 * hash11(spokeId * 13.7);
+        float spokeDist = abs(sin(pang * numSpokes * 0.5)) * prw;
+        float isSpoke = smoothstep(0.004, 0.001, spokeDist) * step(prw, spokeLen) * step(0.008, prw);
+        float isRing = (smoothstep(0.004, 0.001, abs(prw - 0.11))
+                      + smoothstep(0.004, 0.001, abs(prw - 0.18))
+                      + smoothstep(0.004, 0.001, abs(prw - 0.22))) * 0.45;
+        float wheelVal = clamp(isSpoke + isRing + exp(-prw * prw / 0.0004), 0.0, 1.0) * u_diag;
+        rgb = clamp(rgb + wheelVal * vec3(0.85, 0.87, 0.92), 0.0, 1.0);
+
+        // Bottom Tile 1 (Bottom-Left): 2D Standing-Wave Crystal Lattice
+        vec2 t1 = (p - vec2(-0.63, -0.93)) / 0.25;
+        if (abs(t1.x) < 1.0 && abs(t1.y) < 1.0) {
+          float rt1 = max(abs(t1.x), abs(t1.y));
+          float dots = (0.5 + 0.5 * cos(t1.x * 85.0)) * (0.5 + 0.5 * cos(t1.y * 85.0));
+          float nodal = 1.0 - 0.45 * exp(-t1.x * t1.x * 35.0) - 0.45 * exp(-t1.y * t1.y * 35.0);
+          float env = smoothstep(1.05, 0.2, rt1) * (0.4 + 0.7 * dots) * nodal;
+          vec3 t1Col = vec3(0.58 * env + 0.25 * env * env, 0.72 * env + 0.25 * env * env, 0.95 * env + 0.10);
+          rgb = mix(rgb, t1Col, u_diag);
+        }
+
+        // Bottom Tile 2 (Bottom-Center): Magnetic Dipole Hourglass Mesh
+        vec2 t2 = vec2(p.x / 0.26, (p.y + 0.93) / 0.25);
+        if (abs(t2.x) < 1.0 && abs(t2.y) < 1.0) {
+          float hgEnv = smoothstep(0.95, 0.55, abs(t2.y) / (0.35 + 0.65 * t2.x * t2.x));
+          float eye = smoothstep(0.08, 0.24, (t2.x / 0.42)*(t2.x / 0.42) + (t2.y / 0.22)*(t2.y / 0.22));
+          float moire = 0.5 + 0.5 * cos(78.0 * t2.x * (1.0 + 0.4 * t2.y * t2.y)) * cos(64.0 * t2.y);
+          float t2Val = hgEnv * eye * (0.28 + 0.72 * moire);
+          rgb = mix(rgb, vec3(0.72, 0.78, 0.88) * t2Val, u_diag);
+        }
+
+        // Bottom Tile 3 (Bottom-Right): Peeled 3D RGB Color-Space Gradient Manifold
+        vec2 t3 = vec2((p.x - 0.70) / 0.20, (p.y + 0.96) / 0.22);
+        if (abs(t3.x) < 1.0 && abs(t3.y) < 1.0) {
+          float peelCurve = t3.y - (0.65 * tanh(1.4 * t3.x + 0.3) - 0.05);
+          float underPeel = smoothstep(0.02, -0.02, peelCurve);
+          float dSpec = peelCurve + 0.35 * (1.0 - t3.x);
+          vec3 grad = vec3(
+            clamp(1.0 - 1.2 * abs(dSpec + 0.15), 0.12, 1.0),
+            clamp(1.0 - 1.8 * abs(dSpec + 0.35), 0.15, 1.0),
+            clamp(0.35 + 1.4 * (-dSpec - 0.25), 0.10, 1.0)
+          );
+          float whiteBase = smoothstep(-0.35, -0.75, dSpec);
+          vec3 c3 = clamp(grad + vec3(0.85, 0.88, 0.92) * whiteBase, 0.0, 1.0) * underPeel;
+          float foldRim = exp(-(peelCurve * peelCurve) / 0.0012) * 0.65;
+          rgb = mix(rgb, clamp(c3 + foldRim, 0.0, 1.0), u_diag);
+        }
+
+        // Golden Starburst & White Diagnostic Square under END/DNE
+        float dStar = length(p - vec2(0.35, -0.78));
+        float starAng = atan(p.y + 0.78, p.x - 0.35);
+        float starBurst = exp(-dStar / 0.028) * (0.6 + 0.4 * cos(starAng * 24.0)) * u_diag;
+        rgb += starBurst * vec3(1.0, 0.86, 0.55);
+
+        if (abs(p.x - 0.39) < 0.075 && abs(p.y + 1.09) < 0.085) {
+          rgb = mix(rgb, vec3(0.88, 0.94, 0.97), u_diag);
+        }
+      }
+
+      // =======================================================================
+      // 6. THE "BLACK HOLE" SINGULARITY (NULL-TOKEN CORE AT THE CENTER)
+      // =======================================================================
+      if (u_nullR > 0.002) {
+        float chebNull = max(abs(dc.x), abs(dc.y));
+        if (chebNull < u_nullR) {
+          rgb = vec3(0.0);
+        } else if (abs(chebNull - u_nullR) < 0.003) {
+          rgb = vec3(0.20, 0.22, 0.27);
+        }
+      }
+
+      outColor = vec4(clamp(rgb, 0.0, 1.0), 1.0);
+    }`;
+
+    // =========================================================================
+    // INITIALIZE WEBGL2 & VECTOR DIAGNOSTIC HUD OVERLAY
+    // =========================================================================
+    const glCanvas = document.getElementById("glCanvas");
+    const hudCanvas = document.getElementById("hudCanvas");
+    const gl = glCanvas.getContext("webgl2", { preserveDrawingBuffer: true });
+    const ctx = hudCanvas.getContext("2d");
+
+    function compileShader(type, src) {
+      const sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(sh));
+      }
+      return sh;
+    }
+
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
+    gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const quadBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+      -1, -1,  1, -1, -1,  1,
+      -1,  1,  1, -1,  1,  1
+    ]), gl.STATIC_DRAW);
+
+    const posLoc = gl.getAttribLocation(prog, "a_pos");
+    gl.enableVertexAttribArray(posLoc);
+    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+    const uLocs = {
+      time: gl.getUniformLocation(prog, "u_time"),
+      yeganeh: gl.getUniformLocation(prog, "u_yeganeh"),
+      nullR: gl.getUniformLocation(prog, "u_nullR"),
+      jets: gl.getUniformLocation(prog, "u_jets"),
+      shatter: gl.getUniformLocation(prog, "u_shatter"),
+      cfg: gl.getUniformLocation(prog, "u_cfg"),
+      diag: gl.getUniformLocation(prog, "u_diag"),
+    };
+
+    const state = {
+      yeganeh: 0.90,
+      nullR: 0.105,
+      jets: 0.92,
+      shatter: 0.95,
+      cfg: 0.85,
+      diag: 1.00,
+      paused: false,
+      time: 0.0,
+      lastFrame: performance.now(),
+      hoverX: 0.0,
+      hoverY: 0.02,
+      isHovering: false,
+    };
+
+    // Map math coordinates (x in [-1, 1], y in [-1.3, 1.3]) to HUD canvas pixels
+    function toPx(x, y, W, H) {
+      return [
+        ((x + 1.0) * 0.5) * W,
+        ((1.3 - y) / 2.6) * H
+      ];
+    }
+
+    function drawHallucinatedHUD(targetCtx, W, H, alphaScale) {
+      targetCtx.clearRect(0, 0, W, H);
+      if (alphaScale <= 0.02 && !state.isHovering) return;
+
+      targetCtx.save();
+      targetCtx.globalAlpha = alphaScale;
+
+      const uiColor = "#DCE4EE";
+      const mutedColor = "#8A99AD";
+      const goldColor = "#F2C97D";
+
+      // 1. Crosshair Reticles (+)
+      const crosshairs = [
+        [-0.28, 0.96, 0.022, 1.5],
+        [0.24, 1.04, 0.018, 1.5],
+        [0.14, 0.34, 0.038, 3.2],
+        [0.73, -0.34, 0.042, 3.2],
+        [-0.33, -0.73, 0.045, 2.8],
+        [-0.78, -0.56, 0.095, 2.5],
+        [-0.56, -0.56, 0.095, 2.5],
+      ];
+      targetCtx.strokeStyle = uiColor;
+      for (const [cx, cy, sz, lw] of crosshairs) {
+        const [px1, py1] = toPx(cx - sz, cy, W, H);
+        const [px2, py2] = toPx(cx + sz, cy, W, H);
+        const [px3, py3] = toPx(cx, cy - sz, W, H);
+        const [px4, py4] = toPx(cx, cy + sz, W, H);
+        targetCtx.lineWidth = lw * (W / 1000);
+        targetCtx.beginPath();
+        targetCtx.moveTo(px1, py1); targetCtx.lineTo(px2, py2);
+        targetCtx.moveTo(px3, py3); targetCtx.lineTo(px4, py4);
+        targetCtx.stroke();
+      }
+
+      // 2. Left Vertical Corrupted Token Stream
+      targetCtx.save();
+      const [vx, vy] = toPx(-0.935, 0.28, W, H);
+      targetCtx.translate(vx, vy);
+      targetCtx.rotate(Math.PI * 0.5);
+      targetCtx.fillStyle = uiColor;
+      targetCtx.font = `bold ${Math.round(14 * W / 1000)}px monospace`;
+      targetCtx.textAlign = "center";
+      targetCtx.fillText("unhnwinconestrrtanss cresamsmzvutljp/picaall", 0, 0);
+      targetCtx.restore();
+
+      const syms = ["Δ", "X", "O", "Φ", "N!"];
+      targetCtx.fillStyle = uiColor;
+      targetCtx.font = `bold ${Math.round(13 * W / 1000)}px monospace`;
+      targetCtx.textAlign = "center";
+      syms.forEach((s, idx) => {
+        const [sx, sy] = toPx(-0.865, -0.05 - idx * 0.055, W, H);
+        targetCtx.fillText(s, sx, sy);
+      });
+
+      // 3. Horizontal Comb / Frequency Bar Spectrograms
+      for (let i = 0; i < 20; i++) {
+        const yBar = -0.02 + (i / 19) * 0.28;
+        const barLen = 0.24 + 0.14 * Math.sin(yBar * 19.0);
+        const [bx1, by1] = toPx(-0.82, yBar, W, H);
+        const [bx2, by2] = toPx(-0.82 + barLen, yBar, W, H);
+        targetCtx.strokeStyle = mutedColor;
+        targetCtx.lineWidth = 1.0 * (W / 1000);
+        targetCtx.beginPath();
+        targetCtx.moveTo(bx1, by1); targetCtx.lineTo(bx2, by2);
+        targetCtx.stroke();
+      }
+      [-0.08, -0.125, -0.17, -0.215].forEach((yBar, idx) => {
+        const [bx1, by1] = toPx(-0.82, yBar, W, H);
+        const [bx2, by2] = toPx(-0.64, yBar, W, H);
+        targetCtx.strokeStyle = idx >= 2 ? goldColor : uiColor;
+        targetCtx.lineWidth = 3.0 * (W / 1000);
+        targetCtx.beginPath();
+        targetCtx.moveTo(bx1, by1); targetCtx.lineTo(bx2, by2);
+        targetCtx.stroke();
+      });
+
+      // 4. Right-Side Corrupted Glyphology & False Mathematical Logic Matrix
+      targetCtx.fillStyle = uiColor;
+      targetCtx.textAlign = "center";
+      targetCtx.font = `bold ${Math.round(19 * W / 1000)}px monospace`;
+      let [rx, ry] = toPx(0.81, 0.04, W, H);
+      targetCtx.fillText("=  |⁻  ·", rx, ry);
+      [rx, ry] = toPx(0.81, -0.03, W, H);
+      targetCtx.fillText("→ | | +", rx, ry);
+
+      targetCtx.font = `bold ${Math.round(24 * W / 1000)}px monospace`;
+      [rx, ry] = toPx(0.81, -0.145, W, H);
+      targetCtx.fillText("X E", rx, ry);
+      [rx, ry] = toPx(0.81, -0.255, W, H);
+      targetCtx.fillText("Π −", rx, ry);
+
+      targetCtx.font = `bold ${Math.round(17 * W / 1000)}px monospace`;
+      [rx, ry] = toPx(0.60, -0.295, W, H);
+      targetCtx.fillText("<  ≫  =  +", rx, ry);
+
+      // 5. Wireframe Diagnostic Grid Meshes
+      targetCtx.strokeStyle = "rgba(138, 153, 173, 0.45)";
+      targetCtx.lineWidth = 0.8 * (W / 1000);
+      for (let i = 0; i <= 12; i++) {
+        const gx = 0.48 + (i / 12) * 0.24;
+        const [x1, y1] = toPx(gx, 0.38, W, H);
+        const [x2, y2] = toPx(gx, 0.62, W, H);
+        targetCtx.beginPath(); targetCtx.moveTo(x1, y1); targetCtx.lineTo(x2, y2); targetCtx.stroke();
+
+        const gy = 0.38 + (i / 12) * 0.24;
+        const [x3, y3] = toPx(0.48, gy, W, H);
+        const [x4, y4] = toPx(0.72, gy, W, H);
+        targetCtx.beginPath(); targetCtx.moveTo(x3, y3); targetCtx.lineTo(x4, y4); targetCtx.stroke();
+      }
+
+      // 6. Top Labels & Diamond Badge
+      targetCtx.font = `${Math.round(12 * W / 1000)}px monospace`;
+      [rx, ry] = toPx(-0.22, 0.64, W, H);
+      targetCtx.fillText("987654521", rx, ry);
+      [rx, ry] = toPx(0.80, 0.63, W, H);
+      targetCtx.fillText("anchocilturaw", rx, ry);
+
+      // Diamond schematic badge at (0.23, 0.53)
+      const dPts = [[0.15, 0.53], [0.23, 0.57], [0.31, 0.53], [0.23, 0.49], [0.15, 0.53]];
+      targetCtx.strokeStyle = uiColor;
+      targetCtx.lineWidth = 1.3 * (W / 1000);
+      targetCtx.beginPath();
+      dPts.forEach(([dx, dy], i) => {
+        const [px, py] = toPx(dx, dy, W, H);
+        if (i === 0) targetCtx.moveTo(px, py);
+        else targetCtx.lineTo(px, py);
+      });
+      targetCtx.stroke();
+      [rx, ry] = toPx(0.23, 0.525, W, H);
+      targetCtx.font = `italic bold ${Math.round(15 * W / 1000)}px serif`;
+      targetCtx.fillText("2", rx, ry);
+
+      // 7. Bottom-Right Terminal Semantic Tokens: "END" and "DNE" ("Does Not Exist")
+      targetCtx.font = `bold ${Math.round(13 * W / 1000)}px monospace`;
+      [rx, ry] = toPx(0.33, -0.65, W, H);
+      targetCtx.fillText("END", rx, ry);
+      targetCtx.font = `bold ${Math.round(16 * W / 1000)}px monospace`;
+      [rx, ry] = toPx(0.88, -0.65, W, H);
+      targetCtx.fillText("DNE", rx, ry);
+      [rx, ry] = toPx(0.64, -0.65, W, H);
+      targetCtx.fillText("→", rx, ry);
+
+      // Circle next to DNE
+      const [cxDne, cyDne] = toPx(0.75, -0.655, W, H);
+      targetCtx.fillStyle = "#CBD8EC";
+      targetCtx.beginPath();
+      targetCtx.arc(cxDne, cyDne, 12 * (W / 1000), 0, Math.PI * 2);
+      targetCtx.fill();
+
+      // Runic crosshair & "-> D - ->"
+      targetCtx.strokeStyle = uiColor;
+      targetCtx.lineWidth = 1.8 * (W / 1000);
+      let [lx1, ly1] = toPx(0.47, -0.88, W, H);
+      let [lx2, ly2] = toPx(0.47, -0.68, W, H);
+      targetCtx.beginPath(); targetCtx.moveTo(lx1, ly1); targetCtx.lineTo(lx2, ly2); targetCtx.stroke();
+      [lx1, ly1] = toPx(0.42, -0.74, W, H); [lx2, ly2] = toPx(0.53, -0.74, W, H);
+      targetCtx.beginPath(); targetCtx.moveTo(lx1, ly1); targetCtx.lineTo(lx2, ly2); targetCtx.stroke();
+      [lx1, ly1] = toPx(0.42, -0.82, W, H); [lx2, ly2] = toPx(0.53, -0.82, W, H);
+      targetCtx.beginPath(); targetCtx.moveTo(lx1, ly1); targetCtx.lineTo(lx2, ly2); targetCtx.stroke();
+
+      targetCtx.fillStyle = uiColor;
+      targetCtx.font = `bold ${Math.round(19 * W / 1000)}px monospace`;
+      [rx, ry] = toPx(0.42, -0.94, W, H);
+      targetCtx.fillText("→ D — →", rx, ry);
+
+      targetCtx.restore();
+
+      // Draw interactive probe reticle when user hovers on canvas
+      if (state.isHovering) {
+        const [hx, hy] = toPx(state.hoverX, state.hoverY, W, H);
+        targetCtx.save();
+        targetCtx.strokeStyle = "#38BDF8";
+        targetCtx.lineWidth = 1.5;
+        targetCtx.beginPath();
+        targetCtx.arc(hx, hy, 12, 0, Math.PI * 2);
+        targetCtx.stroke();
+        targetCtx.beginPath();
+        targetCtx.moveTo(hx - 18, hy); targetCtx.lineTo(hx + 18, hy);
+        targetCtx.moveTo(hx, hy - 18); targetCtx.lineTo(hx, hy + 18);
+        targetCtx.stroke();
+        targetCtx.restore();
+      }
+    }
+
+    // =========================================================================
+    // RENDER LOOP & INTERACTIVE EVENT HANDLERS
+    // =========================================================================
+    let frameCount = 0;
+    let fpsTimer = performance.now();
+    const fpsEl = document.getElementById("fpsCounter");
+
+    function renderLoop(now) {
+      const dt = (now - state.lastFrame) * 0.001;
+      state.lastFrame = now;
+      if (!state.paused) {
+        state.time += dt;
+      }
+
+      gl.viewport(0, 0, glCanvas.width, glCanvas.height);
+      gl.useProgram(prog);
+      gl.uniform1f(uLocs.time, state.time);
+      gl.uniform1f(uLocs.yeganeh, state.yeganeh);
+      gl.uniform1f(uLocs.nullR, state.nullR);
+      gl.uniform1f(uLocs.jets, state.jets);
+      gl.uniform1f(uLocs.shatter, state.shatter);
+      gl.uniform1f(uLocs.cfg, state.cfg);
+      gl.uniform1f(uLocs.diag, state.diag);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      drawHallucinatedHUD(ctx, hudCanvas.width, hudCanvas.height, state.diag);
+
+      frameCount++;
+      if (now - fpsTimer > 400) {
+        const fps = Math.round((frameCount * 1000) / (now - fpsTimer));
+        fpsEl.textContent = `${fps} FPS • t = ${state.time.toFixed(2)}s`;
+        frameCount = 0;
+        fpsTimer = now;
+      }
+      requestAnimationFrame(renderLoop);
+    }
+    requestAnimationFrame(renderLoop);
+
+    // Slider bindings
+    const sliders = [
+      { id: "slYeganeh", valId: "valYeganeh", key: "yeganeh", digits: 2 },
+      { id: "slNull", valId: "valNull", key: "nullR", digits: 3 },
+      { id: "slJets", valId: "valJets", key: "jets", digits: 2 },
+      { id: "slShatter", valId: "valShatter", key: "shatter", digits: 2 },
+      { id: "slCFG", valId: "valCFG", key: "cfg", digits: 2 },
+      { id: "slDiag", valId: "valDiag", key: "diag", digits: 2 },
+    ];
+
+    function syncSlidersFromState() {
+      for (const s of sliders) {
+        const el = document.getElementById(s.id);
+        const vEl = document.getElementById(s.valId);
+        el.value = state[s.key];
+        vEl.textContent = Number(state[s.key]).toFixed(s.digits);
+      }
+    }
+
+    for (const s of sliders) {
+      const el = document.getElementById(s.id);
+      const vEl = document.getElementById(s.valId);
+      el.addEventListener("input", () => {
+        state[s.key] = parseFloat(el.value);
+        vEl.textContent = state[s.key].toFixed(s.digits);
+      });
+    }
+
+    // Presets
+    const presets = {
+      all:       { yeganeh: 0.90, nullR: 0.105, jets: 0.92, shatter: 0.95, cfg: 0.85, diag: 1.00 },
+      yeganeh:   { yeganeh: 1.15, nullR: 0.000, jets: 0.00, shatter: 0.00, cfg: 0.00, diag: 0.00 },
+      blueprint: { yeganeh: 0.15, nullR: 0.115, jets: 1.05, shatter: 0.00, cfg: 0.15, diag: 1.00 },
+      shatter:   { yeganeh: 0.55, nullR: 0.000, jets: 0.00, shatter: 1.10, cfg: 1.15, diag: 0.00 },
+    };
+
+    document.querySelectorAll(".preset-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const pKey = btn.getAttribute("data-preset");
+        Object.assign(state, presets[pKey]);
+        syncSlidersFromState();
+
+        document.querySelectorAll(".preset-btn").forEach((b) => {
+          b.className = "preset-btn text-left px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--secondary)] text-[var(--secondary-foreground)] text-xs font-medium mono-code hover:opacity-90 transition cursor-pointer flex items-center justify-between";
+        });
+        btn.className = "preset-btn text-left px-3.5 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-semibold mono-code transition cursor-pointer flex items-center justify-between";
+      });
+    });
+
+    document.getElementById("btnResetParams").addEventListener("click", () => {
+      Object.assign(state, presets.all);
+      syncSlidersFromState();
+    });
+
+    // Pause / Play
+    const btnAnim = document.getElementById("btnToggleAnim");
+    btnAnim.addEventListener("click", () => {
+      state.paused = !state.paused;
+      btnAnim.textContent = state.paused ? "▶ RESUME PHASE FLOW" : "⏸ PAUSE PHASE FLOW";
+    });
+
+    // Live Latent Tensor Hover Probe
+    const probeCoord = document.getElementById("probeCoord");
+    const probeScore = document.getElementById("probeScore");
+    const probeLatent = document.getElementById("probeLatent");
+    const probeZone = document.getElementById("probeZone");
+
+    hudCanvas.addEventListener("mousemove", (e) => {
+      const rect = hudCanvas.getBoundingClientRect();
+      const nx = (e.clientX - rect.left) / rect.width;
+      const ny = (e.clientY - rect.top) / rect.height;
+      const x = nx * 2.0 - 1.0;
+      const y = 1.3 - ny * 2.6;
+      state.hoverX = x;
+      state.hoverY = y;
+      state.isHovering = true;
+
+      probeCoord.textContent = `(x: ${x >= 0 ? "+" : ""}${x.toFixed(3)}, y: ${y >= 0 ? "+" : ""}${y.toFixed(3)})`;
+
+      const chebNull = Math.max(Math.abs(x), Math.abs(y - 0.02));
+      if (state.nullR > 0.01 && chebNull < state.nullR) {
+        probeScore.textContent = "0.0000 (NULL CORE)";
+        probeScore.className = "font-semibold text-rose-500 mt-0.5";
+        probeLatent.textContent = "[0.00, 0.00, 0.00] (DNE)";
+        probeZone.textContent = "NULL-TOKEN SINGULARITY";
+      } else if (state.diag > 0.3 && y < -0.66) {
+        probeScore.textContent = `${(0.42 + 0.3 * Math.cos(x * 40)).toFixed(4)} (PARTITIONED)`;
+        probeScore.className = "font-semibold text-sky-400 mt-0.5";
+        probeLatent.textContent = `[${(0.6 + 0.3*Math.sin(x*10)).toFixed(2)}, ${(0.7 + 0.2*Math.cos(y*10)).toFixed(2)}, 0.94]`;
+        probeZone.textContent = x < -0.3 ? "WAVE-FUNCTION LATTICE" : (x < 0.3 ? "DIPOLE HOURGLASS MESH" : "DNE / RGB MANIFOLD PEEL");
+      } else if (state.shatter > 0.3 && Math.abs(x) < 0.35 && Math.abs(y + 0.05) < 0.55) {
+        const vox = Math.floor(y * 125) / 125;
+        probeScore.textContent = `${(14.8 + 8.2 * Math.sin(vox * 90)).toFixed(3)} (DIVERGENT)`;
+        probeScore.className = "font-semibold text-amber-400 mt-0.5";
+        probeLatent.textContent = `[${(1.8 * Math.sin(vox*50)).toFixed(2)}, ${(-1.4 * Math.cos(x*20)).toFixed(2)}, +2.41]`;
+        probeZone.textContent = "VOXEL MANIFOLD FRACTURE";
+      } else {
+        const h0 = (1.1 + 0.9 * Math.sin(x * 8 + y * 5)).toFixed(2);
+        const h1 = (0.4 + 0.8 * Math.cos(x * 6 - y * 7)).toFixed(2);
+        const h2 = (-0.6 + 1.4 * Math.sin(x * 12)).toFixed(2);
+        probeScore.textContent = `${(3.2 + 2.5 * Math.abs(x)).toFixed(4)} (CFG=${(state.cfg * 18.4).toFixed(1)})`;
+        probeScore.className = "font-semibold text-emerald-400 mt-0.5";
+        probeLatent.textContent = `[${h0}, ${h1}, ${h2}]`;
+        probeZone.textContent = state.cfg > 0.6 ? "YEGANEH + CFG OVERDRIVE" : "YEGANEH AUTUMN FOREST";
+      }
+    });
+
+    hudCanvas.addEventListener("mouseleave", () => {
+      state.isHovering = false;
+    });
+
+    // =========================================================================
+    // EXPORT HIGH-RESOLUTION COMPOSITE POSTER + YEGANEH EQUATION SHEET (.PNG)
+    // =========================================================================
+    document.getElementById("btnExportPoster").addEventListener("click", () => {
+      const expCanvas = document.createElement("canvas");
+      expCanvas.width = 1200;
+      expCanvas.height = 1860;
+      const ectx = expCanvas.getContext("2d");
+
+      // Background ivory border
+      ectx.fillStyle = "#FAF8F2";
+      ectx.fillRect(0, 0, 1200, 1860);
+
+      // Draw WebGL artwork & HUD into top 1160x1508 frame
+      ectx.drawImage(glCanvas, 20, 20, 1160, 1508);
+      ectx.drawImage(hudCanvas, 20, 20, 1160, 1508);
+
+      // Render Hamid Naderi Yeganeh Equation Specification Plate at the bottom
+      ectx.fillStyle = "#111111";
+      ectx.textAlign = "center";
+      ectx.font = "bold 22px Georgia, serif";
+      ectx.fillText("Autumn of the Shattered Manifold (Null-Token Singularity & CFG Collapse)", 600, 1565);
+
+      ectx.font = "14px Georgia, serif";
+      ectx.fillText("The above picture is a pure mathematical synthesis of a 2000 × 2600 lattice. For m = 1, 2, ..., 2000 and n = 1, 2, ..., 2600, the color of pixel (m, n) is:", 600, 1595);
+
+      const eqLines = [
+        "rgb( F_CFG(H_0((m-1000)/600, (1301-n)/600)),  F_CFG(H_1((m-1000)/600, (1301-n)/600)),  F_CFG(H_2((m-1000)/600, (1301-n)/600)) ) · (1 - Ψ_null(x, y)),",
+        "where F_CFG(z) = ⌊ 255 · exp(-exp(-1000z)) · |z|^exp(-exp(1000(z-1))) + ω_CFG · Θ(z-1) · cos²(π·ω_CFG·z + 2πv/3 + Δ_VAE(x,y)) ⌋,   Ψ_null(x,y) = exp(-exp(-1000(r_0 - max(|x|, |y-y_0|)))),",
+        "H_v(x,y) = (3-v)/20 + [(1 - Ξ_vox(q_x, q_y))/30](18 + 6v² - 6v + 5y)(1 - G(x,y))Z_8(x,y) + (1/400)W_v(q_x, q_y)[ 460C(x,y) + J_chrome,v(x,y)(3 + 20I(x,y)) ],",
+        "q_y = ⌊N_y · y⌋ / N_y,   q_x = x + ξ_vox · sin(127.1 q_y),   L_s(x,y) = V_s(y) - 1/10 - |U_s(x)|/5 + cos(3x+2y+1)/20,   U_s(x) = arctan(tan(7·10^(-s-1)(15+cos(3s²))^s · x - 3/2 + cos(9s²)/2)),",
+        "V_s(y) = (1/2)((15+cos(3s²))/10)^s · y,   E(x,y) = Σ_{s=1..25} (5/4)(9/10)^s D_s(x,y),   D_s(x,y) = Π_{η∈{0,1}} [ cos(5^s 4^(-s)(cos(2s²)u_η + (-1)^η sin(2s²)u_{1-η})) + 4cos(5^s 4^(-s)(cos((7+η)s²)x + sin((7+η)s²)y)) + 2cos(5s) ],",
+        "Diagnostic Partition Zones:  Φ_wave(x,y) = cos(85x̃)cos(85ỹ)exp(-||x̃||_4^4),   Φ_dipole(x,y) = cos(78x̃(1+0.4ỹ²))cos(64ỹ)(1-exp(-||x̃||_A^2)),   lim_{x→x_null} ||∇_x log p_θ(x|c)|| = 0  ⟹  DNE / END."
+      ];
+
+      ectx.font = "italic 13px Georgia, serif";
+      eqLines.forEach((line, idx) => {
+        ectx.fillText(line, 600, 1632 + idx * 35);
+      });
+
+      const link = document.createElement("a");
+      link.download = "autumn_of_the_shattered_manifold.png";
+      link.href = expCanvas.toDataURL("image/png");
+      link.click();
+    });
+  </script>
+</body>
+</html>

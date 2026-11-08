@@ -1,0 +1,500 @@
+project	cap	capability	source_url	basis
+Tierra	E	Evolution	https://en.wikipedia.org/wiki/Tierra_(computer_simulation)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Tierra	R	Self-reproduction	https://en.wikipedia.org/wiki/Tierra_(computer_simulation)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Tierra	D	Deterministic/reproducible	https://en.wikipedia.org/wiki/Tierra_(computer_simulation)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Tierra	O	Open source	https://en.wikipedia.org/wiki/Tierra_(computer_simulation)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida	E	Evolution	https://doi.org/10.1162/106454604773563612	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida	R	Self-reproduction	https://doi.org/10.1162/106454604773563612	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida	M	Metabolism/energy	https://doi.org/10.1162/106454604773563612	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida	D	Deterministic/reproducible	https://doi.org/10.1162/106454604773563612	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida	O	Open source	https://doi.org/10.1162/106454604773563612	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida-ED	E	Evolution	https://avida-ed.github.io/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida-ED	R	Self-reproduction	https://avida-ed.github.io/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida-ED	M	Metabolism/energy	https://avida-ed.github.io/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida-ED	D	Deterministic/reproducible	https://avida-ed.github.io/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida-ED	W	Runs in browser	https://avida-ed.github.io/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Avida-ED	O	Open source	https://avida-ed.github.io/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Core War	E	Evolution	https://en.wikipedia.org/wiki/Core_War	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Core War	R	Self-reproduction	https://en.wikipedia.org/wiki/Core_War	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Core War	D	Deterministic/reproducible	https://en.wikipedia.org/wiki/Core_War	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Core War	O	Open source	https://en.wikipedia.org/wiki/Core_War	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Aevol	E	Evolution	https://doi.org/10.1093/molbev/msm165	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Aevol	R	Self-reproduction	https://doi.org/10.1093/molbev/msm165	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Aevol	D	Deterministic/reproducible	https://doi.org/10.1093/molbev/msm165	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Aevol	O	Open source	https://doi.org/10.1093/molbev/msm165	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Chromaria	E	Evolution	https://doi.org/10.7551/978-0-262-32621-6-ch128	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Chromaria	R	Self-reproduction	https://doi.org/10.7551/978-0-262-32621-6-ch128	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Chromaria	B	Embodied physics	https://doi.org/10.7551/978-0-262-32621-6-ch128	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Geb	E	Evolution	https://doi.org/10.1080/002077200406570	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Geb	R	Self-reproduction	https://doi.org/10.1080/002077200406570	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Geb	N	Neural control	https://doi.org/10.1080/002077200406570	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Geb	S	Social/multi-agent	https://doi.org/10.1080/002077200406570	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwinbots	E	Evolution	http://wiki.darwinbots.com/w/Main_Page	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwinbots	R	Self-reproduction	http://wiki.darwinbots.com/w/Main_Page	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwinbots	B	Embodied physics	http://wiki.darwinbots.com/w/Main_Page	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwinbots	M	Metabolism/energy	http://wiki.darwinbots.com/w/Main_Page	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwinbots	S	Social/multi-agent	http://wiki.darwinbots.com/w/Main_Page	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwinbots	O	Open source	http://wiki.darwinbots.com/w/Main_Page	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	E	Evolution	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	R	Self-reproduction	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	B	Embodied physics	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	N	Neural control	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	L	Learning/plasticity	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	M	Metabolism/energy	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	S	Social/multi-agent	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Polyworld	O	Open source	https://en.wikipedia.org/wiki/Polyworld	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Echo	E	Evolution	https://en.wikipedia.org/wiki/John_Henry_Holland	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Echo	R	Self-reproduction	https://en.wikipedia.org/wiki/John_Henry_Holland	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Echo	M	Metabolism/energy	https://en.wikipedia.org/wiki/John_Henry_Holland	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Echo	S	Social/multi-agent	https://en.wikipedia.org/wiki/John_Henry_Holland	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Sugarscape	R	Self-reproduction	https://en.wikipedia.org/wiki/Sugarscape	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Sugarscape	M	Metabolism/energy	https://en.wikipedia.org/wiki/Sugarscape	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Sugarscape	S	Social/multi-agent	https://en.wikipedia.org/wiki/Sugarscape	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Sugarscape	O	Open source	https://en.wikipedia.org/wiki/Sugarscape	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Framsticks	E	Evolution	https://en.wikipedia.org/wiki/Framsticks	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Framsticks	B	Embodied physics	https://en.wikipedia.org/wiki/Framsticks	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Framsticks	N	Neural control	https://en.wikipedia.org/wiki/Framsticks	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Framsticks	R	Self-reproduction	https://en.wikipedia.org/wiki/Framsticks	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Framsticks	O	Open source	https://en.wikipedia.org/wiki/Framsticks	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Karl Sims creatures	E	Evolution	https://doi.org/10.1145/192161.192167	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Karl Sims creatures	B	Embodied physics	https://doi.org/10.1145/192161.192167	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Karl Sims creatures	N	Neural control	https://doi.org/10.1145/192161.192167	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Breve	E	Evolution	https://doi.org/10.1007/978-1-84882-285-6_4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Breve	B	Embodied physics	https://doi.org/10.1007/978-1-84882-285-6_4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Breve	N	Neural control	https://doi.org/10.1007/978-1-84882-285-6_4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Breve	O	Open source	https://doi.org/10.1007/978-1-84882-285-6_4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Golem project	E	Evolution	https://doi.org/10.1038/35023115	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Golem project	B	Embodied physics	https://doi.org/10.1038/35023115	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Golem project	N	Neural control	https://doi.org/10.1038/35023115	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Xenobots	E	Evolution	https://doi.org/10.1073/pnas.1910837117	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Xenobots	B	Embodied physics	https://doi.org/10.1073/pnas.1910837117	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Xenobots	C	Connectome/bio-grounded	https://doi.org/10.1073/pnas.1910837117	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evosoro (VoxCAD)	E	Evolution	https://doi.org/10.1145/2463372.2463404	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evosoro (VoxCAD)	B	Embodied physics	https://doi.org/10.1145/2463372.2463404	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evosoro (VoxCAD)	O	Open source	https://doi.org/10.1145/2463372.2463404	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolution Gym	E	Evolution	https://arxiv.org/abs/2201.09863	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolution Gym	B	Embodied physics	https://arxiv.org/abs/2201.09863	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolution Gym	N	Neural control	https://arxiv.org/abs/2201.09863	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolution Gym	L	Learning/plasticity	https://arxiv.org/abs/2201.09863	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolution Gym	O	Open source	https://arxiv.org/abs/2201.09863	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DERL / UNIMAL	E	Evolution	https://doi.org/10.1038/s41467-021-25874-z	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DERL / UNIMAL	B	Embodied physics	https://doi.org/10.1038/s41467-021-25874-z	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DERL / UNIMAL	N	Neural control	https://doi.org/10.1038/s41467-021-25874-z	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DERL / UNIMAL	L	Learning/plasticity	https://doi.org/10.1038/s41467-021-25874-z	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural MMO	N	Neural control	https://arxiv.org/abs/1903.00784	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural MMO	L	Learning/plasticity	https://arxiv.org/abs/1903.00784	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural MMO	S	Social/multi-agent	https://arxiv.org/abs/1903.00784	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural MMO	O	Open source	https://arxiv.org/abs/1903.00784	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolving Virtual Creatures (Lehman novelty)	E	Evolution	https://doi.org/10.1145/2001576.2001606	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolving Virtual Creatures (Lehman novelty)	B	Embodied physics	https://doi.org/10.1145/2001576.2001606	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolving Virtual Creatures (Lehman novelty)	N	Neural control	https://doi.org/10.1145/2001576.2001606	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+POET	E	Evolution	https://arxiv.org/abs/1901.01753	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+POET	B	Embodied physics	https://arxiv.org/abs/1901.01753	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+POET	N	Neural control	https://arxiv.org/abs/1901.01753	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+POET	L	Learning/plasticity	https://arxiv.org/abs/1901.01753	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+POET	O	Open source	https://arxiv.org/abs/1901.01753	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Enhanced POET	E	Evolution	https://arxiv.org/abs/2003.08536	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Enhanced POET	B	Embodied physics	https://arxiv.org/abs/2003.08536	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Enhanced POET	N	Neural control	https://arxiv.org/abs/2003.08536	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Enhanced POET	L	Learning/plasticity	https://arxiv.org/abs/2003.08536	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Enhanced POET	O	Open source	https://arxiv.org/abs/2003.08536	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OMNI	L	Learning/plasticity	https://arxiv.org/abs/2306.01711	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ASAL	E	Evolution	https://arxiv.org/abs/2412.17799	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ASAL	D	Deterministic/reproducible	https://arxiv.org/abs/2412.17799	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ASAL	O	Open source	https://arxiv.org/abs/2412.17799	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Lenia	D	Deterministic/reproducible	https://doi.org/10.25088/ComplexSystems.28.3.251	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Lenia	W	Runs in browser	https://doi.org/10.25088/ComplexSystems.28.3.251	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Lenia	O	Open source	https://doi.org/10.25088/ComplexSystems.28.3.251	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Flow-Lenia	E	Evolution	https://arxiv.org/abs/2212.07906	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Flow-Lenia	M	Metabolism/energy	https://arxiv.org/abs/2212.07906	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Flow-Lenia	D	Deterministic/reproducible	https://arxiv.org/abs/2212.07906	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Flow-Lenia	O	Open source	https://arxiv.org/abs/2212.07906	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Particle Lenia	D	Deterministic/reproducible	https://google-research.github.io/self-organising-systems/particle-lenia/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Particle Lenia	W	Runs in browser	https://google-research.github.io/self-organising-systems/particle-lenia/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Particle Lenia	O	Open source	https://google-research.github.io/self-organising-systems/particle-lenia/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+SmoothLife	D	Deterministic/reproducible	https://arxiv.org/abs/1111.1567	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+SmoothLife	O	Open source	https://arxiv.org/abs/1111.1567	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Game of Life	D	Deterministic/reproducible	https://en.wikipedia.org/wiki/Conway's_Game_of_Life	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Game of Life	W	Runs in browser	https://en.wikipedia.org/wiki/Conway's_Game_of_Life	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Game of Life	O	Open source	https://en.wikipedia.org/wiki/Conway's_Game_of_Life	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Langton's loops	R	Self-reproduction	https://doi.org/10.1016/0167-2789(84)90256-2	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Langton's loops	D	Deterministic/reproducible	https://doi.org/10.1016/0167-2789(84)90256-2	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Langton's loops	O	Open source	https://doi.org/10.1016/0167-2789(84)90256-2	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evoloops	E	Evolution	https://doi.org/10.1162/106454699568818	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evoloops	R	Self-reproduction	https://doi.org/10.1162/106454699568818	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evoloops	D	Deterministic/reproducible	https://doi.org/10.1162/106454699568818	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evoloops	O	Open source	https://doi.org/10.1162/106454699568818	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Von Neumann universal constructor	R	Self-reproduction	https://en.wikipedia.org/wiki/Von_Neumann_universal_constructor	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Von Neumann universal constructor	D	Deterministic/reproducible	https://en.wikipedia.org/wiki/Von_Neumann_universal_constructor	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Nobili-Pesavento constructor	R	Self-reproduction	https://doi.org/10.1162/artl.1995.2.4.337	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Nobili-Pesavento constructor	D	Deterministic/reproducible	https://doi.org/10.1162/artl.1995.2.4.337	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Nobili-Pesavento constructor	O	Open source	https://doi.org/10.1162/artl.1995.2.4.337	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Byl's loop	R	Self-reproduction	https://doi.org/10.1016/0167-2789(89)90242-X	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Byl's loop	D	Deterministic/reproducible	https://doi.org/10.1016/0167-2789(89)90242-X	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural Cellular Automata (Growing NCA)	L	Learning/plasticity	https://doi.org/10.23915/distill.00023	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural Cellular Automata (Growing NCA)	D	Deterministic/reproducible	https://doi.org/10.23915/distill.00023	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural Cellular Automata (Growing NCA)	W	Runs in browser	https://doi.org/10.23915/distill.00023	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Neural Cellular Automata (Growing NCA)	O	Open source	https://doi.org/10.23915/distill.00023	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Self-classifying MNIST NCA	L	Learning/plasticity	https://doi.org/10.23915/distill.00027.002	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Self-classifying MNIST NCA	D	Deterministic/reproducible	https://doi.org/10.23915/distill.00027.002	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Self-classifying MNIST NCA	W	Runs in browser	https://doi.org/10.23915/distill.00027.002	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Self-classifying MNIST NCA	O	Open source	https://doi.org/10.23915/distill.00027.002	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Texture NCA	L	Learning/plasticity	https://doi.org/10.23915/distill.00027.003	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Texture NCA	D	Deterministic/reproducible	https://doi.org/10.23915/distill.00027.003	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Texture NCA	W	Runs in browser	https://doi.org/10.23915/distill.00027.003	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Texture NCA	O	Open source	https://doi.org/10.23915/distill.00027.003	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Primordial particle system	D	Deterministic/reproducible	https://doi.org/10.1038/srep37969	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Primordial particle system	O	Open source	https://doi.org/10.1038/srep37969	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Particle Life (Ventrella clusters)	D	Deterministic/reproducible	https://www.ventrella.com/Clusters/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Particle Life (Ventrella clusters)	W	Runs in browser	https://www.ventrella.com/Clusters/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Particle Life (Ventrella clusters)	O	Open source	https://www.ventrella.com/Clusters/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Swarm chemistry	E	Evolution	https://doi.org/10.1162/artl.2009.15.1.15107	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Swarm chemistry	D	Deterministic/reproducible	https://doi.org/10.1162/artl.2009.15.1.15107	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Swarm chemistry	O	Open source	https://doi.org/10.1162/artl.2009.15.1.15107	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Boids	B	Embodied physics	https://doi.org/10.1145/37401.37406	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Boids	S	Social/multi-agent	https://doi.org/10.1145/37401.37406	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Boids	D	Deterministic/reproducible	https://doi.org/10.1145/37401.37406	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Boids	O	Open source	https://doi.org/10.1145/37401.37406	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Vicsek model	S	Social/multi-agent	https://doi.org/10.1103/PhysRevLett.75.1226	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Vicsek model	D	Deterministic/reproducible	https://doi.org/10.1103/PhysRevLett.75.1226	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Physarum transport networks	M	Metabolism/energy	https://doi.org/10.1162/artl.2010.16.2.16202	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Physarum transport networks	D	Deterministic/reproducible	https://doi.org/10.1162/artl.2010.16.2.16202	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Physarum transport networks	O	Open source	https://doi.org/10.1162/artl.2010.16.2.16202	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AlChemy	E	Evolution	https://doi.org/10.1073/pnas.91.2.757	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AlChemy	R	Self-reproduction	https://doi.org/10.1073/pnas.91.2.757	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AlChemy	D	Deterministic/reproducible	https://doi.org/10.1073/pnas.91.2.757	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Squirm3	E	Evolution	https://doi.org/10.1162/106454602321202417	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Squirm3	R	Self-reproduction	https://doi.org/10.1162/106454602321202417	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Hutton enzyme cells	E	Evolution	https://doi.org/10.1162/artl.2007.13.1.11	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Hutton enzyme cells	R	Self-reproduction	https://doi.org/10.1162/artl.2007.13.1.11	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Hutton enzyme cells	M	Metabolism/energy	https://doi.org/10.1162/artl.2007.13.1.11	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Ono-Ikegami protocells	R	Self-reproduction	https://doi.org/10.1006/jtbi.2000.2121	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Ono-Ikegami protocells	M	Metabolism/energy	https://doi.org/10.1006/jtbi.2000.2121	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+SCL autopoiesis	M	Metabolism/energy	https://doi.org/10.1016/0303-2647(74)90031-8	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+SCL autopoiesis	D	Deterministic/reproducible	https://doi.org/10.1016/0303-2647(74)90031-8	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Chemical organization theory tools	M	Metabolism/energy	https://doi.org/10.1007/s11538-006-9130-8	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Chemical organization theory tools	D	Deterministic/reproducible	https://doi.org/10.1007/s11538-006-9130-8	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+GARD model	E	Evolution	https://doi.org/10.1073/pnas.97.8.4112	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+GARD model	R	Self-reproduction	https://doi.org/10.1073/pnas.97.8.4112	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+GARD model	M	Metabolism/energy	https://doi.org/10.1073/pnas.97.8.4112	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Computational BF self-replicators	E	Evolution	https://arxiv.org/abs/2406.19108	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Computational BF self-replicators	R	Self-reproduction	https://arxiv.org/abs/2406.19108	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Computational BF self-replicators	D	Deterministic/reproducible	https://arxiv.org/abs/2406.19108	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Computational BF self-replicators	O	Open source	https://arxiv.org/abs/2406.19108	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Ludobots	E	Evolution	https://doi.org/10.1145/2492007.2493883	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Ludobots	B	Embodied physics	https://doi.org/10.1145/2492007.2493883	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Ludobots	N	Neural control	https://doi.org/10.1145/2492007.2493883	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Ludobots	O	Open source	https://doi.org/10.1145/2492007.2493883	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Bongard resilient machines	B	Embodied physics	https://doi.org/10.1126/science.1133687	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Bongard resilient machines	N	Neural control	https://doi.org/10.1126/science.1133687	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Bongard resilient machines	L	Learning/plasticity	https://doi.org/10.1126/science.1133687	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenWorm	B	Embodied physics	https://doi.org/10.3389/fncom.2014.00137	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenWorm	N	Neural control	https://doi.org/10.3389/fncom.2014.00137	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenWorm	C	Connectome/bio-grounded	https://doi.org/10.3389/fncom.2014.00137	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenWorm	O	Open source	https://doi.org/10.3389/fncom.2014.00137	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Sibernetic	B	Embodied physics	https://doi.org/10.1098/rstb.2017.0376	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Sibernetic	C	Connectome/bio-grounded	https://doi.org/10.1098/rstb.2017.0376	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Sibernetic	O	Open source	https://doi.org/10.1098/rstb.2017.0376	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+c302	N	Neural control	https://doi.org/10.1098/rstb.2017.0379	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+c302	C	Connectome/bio-grounded	https://doi.org/10.1098/rstb.2017.0379	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+c302	O	Open source	https://doi.org/10.1098/rstb.2017.0379	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+BAAIWorm	B	Embodied physics	https://doi.org/10.1038/s43588-024-00738-w	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+BAAIWorm	N	Neural control	https://doi.org/10.1038/s43588-024-00738-w	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+BAAIWorm	C	Connectome/bio-grounded	https://doi.org/10.1038/s43588-024-00738-w	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+BAAIWorm	O	Open source	https://doi.org/10.1038/s43588-024-00738-w	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly	B	Embodied physics	https://doi.org/10.1038/s41592-022-01466-7	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly	N	Neural control	https://doi.org/10.1038/s41592-022-01466-7	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly	C	Connectome/bio-grounded	https://doi.org/10.1038/s41592-022-01466-7	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly	O	Open source	https://doi.org/10.1038/s41592-022-01466-7	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly v2	B	Embodied physics	https://doi.org/10.1038/s41592-024-02497-y	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly v2	N	Neural control	https://doi.org/10.1038/s41592-024-02497-y	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly v2	L	Learning/plasticity	https://doi.org/10.1038/s41592-024-02497-y	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly v2	C	Connectome/bio-grounded	https://doi.org/10.1038/s41592-024-02497-y	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NeuroMechFly v2	O	Open source	https://doi.org/10.1038/s41592-024-02497-y	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+FlyWire whole-brain LIF model	N	Neural control	https://doi.org/10.1038/s41586-024-07763-9	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+FlyWire whole-brain LIF model	C	Connectome/bio-grounded	https://doi.org/10.1038/s41586-024-07763-9	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+FlyWire whole-brain LIF model	O	Open source	https://doi.org/10.1038/s41586-024-07763-9	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Whole-body fly (MuJoCo)	B	Embodied physics	https://doi.org/10.1038/s41586-025-09029-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Whole-body fly (MuJoCo)	N	Neural control	https://doi.org/10.1038/s41586-025-09029-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Whole-body fly (MuJoCo)	L	Learning/plasticity	https://doi.org/10.1038/s41586-025-09029-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Whole-body fly (MuJoCo)	C	Connectome/bio-grounded	https://doi.org/10.1038/s41586-025-09029-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Whole-body fly (MuJoCo)	O	Open source	https://doi.org/10.1038/s41586-025-09029-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Virtual rodent	B	Embodied physics	https://doi.org/10.1038/s41586-024-07633-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Virtual rodent	N	Neural control	https://doi.org/10.1038/s41586-024-07633-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Virtual rodent	L	Learning/plasticity	https://doi.org/10.1038/s41586-024-07633-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Virtual rodent	C	Connectome/bio-grounded	https://doi.org/10.1038/s41586-024-07633-4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Blue Brain neocortical microcircuit	N	Neural control	https://doi.org/10.1016/j.cell.2015.09.029	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Blue Brain neocortical microcircuit	C	Connectome/bio-grounded	https://doi.org/10.1016/j.cell.2015.09.029	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Blue Brain neocortical microcircuit	O	Open source	https://doi.org/10.1016/j.cell.2015.09.029	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Allen V1 model	N	Neural control	https://doi.org/10.1016/j.neuron.2020.01.040	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Allen V1 model	C	Connectome/bio-grounded	https://doi.org/10.1016/j.neuron.2020.01.040	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Allen V1 model	O	Open source	https://doi.org/10.1016/j.neuron.2020.01.040	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Spaun	N	Neural control	https://doi.org/10.1126/science.1225266	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Spaun	L	Learning/plasticity	https://doi.org/10.1126/science.1225266	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Spaun	C	Connectome/bio-grounded	https://doi.org/10.1126/science.1225266	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Nengo	N	Neural control	https://doi.org/10.3389/fninf.2013.00048	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Nengo	L	Learning/plasticity	https://doi.org/10.3389/fninf.2013.00048	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Nengo	O	Open source	https://doi.org/10.3389/fninf.2013.00048	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Virtual Brain	N	Neural control	https://doi.org/10.3389/fninf.2013.00010	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Virtual Brain	C	Connectome/bio-grounded	https://doi.org/10.3389/fninf.2013.00010	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Virtual Brain	O	Open source	https://doi.org/10.3389/fninf.2013.00010	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEST simulator	N	Neural control	https://doi.org/10.4249/scholarpedia.1430	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEST simulator	L	Learning/plasticity	https://doi.org/10.4249/scholarpedia.1430	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEST simulator	D	Deterministic/reproducible	https://doi.org/10.4249/scholarpedia.1430	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEST simulator	O	Open source	https://doi.org/10.4249/scholarpedia.1430	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brian2	N	Neural control	https://doi.org/10.7554/eLife.47314	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brian2	L	Learning/plasticity	https://doi.org/10.7554/eLife.47314	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brian2	D	Deterministic/reproducible	https://doi.org/10.7554/eLife.47314	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brian2	O	Open source	https://doi.org/10.7554/eLife.47314	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEURON	N	Neural control	https://doi.org/10.1162/neco.1997.9.6.1179	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEURON	C	Connectome/bio-grounded	https://doi.org/10.1162/neco.1997.9.6.1179	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEURON	O	Open source	https://doi.org/10.1162/neco.1997.9.6.1179	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwin / NOMAD robots	B	Embodied physics	https://doi.org/10.1073/pnas.89.15.7267	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwin / NOMAD robots	N	Neural control	https://doi.org/10.1073/pnas.89.15.7267	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwin / NOMAD robots	L	Learning/plasticity	https://doi.org/10.1073/pnas.89.15.7267	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Darwin / NOMAD robots	C	Connectome/bio-grounded	https://doi.org/10.1073/pnas.89.15.7267	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Braitenberg vehicles	B	Embodied physics	https://en.wikipedia.org/wiki/Braitenberg_vehicle	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Braitenberg vehicles	N	Neural control	https://en.wikipedia.org/wiki/Braitenberg_vehicle	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Braitenberg vehicles	D	Deterministic/reproducible	https://en.wikipedia.org/wiki/Braitenberg_vehicle	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures (Grand)	E	Evolution	https://doi.org/10.1145/267658.267663	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures (Grand)	R	Self-reproduction	https://doi.org/10.1145/267658.267663	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures (Grand)	N	Neural control	https://doi.org/10.1145/267658.267663	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures (Grand)	L	Learning/plasticity	https://doi.org/10.1145/267658.267663	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures (Grand)	M	Metabolism/energy	https://doi.org/10.1145/267658.267663	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures (Grand)	S	Social/multi-agent	https://doi.org/10.1145/267658.267663	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures Docking Station	E	Evolution	https://en.wikipedia.org/wiki/Creatures_(video_game_series)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures Docking Station	R	Self-reproduction	https://en.wikipedia.org/wiki/Creatures_(video_game_series)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures Docking Station	N	Neural control	https://en.wikipedia.org/wiki/Creatures_(video_game_series)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures Docking Station	L	Learning/plasticity	https://en.wikipedia.org/wiki/Creatures_(video_game_series)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures Docking Station	M	Metabolism/energy	https://en.wikipedia.org/wiki/Creatures_(video_game_series)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Creatures Docking Station	S	Social/multi-agent	https://en.wikipedia.org/wiki/Creatures_(video_game_series)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Spore	E	Evolution	https://en.wikipedia.org/wiki/Spore_(2008_video_game)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Spore	B	Embodied physics	https://en.wikipedia.org/wiki/Spore_(2008_video_game)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Spore	S	Social/multi-agent	https://en.wikipedia.org/wiki/Spore_(2008_video_game)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Bibites	E	Evolution	https://thebibites.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Bibites	R	Self-reproduction	https://thebibites.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Bibites	B	Embodied physics	https://thebibites.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Bibites	N	Neural control	https://thebibites.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Bibites	M	Metabolism/energy	https://thebibites.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+The Bibites	S	Social/multi-agent	https://thebibites.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biogenesis	E	Evolution	https://biogenesis.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biogenesis	R	Self-reproduction	https://biogenesis.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biogenesis	M	Metabolism/energy	https://biogenesis.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biogenesis	S	Social/multi-agent	https://biogenesis.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biogenesis	O	Open source	https://biogenesis.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gene Pool	E	Evolution	https://www.swimbots.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gene Pool	R	Self-reproduction	https://www.swimbots.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gene Pool	B	Embodied physics	https://www.swimbots.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gene Pool	M	Metabolism/energy	https://www.swimbots.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gene Pool	S	Social/multi-agent	https://www.swimbots.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gene Pool	W	Runs in browser	https://www.swimbots.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gene Pool	O	Open source	https://www.swimbots.com/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ALIEN	E	Evolution	https://alien-project.org/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ALIEN	R	Self-reproduction	https://alien-project.org/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ALIEN	B	Embodied physics	https://alien-project.org/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ALIEN	M	Metabolism/energy	https://alien-project.org/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ALIEN	S	Social/multi-agent	https://alien-project.org/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ALIEN	O	Open source	https://alien-project.org/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Life Engine	E	Evolution	https://thelifeengine.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Life Engine	R	Self-reproduction	https://thelifeengine.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Life Engine	M	Metabolism/energy	https://thelifeengine.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Life Engine	S	Social/multi-agent	https://thelifeengine.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Life Engine	W	Runs in browser	https://thelifeengine.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Life Engine	O	Open source	https://thelifeengine.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Critterding	E	Evolution	https://critterding.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Critterding	R	Self-reproduction	https://critterding.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Critterding	B	Embodied physics	https://critterding.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Critterding	N	Neural control	https://critterding.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Critterding	M	Metabolism/energy	https://critterding.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Critterding	S	Social/multi-agent	https://critterding.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Critterding	O	Open source	https://critterding.sourceforge.net/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biosim4	E	Evolution	https://github.com/davidrmiller/biosim4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biosim4	R	Self-reproduction	https://github.com/davidrmiller/biosim4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biosim4	N	Neural control	https://github.com/davidrmiller/biosim4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biosim4	S	Social/multi-agent	https://github.com/davidrmiller/biosim4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biosim4	D	Deterministic/reproducible	https://github.com/davidrmiller/biosim4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Biosim4	O	Open source	https://github.com/davidrmiller/biosim4	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenAI hide-and-seek	B	Embodied physics	https://arxiv.org/abs/1909.07528	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenAI hide-and-seek	N	Neural control	https://arxiv.org/abs/1909.07528	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenAI hide-and-seek	L	Learning/plasticity	https://arxiv.org/abs/1909.07528	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenAI hide-and-seek	S	Social/multi-agent	https://arxiv.org/abs/1909.07528	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+XLand	B	Embodied physics	https://arxiv.org/abs/2107.12808	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+XLand	N	Neural control	https://arxiv.org/abs/2107.12808	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+XLand	L	Learning/plasticity	https://arxiv.org/abs/2107.12808	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+XLand	S	Social/multi-agent	https://arxiv.org/abs/2107.12808	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+MineDojo / Voyager	L	Learning/plasticity	https://arxiv.org/abs/2305.16291	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Generative Agents	L	Learning/plasticity	https://arxiv.org/abs/2304.03442	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Generative Agents	S	Social/multi-agent	https://arxiv.org/abs/2304.03442	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Generative Agents	O	Open source	https://arxiv.org/abs/2304.03442	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Project Sid	L	Learning/plasticity	https://arxiv.org/abs/2411.00114	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Project Sid	S	Social/multi-agent	https://arxiv.org/abs/2411.00114	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AI Town	S	Social/multi-agent	https://github.com/a16z-infra/ai-town	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AI Town	W	Runs in browser	https://github.com/a16z-infra/ai-town	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AI Town	O	Open source	https://github.com/a16z-infra/ai-town	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JaxLife	E	Evolution	https://arxiv.org/abs/2409.00853	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JaxLife	R	Self-reproduction	https://arxiv.org/abs/2409.00853	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JaxLife	N	Neural control	https://arxiv.org/abs/2409.00853	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JaxLife	L	Learning/plasticity	https://arxiv.org/abs/2409.00853	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JaxLife	M	Metabolism/energy	https://arxiv.org/abs/2409.00853	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JaxLife	S	Social/multi-agent	https://arxiv.org/abs/2409.00853	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JaxLife	O	Open source	https://arxiv.org/abs/2409.00853	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+EvoJAX	E	Evolution	https://arxiv.org/abs/2202.05008	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+EvoJAX	N	Neural control	https://arxiv.org/abs/2202.05008	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+EvoJAX	D	Deterministic/reproducible	https://arxiv.org/abs/2202.05008	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+EvoJAX	O	Open source	https://arxiv.org/abs/2202.05008	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEAT	E	Evolution	https://doi.org/10.1162/106365602320169811	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEAT	N	Neural control	https://doi.org/10.1162/106365602320169811	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NEAT	O	Open source	https://doi.org/10.1162/106365602320169811	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+HyperNEAT	E	Evolution	https://doi.org/10.1162/artl.2009.15.2.15202	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+HyperNEAT	N	Neural control	https://doi.org/10.1162/artl.2009.15.2.15202	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+HyperNEAT	O	Open source	https://doi.org/10.1162/artl.2009.15.2.15202	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Picbreeder	E	Evolution	https://doi.org/10.1162/EVCO_a_00030	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Picbreeder	W	Runs in browser	https://doi.org/10.1162/EVCO_a_00030	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NERO	E	Evolution	https://doi.org/10.1109/TEVC.2005.856210	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NERO	N	Neural control	https://doi.org/10.1109/TEVC.2005.856210	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NERO	L	Learning/plasticity	https://doi.org/10.1109/TEVC.2005.856210	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+MAP-Elites	E	Evolution	https://arxiv.org/abs/1504.04909	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+MAP-Elites	D	Deterministic/reproducible	https://arxiv.org/abs/1504.04909	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+MAP-Elites	O	Open source	https://arxiv.org/abs/1504.04909	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+QDax	E	Evolution	https://arxiv.org/abs/2202.01258	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+QDax	D	Deterministic/reproducible	https://arxiv.org/abs/2202.01258	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+QDax	O	Open source	https://arxiv.org/abs/2202.01258	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Novelty search	E	Evolution	https://doi.org/10.1162/EVCO_a_00025	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Novelty search	N	Neural control	https://doi.org/10.1162/EVCO_a_00025	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Walker evolution (Hornby gait)	E	Evolution	https://doi.org/10.1109/TRO.2004.839222	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Walker evolution (Hornby gait)	B	Embodied physics	https://doi.org/10.1109/TRO.2004.839222	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Walker evolution (Hornby gait)	N	Neural control	https://doi.org/10.1109/TRO.2004.839222	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animats (Wilson)	B	Embodied physics	https://en.wikipedia.org/wiki/Animat	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animats (Wilson)	N	Neural control	https://en.wikipedia.org/wiki/Animat	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animats (Wilson)	L	Learning/plasticity	https://en.wikipedia.org/wiki/Animat	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Subsumption robots	B	Embodied physics	https://doi.org/10.1109/JRA.1986.1087032	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Cog humanoid	B	Embodied physics	https://doi.org/10.1007/3-540-48834-0_5	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Cog humanoid	N	Neural control	https://doi.org/10.1007/3-540-48834-0_5	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Cog humanoid	L	Learning/plasticity	https://doi.org/10.1007/3-540-48834-0_5	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Cog humanoid	S	Social/multi-agent	https://doi.org/10.1007/3-540-48834-0_5	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Kismet	B	Embodied physics	https://en.wikipedia.org/wiki/Kismet_(robot)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Kismet	S	Social/multi-agent	https://en.wikipedia.org/wiki/Kismet_(robot)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+iCub	B	Embodied physics	https://doi.org/10.1145/1774674.1774683	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+iCub	N	Neural control	https://doi.org/10.1145/1774674.1774683	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+iCub	L	Learning/plasticity	https://doi.org/10.1145/1774674.1774683	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+iCub	O	Open source	https://doi.org/10.1145/1774674.1774683	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+LIDA	N	Neural control	https://doi.org/10.1109/TAMD.2013.2277589	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+LIDA	L	Learning/plasticity	https://doi.org/10.1109/TAMD.2013.2277589	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Soar	L	Learning/plasticity	https://doi.org/10.1016/0004-3702(87)90050-6	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Soar	O	Open source	https://doi.org/10.1016/0004-3702(87)90050-6	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ACT-R	L	Learning/plasticity	https://doi.org/10.1037/0033-295X.111.4.1036	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+ACT-R	O	Open source	https://doi.org/10.1037/0033-295X.111.4.1036	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+CLARION	N	Neural control	https://en.wikipedia.org/wiki/CLARION_(cognitive_architecture)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+CLARION	L	Learning/plasticity	https://en.wikipedia.org/wiki/CLARION_(cognitive_architecture)	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenCog	L	Learning/plasticity	https://en.wikipedia.org/wiki/OpenCog	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+OpenCog	O	Open source	https://en.wikipedia.org/wiki/OpenCog	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Global Workspace model (Dehaene)	N	Neural control	https://doi.org/10.1073/pnas.95.24.14529	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Global Workspace model (Dehaene)	I	Indicator tests	https://doi.org/10.1073/pnas.95.24.14529	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+PyPhi	D	Deterministic/reproducible	https://doi.org/10.1371/journal.pcbi.1006343	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+PyPhi	I	Indicator tests	https://doi.org/10.1371/journal.pcbi.1006343	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+PyPhi	O	Open source	https://doi.org/10.1371/journal.pcbi.1006343	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AST model (Graziano)	N	Neural control	https://doi.org/10.1073/pnas.2102421118	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+AST model (Graziano)	I	Indicator tests	https://doi.org/10.1073/pnas.2102421118	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Butlin et al. indicator audit	I	Indicator tests	https://arxiv.org/abs/2308.08708	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Active inference agents (pymdp)	L	Learning/plasticity	https://doi.org/10.21105/joss.04098	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Active inference agents (pymdp)	D	Deterministic/reproducible	https://doi.org/10.21105/joss.04098	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Active inference agents (pymdp)	O	Open source	https://doi.org/10.21105/joss.04098	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Deep active inference (Fountas)	N	Neural control	https://arxiv.org/abs/2006.04176	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Deep active inference (Fountas)	L	Learning/plasticity	https://arxiv.org/abs/2006.04176	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DishBrain	N	Neural control	https://doi.org/10.1016/j.neuron.2022.09.001	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DishBrain	L	Learning/plasticity	https://doi.org/10.1016/j.neuron.2022.09.001	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DishBrain	C	Connectome/bio-grounded	https://doi.org/10.1016/j.neuron.2022.09.001	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brainoware	N	Neural control	https://doi.org/10.1038/s41928-023-01069-w	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brainoware	L	Learning/plasticity	https://doi.org/10.1038/s41928-023-01069-w	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brainoware	C	Connectome/bio-grounded	https://doi.org/10.1038/s41928-023-01069-w	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Anthrobots	B	Embodied physics	https://doi.org/10.1002/advs.202303575	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Anthrobots	C	Connectome/bio-grounded	https://doi.org/10.1002/advs.202303575	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JCVI-syn3.0	R	Self-reproduction	https://doi.org/10.1126/science.aad6253	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JCVI-syn3.0	M	Metabolism/energy	https://doi.org/10.1126/science.aad6253	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+JCVI-syn3.0	C	Connectome/bio-grounded	https://doi.org/10.1126/science.aad6253	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Minimal cell whole-cell model	M	Metabolism/energy	https://doi.org/10.1016/j.cell.2021.12.025	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Minimal cell whole-cell model	C	Connectome/bio-grounded	https://doi.org/10.1016/j.cell.2021.12.025	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+M. genitalium whole-cell model	R	Self-reproduction	https://doi.org/10.1016/j.cell.2012.05.044	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+M. genitalium whole-cell model	M	Metabolism/energy	https://doi.org/10.1016/j.cell.2012.05.044	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+M. genitalium whole-cell model	C	Connectome/bio-grounded	https://doi.org/10.1016/j.cell.2012.05.044	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+E-CELL	M	Metabolism/energy	https://doi.org/10.1093/bioinformatics/15.1.72	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+E-CELL	C	Connectome/bio-grounded	https://doi.org/10.1093/bioinformatics/15.1.72	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+E-CELL	O	Open source	https://doi.org/10.1093/bioinformatics/15.1.72	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gray-Scott self-replicating spots	R	Self-reproduction	https://doi.org/10.1126/science.261.5118.189	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Gray-Scott self-replicating spots	D	Deterministic/reproducible	https://doi.org/10.1126/science.261.5118.189	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Reaction-diffusion (Turing)	D	Deterministic/reproducible	https://doi.org/10.1098/rstb.1952.0012	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+L-systems	D	Deterministic/reproducible	https://doi.org/10.1016/0022-5193(68)90079-9	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+L-systems	O	Open source	https://doi.org/10.1016/0022-5193(68)90079-9	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Algorithmic Botany (Prusinkiewicz)	D	Deterministic/reproducible	http://algorithmicbotany.org/papers/#abop	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+CompuCell3D	M	Metabolism/energy	https://doi.org/10.1016/B978-0-12-388403-9.00013-8	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+CompuCell3D	C	Connectome/bio-grounded	https://doi.org/10.1016/B978-0-12-388403-9.00013-8	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+CompuCell3D	O	Open source	https://doi.org/10.1016/B978-0-12-388403-9.00013-8	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Morpheus	C	Connectome/bio-grounded	https://doi.org/10.1093/bioinformatics/btt772	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Morpheus	O	Open source	https://doi.org/10.1093/bioinformatics/btt772	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+PhysiCell	R	Self-reproduction	https://doi.org/10.1371/journal.pcbi.1005991	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+PhysiCell	M	Metabolism/energy	https://doi.org/10.1371/journal.pcbi.1005991	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+PhysiCell	C	Connectome/bio-grounded	https://doi.org/10.1371/journal.pcbi.1005991	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+PhysiCell	O	Open source	https://doi.org/10.1371/journal.pcbi.1005991	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Cellular Potts model	C	Connectome/bio-grounded	https://doi.org/10.1103/PhysRevLett.69.2013	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+GReaNs	E	Evolution	https://doi.org/10.1007/978-3-642-21283-3_5	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+GReaNs	R	Self-reproduction	https://doi.org/10.1007/978-3-642-21283-3_5	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Bioelectric planaria model	C	Connectome/bio-grounded	https://doi.org/10.3389/fbioe.2016.00055	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Artificial Fishes (Tu & Terzopoulos)	B	Embodied physics	https://doi.org/10.1145/192161.192170	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Artificial Fishes (Tu & Terzopoulos)	N	Neural control	https://doi.org/10.1145/192161.192170	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Artificial Fishes (Tu & Terzopoulos)	L	Learning/plasticity	https://doi.org/10.1145/192161.192170	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DeepMind Control Suite	B	Embodied physics	https://arxiv.org/abs/1801.00690	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DeepMind Control Suite	N	Neural control	https://arxiv.org/abs/1801.00690	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DeepMind Control Suite	L	Learning/plasticity	https://arxiv.org/abs/1801.00690	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DeepMind Control Suite	D	Deterministic/reproducible	https://arxiv.org/abs/1801.00690	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+DeepMind Control Suite	O	Open source	https://arxiv.org/abs/1801.00690	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+MuJoCo	B	Embodied physics	https://doi.org/10.1109/IROS.2012.6386109	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+MuJoCo	D	Deterministic/reproducible	https://doi.org/10.1109/IROS.2012.6386109	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+MuJoCo	O	Open source	https://doi.org/10.1109/IROS.2012.6386109	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brax	B	Embodied physics	https://arxiv.org/abs/2106.13281	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brax	D	Deterministic/reproducible	https://arxiv.org/abs/2106.13281	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Brax	O	Open source	https://arxiv.org/abs/2106.13281	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Isaac Gym	B	Embodied physics	https://arxiv.org/abs/2108.10470	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Isaac Gym	N	Neural control	https://arxiv.org/abs/2108.10470	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Isaac Gym	L	Learning/plasticity	https://arxiv.org/abs/2108.10470	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animal-AI Olympics	B	Embodied physics	https://doi.org/10.1038/s42256-019-0050-3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animal-AI Olympics	N	Neural control	https://doi.org/10.1038/s42256-019-0050-3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animal-AI Olympics	L	Learning/plasticity	https://doi.org/10.1038/s42256-019-0050-3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animal-AI Olympics	O	Open source	https://doi.org/10.1038/s42256-019-0050-3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Unity ML-Agents	B	Embodied physics	https://arxiv.org/abs/1809.02627	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Unity ML-Agents	N	Neural control	https://arxiv.org/abs/1809.02627	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Unity ML-Agents	L	Learning/plasticity	https://arxiv.org/abs/1809.02627	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Unity ML-Agents	S	Social/multi-agent	https://arxiv.org/abs/1809.02627	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Unity ML-Agents	O	Open source	https://arxiv.org/abs/1809.02627	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolving bipedal locomotion (Geijtenbeek)	B	Embodied physics	https://doi.org/10.1145/2508363.2508399	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolving bipedal locomotion (Geijtenbeek)	N	Neural control	https://doi.org/10.1145/2508363.2508399	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Markov Brains	E	Evolution	https://arxiv.org/abs/1709.05601	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Markov Brains	N	Neural control	https://arxiv.org/abs/1709.05601	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Markov Brains	D	Deterministic/reproducible	https://arxiv.org/abs/1709.05601	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Markov Brains	O	Open source	https://arxiv.org/abs/1709.05601	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animats with phi (Edlund)	E	Evolution	https://doi.org/10.1371/journal.pcbi.1002236	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animats with phi (Edlund)	N	Neural control	https://doi.org/10.1371/journal.pcbi.1002236	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Animats with phi (Edlund)	I	Indicator tests	https://doi.org/10.1371/journal.pcbi.1002236	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolved swarm robots (Swarm-bots)	E	Evolution	https://doi.org/10.1023/B:AURO.0000033973.24945.f3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolved swarm robots (Swarm-bots)	B	Embodied physics	https://doi.org/10.1023/B:AURO.0000033973.24945.f3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolved swarm robots (Swarm-bots)	N	Neural control	https://doi.org/10.1023/B:AURO.0000033973.24945.f3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Evolved swarm robots (Swarm-bots)	S	Social/multi-agent	https://doi.org/10.1023/B:AURO.0000033973.24945.f3	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Kilobots	B	Embodied physics	https://doi.org/10.1126/science.1254295	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Kilobots	S	Social/multi-agent	https://doi.org/10.1126/science.1254295	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Kilobots	O	Open source	https://doi.org/10.1126/science.1254295	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Homeostat	L	Learning/plasticity	https://en.wikipedia.org/wiki/Homeostat	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Homeostat	M	Metabolism/energy	https://en.wikipedia.org/wiki/Homeostat	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Daisyworld	M	Metabolism/energy	https://doi.org/10.3402/tellusb.v35i4.14616	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Daisyworld	D	Deterministic/reproducible	https://doi.org/10.3402/tellusb.v35i4.14616	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Madingley model	R	Self-reproduction	https://doi.org/10.1371/journal.pbio.1001841	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Madingley model	M	Metabolism/energy	https://doi.org/10.1371/journal.pbio.1001841	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Madingley model	S	Social/multi-agent	https://doi.org/10.1371/journal.pbio.1001841	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NetLogo	S	Social/multi-agent	https://ccl.northwestern.edu/netlogo/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NetLogo	D	Deterministic/reproducible	https://ccl.northwestern.edu/netlogo/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NetLogo	W	Runs in browser	https://ccl.northwestern.edu/netlogo/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+NetLogo	O	Open source	https://ccl.northwestern.edu/netlogo/	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Mesa	S	Social/multi-agent	https://doi.org/10.25080/Majora-7b98e3ed-009	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Mesa	D	Deterministic/reproducible	https://doi.org/10.25080/Majora-7b98e3ed-009	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+Mesa	O	Open source	https://doi.org/10.25080/Majora-7b98e3ed-009	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+StarLogo	S	Social/multi-agent	https://en.wikipedia.org/wiki/StarLogo	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+StarLogo	D	Deterministic/reproducible	https://en.wikipedia.org/wiki/StarLogo	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round
+StarLogo	O	Open source	https://en.wikipedia.org/wiki/StarLogo	rubric code from cited source (projects.tsv, URL verified round 9); source not re-read for finer-grained features this round

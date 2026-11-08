@@ -1,0 +1,4 @@
+# Specialist: AINF (active-inference epistemic term)
+Ten brain-side approaches, cheap screen (8 seeds, block 560), weakest d/t vs "epistemic term lesioned": base 0.38/0.8; v01 uK1 0.24; v02 uK3 0.27; v03 AOM IG x3 0.16; v04 SC EFE info gain x3 0.07; v05 SC empowerment x3 0.10; v06 knowledge gradient 0.22; v07 depletion-entropy eK 0.31; v08 learning-progress curiosity 0.30; v09 EFE+empowerment+uK 0.12; v10 Thompson-style tsK 0.03. All fail; none beats base.
+Block 500 (16 seeds): every SC arm fails (d -0.16 to 0.13).
+Diagnosis: the test is under-powered rather than capped. Rewards over 2 days are ~55 with between-seed SD ~18, while the epistemic term moves them by ~2 (paired dz 0.45 on base). An unpaired Welch test needs ~15 extra rewards. Stronger epistemic drives do not help because the depleting world rewards exploitation. Recommendation: a paired-seed variant (same seed, lesion vs full) or longer horizon, preregistered, rather than tuning the brain to the test.

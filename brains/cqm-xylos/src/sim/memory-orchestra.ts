@@ -1,0 +1,178 @@
+/**
+ * GOAL5: Multi-Store Memory Orchestra (typed, graph-linked, feedback controlled, decision system).
+ * Implements the 10 orchestrations distilled (typed lattice, entropy gate, graph recall, regime sentinel,
+ * strategic, reflection-to-skill, consensus, meta, etc.).
+ * NOT a blob; structured records + provenance graph + consolidation to narrative.
+ * Deterministic, seeded, allocation disciplined (rings + fixed graph cap).
+ * Grounded symbols via bind to percept/plan atoms.
+ * See contract + research for theory (control, chaos, type, graph, info, game).
+ */
+import type { Rng } from '../math/rng';
+
+type MemKind = 'obs' | 'plan' | 'commit' | 'insight' | 'failure' | 'skill' | 'narrative';
+
+interface MemRecord {
+  kind: MemKind;
+  t: number; // sim time
+  conf: number;
+  src: number; // source id (creature or system)
+  data: number[]; // compact vector (grounded symbol-ish)
+  cause?: number; // provenance edge
+}
+
+export class MemoryOrchestra {
+  private readonly CAP = 128;
+  private readonly events: (MemRecord | undefined)[] = Array.from({ length: 128 }, () => undefined);
+  private len = 0;
+  private head = 0;
+  private readonly graph: number[] = Array.from({ length: 64 }, () => 0); // fixed small graph edges
+  private gLen = 0;
+  private regime = 0.5;
+  private lastConsol = 0;
+  /** Audit #226: monotone write count (len saturates at CAP, which froze the consolidation gate). */
+  private writes = 0;
+  // 12 grounded-symbol confidence EMAs — a lightweight belief-state (NOT true sum-product belief propagation).
+  private readonly fgBeliefs = new Float32Array(12);
+  private fgEnergy = 0.5;
+
+  // fixed scratch for recall to avoid alloc in hot path (small max=4)
+  private readonly scored: { i: number; score: number }[] = Array.from({ length: 128 }, () => ({
+    i: 0,
+    score: 0,
+  }));
+
+  // GOAL5: preallocated data vectors (no slice alloc on write hot path)
+  private readonly datas: number[][] = Array.from({ length: 128 }, () =>
+    Array.from({ length: 8 }, () => 0),
+  );
+  // pre-sized recall result buffer; length mutated; valid until next recall (allocation-free after ctor)
+  private readonly recallOut: MemRecord[] = Array.from({ length: 4 }, () => ({
+    kind: 'obs',
+    t: 0,
+    conf: 0,
+    src: 0,
+    data: [] as number[],
+  }));
+
+  constructor(_rng?: Rng) {}
+
+  /** Surprise/entropy gate + type-contract write. Fixed ring, no realloc (arena-style O(1) bump). */
+  write(kind: MemKind, t: number, conf: number, src: number, data: number[], cause?: number): void {
+    if (conf < 0.15 && kind !== 'failure') return;
+    // reuse preallocated data slot (no slice/new in hot path)
+    const dst = this.datas[this.head]!;
+    for (let j = 0; j < 8; j++) dst[j] = data[j] ?? 0;
+    const rec: MemRecord = { kind, t, conf, src, data: dst, cause };
+    // Update the per-symbol confidence EMAs from this record's data (lightweight belief-state, not sum-product).
+    // Indices 0..7 track direct features; 8..11 track distinct pairwise macro-beliefs instead of duplicating 0..3.
+    for (let s = 0; s < 12; s++) {
+      const d =
+        s < 8 ? (dst[s] ?? 0) : 0.5 * ((dst[(s - 8) * 2] ?? 0) + (dst[(s - 8) * 2 + 1] ?? 0));
+      this.fgBeliefs[s] = (this.fgBeliefs[s] ?? 0) * 0.8 + (d > 0.5 ? conf * 0.2 : 0);
+    }
+    this.events[this.head] = rec;
+    this.head = (this.head + 1) % this.CAP;
+    if (this.len < this.CAP) this.len++;
+    this.writes++;
+    // Audit #226: the cause graph recycles (oldest pair first) instead of filling after 32 links.
+    if (cause != null && this.graph.length >= 2) {
+      if (this.gLen >= this.graph.length - 1) this.gLen = 0;
+      this.graph[this.gLen++] = cause;
+      this.graph[this.gLen++] = (this.head + this.CAP - 1) % this.CAP;
+    }
+  }
+
+  /** Graph-linked recall + router (relevance + conf + recency). Linear for ring, small k. Allocation-free using fixed scratch + prealloc result buffer. */
+  recall(ctx: number[], max = 4): MemRecord[] {
+    // reset scratch (fixed, no alloc)
+    for (let i = 0; i < this.len && i < this.scored.length; i++) this.scored[i]!.score = -1;
+    let numScored = 0;
+    for (let k = 0; k < this.len; k++) {
+      const idx = (this.head - 1 - k + this.CAP) % this.CAP;
+      const e = this.events[idx];
+      if (!e) continue;
+      let rel = 0;
+      const d = e.data || [];
+      for (let j = 0; j < Math.min(ctx.length, d.length); j++) rel += (ctx[j] || 0) * (d[j] || 0);
+      // k=0 is the MOST RECENT record (loop walks head-1 backwards), so recency weight must DECREASE
+      // with k. The old `(k+1)/len` inverted it — newest scored lowest, oldest highest.
+      const age = 0.01 + (this.len - k) / (this.len || 1);
+      // Boost candidate score using associative causal edges in `this.graph`.
+      let graphBoost = 1;
+      for (let g = 0; g + 1 < this.gLen; g += 2) {
+        if (this.graph[g] === idx || this.graph[g + 1] === idx) {
+          graphBoost += 0.15;
+        }
+      }
+      const score = rel * (e.conf || 0) * age * graphBoost;
+      this.scored[numScored]!.i = idx;
+      this.scored[numScored]!.score = score;
+      numScored++;
+    }
+    // In-place descending sort over all `numScored` candidates BEFORE taking top `cap = Math.min(max, 4)`.
+    for (let i = 1; i < numScored; i++) {
+      const curI = this.scored[i]!.i;
+      const curScore = this.scored[i]!.score;
+      let j = i - 1;
+      while (j >= 0 && this.scored[j]!.score < curScore) {
+        this.scored[j + 1]!.i = this.scored[j]!.i;
+        this.scored[j + 1]!.score = this.scored[j]!.score;
+        j--;
+      }
+      this.scored[j + 1]!.i = curI;
+      this.scored[j + 1]!.score = curScore;
+    }
+    // collect top into prealloc buffer (no new/push/slice in hot path)
+    // cap MUST come from a constant, not this.recallOut.length: that field is mutated below to the
+    // actual fill count, so deriving cap from it would permanently shrink-lock every future call to
+    // whatever the smallest past result size was.
+    const cap = Math.min(max, 4);
+    let n = 0;
+    for (let i = 0; i < numScored && n < cap; i++) {
+      const e = this.events[this.scored[i]!.i];
+      if (e) this.recallOut[n++] = e;
+    }
+    this.recallOut.length = n; // reuse backing
+    return this.recallOut;
+  }
+
+  /** Regime shift sentinel + consolidation to narrative. */
+  step(surprise: number, _phi: number): { regime: number; narrative: string } {
+    this.regime = this.regime * 0.9 + surprise * 0.1;
+    // Eshkol active inference: update free energy from beliefs + surprise (corpus style).
+    let energy = 0;
+    for (let s = 0; s < 12; s++) energy += Math.abs((this.fgBeliefs[s] ?? 0) - 0.5);
+    this.fgEnergy = (energy / 12) * 0.5 + surprise * 0.5;
+    if (this.regime > 0.7 && this.writes - this.lastConsol > 12) {
+      this.lastConsol = this.writes;
+      // consolidate high conf (scan ring)
+      let narr = '';
+      let cnt = 0;
+      for (let k = 0; k < this.len && cnt < 8; k++) {
+        const idx = (this.head - 1 - k + this.CAP) % this.CAP;
+        const e = this.events[idx];
+        if (e && e.conf > 0.6) {
+          narr += e.kind[0];
+          cnt++;
+        }
+      }
+      return { regime: this.regime, narrative: narr || 'stable' };
+    }
+    return { regime: this.regime, narrative: '' };
+  }
+
+  snapshot() {
+    const count = this.len;
+    const last = count > 0 ? this.events[(this.head - 1 + this.CAP) % this.CAP] : null;
+    return {
+      eventCount: count,
+      regimeShift: this.regime,
+      beliefMeans: count > 0 ? [this.events[(this.head - 1 + this.CAP) % this.CAP]!.conf] : [],
+      routerRelevance: last ? last.conf : 0,
+      // TSOTCHKE Eshkol fg from corpus.
+      fgEnergy: this.fgEnergy,
+      fgBeliefMean: this.fgBeliefs.reduce((a, b) => a + b, 0) / 12,
+      fgBeliefs: Array.from(this.fgBeliefs),
+    };
+  }
+}

@@ -1,0 +1,3 @@
+import { mulberry, gauss, attnRun, compare } from "./harness";
+const orc = (s: number) => { const r = mulberry(s * 7919 + 11); let a = 0, d = 0, e = 0; for (let t = 0; t < 300; t++) { gauss(r); const u = Math.max(-1, Math.min(1, -(a + 0.98 * d))); d = 0.98 * d + gauss(r) * 0.08; a = a + u + d; e += a * a; } return -e / 300; };
+for (const b of [1000,2000,3000,4000,5000,6000,7000,8000,9000]) { const S = Array.from({ length: 16 }, (_, k) => b + k); const o = S.map(orc), ab = S.map((s) => attnRun(mulberry(s * 7919 + 11), "noschema", false)); const c = compare("", o, ab); console.log(b, "oracle vs ablation d", c.d.toFixed(2), "t", c.t.toFixed(2)); }

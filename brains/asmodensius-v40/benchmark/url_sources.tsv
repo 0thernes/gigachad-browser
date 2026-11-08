@@ -1,0 +1,150 @@
+Tierra	wiki:Tierra (computer simulation)
+Avida	doi:10.1162/106454604773563612
+Avida-ED	url:https://avida-ed.github.io/
+Core War	wiki:Core War
+Aevol	doi:10.1093/molbev/msm165
+Chromaria	doi:10.7551/978-0-262-32621-6-ch128
+Geb	doi:10.1080/002077200406570
+Darwinbots	url:http://wiki.darwinbots.com/w/Main_Page
+Polyworld	wiki:Polyworld
+Echo	wiki:John Henry Holland
+Sugarscape	wiki:Sugarscape
+Framsticks	wiki:Framsticks
+Karl Sims creatures	doi:10.1145/192161.192167
+Breve	doi:10.1007/978-1-84882-285-6_4
+Golem project	doi:10.1038/35023115
+Xenobots	doi:10.1073/pnas.1910837117
+Evosoro (VoxCAD)	doi:10.1145/2463372.2463404
+Evolution Gym	arxiv:2201.09863
+DERL / UNIMAL	doi:10.1038/s41467-021-25874-z
+Neural MMO	arxiv:1903.00784
+Evolving Virtual Creatures (Lehman novelty)	doi:10.1145/2001576.2001606
+POET	arxiv:1901.01753
+Enhanced POET	arxiv:2003.08536
+OMNI	arxiv:2306.01711
+ASAL	arxiv:2412.17799
+Lenia	doi:10.25088/ComplexSystems.28.3.251
+Flow-Lenia	arxiv:2212.07906
+Particle Lenia	url:https://google-research.github.io/self-organising-systems/particle-lenia/
+SmoothLife	arxiv:1111.1567
+Game of Life	wiki:Conway's Game of Life
+Langton's loops	doi:10.1016/0167-2789(84)90256-2
+Evoloops	doi:10.1162/106454699568818
+Von Neumann universal constructor	wiki:Von Neumann universal constructor
+Nobili-Pesavento constructor	doi:10.1162/artl.1995.2.4.337
+Byl's loop	doi:10.1016/0167-2789(89)90242-X
+Neural Cellular Automata (Growing NCA)	doi:10.23915/distill.00023
+Self-classifying MNIST NCA	doi:10.23915/distill.00027.002
+Texture NCA	doi:10.23915/distill.00027.003
+Primordial particle system	doi:10.1038/srep37969
+Particle Life (Ventrella clusters)	url:https://www.ventrella.com/Clusters/
+Swarm chemistry	doi:10.1162/artl.2009.15.1.15107
+Boids	doi:10.1145/37401.37406
+Vicsek model	doi:10.1103/PhysRevLett.75.1226
+Physarum transport networks	doi:10.1162/artl.2010.16.2.16202
+AlChemy	doi:10.1073/pnas.91.2.757
+Squirm3	doi:10.1162/106454602321202417
+Hutton enzyme cells	doi:10.1162/artl.2007.13.1.11
+Ono-Ikegami protocells	doi:10.1006/jtbi.2000.2121
+SCL autopoiesis	doi:10.1016/0303-2647(74)90031-8
+Chemical organization theory tools	doi:10.1007/s11538-006-9130-8
+GARD model	doi:10.1073/pnas.97.8.4112
+Computational BF self-replicators	arxiv:2406.19108
+Ludobots	doi:10.1145/2492007.2493883
+Bongard resilient machines	doi:10.1126/science.1133687
+OpenWorm	doi:10.3389/fncom.2014.00137
+Sibernetic	doi:10.1098/rstb.2017.0376
+c302	doi:10.1098/rstb.2017.0379
+BAAIWorm	doi:10.1038/s43588-024-00738-w
+NeuroMechFly	doi:10.1038/s41592-022-01466-7
+NeuroMechFly v2	doi:10.1038/s41592-024-02497-y
+FlyWire whole-brain LIF model	doi:10.1038/s41586-024-07763-9
+Whole-body fly (MuJoCo)	doi:10.1038/s41586-025-09029-4
+Virtual rodent	doi:10.1038/s41586-024-07633-4
+Blue Brain neocortical microcircuit	doi:10.1016/j.cell.2015.09.029
+Allen V1 model	doi:10.1016/j.neuron.2020.01.040
+Spaun	doi:10.1126/science.1225266
+Nengo	doi:10.3389/fninf.2013.00048
+The Virtual Brain	doi:10.3389/fninf.2013.00010
+NEST simulator	doi:10.4249/scholarpedia.1430
+Brian2	doi:10.7554/eLife.47314
+NEURON	doi:10.1162/neco.1997.9.6.1179
+Darwin / NOMAD robots	doi:10.1073/pnas.89.15.7267
+Braitenberg vehicles	wiki:Braitenberg vehicle
+Creatures (Grand)	doi:10.1145/267658.267663
+Creatures Docking Station	wiki:Creatures (video game series)
+Spore	wiki:Spore (2008 video game)
+The Bibites	url:https://thebibites.com/
+Biogenesis	url:https://biogenesis.sourceforge.net/
+Gene Pool	url:https://www.swimbots.com/
+ALIEN	url:https://alien-project.org/
+Life Engine	url:https://thelifeengine.net/
+Critterding	url:https://critterding.sourceforge.net/
+Biosim4	url:https://github.com/davidrmiller/biosim4
+OpenAI hide-and-seek	arxiv:1909.07528
+XLand	arxiv:2107.12808
+MineDojo / Voyager	arxiv:2305.16291
+Generative Agents	arxiv:2304.03442
+Project Sid	arxiv:2411.00114
+AI Town	url:https://github.com/a16z-infra/ai-town
+JaxLife	arxiv:2409.00853
+EvoJAX	arxiv:2202.05008
+NEAT	doi:10.1162/106365602320169811
+HyperNEAT	doi:10.1162/artl.2009.15.2.15202
+Picbreeder	doi:10.1162/EVCO_a_00030
+NERO	doi:10.1109/TEVC.2005.856210
+MAP-Elites	arxiv:1504.04909
+QDax	arxiv:2202.01258
+Novelty search	doi:10.1162/EVCO_a_00025
+Walker evolution (Hornby gait)	doi:10.1109/TRO.2004.839222
+Animats (Wilson)	wiki:Animat
+Subsumption robots	doi:10.1109/JRA.1986.1087032
+Cog humanoid	doi:10.1007/3-540-48834-0_5
+Kismet	wiki:Kismet (robot)
+iCub	doi:10.1145/1774674.1774683
+LIDA	doi:10.1109/TAMD.2013.2277589
+Soar	doi:10.1016/0004-3702(87)90050-6
+ACT-R	doi:10.1037/0033-295X.111.4.1036
+CLARION	wiki:CLARION (cognitive architecture)
+OpenCog	wiki:OpenCog
+Global Workspace model (Dehaene)	doi:10.1073/pnas.95.24.14529
+PyPhi	doi:10.1371/journal.pcbi.1006343
+AST model (Graziano)	doi:10.1073/pnas.2102421118
+Butlin et al. indicator audit	arxiv:2308.08708
+Active inference agents (pymdp)	doi:10.21105/joss.04098
+Deep active inference (Fountas)	arxiv:2006.04176
+DishBrain	doi:10.1016/j.neuron.2022.09.001
+Brainoware	doi:10.1038/s41928-023-01069-w
+Anthrobots	doi:10.1002/advs.202303575
+JCVI-syn3.0	doi:10.1126/science.aad6253
+Minimal cell whole-cell model	doi:10.1016/j.cell.2021.12.025
+M. genitalium whole-cell model	doi:10.1016/j.cell.2012.05.044
+E-CELL	doi:10.1093/bioinformatics/15.1.72
+Gray-Scott self-replicating spots	doi:10.1126/science.261.5118.189
+Reaction-diffusion (Turing)	doi:10.1098/rstb.1952.0012
+L-systems	doi:10.1016/0022-5193(68)90079-9
+Algorithmic Botany (Prusinkiewicz)	url:http://algorithmicbotany.org/papers/#abop
+CompuCell3D	doi:10.1016/B978-0-12-388403-9.00013-8
+Morpheus	doi:10.1093/bioinformatics/btt772
+PhysiCell	doi:10.1371/journal.pcbi.1005991
+Cellular Potts model	doi:10.1103/PhysRevLett.69.2013
+GReaNs	doi:10.1007/978-3-642-21283-3_5
+Bioelectric planaria model	doi:10.3389/fbioe.2016.00055
+Artificial Fishes (Tu & Terzopoulos)	doi:10.1145/192161.192170
+DeepMind Control Suite	arxiv:1801.00690
+MuJoCo	doi:10.1109/IROS.2012.6386109
+Brax	arxiv:2106.13281
+Isaac Gym	arxiv:2108.10470
+Animal-AI Olympics	doi:10.1038/s42256-019-0050-3
+Unity ML-Agents	arxiv:1809.02627
+Evolving bipedal locomotion (Geijtenbeek)	doi:10.1145/2508363.2508399
+Markov Brains	arxiv:1709.05601
+Animats with phi (Edlund)	doi:10.1371/journal.pcbi.1002236
+Evolved swarm robots (Swarm-bots)	doi:10.1023/B:AURO.0000033973.24945.f3
+Kilobots	doi:10.1126/science.1254295
+Homeostat	wiki:Homeostat
+Daisyworld	doi:10.3402/tellusb.v35i4.14616
+Madingley model	doi:10.1371/journal.pbio.1001841
+NetLogo	url:https://ccl.northwestern.edu/netlogo/
+Mesa	doi:10.25080/Majora-7b98e3ed-009
+StarLogo	wiki:StarLogo

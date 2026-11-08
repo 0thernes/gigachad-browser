@@ -1,14 +1,40 @@
-# Gigachad Browser — Sovereign AI & Autonomous 60Hz Embodied A-Life Browser
+# GIGACHAD Browser — Sovereign AI & 60Hz 4-Brain Fused Embodied A-Life Browser
 
-A local Electron 42 sovereign AI and autonomous embodied A-Life browser for Windows 11. Tabs are sandboxed `<webview>` guests, a Python sidecar on `127.0.0.1:8000` serves page tools, and an in-browser **Humunculus × Asmodenius v40 × Dimension-Ω (`OMEGA-100` × `DEITY-100`) Tokenless Runtime** runs a 60Hz embodied A-Life Pantheon (`1,240,576` live `Float32Array` parameters, zero-LLM autonomy, 5-caste multi-agent swarm, 4D Tesseract hypercube soma, and live DOM reality manipulation) directly across the browser viewport and chrome.
+> **⚠️ LICENSE NOTICE — PROPRIETARY DOWNLOAD-AND-USE-ONLY LICENSE (ALL RIGHTS RESERVED)**
+> Governed by [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md).
+> **GIGACHAD BROWSER is made available for personal download and local execution ONLY.**
+> **Commercial use, modification, editing, derivative works, redistribution of modified copies, or claiming authorship/ownership as your own are STRICTLY PROHIBITED.**
 
-An OpenAI-compatible server (llama.cpp `llama-server`, Ollama, or LM Studio) optionally answers LLM chat routes (`Local GGUF` / `OpenRouter`), while the **Humunculus Tokenless Runtime** operates 100% locally with zero external model dependencies.
+A self-contained Electron 42 sovereign AI and 60Hz zero-LLM embodied artificial-life (A-Life) browser for Windows 11. Tabs are sandboxed `<webview>` guests, a Python sidecar on `127.0.0.1:8000` serves page tools, and an in-browser **4-Brain Fused Neural & Connectome Runtime** (`Humunculus × Asmodensius-v40 × CQM-Xylos Zig Wasm × Dimension-Ω × Empirical C. elegans Connectome`) runs at 60Hz (`1,245,184` cortex parameters, `262,144` connectome synapses, `7,379` empirical *C. elegans* edges, `18` compiled Zig 0.17.0 WebAssembly kernels, and a **6-Tier Multi-Precision Hybrid Tensor Arena** beyond `Float32Array`) directly across the browser viewport and chrome.
 
-Electron is pinned to 42.11.18. That is the newest 42.x release outside the vulnerable range reported by `npm audit` for 35.x through 42.11.15. The app uses context isolation, the preload allowlist, and sandboxed guests.
+For the full mathematical equations, DSA complexity matrices, OWASP Top-10 security mapping, ERD/ERM/ERP schemas, glossary, codebase index, and comparative analysis, see:
+👉 **[`docs/GIGACHAD_BIBLE_GLOSSARY_INDEX_NOTATIONS.md`](docs/GIGACHAD_BIBLE_GLOSSARY_INDEX_NOTATIONS.md)**
 
 ---
 
-## Sovereign Embodied A-Life Architecture (`OMEGA-100` × `DEITY-100`)
+## Core Architectural Pillars
+
+### 1. 6-Tier Multi-Precision Hybrid Tensor Arena (Beyond `Float32Array`)
+Implemented in [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js) (`multiPrecisionBuffer64K`, `65,536`-byte aligned `ArrayBuffer`):
+1. **`Float64Array` (`f64`, IEEE-754 64-bit Double Precision):** Stiff conductance-based `sLTC` ODE integrators ($\tau_{\text{eff}}(t)$), Fubini-Study Quantum Geometric Tensor $g_{\mu\nu}$, `MinSR` sample-space Cholesky natural-gradient solver, and exact DBSP bilinear $\Delta(AB)$ updates.
+2. **`BigInt64Array` (`i64`) & `BigUint64Array` (`u64`):** Exact Cyclotomic integer ring $\mathbb{Z}[\zeta_8] = \mathbb{Z}[x]/(x^4 + 1)$ arithmetic (`cqm_eshkol_cyclotomic8_mul`) with zero floating-point drift and exact algebraic norm $N_{\mathbb{Q}(\zeta_8)/\mathbb{Q}}(\alpha) = A_0^2 - 2A_1^2 \in \mathbb{Z}$.
+3. **`Uint16Array` (`fp16` + CSR Indices):** Hardware-accurate IEEE-754 16-bit half-precision (`1-5-10`) latent compression and Compressed Sparse Row (`CSR`) connectome edge indices.
+4. **`Int8Array` (`INT8`):** Symmetric `[-127, +127]` dynamic per-channel weight quantization with `Float32Array(16)` dequantization scales.
+5. **`Uint8Array` (`BitNet b1.58` Ternary `{-1, 0, +1}`):** 2-bit packed ternary weights (`4` weights per byte) executing **multiplication-free** synaptic accumulation using pure additions and subtractions.
+6. **`Uint32Array` (`u32` Binary `HDC` & `GoT` Bitmask DAG):** 256-bit Kanerva Binary Hyperdimensional Computing hypervectors using bitwise `XOR` binding and SWAR `POPCNT` Hamming similarity.
+
+### 2. Self-Contained 4-Brain Sibling Fusion (`brains/` + `SiblingBrainFusionEngine`)
+All sibling brain repositories are ported line-for-line inside [`brains/`](brains/) and fused into the 60Hz loop:
+- **Brain #1 — CQM-Xylos Zig 0.17.0 WebAssembly Co-Processor ([`brains/cqm-xylos/cqm_kernels.wasm`](brains/cqm-xylos/cqm_kernels.wasm) & [`root.zig`](brains/cqm-xylos/root.zig)):** 18 exported freestanding Wasm functions (`cqm_sbnn_minsr_step` Cholesky natural gradient, `cqm_qgtl_full_tensor_2d` Fubini-Study QGT + Berry curvature, `cqm_moonlab_qwz_chern_fhs` topological Chern number, `cqm_libirrep_bdg_skyrmion_mzm` Majorana Zero Modes $2|Q|$, `cqm_eshkol_dbsp_delta_gemm`, `cqm_entity_brain_batch_forward`, `cqm_glyph_hebbian_step`).
+- **Brain #2 — Asmodensius-v40 Creature 001 ([`brains/asmodensius-v40/creatures/001/`](brains/asmodensius-v40/creatures/001/)):** Larkum two-compartment apical-basal pyramidal neurons with NMDA plateau burst amplification, SOM/PV disynaptic inhibition, Payeur burst-gated apical-basal mismatch plasticity, Thalamic Reticular Nucleus (`TRN`) all-or-none Global Workspace Ignition, and opponent hypothalamic `AgRP`/`POMC` allostasis + `DA`/`NE`/`ACh` neuromodulation.
+- **Brain #3 — Empirical *C. elegans* 302-Neuron / 7,379-Synapse Connectome ([`brains/asmodensius-v40/celegans_herm_full_edgelist.csv`](brains/asmodensius-v40/celegans_herm_full_edgelist.csv)):** Real hermaphrodite chemical synapses (`6,393`) and symmetric electrical gap junctions (`986`) driving `AVB/PVC` vs `AVA` command balance and dorsal-ventral motor waves.
+- **Brain #4 — Dimension-Omega Singularity & 3D Quantum Neural Manifold ([`brains/dimension-omega-singularity/`](brains/dimension-omega-singularity/) & [`brains/quantum_neural_manifold_3d.html`](brains/quantum_neural_manifold_3d.html)):** 3D Riemannian metric curvature and geodesic flow coupled into the thought-curvature tensor.
+
+### 3. Corecursive–Decursive `AoT` · `ToT` · `GoT` & 25 Bleeding-Edge Neural Models
+- **Corecursive `ToT` (Tree of Thought):** 21-node 4-ary implicit heap arena (`1` root $\to 4$ depth-1 $\to 16$ depth-2 leaves) with PUCT exploration and `DSD-24` decursive branch pruning.
+- **`GoT` (Graph of Thought):** 16-vertex bitmask DAG with cross-branch scaled dot-product attention, Tarjan Union-Find equivalence quotienting, and spectral PageRank consensus.
+- **Decursive `AoT` (Atom of Thought):** Irreducible Markovian contraction ($P_{\mathcal{U}_{\text{ban}}^\perp}$) with Tree-Backup Temporal-Difference ($\delta_{\text{GoT}}$) online weight updates across the `1,245,184`-parameter cortex and `262,144` connectome synapses.
+- **25 Bleeding-Edge Models & Multi-Hat Cyber Substrate ([`systems/cortex-neural-cyber-engine.js`](systems/cortex-neural-cyber-engine.js)):** `I-JEPA`, `Liquid-Mamba`, `OT-CFM`, `TTT-Linear`, `Forward-Forward`, `RND`, binary `.gchad` disk persistence, autonomous Chromium PAC Tor (`9050`/`9150`) / I2P (`4444`) / IPFS routing, and live TLS X.509 + DNS OSINT inspection.
 
 - **1.24M FP32 Parameter Cortex (`HumunculusTokenlessRuntime`)**:
   - `semanticMatrix` (`4096 × 256` = `1,048,576` floats), `liquidWeights` (`256 × 256` = `65,536` floats), `kanSplineCoeffs` (`256 × 128` = `32,768` floats), `hypergraph Incidence` (`512 × 64` = `32,768` floats), and `holographicMemory` (`240 × 256` = `60,928` floats).

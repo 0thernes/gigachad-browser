@@ -1,0 +1,4 @@
+// tiny smoke (1 seed per arm, 3 days): no NaN, events appear, lesions change behaviour. Not a test.
+import { Organism } from "./organism";
+const run = (opts: any, days = 3) => { const g = new Organism({ seed: 2001, ...opts }); for (let i = 0; i < 1440 * days && !g.dead; i++) g.step(); const a = g.affectState(); return { foraged: g.foraged, dead: g.dead, fat: +g.fat.toFixed(1), mood: a ? +a.mood.val.toFixed(3) : null, stress: a ? +a.stress.toFixed(3) : null, events: a ? a.events.map((e) => e.type).reduce((m: any, t) => (m[t] = (m[t] || 0) + 1, m), {}) : null, persona: a?.persona }; };
+console.log(JSON.stringify({ full: run({}), lesionAll: run({ affectLesion: "all" }), noDysreg: run({ affectLesion: "dysreg" }), starve: run({ starve: true }, 2), vulnerable: run({ persona: { bold: 0.2, curious: 1, reactive: 0.9, vuln: 1 } }) }, null, 0));

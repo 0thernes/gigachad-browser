@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Eshkol + Moonlab in the browser (WASM)</title>
+<style>body{background:#09111c;color:#d9e2ee;font:14px system-ui;margin:24px}pre{background:#0f1a29;padding:10px;border-radius:6px}</style></head><body>
+<h1>Real Eshkol and Moonlab, compiled to WebAssembly</h1>
+<p>Eshkol bytecode VM (tsotchke/eshkol 341ac81, scripts/build-wasm-repl.sh) and Moonlab quantum simulator (tsotchke/moonlab cd3b234, bindings/javascript emscripten build). Not wired into organism.ts: the organism keeps its seeded 3-qubit port so test results stay deterministic.</p>
+<pre id="o">loading…</pre>
+<script src="eshkol-vm.js"></script><script src="moonlab.js"></script>
+<script>
+(async () => { const out = []; const log = (s) => { out.push(s); document.getElementById("o").textContent = out.join("\n"); };
+  const m = await MoonlabModule(); const st = m._malloc(4096); m._quantum_state_init(st, 3); m._gate_hadamard(st, 0); m._gate_cnot(st, 0, 1);
+  log(`Moonlab Bell state: P(q0=1)=${m._measurement_probability_one(st, 0).toFixed(3)} P(q1=1)=${m._measurement_probability_one(st, 1).toFixed(3)} P(q2=1)=${m._measurement_probability_one(st, 2).toFixed(3)}`);
+  const e = await EshkolVM({ print: (s) => log("Eshkol> " + s) }); try { e.cwrap("repl_init", null, [])(); } catch (x) {}
+  const ev = e.cwrap("repl_eval", "string", ["string"]); for (const src of ["(define (sq x) (* x x)) (sq 12)", "(map (lambda (x) (* 2 x)) (list 1 2 3))"]) { const r = ev(src); if (r) log("Eshkol> " + r); }
+})();
+</script></body></html>

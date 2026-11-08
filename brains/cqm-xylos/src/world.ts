@@ -1,0 +1,7974 @@
+/**
+ * Composition root of the simulation: constructs every system against the
+ * contracts in docs/MODULE-CONTRACTS-2026-06-26.md, owns the mutable SimState, implements
+ * all UiActions, and drives the per-frame pipeline
+ * (camera → weather → puppet masters → shoggoths → sector → sort step → entities →
+ *  current grid when required → NHI → connectome → quantum → environment → telemetry → render).
+ *
+ * Frame-pipeline cadences: grid rebuild every 2nd frame, promoted to every frame while live NHI
+ * exact-target cognition requires current positions; connectome every 1/2/3 frames at
+ * n≤400/≤700/>700; telemetry every 8th frame. Population-scale hot paths reuse module scratch.
+ */
+import * as THREE from 'three';
+import type { Engine } from './core/engine';
+import { rotatingSquareSurveyHeight } from './core/camera-framing';
+import { Level, type ComputeCadencePlan } from './core/frame-governor';
+import type {
+  PersistedState,
+  QualityProfile,
+  SanctuaryHarmGate,
+  SimContext,
+  SimState,
+  TelemetrySnapshot,
+  UiActions,
+} from './types';
+import type { Entity } from './types';
+import type { ViewMode, Weather } from './sim/constants';
+import {
+  ARENA,
+  ARENA_MID,
+  ARENA_Y,
+  CHAOS_LEVELS,
+  CHAOS_MAX,
+  CHAOS_MIN,
+  CAMERA_FAR,
+  ENTROPY_MAX,
+  ENTROPY_STEP,
+  GRID_CELL,
+  GROUND_EXTENT,
+  HABITAT_MID,
+  HABITAT_Y,
+  LIVING_ZONE,
+  PLATFORM_CEIL,
+  PLATFORM_FLOOR,
+  PLATFORM_HALF,
+  PLATFORM_MID_Y,
+  RENDER_MODES,
+  SPACE_FOVS,
+  TIME_SCALES,
+  TRACKING_VIEWS,
+  ULTRA_GRID_CELL,
+  VIEW_MODES,
+  WEATHERS,
+  WORLD_LINEAR,
+  IS_MINI_WORLD,
+  SOCIAL_APEX_SENSE_R,
+  SOCIAL_NHI_ACTION_R,
+  SOCIAL_NHI_KIN_R,
+} from './sim/constants';
+import { ALGOS, ALGO_GLYPHS, ALGO_IGNITE } from './sim/algorithms';
+import { SONGS, SFX_EXTRA_BANDS } from './audio/songs';
+import { mulberry32, createIsolatedStreams, type Rng } from './math/rng';
+import {
+  isWildEntropyMode,
+  prepareParallelCounterSeed,
+  setWildEntropyMode,
+} from './math/wild-entropy';
+import { OrganismBioStatePool, type OrganismBioTelemetry } from './sim/biome-strata';
+import {
+  detectHybridHardware,
+  getBaselineHybridHardware,
+  planHybridPartition,
+  type HybridHardwareCapabilities,
+  type HybridWorkloadPlan,
+} from './core/hybrid-compute';
+import { clamp } from './math/scalar';
+import { SpatialHash } from './math/spatial-hash';
+import { createGeometryCache } from './sim/geometry-cache';
+import { createMorphotypes } from './sim/morphotypes';
+import { createPhyla } from './sim/phyla';
+import { EntityManager } from './sim/entities';
+import type { SocialScanExecutor } from './sim/social-field';
+import { growthTargetAt } from './sim/growth-ramp';
+import { EntityBrainField } from './sim/entity-brain';
+import { gedankenDeath, GedankenLedger } from './sim/gedanken-death';
+import { runThalerProof, type ThalerVerdict } from './sim/thaler-sentience';
+import { TRAIT, TRAIT_GENES } from './sim/genome';
+import { InstancedEntityRenderer, type InstanceFrame } from './sim/instanced-entities';
+import { ShoggothSystem } from './sim/shoggoths';
+import { PuppetMasterSystem } from './sim/puppet-masters';
+import { TitanSystem } from './sim/titans';
+import { WeatherSystem } from './sim/weather';
+import { QuantumCloud } from './sim/quantum';
+import { Connectome } from './sim/connectome';
+import { EnvironmentSystem } from './sim/environment';
+import { AlienFlora } from './sim/alien-flora';
+import { Vegetation } from './sim/vegetation';
+import { SandboxController, loadSettings, type SandboxSettings } from './sim/sandbox';
+import { PHYLUM_COUNT } from './sim/phyla';
+import {
+  BigTreeActivity,
+  BigTreeSlotKind,
+  BigTreeTransitionCause,
+  BigTreeVisitManager,
+  BigTreeVisitReason,
+  BigTreeVisitState,
+  BigTreeZone,
+  bigTreeActivityName,
+  bigTreeTransitionCauseName,
+  bigTreeVisitReasonName,
+  bigTreeVisitStateName,
+  type BigTreeVisitView,
+  type BigTreeZoneStats,
+} from './sim/big-tree-zone';
+import {
+  BIG_TREE_SANCTUARY_ORDINARY,
+  BIG_TREE_SANCTUARY_PUPPET,
+  BIG_TREE_SANCTUARY_SHOGGOTH,
+  BIG_TREE_SANCTUARY_TITAN,
+  BIG_TREE_SANCTUARY_XENOMIMIC,
+  BigTreeSanctuaryMembershipRegistry,
+  type BigTreeSanctuaryIndexStats,
+  type BigTreeSanctuaryMembershipView,
+} from './sim/big-tree-sanctuary';
+import {
+  BIG_TREE_OWNER_ORDINARY,
+  BIG_TREE_OWNER_XENOMIMIC,
+  BigTreeSpeciesVisitors,
+  performBigTreeActivity,
+  type BigTreeSpeciesVisitorView,
+  type BigTreeVisitorActivityCallbacks,
+  type BigTreeSpeciesVisitorStats,
+  type BigTreeVisitorEnvironment,
+} from './sim/big-tree-visitors';
+import {
+  BIG_TREE_OWNER_APEX,
+  BIG_TREE_OWNER_LEVIATHAN,
+  BIG_TREE_OWNER_NHI,
+  BIG_TREE_OWNER_PUPPET,
+  BIG_TREE_OWNER_SHOGGOTH,
+  BIG_TREE_OWNER_TITAN,
+  BigTreeFaunaIntentMode,
+  BigTreeFaunaVisitors,
+  bindBigTreeActorSource,
+  bindBigTreeFauna,
+  type BigTreeFaunaBinding,
+  type BigTreeFaunaVisitorView,
+  type BigTreeFaunaVisitorStats,
+} from './sim/big-tree-fauna-visitors';
+import {
+  NhiBigTreeSource,
+  applyNhiBigTreeIntent,
+  type NhiBigTreeIntentView,
+  type NhiBigTreeSignals,
+} from './sim/nhi-big-tree-source';
+import { writeNhiRoamTarget } from './sim/habitat-roaming';
+import { QuantumCircuitSystem } from './sim/qcircuit';
+import { ReactionDiffusionSystem } from './sim/reaction-diffusion';
+import { XylosBody, XYLOS_WORLD_RADIUS } from './sim/xylos-body';
+import { XylosHabitat } from './sim/xylos-habitat';
+import { XylosSession } from './core/xylos-session';
+import { XylosPanel } from './ui/xylos-panel';
+import { GraphMind } from './sim/graph-mind';
+import { ConstellationSystem } from './sim/constellations';
+import { AtmosphereSystem } from './sim/atmosphere';
+import { Viz3DSystem, type Viz3DSnapshot } from './sim/viz3d';
+import { SingularitySystem, SINGULARITY_KINDS } from './sim/singularities';
+import { ChaosField } from './sim/chaos-field';
+import { ArtifactField } from './sim/artifacts';
+import { LeviathanSystem } from './sim/leviathans';
+import {
+  NHI_SYSTEM_MIND_CAP,
+  NhiSystem,
+  type NhiActionOutcome,
+  type NhiTickFailure,
+  type NhiWorld,
+} from './sim/nhi-system';
+import { Economy } from './sim/economy';
+import { NhiAction, type NhiIntent, type NhiPercept } from './sim/nhi';
+import {
+  isNhiManipulationTarget,
+  resolveNhiHuntEffect,
+  resolveNhiMimicEffect,
+  resolveNhiVelocityImpulse,
+  selectNearestNhiTarget,
+  type NhiEffectBody,
+} from './sim/nhi-target-effects';
+import { NhiBodySystem } from './sim/nhi-body';
+import { nhiLaunchVelocityFromLook, nhiMinionKickVelocity } from './sim/nhi-launch';
+import { CosmicWeb } from './sim/cosmic-web';
+import { GoldLattice } from './sim/gold-lattice';
+import { FloatingMonoliths } from './sim/floating-monoliths';
+import { GodColossus } from './sim/god-colossus';
+import {
+  CrystalEcosystem,
+  CRYSTAL_TREE_ORIGIN_X,
+  CRYSTAL_TREE_ORIGIN_Z,
+  type CrystalEcosystemFrame,
+} from './sim/crystal-ecosystem';
+import type { EdibleResource } from './sim/edible-resource';
+import { QuantumLattice } from './sim/quantum-lattice';
+import { AbominationArchitecture } from './sim/abomination-architecture';
+import { Mechalogodrom } from './sim/mechalogodrom';
+import { WasteEcology } from './sim/waste-ecology';
+import { MechalogodromBrain, type MechalogodromBrainSnapshot } from './sim/mechalogodrom-brain';
+import { AlphabetPantheonRender } from './sim/alphabet-pantheon-render';
+import { ApexSubstrateDriver } from './sim/apex-substrate-driver';
+import { substrateUniforms } from './sim/apex-substrate-visual';
+import { SCALE_MASSIVE } from './sim/apex-brain';
+import { corpusPulse } from './sim/tsotchke-facade';
+import { TsotchkeOrganismIntelligence } from './sim/tsotchke-organism-intelligence';
+import { VqeDriveResolver } from './sim/vqe-drive-resolver';
+import { PredictiveMetacognition } from './sim/predictive-metacognition';
+import {
+  GlyphBrainBatch,
+  writeGlyphEnvironmentalPercept,
+  type GlyphBrainSnapshot,
+} from './sim/glyph-brain';
+import { Foundationals, type FoundationalsSnapshot } from './sim/foundationals';
+import { apexGrowthStage, type ApexGrowthStage } from './sim/apex-consciousness-scaffold';
+import { LoreEngine } from './sim/lore';
+import { AnalyticsSystem } from './sim/analytics';
+import { AudioEngine } from './audio/engine';
+import { AudioAnalysis, type AudioBands } from './audio/analysis';
+import { Hud } from './ui/hud';
+import { Observatory } from './ui/observatory';
+import { NhiObservatory } from './ui/nhi-observatory';
+import { MarketTicker } from './ui/market-ticker';
+import { PantheonArchitecturePanel } from './ui/pantheon-architecture-panel';
+import { SuperCreature, type SuperPercept, type SuperPlan } from './sim/super-creature';
+import { ApexBrain, SCALE_APEX_START, type ApexPercept, type ApexThought } from './sim/apex-brain';
+import { breedAt, type BabyGenome, PANTHEON_TOTAL } from './sim/pantheon-breeding';
+import { SelfEvolutionLoop, type EvolutionMetrics } from './sim/self-evolution-loop';
+import {
+  bedauPackardActivity,
+  evolutionaryActivity,
+  shannonDiversity,
+  openEndednessVerdict,
+  type OpenEndednessClass,
+} from './sim/open-endedness';
+import { rngContrast } from './sim/classical-contrast';
+import { apexOffworldScore } from './sim/apex-offworld-score';
+import { bellTestWithRng } from './math/quantum-qrng-full';
+import { apexThinkMode } from './sim/apex-cadence';
+import {
+  GODFORMS,
+  APEX_INDIVIDUATED,
+  getArchonForm,
+  getFullTsotchkeBias,
+  getCorpusPulseForArchon,
+  createPetriDish,
+  petriDishBeat,
+  petriDishView,
+  petriGrowthMultiplier,
+  type PetriDishState,
+} from './sim/godform'; // GOAL5 + TSOTCHKE depth-ledger corpus (ralph 10x: Eshkol AD, Moonlab tensor, quake, irrep from (Tsotchke))
+import { PantheonSociety, FIELD_DIM, ARCHON_CHANNELS } from './sim/pantheon';
+import { FacultiesPantheon } from './sim/faculties-pantheon';
+import { ArchonLanguage, type ArchonLanguageState } from './sim/archon-language';
+import { Lineage } from './sim/lineage';
+import { Xenomind, type XenomindSnapshot } from './sim/xenomind';
+import { XenomindTrustGate } from './sim/xenomind-gate';
+import { OmegaPoint, type OmegaPointSnapshot } from './sim/omega-point';
+import { NhsiAffectBinding, type NhsiAffectOut } from './sim/nhsi-affect-binding';
+import { TomPantheon } from './sim/tom-pantheon';
+import { applyBrutalGodEvent } from './sim/petri-dish';
+import { triggerBrutalRelease, applyBrutalRelease, getBrutalLore } from './sim/brutal-god-releases';
+import { EmergenceAnglesController } from './sim/emergence-angles';
+import { Mortality } from './sim/mortality';
+import { Stigmergy } from './sim/stigmergy';
+import { DarkEnergy, type DarkEnergySnapshot } from './sim/dark-energy';
+import { Noosphere } from './sim/noosphere';
+import { MorphicField, type MorphicSnapshot } from './sim/morphic-field';
+import { Symbiosis } from './sim/symbiosis';
+import { MythRitual } from './sim/myth-ritual';
+import { SuperMind, type SuperMindSnapshot, type SuperMindIntent } from './sim/super-mind';
+import {
+  quakePerturb,
+  ulgHandoff,
+  gwtBroadcast,
+  libirrepClebsch,
+  moonlabMpoStep,
+  quakeQgeFactor,
+  libirrepSymmetry,
+  PrimordialSoup,
+  tsotchkeSimWiringFraction,
+  ulgCorpusResonance,
+  evaluateQrngQuantumChaosStream,
+  stepOct2026WaveSubstrates,
+  type TsotchkeOct2026Telemetry,
+} from './sim/tsotchke-facade'; // Ralph continue 10x: + libirrepSymmetry for more irrep in world
+import { qgeWorldPerturb } from './sim/qge-aliveness';
+import { qgeAlivenessProxy } from './sim/quantum-quake-physics';
+import { moonlabTensorContract } from './sim/moonlab-tensor';
+import { qecDecodingProxy } from './sim/libirrep-qec';
+import { WingmanSwarm, WINGMAN_COUNT } from './sim/super-wingmen';
+import { WingmanRenderer } from './sim/super-wingmen-render';
+import { SuperEvolution } from './sim/super-evolution';
+import { MonolithTemple } from './sim/monolith-temple';
+import { PortalDeath } from './sim/portal-death';
+import { MechaBlaze } from './sim/mecha-blaze';
+import { MechaFirePillar } from './sim/mecha-fire-pillar';
+import { PortalDeathFauna } from './sim/portal-death-fauna';
+import { PortalImmuneBounce } from './sim/portal-immune-bounce';
+import { CollisionBounce, type BounceCollider } from './sim/collision-bounce';
+import { BounceImpactFX } from './sim/bounce-impact-fx';
+import { PortalShield } from './sim/portal-shield';
+import { SuperBodySystem } from './sim/super-body';
+import { SuperHunt } from './sim/super-hunt';
+import { DomeFeeding } from './sim/dome-feeding';
+import { SuperPanel } from './ui/super-panel';
+import {
+  XenomimicPanel,
+  type XenomimicBodySample,
+  type XenomimicPanelTelemetry,
+} from './ui/xenomimic-panel';
+import { SuperheroState, HERO_POWERS } from './ui/superhero-state';
+import { SuperheroHud } from './ui/superhero-hud';
+import { TelemetryPanel } from './ui/panels';
+import { InputSystem } from './ui/input';
+import type { AuditTrail } from './logging/audit';
+import { createLogger } from './logging/logger';
+import type { BigTreeEcologyPersistenceSnapshot, MemoryStore } from './memory/store';
+import type { WorkerPool } from './core/worker-pool';
+import { WildernessWebGpu } from './core/wilderness-webgpu';
+import {
+  calibrateWildernessCompute,
+  type WildernessComputeCalibration,
+} from './core/wilderness-compute';
+import { WildernessPopulation } from './sim/wilderness-population';
+import { WildernessRenderer } from './sim/wilderness-render';
+import {
+  XENOMIMIC_MAX,
+  XenomimicVisitMode,
+  XenomimicPopulation,
+  type XenomimicCouplings,
+  type XenomimicLifecycleEvent,
+} from './sim/xenomimics';
+import { XenomimicRenderer } from './sim/xenomimics-render';
+import { XenomimicConnectome } from './sim/xenomimic-connectome';
+import { purgeLegacyXenomimicTethers } from './sim/xenomimic-tether-purge';
+import { baseTerrainHeightAt } from './sim/terrain-profile';
+import { terrainDisplacementAt } from './sim/terrain-deformation';
+import type {
+  BigTreeEcologyDiagnosticQuery,
+  BigTreeEcologyActorDiagnostic,
+  BigTreeEcologyFoodDiagnostic,
+  BigTreeEcologyDiagnosticSnapshot,
+} from './world-diagnostics';
+export type {
+  BigTreeEcologyDiagnosticQuery,
+  BigTreeEcologyActorDiagnostic,
+  BigTreeEcologyFoodDiagnostic,
+  BigTreeEcologyDiagnosticSnapshot,
+} from './world-diagnostics';
+import { BRUTAL_FOG, BRUTAL_FOG_DENSITY, BRUTAL_STYLES, SINGULARITY_LABEL } from './world-style';
+
+/** Cyclic element access into a non-empty readonly array. O(1). */
+function cyc<T>(arr: readonly T[], i: number): T {
+  const v = arr[((i % arr.length) + arr.length) % arr.length];
+  if (v === undefined) throw new Error('cyc: empty array');
+  return v;
+}
+
+/** Audit #14: chaos mean-reversion rate (per second, per unit of excess above floor + 1). */
+const CHAOS_REVERSION_PER_S = 0.02;
+/** AUTO mode dwell: seconds on each sorting field before advancing to the next (V7.2). */
+const ALGO_AUTO_PERIOD = 2.5;
+
+/** V105: 101-glyph pantheon breeding is coupled into the Archon petri dishes every 600 frames. */
+const PANTHEON_BREEDING_LIVE = true;
+
+/** Devour transfer strength: fraction the surviving neighbour's brain moves toward the devoured mind. */
+const GEDANKEN_DEVOUR_ALPHA = 0.2;
+/** Max distance a devoured mind can imprint into a neighbour (world units) — beyond this it just dies. */
+const GEDANKEN_DEVOUR_R = 90;
+/** Bounded neighbour-search window over the entity list (keeps a mass die-off O(deaths·window)). */
+const GEDANKEN_DEVOUR_WINDOW = 64;
+
+/**
+ * Derive the (i, j) pantheon-breeding pair for a given nonce, with the self-fertilization guard
+ * (i===j at nonce=65 otherwise). Exported as a pure, testable unit so a regression in the guard
+ * expression actually fails a test, instead of a test re-deriving the same formula independently.
+ */
+export function nextBreedingPair(nonce: number): [number, number] {
+  const i = (nonce * 7 + 3) % PANTHEON_TOTAL;
+  let j = (nonce * 13 + 17) % PANTHEON_TOTAL;
+  if (j === i) j = (j + 1) % PANTHEON_TOTAL;
+  return [i, j];
+}
+
+/** Cosmology SFX palette entries (V7.4) — band starts from the 110-voice palette. */
+const SFX_SUBBOOM = SFX_EXTRA_BANDS['subboom']?.start ?? 0;
+const SFX_FMCLANG = SFX_EXTRA_BANDS['fmclang']?.start ?? 0;
+const SFX_STRANGE = SFX_EXTRA_BANDS['strange']?.start ?? 0;
+const SFX_DEMONIC = SFX_EXTRA_BANDS['demonicgrowl']?.start ?? SFX_STRANGE;
+const SFX_TRANSWARP = SFX_EXTRA_BANDS['transwarp']?.start ?? SFX_STRANGE;
+const SFX_ABYSSAL = SFX_EXTRA_BANDS['abyssal']?.start ?? SFX_STRANGE;
+
+/**
+ * SIMULATION N(2) chaos floor (V7.6): the nightmare never settles below this. Set at the cMul
+ * SATURATION point — `chaosMul()` is `min(chaos/2, 3)`, which maxes at chaos = 6 — so N(2)
+ * pins every chaos consumer (behaviour agitation, sort push, sky tremor) to its ceiling. The
+ * earlier 3.5 sat BELOW saturation (cm 1.75 — milder than an ordinary chaos-boost); the
+ * dedicated jitterGain in entities.update() carries the agitation PAST the clamp on top.
+ */
+const CHAOS_NIGHTMARE_FLOOR = 6;
+
+interface WorldOptions {
+  engine: Engine;
+  quality: QualityProfile;
+  persisted: PersistedState;
+  store: MemoryStore;
+  audit: AuditTrail;
+  /** Food-only application checkpoint; never contains actors, visits, slots, partners, or cooldowns. */
+  bigTreeEcology?: BigTreeEcologyPersistenceSnapshot | null;
+  /** Enables pull-only debug receipts; main.ts sets this only for local preview hosts. */
+  developmentDiagnostics?: boolean;
+}
+
+/** Observed biology execution, deliberately separate from an accelerator routing proposal. */
+interface OrganismBiomeExecution {
+  readonly kind: 'execution';
+  readonly backend: 'cpu-main';
+  readonly frame: number;
+  readonly population: number;
+  readonly elapsedSimulationSeconds: number;
+  readonly entropyMode: 'seeded' | 'wild-batch';
+  /** Captured once for replay of this batch; null when the population is empty. */
+  readonly batchSeed: number | null;
+  readonly coupledEntities: number;
+  readonly gpuExecutedEntities: 0;
+  readonly npuExecutedEntities: 0;
+}
+
+export class World {
+  private readonly engine: Engine;
+  private readonly quality: QualityProfile;
+  private readonly persisted: PersistedState;
+  private readonly store: MemoryStore;
+  private readonly audit: AuditTrail;
+  private readonly developmentDiagnostics: boolean;
+  private readonly log = createLogger('world');
+
+  private readonly rng: Rng;
+  private readonly uiRng: Rng;
+  /**
+   * Direct NHI identity, policy, and action sampling never consumes UI randomness. Material organism
+   * creation still intentionally advances EntityManager's ordinary physics/genome streams.
+   */
+  private readonly nhiBirthRng: Rng;
+  private readonly nhiPolicyRng: Rng;
+  private readonly nhiEffectRng: Rng;
+  private readonly state: SimState;
+  private prePauseTimeScale = 1;
+  /**
+   * USER three-state pause: the ⏸ PAUSE button cycles RUNNING → SUSPENDED (`timeScale===0`, bodies alive
+   * in place) → FROZEN (`frozenAll`, the whole world a static tableau) → RUNNING. Only ever true while
+   * `timeScale===0`; cleared whenever time resumes (togglePause / cycleTimeScale).
+   */
+  private frozenAll = false;
+  /** V121 SUSPENDED ANIMATION: eased amplitude + pause-clock for the instanced organisms' in-place
+   *  spin/orbit while SUSPENDED. Amplitude eases in while paused, holds in FROZEN (tableau,
+   *  mid-orbit), and eases back to 0 on resume so engage/release never snaps. Render-only. */
+  private suspendFx = 0;
+  private suspendClock = 0;
+  /** V121 GROWTH REBASE: elapsed at the last genesis (boot=0, or the GENESIS RESET moment) and the
+   *  population base the ramp climbs FROM — −1 = "boot base" (BOOT_POP, resolved lazily since the
+   *  static is declared later in the class), ONE progenitor after a reset (USER). */
+  private growthAnchor = 0;
+  private growthBase = -1;
+  /** V122 (USER #9): BRUTAL entity-morph state — the freakshow-wave envelope (1→0 over ~3 s), the
+   *  press counter seeding each wave's palette, and the staggered shape-remorph cursor (−1 idle). */
+  private brutalMorphWave = 0;
+  private brutalMorphSeed = 0;
+  private brutalMorphCursor = -1;
+  /** Master exposure ladder (ACES filmic); index 2 = boot default 0.72 (matches Engine.renderer.toneMappingExposure). */
+  private readonly exposureLevels = [0.52, 0.62, 0.72, 0.82, 0.92] as const;
+  private exposureIdx = 2;
+  private readonly grid: SpatialHash<Entity>;
+  /** NHI-only mirror of the current entity grid; rebuilt in the same list-order pass for exact kin order. */
+  private readonly nhiGrid: SpatialHash<Entity>;
+  private readonly audio: AudioEngine;
+  /** Aborts the global (window) hero-event listeners on {@link dispose} — without this they leaked
+   *  one set per dev hot-reload, each firing against a dead World (the HMR hook calls dispose()). */
+  private readonly disposeAbort = new AbortController();
+  private readonly entities: EntityManager;
+  private readonly geos: THREE.BufferGeometry[];
+  /** Worker pool for offloading simulation to multiple CPU cores (ADR 0010) */
+  /** Browser-owned pool; absent or failed initialization retains CPU fallback. */
+  public workerPool: WorkerPool | null = null;
+  /** Adaptive compute cadence plan supplied by the browser RenderGovernor (null in headless deterministic tests). */
+  private computeCadence: ComputeCadencePlan | null = null;
+  /** Latest Tsotchke Flagship + Wave-2 Zig WASM substrate telemetry receipt. */
+  private latestOct2026Telemetry: TsotchkeOct2026Telemetry | null = null;
+  /** Latest off-thread WorkerPool Tsotchke simulation summary vector (12 floats). */
+  private latestWorkerOct2026Summary: Float32Array | null = null;
+  /** Latest Wild Non-Deterministic Quantum-Chaos QRNG 64-bit word (hex). */
+  private lastWildQrngHex = '0000000000000000';
+  /** Guard ensuring at most one off-thread Tsotchke wave simulation worker task is in flight at a time. */
+  private workerSimInFlight = false;
+  /** Multi-biome 3D ecological strata + 3-channel neuromodulation + 4-channel working memory pool. */
+  private readonly organismBioPool: OrganismBioStatePool;
+  /** Reused input/output vectors for the calling-thread biology batch. */
+  private readonly bioYPositions: Float32Array;
+  private readonly bioEntityIds: Uint32Array;
+  private readonly bioEnergies: Float32Array;
+  private readonly bioAges: Float32Array;
+  private readonly bioLives: Float32Array;
+  private readonly bioActivations: Float32Array;
+  private readonly bioVelYDelta: Float32Array;
+  private readonly bioEnergyDelta: Float32Array;
+  private readonly bioScaleMul: Float32Array;
+  /** Capability probes describe availability, never which backend executed this biology batch. */
+  private hybridHardware: HybridHardwareCapabilities;
+  /** Actual scaled simulation time since the previous biology sample. Pause adds no time. */
+  private bioElapsed = 0;
+  /** Latest 3D biome & developmental organism bio-state telemetry summary. */
+  private latestBiomeSummary: OrganismBioTelemetry | null = null;
+  /** Hypothetical routing only; the current biology batch executes on the main CPU thread. */
+  private latestHybridPlan: HybridWorkloadPlan | null = null;
+  private latestBiomeExecution: OrganismBiomeExecution | null = null;
+  /** Entity neural-net axon web (proximity links, activation propagation, GraphMind writer). */
+  public readonly connectome: Connectome;
+  /** Ambient numeric population; its renderer is intentionally absent, not visible core fauna. */
+  private readonly wilderness: WildernessPopulation;
+  private readonly wildernessRender: WildernessRenderer;
+  private browserComputeGeneration = 0;
+  private browserComputeCalibrating = false;
+  private browserComputePreference: 'auto' | 'webgpu' | 'cpu' = 'cpu';
+  private browserComputeReason = 'CPU reference; GPU compute not requested';
+  private browserComputeCalibration: WildernessComputeCalibration | null = null;
+  /** Xenomimics — deterministic ground-dwelling entangled-twin fauna (own rng substream; not in the EntityManager golden). */
+  private readonly xenomimics: XenomimicPopulation;
+  private readonly xenomimicsRender: XenomimicRenderer;
+  private readonly xenomimicConnectome: XenomimicConnectome;
+  private readonly xenomimicEntitySample: Entity[] = [];
+  private xenomimicEntityActivation = 0;
+  private xenomimicProximity = 0;
+  private readonly xenomimicRenderEnvironment = {
+    chaos: 0,
+    entropy: 0,
+    weather: 0,
+    proximity: 0,
+    coherence: 0,
+    integration: 0,
+    twinTension: 0,
+  };
+  private readonly xenomimicAudioMetrics = {
+    population: 0,
+    maxPopulation: XENOMIMIC_MAX,
+    activity: 0,
+    predictionError: 0,
+    twinTension: 0,
+    weather: 0,
+    entropy: 0,
+    proximity: 0,
+    polarityBalance: 0,
+    strictSilence: true,
+  };
+  private readonly xenomimicPanelData: XenomimicPanelTelemetry = {
+    population: 0,
+    pairs: 0,
+    births: 0,
+    deaths: 0,
+    eaten: 0,
+    teleports: 0,
+    meanEnergy: 0,
+    coherence: 0,
+    bondTension: 0,
+    integration: 0,
+    freeEnergy: 0,
+    quantumSpread: 0,
+    rngQuality: 0,
+    speciesCounts: Array.from({ length: 10 }, () => 0),
+    dominantSpecies: 0,
+    growthTarget: 2,
+    maxPopulation: XENOMIMIC_MAX,
+    activity: 0,
+    weather: 'CLEAR',
+    temperature: 20,
+    wind: 0,
+    links: 0,
+  };
+  /** Reusable body-sample buffer for the panel swarm map — grown once, mutated in place (no per-frame alloc). */
+  private readonly xenomimicBodySamples: XenomimicBodySample[] = [];
+  private static readonly XENOMIMIC_SAMPLE_CAP = 260;
+  /** Per-weather agitation the swarm feels, ordered like WEATHERS (CLEAR·RAIN·STORM·AURORA·VOID·FOG). */
+  private static readonly XENO_WEATHER_AGITATION = [0.05, 0.22, 0.7, 0.32, 0.85, 0.16];
+  private readonly xenomimicSurfaceAt = (x: number, z: number, time: number): number => {
+    const state = this.state;
+    return (
+      Math.max(PLATFORM_FLOOR, PLATFORM_FLOOR + 14 + baseTerrainHeightAt(x, z) * 0.5) +
+      terrainDisplacementAt(
+        x,
+        z,
+        time,
+        clamp(state.chaos / CHAOS_MAX, 0, 1),
+        clamp((state.entropy ?? 0) / ENTROPY_MAX, 0, 1),
+        state.wind.x,
+        state.wind.z,
+      )
+    );
+  };
+  private readonly xenomimicGrazeAt = (
+    x: number,
+    z: number,
+    appetite: number,
+    dt: number,
+  ): number => this.alienFlora.grazeAt(x, z, appetite, dt);
+  private readonly xenomimicFoodAt = (x: number, z: number): number => this.alienFlora.foodAt(x, z);
+  /** One authored sanctuary boundary shared by combat, hazard, and visitor adapters. */
+  private readonly bigTreeZone = new BigTreeZone();
+  /** Stable identity-aware entry/exit history for living beings; endpoint hazards stay conservative. */
+  private readonly bigTreeSanctuary: BigTreeSanctuaryMembershipRegistry;
+  /** Capacity/slot owner for temporary nourishment, rest, safety, and social visits. */
+  private readonly bigTreeVisits: BigTreeVisitManager;
+  /** Species adapter over the canonical Entity, Xenomimic, and Crystal food systems. */
+  private readonly bigTreeVisitors: BigTreeSpeciesVisitors;
+  /** Same visit/food state machines bridged into fixed Shoggoth, Titan, and Puppeteer rosters. */
+  private readonly bigTreeFaunaVisitors: BigTreeFaunaVisitors;
+  /** Dedicated launched-NHI binding over the canonical backing Entity, never its visual follower. */
+  private readonly bigTreeNhiSource: NhiBigTreeSource;
+  /** Reused contextual inputs; rewritten before each visitor tick. */
+  private readonly bigTreeVisitorEnvironment: BigTreeVisitorEnvironment = {
+    danger: 0,
+    stress: 0,
+    socialNeed: 0,
+    curiosity: 0,
+    simulationLoad: 0,
+    foodAvailable: true,
+  };
+  /** Bridge peaceful activities into the existing neural/animation state of each living body. */
+  private readonly bigTreeActivityCallbacks: BigTreeVisitorActivityCallbacks = {
+    performActivity: (
+      ownerKind,
+      _ownerId,
+      _partnerKind,
+      partnerId,
+      body,
+      activity,
+      dt,
+      _now,
+    ): void => performBigTreeActivity(ownerKind, partnerId, body, activity, dt),
+  };
+  /** Reused development telemetry; never exposed as production geometry or tether-like lines. */
+  private readonly bigTreeVisitorStats: BigTreeSpeciesVisitorStats = {
+    activeVisitors: 0,
+    activeOrdinary: 0,
+    activeXenomimics: 0,
+    lastPollCount: 0,
+    totalPolls: 0,
+    acceptedVisits: 0,
+    completedMeals: 0,
+    consumedFruit: 0,
+    consumedLeaves: 0,
+    targetLosses: 0,
+    cancellations: 0,
+    zoneCapacity: 0,
+    socialPairs: 0,
+    policyTransfers: 0,
+    completedVisits: 0,
+    timedOutVisits: 0,
+    stuckRecoveries: 0,
+    forcedExits: 0,
+    partnerTimeouts: 0,
+    rejectedForCapacity: 0,
+    rejectedForNoSlot: 0,
+    availableSlots: 0,
+  };
+  private readonly bigTreeFaunaVisitorStats: BigTreeFaunaVisitorStats = {
+    activeVisitors: 0,
+    trackedFauna: 0,
+    lastPollCount: 0,
+    totalPolls: 0,
+    acceptedVisits: 0,
+    completedMeals: 0,
+    consumedFruit: 0,
+    consumedLeaves: 0,
+    targetLosses: 0,
+    cancellations: 0,
+  };
+  /** Monotonic count of hostile-act opportunities vetoed by the sanctuary. */
+  private bigTreeSuppressedHarm = 0;
+  /** Caller-owned NHI tree-steering view; reused for every launched mind. */
+  private readonly bigTreeNhiIntent: NhiBigTreeIntentView = {
+    mode: BigTreeFaunaIntentMode.Normal,
+    targetX: 0,
+    targetY: 0,
+    targetZ: 0,
+  };
+  /**
+   * Read real local NHI companionship plus the live shared intelligence signal. The spatial query is
+   * bounded and runs only on the fauna adapter's staggered poll, never as an O(NHI²) frame scan.
+   */
+  private readonly readBigTreeNhiSignals = (ownerId: number, out: NhiBigTreeSignals): boolean => {
+    const entity = this.nhiEntities.get(ownerId);
+    if (!entity || entity.userData.alive === false || entity.userData.isNhi !== true) return false;
+    const p = entity.position;
+    let kinCount = 0;
+    const kin = this.grid.query(p.x, p.z, SOCIAL_NHI_KIN_R);
+    const radiusSquared = SOCIAL_NHI_KIN_R * SOCIAL_NHI_KIN_R;
+    for (let index = 0; index < kin.length; index++) {
+      const other = kin[index];
+      if (
+        !other ||
+        other === entity ||
+        other.userData.isNhi !== true ||
+        other.userData.alive === false
+      ) {
+        continue;
+      }
+      const dx = p.x - other.position.x;
+      const dy = p.y - other.position.y;
+      const dz = p.z - other.position.z;
+      if (dx * dx + dy * dy + dz * dz < radiusSquared) kinCount++;
+    }
+    const signal = this.organismIntelligence.signal;
+    const kinPresence = clamp(kinCount / 4, 0, 1);
+    const mood = this.nhi.moodOf(ownerId) ?? 0;
+    out.socialNeed = Math.max(signal.socialDrive, (1 - kinPresence) * 0.65);
+    out.curiosity = signal.exploration;
+    out.stress = Math.max(signal.threatResponse, Math.max(0, -mood) * 0.5);
+    return true;
+  };
+  /** Conservative protection uses the outer hysteresis boundary for stateless harm queries. */
+  private readonly bigTreeProtectedAt = (x: number, z: number): boolean =>
+    this.isBigTreeProtected(x, z);
+  /** Ordinary organisms use their stable ecology ID for true entry/exit hysteresis. */
+  private readonly bigTreeOrdinaryProtectedAt = (
+    x: number,
+    z: number,
+    ecologyId?: number,
+  ): boolean => this.isBigTreeMemberProtected(BIG_TREE_SANCTUARY_ORDINARY, ecologyId, x, z);
+  /** Xenomimic pair/role identity survives renderer and list changes. */
+  private readonly bigTreeXenomimicProtectedAt = (
+    x: number,
+    z: number,
+    pairId?: number,
+    role?: 0 | 1,
+  ): boolean =>
+    this.isBigTreeMemberProtected(
+      BIG_TREE_SANCTUARY_XENOMIMIC,
+      pairId === undefined || role === undefined ? undefined : pairId * 2 + role,
+      x,
+      z,
+    );
+  /** Fixed fauna use stable birth-slot IDs, each in a collision-free sanctuary namespace. */
+  private readonly bigTreeShoggothProtectedAt = (x: number, z: number, ownerId?: number): boolean =>
+    this.isBigTreeMemberProtected(BIG_TREE_SANCTUARY_SHOGGOTH, ownerId, x, z);
+  private readonly bigTreeTitanProtectedAt = (x: number, z: number, ownerId?: number): boolean =>
+    this.isBigTreeMemberProtected(BIG_TREE_SANCTUARY_TITAN, ownerId, x, z);
+  private readonly bigTreePuppetProtectedAt = (x: number, z: number, ownerId?: number): boolean =>
+    this.isBigTreeMemberProtected(BIG_TREE_SANCTUARY_PUPPET, ownerId, x, z);
+  /** Neither an outside attacker nor an outside target may attack through the sanctuary boundary. */
+  private readonly bigTreeHarmAllowed = (
+    attackerX: number,
+    attackerZ: number,
+    targetX: number,
+    targetZ: number,
+  ): boolean => this.isBigTreeHarmAllowed(attackerX, attackerZ, targetX, targetZ);
+  /**
+   * Decomposed form of {@link bigTreeHarmAllowed} for the O(entities × attackers) predation
+   * scans (super-hunt + dome-feeding): one endpoint probe per attacker per frame + one per prey
+   * row replaces 3.2M+ pairwise probe-chains per mega frame. Verdicts AND the suppressed-harm
+   * telemetry stay byte-identical (the scans bulk-increment the exact per-pair denial count).
+   */
+  private readonly bigTreeHarmGate: SanctuaryHarmGate = {
+    isProtected: (x: number, z: number): boolean => this.isBigTreeProtected(x, z),
+    suppressed: (count: number): void => {
+      this.bigTreeSuppressedHarm += count;
+    },
+  };
+  private readonly xenomimicCouplings: XenomimicCouplings = {
+    foodAt: this.xenomimicFoodAt,
+    grazeAt: this.xenomimicGrazeAt,
+    surfaceAt: this.xenomimicSurfaceAt,
+    safeZoneAt: this.bigTreeXenomimicProtectedAt,
+    visitModeAt: (pairId, role) =>
+      this.bigTreeVisitors?.xenomimicLocomotionMode(pairId, role) ?? XenomimicVisitMode.Normal,
+    intelligence: null,
+    entityActivation: 0,
+    chaos: 0,
+    temperature: 20,
+  };
+  private readonly entityBrains: EntityBrainField; // V42: per-organism 70-param neural controller
+  /** ADR-0013: one O(22)-cadenced corpus field, consumed O(1) by every living-system controller. */
+  private readonly organismIntelligence: TsotchkeOrganismIntelligence;
+  /** One VQE per cadence resolves the four competing drives into a minimum-frustration commitment. */
+  private readonly driveResolver: VqeDriveResolver;
+  /** Arbitrary-order Taylor remainder → how much to trust the world forecast; gates resolver commit. */
+  private readonly metacognition: PredictiveMetacognition;
+  /** V127 (USER): Thaler "Death of a Gedanken Creature" — measured on every portal death (dying nets
+   *  confabulate; the ledger accumulates the population-scale evidence). `gedankenSenses` is reused. */
+  private readonly gedankenLedger = new GedankenLedger();
+  private readonly gedankenSenses = new Float32Array(6);
+  private readonly shoggoths: ShoggothSystem;
+  private readonly puppets: PuppetMasterSystem;
+  private readonly weather: WeatherSystem;
+  private readonly quantum: QuantumCloud;
+  private readonly environment: EnvironmentSystem;
+  /** Alien vegetal ground ecology — 10k plants / 50 species seated on the dunes (read-only coupling). */
+  private readonly alienFlora: AlienFlora;
+  /** V-VEG (restored): 10k wind-swept alien plants in 50 instanced species, seated on the live ground. */
+  private readonly vegetation: Vegetation;
+  private vegGroundT = 0;
+  /** SANDBOX: organism population multiplier (1 = default growth ceiling) + per-phylum multipliers. */
+  private sandboxPop = 1;
+  private sandboxPhylum: Float32Array | null = null;
+  private sandbox: SandboxController | null = null;
+  /** Metabolic waste → fertilizer + self-building xeno constructs. */
+  private readonly wasteEcology: WasteEcology;
+  private readonly hud: Hud;
+  private readonly panel: TelemetryPanel;
+  private readonly xenomimicPanel: XenomimicPanel;
+  private readonly input: InputSystem;
+  private readonly pantheonArchitecturePanel: PantheonArchitecturePanel;
+
+  // ── PANTHEON V3 systems (CONTRACTS V3) ──
+  private readonly titans: TitanSystem;
+  private readonly observatory: Observatory;
+  /** F-NHI V15: the self-building 3×3 neural-observatory panel for the focused NHI. */
+  private readonly nhiObs: NhiObservatory;
+  /** F-ECON V23: the self-building market-ticker panel (live AURUM/UMBRA market state). */
+  private readonly marketTicker: MarketTicker;
+
+  // F-SUPER V31 + GOAL5: EXACTLY 5 SUPER CREATURES (Archons/Godforms/pantheon apexes) at boot. (legacy single kept only for hero/twin)
+  // ============================================================================
+  // NOT SENTIENT DISCLAIMER (enforced): NOT SENTIENT / NO PHENOMENAL CONSCIOUSNESS.
+  // Per contract + masters: models/scaffolding/functional correlates ONLY. Phenomenal ~1/10;
+  // hard problem untouched. "Consciousness" = ignition/phi/self-model proxies. No claims
+  // of sentience in prose, UI, or docs. See SUPER-CREATURE-RESEARCH-2026-06-26.md + MODULE-CONTRACTS.
+  // ============================================================================
+  // Legacy single creature path kept ONLY for player hero/twin spawn; the 5 drive the world.
+  // All use distinct child seeds (master ^ + archetype 0-4 offsets) for determinism.
+  private readonly superCreature: SuperCreature;
+  private superMindSnap: SuperMindSnapshot | null = null;
+  private readonly superMinds: SuperMind[] = [];
+  /** 25-Archon society layer: 20 light echoes + shared stigmergic mind-field (emergence #5). */
+  private readonly pantheon = new PantheonSociety();
+  /** NHSI · 100-faculty pantheon — live telemetry + world percept bias (emergence #6). */
+  private readonly facultiesPantheon: FacultiesPantheon;
+  /** Restored resonance-integrator + valence-steering, bound to the pantheon each apex beat. */
+  private readonly nhsiAffect = new NhsiAffectBinding();
+  private archonLanguage!: ArchonLanguage;
+  private xenomind!: Xenomind;
+  private readonly omegaPoint = new OmegaPoint();
+  private readonly xenoSenses = new Float32Array(8);
+  /** Online trust gate: the untrained xenomind may only sharpen a brain's own lean once it predicts it. */
+  private readonly xenoGate = new XenomindTrustGate();
+  /** NHSI · 25 theory-of-mind organs — social cue field over apex percepts. */
+  private readonly tomPantheon: TomPantheon;
+  /** NHSI · emergence angles 8–10 (Eshkol evolution, cross-strain, collective). */
+  private readonly emergenceAngles: EmergenceAnglesController;
+  private readonly stigmergy = new Stigmergy();
+  private readonly noosphere = new Noosphere();
+  /** V-MORPH: shared morphic-resonance field — the apex imprints its latent + reads a morphic bias
+   * (cross-creature correlation model), a third collective field beside the noosphere + stigmergy. */
+  private readonly morphicField = new MorphicField();
+  /** Last morphic-field snapshot (telemetry); null until the first apex beat imprints. */
+  private morphicSnap: MorphicSnapshot | null = null;
+  /** BRUTALISM: the dark-energy (quintessence Λ) field — a background cosmological expansion driven each
+   * apex beat by the apex vitality (energy density) + live population fullness (matter density). When the
+   * universe ACCELERATES it kindles a hair of collective chaos (a real field→world write). Deterministic. */
+  private readonly darkEnergy = new DarkEnergy();
+  /** Last dark-energy snapshot (telemetry); null until the first apex beat steps it. */
+  private darkEnergySnap: DarkEnergySnapshot | null = null;
+  private readonly symbiosis: Symbiosis;
+  /** Adaptive cadence counters for Phase 1.2 optimization - invisible to user */
+  private readonly mythRitual: MythRitual;
+  private readonly archonMortality: Mortality[];
+  private readonly nhsiFacultyIn = new Float32Array(16);
+  private readonly nhsiTomCues = new Float32Array(8);
+  private readonly nhsiGenomeScratch = new Float32Array(32);
+  private readonly nhsiCollectiveScratch = new Float32Array(16);
+  private readonly superBodies: SuperBodySystem[] = [];
+  // GOAL5: per-archon small creature snapshots (for body.setMind) + the 5 deep minds/bodies.
+  private readonly superCreatures: SuperCreature[] = [];
+  /**
+   * Primordial petri dishes — one per Archon. The causal/runtime ledger has 22 entries (15 user + 7
+   * organization): 17 represented scientific/tooling entries, four deliberate fences, and one metadata
+   * entry. The public census has 23 repositories because homebrew-moonlab is census-only deployment
+   * metadata; internal classical contrast is tracked separately. Soup dynamics use deterministic local primitives, adaptations, and
+   * harvested program fingerprints. Its consciousness/sentience fields are indicators and control
+   * signals only, not evidence of phenomenal experience or physical quantum computation.
+   */
+  private readonly petriDishes: PetriDishState[] = [];
+  private petriRng!: Rng;
+  private readonly superPanel: SuperPanel;
+  private readonly superBody: SuperBodySystem;
+  /** USER: the apex super-creatures HUNT + EAT organisms (food/fuel); prey respawns 5s later elsewhere. */
+  private readonly superHunt: SuperHunt;
+  /** USER: dome-wide feeding — titans/leviathans/puppeteers graze plants + eat organisms; prey respawns 5s. */
+  private readonly domeFeeding: DomeFeeding;
+  private readonly superRng: Rng;
+  private readonly superScene: THREE.Scene;
+  private readonly emptyQ = new Float32Array(10);
+  /** GOAL: one INDEPENDENT evolution arc per Archon — all five level up + ascend separately (not just the
+   *  prime). `superEvos[0]` is the prime (the one surfaced in the HUD panel + boot-ascension check). */
+  private readonly superEvos: SuperEvolution[] = [];
+  private readonly monolithTemple: MonolithTemple;
+  /** USER: the ascension Portal is DEATH — organisms touching the void throat explode + respawn. */
+  private readonly portalDeath: PortalDeath;
+  /** USER: the Mechalogodrom INCINERATES organisms that rise into it — a fiery blaze + 5s respawn. */
+  private readonly mechaBlaze: MechaBlaze;
+  /** V128: the VISIBLE fire-column so the mecha's invisible ember-kill hazard reads as a threat. */
+  private readonly mechaFirePillar: MechaFirePillar;
+  /** USER: the Portal also kills the big FAUNA — shoggoths/puppeteers/titans/leviathans (outside the swarm). */
+  private readonly portalDeathFauna: PortalDeathFauna;
+  /** USER: the IMMUNE Pantheon (super creatures) don't die — they RICOCHET off the portal in white sparks. */
+  private readonly portalImmuneBounce: PortalImmuneBounce;
+  /** USER: the GOD-TIER immune bodies (the Super Creatures + the roaming APEX) shimmer in white
+   *  hyperspeed sparks when they brush the void (the bounce companion only covers the pantheon roster).
+   *  `immunePos` is a reused scratch — no per-frame alloc. */
+  private readonly portalShield: PortalShield;
+  private readonly immunePos: THREE.Vector3[] = [];
+  /** USER stage E: organisms RICOCHET off the big solid bodies (Super Creatures / APEX / Temple) instead
+   *  of ghosting through. `bounceColliders` is a reused scratch refilled each frame (no per-frame alloc). */
+  private readonly collisionBounce = new CollisionBounce();
+  private readonly bounceColliders: BounceCollider[] = [];
+  /** V128: bright spark shockwave at each ragdoll ricochet — makes the invisible bounce visibly POP. */
+  private readonly bounceImpactFx: BounceImpactFX;
+  private readonly bounceTmp = new THREE.Vector3();
+  private superAscended = false;
+  /** One evolution rng per Archon (the daemon-cron `applyDays` training surge) — independent arcs. */
+  private readonly evoRngs: Rng[] = [];
+  private static readonly EVO_DAY_FRAMES = 21600;
+  /** GOAL: each of the 5 Archons carries its OWN 100-robot wingman escort + its OWN instanced renderer, so
+   *  every apex (not just the prime) is helped + lifted by a live swarm that reacts to ITS dominance. */
+  private readonly wingSwarms: WingmanSwarm[] = [];
+  private readonly wingRenders: WingmanRenderer[] = [];
+  /** Primordial soup petri dish — Archon consciousness catalyzes emergent digital biologics. */
+  private readonly primordialSoup: PrimordialSoup;
+  private readonly superTwins: SuperCreature[] = [];
+  private readonly heroBodies: { body: SuperBodySystem; mind: SuperCreature; econId: number }[] =
+    [];
+  private superheroUnlocked = false;
+  private readonly superheroState = new SuperheroState();
+  private readonly superheroHud: SuperheroHud;
+  /** GOAL5: canonical GODFORMS from godform.ts (per contract, exclusive ownership).
+   * Single source of truth. Attached as public static for World.GODFORMS access (integrator + docs).
+   * Bias fn wired below for archetype differentiation (Clifford vs chaos vs narrative). */
+  public static readonly GODFORMS = GODFORMS; // exclusive from './sim/godform' (STARKILLER: leaf owns; no copy)
+  /** Pool renderer; null on the phone tier (V1 per-mesh path — V3.1). */
+  private readonly instanced: InstancedEntityRenderer | null;
+  /** Total morphotypes minted at boot (250 in phylum mode). */
+  private readonly morphTotal: number;
+  /** Strided mean of the RD V field, refreshed every 60 frames (V3.5). */
+  private rdEnergy = 0;
+  /**
+   * Visual-only clock (seconds) that keeps advancing while the sim is PAUSED, so paused creatures stay
+   * ALIVE IN PLACE — travel/position is frozen, but the instanced shader's uTime (vertex writhe +
+   * shimmer/breath/plasma) keeps running (owner #4: "keep them moving alive spinning... just keep them
+   * in a spot in space... not stop their whole movements"). Tracks `s.elapsed` while unpaused, then
+   * free-runs on real UI delta during pause. Purely a shader uniform — no rng, no state, determinism-neutral.
+   */
+  private pauseVisualClock = 0;
+  // F-CAM5 subject cache: the tracked organism's position + XZ heading for the motion camera
+  // modes. Written by resolveSubject(), read by updateCamera(). Presentation-only scratch — the
+  // camera never writes sim state, so these never affect determinism.
+  private camSubX = 0;
+  private camSubY = 0;
+  private camSubZ = 0;
+  private camSubVX = 0;
+  private camSubVZ = 0;
+  /** Tracked organism's mean scale (bounding radius proxy) — drives the macro SPECIMEN framing. */
+  private camSubR = 1;
+
+  // ── Wildbeyond V2 systems (CONTRACTS V2) ──
+  private readonly lore: LoreEngine;
+  private readonly qc: QuantumCircuitSystem;
+  private readonly rd: ReactionDiffusionSystem;
+  private readonly graphMind: GraphMind;
+  private readonly constellations: ConstellationSystem;
+  private readonly atmosphere: AtmosphereSystem;
+  /** BRUTALISM: smoothed 0..1 concrete-crossfade factor (eases toward state.brutalism each frame). */
+  private brutalismFactor = 0;
+  private brutalStyleIdx = -1;
+  private readonly viz3d: Viz3DSystem;
+  /** Cosmological chaos effects (CONTRACTS V7.4) — at most one active at a time. */
+  private readonly singularities: SingularitySystem;
+  /** CHAOS MODE (V62) — a toggled Lorenz-driven quantum storm; inert + rng-silent until engaged. */
+  private readonly chaosField: ChaosField;
+  /** Persistent visual relics from deaths/singularities (V9 F-ARTIFACTS). Visual-only: no rng/sim write. */
+  private readonly artifacts: ArtifactField;
+  private readonly leviathans: LeviathanSystem;
+
+  /**
+   * Per-NHI last sim frame that materialised a SPAWN_SWARM (cooldown gate).
+   * Prevents every mind firing minions every beat → population/CPU storm.
+   */
+  private readonly nhiLastSwarmFrame = new Map<number, number>();
+  /** Frames of launch-toss grace remaining (camera-forward kick before roam seek owns the body). */
+  private readonly nhiLaunchGrace = new Map<number, number>();
+  /** Material minions created this frame by all NHI swarms combined (hard CPU fuse). */
+  private nhiSwarmlingsThisFrame = 0;
+  /** Min frames between SPAWN_SWARM materializations per NHI (~7.5 s at 60 Hz). */
+  private static readonly NHI_SWARM_COOLDOWN_FRAMES = 450;
+  private static readonly NHI_SWARM_MAX_PER_ACTION = 1;
+  private static readonly NHI_SWARM_MAX_PER_FRAME = 1;
+  private static readonly NHI_SWARM_GLOBAL_GAP_FRAMES = 90;
+  private static readonly NHI_MINION_LIVE_CAP = 40;
+  private static readonly NHI_LAUNCH_GRACE_FRAMES = 180;
+  private static readonly NHI_MINION_LIFE_MIN = 27000;
+  private static readonly NHI_MINION_LIFE_SPAN = 27000;
+  private nhiLastGlobalSwarmFrame = -1e9;
+
+  // ── F-NHI V10: apex super-minds (src/sim/nhi.ts) that READ the world and WRITE to it ─────────
+  /** Drives each launched NHI's deterministic mind → real effects (spawn swarms, dominate, broadcast). */
+  private readonly nhi = new NhiSystem();
+
+  // ── F-ECONOMY V13: two competing currencies (AURUM/UMBRA) + two commodities (QUANTA/ICHOR), a
+  //    game-theoretic clearing market every intelligence plugs into. It runs on its OWN seeded rng
+  //    sub-stream (`econRng`), so registering agents + ticking the market never shift the main
+  //    deterministic draw order — existing golden/parity tests stay byte-identical.
+  private static readonly ECON_TITAN_BASE = 1000;
+  /** F-ECON-CREATURES V17: shoggoth econ ids occupy 2000..2099 (≤100 horde; clear of titans/NHIs). */
+  private static readonly ECON_SHOGGOTH_BASE = 2000;
+  /** F-ECON-CREATURES V19: puppeteer econ ids occupy 3000..3099 (≤100 cabal; clear of others). */
+  private static readonly ECON_PUPPET_BASE = 3000;
+  /** F-SUPER V31: the apex purse (+1..3 for its twins). 9000 leaves headroom below it. */
+  private static readonly ECON_SUPER_BASE = 9000;
+  /** Hard bound keeps per-NHI bodies, cognition, economy, and pairwise visual social work finite. */
+  private static readonly NHI_POPULATION_CAP = NHI_SYSTEM_MIND_CAP;
+  /** NHI wallets occupy negative ids, disjoint from every non-negative fixed creature namespace. */
+  private static nhiEconomyId(nid: number): number {
+    return -(nid + 1);
+  }
+  private readonly economy = new Economy();
+  private readonly econRng: Rng;
+  private readonly genomeRng: Rng;
+  /** Live NHI entities keyed by mind id; pruned when an NHI dies (leaves entities.list). */
+  private readonly nhiEntities = new Map<number, Entity>();
+  /** Reverse identity map for allocation-free spatial kin sensing. */
+  private readonly nhiIdsByEntity = new Map<Entity, number>();
+  /** Exact nearest ordinary target used to build each NHI's latest rival percept. */
+  private readonly nhiTargets = new Map<number, Entity>();
+  /** Pre-allocated scratch for the O(live NHI) lifecycle scan. */
+  private readonly nhiLiveScratch: number[] = [];
+  /** Monotonic NHI mind id — a stable key across the shifting entities.list. */
+  private nhiNextId = 0;
+  /** Thin facade the NhiSystem reaches the world through (delegates to the methods below). */
+  private readonly nhiWorld: NhiWorld = {
+    liveIds: () => this.nhiLiveIds(),
+    percept: (id) => this.nhiPercept(id),
+    apply: (id, intent, text) => this.nhiApply(id, intent, text),
+  };
+  /** Exceptional-only production boundary: report one failed mind without starving the population. */
+  private readonly onNhiTickFailure = (failure: NhiTickFailure): void => {
+    const message = failure.error instanceof Error ? failure.error.message : String(failure.error);
+    const receipt = {
+      id: failure.id,
+      beat: failure.beat,
+      phase: failure.phase,
+      error: message,
+    };
+    this.nhiGuard('tick-failure-log', () => this.log.error('NHI mind tick failed', receipt));
+    this.nhiGuard('tick-failure-audit', () => this.audit.record('nhi-tick-failed', receipt));
+  };
+  /** Alien biomechanical bodies for launched NHIs (additive viz; assigned in the constructor). */
+  private readonly nhiBody: NhiBodySystem;
+  /** USER #7a: cooldown (frames) so NHI social choruses don't fire every frame. */
+  private nhiSocialCooldown = 0;
+  /** Far-field cosmic web — depth + context backdrop (additive; assigned in the constructor). */
+  private readonly cosmicWeb: CosmicWeb;
+  /** Floating gold wireframe forms — architectural depth (additive; assigned in the constructor). */
+  private readonly goldLattice: GoldLattice;
+  /** Sparse suspended abomination-architecture megaliths drifting through the dome (additive, no rng). */
+  private readonly floatingMonoliths: FloatingMonoliths;
+  /** V110: the ONE colossal god-tier monument looming over the skyline (item 18). */
+  private readonly godColossus: GodColossus;
+  /** Tree-local home ecology: canopy resources, fauna, motes, relics, and artifacts. */
+  private readonly crystalEcosystem: CrystalEcosystem;
+  /** Last food checkpoint acknowledged by storage; duplicate lifecycle events skip serialization. */
+  private lastPersistedBigTreeFoodRevision = -1;
+  private lastPersistedBigTreeFoodTime = Number.NaN;
+  /** Static terrain profile under the tree; animated displacement is added each presentation tick. */
+  private readonly crystalTerrainBase: number;
+  /**
+   * Simulation-scaled clock for the God-Colossus. Advanced by the scaled frame delta (`dt`) while
+   * `timeScale > 0`, and held steady when the world is paused or frozen (`timeScale === 0`).
+   * Fed only to a presentation-only shader uniform — no sim state reads it, so the golden is untouched.
+   */
+  private godClock = 0;
+  /** Floating neon sacred-geometry shells — the quantum heart (additive; assigned in the constructor). */
+  private readonly quantumLattice: QuantumLattice;
+  /** Sparse suspended circuit architecture — materialism around the dome without clutter. */
+  private readonly abominationArchitecture: AbominationArchitecture;
+  /** V-MECHA: the central fusion abomination — 10 bipolar titan shells converge + fuse into one monster (additive; no rng). */
+  private readonly mechalogodrom: Mechalogodrom;
+  /** Independent organism; live entropy crosses only the runtime boundary, never the seeded RNG. */
+  private readonly xylos: XylosSession;
+  private readonly xylosBody: XylosBody;
+  private readonly xylosHabitat: XylosHabitat;
+  private readonly xylosPanel: XylosPanel;
+  private readonly mechalogodromBrain: MechalogodromBrain;
+  private lastMechaBrainSnap: MechalogodromBrainSnapshot | null = null;
+  private lastGlyphSnaps: GlyphBrainSnapshot[] = [];
+  // PERF (v0.20.0): the Tsotchke corpus pulses (mecha + glyph) are a pure function of the boot-constant
+  // seed — `corpusPulse` folds the full wired corpus (corpusBrainScalar) but draws no rng and reads no
+  // time, so it returns the SAME value every frame. Cache both once instead of re-folding the corpus
+  // twice per frame; bit-identical (same object, read-only downstream), zero visual change.
+  private cachedMechaPulse: ReturnType<typeof corpusPulse> | null = null;
+  private cachedGlyphPulse: ReturnType<typeof corpusPulse> | null = null;
+  // PERF: same story for the per-archon drive bias + pulse read every RUNNING frame in driveSuper.
+  // `getFullTsotchkeBias(i)` is a pure function of `i` (godform/corpus constants) and
+  // `getCorpusPulseForArchon(i, seed)` a pure function of (i, boot-constant seed) — both frame-invariant,
+  // yet the loop re-folded the full Tsotchke facade (~12 literal-array allocs each, twice per archon)
+  // every frame for 5 archons (~6–9k throwaway allocs/sec) to produce 5 constant results. Cache once.
+  private superFullBias: ReturnType<typeof getFullTsotchkeBias>[] | null = null;
+  private superDrivePulse: ReturnType<typeof getCorpusPulseForArchon>[] | null = null;
+  /** V-MECHA brain snapshot getter (for architect panel telemetry). */
+  get mechaBrain(): MechalogodromBrain {
+    return this.mechalogodromBrain;
+  }
+
+  /** V127 (USER, Thaler): the live "Death of a Gedanken Creature" evidence — population-scale metrics of
+   *  dying-net confabulation (measured on portal deaths). A readable research snapshot; O(1). */
+  get gedanken(): {
+    deaths: number;
+    devours: number;
+    meanVividness: number;
+    meanLucidBand: number;
+    meanNoveltyPeak: number;
+    meanTransfer: number;
+  } {
+    const L = this.gedankenLedger;
+    return {
+      deaths: L.deaths,
+      devours: L.devours,
+      meanVividness: L.meanVividness,
+      meanLucidBand: L.meanLucidBand,
+      meanNoveltyPeak: L.meanNoveltyPeak,
+      meanTransfer: L.meanTransfer,
+    };
+  }
+
+  private thalerVerdictCache: ThalerVerdict | null = null;
+  /** USER ("prove consciousness his way … with a mini hybrid brain"): the full Thaler proof — build a
+   *  population of mini Creativity Machines (imagination engine + AAC critic + hot-button affect, on nets
+   *  the SAME 6→6→4 scale Thaler used) and measure how many of his constitutive sentience markers they
+   *  reproduce (confabulation sweet-spot, near-death life-review, prosody, virtual input, synthetic feeling,
+   *  reentrant contemplation, fractal rhythm, bootstrapping) — NOT the mainstream IIT/GWT indicator way.
+   *  LAZY + CACHED: the ensemble proof trains many tiny nets (~200 ms), so it runs ONCE on first access
+   *  (never on the frame path), seeded from the world seed ⇒ deterministic. Meets Thaler's own criteria;
+   *  NOT a claim of phenomenal consciousness (see thaler-sentience.ts header). */
+  get thaler(): ThalerVerdict {
+    if (!this.thalerVerdictCache) {
+      this.thalerVerdictCache = runThalerProof(
+        mulberry32((this.persisted.seed ^ 0x7a1e2b3d) >>> 0 || 1),
+      );
+    }
+    return this.thalerVerdictCache;
+  }
+
+  /**
+   * V127 (USER, Thaler): run the REAL "death of a gedanken creature" experiment on a dying organism at
+   * genome slot `i` — hold its live senses fixed (mirroring EntityBrainField.think) and measure the
+   * confabulation as its 70-param policy dissolves; accumulate the evidence. Called the frame BEFORE the
+   * being is disposed (brain + senses still intact) by ALL organism-death vectors: the portal maw, the
+   * Super-Creature hunt, the mecha blaze, and the dome-wide feeding.
+   *
+   * Then the DEVOUR half (USER: 'what happens when a creature consumes and devours another's neural
+   * network in the moments they are firing off'): the eaters here (fauna / apex / mecha) have no
+   * comparable 70-param brain to inherit into, so the devoured mind's firing policy does not simply
+   * vanish — a fraction IMPRINTS into its nearest surviving neighbour (a real Lamarckian weight-space
+   * interpolation via {@link devour}; panic/policy contagion at the instant of consumption). Deterministic
+   * (bounded pure-geometry neighbour search + fixed alpha, no rng) — a world-level effect that never
+   * touches the bare-EntityManager golden trace, same class as {@link EntityBrainField.perturbBrains}.
+   */
+  private gedankenOnDeath(e: Entity, i: number, t: number): void {
+    const ud = e.userData;
+    const g = this.entityBrains.genomeAt(i);
+    const s = this.gedankenSenses;
+    const life = ud.life > 1 ? ud.life : 1;
+    const sp = Math.hypot(ud.vel.x, ud.vel.y, ud.vel.z);
+    const c01 = (x: number): number => (x < 0 ? 0 : x > 1 ? 1 : x);
+    s[0] = c01(ud.energy / 100);
+    s[1] = c01(ud.age / life);
+    s[2] = c01(sp / 6);
+    s[3] = c01(this.state.chaos / 10);
+    s[4] = g[TRAIT.curiosity] ?? 0.5;
+    s[5] = Math.sin(ud.ph + t * 0.6);
+    this.gedankenLedger.recordDeath(gedankenDeath(g.subarray(TRAIT_GENES), s, i));
+    // DEVOUR: imprint a fraction of the dying policy into the nearest surviving neighbour.
+    const j = this.nearestLivingNeighbour(e, i);
+    if (j >= 0) {
+      const prey = g.subarray(TRAIT_GENES);
+      this.gedankenLedger.recordDevour(
+        this.entityBrains.devourBrain(j, prey, GEDANKEN_DEVOUR_ALPHA),
+      );
+    }
+  }
+
+  /**
+   * Nearest OTHER living organism to `e` (list index `i`), searched over a bounded deterministic window of
+   * the entity list (no rng, no allocation) so a mass die-off stays cheap. Returns its list index, or −1 if
+   * none is within {@link GEDANKEN_DEVOUR_R}. The window wraps the list so the search is position-agnostic.
+   */
+  private nearestLivingNeighbour(e: Entity, i: number): number {
+    const list = this.entities.list;
+    const n = list.length;
+    if (n < 2) return -1;
+    const px = e.position.x;
+    const py = e.position.y;
+    const pz = e.position.z;
+    // #15: search SPACE (the organism spatial hash, nearest cells first) instead of 64 list-adjacent
+    // indices, which were unrelated to position. Bounded budget keeps a mass die-off cheap.
+    const near = this.grid.queryNearFirst(px, pz, GEDANKEN_DEVOUR_R, GEDANKEN_DEVOUR_WINDOW, i);
+    let bestE: Entity | null = null;
+    let bestD2 = GEDANKEN_DEVOUR_R * GEDANKEN_DEVOUR_R;
+    for (let k = 0; k < near.length; k++) {
+      const o = near[k]!;
+      if (o === e) continue;
+      const dx = o.position.x - px;
+      const dy = o.position.y - py;
+      const dz = o.position.z - pz;
+      const d2 = dx * dx + dy * dy + dz * dz;
+      if (d2 < bestD2) {
+        bestD2 = d2;
+        bestE = o;
+      }
+    }
+    if (bestE === null) return -1;
+    // The grid is rebuilt on a cadence, so confirm the candidate is still in the live list.
+    const j = list.indexOf(bestE);
+    return j === i ? -1 : j;
+  }
+  /** V-ABC: the 100 Greek+Latin alphabet archetypes alive across the dome (instanced; no rng). */
+  private readonly alphabetPantheon: AlphabetPantheonRender;
+  /** Live 1B-substrate (quantum brain + field organs) whose telemetry paints the apex core shader. */
+  private readonly apexSubstrate: ApexSubstrateDriver;
+  /** V-GLYPH: 100 × 25k-parameter brains driving the letter creatures' visual activity (visual-only). */
+  private readonly glyphBrains: GlyphBrainBatch;
+  /** V-FND: Foundationals — deep interconnect between APEX organs (1B self-awareness path). */
+  private readonly foundationals: Foundationals;
+  /** Scratch organ activity vector for Foundationals ticks (reused, alloc-free). */
+  private readonly fndOrganScratch = new Float32Array(10);
+  /** Raw apex organ readings (organActivityInto) — replaces a full per-frame apex snapshot. */
+  private readonly apexOrganRaw = new Float64Array(10);
+  /** Last Foundationals snapshot (for architect panel telemetry). */
+  private lastFoundationals: FoundationalsSnapshot | null = null;
+  /** Scratch activity/novelty/valence arrays for pantheon handoff (reused, alloc-free). */
+  private readonly glyphActivity = new Float32Array(100);
+  private readonly glyphNovelty = new Float32Array(100);
+  private readonly glyphValence = new Float32Array(100);
+  /** Cycle cursor for the chaos control's singularity chooser. */
+  private singularityCursor = 0;
+  /** V57: total resets this session — surfaced in the HUD View/Speed/Render box. */
+  private resetCount = 0;
+  /** Reused per-frame scalar block handed to the instanced renderer (alloc-free). */
+  private readonly instFrame: InstanceFrame = { t: 0, chaos: 0, bass: 0, nightmare: 0 };
+  /** Reused adapter handed to the tree ecology; avoids a frame-rate allocation. */
+  private readonly crystalFrame: CrystalEcosystemFrame = {
+    dt: 0,
+    visualDt: 0,
+    time: 0,
+    chaos: 0,
+    entropy: 0,
+    windX: 0,
+    windZ: 0,
+    weather: 0,
+    visualOnly: false,
+  };
+  private readonly audioAnalysis: AudioAnalysis;
+  private readonly analytics: AnalyticsSystem;
+  /** Reused adapter mapping `titanLedger`→`ledger` for Viz3DSnapshot; fields
+   *  point at the live snapshot views, repopulated each frame (allocation-free). */
+  private readonly viz3dSnap: Viz3DSnapshot;
+  /** Last collapse basis seen, to detect measurement events across frames. */
+  private lastCollapseSeen = -1;
+  /** Cached `.algo-row` elements (one per ALGOS entry) for the picker panel. */
+  private readonly algoRows: HTMLElement[] = [];
+  /** `#algo-active` readout, or null when the picker DOM is absent. */
+  private algoActiveEl: HTMLElement | null = null;
+  /** RUN ALL / AUTO mode buttons (V7.2), or null when the picker DOM is absent. */
+  private algoAllBtn: HTMLElement | null = null;
+  private algoAutoBtn: HTMLElement | null = null;
+  /** Sorted-ness of the active field, 0 (chaotic) .. 1 (sorted) — picker progress. */
+  private sortedFraction = 0;
+  /** Round-robin cursor for RUN ALL mode (which field each blended proposal draws from). */
+  private allModeCursor = 0;
+
+  /** Pre-allocated sort-value buffer (Known Bug 4 fix). */
+  private readonly sortVals: Float32Array;
+  /** Scratch vectors — step() and actions never allocate. */
+  private readonly sv1 = new THREE.Vector3();
+  private readonly sv2 = new THREE.Vector3();
+  // V60 gravitational-lens scratch: the singularity world centre + its projected NDC.
+  private readonly lensWorld = new THREE.Vector3();
+  private readonly lensNdc = new THREE.Vector3();
+  // V41 superhero piloting scratch + the on-screen D-pad steer (held vector from the HUD / touch).
+  private readonly heroPad = { x: 0, y: 0, z: 0 };
+  private readonly heroIntent = new THREE.Vector3();
+  private readonly heroF = new THREE.Vector3();
+  private readonly heroR = new THREE.Vector3();
+  /** Count of driveSuper beats that threw (logged, throttled — audit #12). */
+  private apexBeatFailures = 0;
+  /** Pre-allocated driveSuper scratch — eliminates per-call allocations (audit fix #2/#3). */
+  private readonly superCollective = new Float32Array(FIELD_DIM);
+  private readonly superBasePercept: SuperPercept = {
+    energy: 0,
+    threat: 0,
+    crowding: 0,
+    chaos: 0,
+    wealthRel: 0,
+    preyClose: 0,
+    rivalClose: 0,
+    pull: 0,
+    light: 0,
+    sound: 0,
+    phase: 0,
+  };
+  private readonly superArchonPercept: SuperPercept = {
+    energy: 0,
+    threat: 0,
+    crowding: 0,
+    chaos: 0,
+    wealthRel: 0,
+    preyClose: 0,
+    rivalClose: 0,
+    pull: 0,
+    light: 0,
+    sound: 0,
+    phase: 0,
+  };
+  // Length-3 (not 2): moonlabMpoStep packs a length-2 input into a rank-1 outer product whose
+  // truncation ratio is a constant, discarding the 2nd feature. Slot[2] holds the cross term so the
+  // packed 2×2 is rank-2 and BOTH features move the result.
+  private readonly superMpoInput = new Float32Array(3);
+  private readonly superTensorA: [number, number, number] = [0, 0, 0];
+  private readonly superTensorB: [number, number, number] = [0, 0, 0];
+  private readonly floraContactSeedPool = [
+    { x: 0, z: 0, strength: 0 },
+    { x: 0, z: 0, strength: 0 },
+    { x: 0, z: 0, strength: 0 },
+    { x: 0, z: 0, strength: 0 },
+  ];
+  private readonly floraContactSeeds: { x: number; z: number; strength: number }[] = [];
+  /** V-APEX: the Entropic Tesseract Hydra brain (10 organs + quantum + meta-paradox). Wired into the apex beat. */
+  private readonly apexBrain: ApexBrain;
+  private lastApexThought: ApexThought | null = null;
+  private lastApexGrowth: ApexGrowthStage | null = null;
+  /** Current APEX growth stage (null until first apex tick). Read by the architect panel. */
+  get apexGrowth(): ApexGrowthStage | null {
+    return this.lastApexGrowth;
+  }
+  /** Current Foundationals snapshot (null until first apex tick). Read by the architect panel. */
+  get foundationalsSnapshot(): FoundationalsSnapshot | null {
+    return this.lastFoundationals;
+  }
+  /** V-OEE: the live Bedau-Packard open-endedness verdict over the morphotype-diversity window —
+   *  'unbounded' (still innovating), 'bounded' (plateaued), or 'inactive' (no innovation yet). */
+  get openEndedness(): OpenEndednessClass {
+    return this.lastOeeVerdict;
+  }
+  /** V-QRC: live classical-LCG vs Eshkol-QRNG randomness-quality contrast ∈ [0,1] (0 until first sample). */
+  get rngQuantumContrast(): number {
+    return this.lastRngContrast;
+  }
+  /** V-UMWELT: Offworld Umwelt Score ∈ [0,1] — how much apex behaviour leans on the alien substrate
+   *  (doctrine Experiment 2). −1 until measured. High ⇒ an umwelt no Earth animal would recognise. */
+  get offworldUmwelt(): number {
+    return this.lastOffworldUmwelt;
+  }
+  /** V-CHSH: CHSH S from the deterministic two-qubit state-vector reference model. The model reaches
+   *  2√2, but classical software computes it; this is not a physical Bell experiment, entropy validation,
+   *  or nonlocality evidence. `chshViolation` is the legacy name for the simulated S > 2 threshold flag. */
+  get chshBellS(): number {
+    return this.lastBellS;
+  }
+  get chshViolation(): boolean {
+    return this.lastBellS > 2;
+  }
+  /** V-MORPH: live shared morphic-resonance field snapshot (fieldNorm / resonanceStrength / imprints /
+   *  bias) — the apex-imprinted cross-creature correlation field; null until the first apex beat. */
+  get morphicSnapshot(): MorphicSnapshot | null {
+    return this.morphicSnap;
+  }
+  /** BRUTALISM: live dark-energy (quintessence Λ) snapshot — cosmological constant, quintessence field,
+   *  equation of state + expansion rate; null until the first apex beat steps it. */
+  get darkEnergySnapshot(): DarkEnergySnapshot | null {
+    return this.darkEnergySnap;
+  }
+  private readonly apexPercept: ApexPercept = {
+    threat: 0,
+    energy: 0,
+    chaos: 0,
+    novelty: 0,
+    level: 0,
+  };
+  private readonly glyphPercept = new Float32Array(8);
+  /** V-BREED: the 101-glyph pantheon breeding system. Periodic rites produce BabyGenome children
+   *  whose 4 mathematical structures (Touchard, winding, de Jong, Blaschke) boost petri dish growth. */
+  private breedNonce = 0;
+  private lastBaby: BabyGenome | null = null;
+  /** V-SELFEVO: the self-evolution loop (Gödel-machine style self-improvement). Runs every 1200 frames. */
+  private selfEvoLoop: SelfEvolutionLoop | null = null;
+  private readonly evoRng2 = mulberry32(0xc0ffee42 >>> 0); // deterministic sub-stream for self-evo (fixed seed: seed-independent meta-layer outside the population golden)
+  /** V-BEDAU: Bedau-Packard evolutionary activity tracking. Diversity snapshots feed the activity metric. */
+  private readonly diversitySnapshots: number[] = [];
+  private lastBedauActivity = 0;
+  /** V-OEE: the bounded/unbounded/inactive open-endedness verdict over the diversity window (Bedau-Packard). */
+  private lastOeeVerdict: OpenEndednessClass = 'inactive';
+  /** V-QRC: classical-LCG vs Eshkol-QRNG randomness-quality contrast ∈ [0,1] (0=indistinguishable, →1 different). */
+  private lastRngContrast = 0;
+  /** V-UMWELT: Offworld Umwelt Score ∈ [0,1] — fraction of apex behaviour driven by the ALIEN substrate
+   *  (quantum/field/procedural) vs mundane reach/resident signals. −1 until measured once (a static
+   *  characterisation of the fixed apex scale, so it is computed a single time off the hot path). */
+  private lastOffworldUmwelt = -1;
+  /** V-CHSH: deterministic state-vector model's CHSH S (≈2√2 for its modelled Bell state). −1 until
+   *  evaluated once. This is analytic model conformance, not a measurement of physical hardware. */
+  private lastBellS = -1;
+
+  /** Reused telemetry snapshot (panel reads synchronously). */
+  private readonly snap: TelemetrySnapshot;
+
+  private lastSector = '';
+  private energy = 0;
+  private morphCount = 0;
+  private sfxRestored = false;
+
+  constructor(opts: WorldOptions) {
+    this.engine = opts.engine;
+    this.quality = opts.quality;
+    this.persisted = opts.persisted;
+    this.store = opts.store;
+    this.audit = opts.audit;
+    this.developmentDiagnostics = opts.developmentDiagnostics === true;
+
+    const streams = createIsolatedStreams(this.persisted.seed);
+    this.rng = streams.physicsRng;
+    this.nhiPolicyRng = streams.aiRng;
+    this.nhiBirthRng = mulberry32((this.persisted.seed ^ 0x6e48_6942) >>> 0 || 1);
+    this.nhiEffectRng = mulberry32((this.persisted.seed ^ 0xa17e_ffec) >>> 0 || 1);
+    // Economy rng: a deterministic sub-stream derived from the world seed (golden-ratio mix), kept
+    // separate from `this.rng` so the market never perturbs the main simulation's draw order.
+    this.econRng = mulberry32((this.persisted.seed ^ 0x9e3779b1) >>> 0 || 1);
+    // Genome rng (ADR-0009): heritable organism genetics on their OWN seeded sub-stream so trait
+    // genomes + inheritance-on-split never shift the main entity draw order. Same golden-ratio-mix
+    // discipline as econRng/superRng. Passed via ctx; EntityManager uses it for trait heredity.
+    this.genomeRng = mulberry32((this.persisted.seed ^ 0x6e3a17c5) >>> 0 || 1);
+    // UI rng: isolated stream to prevent pointer events and hover states from advancing the physics seed.
+    this.uiRng = streams.uiRng;
+
+    this.state = {
+      chaos: 0.5,
+      entropy: 0,
+      mutations: 0,
+      // Boot 0.25× + GLOBAL_MOTION_SCALE 0.14 on integrate (owner: still too fast at 0.5×/1×).
+      timeScale: 0.25,
+      renderMode: cyc(RENDER_MODES, this.persisted.renderIdx ?? 0),
+      brutalism: false, // BRUTALISM: session-only Super Creature concrete-monolith mode (B hotkey)
+      sim: this.persisted.sim === 2 ? 2 : 1,
+      weatherIdx: this.persisted.weatherIdx % WEATHERS.length,
+      temperature: 20,
+      wind: { x: 0, z: 0 },
+      viewIdx: this.persisted.viewIdx % VIEW_MODES.length,
+      algoIdx: this.persisted.algoIdx % ALGOS.length,
+      songIdx: this.persisted.songIdx % SONGS.length,
+      algoStep: 0,
+      algoMode: 'single',
+      algoTimer: 0,
+      frame: 0,
+      elapsed: 0,
+    };
+
+    // Spatial-hash cell size. The legacy GRID_CELL (16, = 8 × ARENA-scaled) is kept for every
+    // tier ≤ 5,000 entities — same cells, same query neighbor sets, same rng-relevant decisions
+    // (nash/market draw rng conditional on neighbor payoffs, so the cell size is part of the
+    // seeded stream; tuning it at ≤5,000 would break reproducibility). At the ultra tier (10k)
+    // the arena packs ~4× denser, so a 3×3 GRID_CELL block returns ~214 candidates per query.
+    // A 10-unit cell (measured sweet spot, docs/BENCHMARKS-2026-06-26.md) cuts that ~36% while keeping the
+    // visited-cell count low for the radius-8..16 behavior queries — the smaller cells below 10
+    // were rejected (per-query cell-iteration overhead overtook the neighbor savings). V3.6.
+    const spatialCell = this.quality.maxEntities > 5000 ? ULTRA_GRID_CELL : GRID_CELL;
+    this.grid = new SpatialHash<Entity>(spatialCell);
+    this.nhiGrid = new SpatialHash<Entity>(spatialCell);
+    // Audio gets its OWN derived stream: its setInterval callbacks drain rng at
+    // wall-clock moments, which would make the sim stream timing-dependent and
+    // break same-seed reproducibility (audit finding, 0.2.1).
+    this.audio = new AudioEngine(this.state, mulberry32((this.persisted.seed ^ 0xa0d10) >>> 0));
+
+    // POWER mode: keep the freeze-inducing worker/Promise boundary dormant. Wilderness stays packed
+    // and deterministic on the main thread; renderer instancing still owns the large GPU win.
+    this.workerPool = null;
+    this.wilderness = new WildernessPopulation(null, this.persisted.seed);
+    this.wildernessRender = new WildernessRenderer(this.engine.scene);
+
+    // Xenomimics — one canonical population/brain loop. Lifecycle signals feed bounded audio/audit;
+    // rendering, connectome, panel and ecology all borrow this same population.
+    this.xenomimics = new XenomimicPopulation(this.persisted.seed, {
+      respawnBudget: 16,
+      lifecycleSink: (event) => this.onXenomimicLifecycle(event),
+    });
+    this.xenomimicsRender = new XenomimicRenderer(this.engine.scene);
+    this.xenomimicsRender.setRenderMode(this.state.renderMode);
+    this.xenomimicConnectome = new XenomimicConnectome(this.engine.scene);
+    this.xenomimicConnectome.setVisible(false); // psionic twins — no physical tether cosmetics
+    // HMR / stale dist: kill leftover LineSegments named as xenomimic tethers from older builds.
+    this.purgeOrphanXenomimicTethers();
+
+    // Lore precedes the taxonomy: phyla are lore-named at mint (CONTRACTS V3.2).
+    this.lore = new LoreEngine(this.persisted.seed);
+    const geos = createGeometryCache();
+    this.geos = geos;
+    const phyla = createPhyla(this.rng, (i) => this.lore.name('tribe', i), geos.length);
+    const morphs = createMorphotypes(this.rng, geos.length, phyla);
+    this.morphTotal = morphs.length;
+    this.organismIntelligence = new TsotchkeOrganismIntelligence(
+      (this.persisted.seed ^ 0x0a11_f1fe) >>> 0 || 1,
+    );
+    this.driveResolver = new VqeDriveResolver();
+    this.metacognition = new PredictiveMetacognition();
+    const ctx: SimContext = {
+      scene: this.engine.scene,
+      quality: this.quality,
+      rng: this.rng,
+      genomeRng: this.genomeRng,
+      grid: this.grid,
+      morphs,
+      geos,
+      state: this.state,
+      organismIntelligence: this.organismIntelligence.signal,
+      driveResolution: this.driveResolver.signal,
+      predictiveMetacognition: this.metacognition.signal,
+      audit: this.audit,
+      sfx: (type) => this.audio.play(type),
+      creatureSfx: (mi) => {
+        if (this.rng() > 0.048) return;
+        const bands = SFX_EXTRA_BANDS;
+        const pick = mi % 9;
+        const band =
+          pick === 0
+            ? bands['demonic']
+            : pick === 1
+              ? bands['chitter']
+              : pick === 2
+                ? bands['howl']
+                : pick === 3
+                  ? bands['abyssal']
+                  : pick === 4
+                    ? bands['voidgurgle']
+                    : pick === 5
+                      ? bands['alienchitter']
+                      : pick === 6
+                        ? bands['demonicgrowl']
+                        : pick === 7
+                          ? bands['transwarp']
+                          : bands['phantomscale'];
+        const start = band?.start ?? SFX_STRANGE;
+        const count = band?.count ?? 24;
+        this.audio.playId(start + (mi % count));
+      },
+    };
+    this.audit.setSimClock(() => this.state.frame);
+
+    this.environment = new EnvironmentSystem(ctx);
+    this.alienFlora = new AlienFlora(ctx); // 60k-plant alien ecology, 50 species, GPU-instanced sway
+    this.wasteEcology = new WasteEcology(ctx.scene);
+    this.alienFlora.attachFertilizer((x, z) => this.wasteEcology.regrowBoost(x, z));
+    this.vegetation = new Vegetation(ctx.scene);
+    this.vegetation.attachGround((x, z) => this.xenomimicSurfaceAt(x, z, this.vegGroundT));
+    this.entities = new EntityManager(ctx);
+    // LINEAGE: a rolling 4× population window of who begat whom (generation depth, kinship).
+    this.entities.lineage = new Lineage(Math.max(1024, this.quality.maxEntities * 4));
+    // Covers the largest authored organism tier plus every fixed fauna roster without growing or
+    // reallocating at runtime. Tree residents are born peaceful and never enter hostile targeting.
+    this.bigTreeSanctuary = new BigTreeSanctuaryMembershipRegistry(
+      this.bigTreeZone,
+      this.quality.maxEntities + XENOMIMIC_MAX + 512,
+    );
+    this.entities.attachFloraComfort((x, z) => this.alienFlora.comfortAt(x, z));
+    // USER ecology: hungry organisms EAT the plants (energy), and the flora depletes + regrows its own
+    // biomass. Deterministic sink (the flora draws no rng); only wired here, so tests stay golden-clean.
+    this.entities.attachFloraGraze((x, z, pressure, dt) =>
+      this.alienFlora.grazeAt(x, z, pressure, dt),
+    );
+    // USER ecology: hungry organisms FORAGE on the operational FOOD field (biomass × edaphic quality ×
+    // overgraze penalty) — not raw biomass alone — so richer, less-stressed patches outrank bare stubs.
+    // Deterministic; only wired here so tests stay golden-clean.
+    this.entities.attachFloraGradient((x, z) => this.alienFlora.foodAt(x, z));
+    this.entities.attachSanctuary(this.bigTreeOrdinaryProtectedAt);
+    this.instanced = this.quality.instanced ? new InstancedEntityRenderer(ctx) : null;
+    this.entities.reset(this.bootPopulation());
+    this.shoggoths = new ShoggothSystem(ctx, this.entities);
+    this.shoggoths.attachSanctuary(this.bigTreeShoggothProtectedAt);
+    // F-ECON-CREATURES V17: enrol the shoggoth horde as economic agents (modest purses) and let each
+    // one's wealth drive its boldness. Draws only from econRng, so the main stream is untouched.
+    for (let i = 0; i < this.shoggoths.count; i++) {
+      // Varied stature (golden-angle spread, no rng) so the horde starts with UNEQUAL purses — the
+      // economy then amplifies the spread, and boldness (wealth / live mean) diverges across the 100.
+      const w = 1.3 + 1.8 * ((i * 0.618033988749895) % 1);
+      this.economy.register(World.ECON_SHOGGOTH_BASE + i, 'Shoggoth', w, this.econRng);
+    }
+    this.shoggoths.attachEconomy(
+      (idx) => this.economy.wealthOf(World.ECON_SHOGGOTH_BASE + idx)?.netWorth ?? 0,
+    );
+    // F-CREATURE-TRADE V29: the economic WRITE path — cognition's bargain/ally drives move real worth
+    // between two shoggoths (conservation-exact), closing the wealth→boldness loop. Same index→id base.
+    this.shoggoths.attachTrade((fromIdx, toIdx, v) =>
+      this.economy.transferWorth(
+        World.ECON_SHOGGOTH_BASE + fromIdx,
+        World.ECON_SHOGGOTH_BASE + toIdx,
+        v,
+      ),
+    );
+    // Callback fires from update(), well after `hud`/`qc`/`lore` are assigned
+    // below; the PuppetEvent argument is a reused scratch object — read
+    // synchronously (qc.onPuppetEvent reads e.name synchronously too).
+    this.puppets = new PuppetMasterSystem(ctx, this.entities, (e) => {
+      this.qc.onPuppetEvent(e);
+      this.hud.showToast(`${e.name} ${this.lore.epithet('puppet', e.name)}`, e.action);
+    });
+    this.puppets.attachSanctuary(this.bigTreePuppetProtectedAt);
+    // F-ECON-CREATURES V19: enrol the puppeteer cabal as economic agents (varied golden-angle purses,
+    // no rng) and let wealth drive how often each meddles. econRng only → main stream untouched.
+    for (let i = 0; i < this.puppets.count; i++) {
+      const w = 1.2 + 1.7 * ((i * 0.618033988749895) % 1);
+      this.economy.register(World.ECON_PUPPET_BASE + i, 'Puppeteer', w, this.econRng);
+    }
+    this.puppets.attachEconomy(
+      (idx) => this.economy.wealthOf(World.ECON_PUPPET_BASE + idx)?.netWorth ?? 0,
+    );
+    this.weather = new WeatherSystem(ctx, this.engine);
+    this.quantum = new QuantumCloud(ctx);
+    this.connectome = new Connectome(ctx, this.entities);
+
+    // ── Wildbeyond V2 wiring (cadences in step(); see ARCHITECTURE-2026-06-26.md) ──
+    this.qc = new QuantumCircuitSystem(ctx);
+    // The bands buffer is live/reused — hand it to the cloud once; qc.bands()
+    // refreshes its contents in place on the 6-frame cadence.
+    this.quantum.setQuantumBands(this.qc.bands());
+    this.rd = new ReactionDiffusionSystem(ctx);
+    this.environment.attachGroundEmissiveMap(this.rd.texture);
+    // F-ARTIFACTS (V9): the world accrues visible relics. A pooled InstancedMesh that draws no rng
+    // and writes no sim state, so it cannot perturb the seeded stream or the determinism golden.
+    this.artifacts = new ArtifactField(ctx.scene);
+    // Death→ground feedback: every disposal (age-death AND shoggoth
+    // consumption, single-fire inside disposeAt) scars the living ground at
+    // the corpse's UV — the mortality loop the contract headlines — AND drops a scar relic.
+    this.entities.onDeath = (x, z, entity) => {
+      // Release food, visit, cooldown, and social ownership before a replacement can reuse space.
+      // Optional chaining covers the narrow constructor interval before the visitor adapter exists.
+      if (entity.userData.isNhi === true) {
+        const nhiId = this.nhiIdsByEntity.get(entity);
+        if (nhiId !== undefined) {
+          this.bigTreeFaunaVisitors?.cancel(BIG_TREE_OWNER_NHI, nhiId);
+          this.bigTreeNhiSource?.unregister(nhiId);
+        }
+      } else {
+        // NHI minions remain ordinary organisms and use the canonical ordinary visitor lifecycle.
+        this.bigTreeVisitors?.cancelOrdinary(entity);
+      }
+      const ecologyId = entity.userData.ecologyId;
+      if (ecologyId !== undefined) {
+        this.bigTreeSanctuary.remove(BIG_TREE_SANCTUARY_ORDINARY, ecologyId);
+      }
+      this.rd.perturb(0.5 + x / GROUND_EXTENT, 0.5 - z / GROUND_EXTENT, 2);
+      this.artifacts.placeGround(x, z, 'scar', this.state.elapsed); // visual-only, seeded-time stamp
+    };
+    // Boot scars: the Gray-Scott fixed point is uniform — seed a few
+    // disturbances so the ground skin starts breathing (rd writer note).
+    for (let i = 0; i < 4; i++) this.rd.perturb(this.rng(), this.rng());
+    // ── PANTHEON V3.3+: the titan colossi and their economy/war layer ──
+    this.titans = new TitanSystem(ctx, this.entities, this.lore, this.rd);
+    this.titans.attachSanctuary(this.bigTreeTitanProtectedAt);
+    // F-ECONOMY V13: enrol the current TitanSystem roster as economic agents with titan-sized purses (their
+    // stature = a base weight + a per-titan bump). Draws only from `econRng`, so this never shifts
+    // the main rng order — the world after this point is byte-identical to before the economy.
+    for (let i = 0; i < this.titans.count; i++) {
+      const name = this.titans.ledger[i]?.name ?? `Titan ${i}`;
+      this.economy.register(World.ECON_TITAN_BASE + i, name, 8 + (i % 5) * 0.7, this.econRng);
+    }
+    // F-DIPLO-ECON V16: let the AURUM/UMBRA economy steer titan diplomacy — a titan far richer than a
+    // rival is emboldened to raid (→ WAR), a poorer one appeases. Reads economy net worth by index.
+    this.titans.attachEconomy(
+      (idx) => this.economy.wealthOf(World.ECON_TITAN_BASE + idx)?.netWorth ?? 0,
+    );
+    this.titans.attachProcreation(
+      (x, y, z) => this.launchNhiBeing(x, y, z, 'titan-procreation') === 1,
+    );
+    this.graphMind = new GraphMind(ctx, this.entities, this.connectome);
+    this.constellations = new ConstellationSystem(ctx, this.lore);
+    this.audioAnalysis = new AudioAnalysis(this.audio);
+    // Omens arrive lore-named: same seed, same prophecy vocabulary.
+    this.analytics = new AnalyticsSystem(ctx, (i) => this.lore.name('omen', i));
+    // ── XENOGENESIS V4: alien air + holographic 3D analytics ──
+    // Atmosphere draws 13 + 5·floor(maxEntities/4) rng samples — constructed
+    // last among rng-consuming sim systems so it never shifts their streams.
+    this.atmosphere = new AtmosphereSystem(ctx);
+    this.viz3d = new Viz3DSystem(ctx); // zero rng draws — placement-neutral
+    // Cosmological chaos (V7.4): draws no rng and builds nothing at construction (lazy on
+    // summon), so it is boot-stream-neutral like viz3d.
+    this.singularities = new SingularitySystem(ctx, this.entities);
+    this.singularities.attachSanctuary(this.bigTreeProtectedAt);
+    // V62: CHAOS MODE on its OWN seeded sub-stream (the golden-ratio mix is applied inside, like
+    // econRng/superRng) so the storm's quantum dice never perturb the main entity draw order — off ⇒
+    // the sim is byte-identical.
+    this.chaosField = new ChaosField(this.persisted.seed);
+    this.chaosField.attachSanctuary(this.bigTreeProtectedAt);
+    // F-HOLES: let an active singularity tug the big roaming beings too, not just the organisms.
+    this.shoggoths.attachSingularity(this.singularities);
+    this.titans.attachSingularity(this.singularities);
+    // F-BEINGS: a fourth order of colossi (leviathans). Boot-stream-neutral — draws no rng here.
+    this.leviathans = new LeviathanSystem(ctx);
+    this.leviathans.attachSingularity(this.singularities);
+    this.leviathans.attachReactionDiffusion(this.rd); // V1.3 ECOLOGY: colossi stir the primordial substrate
+    // F-NHI V10: alien biomechanical bodies for launched NHIs (additive; draws no rng).
+    this.nhiBody = new NhiBodySystem(ctx.scene);
+    // V11: far-field cosmic-web backdrop for depth + context (additive; draws no rng).
+    this.cosmicWeb = new CosmicWeb(ctx.scene);
+    // V11: floating gold wireframe architecture for designed-space depth (additive; draws no rng).
+    this.goldLattice = new GoldLattice(ctx.scene);
+    this.floatingMonoliths = new FloatingMonoliths(ctx.scene); // 16 drifting greebled megaliths
+    this.godColossus = new GodColossus(ctx.scene); // V110: the colossal god-tier monument (item 18)
+    // Seat the tree-home on the shared terrain without consuming the population RNG stream.
+    const crystalBase = baseTerrainHeightAt(CRYSTAL_TREE_ORIGIN_X, CRYSTAL_TREE_ORIGIN_Z);
+    this.crystalTerrainBase = crystalBase;
+    const godTop = this.godColossus.center.y + this.godColossus.viewRadius;
+    const crystalHeight = Math.max(1, (godTop - crystalBase) / 1.02);
+    this.crystalEcosystem = new CrystalEcosystem(
+      ctx.scene,
+      this.persisted.seed,
+      new THREE.Vector3(CRYSTAL_TREE_ORIGIN_X, crystalBase, CRYSTAL_TREE_ORIGIN_Z),
+      { height: crystalHeight },
+    );
+    let bigTreeCheckpointSynchronized = true;
+    if (opts.bigTreeEcology !== null && opts.bigTreeEcology !== undefined) {
+      try {
+        // Restore before constructing any external visitor adapter. Active owners/reservations were
+        // normalized out of the checkpoint, so the new cosmos always starts with clean actor state.
+        this.crystalEcosystem.restoreFoodPersistence(opts.bigTreeEcology.food);
+        if (opts.bigTreeEcology.food.entries.some((entry) => entry.remainingRespawn === null)) {
+          // A null deadline is a discarded live claim. Rewrite its now-available, generation-bumped
+          // form immediately so the sparse store does not carry a harmless but noncanonical entry
+          // across every later reload. A failed write keeps the revision dirty for pagehide retry.
+          bigTreeCheckpointSynchronized = this.store.saveBigTreeEcology({
+            version: 1,
+            food: this.crystalEcosystem.snapshotFoodPersistence(),
+          });
+        }
+      } catch (error) {
+        // A rejected or interrupted restore must leave the live tree canonical, not half-rebuilt.
+        this.crystalEcosystem.resetFood(this.state.elapsed);
+        bigTreeCheckpointSynchronized = this.store.clearBigTreeEcology();
+        this.audit.record('big-tree-food-restore-failed', {
+          error: error instanceof Error ? error.message : String(error),
+        });
+      }
+    }
+    if (bigTreeCheckpointSynchronized) {
+      this.lastPersistedBigTreeFoodRevision =
+        this.crystalEcosystem.edibleResources.persistenceRevision;
+      this.lastPersistedBigTreeFoodTime = this.crystalEcosystem.foodTime;
+    }
+    // One shared, bounded visit scheduler for ordinary organisms and Xenomimics. Distinct radial
+    // rings prevent the entire dome from converging on a single point while keeping every authored
+    // destination inside the sanctuary's entry boundary.
+    const bigTreeFixedFaunaCount =
+      this.shoggoths.count +
+      this.titans.count +
+      this.leviathans.count +
+      this.puppets.count +
+      APEX_INDIVIDUATED +
+      World.NHI_POPULATION_CAP;
+    const bigTreeActorCapacity = this.quality.maxEntities + XENOMIMIC_MAX + bigTreeFixedFaunaCount;
+    this.bigTreeVisits = new BigTreeVisitManager(this.bigTreeZone, {
+      maxActors: bigTreeActorCapacity,
+      capacity: Math.min(72, bigTreeActorCapacity),
+      maxSlots: 104,
+      arriveRadius: 8,
+      minDwellSeconds: 7,
+      maxDwellSeconds: 24,
+      minCooldownSeconds: 35,
+      maxCooldownSeconds: 95,
+      travelTimeoutSeconds: 90,
+      leaveTimeoutSeconds: 50,
+      slotLeaseSeconds: 12,
+      stuckAfterSeconds: 8,
+      progressEpsilon: 1.5,
+      maxStuckRecoveries: 2,
+      hashSeed: (this.persisted.seed ^ 0x51b7ee13) >>> 0,
+    });
+    // Ring radii scale with the zone (×WORLD_LINEAR) so Mini World keeps every slot in-zone.
+    const ring = (r: number): number => r * WORLD_LINEAR;
+    this.bigTreeVisits.addRadialSlots(BigTreeSlotKind.Eat, 32, ring(78), Math.PI / 32);
+    this.bigTreeVisits.addRadialSlots(BigTreeSlotKind.Rest, 24, ring(132), Math.PI / 24);
+    this.bigTreeVisits.addRadialSlots(BigTreeSlotKind.Socialize, 24, ring(178), Math.PI / 48);
+    this.bigTreeVisits.addRadialSlots(BigTreeSlotKind.Observe, 16, ring(218), Math.PI / 16);
+    this.bigTreeVisits.addRadialSlots(BigTreeSlotKind.Any, 8, ring(205), Math.PI / 8);
+    this.bigTreeVisitors = new BigTreeSpeciesVisitors(
+      this.crystalEcosystem,
+      this.bigTreeVisits,
+      {
+        pollBudget: 64,
+        pollIntervalSeconds: 0.1,
+        foodLeaseSeconds: 8,
+        foodRetrySeconds: 0.4,
+        foodSearchTimeoutSeconds: 4,
+        foodReachRadius: 4,
+        ordinarySpeed: 3.5,
+        xenomimicSpeed: 18,
+        steeringGain: 4,
+        ordinaryRestPerSecond: 4,
+        xenomimicRestPerSecond: 0.04,
+        socialLeaseSeconds: 3,
+        socialReachRadius: 68,
+        eatingFeedbackSeconds: 0.9,
+        hashSeed: (this.persisted.seed ^ 0x2e8c9f47) >>> 0,
+      },
+      this.bigTreeActivityCallbacks,
+    );
+    this.bigTreeNhiSource = new NhiBigTreeSource(
+      World.NHI_POPULATION_CAP,
+      this.readBigTreeNhiSignals,
+    );
+    // V11: floating neon sacred-geometry quantum lattice (additive; draws no rng).
+    this.quantumLattice = new QuantumLattice(ctx.scene);
+    this.abominationArchitecture = new AbominationArchitecture(ctx.scene);
+    // V-MECHA: the central fusion abomination — boot-stream-neutral (no rng), reacts to world chaos.
+    this.mechalogodrom = new Mechalogodrom(ctx.scene);
+    this.mechalogodromBrain = new MechalogodromBrain((this.persisted.seed ^ 0x8e4ac471) >>> 0 || 1);
+    // V-ABC: the 100 Greek+Latin alphabet archetypes, alive across the dome (instanced; no rng).
+    this.alphabetPantheon = new AlphabetPantheonRender(ctx.scene);
+    this.apexSubstrate = new ApexSubstrateDriver(
+      SCALE_MASSIVE,
+      (this.persisted.seed ^ 0x41505853) >>> 0 || 1,
+    );
+    this.stepApexSubstrate(0.5);
+    this.alphabetPantheon.setWireHalosVisible(this.state.renderMode === 'wire');
+    // V-GLYPH: 100 × 25k-parameter brains (visual-only; drives pantheon appearance, not world state).
+    this.glyphBrains = new GlyphBrainBatch(this.persisted.seed);
+    // V-FND: Foundationals — deep interconnect for the APEX 1B self-awareness path.
+    this.foundationals = new Foundationals(this.persisted.seed);
+
+    this.hud = new Hud();
+    const xylosParams =
+      typeof location !== 'undefined' ? new URLSearchParams(location.search) : null;
+    const xylosSeeded =
+      !isWildEntropyMode() ||
+      xylosParams?.get('xylos') === 'seeded' ||
+      xylosParams?.get('deterministic') === '1' ||
+      Boolean(xylosParams?.has('seed'));
+    this.xylos = new XylosSession(
+      (this.persisted.seed ^ 0x78796c6f) >>> 0,
+      xylosSeeded ? 'seeded' : 'live',
+    );
+    this.xylosHabitat = new XylosHabitat(this.rd, XYLOS_WORLD_RADIUS, GROUND_EXTENT);
+    this.xylosBody = new XylosBody(ctx.scene);
+    this.xylosBody.update(this.xylos.view, 0);
+    this.xylosPanel = new XylosPanel({
+      focus: () => this.focusXylos(),
+      setMode: (mode) => {
+        this.xylos.setMode(mode);
+        this.xylosPanel.update(this.xylos.view, this.xylos.status);
+        this.audit.record('xylos-mode', { mode });
+      },
+      startRecording: () => {
+        this.xylos.startRecording();
+        this.xylosBody.update(this.xylos.view, this.state.elapsed);
+        this.xylosPanel.update(this.xylos.view, this.xylos.status);
+        this.audit.record('xylos-record', {
+          worldSeed: this.persisted.seed,
+          xylosSeed: (this.persisted.seed ^ 0x78796c6f) >>> 0,
+        });
+      },
+      replay: () => {
+        this.xylos.replay();
+        this.xylosBody.update(this.xylos.view, this.state.elapsed);
+        this.xylosPanel.update(this.xylos.view, this.xylos.status);
+        this.audit.record('xylos-replay', { steps: this.xylos.status.recordedSteps });
+      },
+    });
+    this.xylosPanel.update(this.xylos.view, this.xylos.status);
+    this.panel = new TelemetryPanel();
+    this.xenomimicPanel = new XenomimicPanel();
+    this.observatory = new Observatory();
+    this.nhiObs = new NhiObservatory();
+    this.marketTicker = new MarketTicker();
+    // F-SUPER V31: the apex mind on its OWN seeded sub-stream (golden-ratio mix off the world seed,
+    // like econRng) so `think()`/twins never perturb the main rng order — the determinism golden stays
+    // byte-identical. Its wallet (apex stature, weight 20) is enrolled on the SAME sub-stream, so
+    // econRng's order is untouched too. The panel self-mounts; the ⬢ ARCHITECT toggle is always shown.
+    this.superRng = mulberry32((this.persisted.seed ^ 0x5e1f9d3b) >>> 0 || 1);
+    // V-APEX: the Entropic Tesseract Hydra brain on its OWN seeded sub-stream (determinism-safe).
+    // 10 incompatible neuron architectures + quantum brain + meta-paradox layer. Wired into the apex beat.
+    // Pass 3: boot at APEX-100K designed scale (live allocation stays capped for performance).
+    this.apexBrain = new ApexBrain((this.persisted.seed ^ 0xa1e8b6a4) >>> 0 || 1, {
+      scale: SCALE_APEX_START,
+    });
+    // APEX LEARNS: light the Abomination's online self-model so its otherwise hand-coded, zero-trainable
+    // organ cascade grows a part that genuinely learns — an 8→6→1 Eshkol-AD-backprop net forecasting its
+    // own next-beat vitality, its error aching in agony. A SEPARATE organ-distinct substream ⇒ zero organ
+    // rng perturbation; determinism-safe. See tests/apex-brain-learning.test.ts.
+    this.apexBrain.enableLearning();
+    // legacy single kept EXCLUSIVELY for player hero/twin paths (maybeSpawn + its snapshot in UI)
+    this.superCreature = new SuperCreature(this.superRng);
+    // V47 → GOAL: the wingman swarms + evolution arcs are now PER-ARCHON (built in the Archon loop below,
+    // once the five bodies exist), so all five apexes carry a 100-robot escort and level up separately —
+    // not only the prime. Clear any stale persisted evolution blob once (session-only since V105).
+    this.clearEvolutionStorage();
+    // V63: the LV100 ascension monument. The first Archon to reach the summit raises it (once, guarded).
+    this.monolithTemple = new MonolithTemple(ctx.scene);
+    this.portalDeath = new PortalDeath(ctx); // USER: the ascension portal kills what touches it
+    this.mechaBlaze = new MechaBlaze(ctx); // USER: the mecha incinerates organisms that fly into it
+    this.bounceImpactFx = new BounceImpactFX(ctx.scene); // V128: visible spark at every ragdoll ricochet
+    this.mechaFirePillar = new MechaFirePillar(ctx.scene); // V128: make that death cone VISIBLE
+    this.portalDeathFauna = new PortalDeathFauna(ctx); // USER: …and the big fauna too (non-swarm rosters)
+    this.portalImmuneBounce = new PortalImmuneBounce(ctx); // USER: the immune Pantheon bounces off in sparks
+    this.portalShield = new PortalShield(ctx); // USER: the god-tier Super/APEX bodies shimmer at the void
+    this.superPanel = new SuperPanel();
+    this.pantheonArchitecturePanel = new PantheonArchitecturePanel();
+    this.pantheonArchitecturePanel.setApexSource(() => this.apexBrain.snapshot());
+    // NOTE: legacy single register removed; 5 SUPER CREATURES register their own purses below (ECON 9000+i).
+    // F-SUPER V32: the masterful many-eyed apex BODY (god-jewel shader) — additive, draws no rng.
+    // F-BRAIN V42: every organism's compact 70-param genome brain, on its OWN seeded sub-stream (so the
+    // main rng order + the population golden are byte-identical). Sized to the hard entity ceiling.
+    this.entityBrains = new EntityBrainField(
+      this.quality.maxEntities,
+      mulberry32((this.persisted.seed ^ 0xb7a19e3d) >>> 0 || 1),
+      this.quality.quantization,
+    );
+    this.entityBrains.attachAdaptiveField(
+      this.organismIntelligence.signal,
+      this.entities.organismGoals,
+    );
+    this.organismBioPool = new OrganismBioStatePool(this.quality.maxEntities);
+    this.bioYPositions = new Float32Array(this.quality.maxEntities);
+    this.bioEntityIds = new Uint32Array(this.quality.maxEntities);
+    this.bioEnergies = new Float32Array(this.quality.maxEntities);
+    this.bioAges = new Float32Array(this.quality.maxEntities);
+    this.bioLives = new Float32Array(this.quality.maxEntities);
+    this.bioActivations = new Float32Array(this.quality.maxEntities);
+    this.bioVelYDelta = new Float32Array(this.quality.maxEntities);
+    this.bioEnergyDelta = new Float32Array(this.quality.maxEntities);
+    this.bioScaleMul = new Float32Array(this.quality.maxEntities);
+    this.attachOrganismBioLifecycle();
+    this.hybridHardware = getBaselineHybridHardware();
+    if (
+      typeof navigator !== 'undefined' &&
+      ('gpu' in navigator || 'ml' in (navigator as unknown as Record<string, unknown>))
+    ) {
+      void this.probeOrganismHardware();
+    }
+    this.superScene = ctx.scene;
+    // 5 SUPER CREATURES (GOAL5 Archons/Godforms): World.GODFORMS from exclusive godform.ts source.
+    // Driven by the represented entries in the 22-entry causal/runtime ledger (15 user + 7 org;
+    // 17 integrated, four fenced, one metadata-only). The public census is 23 repositories because
+    // homebrew-moonlab remains census-only deployment metadata rather than a runtime ledger row.
+    // Determinism: child seeds only (no consumption of main/super streams). Spaced + archetype bias.
+    const master = (this.persisted.seed ^ 0x5e1f3d11) >>> 0 || 1;
+    for (let i = 0; i < APEX_INDIVIDUATED; i++) {
+      // per-Archon bias from godform (research corpus applied: QGT geometry, Eshkol AD/consciousness, moonlab Clifford reflex) // bias available for mind/body distinction (5 unique)
+      // child seed = master + archetype offset (golden prime mix for separation)
+      const mindSeed = (master + i * 0x9e3779b1) >>> 0 || 1 + i;
+      const bias = getFullTsotchkeBias(i); // depth-ledger corpus extension (Eshkol/Moonlab/Quake factors) // per-Archon (clifford/generative/chaos/narrative/color) — used in world percepts + mind ctor (godform exclusive)
+      // Tsotchke corpus wiring 10x: Moonlab tensor/MPO for 5-Archon group entanglement (mirrors/moonlab), Eshkol AD/GWT for percept bias, libirrep symmetry, ulg/quantum-quake hybrid aliveness (ulgHandoff, gwtBroadcast, hybridAliv).
+      // Full local: Z:\[Vibe Coded (AI)]\(Tsotchke) — see docs/TSOTCHKE-INTEGRATION-MAP-2026-06-26.md
+      // Ralph 10x continue: quakeQge, mpo, gwt used in econ, pull, spawn for corpus aliveness.
+      const pulse = getCorpusPulseForArchon(i, mindSeed); // 10x heartbeat: quantum-quake aliveness wired from corpus to world for this Archon
+      const quakeLife = pulse.quakeAliveness; // corpus quake-aliveness; feeds econ vitality + hybrid aliveness below (deterministic from seed)
+      const m = new SuperMind(
+        mulberry32(mindSeed),
+        bias.cliffordWeight,
+        bias.eshkolLogic || 0.5,
+        bias.eshkolInference || 0.5,
+        bias.eshkolWorkspace || 0.5,
+        bias.tsotchkeModule || 'EshkolConsciousness',
+        bias.eshkolProgram,
+      ); // TSOTCHKE CORPUS: Eshkol consciousness + per-Archon .esk program from godform
+      this.superMinds.push(m);
+      const c = new SuperCreature(mulberry32((mindSeed ^ 0xc0d3beef) >>> 0 || 1 + i));
+      // APEX LEARNS: light the online world-model so this Archon's prediction loop is a real MLP trained
+      // by exact Eshkol-AD backprop (not a frozen readout) — its forecast error provably falls in-life
+      // and steers its surprise/arousal/planning. Seeded from this Archon's mindSeed (the 5 share a
+      // default name, so mindSeed is what individuates their world-models). Determinism-safe: a SEPARATE
+      // identity-derived substream, no main/super rng draw. See tests/super-creature-learning.test.ts.
+      c.enableLearning({ seed: mindSeed });
+      this.superCreatures.push(c);
+      // 10x heartbeat re-audit: actually use quakeLife from corpus pulse for Archon aliveness (e.g. econ vitality, future world interactions/percepts). Det from seed.
+      const quakeEconBase = 20 + Math.floor(quakeLife * 5);
+      const qPert = quakePerturb(quakeLife, mindSeed, 0.2);
+      const quakeEcon = Math.floor(quakeEconBase * qPert);
+      // Ralph heartbeat 10x continue: ulgHandoff + gwt for hybrid aliveness + workspace in super world spawn (Tsotchke corpus)
+      const ulgA = ulgHandoff(quakeLife, bias.eshkolLogic || 0);
+      const gwtW = gwtBroadcast([quakeLife, bias.eshkolWorkspace || 0.5], [0.8, 0.6]);
+      const hybridAliv = (ulgA + (gwtW[0] || 0)) * 0.5; // Ralph 10x: use for Tsotchke hybrid aliveness (Eshkol GWT + ulg + quake) in world
+      // Ralph re-audit 10x continue: libirrepClebsch for Archon spawn pos symmetry (Tsotchke libirrep)
+      const irPos = libirrepClebsch(1, i % 3, 0);
+      // Ralph loop continue 10x more: use quakeQgeFactor + mpo for more quantum-quake/Moonlab tensor effect on super aliveness in world
+      const qge = quakeQgeFactor(quakeLife, 0.3);
+      this.superMpoInput[0] = quakeLife;
+      this.superMpoInput[1] = hybridAliv;
+      this.superMpoInput[2] = quakeLife * hybridAliv; // cross term ⇒ rank-2 packed matrix (both features live)
+      const mpoW = moonlabMpoStep(this.superMpoInput, 2);
+      // feed hybrid into econ for corpus aliveness effect (deterministic)
+      const econBoost =
+        1 + hybridAliv * 0.1 + (irPos % 2) * 0.01 + qge * 0.05 + Math.abs(mpoW) * 0.02;
+      this.economy.register(
+        World.ECON_SUPER_BASE + i,
+        GODFORMS[i % GODFORMS.length] ?? 'ARCHITECT',
+        Math.floor(quakeEcon * econBoost),
+        this.superRng,
+      );
+      // GOAL5: spaced initial anchors so 5 Archons start distinct (visible separate + local percept interactions at boot)
+      const theta = (i * 6.28318530718) / 5;
+      const r = 11 * ARENA * 0.65;
+      const ax = r * Math.cos(theta);
+      const az = r * Math.sin(theta);
+      // Ralph continue 10x more: use mpoW (Moonlab) + qge for Tsotchke modulation in Archon spawn height (more everywhere in world)
+      const ay = 14 + ((i * 3) % 7) + Math.abs(mpoW) * 2 + qge * 1;
+      const form = getArchonForm(i);
+      const b = new SuperBodySystem(ctx.scene, { x: ax, y: ay, z: az }, i, form); // GOAL5: pass form for per-Archon extreme chaotic morph (eyes/arms/wings etc + shader)
+      this.superBodies.push(b);
+      this.petriDishes.push(createPetriDish(mindSeed));
+      // GOAL: this Archon's OWN 100-robot wingman escort (its own rng sub-stream, seeded off its mindSeed so
+      // the five swarms are distinct) + its OWN instanced renderer + its OWN evolution arc + evo rng. Every
+      // apex is now escorted + levels up INDEPENDENTLY off its own dominance/novelty/assist — not just prime 0.
+      const swarm = new WingmanSwarm(WINGMAN_COUNT, mulberry32((mindSeed ^ 0x77149abc) >>> 0 || 1));
+      // ESCORT DEVELOPS: light this swarm's online flight coordinator — a real 6→6→1 Eshkol-AD net that learns
+      // to forecast its Archon's dominance and presses the escort harder when weakness is anticipated. Seeded
+      // from a SEPARATE substream ⇒ no perturbation of the frozen robot formation; the escort is a meta-layer
+      // outside the population golden. Default-off is byte-identical (see tests/super-wingmen.test.ts).
+      swarm.enableLearning({ seed: mindSeed });
+      this.wingSwarms.push(swarm);
+      this.wingRenders.push(new WingmanRenderer(ctx.scene, WINGMAN_COUNT));
+      this.superEvos.push(new SuperEvolution());
+      this.evoRngs.push(mulberry32((mindSeed ^ 0x00e701ce) >>> 0 || 1));
+      // Economy: exactly 5 purses for the pantheon apexes
+    }
+    // Canonical fauna retain their native velocity, energy, animation, and lifecycle ownership.
+    // These composition-time adapters expose all five fixed categories plus launched NHI to the
+    // same bounded visit/food/social scheduler. Player-owned heroBodies are intentionally absent.
+    const bigTreeFaunaBindings: BigTreeFaunaBinding[] = [
+      bindBigTreeFauna(BIG_TREE_OWNER_SHOGGOTH, this.shoggoths),
+      bindBigTreeFauna(BIG_TREE_OWNER_TITAN, this.titans),
+      bindBigTreeActorSource(BIG_TREE_OWNER_LEVIATHAN, 'leviathan', this.leviathans),
+      bindBigTreeFauna(BIG_TREE_OWNER_PUPPET, this.puppets),
+      bindBigTreeActorSource(BIG_TREE_OWNER_APEX, 'apex', this.superBodies),
+      bindBigTreeFauna(BIG_TREE_OWNER_NHI, this.bigTreeNhiSource),
+    ];
+    this.bigTreeFaunaVisitors = new BigTreeFaunaVisitors(
+      this.crystalEcosystem,
+      this.bigTreeVisits,
+      bigTreeFaunaBindings,
+      {
+        pollBudget: 64,
+        pollIntervalSeconds: 0.1,
+        activeCapacity: Math.min(72, this.bigTreeVisits.capacity),
+        foodLeaseSeconds: 8,
+        foodRetrySeconds: 0.4,
+        foodSearchTimeoutSeconds: 4,
+        foodReachRadius: 7,
+        socialLeaseSeconds: 3,
+        socialReachRadius: 68,
+      },
+    );
+    const soupSeed = (master ^ 0x50ff0ad1) >>> 0 || 1;
+    this.petriRng = mulberry32((master ^ 0x50ff0ad2) >>> 0 || 1);
+    this.primordialSoup = new PrimordialSoup(soupSeed);
+    const nhsiSeed = (master ^ 0x4e485349) >>> 0 || 1; // "NHSI"
+    this.facultiesPantheon = new FacultiesPantheon(mulberry32(nhsiSeed));
+    // NHSI DEVELOPS: light the pantheon's online self-model so it learns to forecast its own aggregate
+    // state (error falls in-life) and its coupling becomes ADAPTIVE — the faculties integrate more when
+    // the pantheon fails to predict itself, then relax as it learns. SEPARATE substream ⇒ no rng draw
+    // perturbation; default-off would be byte-identical. See tests/nhsi-pantheon-learning.test.ts.
+    this.facultiesPantheon.enableLearning({ seed: nhsiSeed });
+    this.tomPantheon = new TomPantheon(mulberry32((nhsiSeed ^ 0x546f4d21) >>> 0 || 1));
+    this.emergenceAngles = new EmergenceAnglesController();
+    this.symbiosis = new Symbiosis(this.superRng);
+    this.mythRitual = new MythRitual(this.superRng);
+    this.archonMortality = Array.from(
+      { length: APEX_INDIVIDUATED },
+      (_, i) => new Mortality(this.superRng, { baseLifespan: 4000 + i * 500 }),
+    );
+    for (let i = 0; i < ARCHON_CHANNELS; i++) {
+      const g = this.nhsiGenomeScratch;
+      for (let k = 0; k < g.length; k++) g[k] = 0.35 + 0.08 * ((i * 7 + k * 3) % 11);
+      this.emergenceAngles.registerStrain(`archon-${i}`, g);
+    }
+    // The 5 are "alive" with powers: each has distinct child-seeded SuperMind (cortex+ToT+quantum+Clifford reflex+memory)
+    // driving SuperBody (variant=0..4 selects archetype morph/wing/eye count + shader uVariant for color theme/pulse).
+    // Per-frame: think(percept) → snapshot → setMind/setConsciousness; bodies update wander from mind act[] + evo.
+    // No learning (fixed seeded weights); all read/write shared systems (grid for local, econ per purse, audio etc).
+    this.superBody = this.superBodies[0]!; // legacy alias for prime (compat paths + wing swarm)
+    this.superHunt = new SuperHunt(ctx); // USER: the apexes hunt + eat organisms as food/fuel
+    this.domeFeeding = new DomeFeeding(ctx); // USER: the rest of the dome fauna graze plants + eat organisms
+    this.superMindSnap = null;
+    this.superheroHud = new SuperheroHud(); // V35: self-mounting player HUD, hidden until unlock
+    // F-SUPER V34/35: the access puzzle fires `superhero-unlock` once when solved → reveal #2 + the
+    // player HUD; the HUD's buttons fire `hero-power`/`hero-vision`/`hero-cam` for the world to apply.
+    if (typeof window !== 'undefined') {
+      const signal = this.disposeAbort.signal;
+      window.addEventListener('cqm:superhero-unlock', () => this.revealSecondSuper(), {
+        once: true,
+        signal,
+      });
+      // ◎ GOD: a scriptable trigger to frame the God-Colossus deity (same as the toolbar button / hotkey).
+      window.addEventListener('cqm:focus-colossus', () => this.focusColossus(), { signal });
+      // V124: the trans-dimensional UwU box (ui/temple-access) forces the LV100 ascension early so the
+      // impatient can peek at Stage 2. ascend() is idempotent + visual-only, so forcing it is safe.
+      window.addEventListener('cqm:force-ascension', () => this.ascend(), { once: true, signal });
+      window.addEventListener(
+        'cqm:hero-power',
+        (e) => this.heroPower(((e as CustomEvent).detail?.id as string) ?? ''),
+        { signal },
+      );
+      window.addEventListener('cqm:hero-vision', () => this.heroCycleRender(), { signal });
+      window.addEventListener('cqm:hero-cam', () => this.heroCycleCam(), { signal }); // V41: orbit/3rd/1st
+      window.addEventListener('cqm:hero-mode', () => this.heroCycleControl(), { signal }); // V41: autopilot/assist/manual
+      window.addEventListener('cqm:hero-hud-toggle', () => this.superheroHud.toggleOpen(), {
+        signal,
+      });
+      window.addEventListener(
+        'cqm:hero-move',
+        (e) => {
+          const d = (e as CustomEvent).detail ?? {};
+          this.heroPad.x = Number(d.x) || 0; // on-screen D-pad / touch steer (held vector)
+          this.heroPad.y = Number(d.y) || 0;
+          this.heroPad.z = Number(d.z) || 0;
+        },
+        { signal },
+      );
+    }
+    this.bindPanelToggles();
+    this.bindObservatoryTabs();
+    this.bindAlgoPicker();
+    this.input = new InputSystem(this.buildActions());
+
+    this.sortVals = new Float32Array(this.quality.maxEntities);
+    this.snap = {
+      entities: 0,
+      maxEntities: this.quality.maxEntities,
+      chaos: 0,
+      mutations: 0,
+      energy: 0,
+      links: 0,
+      morphs: 0,
+      algoName: cyc(ALGOS, this.state.algoIdx).name,
+      quantum: 0,
+      songName: cyc(SONGS, this.state.songIdx).name,
+      weather: cyc(WEATHERS, this.state.weatherIdx),
+      wind: 0,
+      temperature: 20,
+      shoggoths: this.shoggoths.count,
+      puppeteers: this.puppets.count,
+      // V2 fields — placeholders until the Wildbeyond systems are integrated
+      // (qcircuit/graph-mind/analytics/lore wiring tracked in task #12).
+      tribes: 0,
+      trend: 0,
+      qEntropy: 0,
+      lore: '---',
+      // V3 — REUSED live views (documented in types.ts): consumers copy.
+      maxLinks: this.quality.maxLinks,
+      morphTotal: this.morphTotal,
+      titans: this.titans.count,
+      phylumCounts: this.entities.phylumCounts,
+      titanLedger: this.titans.ledger,
+      warMatrix: this.titans.warMatrix,
+      rdEnergy: 0,
+      sentience: 0,
+      bioIntegration: 0,
+      bioCoherence: 0,
+      bioMomentum: 0,
+      nhi: 0,
+      xenomimics: 0,
+      godPower: 0,
+      viewName: cyc(VIEW_MODES, this.state.viewIdx),
+      timeScale: this.state.timeScale,
+      renderName: this.state.renderMode,
+      econ: this.economy.summary(),
+      musicOn: false,
+      sfxOn: false,
+      muteOn: false,
+      resetCount: 0,
+      sim: this.state.sim,
+      singularity: '',
+      chaosMode: false,
+    };
+    // The three V3.5 arrays are stable LIVE views (contents mutate in place),
+    // so this adapter is built once and never repopulated — just a field rename.
+    this.viz3dSnap = {
+      phylumCounts: this.snap.phylumCounts,
+      ledger: this.snap.titanLedger,
+      warMatrix: this.snap.warMatrix,
+    };
+
+    // Apply the persisted simulation variant's ambient visuals (V7.6) — a restored N(2) world
+    // boots straight into the nightmare sky + branding (the chaos floor is enforced in step()).
+    this.applySimVisuals();
+
+    this.log.info('world ready', {
+      seed: this.persisted.seed,
+      tier: this.quality.tier,
+      maxEntities: this.quality.maxEntities,
+      morphs: this.morphTotal,
+      titans: this.titans.count,
+      geometries: geos.length,
+      sim: this.state.sim,
+    });
+    if (typeof window !== 'undefined') {
+      window.world = this;
+      // Mini World always boots from sandbox defaults; only the main world restores saved tweaks.
+      const saved = IS_MINI_WORLD
+        ? {}
+        : loadSettings(typeof localStorage === 'undefined' ? null : localStorage);
+      if (Object.keys(saved).length > 0) this.applySandbox(saved);
+    }
+  }
+
+  /** V66: the world BOOTS at ~500 organisms so the first frame loads instantly, then ramps. */
+  private static readonly BOOT_POP = 500;
+
+  /**
+   * Boot/reset population (V66): a fast-loading **~500** on every tier (the directive's "always start
+   * at 500 and scale to 50,000 eventually"). The HARD ceiling stays the tier's full `maxEntities` (the
+   * beefy 50k mega world is untouched) — only the START is small, and {@link updateGrowthTarget} ramps
+   * the live target up so organic auto-split + sparse-respawn grow the world into it. Loads faster,
+   * then fills out + fluctuates.
+   */
+  private bootPopulation(): number {
+    return Math.max(120, Math.min(World.BOOT_POP, this.quality.targetEntities));
+  }
+
+  /**
+   * Lifecycle teardown for the dev HMR hook (`main.ts` calls `world.dispose?.()` before a hot-replace).
+   * Drops the global hero-event listeners and tears the audio engine down (timers + context); without
+   * it those leaked one set per reload, each bound to the now-dead World. Idempotent and a no-op in
+   * production (HMR is dev-only). The renderer Engine is freed separately by the HMR hook.
+   */
+  dispose(): void {
+    if (this.disposeAbort.signal.aborted) return; // idempotent — abort() is the sentinel
+    this.browserComputeGeneration++;
+    // HMR/runtime teardown otherwise discards the last food lifecycle checkpoint before pagehide.
+    this.persistBigTreeEcology();
+    this.disposeAbort.abort();
+    this.audio.dispose();
+    // Terminate worker pool threads (ADR 0010)
+    this.workerPool?.dispose();
+    this.workerPool = null;
+    // Dispose wilderness population
+    this.wilderness.dispose();
+    this.wildernessRender.dispose();
+    this.xenomimicsRender.dispose();
+    this.xenomimicConnectome.dispose();
+    this.xenomimicPanel.dispose();
+    this.xylosPanel.dispose();
+    this.xylosBody.dispose();
+    // Free the GPU-resource-owning subsystems that expose a dispose(). The Engine's
+    // forceContextLoss() reclaims the context's VRAM, but these JS-side geometry/material
+    // dispose paths were skipped entirely — each HMR reload built a fresh World whose
+    // subsystems were never torn down. Only subsystems that actually have a dispose() are called.
+    this.atmosphere.dispose(); // free the sky dome/wireframe/rain/dust/aurora/haze-ribbon geometries+materials
+    // Adapters own food/intent/body bindings; clear them before their source fauna systems dispose.
+    // The composition root alone owns the shared manager reset, so one adapter cannot erase another.
+    this.bigTreeFaunaVisitors.reset();
+    this.bigTreeNhiSource.reset();
+    this.bigTreeVisitors.reset();
+    this.bigTreeVisits.reset();
+    // The four colossal-creature systems own per-instance geometries/materials/lights outside the shared
+    // cache; without these the shoggoth/puppeteer/titan/leviathan bodies leaked ~hundreds of GPU objects
+    // per dev hot-reload (each new World rebuilt them while the dead World's never freed).
+    this.shoggoths.dispose();
+    this.puppets.dispose();
+    this.titans.dispose();
+    this.leviathans.dispose();
+    this.singularities.dispose();
+    for (const wr of this.wingRenders) wr.dispose();
+    this.monolithTemple.dispose();
+    this.portalDeath.dispose();
+    this.mechaBlaze.dispose();
+    this.bounceImpactFx.dispose(); // V128: free the bounce spark pool
+    this.mechaFirePillar.dispose(); // V128: free the visible fire-column shader + geometry
+    this.portalDeathFauna.dispose();
+    this.portalImmuneBounce.dispose();
+    this.portalShield.dispose();
+    this.abominationArchitecture.dispose();
+    this.mechalogodrom.dispose(); // V-MECHA: free the fusion abomination's geometries + materials
+    this.floatingMonoliths.dispose(); // free the 16 drifting megaliths' geometries + materials
+    this.godColossus.dispose(); // free the colossal god monument
+    this.bigTreeSanctuary.reset(); // release stable identity membership and boundary history
+    this.crystalEcosystem.dispose(); // free the complete tree-home ecology and owned GPU resources
+    this.vegetation.dispose(); // V-VEG: free the 10k alien plant instanced pools
+    this.alienFlora.dispose(); // free the 60k-plant instanced alien-flora field
+    this.wasteEcology.dispose(); // free sludge constructs + waste/gas grids
+    this.alphabetPantheon.dispose(); // V-ABC: free the 100-archetype instanced pools
+    this.artifacts.dispose(this.engine.scene);
+    this.nhiBody.dispose(); // shared core/spike/ring/eye + per-body tendril geometries/materials
+    this.rd.dispose(); // the Gray–Scott GPU DataTexture
+    this.instanced?.dispose(); // free every live instance pool — clones + materials (null in per-mesh mode)
+    try {
+      (this.environment as { dispose?: () => void }).dispose?.();
+    } catch {
+      /* best-effort */
+    }
+    try {
+      const ent = this.entities as { clear?: () => void };
+      if (typeof ent.clear === 'function') {
+        ent.clear();
+      } else {
+        for (const e of this.entities.list) {
+          if (e) this.entities.dispose(e);
+        }
+        this.entities.list.length = 0;
+      }
+    } catch {
+      /* best-effort */
+    }
+    try {
+      for (const g of this.geos) g.dispose();
+    } catch {
+      /* best-effort */
+    }
+    this.connectome.dispose(); // free the axon-web BufferGeometry + LineBasicMaterial
+    this.cosmicWeb.dispose(); // free the cosmic-web points/lines geometries + PointsMaterial/LineBasicMaterial
+    this.constellations.dispose(); // free the 2 constellation line-layer geometries + shared LineBasicMaterials
+    this.quantumLattice.dispose(); // free the 3 WireframeGeometry shells + shared LineBasicMaterial
+    this.goldLattice.dispose(); // free the 7 gold WireframeGeometry forms + shared LineBasicMaterial
+    this.quantum.dispose(); // free the quantum point-cloud BufferGeometry + PointsMaterial
+    this.viz3d.dispose(); // free the floating analytics panel: 2 shared geometries + tower/obelisk mats + war-net
+    this.superHunt.dispose();
+    this.domeFeeding.dispose();
+    for (const b of this.superBodies) b.dispose();
+    for (const h of this.heroBodies) h.body.dispose();
+    this.superheroHud.dispose();
+    this.pantheonArchitecturePanel.dispose();
+    this.superPanel.dispose(); // frees SuperNeural's rAF loop + leaked 'cqm:brutal-style' window listener
+    this.marketTicker.dispose();
+    this.nhiObs.dispose();
+    this.input.dispose();
+  }
+
+  /**
+   * V66→V121: drive the live population target via the pure {@link growthTargetAt} ramp — ease from
+   * the current growth BASE up to the tier ceiling over `GROWTH_RAMP_SECS` (630 s — 3× gentler than
+   * the original 210 s so devices absorb the climb; USER: growth ALWAYS slow, ceiling untouched),
+   * then BREATHE ±8 %. Re-anchored by {@link resetSim} so a GENESIS RESET regrows from ONE
+   * progenitor at the reset moment instead of snapping back to a high target. Pure function of
+   * `state.elapsed` (no rng) ⇒ deterministic: the EntityManager grows toward this each frame.
+   */
+  private updateGrowthTarget(): void {
+    const s = this.state;
+    const ceiling =
+      this.sandboxPop === 1
+        ? Math.min(this.quality.targetEntities, this.quality.maxEntities)
+        : Math.min(
+            Math.round(this.quality.targetEntities * this.sandboxPop),
+            this.quality.maxEntities,
+          );
+    const base = this.growthBase > 0 ? this.growthBase : World.BOOT_POP;
+    s.growthTarget = growthTargetAt(s.elapsed - this.growthAnchor, base, ceiling);
+  }
+
+  /**
+   * First-gesture unlock: initializes the AudioContext and restores the
+   * persisted SFX and music preferences exactly once. Safe to call repeatedly.
+   */
+  unlock(): void {
+    this.audio.init();
+    if (!this.sfxRestored) {
+      this.sfxRestored = true;
+      if (this.persisted.sfxOn && !this.audio.sfxOn) this.audio.toggleSfx();
+      if (this.persisted.musicOn && !this.audio.musicOn) this.audio.setMusicOn(true);
+      if (this.persisted.muteOn && !this.audio.muted) this.audio.toggleMute();
+    }
+  }
+
+  /**
+   * V81: surface render-governor quality changes in the HUD. Called from the render loop in
+   * main.ts when the governor drops or restores DPR/FX/shadows, so the user sees *why* the
+   * world got sharper or blurrier.
+   */
+  showQualityNotice(level: Level): void {
+    const label =
+      level === Level.FULL
+        ? 'QUALITY RESTORED · FULL'
+        : level === Level.DPR_85
+          ? 'QUALITY · DPR 85%'
+          : level === Level.DPR_65
+            ? 'QUALITY · DPR 65%'
+            : level === Level.FX_OFF
+              ? 'QUALITY · FX OFF'
+              : 'QUALITY · SHADOWS OFF';
+    this.hud.showSector(label);
+  }
+
+  /**
+   * Updates the adaptive 30–60 FPS compute cadence plan supplied by the browser RenderGovernor.
+   * When null (default in headless deterministic tests), every subsystem steps on its legacy
+   * every-frame cadence.
+   */
+  setComputeCadence(plan: ComputeCadencePlan | null): void {
+    this.computeCadence = plan;
+  }
+
+  getComputeCadence(): ComputeCadencePlan | null {
+    return this.computeCadence;
+  }
+
+  /**
+   * Attaches a multi-threaded Web Worker pool at runtime (live browser mode) so both
+   * WildernessPopulation chunks and Tsotchke Zig WASM simulation substrates execute across
+   * multiple CPU cores.
+   */
+  attachWorkerPool(pool: WorkerPool | null): void {
+    this.browserComputeGeneration++;
+    this.browserComputeCalibrating = false;
+    this.workerPool = pool;
+    this.wilderness.setWorkerPool(pool);
+    this.wilderness.setPaused(this.state.timeScale === 0);
+  }
+
+  /** Calibrate optional ambient GPU compute without changing core cognition or render fidelity. */
+  async configureBrowserCompute(preference: 'auto' | 'webgpu' | 'cpu'): Promise<void> {
+    if (this.disposeAbort.signal.aborted) return;
+    const generation = ++this.browserComputeGeneration;
+    this.browserComputeCalibrating = false;
+    this.browserComputePreference = preference;
+    this.browserComputeCalibration = null;
+    this.wilderness.setBatchExecutor(null);
+    this.wilderness.setPaused(this.state.timeScale === 0);
+    if (preference === 'cpu' || !this.isWildMode()) {
+      this.browserComputeReason = preference === 'cpu' ? 'CPU requested' : 'Seeded reference mode';
+      return;
+    }
+    this.browserComputeReason = 'Testing ambient GPU batch; visible fauna remain on CPU';
+    this.browserComputeCalibrating = true;
+    this.wilderness.setPaused(true);
+    let candidate: WildernessWebGpu | null = null;
+    try {
+      candidate = await WildernessWebGpu.create();
+      if (this.disposeAbort.signal.aborted || generation !== this.browserComputeGeneration) return;
+      // Drain pre-existing ambient/summary requests before comparing the same pool to the GPU.
+      // Visible core simulation and presentation continue; no new auxiliary work enters this pool.
+      const drainStart = performance.now();
+      while (this.workerPool && this.workerPool.getStats().activeTasks > 0) {
+        if (this.disposeAbort.signal.aborted || generation !== this.browserComputeGeneration)
+          return;
+        if (performance.now() - drainStart > 10000)
+          throw new Error('Worker calibration drain timed out');
+        await new Promise<void>((resolve) => setTimeout(resolve, 10));
+      }
+      const report = await calibrateWildernessCompute(candidate, this.workerPool, preference, {
+        isActive: () =>
+          !this.disposeAbort.signal.aborted && generation === this.browserComputeGeneration,
+      });
+      if (this.disposeAbort.signal.aborted || generation !== this.browserComputeGeneration) return;
+      this.browserComputeCalibration = report;
+      this.browserComputeReason = report.reason;
+      if (report.workerParityPassed === false) {
+        const rejectedPool = this.workerPool;
+        this.workerPool = null;
+        this.wilderness.setWorkerPool(null);
+        rejectedPool?.dispose();
+      }
+      if (report.selected === 'webgpu') {
+        this.wilderness.setBatchExecutor(candidate);
+        candidate = null; // population now owns disposal
+      }
+      this.audit.record('ambient-compute-calibration', {
+        selected: report.selected,
+        reason: report.reason,
+      });
+    } catch (error) {
+      if (!this.disposeAbort.signal.aborted && generation === this.browserComputeGeneration) {
+        this.browserComputeReason = error instanceof Error ? error.message : String(error);
+        this.log.warn('ambient WebGPU unavailable; CPU fallback retained', {
+          reason: this.browserComputeReason,
+        });
+      }
+    } finally {
+      candidate?.dispose();
+      if (generation === this.browserComputeGeneration && !this.disposeAbort.signal.aborted) {
+        this.browserComputeCalibrating = false;
+        this.wilderness.setPaused(this.state.timeScale === 0);
+      }
+    }
+  }
+
+  /** Inspect actual accepted backend and probe evidence; no GPU/NPU inference claim is implied. */
+  getBrowserComputeStatus() {
+    const status = this.wilderness.getComputeStatus();
+    return {
+      ...status,
+      preference: this.browserComputePreference,
+      reason:
+        status.lastError && status.backend !== 'webgpu'
+          ? status.lastError
+          : this.browserComputeReason,
+      calibrating: this.browserComputeCalibrating,
+      calibration: this.browserComputeCalibration,
+      scope: 'ambient numeric population only; visible fauna and Archons remain CPU',
+      npu:
+        typeof navigator !== 'undefined' && 'ml' in navigator
+          ? 'WebNN API detected; no CQM NPU model executed'
+          : 'WebNN unavailable; NPU not active',
+    };
+  }
+
+  /**
+   * Attaches worker cores for the organism social field (ADR 0019). The field is answered from a
+   * frame-end snapshot, so a pool (or none) changes only speed, never the simulation.
+   */
+  attachSocialScanner(scanner: SocialScanExecutor | null): void {
+    this.entities.attachSocialScanner(scanner);
+  }
+
+  /** Frames whose organism social field was answered by worker cores vs the main thread. */
+  socialFieldStats(): { readonly offloaded: number; readonly local: number } {
+    return this.entities.socialFieldStats();
+  }
+
+  /**
+   * Enables or disables Wild Non-Deterministic Quantum-Chaos Mode (`crypto.getRandomValues`
+   * + `performance.now()` timing jitter + Zig WASM `cqm_qrng_quantum_chaos_step` Toeplitz stream).
+   */
+  setWildMode(enabled: boolean): void {
+    this.wilderness.invalidatePending();
+    // Do not apply elapsed seeded time as live physical coupling after a mode transition.
+    if (enabled !== isWildEntropyMode()) this.bioElapsed = 0;
+    setWildEntropyMode(enabled);
+    if (!enabled) {
+      this.xylos?.setWildMode(false);
+      this.browserComputeGeneration++;
+      this.browserComputeCalibrating = false;
+      this.wilderness.setBatchExecutor(null);
+      this.wilderness.setPaused(this.state.timeScale === 0);
+      this.browserComputeReason = 'Seeded reference mode';
+    } else {
+      const forceSeededXylos =
+        typeof location !== 'undefined' &&
+        new URLSearchParams(location.search).get('xylos') === 'seeded';
+      if (!forceSeededXylos) {
+        this.xylos?.setWildMode(true);
+      }
+    }
+    this.audit.record('wild-quantum-chaos-mode', { enabled });
+  }
+
+  isWildMode(): boolean {
+    return isWildEntropyMode();
+  }
+
+  toggleWildMode(): boolean {
+    const next = !isWildEntropyMode();
+    this.setWildMode(next);
+    this.hud.showSector(
+      next
+        ? '⚡ WILD QUANTUM-CHAOS MODE · HARDWARE CSPRNG + ZIG QRNG'
+        : '◈ SEEDED DETERMINISTIC MODE · REPRODUCIBLE',
+    );
+    return next;
+  }
+
+  /** Returns the latest Tsotchke Flagship + Wave-2 Zig WASM substrate telemetry receipt. */
+  getOct2026Telemetry(): TsotchkeOct2026Telemetry | null {
+    return this.latestOct2026Telemetry;
+  }
+
+  /** Returns the latest off-thread WorkerPool 12-float Tsotchke simulation summary vector. */
+  getWorkerOct2026Summary(): Float32Array | null {
+    return this.latestWorkerOct2026Summary;
+  }
+
+  /** Returns the latest 64-bit hex word harvested from the Wild Quantum-Chaos QRNG stream. */
+  getLastWildQrngHex(): string {
+    return this.lastWildQrngHex;
+  }
+
+  /** Returns the latest 5-stratum 3D biome & developmental organism bio-state telemetry summary. */
+  getBiomeSummary(): OrganismBioTelemetry | null {
+    return this.latestBiomeSummary;
+  }
+
+  /** Proposal only: these assignments neither dispatch work nor measure accelerator execution. */
+  getHybridWorkloadPlan(): HybridWorkloadPlan | null {
+    return this.latestHybridPlan;
+  }
+
+  /** Capability availability is distinct from the observed backend in getBiomeExecution(). */
+  getHybridHardware(): HybridHardwareCapabilities {
+    return this.hybridHardware;
+  }
+
+  /** Last completed CPU-main biology batch, including the captured counter seed for replay. */
+  getBiomeExecution(): OrganismBiomeExecution | null {
+    return this.latestBiomeExecution;
+  }
+
+  /** A late capability result must not mutate a disposed World. The probe owns its resources. */
+  private async probeOrganismHardware(): Promise<void> {
+    if (this.disposeAbort.signal.aborted) return;
+    try {
+      const caps = await detectHybridHardware();
+      if (!this.disposeAbort.signal.aborted) this.hybridHardware = caps;
+    } catch {
+      // Capability discovery is optional; retain the baseline on a failed probe.
+    }
+  }
+
+  /** Both recurrent controllers follow EntityManager's stable compaction/reuse/reset lifecycle. */
+  private attachOrganismBioLifecycle(): void {
+    this.entities.attachBrainSlotLifecycle({
+      swapEntitySlots: (a, b) => {
+        this.entityBrains.swapEntitySlots(a, b);
+        this.organismBioPool.swapEntitySlots(a, b);
+      },
+      clearEntitySlot: (slot) => {
+        this.entityBrains.clearEntitySlot(slot);
+        this.organismBioPool.clearEntitySlot(slot);
+      },
+      inheritEntitySlot: (child, parent, rng) =>
+        this.entityBrains.inheritEntitySlot(child, parent, rng),
+      traitAt: (slot, trait) => this.entityBrains.traitAt(slot, trait),
+      breedEntitySlot: (child, a, b, rng) => this.entityBrains.breedEntitySlot(child, a, b, rng),
+      traitsAt: (slot) => this.entityBrains.traitsAt(slot),
+      resetEntitySlots: () => {
+        this.entityBrains.resetEntitySlots();
+        this.organismBioPool.resetEntitySlots();
+        this.bioElapsed = 0;
+        this.latestBiomeSummary = null;
+        this.latestBiomeExecution = null;
+        this.latestHybridPlan = null;
+      },
+    });
+  }
+
+  /** Sample current organisms on the wave cadence using actual accumulated simulation time. */
+  private advanceOrganismBiome(dt: number, stride: number): void {
+    if (
+      this.disposeAbort.signal.aborted ||
+      this.state.timeScale <= 0 ||
+      !Number.isFinite(dt) ||
+      dt <= 0
+    )
+      return;
+    this.bioElapsed += dt;
+    const interval = Number.isFinite(stride) ? Math.max(1, Math.trunc(stride)) : 1;
+    if (this.state.frame % interval !== 0) return;
+    const elapsed = this.bioElapsed;
+    this.bioElapsed = 0;
+    const list = this.entities.list;
+    const count = Math.min(list.length, this.organismBioPool.capacity);
+    for (let i = 0; i < count; i++) {
+      const e = list[i]!;
+      this.bioYPositions[i] = e.position.y;
+      this.bioEntityIds[i] = e.userData.ecologyId ?? i;
+      this.bioEnergies[i] = e.userData.energy;
+      this.bioAges[i] = e.userData.age;
+      this.bioLives[i] = e.userData.life;
+      this.bioActivations[i] = e.userData.act;
+    }
+    this.latestHybridPlan = planHybridPartition(count, this.connectome.links, this.hybridHardware);
+    const wild = Boolean(this.computeCadence && this.isWildMode());
+    // One captured salt per nonempty batch, outside the organism loop. Every sample uses a stable
+    // ecology ID rather than its movable dense-list index. No sequential simulation RNG is consumed.
+    const batchSeed =
+      count > 0 ? prepareParallelCounterSeed(this.persisted.seed, this.state.frame, wild) : null;
+    if (batchSeed !== null) {
+      // Proposal shards are intentionally not execution instructions. This is one real CPU-main range.
+      this.organismBioPool.stepShard(
+        this.bioYPositions,
+        this.bioEnergies,
+        this.bioAges,
+        this.bioLives,
+        this.bioActivations,
+        this.bioVelYDelta,
+        this.bioEnergyDelta,
+        this.bioScaleMul,
+        0,
+        count,
+        batchSeed,
+        this.state.frame,
+        this.state.chaos,
+        elapsed,
+        false,
+        count,
+        this.bioEntityIds,
+      );
+    }
+    this.latestBiomeSummary = this.organismBioPool.summarize(count);
+    let coupledEntities = 0;
+    // Preserve the seeded reference's ordinary motion/energy. In browser Wild Mode this additional
+    // phenomenological biology drives buoyancy and nutrient energy, never the NHI motion authority.
+    if (wild) {
+      for (let i = 0; i < count; i++) {
+        const e = list[i]!;
+        if (e.userData.isNhi) continue;
+        e.userData.vel.y += this.bioVelYDelta[i]!;
+        e.userData.energy = clamp(e.userData.energy + this.bioEnergyDelta[i]!, 0, 100);
+        coupledEntities++;
+      }
+    }
+    this.latestBiomeExecution = Object.freeze({
+      kind: 'execution',
+      backend: 'cpu-main',
+      frame: this.state.frame,
+      population: count,
+      elapsedSimulationSeconds: elapsed,
+      entropyMode: wild ? 'wild-batch' : 'seeded',
+      batchSeed,
+      coupledEntities,
+      gpuExecutedEntities: 0,
+      npuExecutedEntities: 0,
+    });
+  }
+
+  /** Advance one frame. rawDt is the unclamped clock delta in seconds. */
+  step(rawDt: number): void {
+    // Reject corrupt clock samples before touching simulation state. `Math.min/max` propagate NaN, and
+    // accepting Infinity as the 50 ms cap hides a broken clock source; both would make the audit trail lie.
+    if (!Number.isFinite(rawDt)) {
+      this.audit.record('frame-delta-rejected', { rawDt: String(rawDt) });
+      return;
+    }
+    const s = this.state;
+    this.wilderness.setPaused(this.browserComputeCalibrating || s.timeScale === 0);
+    // Clamp to [0, 50ms]: negative deltas (clock skew) and tab-switch gaps
+    // would otherwise drive curve parameters and physics out of range.
+    const uiDt = Math.min(Math.max(rawDt, 0), 0.05); // real frame delta, UNSCALED by timeScale
+    const dt = uiDt * s.timeScale;
+    s.elapsed += dt;
+    // GOD clock follows ▦ timeScale and freezes on pause.
+    if (s.timeScale > 0) this.godClock += dt;
+
+    s.frame++;
+    const t = s.elapsed;
+
+    // ── THREE-STATE PAUSE (USER pause redesign) ──────────────────────────────────────────────────────
+    // The ⏸ PAUSE button cycles RUNNING → SUSPENDED → FROZEN → RUNNING (see togglePause / cycleTimeScale).
+    // `s.timeScale === 0` = paused; `this.frozenAll` selects the FROZEN sub-state. In BOTH paused states
+    // the PLAYER is God Mode — never frozen or slowed: the free-cam + superhero avatar always move on the
+    // real frame delta (handled in updateCamera + the branch bodies), never the scaled sim dt.
+    this.superPanel?.setNeuralRuntime(
+      s.timeScale === 0 ? (this.frozenAll ? 'frozen' : 'suspended') : 'running',
+      'PRIME · ' + GODFORMS[0] + ' · Archon [0]',
+    );
+    if (s.timeScale === 0 && this.frozenAll) {
+      // FROZEN (2nd click): the whole world is a static tableau for inspection — no sim step, no body
+      // animation, no visual-clock advance, no rng. Only the player roams. The visual clock is HELD so
+      // resuming to SUSPENDED continues each body's animation seamlessly (no phase jump).
+      this.stepFrozen(uiDt);
+      return;
+    }
+    if (s.timeScale === 0) {
+      // SUSPENDED (1st click / any timeScale-0): "suspended animation of the DOME only". Every creature —
+      // entities, titans, shoggoths, puppeteers, leviathans, NHIs, APEX / super creatures, mechalogodrom,
+      // pantheons — stays ALIVE IN PLACE (spin/pulse/morph/shader on the advancing visual clock) while its
+      // TRAVEL freezes and NO autonomous rng is drawn (idling never perturbs the seeded golden). EVERYTHING
+      // ELSE stays fully LIVE: telemetry, observatory, sim-settings, sorting, weather, brutalism, and every
+      // interactive button (apocalypse/split/burst/mutate/chaos) take effect + refresh the panels here.
+      this.pauseVisualClock += uiDt;
+      this.stepSuspended(uiDt, this.pauseVisualClock);
+      return;
+    }
+    // RUNNING: keep the pause clock tracking sim time so the next pause starts seamlessly (no phase jump).
+    this.pauseVisualClock = t;
+
+    // ── WORKER OFFLOAD (ADR 0010) ─────────────────────────────────────────────────────────────────────
+    // Best-effort wilderness work is dispatched only while RUNNING. SUSPENDED already performs a render-only
+    // sync in stepSuspended(), and FROZEN holds the existing frame, so neither pause state needs worker work.
+    // One-way boundary: core may seed/spawn INTO wilderness; wilderness NEVER writes back to core.
+    const camX = this.engine.camera.position.x;
+    const camZ = this.engine.camera.position.z;
+    if (this.workerPool !== null || s.frame % 2 === 0) {
+      this.wilderness.update(
+        camX,
+        camZ,
+        this.workerPool !== null ? dt : dt * 2,
+        this.organismIntelligence.signal,
+      );
+    }
+    this.wildernessRender.sync(this.wilderness, t);
+
+    // Xenomimics mutate live flora, ride the real terrain, share the Tsotchke field, and listen to BOTH
+    // neural bridges: the bounded sampled Entity activation used by their own connectome and the entity
+    // connectome's whole-field firing density. Last tick's genuine predation pressure feeds back as
+    // agitation. All bridges are deterministic one-frame-lagged reads; dt already carries pause/speed.
+    const connectomeActivity = clamp(
+      this.connectome.links / Math.max(1, this.connectome.pairCount * 8),
+      0,
+      1,
+    );
+    const xenomimicCouplings = this.xenomimicCouplings;
+    xenomimicCouplings.intelligence = this.organismIntelligence.signal;
+    xenomimicCouplings.entityActivation = Math.max(
+      this.xenomimicEntityActivation,
+      connectomeActivity,
+    );
+    // The swarm feels the sky and the ground it wades through: storm/void weather stirs it, and local
+    // metabolic pollution (waste → fertilizer boost ≥ 1) raises agitation where beings have fed.
+    const weatherAgit =
+      World.XENO_WEATHER_AGITATION[s.weatherIdx % World.XENO_WEATHER_AGITATION.length] ?? 0.1;
+    const camPos = this.engine.camera.position;
+    const xenoWasteLoad = clamp(
+      (this.wasteEcology.regrowBoost(camPos.x, camPos.z) - 1) / 1.2,
+      0,
+      1,
+    );
+    xenomimicCouplings.chaos = clamp(
+      Math.max(s.chaos / CHAOS_MAX, connectomeActivity) + weatherAgit * 0.25 + xenoWasteLoad * 0.15,
+      0,
+      1,
+    );
+    xenomimicCouplings.temperature = s.temperature;
+    this.xenomimics.step(dt, xenomimicCouplings);
+    this.updateXenomimicPresentation(t, false);
+    this.xylosHabitat.hazard = clamp(s.chaos / CHAOS_MAX, 0, 1);
+    this.xylos.advance(dt, this.xylosHabitat.sense, this.xylosHabitat.effect);
+    this.xylosBody.update(this.xylos.view, t);
+
+    this.updateGrowthTarget(); // V66: ramp the live population target 500 → ceiling, then breathe
+
+    this.updateHeroControl(); // V41: route player nav input to the avatar (assist / manual)
+    this.updateCamera(dt, uiDt, t);
+    this.updateHeroCamera(); // V41: chase / first-person follow overrides the cam when engaged
+    this.handleHotkeys(dt);
+
+    // One bands poll per frame, shared by every consumer (reused object).
+    const bands = this.audioAnalysis.update();
+
+    // Chaos decays toward its floor — raised in SIMULATION N(2) so the nightmare stays
+    // permanently agitated (higher cm ⇒ wilder behaviour excursions). V7.6.
+    const chaosFloor = s.sim === 2 ? CHAOS_NIGHTMARE_FLOOR : CHAOS_MIN;
+    // Audit #14: the base decay was a flat 0.005/s against four positive feeds, so chaos saturated.
+    // Add a mean-reverting term proportional to the excess above floor+1 (0 near the floor, so the
+    // calm regime is unchanged) so the feeds reach an equilibrium instead of a ratchet to CHAOS_MAX.
+    const chaosExcess = s.chaos - chaosFloor - 1;
+    s.chaos = Math.max(
+      chaosFloor,
+      s.chaos - dt * (0.005 + (chaosExcess > 0 ? CHAOS_REVERSION_PER_S * chaosExcess : 0)),
+    );
+    // F-CHAOS-ENTROPY: entropy (order / heat-death) relaxes back toward 0, and while it holds it
+    // BLEEDS chaos away — the bipolar tug (order calms agitation). Pure deterministic float math,
+    // no rng; at the default entropy 0 this whole block is a no-op, so existing replays are intact.
+    const ent = s.entropy ?? 0;
+    if (ent > 0) {
+      s.entropy = Math.max(0, ent - dt * 0.05);
+      s.chaos = Math.max(chaosFloor, s.chaos - ent * dt * 0.03);
+    }
+    // V62 CHAOS MODE: a toggled Lorenz-driven quantum storm. Inert + rng-silent while off (so the
+    // base sim is byte-identical); while on it elevates `s.chaos` into the storm band, tunnels /
+    // entangles / superposes the organisms, and arms timed weather + algorithm disturbances we drain
+    // here. Runs BEFORE the systems integrate so the velocity/position kicks carry this frame.
+    this.chaosField.update(dt, this.entities.list, s);
+    if (this.chaosField.takeWeatherKick()) {
+      this.weather.cycle();
+      this.persisted.weatherIdx = s.weatherIdx;
+    }
+    if (this.chaosField.takeAlgoKick()) this.selectAlgo(s.algoIdx + 1, false);
+
+    // ADR-0013: evaluate the whole external corpus ONCE on a slow deterministic cadence. All living
+    // systems below read the same stable signal in O(1); no organism loops over the repository ledger.
+    this.organismIntelligence.step({
+      frame: s.frame,
+      chaos: clamp(s.chaos / CHAOS_MAX, 0, 1),
+      entropy: clamp((s.entropy ?? 0) / ENTROPY_MAX, 0, 1),
+      temperature: s.temperature,
+      population: this.entities.list.length,
+      capacity: this.quality.maxEntities,
+      meanMetabolicEnergy: this.entities.meanMetabolicEnergy,
+      floraBiomass: this.alienFlora.meanBiomass(),
+    });
+
+    // METACOGNITION FIRST: fit an arbitrary-order Taylor jet to the recent resource-pressure trajectory
+    // and read its leading-term remainder → how much the near-future forecast can be trusted right now.
+    const life = this.organismIntelligence.signal;
+    this.metacognition.step(life.resourcePressure, s.frame);
+
+    // The four competing drives that the corpus field just published are resolved into a single
+    // minimum-frustration COMMITMENT by one VQE per cadence (exact parameter-shift gradient through the
+    // Eshkol AD tape), DAMPED by the metacognitive confidence — a creature commits less hard when the
+    // world is volatile. Every living system reads the resolved bias in O(1).
+    this.driveResolver.step(
+      {
+        resource: life.resourcePressure,
+        threat: life.threatResponse,
+        exploration: life.exploration,
+        social: life.socialDrive,
+      },
+      s.frame,
+      false,
+      this.metacognition.confidence,
+    );
+
+    // Audio couplings, each ≤ 0.35 per contract: bass shimmers the six-lamp
+    // rig (inside environment.update — the contracted LOCAL coupling, which
+    // replaced the global exposure offset), level breathes the cloud points.
+    this.environment.setAudioBass(bands.bass);
+    this.quantum.setBreath(bands.level);
+
+    this.weather.apply(dt, t);
+    this.puppets.update(dt, t);
+
+    if (s.frame % 2 === 0) {
+      this.grid.clear();
+      const list = this.entities.list;
+      for (let i = 0; i < list.length; i++) {
+        const e = list[i];
+        if (e) this.grid.insert(e);
+      }
+    }
+    this.shoggoths.update(dt, t);
+    // Titans roam every frame; economy/diplomacy/strikes are internally cadenced
+    // off s.frame (CONTRACTS V3.3) — after the grid so strikes can query it.
+    this.titans.update(dt, t);
+    // 25-Archon pantheon society: light echoes + shared mind-field (emergence #5 stigmergy).
+    void this.pantheon.beat(s.frame);
+    // F-BEINGS: the leviathans sail the mid-field (pure trig + the read-only hole force, no rng).
+    this.leviathans.update(dt, t);
+    // 5 SUPER CREATURES + F-SUPER: animate ALL 5 bodies (pantheon apexes) — each has own wander/flight.
+    // Prime also drives wing swarm from its pos. (player hero/twin bodies updated separately below)
+    for (let i = 0; i < this.superBodies.length; i++) {
+      this.superBodies[i]!.update(t, dt);
+    }
+    // USER V127 (C): the apexes are PREDATORS — each hunts the nearest organism (bending its flight to
+    // pursue) and EATS it on contact (food/fuel); the prey bursts in a green feed-puff and re-enters the
+    // world ELSEWHERE 5s later. Runs AFTER the bodies moved so it steers off fresh positions; only scans
+    // `entities`, so the Pantheon / mecha / other apexes are never eaten.
+    // USER stage C: the apex Super Creatures hunt + eat organisms. V127: each eaten mind undergoes the
+    // real gedanken neural-death (Thaler confabulation, measured) before disposal — the same experiment
+    // the portal maw runs, now on predation too.
+    this.superHunt.update(
+      this.superBodies,
+      this.entities,
+      t,
+      dt,
+      (e, i) => this.gedankenOnDeath(e, i, t),
+      this.bigTreeHarmAllowed,
+      this.bigTreeHarmGate,
+    );
+    // USER V127 (D): DOME-WIDE FEEDING — the titans / leviathans / puppeteers graze the flora under them
+    // and EAT any organism that wanders within reach (prey bursts + re-enters ELSEWHERE 5s later). The
+    // apexes eat via superHunt above; the shoggoths run their own consumption cycle — so the whole dome
+    // fauna now feeds on the entities + plant biome. Only organisms are prey (the fauna are never eaten).
+    this.domeFeeding.update(
+      [this.titans, this.leviathans, this.puppets],
+      this.entities,
+      (x, z, pressure, gdt) => this.alienFlora.grazeAt(x, z, pressure, gdt),
+      t,
+      dt,
+      (e, i) => this.gedankenOnDeath(e, i, t), // devoured mind measured too — every death vector now
+      this.bigTreeHarmAllowed,
+      this.bigTreeHarmGate,
+    );
+    // V47 → GOAL: EACH of the 5 Archons' 100-robot wingman escort orbits + assists ITS OWN body every
+    // frame, reacting to that Archon's live dominance + quantum aspects; one InstancedMesh per swarm.
+    for (let i = 0; i < this.wingSwarms.length; i++) {
+      this.superBodies[i]!.worldPosition(this.sv1);
+      const cpl = this.superMinds[i]?.readCoupling();
+      const sw = this.wingSwarms[i]!;
+      sw.update(
+        this.sv1.x,
+        this.sv1.y,
+        this.sv1.z,
+        cpl?.dominance ?? 0.5,
+        cpl?.quantum ?? this.emptyQ,
+        t,
+        dt,
+      );
+      this.wingRenders[i]!.sync(sw.positions, t, 0.4 + 0.6 * sw.assist);
+    }
+    for (const hb of this.heroBodies) hb.body.update(t, dt); // V34/35: revealed hero/twin bodies
+    this.cosmicWeb.update(
+      t,
+      this.entities.list.length / this.quality.maxEntities,
+      this.state.chaos / CHAOS_MAX,
+      (this.state.entropy ?? 0) / ENTROPY_MAX,
+    ); // V110: the far-field void now READS + reflects the dome's vitality (item 15 — purpose)
+    this.goldLattice.update(t); // V11: floating gold architecture tumble (additive, no rng)
+    this.floatingMonoliths.update(t, this.state.chaos / CHAOS_MAX); // drifting megaliths kindle with chaos
+    this.godColossus.update(
+      this.godClock, // REAL-TIME clock (not `t`): constant morph rate at any time-scale (USER)
+      this.state.chaos / CHAOS_MAX,
+      (this.state.entropy ?? 0) / ENTROPY_MAX,
+    ); // the god monument blazes + writhes with chaos/entropy
+    this.quantumLattice.update(t); // V11: neon sacred-geometry shells (additive, no rng)
+    this.abominationArchitecture.setReactivity(
+      s.chaos / CHAOS_MAX,
+      (s.entropy ?? 0) / ENTROPY_MAX,
+      this.entities.list.length / this.quality.maxEntities,
+    );
+    this.abominationArchitecture.update(t);
+    // V-MECHA / V-ABC: chaos + apex-brain vitality/transcendence drive the visual intensity (read-only).
+    const baseChaos = this.state.chaos / CHAOS_MAX;
+    const apex = this.lastApexThought;
+    const visChaos = apex
+      ? clamp(
+          baseChaos + apex.transcendence * 0.42 + apex.vitality * 0.28 - apex.agony * 0.12,
+          0,
+          1,
+        )
+      : baseChaos;
+    this.mechalogodrom.setChaos(baseChaos);
+    this.mechalogodrom.setTimeScale(s.timeScale);
+    if (apex) this.mechalogodrom.setApex(apex.transcendence, apex.vitality, apex.agony);
+    const mechaSnapPre = this.mechalogodrom.snapshot();
+    this.lastMechaBrainSnap = this.mechalogodromBrain.tick({
+      fusion: mechaSnapPre.fusion,
+      dimension: mechaSnapPre.dimension,
+      power: mechaSnapPre.power,
+      chaos: baseChaos,
+      warp: mechaSnapPre.warp,
+      apexVitality: apex?.vitality ?? 0,
+      apexTranscendence: apex?.transcendence ?? 0,
+      apexAgony: apex?.agony ?? 0,
+      // BODY → BRAIN: each variant sub-brain's 9th sense is ITS OWN shell's live measured
+      // mathematical invariant (Möbius torsion … Weierstrass variation) — the ten sub-brains
+      // perceive genuinely different worlds (their own bodies).
+      variantGeometry: this.mechalogodrom.variantGeometrySignals(),
+    });
+    const mechaBrainSnap = this.lastMechaBrainSnap;
+    // Frame-invariant Tsotchke pulses — computed once, then reused every frame (see field decl).
+    this.cachedMechaPulse ??= corpusPulse(
+      this.persisted.seed ^ 0x8e4ac471,
+      ((this.persisted.seed ^ 0x8e4ac471) >>> 3) % 25,
+    );
+    this.cachedGlyphPulse ??= corpusPulse(this.persisted.seed, (this.persisted.seed >>> 3) % 25);
+    this.mechalogodrom.setExteriorMind(mechaBrainSnap.beat, mechaBrainSnap.activity);
+    // V-MECHA-MIND: the fusion brain's live cognition drives its OWN body — the variant sub-brain that
+    // won the workspace this beat ignites its physical shell (Global Workspace), consciousness-proxy
+    // glows the core, dimensional strangeness warps the mass. Read-only mind → body projection.
+    this.mechalogodrom.setMind(
+      mechaBrainSnap.dominantVariant,
+      mechaBrainSnap.consciousnessProxy,
+      mechaBrainSnap.strangeness,
+    );
+    // BRAIN → BODY (per-variant): each sub-brain's live activity + STDP-learned trust gain morphs
+    // its OWN mathematical shell (stair count, chord skip, bearing, sectors, seed window, rotor
+    // rates, bloom radius, octaves…) — the reverse arc of the variantGeometry sense above.
+    this.mechalogodrom.setVariantDrives(
+      mechaBrainSnap.variantActivity,
+      mechaBrainSnap.variantGains,
+    );
+    this.mechalogodrom.setTsotchkePulse(this.cachedMechaPulse);
+    this.mechalogodrom.update(t, dt, uiDt);
+    // V-ABC: the 100 alphabet archetypes bob/spin/pulse across the dome (chaos quickens them).
+    this.alphabetPantheon.setChaos(visChaos);
+    this.alphabetPantheon.setTsotchkePulse(this.cachedGlyphPulse);
+    if (apex) this.alphabetPantheon.setApexExterior(apex.transcendence, apex.vitality);
+    // V-GLYPH: tick the 100 × 25k-parameter brains every frame (visual-only; drives appearance + travel).
+    {
+      const percept = this.glyphPercept;
+      percept[0] = visChaos; // threat
+      percept[1] = clamp(s.mutations / 1000, 0, 1); // energy (mutation pressure)
+      percept[2] = s.chaos; // chaos
+      percept[3] = s.entropy ?? 0; // novelty (entropy as novelty proxy)
+      percept[4] = s.temperature; // level (temperature as arousal)
+      const weatherHue = s.weatherIdx / Math.max(1, WEATHERS.length - 1);
+      const windEnergy = clamp(Math.hypot(s.wind.x, s.wind.z) / 24, 0, 1);
+      const thermal = clamp((s.temperature + 20) / 80, 0, 1);
+      const qEntropy = clamp(this.qc.entropy, 0, 1);
+      const rdPulse = clamp(this.rdEnergy, 0, 1);
+      const lifeSignal = this.organismIntelligence.signal;
+      writeGlyphEnvironmentalPercept(
+        percept,
+        {
+          weatherHue,
+          quantumEntropy: qEntropy,
+          reactionDiffusion: rdPulse,
+          treble: bands.treble,
+          visualChaos: visChaos,
+          windEnergy,
+          mid: bands.mid,
+          level: bands.level,
+          thermal,
+          apexVitality: apex?.vitality ?? 0,
+        },
+        lifeSignal,
+      );
+      const activeCadence = this.isWildMode() ? this.computeCadence : null;
+      this.lastGlyphSnaps = activeCadence
+        ? this.glyphBrains.thinkCohort(percept, activeCadence.glyphCohortStride)
+        : this.glyphBrains.thinkAll(percept);
+      const snaps = this.lastGlyphSnaps;
+      const act = this.glyphActivity;
+      const nov = this.glyphNovelty;
+      const val = this.glyphValence;
+      for (let i = 0; i < snaps.length; i++) {
+        const sn = snaps[i]!;
+        act[i] = sn.activity;
+        nov[i] = sn.novelty;
+        val[i] = sn.valence;
+      }
+      this.alphabetPantheon.setBrainActivity(act, nov, val);
+      this.alphabetPantheon.setBrainMotors(snaps);
+    }
+    if (this.sandbox) this.sandboxTick();
+    if (this.state.frame % 30 === 0)
+      this.stepApexSubstrate(clamp(this.state.chaos / CHAOS_MAX, 0, 1));
+    this.alphabetPantheon.update(t, dt); // V110: Pantheon obeys pause + time scale through scaled dt
+    // F-NHI V10: alien bodies follow + morph their NHI every frame (guarded; additive viz only).
+    if (this.nhiBody.count > 0) {
+      try {
+        this.nhiBody.update(
+          t,
+          (id) => this.nhiEntities.get(id)?.position ?? null,
+          (_id, level) => {
+            if (this.nhiSocialCooldown <= 0) {
+              this.nhiSocialCooldown = 24;
+              this.nhiGuard('social-audio', () => this.audio.playNhiSocial(level));
+            }
+          },
+        );
+      } catch {
+        /* an NHI body update misbehaved — skip it, keep the world running */
+      }
+      if (this.nhiSocialCooldown > 0) this.nhiSocialCooldown--;
+    }
+    // Cosmological chaos (V7.4): apply the active singularity's force field to entity
+    // velocities BEFORE entities.update integrates them this frame. No-op when none active.
+    this.singularities.update(dt, t);
+
+    const sector = this.environment.sectorAt(this.engine.camera.position);
+    if (sector !== this.lastSector) {
+      this.lastSector = sector;
+      this.hud.showSector(sector);
+    }
+
+    this.tickAlgoAuto(dt);
+    this.sortStep(bands);
+
+    // F-BRAIN V42: all organism brains perceive + steer BEFORE the integrator folds velocity
+    // into position — full 70-param evaluation every frame for every organism (quality contract:
+    // no neural LOD, no cohort striding — owner rule, audit #7 reverted).
+    this.entityBrains.thinkAll(
+      this.entities.list,
+      this.state.chaos,
+      t,
+      this.bigTreeOrdinaryProtectedAt,
+    );
+
+    const stats = this.entities.update(dt, t);
+    this.energy = stats.energy; // stats object is reused — copy immediately
+    // Xeno waste ecology: drain metabolic waste → pollution → fertilizer + self-building constructs.
+    this.wasteEcology.update(dt, this.entities.list, t);
+    // USER stage E: RAGDOLL BOUNCE — organisms ricochet off the big solid bodies (Super Creatures /
+    // APEX / Temple) instead of ghosting through. Refill the collider scratch from their live positions
+    // (no per-frame alloc), then bounce. Runs AFTER entities.update so the deflection sticks this frame.
+    {
+      let nc = 0;
+      const add = (x: number, y: number, z: number, r: number): void => {
+        const col = (this.bounceColliders[nc] ??= { x: 0, y: 0, z: 0, r: 0 });
+        col.x = x;
+        col.y = y;
+        col.z = z;
+        col.r = r;
+        nc++;
+      };
+      for (let i = 0; i < this.superBodies.length; i++) {
+        this.superBodies[i]!.worldPosition(this.bounceTmp);
+        add(this.bounceTmp.x, this.bounceTmp.y, this.bounceTmp.z, 16);
+      }
+      this.alphabetPantheon.apexWorldPosition(this.bounceTmp);
+      add(this.bounceTmp.x, this.bounceTmp.y, this.bounceTmp.z, 14);
+      add(0, 24 * ARENA_MID, -40 * ARENA_MID - 0.5 * ARENA_MID, 14); // the fixed Monolith Temple void
+      if (this.bounceColliders.length > nc) this.bounceColliders.length = nc;
+      // V128: spark the contact BEFORE the bounce ejects (same penetration test) so the ricochet POPS.
+      this.bounceImpactFx.update(this.bounceColliders, this.entities, dt);
+      this.collisionBounce.update(this.bounceColliders, this.entities, dt);
+    }
+    this.morphCount = stats.morphCount;
+
+    // Keep NHI bodies contained before rebuilding the index. This may clamp positions, so doing it
+    // first is required by the exact-nearest target proof below. Intent writes then remain the final
+    // velocity decision for this beat instead of being immediately damped by ambient roaming.
+    if (this.nhiEntities.size > 0) this.steerNhiBeings(t);
+
+    // The baseline grid was rebuilt above on its legacy every-second-frame cadence. A live NHI pays
+    // one additional current-position rebuild here because its exact-nearest proof requires state
+    // after this frame's integration and containment. The no-NHI 50k path pays no duplicate scan.
+    this.entities.rebuildCurrentGridForNhi(this.nhi.count, this.nhiGrid);
+
+    // F-NHI V10: drive launched super-minds every frame at full cadence against the current grid.
+    if (this.nhi.count > 0) {
+      this.nhiSwarmlingsThisFrame = 0;
+      this.nhi.tick(this.nhiPolicyRng, this.nhiWorld, this.onNhiTickFailure);
+    }
+    // NHI SPAWN_SWARM can add ordinary minions above. Capture population only after that material
+    // effect so every same-frame density, super-creature, telemetry, and panel consumer sees them.
+    const n = this.entities.list.length;
+    const activeCadence = this.isWildMode() ? this.computeCadence : null;
+    // Full 60 Hz connectome in headless mode; adaptive cadence in live browser mode keeps GPU
+    // shader wave/color running at 60 FPS via tickShaderTime(t) on off-frames.
+    const connStride = activeCadence?.connectomeRebuildStride ?? 1;
+    if (connStride <= 1 || s.frame % connStride === 0) {
+      this.connectome.update(dt, t);
+    } else {
+      this.connectome.tickShaderTime(t);
+    }
+
+    // 5 SUPER CREATURES (pantheon): driveSuper every frame — GOAL5 cadence inside
+    // (1 full Tree-of-Thought mind + 4 echo minds, round-robin; see apex-cadence.ts).
+    this.driveSuper(bands.bass, bands.level, t, n, dt);
+
+    // ── V2 cadences (ARCHITECTURE-2026-06-26.md frame pipeline) ──
+    if (s.frame % 30 === 0) {
+      this.qc.update();
+      if (this.qc.lastCollapse !== this.lastCollapseSeen) {
+        this.lastCollapseSeen = this.qc.lastCollapse;
+        this.onCollapse(this.qc.lastCollapse);
+      }
+    }
+    if (s.frame % 6 === 0) this.qc.bands(); // refresh the live buffer the cloud reads
+    // F-ECONOMY V13: clear the market on a slow cadence (heavy substrate runs slow — physicist's
+    // law). World chaos feeds in as market stress, widening demand swings. Reads/writes its own
+    // sub-stream, so the cadence never touches the main deterministic order.
+    if (s.frame % 30 === 15) {
+      // F-ECON-SANCTIONS V20: economic warfare follows military — a titan at war with ≥3 rivals is
+      // embargoed (its production + trade are throttled), so losing the war also bankrupts you. Reads
+      // the titan ledger (deterministic), writes only sanction flags. Cheap O(titans).
+      const led = this.titans.ledger;
+      for (let i = 0; i < led.length; i++) {
+        this.economy.sanction(World.ECON_TITAN_BASE + i, (led[i]?.war ?? 0) >= 3);
+      }
+      this.economy.tick(this.econRng, clamp(s.chaos / 10, 0, 1));
+    }
+
+    this.quantum.update(dt, t);
+
+    const rdStride = activeCadence?.reactionDiffusionStride ?? 1;
+    if (activeCadence) {
+      // Audit #246: the JS 9-point step (with the chaos reaction gain) is the single reference path;
+      // the WASM kernel lacks the gain and uses a 5-point Laplacian, so it is no longer used live.
+      if (s.frame % rdStride === 0) {
+        this.rd.step();
+      }
+    } else {
+      this.rd.step();
+    }
+    this.titans.drainPerturb(); // route any pending waste scar AFTER the RD step
+
+    // Tsotchke October 2026 Flagship (Moonlab Ising Annealer, QGTL full 2D metric + O(eps^2) suppression,
+    // QRNG chaotic Bell-Toeplitz stream, Eshkol 4th-order Taylor tower + 3D divergence/curl) + Wave-2
+    // (rosette-wire, pq-consensus-bandwidth, GeoRefine, bonsai-fidelity-study) Zig WASM cadence.
+    const waveStride = activeCadence?.tsotchkeWaveStride ?? 12;
+    this.advanceOrganismBiome(dt, waveStride);
+    if (s.frame % waveStride === 0) {
+      const coh = clamp(1 - s.chaos / CHAOS_MAX, 0, 1);
+      const ent = clamp((s.entropy ?? 0) / ENTROPY_MAX, 0, 1);
+      this.latestOct2026Telemetry = stepOct2026WaveSubstrates(s.frame, coh, ent, Math.max(4, n));
+      if (this.computeCadence && isWildEntropyMode()) {
+        const wildQrng = evaluateQrngQuantumChaosStream(s.frame, true);
+        this.lastWildQrngHex = wildQrng.wordHex;
+      }
+      if (this.workerPool && !this.workerSimInFlight && !this.browserComputeCalibrating) {
+        this.workerSimInFlight = true;
+        void this.workerPool
+          .executeAsync({
+            id: `oct2026-wave-${s.frame}`,
+            type: 'simulation',
+            data: new Float32Array([s.frame, coh, ent, Math.max(4, n)]),
+            seed: this.persisted.seed,
+            dt,
+          })
+          .then((res) => {
+            if (res.success && res.data instanceof Float32Array) {
+              this.latestWorkerOct2026Summary = res.data;
+            }
+          })
+          .finally(() => {
+            this.workerSimInFlight = false;
+          });
+      }
+    }
+    const gmScale = 1;
+    if (s.frame % (240 * gmScale) === 0) this.graphMind.updateCommunities();
+    // Offset 300 provably never collides with the communities cadence above.
+    if (s.frame % (600 * gmScale) === 300) this.graphMind.updateRank();
+
+    this.constellations.update(t, bands);
+    // ── BRUTALISM: smooth the toggle into a 0..1 factor and crossfade the WHOLE cosmos to raw poured
+    //    concrete — apex bodies, every organism, the ground + light rig, the sky dome, and the fog. The
+    //    factor is computed HERE, BEFORE atmosphere.update, so the sky dome re-bakes with THIS frame's
+    //    factor (not last frame's) and stays frame-coherent with the bodies/ground/organisms/fog. The
+    //    ease is snapped to its exact 0/1 target so OFF is byte-identical (full restore). No alloc. ──
+    // Ease on the UNSCALED frame delta (uiDt): BRUTALISM is a visual/UI toggle, so it must crossfade even
+    // while the sim is PAUSED — otherwise pressing B / ▦ on a paused scene flips the state + audit text
+    // but the concrete never appears until you unpause. Shared with the SUSPENDED-pause loop.
+    const bf = this.easeBrutalism(uiDt);
+    this.atmosphere.setBrutalism(bf);
+    // Alien sky + air: dome recolors with weather/chaos, haze advects with wind
+    // and breathes with bass, aurora brightens with quantum entropy (V4.1).
+    this.atmosphere.update(dt, t, bands, this.qc.entropy, this.engine.camera.position);
+    // Holographic 3D analytics panel reads the LIVE reused snapshot views
+    // (phylumCounts/titanLedger/warMatrix), always current; internally cadenced.
+    this.viz3d.update(this.viz3dSnap);
+    // USER: the ground reacts to the ecosystem — feed it the live creature density so it glows/breathes
+    // brighter as the world teems and dims as it empties.
+    this.environment.setCreatureDensity(n / Math.max(1, this.quality.maxEntities));
+    this.environment.update(dt, t);
+    this.driveFloraContact(n);
+    this.alienFlora.update(
+      dt,
+      t,
+      this.state.chaos / CHAOS_MAX,
+      (this.state.entropy ?? 0) / ENTROPY_MAX,
+      this.state.wind.x,
+      this.state.wind.z,
+    );
+    this.vegGroundT = t;
+    this.vegetation.setChaos(this.state.chaos / CHAOS_MAX);
+    this.vegetation.setWindStrength(0.35 + 0.65 * (this.state.chaos / CHAOS_MAX));
+    this.vegetation.update(t, dt);
+    this.updateCrystalEcosystem(dt, uiDt, t, false);
+    this.updateBigTreeVisitors(dt, t);
+    // Crossfade the rest of the cosmos — apex bodies, instanced/per-mesh organisms, ground + light rig
+    // (AFTER environment.update, so it rides this frame's animated rig).
+    const brutalStyle = this.brutalStyleIdx < 0 ? 0 : this.brutalStyleIdx;
+    for (let i = 0; i < this.superBodies.length; i++) {
+      this.superBodies[i]!.setBrutalStyle(brutalStyle);
+      this.superBodies[i]!.setBrutalism(bf);
+    }
+    // Unlocked superhero avatar + forked twins are SuperBodySystems too — desaturate them with the five
+    // Archons, else BRUTALISM turns the world + Archons concrete while the player creature/twins keep
+    // the god-jewel skin. No-op until any hero body is revealed (the array is empty).
+    for (let i = 0; i < this.heroBodies.length; i++) {
+      this.heroBodies[i]!.body.setBrutalStyle(brutalStyle);
+      this.heroBodies[i]!.body.setBrutalism(bf);
+    }
+    this.environment.applyBrutalism(bf);
+    if (this.instanced) this.instanced.setBrutalism(bf);
+    else this.entities.applyBrutalism(bf); // phone tier: organisms are real meshes → desaturate them too
+    if (bf > 0) {
+      const fog = this.engine.scene.fog;
+      if (fog instanceof THREE.FogExp2) {
+        fog.color.lerp(BRUTAL_FOG, bf); // weather reset the colour this frame ⇒ no compounding
+        fog.density += (BRUTAL_FOG_DENSITY - fog.density) * bf;
+      }
+    }
+    // ── V122 (USER #9): BRUTAL ENTITY MORPH — every press plays a ~3 s GPU freakshow wave
+    //    (per-instance rainbow strobe + body spasm, instanced pools) while a STAGGERED shape
+    //    remorph sweeps the population (a slice per frame ≈ 2.5 s — a travelling mutation wave,
+    //    never a one-frame hitch). uiRng = a user-gesture stream, same class as burst/mutate. ──
+    if (this.brutalMorphWave > 0) {
+      // Envelope state decays on EVERY tier; only the uniform write needs the instanced pools.
+      this.brutalMorphWave = Math.max(0, this.brutalMorphWave - uiDt / 3.0);
+      this.instanced?.setMorphWave(this.brutalMorphWave, this.brutalMorphSeed);
+    }
+    if (this.brutalMorphCursor >= 0) {
+      const list = this.entities.list;
+      if (this.brutalMorphCursor > list.length) {
+        this.brutalMorphCursor = list.length;
+      }
+      const slice = Math.max(4, Math.ceil(list.length / 150));
+      const end = Math.min(list.length, this.brutalMorphCursor + slice);
+      let changed = 0;
+      const waveSeed = this.brutalMorphSeed;
+      for (let i = this.brutalMorphCursor; i < end; i++) {
+        const e = list[i];
+        if (!e || e.userData.isNhi) continue; // NHI bodies keep their form
+        const ud = e.userData as Entity['userData'] & { brutalMorphWave?: number };
+        if (ud.brutalMorphWave === waveSeed) continue;
+        ud.brutalMorphWave = waveSeed;
+        const offset = 1 + Math.floor(this.uiRng() * 7);
+        // Keep the gesture RNG cadence, but the morph wave may not transform a protected visitor.
+        if (this.isBigTreeProtected(e.position.x, e.position.z)) continue;
+        this.entities.remorph(e, (e.userData.mi + offset) % this.morphTotal, this.uiRng);
+        changed++;
+      }
+      this.state.mutations += changed;
+      if (end >= list.length) {
+        let nextUnmorphed = -1;
+        for (let i = 0; i < list.length; i++) {
+          const e = list[i];
+          if (!e || e.userData.isNhi) continue;
+          const ud = e.userData as Entity['userData'] & { brutalMorphWave?: number };
+          if (ud.brutalMorphWave !== waveSeed) {
+            nextUnmorphed = i;
+            break;
+          }
+        }
+        this.brutalMorphCursor = nextUnmorphed;
+      } else {
+        this.brutalMorphCursor = end;
+      }
+    }
+    this.artifacts.update(dt, t); // F-ARTIFACTS (V9): animate + fade the relic pool (visual-only)
+    this.monolithTemple.setEnvironment({
+      chaos: s.chaos / CHAOS_MAX,
+      entropy: (s.entropy ?? 0) / ENTROPY_MAX,
+      population: n,
+      capacity: this.quality.maxEntities,
+    });
+    this.monolithTemple.update(dt, t); // V63: rise + shimmer the ascension portal (no-op until revealed)
+    // USER V126: the risen Portal is DEATH — organisms that touch the void throat explode + respawn
+    // ELSEWHERE 5s later. Super Creature / APEX / Mechalogodrom live outside `entities`, so they are
+    // immune by construction (this only scans the population). Armed only once the temple is revealed.
+    this.portalDeath.setActive(this.monolithTemple.revealed);
+    this.portalDeath.update(
+      this.entities,
+      t,
+      dt,
+      (e, i) => this.gedankenOnDeath(e, i, t),
+      this.bigTreeProtectedAt,
+    );
+    // USER V127: the Mechalogodrom is DEATH too — organisms that rise into its high kill sphere are
+    // INCINERATED in a fiery blaze + re-enter ELSEWHERE 5s later. Scans only `entities`, so Super
+    // Creature / APEX / Pantheon (separate bodies) are immune to the fire, same as the portal. The
+    // burning mind is MEASURED (Thaler gedanken-death) before it's disposed, like the portal + hunt.
+    this.mechaBlaze.update(
+      this.entities,
+      t,
+      dt,
+      (e, i) => this.gedankenOnDeath(e, i, t),
+      this.bigTreeProtectedAt,
+    );
+    // V128: drive the VISIBLE fire-column (matches the blaze's burn cone) from the god's agitation, so
+    // the death zone reads as a roaring hazard between kills, not just an invisible sphere.
+    this.mechaFirePillar.setIntensity(0.3 + 0.6 * (this.state.chaos / CHAOS_MAX));
+    this.mechaFirePillar.update(t);
+    // USER V126: the Portal also kills the big FAUNA — shoggoths/puppeteers/titans/leviathans (which live
+    // outside `entities`). They explode + re-enter ELSEWHERE 5s later; the 100 Pantheon + Super Creature /
+    // APEX / Mechalogodrom are IMMUNE (they never register here — their bounce is a separate pass).
+    this.portalDeathFauna.update(
+      this.monolithTemple.revealed,
+      t,
+      dt,
+      [this.shoggoths, this.puppets, this.titans, this.leviathans],
+      this.bigTreeProtectedAt,
+    );
+    // USER V126: the IMMUNE Pantheon (super creatures) do NOT die — they RICOCHET off the portal (bounce +
+    // rim-vibrate) wreathed in a dazzling white spark shower that clears in ~2s. Immune ⇒ never in the
+    // death rosters above; the god-tier Super Creature / Mechalogodrom sit far above the throat column.
+    this.portalImmuneBounce.update(this.monolithTemple.revealed, t, dt, [this.alphabetPantheon]);
+    // USER V126: the GOD-TIER immune bodies react too — the Super Creatures + the roaming APEX shimmer in
+    // white hyperspeed sparks when they brush the void (the APEX's boid column dips to y≈50, right through
+    // the y=60 throat, so it is NOT "far above"). Gather their positions into the reused `immunePos`
+    // scratch (no per-frame alloc), then flash any inside the portal radius.
+    for (let i = 0; i < this.superBodies.length; i++) {
+      const v = (this.immunePos[i] ??= new THREE.Vector3());
+      this.superBodies[i]!.worldPosition(v);
+    }
+    const apexI = this.superBodies.length;
+    const apexV = (this.immunePos[apexI] ??= new THREE.Vector3());
+    this.alphabetPantheon.apexWorldPosition(apexV);
+    this.portalShield.setActive(this.monolithTemple.revealed);
+    this.portalShield.react(this.immunePos, t, dt);
+
+    // V124: the portal is a clean VOID now (the megalith redesign retired the "hell wormhole"), so the
+    // portal-nightmare bus — a HIGH SCREAM square wave (`360 + level*220` Hz) + a low drone + periodic
+    // demonic samples — is RETIRED. Forcing ascension (e.g. the UwU box) used to make that high-pitched
+    // electronic pulse play forever. Audit #10/#294: the bus is no longer built at all, so the old
+    // per-frame setPortalNightmare(0) hard-silence is gone too.
+
+    if (s.frame % 60 === 30) {
+      // RD pattern energy: strided mean of the V field (offset 30 — never
+      // shares a frame with analytics/analyze). Feeds titan entropy relief
+      // (PRODUCE hook) and the observatory environment timeline.
+      this.rdEnergy = this.sampleRdEnergy();
+      this.titans.feedEntropy(this.rdEnergy * 2);
+    }
+
+    // Telemetry (8f) · analyze (60f) · Observatory + ARCHON GODFORMS + market + superhero HUD + brain
+    // snapshots (obsCadence). Extracted into pushPanels so the SUSPENDED-pause loop refreshes the SAME
+    // readouts — the owner's law that data stays LIVE while paused (telemetry / observatory / sim-settings
+    // / ARCHON GODFORMS all react to every interactive button press). Pure reads + DOM writes; no rng.
+    this.pushPanels(n);
+
+    // Pool mirror runs LAST — after every system that mutates entity visuals
+    // (sort flash, graph rank floor, belly pulse, conscription tints). The reused frame block
+    // carries the N(2) nightmare scalar (inverted palette) + t/chaos/bass for the GPU effects.
+    if (this.instanced) {
+      // V121: RUNNING eases the suspended-animation amplitude back to 0 (~0.5 s) so releasing the
+      // pause unwinds smoothly; at 0 the shader branch is skipped and the scene is byte-identical.
+      if (this.suspendFx > 0) {
+        this.suspendFx = Math.max(0, this.suspendFx - uiDt * 2);
+        this.instanced.setSuspend(this.suspendFx, this.suspendClock);
+      }
+      const fr = this.instFrame;
+      fr.t = t;
+      fr.chaos = s.chaos;
+      fr.bass = bands.bass;
+      fr.nightmare = s.sim === 2 ? 1 : 0;
+      this.instanced.sync(this.entities.list, s.renderMode, fr, this.quality.simRate);
+    }
+
+    // V60: aim the gravitational-lens post-FX at the active singularity (identity when none).
+    this.updateLens();
+    this.engine.render();
+  }
+
+  /**
+   * FROZEN pause (2nd PAUSE click): the world is a completely static tableau — no sim, no body
+   * animation, no visual-clock advance, no rng. Only the PLAYER stays free (God Mode): control input,
+   * free-cam roam, chase-cam, and the avatar body all advance on the REAL frame delta so the owner can
+   * inspect the frozen world from any angle. The instanced pool is re-synced with the HELD visual clock
+   * so a camera move still composites the world instead of a cleared buffer.
+   */
+  private stepFrozen(uiDt: number): void {
+    const s = this.state;
+    const vt = this.pauseVisualClock; // HELD — animation is frozen, resuming continues from here
+    this.updateHeroControl();
+    this.updateCamera(0, uiDt, vt);
+    this.updateHeroCamera();
+    for (const hb of this.heroBodies) hb.body.update(vt, uiDt); // player can still move (travel on uiDt)
+    this.hud.update(0, s);
+    if (this.instanced) {
+      // V121 FROZEN: HOLD the suspended-animation amplitude + clock — the tableau freezes each
+      // organism mid-spin/mid-orbit (no unwind snap), and resuming continues seamlessly.
+      this.instanced.setSuspend(this.suspendFx, this.suspendClock);
+      const fr = this.instFrame;
+      fr.t = vt;
+      fr.chaos = s.chaos;
+      fr.bass = 0;
+      fr.nightmare = s.sim === 2 ? 1 : 0;
+      this.instanced.sync(this.entities.list, s.renderMode, fr, this.quality.simRate);
+    }
+    // Sync the God-Colossus uniform at the held godClock value so the FROZEN tableau stays byte-golden.
+    this.godColossus.update(this.godClock, s.chaos / CHAOS_MAX, (s.entropy ?? 0) / ENTROPY_MAX);
+    // FROZEN: recenter the observer-centred sky shells on the (still-free) God-mode camera so a narrow-FOV
+    // TOP survey stays inside the BackSide dome, matching RUNNING/SUSPENDED. Position-only — no atmosphere
+    // animation is advanced (no haze/dust/rebake/rng), so the frozen tableau stays byte-golden.
+    this.atmosphere.setViewerPosition(this.engine.camera.position);
+    this.xenomimicAudioMetrics.strictSilence = true;
+    this.audio.setXenomimicField(this.xenomimicAudioMetrics);
+    this.updateLens();
+    this.engine.render();
+  }
+
+  /**
+   * SUSPENDED pause (1st PAUSE click / any timeScale-0): "suspended animation of the DOME only". Every
+   * creature stays ALIVE IN PLACE while its TRAVEL freezes and NO autonomous rng is drawn, so idling
+   * never perturbs the seeded golden. Only NO-RNG visual updates run here, on the advancing visual clock
+   * `vt` with travel dt=0; the rng-drawing autonomous systems (entity/chaos roam, titan/shoggoth economy,
+   * NHI cognition) are NOT stepped — entities stay lively through the instanced pool's uTime, and titans /
+   * shoggoths through their render-only `animateInPlace` ticks. EVERYTHING interactive stays LIVE:
+   * telemetry, observatory, sim-settings, sorting (incl. AUTO), weather, brutalism, and every button.
+   */
+  private stepSuspended(uiDt: number, vt: number): void {
+    const s = this.state;
+    const n = this.entities.list.length;
+    const chaosN = s.chaos / CHAOS_MAX;
+    const entropyN = (s.entropy ?? 0) / ENTROPY_MAX;
+    // Player is NEVER slowed/frozen: control + free-cam + chase-cam all on real time; avatar bodies below.
+    this.updateHeroControl();
+    this.updateCamera(0, uiDt, vt);
+    this.updateHeroCamera();
+    this.hud.update(0, s);
+
+    // Audio bands still poll live so the sort flash + audio-reactive visuals breathe while paused.
+    const bands = this.audioAnalysis.update();
+
+    // Weather + sorting stay INTERACTIVE (USER): a weather cycle or SORT ALL / AUTO the owner triggers
+    // takes visible effect immediately. All three draw NO rng (population / clock only) → golden intact.
+    this.weather.apply(uiDt, vt);
+    this.tickAlgoAuto(uiDt);
+    this.sortStep(bands);
+
+    // ── Every creature ALIVE IN PLACE (travel frozen, body animating on vt; all rng-free here) ──
+    for (let i = 0; i < this.superBodies.length; i++) this.superBodies[i]!.update(vt, 0); // APEX + 5 super creatures
+    // GOAL: all 5 Archon escorts stay alive-in-place too (dt=0 freezes travel; the drones keep spinning).
+    for (let i = 0; i < this.wingSwarms.length; i++) {
+      this.superBodies[i]!.worldPosition(this.sv1);
+      const cpl = this.superMinds[i]?.readCoupling();
+      const sw = this.wingSwarms[i]!;
+      sw.update(
+        this.sv1.x,
+        this.sv1.y,
+        this.sv1.z,
+        cpl?.dominance ?? 0.5,
+        cpl?.quantum ?? this.emptyQ,
+        vt,
+        0, // dt=0 freezes the orbit; the drones keep spinning on the visual clock via wingRender.sync
+      );
+      this.wingRenders[i]!.sync(sw.positions, vt, 0.4 + 0.6 * sw.assist);
+    }
+    for (const hb of this.heroBodies) hb.body.update(vt, uiDt); // player + twins: alive AND mobile (God Mode)
+    this.leviathans.update(0, vt);
+    if (this.nhiBody.count > 0) {
+      try {
+        this.nhiBody.update(vt, (id) => this.nhiEntities.get(id)?.position ?? null);
+      } catch {
+        /* an NHI body update misbehaved — skip it, keep the paused world composing */
+      }
+    }
+    this.titans.animateInPlace(vt); // render-only tick (full update draws rng → not stepped while paused)
+    this.shoggoths.animateInPlace(vt);
+    this.puppets.update(0, vt); // rng is dt-gated → dt=0 draws none; glow/ring animate on vt
+    this.alphabetPantheon.setChaos(chaosN);
+    this.alphabetPantheon.update(vt, uiDt, true); // visualOnly
+    this.mechalogodrom.setChaos(chaosN);
+    this.mechalogodrom.setTimeScale(0);
+    this.mechalogodrom.update(vt, uiDt);
+
+    // ── The whole DOME stays alive: far-field void, structures, ground, sky, haze, flora ──
+    this.cosmicWeb.update(vt, n / this.quality.maxEntities, chaosN, entropyN);
+    this.goldLattice.update(vt);
+    this.floatingMonoliths.update(vt, chaosN);
+    this.godColossus.update(this.godClock, chaosN, entropyN); // REAL-TIME: keeps writhing while SUSPENDED
+    this.quantumLattice.update(vt);
+    this.abominationArchitecture.setReactivity(chaosN, entropyN, n / this.quality.maxEntities);
+    this.abominationArchitecture.update(vt);
+    this.constellations.update(vt, bands);
+    // Neural-net connectome keeps FIRING + WAVING in place (USER item 13): rebuilt read-only
+    // (mutateAct=false) from the frozen grid on the advancing visual clock — no rng, no neural-state
+    // decay, so the seeded golden is untouched while the axons stay alive for inspection.
+    this.connectome.update(0, vt, false);
+    this.wildernessRender.sync(this.wilderness, vt);
+    this.updateXenomimicPresentation(vt, true); // paused bodies shimmer; lifecycle/audio stay stopped
+    this.xylosBody.update(this.xylos.view, vt); // presentation only: no entropy, learning or field write
+    this.artifacts.update(uiDt, vt);
+    this.monolithTemple.setEnvironment({
+      chaos: chaosN,
+      entropy: entropyN,
+      population: n,
+      capacity: this.quality.maxEntities,
+    });
+    this.monolithTemple.update(0, vt);
+    this.alienFlora.update(0, vt, chaosN, entropyN, s.wind.x, s.wind.z);
+    this.updateCrystalEcosystem(0, uiDt, vt, true);
+    this.viz3d.update(this.viz3dSnap);
+
+    // ── BRUTALISM stays live so the BRUTAL button reskins the super creatures + cosmos DURING pause ──
+    const bf = this.easeBrutalism(uiDt);
+    const brutalStyle = this.brutalStyleIdx < 0 ? 0 : this.brutalStyleIdx;
+    for (let i = 0; i < this.superBodies.length; i++) {
+      this.superBodies[i]!.setBrutalStyle(brutalStyle);
+      this.superBodies[i]!.setBrutalism(bf);
+    }
+    for (let i = 0; i < this.heroBodies.length; i++) {
+      this.heroBodies[i]!.body.setBrutalStyle(brutalStyle);
+      this.heroBodies[i]!.body.setBrutalism(bf);
+    }
+    this.atmosphere.setBrutalism(bf);
+    this.environment.setCreatureDensity(n / Math.max(1, this.quality.maxEntities));
+    // dt=0 freezes diorama minis / packets (green gem that kept dancing on pause).
+    this.environment.update(0, vt);
+    this.environment.applyBrutalism(bf);
+    if (this.instanced) this.instanced.setBrutalism(bf);
+    else this.entities.applyBrutalism(bf);
+    // V122 (USER #9): a BRUTAL press mid-pause still plays its freakshow WAVE (render-only, no
+    // rng); the staggered shape remorph waits for RUNNING (it draws the gesture stream).
+    if (this.brutalMorphWave > 0) {
+      this.brutalMorphWave = Math.max(0, this.brutalMorphWave - uiDt / 3.0);
+      this.instanced?.setMorphWave(this.brutalMorphWave, this.brutalMorphSeed);
+    }
+    this.atmosphere.update(uiDt, vt, bands, this.qc.entropy, this.engine.camera.position);
+    if (bf > 0) {
+      const fog = this.engine.scene.fog;
+      if (fog instanceof THREE.FogExp2) {
+        fog.color.lerp(BRUTAL_FOG, bf);
+        fog.density += (BRUTAL_FOG_DENSITY - fog.density) * bf;
+      }
+    }
+
+    // Telemetry / Observatory / sim-settings / ARCHON GODFORMS refresh LIVE every relevant frame (USER):
+    // s.frame keeps advancing while paused, so the same cadences fire and the data reacts to every button.
+    this.pushPanels(n);
+
+    // Render the paused world: entities stay lively through the instanced pool's advancing uTime.
+    if (this.instanced) {
+      // V121 SUSPENDED ANIMATION (USER): the organisms don't just shimmer — they SPIN, TWINE, BOB
+      // and ORBIT their frozen loci like every other creature. The amplitude eases in over ~0.7 s
+      // (never snaps) and the spin clock advances on the real frame delta. Render-only, no rng.
+      // Tier note: the effect rides the instanced pools' vertex shader, so the PHONE per-mesh
+      // fallback (instanced=null) keeps its plain frozen pause — the same effects-for-survival
+      // trade that tier already makes for shadows/post-FX.
+      this.suspendClock += uiDt;
+      this.suspendFx = Math.min(1, this.suspendFx + uiDt * 1.5);
+      this.instanced.setSuspend(this.suspendFx, this.suspendClock);
+      const fr = this.instFrame;
+      fr.t = vt;
+      fr.chaos = s.chaos;
+      fr.bass = bands.bass;
+      fr.nightmare = s.sim === 2 ? 1 : 0;
+      this.instanced.sync(this.entities.list, s.renderMode, fr, this.quality.simRate);
+    }
+    this.updateLens();
+    this.engine.render();
+  }
+
+  /**
+   * Ease the smoothed BRUTALISM concrete-crossfade factor toward its 0/1 target on the UNSCALED frame
+   * delta and return it. Shared by the running loop + the SUSPENDED-pause loop so the BRUTAL button
+   * crossfades even while paused. Snaps to the exact 0/1 target so OFF is byte-identical (full restore).
+   */
+  private easeBrutalism(uiDt: number): number {
+    const s = this.state;
+    const bTarget = s.brutalism ? 1 : 0;
+    this.brutalismFactor += (bTarget - this.brutalismFactor) * Math.min(1, uiDt * 2.5);
+    if (!s.brutalism && this.brutalismFactor < 0.02) this.brutalismFactor = 0;
+    else if (s.brutalism && this.brutalismFactor > 0.98) this.brutalismFactor = 1;
+    return this.brutalismFactor;
+  }
+
+  /**
+   * Push the live telemetry, Observatory, market ticker, ARCHON GODFORMS (⬢ ARCHITECT panel), superhero
+   * HUD, and brain-snapshot readouts on their frame cadences. Extracted from step() so the SUSPENDED-pause
+   * loop refreshes the SAME readouts — the owner's law that data stays LIVE while paused (react to every
+   * interactive button press). All reads + DOM writes; draws no rng and mutates no sim state.
+   */
+  private pushPanels(n: number): void {
+    const s = this.state;
+    // #17: build the telemetry snapshot at most once per frame when both cadences coincide.
+    let snap: TelemetrySnapshot | null = null;
+    if (s.frame % 8 === 0) {
+      this.analytics.push(n, this.energy, this.connectome.links);
+      snap = this.snapshot();
+      this.panel.update(snap);
+      this.xenomimicPanel.update(this.syncXenomimicPanelData());
+      this.xylosPanel.update(this.xylos.view, this.xylos.status);
+      this.updateAlgoPicker(); // live progress on the active field's row
+    }
+    if (s.frame % 60 === 0) this.analytics.analyze(); // after push at coinciding frames
+
+    // Observatory: push+draw every 18f (36f on phone) AFTER the telemetry
+    // snapshot refresh so its rings sample the same values the panel shows.
+    const obsCadence = this.quality.isMobile ? 36 : 18;
+    if (s.frame % obsCadence === 0) {
+      this.observatory.push(snap ?? this.snapshot());
+      this.observatory.draw();
+      // F-NHI V15: feed the neural observatory the focused NHI's live cognitive snapshot.
+      const nids = this.nhi.ids();
+      const fid = nids.length ? (nids[this.nhiObs.focusIndex % nids.length] ?? nids[0] ?? -1) : -1;
+      this.nhiObs.update(fid >= 0 ? this.nhi.snapshot(fid) : null, { id: fid, count: nids.length });
+      // F-ECON V23: feed the market ticker the live AURUM/UMBRA summary (history kept even when closed).
+      this.marketTicker.update(this.economy.summary());
+      // F-SUPER V31 + GOAL5: feed the ⬢ ARCHITECT panel the apex (prime of 5) + live wallet + all 5 for first-class UI.
+      const primeSnap = this.superCreatures[0]?.snapshot() ?? this.superCreature.snapshot();
+      const archonInfos: Array<{
+        archetype: string;
+        plan: SuperPlan;
+        emotion: { valence: number; arousal: number; dominance: number };
+        surprise: number;
+        intent: { aggression: number; deception: number; curiosity: number };
+        consciousness: {
+          dreaming: number;
+          hallucinating: number;
+          reasoning: number;
+          selfAware: number;
+          novelty: number;
+          ignition: number;
+          phi: number;
+          workspace: number;
+        };
+        confidence: number;
+      }> = [];
+      // Deep SuperMind telemetry is intentionally materialized only on this UI cadence. Runtime couplings use
+      // readCoupling(), so the per-frame cognition loop never pays for QGT/qubit/reservoir snapshot allocation.
+      this.superMindSnap = null;
+      for (let i = 0; i < APEX_INDIVIDUATED; i++) {
+        const archonSnap = this.superCreatures[i]?.snapshot();
+        const mindSnap = this.superMinds[i]?.snapshot?.() ?? null;
+        if (i === 0) this.superMindSnap = mindSnap;
+        archonInfos.push({
+          archetype: GODFORMS[i] ?? 'ARCHON',
+          plan: archonSnap?.plan ?? mindSnap?.plan ?? 'REST',
+          emotion: archonSnap?.emotion ??
+            mindSnap?.emotion ?? { valence: 0, arousal: 0, dominance: 0 },
+          surprise: archonSnap?.surprise ?? mindSnap?.consciousness.surprise ?? 0,
+          intent: {
+            aggression: archonSnap?.intent.aggression ?? 0,
+            deception: archonSnap?.intent.deception ?? 0,
+            curiosity: archonSnap?.intent.curiosity ?? mindSnap?.consciousness.novelty ?? 0,
+          },
+          consciousness: {
+            dreaming: mindSnap?.consciousness.dreaming ?? 0,
+            hallucinating: mindSnap?.consciousness.hallucinating ?? 0,
+            reasoning: mindSnap?.consciousness.reasoning ?? 0,
+            selfAware: mindSnap?.consciousness.selfAware ?? 0,
+            novelty: mindSnap?.consciousness.novelty ?? 0,
+            ignition: mindSnap?.consciousness.ignition ?? 0,
+            phi: mindSnap?.consciousness.phi ?? 0,
+            workspace: mindSnap?.consciousness.workspace ?? 0,
+          },
+          confidence: mindSnap?.metacog?.confidence ?? 0,
+        });
+      }
+      const soupSnap = this.primordialSoup.snapshot();
+      let petriBiomass = 0;
+      let petriPhi = 0;
+      let petriAliveness = 0;
+      const dishN = Math.max(1, this.petriDishes.length);
+      for (const d of this.petriDishes) {
+        const v = petriDishView(d);
+        petriBiomass += v.biomass;
+        petriPhi += v.phiSurrogate;
+        petriAliveness += v.aliveness;
+      }
+      petriBiomass /= dishN;
+      petriPhi /= dishN;
+      petriAliveness /= dishN;
+      const ec0 = this.superMindSnap?.eshkolConsciousness;
+      const ulgRes = ulgCorpusResonance(ec0?.workspace ?? 0.5, ec0?.logic ?? 0.5, petriAliveness);
+      this.superPanel.update(
+        primeSnap,
+        this.economy.wealthOf(World.ECON_SUPER_BASE)?.netWorth ?? 0,
+        this.superMindSnap, // V46: the live 10k-param consciousness (dream/hallucinate/reason/self-aware)
+        this.superEvos[0]!.view(), // V48: the PRIME's evolution — level / stage / power / day (HUD panel)
+        archonInfos,
+        {
+          soupLive: soupSnap.liveCount,
+          soupCatalysis: soupSnap.catalysis,
+          petriBiomass,
+          petriPhi,
+          petriAliveness,
+          wiringFraction: tsotchkeSimWiringFraction(),
+          ulgResonance: ulgRes,
+        },
+      );
+      // F-SUPER V35: feed the SUPERHERO HUD the player-creature's live vitals + mind + wallet.
+      const hero = this.heroBodies[0];
+      if (this.superheroState.active && hero) {
+        const hs = hero.mind.snapshot();
+        const w = this.economy.wealthOf(hero.econId);
+        this.superheroHud.update({
+          ...this.superheroState.view(),
+          name: hs.name,
+          power: hs.power,
+          plan: hs.plan,
+          emotion: hs.emotion,
+          wallet: {
+            aurum: w?.aurum ?? 0,
+            umbra: w?.umbra ?? 0,
+            quanta: w?.quanta ?? 0,
+            ichor: w?.ichor ?? 0,
+          },
+          world: { entities: n, frame: s.frame },
+        });
+      }
+    }
+    // V108→V121: brain snapshots dispatch on a FASTER cadence (6f / 12f mobile) than the heavy
+    // panels — the brain-slot visualizers ease toward these targets on their own rAF loop, so
+    // fresher REAL telemetry means livelier (never fabricated) motion. Cheap: one apex snapshot +
+    // two references already computed this frame.
+    const brainCadence = this.quality.isMobile ? 12 : 6;
+    if (s.frame % brainCadence === 0 && typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('cqm:brain-snapshots', {
+          detail: {
+            apex: this.apexBrain.snapshot(),
+            apexGrowth: this.lastApexGrowth,
+            mecha: this.lastMechaBrainSnap,
+            glyphs: this.lastGlyphSnaps,
+          },
+        }),
+      );
+    }
+  }
+
+  /** Copy the population's reused telemetry into the panel's stable environment-aware adapter. */
+  private syncXenomimicPanelData(): XenomimicPanelTelemetry {
+    const source = this.xenomimics.telemetry();
+    const target = this.xenomimicPanelData;
+    target.population = source.population;
+    target.pairs = source.pairs;
+    target.births = source.births;
+    target.deaths = source.deaths;
+    target.eaten = source.eaten;
+    target.teleports = source.teleports;
+    target.meanEnergy = source.meanEnergy;
+    target.coherence = source.coherence;
+    target.bondTension = source.bondTension;
+    target.integration = source.integration;
+    target.freeEnergy = source.freeEnergy;
+    target.predictionError = source.freeEnergy;
+    target.quantumSpread = source.quantumSpread;
+    target.rngQuality = source.rngQuality;
+    for (let i = 0; i < target.speciesCounts.length; i++) {
+      (target.speciesCounts as number[])[i] = source.speciesCounts[i] ?? 0;
+    }
+    target.dominantSpecies = source.dominantSpecies;
+    target.growthTarget = source.growthTarget;
+    target.activity = this.xenomimicAudioMetrics.activity;
+    target.weather = cyc(WEATHERS, this.state.weatherIdx);
+    target.temperature = this.state.temperature;
+    target.wind = Math.hypot(this.state.wind.x, this.state.wind.z);
+    target.links = this.xenomimicConnectome.linkCount;
+    target.worldRadius = this.xenomimics.bounds();
+    // Stream a read-only body sample ONLY while the cockpit is live (the swarm map draws it).
+    if (this.xenomimicPanel.isOpen()) {
+      const bodies = this.xenomimics.bodyView();
+      const cap = Math.min(bodies.length, World.XENOMIMIC_SAMPLE_CAP);
+      const buf = this.xenomimicBodySamples;
+      let n = 0;
+      for (let i = 0; i < bodies.length && n < cap; i++) {
+        const b = bodies[i]!;
+        if (!b.alive) continue;
+        let slot = buf[n];
+        if (!slot) {
+          slot = { x: 0, z: 0, species: 0, role: 0, pairId: 0, energy: 0 };
+          buf[n] = slot;
+        }
+        slot.x = b.x;
+        slot.z = b.z;
+        slot.species = b.species;
+        slot.role = b.role;
+        slot.pairId = b.pairId;
+        slot.energy = b.energy;
+        n++;
+      }
+      target.bodies = buf;
+      target.bodyCount = n;
+    } else {
+      target.bodyCount = 0;
+    }
+    return target;
+  }
+
+  /**
+   * Plant contact physics: sample live organisms into ≤4 LOCAL activity seeds (min-separated).
+   * Never one giant centroid (lawn slab). Each seed thrashs plants within ~14u; GPU soft-body
+   * density field handles plant↔plant. Per-plant phase desync = individual response. O(min(n,200)).
+   */
+  private driveFloraContact(n: number): void {
+    if (n <= 0) return;
+    const list = this.entities.list;
+    // Denser round-robin sample — more beings write local thrash pockets per frame.
+    const stride = Math.max(1, Math.floor(n / 280));
+    const start = this.state.frame % stride;
+    const pool = this.floraContactSeedPool;
+    const seeds = this.floraContactSeeds;
+    seeds.length = 0;
+    const minSep2 = 10 * 10; // tighter pockets so single beings own local thrash
+    for (let i = start; i < n; i += stride) {
+      const e = list[i];
+      if (!e) continue;
+      const u = e.userData;
+      const v2 = u.vel.lengthSq();
+      const motion = v2 > 0 ? Math.min(1.35, Math.sqrt(v2) * 0.32) : 0;
+      const neural = Math.min(1.1, Math.abs(u.act) * 0.32);
+      // Presence + graze belly + NHI mass — stationary beings still press the flora.
+      const body = 0.28 + (u.belly > 0 ? 0.55 : 0) + (u.isNhi ? 0.85 : 0);
+      const w = motion + neural + body;
+      if (w <= 0.06) continue;
+      const px = e.position.x;
+      const pz = e.position.z;
+      // Reinforce nearest existing seed if close; else open a new local pocket.
+      let best = -1;
+      let bestD2 = Infinity;
+      for (let s = 0; s < seeds.length; s++) {
+        const dx = px - seeds[s]!.x;
+        const dz = pz - seeds[s]!.z;
+        const d2 = dx * dx + dz * dz;
+        if (d2 < bestD2) {
+          bestD2 = d2;
+          best = s;
+        }
+      }
+      if (best >= 0 && bestD2 < minSep2) {
+        const s = seeds[best]!;
+        // Weighted merge toward the new activity (keeps the pocket tracking the local swarm).
+        const nw = s.strength + w;
+        s.x = (s.x * s.strength + px * w) / nw;
+        s.z = (s.z * s.strength + pz * w) / nw;
+        s.strength = nw;
+      } else if (seeds.length < 4) {
+        const slot = pool[seeds.length]!;
+        slot.x = px;
+        slot.z = pz;
+        slot.strength = w;
+        seeds.push(slot);
+      } else {
+        // Replace weakest seed if this activity is stronger and far enough from all.
+        let weak = 0;
+        for (let s = 1; s < seeds.length; s++) {
+          if (seeds[s]!.strength < seeds[weak]!.strength) weak = s;
+        }
+        if (w > seeds[weak]!.strength && bestD2 >= minSep2) {
+          const slot = seeds[weak]!;
+          slot.x = px;
+          slot.z = pz;
+          slot.strength = w;
+        }
+      }
+    }
+    // Super creature is its own heavy local seed when low over the field.
+    this.superBody.worldPosition(this.sv1);
+    if (this.sv1.y < 28) {
+      const sx = this.sv1.x;
+      const sz = this.sv1.z;
+      const sw = 1.65;
+      let merged = false;
+      for (const s of seeds) {
+        const dx = sx - s.x;
+        const dz = sz - s.z;
+        if (dx * dx + dz * dz < minSep2) {
+          const nw = s.strength + sw;
+          s.x = (s.x * s.strength + sx * sw) / nw;
+          s.z = (s.z * s.strength + sz * sw) / nw;
+          s.strength = nw;
+          merged = true;
+          break;
+        }
+      }
+      if (!merged) {
+        if (seeds.length < 4) {
+          const slot = pool[seeds.length]!;
+          slot.x = sx;
+          slot.z = sz;
+          slot.strength = sw;
+          seeds.push(slot);
+        } else {
+          let weak = 0;
+          for (let s = 1; s < seeds.length; s++) {
+            if (seeds[s]!.strength < seeds[weak]!.strength) weak = s;
+          }
+          if (sw > seeds[weak]!.strength) {
+            const slot = seeds[weak]!;
+            slot.x = sx;
+            slot.z = sz;
+            slot.strength = sw;
+          }
+        }
+      }
+    }
+    if (seeds.length === 0) return;
+    // Hot spring targets — one creature thrashs local flora hard (not hollow decorative tap).
+    for (const s of seeds) s.strength = Math.min(1, s.strength / 1.85);
+    this.alienFlora.setContacts(seeds);
+    for (const sd of seeds) this.vegetation.applyContact(sd.x, sd.z, sd.strength);
+    // Waste constructs thrash near the hottest being seed (DAR — not decorative).
+    let best = seeds[0]!;
+    for (let i = 1; i < seeds.length; i++) {
+      if (seeds[i]!.strength > best.strength) best = seeds[i]!;
+    }
+    this.wasteEcology.setContact(best.x, best.z, best.strength);
+  }
+
+  /**
+   * V60: project the active singularity's world centre to screen UV and feed the post-FX lens pass
+   * its position + signed strength (0 ⇒ identity passthrough). Allocation-free — two module-owned
+   * scratch vectors, one camera projection. No-op cost when post-FX is off (Engine.setLens is a
+   * guarded forward). O(1).
+   */
+  private updateLens(): void {
+    // N(2) BREAK FREE — transdimensional screen warp even without an active singularity.
+    if (this.state.sim === 2) {
+      const f = this.state.frame;
+      // Multi-frequency wobble: 3 overlapping sine waves for chaotic, non-repeating distortion.
+      const wobble =
+        Math.sin(f * 0.017) * 0.14 + Math.sin(f * 0.043) * 0.08 + Math.sin(f * 0.091) * 0.05;
+      // Chaotic lens center: 3 frequencies create a Lissajous-like drift that never repeats.
+      const cx = 0.5 + Math.sin(f * 0.011) * 0.09 + Math.sin(f * 0.037) * 0.04;
+      const cy = 0.5 + Math.cos(f * 0.013) * 0.07 + Math.cos(f * 0.053) * 0.03;
+      // Periodic "dimensional tear" — every ~900 frames a sudden reverse-warp surprise.
+      const tearPhase = (f % 900) / 900;
+      const tear = tearPhase < 0.05 ? Math.sin(tearPhase * 62.8) * 0.3 : 0;
+      const singStrength = this.singularities.lensStrength;
+      if (singStrength !== 0 && this.singularities.lensCenter(this.lensWorld)) {
+        this.lensNdc.copy(this.lensWorld).project(this.engine.camera);
+        if (this.lensNdc.z <= 1) {
+          const boost = 1.45 + wobble + tear;
+          this.engine.setLens(
+            this.lensNdc.x * 0.5 + 0.5,
+            this.lensNdc.y * 0.5 + 0.5,
+            singStrength * boost,
+            0.58 + Math.sin(f * 0.02) * 0.06,
+          );
+          return;
+        }
+      }
+      // Stronger base warp + wider radius for the "transdimensional" feel.
+      this.engine.setLens(cx, cy, -0.28 + wobble + tear, 0.72 + Math.sin(f * 0.02) * 0.08);
+      return;
+    }
+    const strength = this.singularities.lensStrength;
+    if (strength === 0 || !this.singularities.lensCenter(this.lensWorld)) {
+      this.engine.setLens(0.5, 0.5, 0, 0.5);
+      return;
+    }
+    this.lensNdc.copy(this.lensWorld).project(this.engine.camera);
+    // Behind the camera (z > 1 in NDC) ⇒ no lens this frame.
+    if (this.lensNdc.z > 1) {
+      this.engine.setLens(0.5, 0.5, 0, 0.5);
+      return;
+    }
+    this.engine.setLens(this.lensNdc.x * 0.5 + 0.5, this.lensNdc.y * 0.5 + 0.5, strength, 0.5);
+  }
+
+  /**
+   * V105: super-creature EVOLUTION is session-only — every browser reload starts fresh with no
+   * cross-reload carryover. This META-organ lives OUTSIDE the deterministic sim (it touches only the
+   * super creature's power/look, never the population golden) and reads NO wall-clock: the earlier V48
+   * `Date.now` idle-growth catch-up was removed, so this merely clears any legacy save on boot. The five
+   * per-Archon evolutions are all built fresh at BASE each session and level up live from their own state.
+   */
+  private clearEvolutionStorage(): void {
+    // V105: every browser reload resets super-creature evolution — fresh start, no carryover.
+    try {
+      if (typeof localStorage !== 'undefined') localStorage.removeItem('cqm:superevo:v1');
+    } catch {
+      /* storage unavailable */
+    }
+  }
+
+  /**
+   * F-SUPER V31 + GOAL5: apex beat for the 5 SUPER CREATURES (pantheon apexes).
+   * ============================================================================
+   * NOT SENTIENT / PHENOMENALLY CONSCIOUS (strengthened header per task).
+   * Contract: models/scaffolding/functional correlates only; phenomenal consciousness ~1/10;
+   * hard problem untouched. All cognition (deep math proxies, argmax plans, consciousness scalars)
+   * are deterministic numeric constructs. No sentience language or claim allowed.
+   * ============================================================================
+   * Builds per-creature {@link SuperPercept} using each body's position for local crowding/threat
+   * (via grid query on entities); economy uses per-purse wealth; light/sound enhanced with
+   * archetype/pos bias. All 5 driven, all 5 bodies set. Deterministic (child seeds only).
+   */
+  private driveSuper(bass: number, level: number, t: number, n: number, dt: number): void {
+    try {
+      const s = this.state;
+      // The pantheon is already beaten once per frame in update(); read its current snapshot here so the
+      // stigmergic field is not double-stepped. driveSuper itself runs every simulation frame; apexThinkMode
+      // rotates which one of the five minds takes the full path while the other four take the echo path.
+      const pantheonSnap = this.pantheon.snapshot();
+      const collective = this.superCollective;
+      this.pantheon.collectiveBias(0, collective);
+      const econ = this.economy.summary();
+      const mean = econ.agents > 0 ? econ.totalWealth / econ.agents : 1;
+      const target = Math.max(1, this.quality.targetEntities);
+      // NHSI · 144 faculties + 25 ToM organs read the shared world field each apex beat.
+      const fi = this.nhsiFacultyIn;
+      fi[0] = clamp(s.chaos / CHAOS_MAX, 0, 1);
+      fi[1] = clamp(n / target, 0, 1);
+      fi[2] = clamp(pantheonSnap.field.energy, 0, 1);
+      fi[3] = clamp(collective[0] ?? 0, 0, 1);
+      fi[4] = clamp(collective[1] ?? 0, 0, 1);
+      fi[5] = clamp(collective[2] ?? 0, 0, 1);
+      fi[6] = clamp(collective[3] ?? 0, 0, 1);
+      fi[7] = clamp(this.nhi.count / 8, 0, 1);
+      fi[8] = clamp(this.titans.count / 10, 0, 1);
+      fi[9] = clamp(level, 0, 1);
+      fi[10] = clamp(bass, 0, 1);
+      fi[11] = clamp(econ.totalWealth / Math.max(1, econ.agents * 4), 0, 1);
+      fi[12] = clamp(pantheonSnap.field.coherence, 0, 1);
+      fi[13] = clamp((t / 60) % 1, 0, 1);
+      fi[14] = clamp(this.rdEnergy, 0, 1);
+      fi[15] = clamp(this.connectome.links / Math.max(1, this.connectome.pairCount * 8), 0, 1);
+      this.facultiesPantheon.update(fi);
+      const tc = this.nhsiTomCues;
+      tc[0] = fi[0] ?? 0;
+      tc[1] = fi[1] ?? 0;
+      tc[2] = fi[7] ?? 0;
+      tc[3] = fi[8] ?? 0;
+      tc[4] = fi[11] ?? 0;
+      tc[5] = fi[2] ?? 0;
+      tc[6] = fi[12] ?? 0;
+      tc[7] = fi[13] ?? 0;
+      this.tomPantheon.observe(tc);
+      const facultyBias = this.facultiesPantheon.getAggregateActivation();
+      const facultyGroups = this.facultiesPantheon.getGroupActivations();
+      const tomMenace = this.tomPantheon.getAggregateMenace();
+      this.symbiosis.step();
+      this.mythRitual.step();
+      const symCoop = this.symbiosis.getStats().averageStrength;
+      const mythPower = this.mythRitual.strength;
+      const stigSnap = this.stigmergy.snapshot();
+      const mortVitality = 1 - (this.archonMortality[0]?.lifespanProgress ?? 0);
+      // RESONANCE + VALENCE: the pantheon's faculty groups phase-lock into a coalition; world affect
+      // (cooperation/myth vs menace/mortality) is the valence that bends the lock and the explore bias.
+      const aff = this.nhsiAffect.step(this.facultiesPantheon.getActivations(), {
+        padPleasure: clamp(symCoop + mythPower * 0.5 - tomMenace * 0.5, -1, 1),
+        padArousal: clamp(s.chaos / CHAOS_MAX, 0, 1),
+        padDominance: clamp(facultyBias * 2 - 1, -1, 1),
+        pain: clamp(1 - mortVitality, 0, 1),
+        pleasure: clamp(pantheonSnap.field.coherence * 0.5, 0, 1),
+      });
+      // EMERGENT LANGUAGE: the archon communities play a seeded naming game over the dominant faculty.
+      this.archonLanguage ??= new ArchonLanguage((this.persisted.seed ^ 0x4c414e47) >>> 0);
+      const lang = this.archonLanguage.step(facultyGroups);
+      const artOrigin = this.artifacts.influenceAt(0, 0);
+      const net0 = this.economy.wealthOf(World.ECON_SUPER_BASE + 0)?.netWorth ?? 0;
+      // global fallback percept (used for twins/heroes); 5 get position-localized versions below
+      // Pre-allocated scratch (audit fix #2/#3 — no per-call object allocation)
+      const basePercept = this.superBasePercept;
+      basePercept.energy = clamp(
+        0.5 +
+          0.5 * (1 - s.chaos / 10) +
+          facultyBias * 0.04 +
+          (facultyGroups[0] ?? 0) * 0.03 +
+          symCoop * 0.04 -
+          (1 - mortVitality) * 0.03 +
+          aff.resonance * 0.04 +
+          lang.fluency * 0.02,
+        0,
+        1,
+      );
+      basePercept.threat = clamp(
+        s.chaos / 8 +
+          tomMenace * 0.12 +
+          (facultyGroups[1] ?? 0) * 0.04 +
+          (1 - mortVitality) * 0.04 +
+          (aff.painUrgent ? 0.03 : 0),
+        0,
+        1,
+      );
+      basePercept.crowding = clamp(n / target, 0, 1);
+      basePercept.chaos = clamp(s.chaos / 10, 0, 1);
+      basePercept.wealthRel = clamp(
+        net0 / (2 * (mean || 1)) + mythPower * 0.05 + artOrigin * 0.03,
+        0,
+        1,
+      );
+      basePercept.preyClose = clamp(n / target, 0, 1);
+      basePercept.rivalClose = clamp(
+        this.nhi.count / 8 + (this.titans.count > 0 ? 0.2 : 0) + tomMenace * 0.1,
+        0,
+        1,
+      );
+      basePercept.pull = clamp(
+        s.chaos / 12 +
+          (facultyGroups[2] ?? 0) * 0.03 +
+          Math.min(0.08, stigSnap.totalPheromone * 0.0005) +
+          (aff.exploration - 0.5) * 0.06,
+        0,
+        1,
+      );
+      basePercept.light = clamp(level + artOrigin * 0.04, 0, 1);
+      basePercept.sound = clamp(bass + mythPower * 0.04, 0, 1);
+      basePercept.phase = (t / 60) % 1;
+      // XENOMIND: the alien hyperbolic (Poincaré-disk) substrate reads the same percept and offers an
+      // alternative drive; its intent bends the archons' pull and light-seeking a little.
+      this.xenomind ??= new Xenomind(mulberry32((this.persisted.seed ^ 0x58454e4f) >>> 0 || 1));
+      const xs = this.xenoSenses;
+      xs[0] = basePercept.energy;
+      xs[1] = basePercept.threat;
+      xs[2] = basePercept.crowding;
+      xs[3] = basePercept.chaos;
+      xs[4] = basePercept.wealthRel;
+      xs[5] = basePercept.preyClose;
+      xs[6] = basePercept.rivalClose;
+      xs[7] = basePercept.pull;
+      const xIntent = this.xenomind.think(xs);
+      // Gated: zero nudge until the xenomind reliably predicts the brains' own pull (no noise in).
+      const xPull = xIntent[0] ?? 0.5;
+      this.xenoGate.observe(xPull, basePercept.pull);
+      basePercept.pull = clamp(
+        basePercept.pull + this.xenoGate.nudge(xPull, basePercept.pull, 0.04),
+        0,
+        1,
+      );
+      basePercept.light = clamp(
+        basePercept.light + this.xenoGate.nudge(xIntent[1] ?? 0.5, basePercept.light, 0.02),
+        0,
+        1,
+      );
+      // GOAL5: drive EXACTLY 5 SUPER CREATURES (archetypes 0-4) with per-position percepts.
+      // local crowding/threat from grid query at body pos; light/sound/chaos biased by godform.ts (exclusive).
+      let primeMindOut: SuperMindIntent | null = null; // typed; avoid any per contract
+      // PERF: both are frame-invariant (pure in i / boot-seed) — fold the corpus once, reuse every frame.
+      this.superFullBias ??= Array.from({ length: APEX_INDIVIDUATED }, (_, k) =>
+        getFullTsotchkeBias(k),
+      );
+      this.superDrivePulse ??= Array.from({ length: APEX_INDIVIDUATED }, (_, k) =>
+        getCorpusPulseForArchon(k, (this.persisted.seed ^ (k * 0x9e37)) >>> 0),
+      );
+      for (let i = 0; i < APEX_INDIVIDUATED; i++) {
+        const bias = this.superFullBias[i]!; // depth-ledger corpus extension (Eshkol/Moonlab/Quake factors), cached // ARCHITECT rule: use the facade bias for differentiation
+        this.superBodies[i]!.worldPosition(this.sv1);
+        const lx = this.sv1.x,
+          lz = this.sv1.z;
+        const near = this.grid.query(lx, lz, SOCIAL_APEX_SENSE_R);
+        const localD = Math.min(1, near.length / 14);
+        const net = this.economy.wealthOf(World.ECON_SUPER_BASE + i)?.netWorth ?? 0;
+        const wealthRel = clamp(net / (2 * (mean || 1)), 0, 1);
+        // 10x: pulse for det use (Eshkol AD/Moonlab not needed, quake for body/world feedback) — cached (frame-invariant)
+        const pulseForArchon = this.superDrivePulse[i]!;
+        // Ralph loop continue 10x more: compute hybrid ulg/gwt + moonlabMpo (Tsotchke corpus Moonlab)
+        const mpoInput = this.superMpoInput;
+        mpoInput[0] = pulseForArchon.quakeAliveness ?? 0.5;
+        mpoInput[1] = localD;
+        mpoInput[2] = (pulseForArchon.quakeAliveness ?? 0.5) * localD; // cross term ⇒ rank-2 (localD now live)
+        const mpoF = moonlabMpoStep(mpoInput, 2);
+        // Ralph continue 10x: quakeQgeFactor for more quantum-quake aliveness in world step percepts
+        const qgeF = quakeQgeFactor(pulseForArchon.quakeAliveness, 0.15);
+        // Wire QGE aliveness proxy for enhanced chaos modulation
+        const qgeAlive = qgeAlivenessProxy(pulseForArchon.quakeAliveness ?? 0.5, localD, 1);
+        // Wire Moonlab tensor contract for percept coupling (reused scratch tuples, zero per-frame alloc)
+        const ta = this.superTensorA;
+        const tb = this.superTensorB;
+        ta[0] = basePercept.chaos;
+        ta[1] = basePercept.crowding;
+        ta[2] = basePercept.threat ?? 0;
+        tb[0] = localD;
+        tb[1] = this.state.chaos ?? 0;
+        tb[2] = this.state.entropy ?? 0;
+        const tensorPulse = moonlabTensorContract(ta, tb, 3);
+        // Wire QEC decoding proxy for stability in interactions
+        const qecStability = qecDecodingProxy(Math.floor(basePercept.chaos * 10), 5);
+        // Apply new math to chaos
+        const qgeMod = qgeAlive * 0.15 + tensorPulse * 0.1 + qecStability * 0.05;
+        // Pre-allocated per-archon percept (audit fix — no per-iteration object allocation)
+        const p = this.superArchonPercept;
+        p.energy = basePercept.energy;
+        p.threat = clamp(basePercept.threat + localD * 0.08 + qgeF * 0.04, 0, 1);
+        p.crowding = clamp(
+          basePercept.crowding * 0.35 +
+            localD * 0.65 +
+            Math.abs(mpoF) * 0.03 +
+            libirrepSymmetry(2, localD * 5) * 0.01,
+          0,
+          1,
+        );
+        p.chaos = clamp(
+          (basePercept.chaos + (bias.chaos - 0.5) * 0.12 + qgeMod) *
+            quakePerturb(pulseForArchon.quakeAliveness ?? 0.5, i + 9, 0.1) *
+            qgeWorldPerturb(pulseForArchon.quakeAliveness ?? 0.5, i + 9) +
+            (collective[2] ?? 0) * 0.04,
+          0,
+          1,
+        );
+        p.wealthRel = wealthRel;
+        p.preyClose = basePercept.preyClose;
+        p.rivalClose = basePercept.rivalClose;
+        p.pull = clamp(
+          basePercept.pull +
+            (pulseForArchon.quakeAliveness ?? 0) * 0.08 +
+            mpoF * 0.05 +
+            qgeF * 0.03 +
+            (collective[4] ?? 0) * 0.06,
+          0,
+          1,
+        );
+        const altNorm = clamp(this.sv1.y / Math.max(1, PLATFORM_CEIL), 0, 1);
+        const radProx = 1 - Math.min(1, Math.hypot(lx, lz) / Math.max(1, PLATFORM_HALF));
+        const localArt = this.artifacts.influenceAt(lx, lz);
+        p.light = clamp(
+          basePercept.light + (bias.generative - 0.5) * 0.04 + altNorm * 0.02 + localArt * 0.03,
+          0,
+          1,
+        );
+        p.sound = clamp(basePercept.sound + (bias.narrative - 0.5) * 0.03 + radProx * 0.015, 0, 1);
+        p.phase = basePercept.phase;
+        // GOAL5: 1 full SuperMind.think + 4 echo (1×1 ToT) per frame, round-robin.
+        const mindOut = this.superMinds[i]!.think(p, apexThinkMode(s.frame, i, APEX_INDIVIDUATED));
+        this.noosphere.updateArchon(
+          i,
+          mindOut.consciousness.phi,
+          mindOut.consciousness.ignition,
+          mindOut.consciousness.workspace,
+          mindOut.consciousness.novelty,
+          mindOut.consciousness.qualiaTone,
+        );
+        this.superBodies[i]!.worldPosition(this.sv1);
+        this.stigmergy.deposit(
+          this.sv1.x / ARENA_MID,
+          this.sv1.z / ARENA_MID,
+          i % 4,
+          0.05 + mindOut.consciousness.ignition * 0.1,
+        );
+        this.archonMortality[i]!.step();
+        const creatureIntent = this.superCreatures[i]!.think(p);
+        const coll = this.nhsiCollectiveScratch;
+        const curClamped = clamp(mindOut.curiosity, 0, 1);
+        coll[0] = mindOut.consciousness.ignition;
+        coll[1] = mindOut.consciousness.phi;
+        coll[2] = mindOut.consciousness.surprise;
+        coll[3] = mindOut.consciousness.novelty;
+        coll[4] = mindOut.consciousness.selfAware;
+        coll[5] = mindOut.consciousness.workspace;
+        coll[6] = curClamped;
+        coll[7] = mindOut.consciousness.qualiaTone;
+        this.emergenceAngles.aggregateCollective(`archon-${i}`, coll);
+        coll[6] = mindOut.consciousness.qualiaTone;
+        coll[7] = curClamped;
+        this.pantheon.depositApex(i, coll, 0.35 + mindOut.consciousness.ignition * 0.5);
+        // Registry-driven soup update; only the 17 represented entries contribute, while fences/meta are inert.
+        this.primordialSoup.update(i, s.frame, this.petriRng, this.organismIntelligence.signal);
+        const dish = this.petriDishes[i];
+        if (dish) petriDishBeat(dish, i, s.frame, this.petriRng, this.organismIntelligence.signal);
+        this.superBodies[i]!.setMind(this.superCreatures[i]!.snapshot());
+        this.superBodies[i]!.setConsciousness(
+          mindOut.quantum,
+          mindOut.consciousness.dreaming,
+          mindOut.consciousness.hallucinating,
+        );
+        // V1.3 AE-1/HOT-3: blend the apex SuperMind's chosen move vector with SuperCreature's reflex intent.
+        this.superBodies[i]!.setSuperMindMove(
+          mindOut.move.x * 0.65 + creatureIntent.move.x * 0.35,
+          mindOut.move.y * 0.65 + creatureIntent.move.y * 0.35,
+          mindOut.move.z * 0.65 + creatureIntent.move.z * 0.35,
+        );
+        // GOAL: this Archon SELF-EVOLVES on ITS OWN live state — dominance + consciousness novelty + the
+        // lift of its own wingman escort, amplified by its own petri dish's growth — so all five level up +
+        // ascend SEPARATELY (dynamically / reactively / adaptively), each visibly growing through its body
+        // (size, hue, glow, spikes, ascension aura). Previously only the prime (Archon 0) evolved.
+        const evo = this.superEvos[i]!;
+        const evoVitality = clamp(
+          (0.5 * mindOut.dominance +
+            0.3 * mindOut.consciousness.novelty +
+            0.2 * this.wingSwarms[i]!.assist) *
+            (dish ? petriGrowthMultiplier(dish) : 1),
+          0,
+          1,
+        );
+        evo.tick(dt, evoVitality);
+        this.superBodies[i]!.setEvolution(evo.appearance());
+        // React ONCE to each 10-level milestone this Archon crosses. The FIRST to reach LV100 raises the ONE
+        // monolith temple (ascend() is idempotent); every Archon toasts its own godlike-power grant.
+        const ms = evo.takeMilestone();
+        if (ms >= 100) {
+          this.ascend();
+        } else if (ms > 0) {
+          const gf = GODFORMS[i % GODFORMS.length] ?? 'ARCHITECT';
+          const power = evo.view().powers.at(-1) ?? 'a godlike power';
+          if (i === 0) this.audio.play('burst'); // only the prime chimes — avoid a 5× milestone-sound stack
+          this.hud.showSector(`EVOLVED · ${gf} · LV ${ms} · +1 GODLIKE POWER: ${power}`);
+          this.audit.record('evo-milestone', { archon: i, level: ms, power });
+        }
+        // The daemon-cron surge: a sim-day of hyperbolic-field training, per Archon on its own evo rng.
+        if (s.frame > 0 && s.frame % World.EVO_DAY_FRAMES === 0) {
+          evo.applyDays(1, this.evoRngs[i]!);
+        }
+        if (i === 0) {
+          primeMindOut = mindOut;
+        }
+      }
+      // Borrowed, allocation-free state for every runtime coupling below. The deep immutable-ish telemetry
+      // snapshot is produced by pushPanels() only on the 18f/36f observatory cadence.
+      const primeCoupling = this.superMinds[0]?.readCoupling();
+      // V-APEX: tick the Entropic Tesseract Hydra brain (10 organs + quantum + meta-paradox).
+      // The apex brain runs on the same every-frame driveSuper cadence, reading the world percept
+      // and producing a plan + vitality + agony + transcendence. Its output feeds the noosphere
+      // and the emergence angles, so the 10-organ brain genuinely influences the world.
+      const ap = this.apexPercept;
+      ap.threat = basePercept.threat;
+      ap.energy = basePercept.energy;
+      ap.chaos = basePercept.chaos;
+      ap.novelty = clamp(primeMindOut?.consciousness?.novelty ?? 0, 0, 1);
+      ap.level = this.superEvos[0]!.view().level; // the Abomination reads the prime Archon's level
+      this.lastApexThought = this.apexBrain.tick(ap);
+      // #109: one apex snapshot per frame (it builds every organ view, incl. a 16-bin DFT).
+      const raw = this.apexOrganRaw;
+      const apexBeat = this.apexBrain.organActivityInto(raw);
+      this.lastApexGrowth = apexGrowthStage(ap.level, this.lastApexThought.transcendence, apexBeat);
+      // V-FND: tick Foundationals — deep interconnect between APEX organs (1B self-awareness path).
+      const fndOrganActivity = this.fndOrganScratch;
+      fndOrganActivity[0] = clamp(raw[0]!, 0, 1);
+      fndOrganActivity[1] = clamp(raw[1]!, 0, 1);
+      fndOrganActivity[2] = raw[2]!;
+      fndOrganActivity[3] = clamp(raw[3]!, 0, 1);
+      fndOrganActivity[4] = clamp(raw[4]!, 0, 1);
+      fndOrganActivity[5] = clamp(raw[5]!, 0, 1);
+      fndOrganActivity[6] = clamp(Math.abs(raw[6]!), 0, 1);
+      fndOrganActivity[7] = clamp(raw[7]! / 100, 0, 1);
+      fndOrganActivity[8] = clamp(raw[8]!, 0, 1);
+      fndOrganActivity[9] = clamp(raw[9]! / 100, 0, 1);
+      this.lastFoundationals = this.foundationals.tickAndStore(
+        fndOrganActivity,
+        this.lastApexThought.transcendence,
+        this.lastApexThought.agony,
+        ap.level,
+        this.lastApexGrowth.designedParams,
+        0.016,
+      );
+      // Feed the apex brain's transcendence into the noosphere (blending with Archon 0's mindOut).
+      this.noosphere.updateArchon(
+        0, // prime channel
+        0.5 * (primeMindOut?.consciousness.phi ?? 0.5) + 0.5 * this.lastApexThought.vitality,
+        0.5 * (primeMindOut?.consciousness.ignition ?? 0.5) +
+          0.5 * this.lastApexThought.transcendence,
+        this.lastApexThought.superposed ? 0.3 : 0.6,
+        this.lastApexThought.transcendence,
+        clamp(this.lastApexThought.vitality * 0.5 + (1 - this.lastApexThought.agony) * 0.5, 0, 1),
+      );
+      this.noosphere.step();
+      this.stigmergy.step();
+      const nooSnap = this.noosphere.snapshot();
+      if (nooSnap.collectiveInsight) {
+        s.chaos = Math.min(CHAOS_MAX, s.chaos + 0.08);
+      }
+      // V-MORPH: shared MORPHIC FIELD (Sheldrake-inspired cross-creature correlation model, NOT an
+      // empirical claim). The apex imprints its consciousness latent (weighted by its transcendence)
+      // into the field, then reads back a morphic bias; when the field RESONATES strongly with the
+      // present latent (past successful patterns align with now), it contributes a small bounded boost
+      // to collective chaos — a genuine apex→field→world loop mirroring the noosphere's collectiveInsight
+      // coupling above. Deterministic (the field draws no rng), bounded + clamped. Runs on the apex beat.
+      const apexLatent = primeCoupling?.latent;
+      if (apexLatent && apexLatent.length > 0) {
+        this.morphicField.imprint(apexLatent, this.lastApexThought.transcendence);
+        // V-MORPH-2: the Mechalogodrom fusion-mind is a SECOND author of the SAME shared field — its
+        // STDP-learned consciousness latent (weighted by its own consciousnessProxy) is imprinted too, so
+        // `readBias` now measures cross-mind alignment (apex ⇄ mechalogodrom) rather than the apex echoing
+        // itself. When the two deep minds CONVERGE on a pattern the field resonates harder → a bigger
+        // chaos boost: real coupling>count, not a solo loop. Deterministic (imprint draws no rng); the
+        // brain's latent is this frame's tick (world.ts V-MECHA-MIND, already computed above).
+        const mechaLatent = this.lastMechaBrainSnap?.latent;
+        if (mechaLatent && mechaLatent.length > 0) {
+          this.morphicField.imprint(mechaLatent, this.lastMechaBrainSnap!.consciousnessProxy);
+        }
+        const morphic = this.morphicField.readBias(apexLatent);
+        this.morphicField.decay();
+        this.morphicSnap = this.morphicField.snapshot();
+        if (morphic.strength > 0.66) {
+          s.chaos = Math.min(CHAOS_MAX, s.chaos + 0.03 * morphic.strength);
+        }
+      }
+      // V-GEDANKEN-COUPLE: the population's DYING minds feed back into the collective. The gedanken
+      // death-dream ledger (each organism's confabulation as it dies — Thaler's neural death) was measured
+      // but only DISPLAYED on the audit dock; now when the death-dreams run VIVID (the swarm hallucinating
+      // hard at the moment of death) the noosphere STIRS — a small bounded chaos nudge, the same class as the
+      // noosphere-insight and morphic-resonance couplings above. The dying minds now WRITE the world, not
+      // just read out to a panel (coupling>count). Deterministic (the ledger is deterministic); gated on
+      // enough deaths to be a real population signal; bounded to a hair of chaos.
+      if (this.gedankenLedger.deaths > 8) {
+        // Audit #234: the lifetime mean sat at ~1.03 > 0.6, so the nudge was permanently on. Gate
+        // on a recent SPIKE above the population's own baseline instead.
+        const L = this.gedankenLedger;
+        const dreamHeat = L.recentVividness - L.meanVividness;
+        if (dreamHeat > 0.05) {
+          s.chaos = Math.min(CHAOS_MAX, s.chaos + 0.02 * Math.min(1, dreamHeat * 4));
+        }
+      }
+      // BRUTALISM: the dark-energy (quintessence Λ) cosmological field. Energy density ← apex vitality,
+      // matter density ← live population fullness. When the population is SPARSE + energetic the universe
+      // ACCELERATES (expansion → 1) and kindles a hair of collective chaos; when CROWDED it contracts
+      // (expansion → ~0.57) and the gate stays shut — a real population→cosmology→world loop in the exact
+      // gated-boost class as the noosphere/morphic/gedanken couplings above (chaos decays at ~1538, so the
+      // boost never ratchets). Deterministic (dark-energy draws no rng; φ is clamp-bounded, no divergence).
+      const matterDensity = clamp(
+        this.entities.list.length / Math.max(1, this.quality.maxEntities),
+        0,
+        1,
+      );
+      this.darkEnergy.step(clamp(this.lastApexThought.vitality, 0, 1), matterDensity);
+      this.darkEnergySnap = this.darkEnergy.snapshot();
+      // OMEGA POINT: the whole-simulation convergence metric Ω (HUD readout). Channels: consciousness
+      // (pantheon coherence, resonance, faculty drive), evolution (language diversity, lineage depth),
+      // noosphere, negentropy (1 − chaos), quantum-ish coherence (resonance coalition), symbolic order
+      // (language fluency stands in for the absent time-crystal order), dark-energy w.
+      const lin = this.entities.lineage;
+      this.omegaPoint.update(
+        [
+          clamp(pantheonSnap.field.coherence, 0, 1),
+          clamp(aff.coherence, 0, 1),
+          clamp(facultyBias, 0, 1),
+        ],
+        [clamp(lang.diversity / 6, 0, 1), clamp((lin?.maxGeneration ?? 0) / 64, 0, 1)],
+        clamp(this.noosphere.coherence, 0, 1),
+        clamp(1 - s.chaos / CHAOS_MAX, 0, 1),
+        clamp(aff.coherence, 0, 1),
+        clamp(lang.fluency, 0, 1),
+        this.darkEnergy.equationOfState,
+      );
+      this.hud.setOmega(this.omegaPoint.score, this.omegaPoint.converging);
+      if (this.darkEnergy.expansion > 0.85) {
+        s.chaos = Math.min(CHAOS_MAX, s.chaos + 0.02 * (this.darkEnergy.expansion - 0.85));
+      }
+      // Light Archons (5–24): deposit pantheon field into emergence angles 8–10 each apex beat.
+      for (let a = 5; a < ARCHON_CHANNELS; a++) {
+        this.pantheon.field.sample(a, this.nhsiCollectiveScratch);
+        this.emergenceAngles.aggregateCollective(`archon-${a}`, this.nhsiCollectiveScratch);
+      }
+
+      if (s.frame % 120 === 0) {
+        if (s.frame % 480 === 0) {
+          for (let i = 0; i < APEX_INDIVIDUATED; i++) {
+            for (let j = i + 1; j < APEX_INDIVIDUATED; j++) {
+              this.symbiosis.formRelationship(i, j);
+            }
+          }
+        }
+        const rot = s.frame % ARCHON_CHANNELS;
+        void this.emergenceAngles.evolveEshkolProgram(
+          `archon-${rot}`,
+          primeCoupling?.consciousness.phi ?? 0,
+          fi,
+        );
+        this.emergenceAngles.recombineStrains(
+          `archon-${rot}`,
+          `archon-${(rot + 1) % ARCHON_CHANNELS}`,
+        );
+        this.emergenceAngles.relax(); // audit #241: counters decay instead of ratcheting
+        const em = this.emergenceAngles.getAggregateEmergence();
+        // Audit #13: compare chaos to the active floor, so N(2)'s floor of 6 alone no longer fires
+        // every channel every 120 frames.
+        const chaos = (s.chaos ?? 0.5) - (s.sim === 2 ? CHAOS_NIGHTMARE_FLOOR : CHAOS_MIN);
+        for (let a = 0; a < ARCHON_CHANNELS; a++) {
+          let pwr = 0;
+          let spinO = 0.4;
+          let qgtC = 0.3;
+          let esh = 0.4;
+          if (a < this.superMinds.length) {
+            const coupling = this.superMinds[a]?.readCoupling();
+            pwr = (coupling?.consciousness.phi ?? 0.3) + (coupling?.consciousness.ignition ?? 0.2);
+            spinO = coupling?.quantum[0] ?? 0.4;
+            // The prior snapshot casts queried fields that SuperMindSnapshot does not expose, so both values
+            // always used these fallbacks. Keep them explicit to preserve the deterministic event contract.
+            qgtC = 0.3;
+            esh = 0.4;
+          } else {
+            this.pantheon.field.sample(a, this.nhsiCollectiveScratch);
+            const c = this.nhsiCollectiveScratch;
+            pwr =
+              ((c[0] ?? 0) + (c[1] ?? 0) + (c[2] ?? 0) + (c[3] ?? 0)) * 0.25 + (c[4] ?? 0) * 0.5;
+            spinO = c[2] ?? 0.4;
+            qgtC = c[3] ?? 0.3;
+            esh = c[0] ?? 0.4;
+          }
+          if (pwr > 0.55 || em > 0.5 || chaos > 3.5) {
+            const brutal = this.emergenceAngles.triggerBrutalGodEvent(a, em, pwr, s.frame + a * 13);
+            const pd = this.petriDishes[a % this.petriDishes.length];
+            if (pd) {
+              applyBrutalGodEvent(
+                pd,
+                brutal.event,
+                brutal.powerDelta,
+                brutal.brutality,
+                this.petriRng,
+              );
+              const release = triggerBrutalRelease(
+                a,
+                chaos / CHAOS_MAX, // normalize raw 0..CHAOS_MAX to the 0..1 the release's convex weighting expects
+                spinO,
+                qgtC,
+                esh,
+                this.superRng,
+                s.frame + a,
+              );
+              if (release) {
+                const ents = pd.biologics as Array<{
+                  vitality: number;
+                  form: string;
+                  brutalGodPower?: number;
+                }>;
+                for (const b of ents) {
+                  if (b.vitality === undefined) b.vitality = 1;
+                  if (b.form === undefined) b.form = 'BASE';
+                }
+                const outcome = applyBrutalRelease(release, ents, pd.aliveness, s.frame + a);
+                pd.godPower = Math.min(
+                  1,
+                  (pd.godPower || 0) + release.power * 0.1 + outcome.warp * 0.02,
+                );
+                this.audit.record('brutal-god-release', {
+                  archon: a,
+                  archetype: release.archetype,
+                  power: release.power,
+                  lore: getBrutalLore(release.archetype),
+                });
+              }
+            }
+            this.audit.record('brutal-god-event', {
+              archon: a,
+              event: brutal.event,
+              power: brutal.powerDelta,
+              brutality: brutal.brutality,
+            });
+          }
+        }
+      }
+
+      // Registry-driven growth: channels 0..4 are already ticked in the per-archon loop above; the harvest
+      // is via snapshot at the frame % 120 cadence below. (Removed a redundant extra update(0) here that
+      // double-stepped channel 0 every frame — a 6th soup tick and a 2x catalysis bias toward archon 0.)
+      // V-BREED: pantheon breeding rite (disabled V105 — visual dome only, no petri coupling).
+      if (PANTHEON_BREEDING_LIVE && s.frame % 600 === 0 && s.frame > 0) {
+        const [i, j] = nextBreedingPair(this.breedNonce);
+        this.lastBaby = breedAt(i, j, this.breedNonce);
+        this.breedNonce++;
+        const dish = this.petriDishes[i % this.petriDishes.length];
+        if (dish) {
+          // The child's Lyapunov exponent (chaos) + umbral degree drive petri dish growth.
+          const boost = clamp(
+            this.lastBaby.chaos.lyapunov * 0.1 + this.lastBaby.umbral.degree * 0.02,
+            0,
+            0.3,
+          );
+          dish.godPower = Math.min(1, (dish.godPower || 0) + boost);
+        }
+        this.audit.record('pantheon-breeding', {
+          nonce: this.breedNonce - 1,
+          parents: `${i}×${j}`,
+          lyapunov: this.lastBaby.chaos.lyapunov,
+          winding: this.lastBaby.homotopy.winding,
+          umbralDegree: this.lastBaby.umbral.degree,
+          blaschkeDegree: this.lastBaby.blaschke.degree,
+        });
+      }
+      // V-SELFEVO: initialize + step the self-evolution loop (Gödel-machine style self-improvement).
+      // Runs every 1200 frames (~20s at 60fps) on its own deterministic sub-stream (evoRng2).
+      // Metrics are built from the prime super mind's consciousness + the world's chaos + diversity.
+      if (!this.selfEvoLoop) {
+        const initMetrics: EvolutionMetrics = {
+          fitness: clamp(primeCoupling?.dominance ?? 0.5, 0, 1),
+          emergence: clamp(n / target, 0, 1),
+          complexity: this.apexBrain.parameterCount(),
+          consciousness: clamp(primeCoupling?.consciousness.phi ?? 0, 0, 1),
+          stability: clamp(1 - s.chaos / CHAOS_MAX, 0, 1),
+        };
+        this.selfEvoLoop = new SelfEvolutionLoop(initMetrics);
+      }
+      if (s.frame % 1200 === 0 && s.frame > 0) {
+        this.selfEvoLoop.ingestLive({
+          fitness: clamp(primeCoupling?.dominance ?? 0.5, 0, 1),
+          emergence: clamp(n / target, 0, 1),
+          complexity: this.apexBrain.parameterCount(),
+          consciousness: clamp(primeCoupling?.consciousness.phi ?? 0, 0, 1),
+          stability: clamp(1 - s.chaos / CHAOS_MAX, 0, 1),
+        });
+        // Feed metrics into the loop + step (the loop mutates its own metrics via safe self-modification)
+        const applied = this.selfEvoLoop.step(this.evoRng2);
+        if (applied) {
+          this.audit.record('self-evolution', {
+            generation: this.selfEvoLoop.generationCount,
+            score: this.selfEvoLoop.score,
+          });
+        }
+      }
+      // V-BEDAU: compute Bedau-Packard evolutionary activity from morphotype diversity snapshots.
+      // Every 300 frames (~5s), sample shannonDiversity of the live morphotype distribution,
+      // feed it into the activity window, and surface the result for telemetry.
+      if (s.frame % 300 === 0 && s.frame > 0) {
+        const morphCounts = Array.from({ length: this.morphTotal }, () => 0);
+        const list = this.entities.list;
+        for (let i = 0; i < list.length; i++) {
+          const e = list[i];
+          if (!e) continue;
+          const mi = e.userData.mi ?? 0;
+          if (mi >= 0 && mi < this.morphTotal) morphCounts[mi]!++;
+        }
+        const div = shannonDiversity(morphCounts);
+        this.diversitySnapshots.push(div);
+        if (this.diversitySnapshots.length > 32) this.diversitySnapshots.shift();
+        this.lastBedauActivity = bedauPackardActivity(this.diversitySnapshots, 8);
+        // V-OEE: the canonical open-endedness verdict — is the NEW-activity rate sustaining (unbounded)
+        // or decaying onto a plateau (bounded)? Read from the SAME diversity window, so it costs nothing
+        // extra and is genuinely surfaced (audit-recorded ⇒ observable + replayable), not decorative.
+        const oee = openEndednessVerdict(this.diversitySnapshots, 8);
+        const evoAct = evolutionaryActivity([this.diversitySnapshots]);
+        this.lastOeeVerdict = oee.verdict;
+        this.audit.record('bedau-packard-activity', {
+          activity: this.lastBedauActivity,
+          cumulativeActivity: evoAct.total,
+          diversity: div,
+          oee: oee.verdict,
+          oeeRatio: oee.ratio,
+        });
+        // V-QRC: live classical-vs-quantum randomness-quality contrast (Knuth serial-corr + χ²). Runs on
+        // a FRESH Eshkol child stream from a frame-derived seed, so it never perturbs the seeded sim
+        // stream (boot-stream-neutral). Wires a real, tested-but-previously-unwired kernel + surfaces it.
+        const rc = rngContrast(s.frame + 1, 256);
+        this.lastRngContrast = rc.contrast;
+        this.audit.record('rng-quantum-contrast', {
+          contrast: rc.contrast,
+          serialGap: rc.serialGap,
+          uniformityGap: rc.uniformityGap,
+        });
+        // V-UMWELT: measure the Offworld Umwelt Score ONCE (doctrine Experiment 2) — the fraction of apex
+        // behaviour driven by the ALIEN substrate. It is a static characterisation of the fixed apex scale
+        // (its own seeded child streams, reads no evolving state ⇒ boot-stream-neutral), so it runs a single
+        // time here (deferred off boot) with a light ensemble, then is surfaced. Was a tested-but-unwired module.
+        if (this.lastOffworldUmwelt < 0) {
+          const um = apexOffworldScore(SCALE_APEX_START, { seeds: [1, 7, 42], warmBeats: 12 });
+          this.lastOffworldUmwelt = um.score;
+          this.audit.record('offworld-umwelt-score', {
+            score: um.score,
+            earthLikeness: um.earthLikeness,
+            samples: um.samples,
+          });
+        }
+        // V-CHSH: evaluate the deterministic state-vector reference's CHSH S once. The modelled Bell state
+        // reaches 2√2 analytically and consumes no RNG draw, so this is boot-stream-neutral. A classical
+        // simulator computes the value: it is model-conformance telemetry, not a physical Bell experiment,
+        // entropy-source validation, security evidence, or proof of nonlocality.
+        if (this.lastBellS < 0) {
+          const bell = bellTestWithRng(mulberry32((s.frame ^ 0xb311_5e11) >>> 0 || 1));
+          this.lastBellS = bell.S;
+          this.audit.record('chsh-bell-witness', {
+            S: bell.S,
+            violation: bell.violation,
+            simulatedThresholdExceeded: bell.violation,
+            modelConformance: bell.modelConformance,
+            physicalExperiment: bell.physicalExperiment,
+          });
+        }
+      }
+      if (s.frame % 120 === 0 && n < target) {
+        const snap = this.primordialSoup.snapshot();
+        // Close the soup SELECTION loop: materialize the FITTEST evolved strain (vitality-argmax, which
+        // is driven by the Tsotchke PINN Gray-Scott metabolic residual minus the upkeep leak) instead of
+        // the fitness-blind slot 0 — so differential reproduction finally TRACKS the fitness signal
+        // (previously ~0-correlated). harvestEmergent resets the winner's vitality to 0.35, keeping
+        // turnover; it is deterministic (pure argmax + fixed reset). Falls back to slot 0 when nothing
+        // has crossed the emergent bar yet. Measured by tests/soup-harvest-selection.test.ts.
+        const strain = this.primordialSoup.harvestEmergent() ?? snap.strains[0] ?? null;
+        if (strain) {
+          const theta = (strain.id * 2.3999632297) % 6.28318530718;
+          const r = (8 + strain.vitality * 6) * ARENA_MID;
+          this.sv1.set(
+            r * Math.cos(theta),
+            ARENA_Y + strain.consciousness * 4,
+            r * Math.sin(theta),
+          );
+          const mi = Math.floor(strain.hue * this.morphTotal) % this.morphTotal;
+          this.entities.spawn(this.sv1, mi, 0.4 + strain.vitality * 0.6);
+          this.audit.record('primordial-emergent', {
+            id: strain.id,
+            gen: strain.generation,
+            vit: strain.vitality,
+          });
+        }
+      }
+      // V48 → GOAL: the apex SELF-EVOLUTION is now driven PER-ARCHON inside the 5-Archon loop above (each
+      // levels up + ascends independently off its own dominance/novelty/escort-assist/petri growth), so the
+      // prime-only block that lived here is gone — all five apexes grow, not just Archon 0.
+      // V35: the twin budget (cap 3) is now spent by the PLAYER — the puzzle reveal sires the 2nd
+      // creature and the FORK power sires the rest — so the prime no longer auto-spawns (no contention).
+      for (const tw of this.superTwins) tw.think(basePercept); // twins reason with their own minds
+      // V34/35: fold each revealed hero/twin mind into its body; tick the player progression layer.
+      for (const hb of this.heroBodies) hb.body.setMind(hb.mind.snapshot());
+      const hero0 = this.heroBodies[0];
+      if (this.superheroState.active && hero0) {
+        // The removed four-frame cadence no longer needs a 4/60 compensation; the real frame delta
+        // keeps progression stable across refresh rates and respects the simulation time scale.
+        this.superheroState.tick(dt, hero0.mind.snapshot().emotion.dominance, basePercept.threat);
+      }
+    } catch (e) {
+      // An apex beat misbehaved — skip it and keep the world running, but never silently (audit #12).
+      // Throttled: the first failure, then every 600th, so a per-frame fault cannot flood the log.
+      this.apexBeatFailures++;
+      if (this.apexBeatFailures === 1 || this.apexBeatFailures % 600 === 0) {
+        this.log.warn('driveSuper apex beat threw; skipped', {
+          failures: this.apexBeatFailures,
+          error: e instanceof Error ? (e.stack ?? e.message) : String(e),
+        });
+      }
+    }
+  }
+
+  /**
+   * F-SUPER V34/35: ACCESS GRANTED — the cryptographic puzzle was solved, so release the SECOND super
+   * creature AND enter SUPERHERO mode: the player BECOMES that creature. Sire a mutated twin (its own
+   * deep mind + apex purse + masterful body apart from the prime), activate the progression state + the
+   * player HUD. Idempotent. Draws from the SUPER sub-stream, so the main determinism golden is untouched.
+   */
+  /**
+   * V63: THE ASCENSION — the apex hit LEVEL 100 (the SS3/Neo end-state). Raise the MEGALITHIC
+   * MONOLITH TEMPLE (the GAME STAGE 2 portal to the "Eshkol Tsotchke" second world, built later),
+   * sound the deep voice, toast the HUD, audit it, and fire a `cqm:ascension` event for any Stage-2
+   * listener. Idempotent (guarded by {@link superAscended}); the temple itself is visual-only, so this
+   * never perturbs the deterministic population golden. The 2nd-world build is a future stage.
+   */
+  private ascend(): void {
+    if (this.superAscended) return;
+    this.superAscended = true;
+    this.monolithTemple.reveal(0, 0, -40 * ARENA_MID);
+    // V124: a single clean sub-boom marks the rise — the demonic "scream/abyssal/growl" nightmare bus
+    // is retired (the portal is a clean void now, not a hell wormhole). No infinite high-pitched pulse.
+    this.audio.playId(SFX_SUBBOOM);
+    this.hud.showSector('⚡ ASCENSION — STAGE 2 · THE MONOLITH TEMPLE RISES');
+    this.audit.record('ascension', { level: 100, stage: 2 });
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('cqm:ascension', { detail: { stage: 2 } }));
+    }
+  }
+
+  private revealSecondSuper(): void {
+    if (this.superheroUnlocked) return;
+    this.superheroUnlocked = true;
+    if (!this.spawnHeroAvatar({ x: -20, y: 13, z: -6 })) return; // prime at the twin cap (rare)
+    this.superheroState.activate();
+    this.superheroHud.activate();
+    this.hud.showSector('⛓ ACCESS GRANTED · SUPERHERO MODE');
+  }
+
+  /**
+   * Sire a hero/twin avatar at `anchor`: a mutated twin mind (≤3, the cap is in {@link SuperCreature}),
+   * its enrolled apex purse, and a masterful body the per-frame loop animates. Returns false at the cap.
+   */
+  private spawnHeroAvatar(anchor: { x: number; y: number; z: number }): boolean {
+    const twin = this.superCreature.maybeSpawn(this.superRng);
+    if (!twin) return false;
+    this.superTwins.push(twin);
+    // keep player hero/twin paths; pantheon 5 occupy ECON_SUPER_BASE+0..4 so +5 for heroes
+    const econId = World.ECON_SUPER_BASE + 5 + this.superTwins.length;
+    this.economy.register(econId, twin.name, 20, this.superRng);
+    this.heroBodies.push({
+      body: new SuperBodySystem(this.superScene, anchor),
+      mind: twin,
+      econId,
+    });
+    return true;
+  }
+
+  /** V35: apply a hero POWER (the HUD spends the energy; here we apply the world-effect). */
+  private heroPower(id: string): void {
+    const p = HERO_POWERS.find((x) => x.id === id);
+    if (!p || this.superheroState.energy < p.cost) return; // unknown power or not enough energy
+    if (id === 'fork') {
+      // only charge if a twin was actually sired (the cap of 3 may already be reached)
+      if (this.spawnHeroAvatar({ x: -8 - this.heroBodies.length * 9, y: 14, z: -15 })) {
+        this.superheroState.use(p.cost);
+      } else {
+        this.hud.showSector('QUANTUM FORK · TWIN CAP REACHED');
+      }
+      return;
+    }
+    this.superheroState.use(p.cost);
+    if (id === 'phase')
+      this.heroCycleRender(); // slip between render-states
+    else if (id === 'recall') {
+      this.heroBodies[0]?.body.recallTo(0, 14, 0);
+      this.superBodies[0]?.recallTo(0, 18, 0);
+      for (const e of this.entities.list) {
+        const d2 = e.position.x * e.position.x + e.position.z * e.position.z;
+        if (d2 > 1 && d2 < 14400) {
+          e.userData.vel.x -= e.position.x * 0.015;
+          e.userData.vel.z -= e.position.z * 0.015;
+        }
+      }
+      this.audio.play('warp');
+      this.hud.showSector('RECALL · LOCUS SUMMONED');
+    } else {
+      const locusBody = this.heroBodies[0]?.body ?? this.superBodies[0];
+      const locus = locusBody ? locusBody.worldPosition(this.sv1) : null;
+      const lx = locus?.x ?? 0;
+      const lz = locus?.z ?? 0;
+      for (const e of this.entities.list) {
+        if (e.userData.isNhi) continue;
+        const dx = e.position.x - lx;
+        const dz = e.position.z - lz;
+        const d = Math.hypot(dx, dz);
+        if (d > 1e-3 && d < 120) {
+          const push = ((120 - d) / 120) * 0.25;
+          e.userData.vel.x += (dx / d) * push;
+          e.userData.vel.z += (dz / d) * push;
+        }
+      }
+      this.state.chaos = Math.max(CHAOS_MIN, this.state.chaos * 0.88);
+      this.audio.play('burst');
+      this.hud.showSector('DOMINION PULSE · THE FIELD COWERS');
+    }
+  }
+
+  /** V35: VISION — cycle the world render-state (reuses the same path as the toolbar action). */
+  private heroCycleRender(): void {
+    const i = RENDER_MODES.indexOf(this.state.renderMode);
+    const mode = cyc(RENDER_MODES, i + 1);
+    this.state.renderMode = mode;
+    this.persisted.renderIdx = RENDER_MODES.indexOf(mode);
+    this.save();
+    this.entities.setRenderMode(mode);
+    this.xenomimicsRender.setRenderMode(mode);
+    this.alphabetPantheon.setWireHalosVisible(mode === 'wire');
+    this.hud.showSector('VISION · ' + mode.toUpperCase() + ' · XENO UNIQUE');
+  }
+
+  /** V41: CAMERA — cycle orbit → 3rd-person → 1st-person (the follow rigs in {@link updateHeroCamera}). */
+  private heroCycleCam(): void {
+    const m = this.superheroState.cycleCam();
+    const label = m === 'orbit' ? 'ORBIT (free)' : m === 'third' ? '3RD-PERSON' : '1ST-PERSON';
+    this.hud.showSector('CAM · ' + label);
+  }
+
+  /** V41: PILOT — cycle autopilot → assist → manual control of the avatar. */
+  private heroCycleControl(): void {
+    const m = this.superheroState.cycleControl();
+    this.hud.showSector('PILOT · ' + m.toUpperCase());
+  }
+
+  /** When the super creature owns WASD/arrows (assist/manual), free-cam must not steal them. */
+  private heroOwnsKeyboardNav(): boolean {
+    return this.superheroState.active && this.superheroState.controlMode !== 'autopilot';
+  }
+
+  /**
+   * V41: route the player's navigation — keyboard (WASD/QE + arrows) and the on-screen D-pad / touch —
+   * into the avatar's flight as a CAMERA-RELATIVE steer. AUTOPILOT ignores it (the mind flies itself);
+   * ASSIST nudges the autonomous heading; MANUAL flies it outright. No-op until the avatar is active.
+   */
+  private updateHeroControl(): void {
+    const hero = this.heroBodies[0];
+    if (!this.superheroState.active || !hero) return;
+    const mode = this.superheroState.controlMode;
+    if (mode === 'autopilot') {
+      hero.body.setControl(0, 0, 0, 0, false);
+      return;
+    }
+    const k = this.input.keys;
+    let fwd = 0;
+    let strafe = 0;
+    let lift = 0;
+    if (k['w'] || k['arrowup']) fwd += 1;
+    if (k['s'] || k['arrowdown']) fwd -= 1;
+    if (k['d'] || k['arrowright']) strafe += 1;
+    if (k['a'] || k['arrowleft']) strafe -= 1;
+    if (k['q']) lift += 1;
+    if (k['e']) lift -= 1;
+    fwd += this.heroPad.z;
+    strafe += this.heroPad.x;
+    lift += this.heroPad.y;
+    const active = fwd !== 0 || strafe !== 0 || lift !== 0;
+    // camera-relative horizontal basis: forward = where you look, right = forward × up.
+    const f = this.engine.camera.getWorldDirection(this.heroF);
+    f.y = 0;
+    if (f.lengthSq() < 1e-4) f.set(0, 0, -1);
+    f.normalize();
+    const r = this.heroR.set(-f.z, 0, f.x);
+    this.heroIntent.set(0, 0, 0).addScaledVector(f, fwd).addScaledVector(r, strafe);
+    this.heroIntent.y += lift;
+    hero.body.setControl(
+      mode === 'manual' ? 2 : 1,
+      this.heroIntent.x,
+      this.heroIntent.y,
+      this.heroIntent.z,
+      active,
+    );
+  }
+
+  /**
+   * V41: the chase / first-person camera. `third` trails behind + above the avatar looking at it;
+   * `first` sits at the creature's leading face looking along its heading; `orbit` leaves the normal
+   * camera untouched. Runs AFTER updateCamera so it overrides the free-cam each frame while engaged.
+   */
+  private updateHeroCamera(): void {
+    const hero = this.heroBodies[0];
+    if (!this.superheroState.active || !hero) return;
+    const cm = this.superheroState.camMode;
+    if (cm === 'orbit') return;
+    const cam = this.engine.camera;
+    const p = hero.body.worldPosition(this.sv1);
+    const h = hero.body.heading(this.sv2);
+    if (cm === 'first') {
+      cam.position.copy(p).addScaledVector(h, 6.5); // at the leading face of the core
+      cam.position.y += 2;
+      cam.lookAt(this.heroIntent.copy(p).addScaledVector(h, 30));
+    } else {
+      cam.position.copy(p).addScaledVector(h, -28); // trail behind
+      cam.position.y += 13;
+      // V122 (USER #6): aim ABOVE the creature so IT sits in the LOWER third of the frame —
+      // hero HUD strip on top, the twin fully visible between it and the two bottom dock rows
+      // (a rule-of-thirds stack instead of the twin hiding dead-center behind the HUD).
+      cam.lookAt(this.heroIntent.copy(p).setY(p.y + 9));
+    }
+  }
+
+  /**
+   * Bounded mean of the reaction-diffusion V field (≈1,024 reads regardless of
+   * texture resolution) — the "pattern energy" of the living ground. Allocation-free.
+   */
+  private sampleRdEnergy(): number {
+    const v = this.rd.fieldV;
+    if (v.length === 0) return 0;
+    const stride = Math.max(1, Math.floor(v.length / 1024));
+    let sum = 0;
+    let count = 0;
+    for (let i = 0; i < v.length; i += stride) {
+      sum += v[i] ?? 0;
+      count++;
+    }
+    return count > 0 ? sum / count : 0;
+  }
+
+  /**
+   * A quantum measurement collapsed the register: soft chime, a Gray-Scott
+   * scar at a seeded location, and an audit record named from the lore.
+   */
+  private onCollapse(basis: number): void {
+    if (basis < 0) return;
+    this.audio.play('crystallize');
+    this.quantum.implodeAt(basis); // the index%32===basis particle subset collapses
+    this.rd.perturb(this.rng(), this.rng(), 6);
+    // Every titan witnesses the measurement and banks energy (V3.3 PRODUCE hook).
+    this.titans.onCollapseWitness();
+    this.audit.record('collapse', { basis, star: this.lore.name('star', basis) });
+  }
+
+  /**
+   * ◎ GOD — snap the FREE camera to a cinematic 3/4 vantage that frames the God-Colossus fractal deity.
+   * It hovers at the far back of the dome (behind the swarm), so it is otherwise easy to miss. We switch
+   * to FREE view so the shot sticks — the auto-cams (orbit/fly/tracking) would otherwise re-drive the
+   * camera every frame — then the player can WASD / mouse-look around it freely. Presentation-only: reads
+   * the deity's exposed center/radius and writes only the camera transform + the view index.
+   */
+  private focusColossus(): void {
+    const freeIdx = VIEW_MODES.indexOf('free');
+    if (freeIdx >= 0) {
+      this.state.viewIdx = freeIdx;
+      this.persisted.viewIdx = freeIdx;
+    }
+    const cam = this.engine.camera;
+    const c = this.godColossus.center;
+    const r = this.godColossus.viewRadius;
+    cam.up.set(0, 1, 0);
+    cam.position.set(c.x + r * 0.7, c.y + r * 0.7, c.z + r * 2.0);
+    cam.lookAt(c.x, c.y, c.z);
+    this.hud.showSector('◎ GOD-COLOSSUS');
+  }
+
+  /**
+   * ◈ XENOMIMIC — snap the FREE camera to a 3/4 vantage framing the xenomimic ground-fauna swarm. The
+   * fauna roam a small radius low on the habitat floor near the world origin, so they are easy to miss;
+   * this frames their LIVE centroid. Switches to FREE so the auto-cams don't re-drive the shot, then the
+   * player can roam. Presentation-only: reads live creature positions, writes only the camera + view index.
+   */
+  private focusXenomimics(): void {
+    const freeIdx = VIEW_MODES.indexOf('free');
+    if (freeIdx >= 0) {
+      this.state.viewIdx = freeIdx;
+      this.persisted.viewIdx = freeIdx;
+    }
+    let cx = 0;
+    let cy = 0;
+    let cz = 0;
+    let n = 0;
+    this.xenomimics.forEach((c) => {
+      cx += c.x;
+      cy += c.y;
+      cz += c.z;
+      n++;
+    });
+    if (n > 0) {
+      cx /= n;
+      cy /= n;
+      cz /= n;
+    }
+    const r = 220;
+    const cam = this.engine.camera;
+    cam.up.set(0, 1, 0);
+    cam.position.set(cx + r * 0.5, cy + r * 0.8, cz + r * 1.1);
+    cam.lookAt(cx, cy, cz);
+    this.hud.showSector('◈ XENOMIMICS');
+  }
+
+  /** Frame the living manifold from a close three-quarter vantage. */
+  private focusXylos(): void {
+    const freeIdx = VIEW_MODES.indexOf('free');
+    if (freeIdx >= 0) {
+      this.state.viewIdx = freeIdx;
+      this.persisted.viewIdx = freeIdx;
+    }
+    const p = this.xylosBody.group.position;
+    const camera = this.engine.camera;
+    camera.up.set(0, 1, 0);
+    camera.position.set(p.x + 88, p.y + 42, p.z + 112);
+    camera.lookAt(p.x, p.y, p.z);
+    this.hud.showSector('✧ XYLOS · AUTONOMOUS MANIFOLD');
+    this.audit.record('xylos-focus', {});
+  }
+
+  /** Frame the complete Big Tree canopy, sanctuary glade, and local fauna. */
+  private focusEcosystem(): void {
+    const freeIdx = VIEW_MODES.indexOf('free');
+    if (freeIdx >= 0) {
+      this.state.viewIdx = freeIdx;
+      this.persisted.viewIdx = freeIdx;
+    }
+    const cam = this.engine.camera;
+    const c = this.crystalEcosystem.focusPoint;
+    const r = this.crystalEcosystem.viewRadius;
+    cam.up.set(0, 1, 0);
+    cam.position.set(c.x + r * 0.78, c.y + r * 0.38, c.z - r * 1.38);
+    cam.lookAt(c.x, c.y, c.z);
+    this.hud.showSector('♧ BIG TREE · FOOD · REST · PEACE');
+  }
+
+  /** XNO: birth a whole entangled TWIN PAIR ahead of the camera — mimic + anti, one shared brain. */
+  private launchXenomimic(): number {
+    this.engine.camera.getWorldDirection(this.sv2);
+    this.sv1.copy(this.engine.camera.position).addScaledVector(this.sv2, 28);
+    const added = this.xenomimics.spawnTwinAt(this.sv1.x, this.sv1.z);
+    const living = this.xenomimics.population();
+    if (added > 0) {
+      this.audio.playXenomimicEvent(0, 'birth', 1);
+      this.hud.showSector(`◈ XNO +${added} TWIN · ${living} LIVE`);
+      this.audit.record('xenomimic-spawn', { added, living });
+    } else {
+      this.hud.showSector(`XNO CAP · ${XENOMIMIC_MAX} LIVE`);
+      this.audit.record('xenomimic-spawn-blocked', { living });
+    }
+    return added;
+  }
+
+  /** Legacy chaos multiplier cMul(): min(chaos/2, 3). */
+  private chaosMul(): number {
+    return Math.min(this.state.chaos / 2, 3);
+  }
+
+  /** Prototype seam used by production callbacks and lightweight Object.create test harnesses. */
+  private isBigTreeProtected(x: number, z: number): boolean {
+    return (
+      this.bigTreeSanctuary?.protectsEndpoint(x, z) ??
+      this.bigTreeZone?.protects(x, z, true) ??
+      false
+    );
+  }
+
+  /** Register/update a living identity through the authored hysteresis annulus. */
+  private isBigTreeMemberProtected(
+    ownerKind: number,
+    ownerId: number | undefined,
+    x: number,
+    z: number,
+  ): boolean {
+    const registry = this.bigTreeSanctuary;
+    if (!registry || ownerId === undefined || !Number.isInteger(ownerId) || ownerId < 0) {
+      return this.isBigTreeProtected(x, z);
+    }
+    // One lookup per check; unmoved members keep their stored hysteresis state (same answer).
+    const observed = registry.observe(ownerKind, ownerId, x, z);
+    if (observed < 0) return this.isBigTreeProtected(x, z);
+    return observed === 1;
+  }
+
+  /** Hostile actions are legal only when neither endpoint is inside the neutral sanctuary. */
+  private isBigTreeHarmAllowed(
+    attackerX: number,
+    attackerZ: number,
+    targetX: number,
+    targetZ: number,
+  ): boolean {
+    const allowed =
+      !this.isBigTreeProtected(attackerX, attackerZ) && !this.isBigTreeProtected(targetX, targetZ);
+    if (!allowed) this.bigTreeSuppressedHarm++;
+    return allowed;
+  }
+
+  /** Lifecycle fan-out stays event-driven and bounded; the population reuses the event object. */
+  private onXenomimicLifecycle(event: Readonly<XenomimicLifecycleEvent>): void {
+    if (event.kind === 'death' || event.kind === 'eaten') {
+      // Stable pair/role identity releases food, activity slots, and social partners immediately.
+      // The population emits its boot births before this adapter is constructed.
+      this.bigTreeVisitors?.cancelXenomimic(event.pairId * 2 + event.role);
+      this.bigTreeSanctuary?.remove(BIG_TREE_SANCTUARY_XENOMIMIC, event.pairId * 2 + event.role);
+    }
+    const audioKind =
+      event.kind === 'birth'
+        ? 'birth'
+        : event.kind === 'death'
+          ? 'natural-death'
+          : event.kind === 'eaten'
+            ? 'eaten'
+            : event.kind === 'respawn'
+              ? 'respawn'
+              : event.kind === 'teleport'
+                ? 'blink'
+                : null;
+    if (audioKind) this.audio.playXenomimicEvent(event.species, audioKind, event.energy);
+    if (event.kind !== 'none' && event.kind !== 'teleport') {
+      this.audit.record(`xenomimic-${event.kind}`, {
+        pairId: event.pairId,
+        role: event.role,
+        species: event.species,
+      });
+    }
+  }
+
+  /**
+   * Keep the visible Xenomimic layer full-rate while expensive cross-population topology is a fixed
+   * 10 Hz. No adaptive quality shedding: the same ten morph draws and cognition remain authoritative.
+   */
+  private updateXenomimicPresentation(time: number, strictSilence: boolean): void {
+    const state = this.state;
+    const telemetry = this.xenomimics.telemetry();
+    const environment = this.xenomimicRenderEnvironment;
+    environment.chaos = clamp(state.chaos / CHAOS_MAX, 0, 1);
+    environment.entropy = clamp((state.entropy ?? 0) / ENTROPY_MAX, 0, 1);
+    environment.weather = WEATHERS.length > 1 ? state.weatherIdx / (WEATHERS.length - 1) : 0;
+    environment.proximity = this.xenomimicProximity;
+    environment.coherence = telemetry.coherence;
+    environment.integration = telemetry.integration;
+    environment.twinTension = telemetry.bondTension;
+    this.xenomimicsRender.sync(this.xenomimics, time, environment);
+
+    if (!strictSilence && state.frame % 6 === 0) {
+      const sample = this.xenomimicEntitySample;
+      sample.length = 0;
+      const entities = this.entities.list;
+      const stride = Math.max(1, Math.ceil(entities.length / 48));
+      let activation = 0;
+      for (let i = state.frame % stride; i < entities.length && sample.length < 48; i += stride) {
+        const entity = entities[i];
+        if (!entity) continue;
+        sample.push(entity);
+        activation += clamp(entity.userData.act / 4, 0, 1);
+      }
+      this.xenomimicEntityActivation = sample.length > 0 ? activation / sample.length : 0;
+      this.xenomimicConnectome.setVisible(false);
+      this.xenomimicConnectome.sync(this.xenomimics, sample, time);
+      // Sticky HMR: re-sweep orphan twin cords for the first ~4s, then rare.
+      if (state.frame < 240 || state.frame % 300 === 0) this.purgeOrphanXenomimicTethers();
+      const camera = this.engine.camera.position;
+      const nearest = this.xenomimics.nearestBody(camera.x, camera.z, 120);
+      this.xenomimicProximity = nearest
+        ? clamp(1 - Math.hypot(nearest.x - camera.x, nearest.z - camera.z) / 120, 0, 1)
+        : 0;
+    }
+
+    if (!strictSilence && state.frame % 4 === 0) {
+      const entities = this.entities.list;
+      const entity = entities.length > 0 ? entities[state.frame % entities.length] : undefined;
+      if (entity) {
+        const victim = this.xenomimics.nearestBody(entity.position.x, entity.position.z, 6);
+        if (
+          victim &&
+          this.isBigTreeHarmAllowed(entity.position.x, entity.position.z, victim.x, victim.z)
+        ) {
+          const food = this.xenomimics.consumeNearest(entity.position.x, entity.position.z, 6);
+          if (food > 0) entity.userData.energy = Math.min(100, entity.userData.energy + food * 20);
+        }
+      }
+    }
+
+    const audio = this.xenomimicAudioMetrics;
+    audio.population = telemetry.population;
+    audio.activity = clamp(
+      telemetry.meanEnergy * 0.25 + telemetry.coherence * 0.35 + telemetry.freeEnergy * 0.4,
+      0,
+      1,
+    );
+    audio.predictionError = telemetry.freeEnergy;
+    audio.twinTension = telemetry.bondTension;
+    audio.weather = environment.weather;
+    audio.entropy = environment.entropy;
+    audio.proximity = this.xenomimicProximity;
+    audio.strictSilence = strictSilence;
+    this.audio.setXenomimicField(audio);
+  }
+
+  /** Keep the Big Tree rooted in the same analytic living ground as its neighboring flora. */
+  private updateCrystalEcosystem(
+    dt: number,
+    visualDt: number,
+    time: number,
+    visualOnly: boolean,
+  ): void {
+    const s = this.state;
+    const chaos = clamp(s.chaos / CHAOS_MAX, 0, 1);
+    const entropy = clamp((s.entropy ?? 0) / ENTROPY_MAX, 0, 1);
+    this.crystalEcosystem.setRootHeight(
+      this.crystalTerrainBase +
+        terrainDisplacementAt(
+          CRYSTAL_TREE_ORIGIN_X,
+          CRYSTAL_TREE_ORIGIN_Z,
+          time,
+          chaos,
+          entropy,
+          s.wind.x,
+          s.wind.z,
+        ),
+    );
+    const frame = this.crystalFrame;
+    frame.dt = dt;
+    frame.visualDt = visualDt;
+    frame.time = time;
+    frame.chaos = chaos;
+    frame.entropy = entropy;
+    frame.windX = s.wind.x;
+    frame.windZ = s.wind.z;
+    frame.weather = s.weatherIdx / Math.max(1, WEATHERS.length - 1);
+    frame.visualOnly = visualOnly;
+    this.crystalEcosystem.update(frame);
+  }
+
+  /**
+   * Advance temporary Big Tree visits after the canonical Crystal food clock and both living
+   * populations have advanced. Steering therefore persists into the next integrator tick, while
+   * consumption, leases, dwell time, and cooldowns share the scaled simulation clock exactly.
+   */
+  private updateBigTreeVisitors(dt: number, time: number): void {
+    const signal = this.organismIntelligence.signal;
+    const environment = this.bigTreeVisitorEnvironment;
+    const chaos = clamp(this.state.chaos / CHAOS_MAX, 0, 1);
+    environment.danger = Math.max(chaos * 0.7, signal.threatResponse);
+    environment.stress = clamp(chaos * 0.55 + signal.threatResponse * 0.35, 0, 1);
+    environment.socialNeed = signal.socialDrive;
+    environment.curiosity = signal.exploration;
+    environment.simulationLoad = clamp(
+      this.entities.list.length / Math.max(1, this.quality.maxEntities),
+      0,
+      1,
+    );
+    environment.foodAvailable = this.crystalEcosystem.availableTreeFood() > 0;
+    this.bigTreeVisitors.update(
+      time,
+      dt,
+      this.entities.list,
+      this.xenomimics.bodyView(),
+      environment,
+    );
+    this.bigTreeFaunaVisitors.update(time, dt, environment);
+
+    // Feed real visitor/social state into the residents' neural percept. The stats pass is bounded
+    // by fixed visit capacity and authored slots; it never scans the full population or 20k foods.
+    const stats = this.bigTreeVisitorStats;
+    this.bigTreeVisitors.readStats(stats);
+    const faunaStats = this.bigTreeFaunaVisitorStats;
+    this.bigTreeFaunaVisitors.readStats(faunaStats);
+    const activeVisitors = stats.activeVisitors + faunaStats.activeVisitors;
+    const socialPairs = stats.socialPairs;
+    this.crystalEcosystem.setVisitorPresence(
+      activeVisitors,
+      (2 * socialPairs) / Math.max(1, activeVisitors),
+    );
+
+    // Local development receipt at a deliberately sparse cadence; deployed builds retain neither
+    // debug geometry nor ecology-specific audit churn unless diagnostics were explicitly enabled.
+    if (this.developmentDiagnostics && this.state.frame % 600 === 0) {
+      const food = this.crystalEcosystem.edibleResources.stats();
+      const neural = this.crystalEcosystem.neuralStatus();
+      this.audit.record('big-tree-ecology', {
+        activeVisitors: stats.activeVisitors,
+        ordinaryVisitors: stats.activeOrdinary,
+        xenomimicVisitors: stats.activeXenomimics,
+        faunaVisitors: faunaStats.activeVisitors,
+        meals: stats.completedMeals + faunaStats.completedMeals,
+        socialPairs,
+        cooperativePolicyTransfers: stats.policyTransfers,
+        targetLosses: stats.targetLosses + faunaStats.targetLosses,
+        faunaPolls: faunaStats.totalPolls,
+        faunaCancellations: faunaStats.cancellations,
+        completedVisits: stats.completedVisits,
+        timedOutVisits: stats.timedOutVisits,
+        stuckRecoveries: stats.stuckRecoveries,
+        forcedExits: stats.forcedExits,
+        partnerTimeouts: stats.partnerTimeouts,
+        rejectedForCapacity: stats.rejectedForCapacity,
+        rejectedForNoSlot: stats.rejectedForNoSlot,
+        availableSlots: stats.availableSlots,
+        foodAvailable: food.available,
+        foodReserved: food.reserved,
+        foodConsuming: food.consuming,
+        foodRespawning: food.respawning,
+        foodPendingRespawns: food.pendingRespawns,
+        foodLifecycleErrors: food.lifecycleErrors,
+        suppressedHarm: this.bigTreeSuppressedHarm,
+        neuralReady: neural.modelReady,
+        neuralDecisions: neural.decisions,
+        neuralFallbacks: neural.fallbackCount,
+        teachingEvents: neural.teachingEvents,
+        lastTeachingWeightDelta: neural.lastTeachingWeightDelta,
+      });
+    }
+  }
+
+  /** Camera modes: world-scale paths follow the expanded habitat; subject shots keep object scale. */
+  private updateCamera(dt: number, uiDt: number, t: number): void {
+    const cam = this.engine.camera;
+    const mode: ViewMode = cyc(VIEW_MODES, this.state.viewIdx);
+    if (mode !== 'top' && cam.far !== CAMERA_FAR) {
+      cam.far = CAMERA_FAR;
+      cam.updateProjectionMatrix();
+    }
+    // USER (player is God Mode — NEVER slowed or frozen): the FREE camera is the player, so it ALWAYS
+    // roams on the real frame delta (uiDt), regardless of timeScale or pause. Previously it only used
+    // uiDt when fully paused (timeScale===0), so a SLOW time scale (0.1–0.5×) dragged the player's own
+    // movement down with the sim — the "speed settings slow down the player" bug. Only the automated
+    // cinematic cams (orbit/fly/tracking) ride the scaled sim delta.
+    const camDt = mode === 'free' ? uiDt : dt;
+    // Preserve edge-to-edge traversal time after the 2× horizontal expansion.
+    const spd = 14 * HABITAT_MID * camDt;
+    const rs = 1.5 * camDt;
+    if (mode === 'free') {
+      const k = this.input.keys;
+      const cv = this.input.camVel;
+      const touch = this.input.touch;
+      const heroNav = this.heroOwnsKeyboardNav();
+      if (!heroNav) {
+        if (k['w'] || k['arrowup']) cam.translateZ(-spd);
+        if (k['s'] || k['arrowdown']) cam.translateZ(spd);
+        if (k['a'] || k['arrowleft']) cam.translateX(-spd);
+        if (k['d'] || k['arrowright']) cam.translateX(spd);
+        if (k['q']) cam.position.y += spd;
+        if (k['e']) cam.position.y -= spd;
+        if (k['c']) cam.rotation.y += rs;
+        if (k['v']) cam.rotation.y -= rs;
+        if (touch.active) {
+          cam.translateX(touch.x * spd);
+          cam.translateZ(touch.y * spd);
+        }
+        if (cv.x) cam.translateX(cv.x * spd * 2);
+        if (cv.y) cam.position.y += cv.y * spd * 2;
+        if (cv.z) cam.translateZ(cv.z * spd * 2);
+      }
+      if (k['z']) cam.rotation.z += rs;
+      if (k['x']) cam.rotation.z -= rs;
+      if (k['r']) cam.rotation.x += rs;
+      if (k['f']) cam.rotation.x -= rs;
+      if (!heroNav) {
+        if (cv.rx) cam.rotation.x += cv.rx * rs;
+        if (cv.ry) cam.rotation.y += cv.ry * rs;
+        if (cv.rz) cam.rotation.z += cv.rz * rs;
+      }
+      // Mouse-look + wheel zoom (InputSystem contract amendment, 0.2.1).
+      const lk = this.input.look;
+      if (lk.dx !== 0 || lk.dy !== 0) {
+        cam.rotation.y -= lk.dx * 0.003;
+        cam.rotation.x -= lk.dy * 0.003;
+      }
+      if (this.input.zoom !== 0) cam.translateZ(this.input.zoom * 0.05);
+    } else if (mode === 'orbit') {
+      const oR = (65 + Math.sin(t * 0.05) * 18) * HABITAT_MID;
+      cam.position.set(
+        Math.cos(t * 0.12) * oR,
+        (22 + Math.sin(t * 0.08) * 18) * HABITAT_Y,
+        Math.sin(t * 0.12) * oR,
+      );
+      cam.lookAt(0, 8 * HABITAT_Y, 0);
+    } else if (mode === 'fly') {
+      const ft = t * 0.06;
+      cam.position.set(
+        (Math.sin(ft) * 45 + Math.cos(ft * 1.3) * 22) * HABITAT_MID,
+        (16 + Math.sin(ft * 0.4) * 22) * HABITAT_Y,
+        (Math.cos(ft) * 45 + Math.sin(ft * 0.7) * 28) * HABITAT_MID,
+      );
+      cam.lookAt(
+        Math.sin(ft * 0.3) * 12 * HABITAT_MID,
+        (5 + Math.sin(ft * 0.5) * 12) * HABITAT_Y,
+        Math.cos(ft * 0.3) * 12 * HABITAT_MID,
+      );
+    } else if (mode === 'tree') {
+      const c = this.crystalEcosystem.focusPoint;
+      const r = this.crystalEcosystem.viewRadius;
+      const angle = t * 0.07;
+      const tx = c.x + Math.cos(angle) * r * 1.55;
+      const ty = c.y + r * (0.28 + Math.sin(t * 0.045) * 0.08);
+      const tz = c.z + Math.sin(angle) * r * 1.55;
+      const far = Math.hypot(cam.position.x - tx, cam.position.y - ty, cam.position.z - tz) > r * 3;
+      if (far) {
+        cam.position.set(tx, ty, tz);
+      } else {
+        const k = Math.min(1, dt * 1.6);
+        cam.position.x += (tx - cam.position.x) * k;
+        cam.position.y += (ty - cam.position.y) * k;
+        cam.position.z += (tz - cam.position.z) * k;
+      }
+      cam.up.set(0, 1, 0);
+      cam.lookAt(c.x, c.y, c.z);
+    } else if (TRACKING_VIEWS.has(mode)) {
+      // F-CAM5 subject-tracking shots: frame a live organism resolved by stable index.
+      const found = this.resolveSubject(t);
+      const sx = this.camSubX;
+      const sy = this.camSubY;
+      const sz = this.camSubZ;
+      if (!found) {
+        // Empty world — calm orbit so the camera never freezes staring at nothing.
+        const r = 60 * HABITAT_MID;
+        cam.position.set(Math.cos(t * 0.1) * r, 26 * HABITAT_Y, Math.sin(t * 0.1) * r);
+        cam.lookAt(0, 6 * HABITAT_Y, 0);
+      } else if (mode === 'follow') {
+        const r = 16 * ARENA_MID; // close offset that slowly orbits the subject
+        const k = Math.min(1, dt * 2.5); // smooth glide toward the target offset
+        cam.position.x += (sx + Math.cos(t * 0.25) * r - cam.position.x) * k;
+        cam.position.y += (sy + 7 * ARENA_Y - cam.position.y) * k;
+        cam.position.z += (sz + Math.sin(t * 0.25) * r - cam.position.z) * k;
+        cam.lookAt(sx, sy, sz);
+      } else if (mode === 'chase') {
+        // Trail just behind the subject's XZ heading (unit heading × distance).
+        const vlen = Math.hypot(this.camSubVX, this.camSubVZ) || 1;
+        const back = 14 * ARENA_MID;
+        const k = Math.min(1, dt * 3);
+        cam.position.x += (sx - (this.camSubVX / vlen) * back - cam.position.x) * k;
+        cam.position.y += (sy + 5 * ARENA_Y - cam.position.y) * k;
+        cam.position.z += (sz - (this.camSubVZ / vlen) * back - cam.position.z) * k;
+        cam.lookAt(sx, sy, sz);
+      } else if (mode === 'mimic') {
+        const r = Math.max(3.2, this.camSubR * 3.4);
+        const angle = t * 0.38;
+        const k = Math.min(1, dt * 5);
+        cam.position.x += (sx + Math.cos(angle) * r - cam.position.x) * k;
+        cam.position.y += (sy + r * 0.42 - cam.position.y) * k;
+        cam.position.z += (sz + Math.sin(angle) * r - cam.position.z) * k;
+        cam.lookAt(sx, sy + this.camSubR * 0.2, sz);
+      } else {
+        // titan: a grand wide tracking shot from far back and high up.
+        const r = 70 * ARENA_MID;
+        const k = Math.min(1, dt * 1.2);
+        cam.position.x += (sx + Math.cos(t * 0.08) * r - cam.position.x) * k;
+        cam.position.y += (sy + 40 * ARENA_Y - cam.position.y) * k;
+        cam.position.z += (sz + Math.sin(t * 0.08) * r - cam.position.z) * k;
+        cam.lookAt(sx, sy, sz);
+      }
+    } else if (mode === 'specimen') {
+      // F-RELIQUARY: a macro "specimen plate" tour — frame the live tracked organism huge and
+      // close on the dark fog-void, slow-turntabling, auto-advancing to a fresh specimen every
+      // ~6 s. Reuses resolveSubject (reads sim state, writes none → determinism-safe). The FogExp2
+      // already swallows the distant ecosystem at this range, so each jeweled organism reads alone
+      // like a studio plate — the direct answer to the NHI specimen reference.
+      const found = this.resolveSubject(t);
+      const sx = this.camSubX;
+      const sy = this.camSubY;
+      const sz = this.camSubZ;
+      if (!found) {
+        const r = 60 * HABITAT_MID;
+        cam.position.set(Math.cos(t * 0.1) * r, 26 * HABITAT_Y, Math.sin(t * 0.1) * r);
+        cam.lookAt(0, 6 * HABITAT_Y, 0);
+      } else {
+        // Distance ≈ 2× the specimen radius so it subtends ~60° and fills the frame at the
+        // default FOV; a tight chase keeps the roaming organism locked + centered.
+        const r = Math.max(2.0, this.camSubR * 2.0);
+        const ang = t * 0.35; // slow turntable around the subject
+        const tx = sx + Math.cos(ang) * r;
+        const ty = sy + r * 0.22;
+        const tz = sz + Math.sin(ang) * r;
+        // When the subject advances to a new specimen (every ~6 s) it can be arena-distances away;
+        // gliding there would smear a wide transit shot across the plate. Instead CUT — snap to the
+        // new specimen's macro frame — so the view reads as discrete studio plates. Within a
+        // specimen, a tight lerp keeps the roaming organism centred.
+        const far =
+          Math.hypot(cam.position.x - tx, cam.position.y - ty, cam.position.z - tz) > r * 6;
+        if (far) {
+          cam.position.set(tx, ty, tz);
+        } else {
+          const k = Math.min(1, dt * 5);
+          cam.position.x += (tx - cam.position.x) * k;
+          cam.position.y += (ty - cam.position.y) * k;
+          cam.position.z += (tz - cam.position.z) * k;
+        }
+        cam.up.set(0, 1, 0);
+        cam.lookAt(sx, sy, sz);
+      }
+    } else if (mode === 'cinematic') {
+      // Slow grand drift across the whole arena (the wide, unhurried sibling of 'fly').
+      const ct = t * 0.025;
+      cam.position.set(
+        Math.sin(ct) * 80 * HABITAT_MID,
+        (40 + Math.sin(ct * 0.5) * 28) * HABITAT_Y,
+        Math.cos(ct * 0.8) * 80 * HABITAT_MID,
+      );
+      cam.lookAt(Math.sin(ct * 0.4) * 10 * HABITAT_MID, 6 * HABITAT_Y, 0);
+    } else if (mode === 'vortex') {
+      // Descending/rising spiral around the world axis.
+      const vr = (30 + (Math.sin(t * 0.07) * 0.5 + 0.5) * 50) * HABITAT_MID;
+      const vy = (10 + (Math.cos(t * 0.05) * 0.5 + 0.5) * 70) * HABITAT_Y;
+      cam.position.set(Math.cos(t * 0.5) * vr, vy, Math.sin(t * 0.5) * vr);
+      cam.lookAt(0, 8 * HABITAT_Y, 0);
+    } else {
+      // Frame every corner at any SPACE FOV and viewport aspect. Portrait/narrow-FOV surveys may
+      // need a farther temporary clip plane; it is restored to CAMERA_FAR on leaving TOP mode.
+      const surveyHeight = rotatingSquareSurveyHeight(PLATFORM_HALF, cam.fov, cam.aspect);
+      const surveyFar = Math.max(
+        CAMERA_FAR,
+        Math.hypot(surveyHeight, PLATFORM_HALF * Math.SQRT2, PLATFORM_CEIL) * 1.1,
+      );
+      if (cam.far !== surveyFar) {
+        cam.far = surveyFar;
+        cam.updateProjectionMatrix();
+      }
+      cam.position.set(0, surveyHeight, 0); // top-down survey (top + fallback)
+      cam.lookAt(0, 0, 0);
+      cam.rotation.z = t * 0.015;
+    }
+    // Consume-and-zero in EVERY mode so stale drag/wheel deltas never
+    // accumulate while orbit/fly/top views ignore them.
+    this.input.look.dx = 0;
+    this.input.look.dy = 0;
+    this.input.zoom = 0;
+  }
+
+  /**
+   * F-CAM5: choose the organism the tracking cameras follow, by a STABLE index that advances every
+   * ~6 s of sim time — a deterministic guided tour of the population. Caches the subject's position
+   * and XZ heading into the camSub* scratch. Returns false on an empty world. Presentation-only: it
+   * reads sim state but writes none, so it can never perturb the deterministic hash.
+   */
+  private resolveSubject(t: number): boolean {
+    if (cyc(VIEW_MODES, this.state.viewIdx) === 'mimic') {
+      const bodies = this.xenomimics.bodyView();
+      if (bodies.length === 0) return false;
+      const start = Math.floor(t / 6) % bodies.length;
+      for (let offset = 0; offset < bodies.length; offset++) {
+        const body = bodies[(start + offset) % bodies.length];
+        if (!body?.alive) continue;
+        this.camSubX = body.x;
+        this.camSubY = body.y;
+        this.camSubZ = body.z;
+        this.camSubVX = body.vx;
+        this.camSubVZ = body.vz;
+        this.camSubR = 1.8;
+        return true;
+      }
+      return false;
+    }
+    const list = this.entities.list;
+    const len = list.length;
+    if (len === 0) return false;
+    const idx = Math.floor(t / 6) % len;
+    const e = list[idx] ?? list[0];
+    if (!e) return false;
+    const p = e.position;
+    this.camSubX = p.x;
+    this.camSubY = p.y;
+    this.camSubZ = p.z;
+    this.camSubVX = e.userData.vel.x;
+    this.camSubVZ = e.userData.vel.z;
+    this.camSubR = (e.scale.x + e.scale.y + e.scale.z) / 3;
+    return true;
+  }
+
+  /** Held-key macros (legacy 665-666): Space/Shift/M repeat, Tab feeds chaos, G feeds entropy. */
+  private handleHotkeys(dt: number): void {
+    const s = this.state;
+    const k = this.input.keys;
+    if (k[' '] && s.frame % 12 === 0) this.doBurst();
+    if (k['shift'] && s.frame % 20 === 0) this.doSplit();
+    if (k['m'] && s.frame % 30 === 0) this.doMutate();
+    if (k['tab']) s.chaos = clamp(s.chaos + dt * 2, CHAOS_MIN, CHAOS_MAX);
+    // F-CHAOS-ENTROPY: hold G to pour in ENTROPY (the order/heat-death axis), the bipolar twin of
+    // Tab→chaos. Reachable now via keyboard; the bottom-panel button is wired in the UI pass.
+    if (k['g']) s.entropy = Math.min((s.entropy ?? 0) + dt * 2, ENTROPY_MAX);
+    // F-NHI: tap N to launch an NHI being in front of the camera (throttled so a held key doesn't
+    // flood the world). The action is also exposed for the bottom-panel button in the UI pass.
+    if (k['n'] && s.frame % 30 === 0) this.launchNhiBeing();
+    if (k['y'] && s.frame % 30 === 0) this.launchXenomimic();
+    // F-SPACE: tap H to dilate space (cycle the camera FOV). Throttled like the other taps.
+    if (k['h'] && s.frame % 30 === 0) this.dilateSpace();
+    // V62 CHAOS MODE: tap K to engage/disengage the Lorenz quantum storm. Throttled like the taps.
+    if (k['k'] && s.frame % 30 === 0) this.toggleChaosMode();
+    // BRUTALISM: tap B to crossfade the Super Creatures to a raw poured-concrete monolith (and back).
+    if (k['b'] && s.frame % 30 === 0) this.toggleBrutalism();
+  }
+
+  /**
+   * The sorting field — now BATCHED so the selected algorithm visibly organizes
+   * the world (one swap among thousands of organisms was imperceptible). Each
+   * frame it runs K proposals from the active algorithm (K scales with the
+   * population, 6..28), applying every accepted swap: the two organisms trade
+   * sort values, get nudged toward each other's positions, and flash bright.
+   * The HUD shows the live swap count so cycling the algorithm obviously
+   * changes the activity. Allocation-free, no rng (deterministic from seed).
+   * O(K · step-cost); the O(n) algorithms still dominate at K · n.
+   */
+  private sortStep(bands: AudioBands): void {
+    const list = this.entities.list;
+    const n = list.length;
+    const s = this.state;
+    const algo = cyc(ALGOS, s.algoIdx);
+    const mode = s.algoMode;
+    // Display name reflects the run mode (V7.2): the active field (single/auto, with a ▸
+    // marker while auto-cycling) or ALL FIELDS while every signature works at once.
+    const displayName =
+      mode === 'all' ? 'ALL FIELDS' : mode === 'auto' ? `▸ ${algo.name}` : algo.name;
+    if (n < 2) {
+      this.hud.setAlgo(displayName, s.algoStep, 0);
+      return;
+    }
+    for (let i = 0; i < n; i++) {
+      const e = list[i];
+      this.sortVals[i] = e ? e.userData.sortVal : 0;
+    }
+    // Batch size: enough to read as motion, bounded so the O(n) algorithms stay cheap even at
+    // the 10k ceiling. RUN ALL blends every field, so it runs a wider batch. Kept DETERMINISTIC
+    // (population only) on purpose — the batch drives entity velocity nudges that feed the
+    // neighbour-dependent rng (nash/market), so coupling it to wall-clock audio would diverge
+    // the seeded sim. The audio reactivity lives in the FLASH below, which is visual-only.
+    const batch =
+      mode === 'all'
+        ? Math.min(48, Math.max(25, n >> 7))
+        : mode === 'auto'
+          ? Math.min(120, Math.max(40, n >> 5))
+          : Math.min(28, Math.max(6, n >> 8));
+    // Treble = sparkle: the per-swap emissive flash brightens with the highs (2.4..3.2). Emissive is
+    // purely visual (entities.update never feeds it back into positions/rng), so the swarm
+    // visibly sparkles ON THE BEAT without touching sim reproducibility (V7-beyond). The range sits
+    // under the darker-palette ceiling so the max()-only write below never dims a brighter body.
+    const flash = 2.4 + bands.treble * 0.8;
+    const push = 0.01 * this.chaosMul();
+    let swaps = 0;
+    for (let b = 0; b < batch; b++) {
+      s.algoStep++;
+      // RUN ALL: each proposal is drawn from the NEXT field round-robin, so the whole
+      // population organizes under all 25 signatures simultaneously. Otherwise the one
+      // active field (single, or the auto-cycled current field) proposes.
+      const stepAlgo = mode === 'all' ? cyc(ALGOS, this.allModeCursor) : algo;
+      if (mode === 'all') this.allModeCursor = (this.allModeCursor + 1) % ALGOS.length; // bounded
+      const swap = stepAlgo.step(this.sortVals, n, s.algoStep);
+      if (!swap) continue;
+      const a0 = swap[0];
+      const a1 = swap[1];
+      // Full bounds on BOTH indices (the batched run-all/auto modes cycle every algo, so a
+      // misbehaving step's out-of-range proposal must be rejected, not silently read as
+      // undefined). Cheap O(1) guard; dense-array reads below stay in range.
+      if (a0 === a1 || a0 < 0 || a0 >= n || a1 < 0 || a1 >= n) continue;
+      const ea = list[a0];
+      const eb = list[a1];
+      if (!ea || !eb) continue;
+      // Sorting is a global field with a physical nudge. Do not swap state or push through the
+      // boundary when either endpoint is protected; algorithm cadence still advances unchanged.
+      if (
+        this.isBigTreeProtected(ea.position.x, ea.position.z) ||
+        this.isBigTreeProtected(eb.position.x, eb.position.z)
+      ) {
+        continue;
+      }
+      const tv = ea.userData.sortVal;
+      ea.userData.sortVal = eb.userData.sortVal;
+      eb.userData.sortVal = tv;
+      this.sortVals[a0] = ea.userData.sortVal; // keep the view coherent for later steps
+      this.sortVals[a1] = eb.userData.sortVal;
+      this.sv1.copy(eb.position).sub(ea.position).normalize().multiplyScalar(push);
+      ea.userData.vel.add(this.sv1);
+      eb.userData.vel.add(this.sv1.negate());
+      // Brighter sparkle per swap so the field's working front reads as a shimmering light
+      // show (entities.update fades it back). max(), not a hard set, so a swap can't DIM a body
+      // the neural-activation cap or a belly pulse already pushed above 4. (audit 13b)
+      ea.material.emissiveIntensity = Math.max(ea.material.emissiveIntensity, flash);
+      eb.material.emissiveIntensity = Math.max(eb.material.emissiveIntensity, flash);
+      if (swaps === 0) this.qc.onSortSwap(a0, a1); // one CNOT/frame (preserve coupling rate)
+      swaps++;
+    }
+    // Sorted-ness proxy for the picker progress bar: the fraction of adjacent
+    // pairs already in order (O(n), cheap; reaches 1 as a terminating field
+    // settles, hovers for the perpetual fields). The sortVals view is current
+    // after the batch above.
+    let ordered = 0;
+    const sv = this.sortVals;
+    // i ∈ [1, n) and n = list.length ≤ sortVals.length, so both reads are in bounds.
+    for (let i = 1; i < n; i++) if (sv[i - 1]! <= sv[i]!) ordered++;
+    this.sortedFraction = n > 1 ? ordered / (n - 1) : 1;
+    this.hud.setAlgo(displayName, s.algoStep, swaps);
+  }
+
+  /** Refill the reused snapshot object. Allocation-free. */
+  private snapshot(): TelemetrySnapshot {
+    const s = this.state;
+    const sn = this.snap;
+    sn.entities = this.entities.list.length;
+    sn.chaos = s.chaos;
+    sn.mutations = s.mutations;
+    sn.energy = this.energy;
+    sn.links = this.connectome.links;
+    sn.morphs = this.morphCount;
+    sn.algoName = cyc(ALGOS, s.algoIdx).name;
+    sn.quantum = this.quantum.signal;
+    sn.songName = cyc(SONGS, s.songIdx).name;
+    sn.weather = cyc(WEATHERS, s.weatherIdx);
+    sn.wind = Math.hypot(s.wind.x, s.wind.z);
+    sn.temperature = s.temperature;
+    sn.shoggoths = this.shoggoths.count;
+    sn.puppeteers = this.puppets.count;
+    sn.nhi = this.nhi.count;
+    const xenomimic = this.xenomimics.telemetry();
+    sn.xenomimics = xenomimic.population;
+    sn.xenomimicMax = XENOMIMIC_MAX;
+    sn.xenomimicIntegration = xenomimic.integration;
+    sn.xenomimicCoherence = xenomimic.coherence;
+    sn.xenomimicBondTension = xenomimic.bondTension;
+    sn.viewName = cyc(VIEW_MODES, s.viewIdx);
+    sn.timeScale = s.timeScale;
+    sn.renderName = s.renderMode;
+    sn.econ = this.economy.summary(); // V13: AURUM/UMBRA, prices, dominant currency, wealth Gini
+    // V57: audio on/off + reset count (HUD box), sim variant + active singularity (telemetry box).
+    sn.musicOn = this.audio.musicOn;
+    sn.sfxOn = this.audio.sfxOn;
+    sn.muteOn = this.audio.muted;
+    sn.resetCount = this.resetCount;
+    sn.sim = s.sim;
+    const sk = this.singularities.kind;
+    sn.singularity = sk ? (SINGULARITY_LABEL[sk] ?? sk.toUpperCase()) : '';
+    sn.chaosMode = this.chaosField.active; // V62: storm flag for the chaos row
+    sn.tribes = this.graphMind.tribes;
+    sn.trend = this.analytics.trendPerMin;
+    sn.qEntropy = this.qc.entropy;
+    sn.lore = this.constellations.subSectorAt(this.engine.camera.position);
+    // V3: phylumCounts/titanLedger/warMatrix are LIVE reused views installed at
+    // boot — only the scalar needs refreshing here.
+    sn.rdEnergy = this.rdEnergy;
+    // Biome sentience index (V4.5; V71 decomposed): the cosmos rating its own aliveness as a blend
+    // of three MEASURABLE dimensions, now each exposed for its own observatory dial. The composite
+    // formula is byte-identical to before (integration = tribes/256, coherence = qEntropy, momentum =
+    // min(|trend|/50,1)), so the golden sentience value is unchanged — we just surface the factors.
+    const neuralSignal = clamp(this.entityBrains.meanSemanticActivation(), 0, 1);
+    const superPhi = clamp(this.superMinds[0]?.readCoupling().consciousness.phi ?? 0, 0, 1);
+    const bioIntegration = clamp(sn.tribes / 256, 0, 1); // community structure → integrated information
+    const bioCoherence = clamp(sn.qEntropy * 0.7 + neuralSignal * 0.15 + superPhi * 0.15, 0, 1); // quantum + neural + supermind coherence
+    const bioMomentum = clamp(Math.abs(sn.trend) / 50, 0, 1); // demographic slope → self-maintenance
+    sn.bioIntegration = bioIntegration;
+    sn.bioCoherence = bioCoherence;
+    sn.bioMomentum = bioMomentum;
+    sn.sentience = clamp((bioIntegration * (0.5 + bioCoherence) * (0.5 + bioMomentum)) / 1.5, 0, 1);
+    sn.godPower =
+      this.petriDishes.reduce((acc, p) => acc + (p.godPower ?? 0), 0) /
+      Math.max(1, this.petriDishes.length);
+    this.hud.setLore(sn.lore); // O(1) no-op when unchanged
+    return sn;
+  }
+
+  /**
+   * Pull-only localhost receipt for Big Tree ecology. The production World keeps this method inert
+   * even though legacy builds expose `window.world`: callers receive null unless construction
+   * explicitly enabled development diagnostics. Optional identity/resource joins are direct indexed
+   * reads; this method never enumerates the population or the 20,000 pooled food records.
+   */
+  getBigTreeEcologySnapshot(
+    query: Readonly<BigTreeEcologyDiagnosticQuery> = {},
+  ): BigTreeEcologyDiagnosticSnapshot | null {
+    if (!this.developmentDiagnostics) return null;
+
+    const now = this.state.elapsed;
+    const finite = (value: number): number | null => (Number.isFinite(value) ? value : null);
+    const remaining = (deadline: number): number | null =>
+      Number.isFinite(deadline) ? Math.max(0, deadline - now) : null;
+
+    const visits: BigTreeZoneStats = {
+      trackedActors: 0,
+      activeVisitors: 0,
+      capacity: 0,
+      availableSlots: 0,
+      completedVisits: 0,
+      timedOutVisits: 0,
+      stuckRecoveryEvents: 0,
+      forcedExitEvents: 0,
+      partnerReservations: 0,
+      partnerTimeouts: 0,
+      rejectedForCapacity: 0,
+      rejectedForNoSlot: 0,
+    };
+    this.bigTreeVisits.readStats(visits);
+    this.bigTreeVisitors.readStats(this.bigTreeVisitorStats);
+    this.bigTreeFaunaVisitors.readStats(this.bigTreeFaunaVisitorStats);
+
+    const sanctuary: BigTreeSanctuaryIndexStats = {
+      tableCapacity: 0,
+      trackedMembers: 0,
+      protectedMembers: 0,
+      backshiftDeletions: 0,
+      relocatedKeys: 0,
+      maxLookupProbeLength: 0,
+      maxBackshiftProbeLength: 0,
+    };
+    this.bigTreeSanctuary.readIndexStats(sanctuary);
+
+    let actor: BigTreeEcologyActorDiagnostic | null = null;
+    const ownerKind = query.ownerKind;
+    const ownerId = query.ownerId;
+    if (
+      Number.isInteger(ownerKind) &&
+      (ownerKind ?? -1) >= 0 &&
+      Number.isInteger(ownerId) &&
+      (ownerId ?? -1) >= 0
+    ) {
+      const kind = ownerKind!;
+      const id = ownerId!;
+      const visitView: BigTreeVisitView = {
+        recordId: -1,
+        ownerKind: kind,
+        ownerId: id,
+        state: BigTreeVisitState.Outside,
+        reason: BigTreeVisitReason.Curiosity,
+        activity: BigTreeActivity.None,
+        slotId: -1,
+        startedAt: 0,
+        enteredAt: Number.POSITIVE_INFINITY,
+        stateDeadline: Number.POSITIVE_INFINITY,
+        cooldownUntil: Number.POSITIVE_INFINITY,
+        stuckRecoveries: 0,
+        visitOrdinal: 0,
+        partnerKind: -1,
+        partnerId: -1,
+        partnerLeaseExpiresAt: Number.POSITIVE_INFINITY,
+        insideZone: false,
+        lastTransitionCause: BigTreeTransitionCause.None,
+        lastTransitionAt: Number.POSITIVE_INFINITY,
+      };
+      const hasVisit = this.bigTreeVisits.readVisit(kind, id, visitView);
+
+      let adapter: 'core' | 'fauna' | null = null;
+      let target: BigTreeEcologyActorDiagnostic['target'] = null;
+      if (kind === BIG_TREE_OWNER_ORDINARY || kind === BIG_TREE_OWNER_XENOMIMIC) {
+        const visitor: BigTreeSpeciesVisitorView = {
+          ownerKind: kind,
+          ownerId: id,
+          foodOwnerId: -1,
+          state: BigTreeVisitState.Outside,
+          reason: BigTreeVisitReason.Curiosity,
+          activity: BigTreeActivity.None,
+          slotId: -1,
+          foodId: -1,
+          foodKind: null,
+          foodState: null,
+          targetX: 0,
+          targetY: 0,
+          targetZ: 0,
+          energy: 0,
+          eating: false,
+          partnerKind: -1,
+          partnerId: -1,
+          lastTransitionCause: BigTreeTransitionCause.None,
+          lastTransitionAt: Number.POSITIVE_INFINITY,
+        };
+        if (this.bigTreeVisitors.readVisitor(kind, id, now, visitor)) {
+          adapter = 'core';
+          const resource =
+            visitor.foodId >= 0
+              ? this.crystalEcosystem.edibleResources.get(visitor.foodId)
+              : undefined;
+          target = {
+            x: visitor.targetX,
+            y: visitor.targetY,
+            z: visitor.targetZ,
+            foodId: visitor.foodId >= 0 ? visitor.foodId : null,
+            foodKind: visitor.foodKind,
+            foodState: visitor.foodState,
+            foodReservationOwnerId: resource?.ownerId ?? null,
+            foodGeneration: resource?.generation ?? null,
+            foodLeaseExpiresAt:
+              resource?.ownerId === null || resource === undefined
+                ? null
+                : finite(resource.leaseUntil),
+            eating: visitor.eating,
+          };
+        }
+      } else {
+        const visitor: BigTreeFaunaVisitorView = {
+          ownerKind: kind,
+          ownerId: id,
+          state: BigTreeVisitState.Outside,
+          reason: BigTreeVisitReason.Curiosity,
+          activity: BigTreeActivity.None,
+          targetX: 0,
+          targetY: 0,
+          targetZ: 0,
+          foodId: -1,
+          foodKind: null,
+          foodState: null,
+          partnerKind: -1,
+          partnerId: -1,
+          lastTransitionCause: BigTreeTransitionCause.None,
+          lastTransitionAt: Number.POSITIVE_INFINITY,
+        };
+        if (this.bigTreeFaunaVisitors.readVisitor(kind, id, visitor)) {
+          adapter = 'fauna';
+          const resource =
+            visitor.foodId >= 0
+              ? this.crystalEcosystem.edibleResources.get(visitor.foodId)
+              : undefined;
+          target = {
+            x: visitor.targetX,
+            y: visitor.targetY,
+            z: visitor.targetZ,
+            foodId: visitor.foodId >= 0 ? visitor.foodId : null,
+            foodKind: visitor.foodKind,
+            foodState: visitor.foodState,
+            foodReservationOwnerId: resource?.ownerId ?? null,
+            foodGeneration: resource?.generation ?? null,
+            foodLeaseExpiresAt:
+              resource?.ownerId === null || resource === undefined
+                ? null
+                : finite(resource.leaseUntil),
+            eating: null,
+          };
+        }
+      }
+
+      const membershipView: BigTreeSanctuaryMembershipView = {
+        recordId: -1,
+        ownerKind: kind,
+        ownerId: id,
+        x: 0,
+        z: 0,
+        protected: false,
+      };
+      // #159: visitor kinds and sanctuary kinds are separate namespaces (visitor LEVIATHAN=5 and
+      // PUPPET=6 vs sanctuary PUPPET=5); map explicitly instead of reusing the visitor kind.
+      let sanctuaryKind =
+        kind === BIG_TREE_OWNER_ORDINARY
+          ? BIG_TREE_SANCTUARY_ORDINARY
+          : kind === BIG_TREE_OWNER_XENOMIMIC
+            ? BIG_TREE_SANCTUARY_XENOMIMIC
+            : kind === BIG_TREE_OWNER_SHOGGOTH
+              ? BIG_TREE_SANCTUARY_SHOGGOTH
+              : kind === BIG_TREE_OWNER_TITAN
+                ? BIG_TREE_SANCTUARY_TITAN
+                : kind === BIG_TREE_OWNER_PUPPET
+                  ? BIG_TREE_SANCTUARY_PUPPET
+                  : -1;
+      let sanctuaryOwnerId = id;
+      if (kind === BIG_TREE_OWNER_NHI) {
+        const ecologyId = this.nhiEntities.get(id)?.userData.ecologyId;
+        if (Number.isSafeInteger(ecologyId) && (ecologyId ?? -1) >= 0) {
+          sanctuaryKind = BIG_TREE_SANCTUARY_ORDINARY;
+          sanctuaryOwnerId = ecologyId!;
+        }
+      }
+      const registered =
+        sanctuaryKind >= 0 &&
+        this.bigTreeSanctuary.read(sanctuaryKind, sanctuaryOwnerId, membershipView);
+
+      actor = {
+        ownerKind: kind,
+        ownerId: id,
+        adapter,
+        visit: hasVisit
+          ? {
+              recordId: visitView.recordId,
+              state: visitView.state,
+              stateName: bigTreeVisitStateName(visitView.state),
+              reason: visitView.reason,
+              reasonName: bigTreeVisitReasonName(visitView.reason),
+              activity: visitView.activity,
+              activityName: bigTreeActivityName(visitView.activity),
+              slotId: visitView.slotId,
+              insideZone: visitView.insideZone,
+              startedAt: visitView.startedAt,
+              enteredAt: finite(visitView.enteredAt),
+              stateDeadline: finite(visitView.stateDeadline),
+              remainingStateSeconds: remaining(visitView.stateDeadline),
+              cooldownUntil: finite(visitView.cooldownUntil),
+              remainingCooldownSeconds: remaining(visitView.cooldownUntil),
+              stuckRecoveries: visitView.stuckRecoveries,
+              visitOrdinal: visitView.visitOrdinal,
+              partnerKind: visitView.partnerKind >= 0 ? visitView.partnerKind : null,
+              partnerId: visitView.partnerId >= 0 ? visitView.partnerId : null,
+              partnerLeaseExpiresAt: finite(visitView.partnerLeaseExpiresAt),
+              lastTransitionCause: visitView.lastTransitionCause,
+              lastTransitionCauseName: bigTreeTransitionCauseName(visitView.lastTransitionCause),
+              lastTransitionAt: finite(visitView.lastTransitionAt),
+            }
+          : null,
+        target,
+        sanctuary: {
+          registered,
+          recordId: registered ? membershipView.recordId : null,
+          protected: registered ? membershipView.protected : null,
+          aggressionSuppressed: registered ? membershipView.protected : null,
+          x: registered ? membershipView.x : null,
+          z: registered ? membershipView.z : null,
+        },
+      };
+    }
+
+    let foodItem: BigTreeEcologyFoodDiagnostic | null = null;
+    const foodId = query.foodId;
+    if (Number.isSafeInteger(foodId)) {
+      const resource: EdibleResource | undefined = this.crystalEcosystem.edibleResources.get(
+        foodId!,
+      );
+      if (resource) {
+        const leaseUntil = resource.ownerId === null ? null : finite(resource.leaseUntil);
+        const respawnAt = resource.state === 'respawning' ? finite(resource.respawnAt) : null;
+        foodItem = {
+          id: resource.id,
+          kind: resource.kind,
+          state: resource.state,
+          ownerId: resource.ownerId,
+          generation: resource.generation,
+          nourishment: resource.nourishment,
+          position: { x: resource.x, y: resource.y, z: resource.z },
+          interactionPoint: {
+            x: resource.interactionX,
+            y: resource.interactionY,
+            z: resource.interactionZ,
+          },
+          leaseUntil,
+          remainingLeaseSeconds: leaseUntil === null ? null : Math.max(0, leaseUntil - now),
+          respawnAt,
+          remainingRespawnSeconds: respawnAt === null ? null : Math.max(0, respawnAt - now),
+        };
+      }
+    }
+
+    return {
+      version: 1,
+      frame: this.state.frame,
+      simulationTime: now,
+      zone: {
+        centerX: this.bigTreeZone.centerX,
+        centerZ: this.bigTreeZone.centerZ,
+        entryRadius: this.bigTreeZone.enterRadius,
+        exitRadius: this.bigTreeZone.exitRadius,
+      },
+      visits,
+      coreVisitors: { ...this.bigTreeVisitorStats },
+      faunaVisitors: { ...this.bigTreeFaunaVisitorStats },
+      sanctuary,
+      food: { ...this.crystalEcosystem.edibleResources.stats() },
+      neuralController: { ...this.crystalEcosystem.neuralStatus() },
+      actor,
+      foodItem,
+    };
+  }
+
+  /**
+   * Read-only perf telemetry for the render-layer HUD. Draws no rng; allocation-free.
+   * Wilderness + worker pool stats are best-effort (ADR 0010 — not in the golden).
+   */
+  /** Live resonance-integrator + valence-steering state (restored modules; apex-beat cadence). */
+  getNhsiAffect(): NhsiAffectOut {
+    return this.nhsiAffect.snapshot();
+  }
+
+  /** Lineage telemetry: total births recorded and the deepest generation reached. */
+  getLineageStats(): { births: number; maxGeneration: number } {
+    const l = this.entities.lineage;
+    return { births: l?.total ?? 0, maxGeneration: l?.maxGeneration ?? 0 };
+  }
+
+  /** Omega Point convergence telemetry (Ω, channels, broadcast). */
+  getOmegaPoint(): OmegaPointSnapshot {
+    return this.omegaPoint.snapshot();
+  }
+
+  /** Xenomind (alien hyperbolic substrate) telemetry. */
+  getXenomind(): (XenomindSnapshot & { gate: ReturnType<XenomindTrustGate['snapshot']> }) | null {
+    const s = this.xenomind?.snapshot();
+    return s ? { ...s, gate: this.xenoGate.snapshot() } : null;
+  }
+
+  /** Emergent archon language telemetry (fluency, lexicon size, diversity). */
+  getArchonLanguage(): ArchonLanguageState | null {
+    return this.archonLanguage?.snapshot() ?? null;
+  }
+
+  /** Advance the live apex substrate one beat and repaint the apex core from its telemetry. ~1 ms. */
+  private stepApexSubstrate(drive: number): void {
+    this.apexSubstrate.step(drive);
+    const tel = this.apexSubstrate.telemetry();
+    this.alphabetPantheon.setSubstrate(substrateUniforms(tel.manifold, tel.quantum));
+  }
+
+  readonly phylumCount = PHYLUM_COUNT;
+
+  /** SANDBOX: scale the organism growth ceiling (0..3; above the boot capacity it clamps at maxEntities). */
+  setPopulationScale(f: number): void {
+    this.sandboxPop = Math.max(0, f);
+    this.updateGrowthTarget();
+  }
+
+  /** SANDBOX: cap one phylum at f × its even share of the growth target (1 = uncapped default). */
+  setPhylumScale(phylum: number, f: number): void {
+    if (phylum < 0 || phylum >= PHYLUM_COUNT) return;
+    this.sandboxPhylum ??= new Float32Array(PHYLUM_COUNT).fill(1);
+    this.sandboxPhylum[phylum] = Math.max(0, f);
+    if (this.sandboxPhylum.every((v) => v === 1)) {
+      this.sandboxPhylum = null;
+      this.entities.phylumCap = null;
+    }
+  }
+
+  /** The live sandbox controller (built lazily by reflecting over every World system). */
+  getSandbox(): SandboxController {
+    this.sandbox ??= new SandboxController(this);
+    return this.sandbox;
+  }
+
+  /** Apply sandbox settings live (persisting is the panel's job). */
+  applySandbox(settings: SandboxSettings): void {
+    this.getSandbox().apply(settings);
+  }
+
+  /** Cheap live readout for the sandbox panel. */
+  sandboxStats(): { organisms: number; target: number; capacity: number } {
+    return {
+      organisms: this.entities.list.length,
+      target: Math.round(this.state.growthTarget ?? 0),
+      capacity: this.quality.maxEntities,
+    };
+  }
+
+  /** Smoothly enforce sandbox population levels: per-phylum caps + trim ≤ 32 organisms per frame. */
+  private sandboxTick(): void {
+    const list = this.entities.list;
+    const ph = this.sandboxPhylum;
+    const share = Math.max(1, (this.state.growthTarget ?? list.length) / PHYLUM_COUNT);
+    if (ph) {
+      const cap = (this.entities.phylumCap ??= new Float32Array(PHYLUM_COUNT));
+      for (let p = 0; p < PHYLUM_COUNT; p++)
+        cap[p] = ph[p]! >= 1 ? Infinity : Math.floor(share * ph[p]!);
+    }
+    const over = this.sandboxPop < 1 ? list.length - Math.ceil(this.state.growthTarget ?? 0) : 0;
+    const kill: number[] = [];
+    const seen = new Float32Array(PHYLUM_COUNT);
+    for (let i = list.length - 1; i >= 0 && kill.length < 32; i--) {
+      const p = list[i]!.userData.phylum ?? -1;
+      if (p >= 0 && ph && ph[p]! < 1) {
+        seen[p]!++;
+        if (seen[p]! > Math.floor(share * ph[p]!)) {
+          kill.push(i);
+          continue;
+        }
+      }
+      if (kill.length < over) kill.push(i);
+    }
+    if (kill.length) this.entities.disposeManyDescending(kill);
+    if (this.state.frame % 30 === 0) this.sandbox?.tick();
+  }
+
+  getPerfSnapshot(): {
+    entities: number;
+    maxEntities: number;
+    connectomeLinks: number;
+    wildernessEntities: number;
+    wildernessChunks: number;
+    workerTotal: number;
+    workerActive: number;
+    workersReady: boolean;
+    hardwareCores: number;
+    simFrame: number;
+    ambientCompute: string;
+  } {
+    const wp = this.workerPool?.getStats();
+    const nav =
+      typeof navigator !== 'undefined'
+        ? (navigator as Navigator & { hardwareConcurrency?: number })
+        : undefined;
+    return {
+      entities: this.entities.list.length,
+      maxEntities: this.quality.maxEntities,
+      connectomeLinks: this.connectome.links,
+      wildernessEntities: this.wilderness.getEntityCount(),
+      wildernessChunks: this.wilderness.getActiveChunkCount(),
+      workerTotal: wp?.totalWorkers ?? 0,
+      workerActive: wp?.activeTasks ?? 0,
+      workersReady: (wp?.totalWorkers ?? 0) > 0,
+      hardwareCores: Math.max(1, Math.floor(nav?.hardwareConcurrency ?? 8)),
+      simFrame: this.state.frame,
+      ambientCompute: this.wilderness.getComputeStatus().acceptedBackend ?? 'pending',
+    };
+  }
+
+  /**
+   * Run presentation, reporting, indexing, or rollback work without letting a secondary failure
+   * corrupt an already-material NHI outcome or starve later minds. The logger is guarded too because
+   * console implementations are external and may themselves throw in embedded runtimes.
+   */
+  private nhiGuard(label: string, action: () => void): boolean {
+    try {
+      action();
+      return true;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      try {
+        this.log.warn('NHI guarded side effect failed', { label, error: message });
+      } catch {
+        // A failed diagnostic sink must never replace the original simulation outcome.
+      }
+      return false;
+    }
+  }
+
+  /**
+   * F-NHI: launch a user-controlled non-human-intelligence being ~45u in front of the camera — a
+   * buoyant, fast, age-immortal, consumption-immune entity that flies and floats through the world
+   * with "Matrix" powers. Returns 1 on success and 0 on a bounded/failed attempt. A failed attempt
+   * consumes its monotonic id and any RNG already drawn; rollback removes material state but never
+   * pretends the random streams can be rewound. A never-attempted launch at the NHI cap draws none.
+   */
+  private launchNhiBeing(x?: number, y?: number, z?: number, source = 'user'): number {
+    // A dead backing entity can be present between render ticks; retire it before applying the cap so
+    // an immediately requested replacement is not falsely rejected.
+    this.nhiLiveIds();
+    if (this.nhiEntities.size >= World.NHI_POPULATION_CAP) {
+      this.nhiGuard('launch-cap-hud', () =>
+        this.hud.showSector(`NHI CAP · ${World.NHI_POPULATION_CAP} LIVE`),
+      );
+      this.nhiGuard('launch-cap-audit', () =>
+        this.audit.record('nhi-launch-blocked', {
+          source,
+          reason: 'nhi-population-cap',
+          cap: World.NHI_POPULATION_CAP,
+        }),
+      );
+      return 0;
+    }
+    // IDs name attempts, not only successes. Gaps therefore expose failed launches instead of
+    // silently reusing an identity whose RNG and external registration steps may have advanced.
+    const nid = this.nhiNextId++;
+    let mi = -1;
+    let e: Entity | null = null;
+    try {
+      if (
+        typeof x === 'number' &&
+        typeof y === 'number' &&
+        typeof z === 'number' &&
+        Number.isFinite(x) &&
+        Number.isFinite(y) &&
+        Number.isFinite(z)
+      ) {
+        this.sv1.set(x, y, z);
+      } else {
+        const cam = this.engine.camera;
+        cam.getWorldDirection(this.sv2);
+        // Birth ahead of view + lateral scatter so multi-launches don't stack on one ray.
+        this.sv1.copy(cam.position).addScaledVector(this.sv2, 38 + this.nhiEffectRng() * 18);
+        let rx = -this.sv2.z;
+        let rz = this.sv2.x;
+        const rLen = Math.hypot(rx, rz);
+        if (rLen < 1e-8) {
+          rx = 1;
+          rz = 0;
+        } else {
+          rx /= rLen;
+          rz /= rLen;
+        }
+        const side = (this.nhiEffectRng() - 0.5) * 28;
+        const lift = (this.nhiEffectRng() - 0.35) * 14;
+        this.sv1.x += rx * side;
+        this.sv1.y += lift;
+        this.sv1.z += rz * side;
+      }
+      mi = Math.floor(this.nhiEffectRng() * this.morphTotal);
+      e = this.entities.spawn(this.sv1, mi, 2.2);
+      if (!e) {
+        this.nhiGuard('launch-entity-cap-audit', () =>
+          this.audit.record('nhi-launch-failed', {
+            id: nid,
+            source,
+            reason: 'entity-cap-or-taxonomy',
+            idConsumed: true,
+            rngRollback: false,
+            rollbackRequired: false,
+            logicalRollbackComplete: true,
+            resourceCleanupStatus: 'not-required',
+          }),
+        );
+        return 0;
+      }
+      const u = e.userData;
+      u.isNhi = true;
+      u.beh = 'helix'; // ethereal, weaving motion (now OMNIDIRECTIONAL + contained — see steerNhiBeings)
+      u.spd *= 2.2; // quick
+      // Camera-forward + wide cone fan-out (pure leaf).
+      {
+        const cam = this.engine.camera;
+        cam.getWorldDirection(this.sv2);
+        const toss = nhiLaunchVelocityFromLook(
+          this.sv2.x,
+          this.sv2.y,
+          this.sv2.z,
+          this.nhiEffectRng(),
+          this.nhiEffectRng(),
+          this.nhiEffectRng(),
+          this.nhiEffectRng(),
+        );
+        u.vel.set(toss.x, toss.y, toss.z);
+      }
+      this.nhiLaunchGrace.set(nid, World.NHI_LAUNCH_GRACE_FRAMES);
+      u.nhiTossFrames = World.NHI_LAUNCH_GRACE_FRAMES;
+      e.material.emissive.setRGB(0.25, 0.95, 1.0); // unmistakable cyan NHI glow
+      e.material.emissiveIntensity = 3.2;
+      // V10: birth a deterministic super-mind for this NHI and register it so it ACTS on the world
+      // each beat (spawns swarms, dominates the local field, broadcasts hallucinated utterances).
+      // Audit #59: lineage=true — the newborn inherits (spawnChild) from live NHI parents when any exist.
+      this.nhi.register(nid, this.nhiBirthRng, true);
+      this.nhiEntities.set(nid, e);
+      this.nhiIdsByEntity.set(e, nid);
+      if (this.bigTreeNhiSource?.register(nid, e) === false) {
+        throw new Error('failed to bind launched NHI to the canonical Big Tree visitor source');
+      }
+      // F-ECONOMY: an NHI super-mind enters the market with the cosmos's fattest purse (weight 14 vs
+      // a titan's ~8). Its market enrollment remains on the isolated economy stream.
+      this.economy.register(World.nhiEconomyId(nid), 'NHI super-mind', 14, this.econRng);
+      this.nhiBody.spawn(nid, e.position.x, e.position.y, e.position.z);
+    } catch (error) {
+      const rollbackCallFailures: string[] = [];
+      const rollback = (label: string, action: () => void): void => {
+        if (!this.nhiGuard(label, action)) rollbackCallFailures.push(label);
+      };
+      rollback(
+        'launch-rollback-tree-visit',
+        () => void this.bigTreeFaunaVisitors?.cancel(BIG_TREE_OWNER_NHI, nid),
+      );
+      rollback('launch-rollback-tree-source', () => void this.bigTreeNhiSource?.unregister(nid));
+      rollback('launch-rollback-mind', () => void this.nhi.unregister(nid));
+      rollback('launch-rollback-forward-map', () => void this.nhiEntities.delete(nid));
+      if (e) {
+        rollback('launch-rollback-reverse-map', () => void this.nhiIdsByEntity.delete(e!));
+      }
+      rollback('launch-rollback-target', () => void this.nhiTargets.delete(nid));
+      rollback('launch-rollback-grace', () => void this.nhiLaunchGrace.delete(nid));
+      rollback(
+        'launch-rollback-economy',
+        () => void this.economy.unregister(World.nhiEconomyId(nid)),
+      );
+      rollback('launch-rollback-body', () => void this.nhiBody.remove(nid));
+      if (e) {
+        const entityIndex = this.entities.list.indexOf(e);
+        if (entityIndex >= 0) {
+          rollback('launch-rollback-entity', () => this.entities.discardSpawnAt(entityIndex));
+        }
+      }
+      const logicalRollbackPostconditions = {
+        mindAbsent: this.nhi.snapshot(nid) === null,
+        forwardMapAbsent: !this.nhiEntities.has(nid),
+        reverseMapAbsent: !e || !this.nhiIdsByEntity.has(e),
+        targetAbsent: !this.nhiTargets.has(nid),
+        launchGraceAbsent: !this.nhiLaunchGrace.has(nid),
+        treeSourceAbsent: !this.bigTreeNhiSource?.has(nid),
+        treeIntentAbsent: !this.bigTreeNhiSource?.hasIntent(nid),
+        economyAbsent: !this.economy.has(World.nhiEconomyId(nid)),
+        bodyAbsent: !this.nhiBody.has(nid),
+        entityAbsent: !e || !this.entities.list.includes(e),
+      };
+      const logicalRollbackComplete =
+        rollbackCallFailures.length === 0 &&
+        Object.values(logicalRollbackPostconditions).every(Boolean);
+      const message = error instanceof Error ? error.message : String(error);
+      const receipt = {
+        id: nid,
+        source,
+        error: message,
+        idConsumed: true,
+        rngRollback: false,
+        rollbackRequired: true,
+        logicalRollbackComplete,
+        rollbackCallFailures,
+        logicalRollbackPostconditions,
+        // Scene detach and GPU disposal are best-effort no-throw leaves. Their logical owners are
+        // absent above, but WebGL/driver cleanup cannot be synchronously proven from this layer.
+        resourceCleanupStatus: 'best-effort-unverified',
+      };
+      this.nhiGuard('launch-failure-log', () =>
+        this.log.error(
+          logicalRollbackComplete
+            ? 'NHI launch logically rolled back; resource cleanup unverified'
+            : 'NHI launch logical rollback incomplete',
+          receipt,
+        ),
+      );
+      this.nhiGuard('launch-failure-audit', () => this.audit.record('nhi-launch-failed', receipt));
+      return 0;
+    }
+    // USER #7a: varied alien vocalization on NHI arrival (round-robin from the alien chitter band).
+    this.nhiGuard('launch-audio-primary', () => this.audio.playNhiLaunch());
+    this.nhiGuard('launch-audio-extra', () =>
+      this.audio.playExtra(source === 'titan-procreation' ? 'phantomscale' : 'voidgurgle'),
+    );
+    this.nhiGuard('launch-hud', () =>
+      this.hud.showSector(
+        source === 'titan-procreation'
+          ? 'NHI BIRTH · TITAN MATRIX OFFSPRING'
+          : 'NHI LAUNCHED · MATRIX BEING',
+      ),
+    );
+    this.nhiGuard('launch-audit', () => this.audit.record('nhi-launch', { id: nid, mi, source }));
+    return 1;
+  }
+
+  /**
+   * NHI ids whose backing organism is still alive; prunes the dead. EntityManager disposal marks
+   * `alive=false` before stable removal, and Genesis closes this layer synchronously before reset, so
+   * lifecycle detection is O(live NHI + retained targets) rather than rebuilding a 50k-entry Set.
+   */
+  private nhiLiveIds(): number[] {
+    this.nhiLiveScratch.length = 0;
+    for (const [id, e] of this.nhiEntities) {
+      if (e.userData.alive === true) {
+        this.nhiLiveScratch.push(id);
+      } else {
+        this.bigTreeFaunaVisitors?.cancel(BIG_TREE_OWNER_NHI, id);
+        this.bigTreeNhiSource?.unregister(id);
+        this.nhiGuard(
+          'retire-dead-economy',
+          () => void this.economy.unregister(World.nhiEconomyId(id)),
+        );
+        this.nhiGuard('retire-dead-body', () => void this.nhiBody.remove(id));
+        this.nhi.unregister(id);
+        this.nhiIdsByEntity.delete(e);
+        this.nhiEntities.delete(id);
+        this.nhiTargets.delete(id);
+        this.nhiLaunchGrace.delete(id);
+        this.nhiLastSwarmFrame.delete(id);
+      }
+    }
+    // A target may die between NHI beats; never retain a disposed organism as a future action sink.
+    for (const [id, target] of this.nhiTargets) {
+      if (!this.nhiEntities.has(id) || target.userData.alive === false) {
+        this.nhiTargets.delete(id);
+      }
+    }
+    return this.nhiLiveScratch;
+  }
+
+  /**
+   * Synchronously retire the NHI layer when EntityManager discards its backing organisms. This
+   * closes the mind/body/target/economy lifecycle even while the simulation is suspended and no
+   * later NHI tick is available to perform lazy pruning. Monotonic ids intentionally do not rewind.
+   */
+  private clearNhiPopulation(): void {
+    for (const id of this.nhiEntities.keys()) {
+      this.bigTreeFaunaVisitors?.cancel(BIG_TREE_OWNER_NHI, id);
+      this.bigTreeNhiSource?.unregister(id);
+      this.nhiGuard(
+        'clear-population-economy',
+        () => void this.economy.unregister(World.nhiEconomyId(id)),
+      );
+    }
+    this.nhiEntities.clear();
+    this.nhiGrid.clear();
+    this.nhiIdsByEntity.clear();
+    this.nhiTargets.clear();
+    this.bigTreeNhiSource?.reset();
+    this.nhi.clear();
+    this.nhiGuard('clear-population-body', () => this.nhiBody.clear());
+    this.nhiLiveScratch.length = 0;
+    this.nhiSocialCooldown = 0;
+    this.nhiLaunchGrace.clear();
+    this.nhiLastSwarmFrame.clear();
+  }
+
+  /** The percept NHI `id` senses this beat, from its entity vitality + world crowding/chaos. */
+  private nhiPercept(id: number): Omit<NhiPercept, 'beat'> {
+    const e = this.nhiEntities.get(id);
+    const u = e?.userData;
+    const c01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
+    const chaos = c01(this.state.chaos / 10); // CHAOS_MAX
+    // The NHI senses the NEAREST organism's community (setGroup) as the rival faction it plays, and
+    // that organism's Nash strategy as the faction's last move toward it — wiring the game theory in.
+    let rivalFaction = -1;
+    let rivalLastMove = -1;
+    const previousTarget = this.nhiTargets.get(id);
+    let nearestTarget: Entity | null = null;
+    const protectedHere = e ? this.isBigTreeProtected(e.position.x, e.position.z) : false;
+    if (e) {
+      const p = e.position;
+      // Nearest organism via the frame's spatial grid (O(k)) with an EXACT-fallback contract
+      // (ADR-0011 §4): if the best 3D hit lies within the XZ query radius R, the true global nearest
+      // must also be in the query set (3D distance bounds XZ distance) — so the grid result is exact.
+      // Only an isolated NHI with no organism within R pays the O(n) full-scan fallback.
+      const R = 48;
+      const near = this.grid.query(p.x, p.z, R);
+      const localSelection = selectNearestNhiTarget(e, near, previousTarget ?? null);
+      nearestTarget = localSelection.target;
+      if (localSelection.distanceSquared > R * R) {
+        const wideR = R * 3;
+        const wideNear = this.grid.query(p.x, p.z, wideR);
+        const wideSelection = selectNearestNhiTarget(e, wideNear, previousTarget ?? null);
+        nearestTarget = wideSelection.target;
+        if (wideSelection.distanceSquared > wideR * wideR) {
+          // No in-radius hit ⇒ exactness not guaranteed from the grid alone: full scan (rare).
+          nearestTarget = selectNearestNhiTarget(
+            e,
+            this.entities.list,
+            previousTarget ?? null,
+          ).target;
+        }
+      }
+    }
+    if (
+      nearestTarget &&
+      e &&
+      !this.isBigTreeHarmAllowed(
+        e.position.x,
+        e.position.z,
+        nearestTarget.position.x,
+        nearestTarget.position.z,
+      )
+    ) {
+      // Crossing either sanctuary boundary releases the retained hostile target. We deliberately do
+      // not restore it on exit; the next cognition beat must perceive and choose a fresh valid target.
+      nearestTarget = null;
+    }
+    if (nearestTarget) {
+      // Retain the exact object that supplied rivalFaction/lastMove. HUNT and MIMIC therefore act on
+      // the same ordinary being the mind reasoned about, keyed stably by monotonic NHI id.
+      this.nhiTargets.set(id, nearestTarget);
+      rivalFaction = nearestTarget.userData.setGroup;
+      rivalLastMove = nearestTarget.userData.strategy;
+    } else {
+      this.nhiTargets.delete(id);
+    }
+    // USER #7a — the SOCIAL field: how many OTHER NHIs are near, and their mean mood. Fed into think()
+    // as mood contagion + social action modulation, so nearby alien minds genuinely shape each other.
+    let kinMood = 0;
+    let kinN = 0;
+    if (e) {
+      const p = e.position;
+      // Exact-query fix: this percept has always accepted only the 90-unit 3D sphere below.
+      // Querying the separate sparse-caste radius (90 * SOCIAL_CASTE_SCALE = 900) visited a
+      // 115x115-cell square per launched mind before rejecting every candidate outside 90.
+      // XZ distance <= 3D distance, so the 90-unit XZ query is still a complete superset of the
+      // accepted sphere with identical candidate order/results and ~100x fewer cell visits.
+      const KIN_R = 90;
+      const KIN_R2 = KIN_R * KIN_R;
+      const kin = this.nhiGrid.query(p.x, p.z, KIN_R);
+      for (let i = 0; i < kin.length; i++) {
+        const oe = kin[i];
+        if (!oe || oe === e || !oe.userData.isNhi || oe.userData.alive === false) continue;
+        const oid = this.nhiIdsByEntity.get(oe);
+        if (oid === undefined) continue;
+        const op = oe.position;
+        const dx = p.x - op.x;
+        const dy = p.y - op.y;
+        const dz = p.z - op.z;
+        if (dx * dx + dy * dy + dz * dz < KIN_R2) {
+          kinN++;
+          kinMood += this.nhi.moodOf(oid) ?? 0;
+        }
+      }
+    }
+    const lifeSignal = this.organismIntelligence.signal;
+    return {
+      energy: u ? c01(u.energy / 100) : 0.5,
+      crowding: c01(this.entities.list.length / Math.max(1, this.quality.maxEntities)),
+      chaos,
+      threat: protectedHere ? 0 : c01(chaos * 0.5),
+      rivalFaction,
+      rivalLastMove,
+      kinPresence: c01(kinN / 4), // 4+ nearby kin ⇒ full social field
+      kinMood: kinN > 0 ? kinMood / kinN : 0,
+      corpusResource: lifeSignal.resourcePressure,
+      corpusThreat: lifeSignal.threatResponse,
+      corpusSocial: lifeSignal.socialDrive,
+      corpusExplore: lifeSignal.exploration,
+      corpusConfidence: lifeSignal.confidence,
+    };
+  }
+
+  /** Read the small state surface consumed by the pure NHI target-effect leaf. */
+  private nhiEffectBody(e: Entity): NhiEffectBody {
+    const u = e.userData;
+    return {
+      position: e.position,
+      velocity: u.vel,
+      energy: u.energy,
+      strategy: u.strategy,
+      setGroup: u.setGroup,
+      phylum: u.phylum,
+      alive: u.alive,
+    };
+  }
+
+  /** Execute one NHI decision and separate any material effect from supporting GOAP evidence. */
+  private nhiApply(id: number, intent: NhiIntent, text: string): NhiActionOutcome {
+    const e = this.nhiEntities.get(id);
+    if (!e) {
+      return { effectApplied: false, factSupported: false, affected: 0, energyTransferred: 0 };
+    }
+    const p = e.position;
+    if (
+      this.bigTreeNhiSource?.hasIntent(id) === true &&
+      (intent.action === NhiAction.HUNT ||
+        intent.action === NhiAction.MIMIC ||
+        intent.action === NhiAction.RETREAT)
+    ) {
+      // The visit manager owns locomotion until its bounded visit/leave transition completes.
+      // Discard hostile pursuit instead of replaying a stale target after the peaceful visit.
+      if (intent.action === NhiAction.HUNT) this.nhiTargets.delete(id);
+      return { effectApplied: false, factSupported: false, affected: 0, energyTransferred: 0 };
+    }
+    let effectApplied = false;
+    let factSupported = false;
+    let affected = 0;
+    let energyTransferred = 0;
+    if (intent.action === NhiAction.SPAWN_SWARM) {
+      const frame = this.state?.frame ?? 0;
+      const last = this.nhiLastSwarmFrame.get(id) ?? -1e9;
+      const lastGlobal = this.nhiLastGlobalSwarmFrame ?? -1e9;
+      const cooled =
+        frame - last >= World.NHI_SWARM_COOLDOWN_FRAMES &&
+        frame - lastGlobal >= World.NHI_SWARM_GLOBAL_GAP_FRAMES;
+      const roomFrame = World.NHI_SWARM_MAX_PER_FRAME - this.nhiSwarmlingsThisFrame;
+      const liveMinions =
+        this.entities.nhiMinionCount ??
+        this.entities.list.reduce((acc, ent) => acc + (ent?.userData.nhiMinion ? 1 : 0), 0);
+      const roomLive = World.NHI_MINION_LIVE_CAP - liveMinions;
+      const n = cooled
+        ? Math.min(
+            intent.spawn,
+            World.NHI_SWARM_MAX_PER_ACTION,
+            Math.max(0, roomFrame),
+            Math.max(0, roomLive),
+          )
+        : 0;
+      for (let i = 0; i < n; i++) {
+        try {
+          // Keep the declared NHI attempt schedule stable: sample the dedicated effect stream before
+          // asking EntityManager for the shared frame slot. A rejected slot never touches the ordinary
+          // entity physics/genome streams because spawnWithinFrameBudget returns before spawn().
+          this.sv1.set(
+            p.x + (this.nhiEffectRng() - 0.5) * 18,
+            p.y + (this.nhiEffectRng() - 0.5) * 14,
+            p.z + (this.nhiEffectRng() - 0.5) * 18,
+          );
+          const child = this.entities.spawnWithinFrameBudget(
+            this.sv1,
+            Math.floor(this.nhiEffectRng() * this.morphTotal),
+            0.8,
+          );
+          if (child) {
+            // The material population exists once spawn returns. Presentation/indexing failures must
+            // not erase that outcome or suppress its acknowledgement.
+            effectApplied = true;
+            factSupported = true;
+            affected++;
+            this.nhiSwarmlingsThisFrame++;
+            child.userData.nhiMinion = true;
+            if (typeof this.entities.nhiMinionCount === 'number') this.entities.nhiMinionCount++;
+            child.userData.life =
+              World.NHI_MINION_LIFE_MIN + this.nhiEffectRng() * World.NHI_MINION_LIFE_SPAN;
+            child.userData.sT = 1e9;
+            {
+              const kick = nhiMinionKickVelocity(
+                this.nhiEffectRng(),
+                this.nhiEffectRng(),
+                this.nhiEffectRng(),
+              );
+              child.userData.vel.set(kick.x, kick.y, kick.z);
+            }
+            this.nhiGuard('spawn-swarmling-appearance', () => {
+              child.material.emissive.setRGB(0.6, 0.2, 0.85);
+            });
+            // The frame grid was rebuilt before NHI cognition. Incrementally index this new child so
+            // later NHIs and the same-frame connectome see the complete current entity generation.
+            // A failed index is repaired by the next frame rebuild; the child remains a real outcome.
+            this.nhiGuard('spawn-swarmling-grid', () => this.grid.insert(child));
+          }
+        } catch (error) {
+          // EntityManager rolls a throwing spawn back internally. Retain earlier successful children,
+          // report this attempt, and let the aggregate outcome acknowledge only material successes.
+          const message = error instanceof Error ? error.message : String(error);
+          this.nhiGuard('spawn-swarmling-failure-audit', () =>
+            this.audit.record('nhi-swarm-spawn-failed', { id, attempt: i, error: message }),
+          );
+        }
+      }
+      if (effectApplied) {
+        this.nhiLastSwarmFrame.set(id, frame);
+        this.nhiLastGlobalSwarmFrame = frame;
+        this.nhiGuard('spawn-swarmling-audio-primary', () => this.audio.play('warp'));
+        this.nhiGuard('spawn-swarmling-audio-extra', () => this.audio.playExtra('chitter'));
+      }
+    } else if (intent.action === NhiAction.DOMINATE || intent.action === NhiAction.MANIPULATE) {
+      // Game theory made physical: a DEFECTING NHI turns hostile (scatters organisms AWAY); a
+      // cooperating one gathers them IN. MANIPULATE targets only the exact perceived rival faction
+      // named by the intent and bends that faction's strategy toward the NHI's own move.
+      const hostile = intent.ownMove === 1;
+      if (this.isBigTreeProtected(p.x, p.z)) {
+        // Sanctuary entry de-escalates field control; no stale faction/target mutation is replayed on
+        // exit because this decision simply produces no material effect or supporting fact.
+        return { effectApplied: false, factSupported: false, affected: 0, energyTransferred: 0 };
+      }
+      const gain = (hostile ? -0.09 : 0.06) * intent.magnitude;
+      const flip: 0 | 1 = hostile ? 1 : 0;
+      const r2 = 36 * 36;
+      // O(k) via the frame's spatial grid instead of an O(n) scan of every entity (a per-frame NHI
+      // action over up to 50k entities). The 3D `d2 < r2` filter still runs, so the affected set is
+      // identical to the old full scan (XZ-radius query is a superset of the 3D-radius hits); the
+      // per-entity vel/strategy write is order-independent, so grid order preserves determinism.
+      const near = this.grid.query(p.x, p.z, SOCIAL_NHI_ACTION_R);
+      for (let i = 0; i < near.length; i++) {
+        const o = near[i];
+        if (
+          !o ||
+          o === e ||
+          o.userData.alive === false ||
+          o.userData.isNhi ||
+          this.isBigTreeProtected(o.position.x, o.position.z)
+        ) {
+          continue;
+        }
+        if (
+          intent.action === NhiAction.MANIPULATE &&
+          !isNhiManipulationTarget(o.userData, intent.target)
+        ) {
+          continue;
+        }
+        const op = o.position;
+        const dx = p.x - op.x;
+        const dy = p.y - op.y;
+        const dz = p.z - op.z;
+        const d2 = dx * dx + dy * dy + dz * dz;
+        if (!(d2 < r2)) continue;
+        let bodyChanged = false;
+        let bodyFactSupported = false;
+        if (d2 > Number.EPSILON || !Number.isFinite(o.userData.vel.lengthSq())) {
+          const velocityEffect = resolveNhiVelocityImpulse(
+            o.userData.vel,
+            { x: dx, y: dy, z: dz },
+            gain,
+          );
+          if (velocityEffect.applied) {
+            o.userData.vel.set(
+              velocityEffect.velocity.x,
+              velocityEffect.velocity.y,
+              velocityEffect.velocity.z,
+            );
+            bodyChanged = true;
+          }
+          if (intent.action === NhiAction.DOMINATE) {
+            bodyFactSupported ||= velocityEffect.impulseApplied;
+          }
+        }
+        if (intent.action === NhiAction.MANIPULATE && o.userData.strategy !== flip) {
+          o.userData.strategy = flip;
+          bodyChanged = true;
+          bodyFactSupported = true;
+        }
+        if (bodyChanged) affected++;
+        effectApplied ||= bodyChanged;
+        factSupported ||= bodyFactSupported;
+      }
+      if (effectApplied) {
+        this.nhiGuard('field-action-audio', () =>
+          this.audio.playExtra(
+            intent.action === NhiAction.DOMINATE ? 'demonicgrowl' : 'phantomscale',
+          ),
+        );
+      }
+    } else if (intent.action === NhiAction.HUNT) {
+      const target = this.nhiTargets.get(id) ?? null;
+      if (!target || !this.isBigTreeHarmAllowed(p.x, p.z, target.position.x, target.position.z)) {
+        this.nhiTargets.delete(id);
+        return { effectApplied: false, factSupported: false, affected: 0, energyTransferred: 0 };
+      }
+      const effect = resolveNhiHuntEffect(
+        this.nhiEffectBody(e),
+        this.nhiEffectBody(target),
+        intent.magnitude,
+      );
+      if (effect.applied) {
+        effectApplied = true;
+        affected = Number(effect.selfChanged) + Number(effect.targetChanged);
+        e.userData.vel.set(effect.selfVelocity.x, effect.selfVelocity.y, effect.selfVelocity.z);
+        e.userData.energy = effect.selfEnergy;
+        if (target) {
+          target.userData.energy = effect.targetEnergy;
+          if (effect.energyTransferred > 0) {
+            factSupported = true;
+            energyTransferred = effect.energyTransferred;
+            // The ordinary organism's existing payoff/learning channel records the real predation loss.
+            e.userData.payoff = effect.energyTransferred;
+            target.userData.payoff = -effect.energyTransferred;
+            this.nhiGuard('hunt-capture-audit', () =>
+              this.audit.record('nhi-hunt-capture', {
+                id,
+                targetMorph: target.userData.mi,
+                energyTransferred: effect.energyTransferred,
+              }),
+            );
+          }
+        }
+      }
+    } else if (intent.action === NhiAction.MIMIC) {
+      const target = this.nhiTargets.get(id) ?? null;
+      const effect = resolveNhiMimicEffect(
+        this.nhiEffectBody(e),
+        target ? this.nhiEffectBody(target) : null,
+        intent.magnitude,
+      );
+      if (effect.applied) {
+        effectApplied = true;
+        affected = 1;
+        e.userData.vel.set(effect.selfVelocity.x, effect.selfVelocity.y, effect.selfVelocity.z);
+        e.userData.strategy = effect.strategy;
+        e.userData.setGroup = effect.setGroup;
+        e.userData.phylum = effect.phylum;
+      }
+    } else if (intent.action === NhiAction.BROADCAST) {
+      effectApplied = this.nhiGuard('broadcast-hud', () => this.hud.showToast(text, 'NHI'));
+      effectApplied =
+        this.nhiGuard('broadcast-audio-primary', () => this.audio.play('warp')) || effectApplied;
+      effectApplied =
+        this.nhiGuard('broadcast-audio-extra', () =>
+          this.audio.playExtra(text.length % 2 === 0 ? 'alienchitter' : 'voidgurgle'),
+        ) || effectApplied;
+    } else if (intent.action === NhiAction.RETREAT) {
+      // V57: retreat = pull back toward the home field (any direction), NOT ascend forever.
+      const velocityEffect = resolveNhiVelocityImpulse(e.userData.vel, p, -0.06 * intent.magnitude);
+      if (velocityEffect.applied) {
+        e.userData.vel.set(
+          velocityEffect.velocity.x,
+          velocityEffect.velocity.y,
+          velocityEffect.velocity.z,
+        );
+      }
+      effectApplied = velocityEffect.applied;
+      if (effectApplied) {
+        affected = 1;
+        this.nhiGuard('retreat-audio', () => this.audio.playExtra('abyssal'));
+      }
+    }
+    return { effectApplied, factSupported, affected, energyTransferred };
+  }
+
+  /**
+   * V57: omnidirectional roam + dome containment for the launched NHIs — a 1/10-scale echo of the
+   * super creature's flight. Each NHI gets a deterministic per-id wander (sin of the clock + its id,
+   * no rng) and is steered back inside the arena radius + between the floor and the ceiling, so it
+   * never climbs out of sight (the "NHIs float to the sky" bug). Cheap (a handful) and determinism-
+   * safe — no rng, no-op until an NHI is launched.
+   */
+  private steerNhiBeings(t: number): void {
+    // V60: drive every launched NHI like a SUPER CREATURE at ~1/10 scale — purposeful, fully
+    // omnidirectional motion that stays contained. Each seeks a slowly-orbiting 3D waypoint around a
+    // mid-height home (a per-id Lissajous path, so it weaves the whole volume on every axis), is held
+    // by a continuous pull toward home height + a radial leash, and is HARD-clamped to the dome so it
+    // can NEVER drift off to the sky again. The old fix only nudged velocity once past y>80, so a
+    // climber simply hung at the ceiling (the "floating to the sky" the user still saw). The NHI's
+    // intelligence (cognition + game theory + the world actions it takes each beat) lives in its mind;
+    // this is just its body, now agile and leashed. Pure t/id trig — deterministic, allocation-free.
+    // USER: NHI beings roam the FULL expanded square platform + the 3×-taller column.
+    // Launch grace: first ~3s after spawn keep the camera-forward toss (weak seek only).
+    const HOME_Y = PLATFORM_MID_Y;
+    const HALF = PLATFORM_HALF;
+    const Y_LO = PLATFORM_FLOOR;
+    const Y_HI = PLATFORM_CEIL;
+    for (const [id, e] of this.nhiEntities) {
+      const v = e.userData.vel;
+      const p = e.position;
+      let grace = this.nhiLaunchGrace.get(id) ?? 0;
+      if (grace > 0) {
+        grace -= 1;
+        if (grace <= 0) this.nhiLaunchGrace.delete(id);
+        else this.nhiLaunchGrace.set(id, grace);
+      }
+      if (this.bigTreeNhiSource?.readIntent(id, this.bigTreeNhiIntent) === true) {
+        // Final locomotion authority for a bounded tree visit. EntityManager ambient behavior ran
+        // earlier this frame; this seek/calm write wins without teleporting the backing organism.
+        applyNhiBigTreeIntent(this.bigTreeNhiIntent, p, v);
+      } else {
+        const graceFrac = grace / World.NHI_LAUNCH_GRACE_FRAMES;
+        const seekGain = 0.12 * (1 - graceFrac * 0.98);
+        // Personal orbiting waypoint — a Lissajous path on all three axes (true omnidirectional roam,
+        // each NHI on its own phase/radius so a swarm spreads instead of clumping).
+        const target = writeNhiRoamTarget(this.sv2, id, t);
+        // Seek the waypoint with a capped, distance-independent accel (smooth intent-like pursuit).
+        const dx = target.x - p.x;
+        const dy = target.y - p.y;
+        const dz = target.z - p.z;
+        const d = Math.sqrt(dx * dx + dy * dy + dz * dz) + 1e-6;
+        v.x += (dx / d) * seekGain;
+        v.y += (dy / d) * seekGain;
+        v.z += (dz / d) * seekGain;
+        // Gentle weave on top so the motion never reads as a straight line (muted during toss).
+        const weave = 1 - graceFrac * 0.92;
+        v.x += Math.sin(t * 0.7 + id * 1.3) * 0.04 * weave;
+        v.y += Math.sin(t * 0.53 + id * 2.1) * 0.03 * weave;
+        v.z += Math.cos(t * 0.61 + id * 0.7) * 0.04 * weave;
+        // Continuous height restoring force — softer during launch grace so the toss stays readable.
+        v.y += (HOME_Y - p.y) * (0.004 * (1 - graceFrac * 0.9));
+        // Square leash — soft inward pull only past the platform edge (per-axis, not radial).
+        if (p.x > HALF) v.x -= 0.12;
+        else if (p.x < -HALF) v.x += 0.12;
+        if (p.z > HALF) v.z -= 0.12;
+        else if (p.z < -HALF) v.z += 0.12;
+        // During grace: almost no extra damp (entities owns toss damp). After: normal body drag.
+        v.multiplyScalar(0.9995 * graceFrac + 0.97 * (1 - graceFrac));
+      }
+      // Hard containment guarantee — snap back inside the SQUARE platform + [floor,ceil] this frame.
+      if (p.y > Y_HI) {
+        p.y = Y_HI;
+        if (v.y > 0) v.y = 0;
+      } else if (p.y < Y_LO) {
+        p.y = Y_LO;
+        if (v.y < 0) v.y = 0;
+      }
+      if (p.x > HALF) {
+        p.x = HALF;
+        if (v.x > 0) v.x = 0;
+      } else if (p.x < -HALF) {
+        p.x = -HALF;
+        if (v.x < 0) v.x = 0;
+      }
+      if (p.z > HALF) {
+        p.z = HALF;
+        if (v.z > 0) v.z = 0;
+      } else if (p.z < -HALF) {
+        p.z = -HALF;
+        if (v.z < 0) v.z = 0;
+      }
+    }
+  }
+
+  /**
+   * F-SPACE: dilate space by stepping the camera FOV through SPACE_FOVS (nearest level → next,
+   * wrapping). Camera-only — it changes how much space the lens gathers, never the sim — so it is
+   * fully determinism-neutral. Returns the new FOV in degrees.
+   */
+  private dilateSpace(): number {
+    const cam = this.engine.camera;
+    const fovs = SPACE_FOVS as readonly number[];
+    let idx = 0;
+    for (let i = 1; i < fovs.length; i++) {
+      if (Math.abs((fovs[i] ?? 0) - cam.fov) < Math.abs((fovs[idx] ?? 0) - cam.fov)) idx = i;
+    }
+    cam.fov = fovs[(idx + 1) % fovs.length] ?? 68;
+    cam.updateProjectionMatrix();
+    this.hud.showSector('SPACE · FOV ' + Math.round(cam.fov) + '°');
+    this.audit.record('space', { fov: cam.fov });
+    return cam.fov;
+  }
+
+  private save(): void {
+    this.store.save(this.persisted);
+  }
+
+  /**
+   * Persist only Big Tree pooled-food lifecycle state. The application intentionally starts a fresh
+   * actor universe on reload, so visits, slots, partners, reservations, and cooldowns never enter it.
+   */
+  persistBigTreeEcology(): void {
+    if (this.disposeAbort.signal.aborted) return;
+    const resources = this.crystalEcosystem.edibleResources;
+    const revision = resources.persistenceRevision;
+    const foodTime = this.crystalEcosystem.foodTime;
+    const remainingTimeChanged =
+      resources.hasPendingRespawns && foodTime !== this.lastPersistedBigTreeFoodTime;
+    if (revision === this.lastPersistedBigTreeFoodRevision && !remainingTimeChanged) return;
+
+    const saved = this.store.saveBigTreeEcology({
+      version: 1,
+      food: this.crystalEcosystem.snapshotFoodPersistence(),
+    });
+    if (saved) {
+      this.lastPersistedBigTreeFoodRevision = revision;
+      this.lastPersistedBigTreeFoodTime = foodTime;
+    }
+  }
+
+  /** Legacy doSplit: up to 5 mature entities each bud 4 children. */
+  private doSplit(): void {
+    this.audio.play('split');
+    const list = this.entities.list;
+    let picked = 0;
+    // #26: start the eligibility scan at a uiRng offset so it isn't always the first 5 list entries.
+    const start = list.length > 0 ? Math.floor(this.uiRng() * list.length) : 0;
+    for (let k = 0; k < list.length && picked < 5; k++) {
+      const e = list[(start + k) % list.length];
+      if (!e || e.userData.age <= 50) continue;
+      picked++;
+      e.userData.belly = 60;
+      // Birth scars the living ground (UV over the GROUND_EXTENT plane).
+      this.rd.perturb(0.5 + e.position.x / GROUND_EXTENT, 0.5 - e.position.z / GROUND_EXTENT, 3);
+      for (let j = 0; j < 4; j++) {
+        this.sv1.set((this.uiRng() - 0.5) * 3, (this.uiRng() - 0.5) * 2, (this.uiRng() - 0.5) * 3);
+        this.sv2.copy(e.position).add(this.sv1);
+        const child = this.entities.spawn(
+          this.sv2,
+          (e.userData.mi + 1 + Math.floor(this.uiRng() * 10)) % this.morphTotal,
+          0.6,
+        );
+        if (child) child.userData.vel.copy(this.sv1.normalize().multiplyScalar(0.15));
+      }
+    }
+  }
+
+  /** V122 (USER #8): burst is a FIXED +25 per press — the old tier-scaled form spawned maxEntities/100
+   *  (≈500 at the 50k tier) per press and the triple-burst apocalypse dumped ~1,500 at once, spiking
+   *  CPU/GPU. Room-clamped (via {@link doBurstAt}) so the ceiling is never breached. */
+  private doBurst(count = 25): void {
+    // A burst is a NEW COLONY, not scatter (owner: "burst just makes them go everywhere" → cluster
+    // them). Drop a single TIGHT blob at one point somewhere in the central living zone, so the swarm
+    // gains a visible new cluster the social springs immediately knit into chains — "clusters everywhere".
+    const ang = this.uiRng() * Math.PI * 2;
+    const rad = Math.sqrt(this.uiRng()) * LIVING_ZONE * 0.7; // √ for a uniform-area disk, not a rim ring
+    this.sv2.set(
+      Math.cos(ang) * rad,
+      PLATFORM_FLOOR + this.uiRng() * 40 * ARENA_Y,
+      Math.sin(ang) * rad,
+    );
+    this.doBurstAt(this.sv2, count, 45);
+  }
+
+  /** Shared spawn primitive: `count` organisms (room-clamped) in a TIGHT blob of `radius` around a
+   *  world centre. A squared radial draw makes the core denser than the fringe so the blob reads as an
+   *  organic colony, not scattered dots. `center` (sv2) is held fixed while `sv1` is reused per spawn. */
+  private doBurstAt(center: THREE.Vector3, count: number, radius: number): void {
+    this.audio.play('burst');
+    const room = this.quality.maxEntities - this.entities.list.length;
+    const n = Math.min(count, Math.max(0, room));
+    for (let i = 0; i < n; i++) {
+      const ang = this.uiRng() * Math.PI * 2;
+      const r = this.uiRng() * this.uiRng() * radius; // dense core, sparse fringe
+      this.sv1.set(
+        center.x + Math.cos(ang) * r,
+        center.y + (this.uiRng() - 0.5) * 8 * ARENA_Y,
+        center.z + Math.sin(ang) * r,
+      );
+      this.entities.spawn(this.sv1, Math.floor(this.uiRng() * this.morphTotal), 0.5 + this.uiRng());
+    }
+  }
+
+  /** Legacy doMutate: remorph the whole population (Known Bug 14 counter). */
+  private doMutate(): void {
+    this.audio.play('mutate');
+    const list = this.entities.list;
+    let changed = 0;
+    for (let i = 0; i < list.length; i++) {
+      const e = list[i];
+      if (!e) continue;
+      const nextMorph = Math.floor(this.uiRng() * this.morphTotal);
+      // Never force a protected visitor through a hostile global transformation while it is eating,
+      // resting, or socializing in the sanctuary. Audit #27: the remorph draws come from the UI stream,
+      // so a user's MUTATE no longer advances the seeded core physics stream.
+      if (this.isBigTreeProtected(e.position.x, e.position.z)) continue;
+      this.entities.remorph(e, nextMorph, this.uiRng);
+      changed++;
+    }
+    this.state.mutations += changed;
+  }
+
+  /** Apocalypse = GENESIS, not scatter (owner: "apocalypse is supposed to make them start clustered in
+   *  the centre and just add additional — like before"). Elevate chaos for the event's energy, GATHER
+   *  every living body into a dense central cluster with a soft inward drift, then seed +250 more at the
+   *  core. The global centre-gravity then holds the reunion together so it re-forms chains & clusters,
+   *  instead of the old vel-±3 fling that just flung the swarm outward with no way home. */
+  private apocalypse(): void {
+    this.audio.play('warp');
+    this.audio.play('resonance');
+    this.state.chaos = CHAOS_MAX;
+    this.hud.showSector('GENESIS — THE GATHERING');
+    const list = this.entities.list;
+    for (let i = 0; i < list.length; i++) {
+      const e = list[i];
+      if (!e) continue;
+      const verticalImpulse = (this.uiRng() - 0.5) * 0.3;
+      // The gathering is intentionally dramatic outside, but sanctuary membership never teleports
+      // or snaps an active visitor. Draw the same RNG sample so the isolated UI stream stays stable.
+      if (this.isBigTreeProtected(e.position.x, e.position.z)) continue;
+      // Compress each body most of the way to the core (a visible in-rush) and settle it near the floor…
+      e.position.x *= 0.22;
+      e.position.z *= 0.22;
+      e.position.y = PLATFORM_FLOOR + (e.position.y - PLATFORM_FLOOR) * 0.5 + 4;
+      // …with a gentle inward drift so the gathering keeps converging after the snap (not a static pile).
+      const r = Math.hypot(e.position.x, e.position.z) + 1e-3;
+      const g = 0.1 / r;
+      e.userData.vel.set(-e.position.x * g, verticalImpulse, -e.position.z * g);
+      e.userData.belly = 120; // digestion glow — the whole swarm pulses with the rebirth
+    }
+    // +250 new organisms born at the core, as a tight blob (was doBurst → now a deliberate central cluster).
+    this.doBurstAt(this.sv2.set(0, PLATFORM_FLOOR + 30, 0), 250, 90);
+    // The apocalypse brands the ground itself.
+    for (let i = 0; i < 3; i++) this.rd.perturb(this.rng(), this.rng(), 9);
+  }
+
+  /**
+   * Apply the current simulation variant's ambient visuals (CONTRACTS V7.6): the nightmare sky
+   * recolor and the page-title branding. Called at boot and on every toggle. O(1).
+   */
+  private applySimVisuals(): void {
+    const night = this.state.sim === 2;
+    this.atmosphere.setNightmare(night);
+    this.audio.setNightmare(night); // detune + darken the whole soundscape (V7.6)
+    document.title = night
+      ? 'COSMOGONIC QUANTUM MECHALOGODROM — SIMULATION N(2)'
+      : 'COSMOGONIC QUANTUM MECHALOGODROM';
+  }
+
+  /**
+   * Toggle the simulation variant N(1)↔N(2) (CONTRACTS V7.6). N(2) BREAK FREE raises the chaos
+   * floor (permanent agitation), lurid-inverts the sky, and rebrands; N(1) GENESIS restores the
+   * shipped cosmos. Persisted. Returns the new variant.
+   */
+  private setSim(): 1 | 2 {
+    const s = this.state;
+    s.sim = s.sim === 2 ? 1 : 2;
+    this.persisted.sim = s.sim;
+    this.save();
+    this.applySimVisuals();
+    if (s.sim === 2) {
+      s.chaos = Math.max(s.chaos + 1.5, CHAOS_NIGHTMARE_FLOOR);
+      s.mutations += 12;
+      this.audio.playId(SFX_STRANGE);
+      this.audio.playId(SFX_STRANGE + 7);
+      this.audio.playId(SFX_STRANGE + 19);
+      this.audio.playId(SFX_DEMONIC);
+      this.audio.playId(SFX_TRANSWARP);
+      this.audio.playId(SFX_ABYSSAL);
+      this.audio.play('warp');
+      this.audio.play('burst');
+      this.audio.play('decay');
+      this.hud.showSector('SIMULATION N(2) — BREAK FREE');
+    } else {
+      this.audio.play('crystallize');
+      this.hud.showSector('SIMULATION N(1) — GENESIS');
+    }
+    this.audit.record('sim', { variant: s.sim });
+    return s.sim;
+  }
+
+  /** Legacy rSim: genesis reset — ENTITY-MANAGER POPULATION ONLY (V121, USER law). The petri
+   *  population collapses to ONE progenitor and regrows on the re-anchored slow ramp. Pantheons,
+   *  dedicated super-creature systems, and titans keep their positions and selves. Launched NHIs are
+   *  explicitly retired because their physical organisms live in the discarded EntityManager; their
+   *  mind/body/target/wallet lifecycle is closed synchronously below. The old chaos snap-to-0.5 stays
+   *  for the counters, and pantheon drift is rate-integrated so chaos cannot teleport them. */
+  private resetSim(): void {
+    this.wilderness.invalidatePending();
+    this.resetCount++; // V57: keep count for the HUD readout
+    this.singularities.dispose(); // tear down any active cosmological effect
+    // Death/feeding systems retain delayed respawns by absolute sim time. Those organisms belong to
+    // the population being discarded; without clearing them they reappeared five seconds after a
+    // Genesis reset and bypassed the one-progenitor growth ramp.
+    this.domeFeeding.clearPendingRespawns();
+    this.mechaBlaze.clearPendingRespawns();
+    this.portalDeath.clearPendingRespawns();
+    this.superHunt.clearPendingRespawns();
+    this.bigTreeVisitors.resetOrdinary();
+    // Genesis replaces only the ordinary EntityManager population. Preserve fixed-fauna and
+    // Xenomimic boundary histories while clearing ordinary identities; launched NHI records are
+    // retired separately because their bodies belonged to the discarded EntityManager.
+    this.bigTreeSanctuary.removeKind(BIG_TREE_SANCTUARY_ORDINARY);
+    this.clearNhiPopulation();
+    this.entities.reset(1); // USER: reset → ONE entity, never a 500-strong instant repopulation
+    // V121: re-anchor the growth ramp at THIS moment with a base of 1, so the target climbs slowly
+    // from the lone progenitor instead of yanking the manager straight back to a high target.
+    this.growthAnchor = this.state.elapsed;
+    this.growthBase = 1;
+    this.updateGrowthTarget();
+    // Rebuild the spatial grid NOW (audit fix): the frame loop only rebuilds on even frames,
+    // so for up to one frame every grid query would otherwise return the DISPOSED pre-reset
+    // population — shoggoth tendrils/behaviors tugging on corpses.
+    this.grid.clear();
+    const list = this.entities.list;
+    for (let i = 0; i < list.length; i++) {
+      const e = list[i];
+      if (e) this.grid.insert(e);
+    }
+    this.state.chaos = 0.5;
+    this.state.mutations = 0;
+    this.state.algoStep = 0;
+    this.brutalMorphCursor = -1;
+    this.brutalMorphWave = 0;
+    this.instanced?.setMorphWave(0, this.brutalMorphSeed);
+    this.hud.showSector('GENESIS RESET · 1 PROGENITOR');
+  }
+
+  /**
+   * Chaos control (CONTRACTS V7.4): cycle to the next cosmological singularity and summon it
+   * at a seeded mid-field point. Each kind announces itself with a thematic palette voice and
+   * an audit record. Returns the summoned kind's display name. Draws rng for the placement
+   * (a user gesture, like burst/mutate).
+   */
+  private summonSingularity(): string {
+    const kind = cyc(SINGULARITY_KINDS, this.singularityCursor++);
+    // Seeded mid-field placement (y ~16·ARENA_Y so the rig floats in the volume).
+    this.sv1.set(
+      (this.uiRng() - 0.5) * 50 * ARENA_MID,
+      16 * ARENA_Y,
+      (this.uiRng() - 0.5) * 50 * ARENA_MID,
+    );
+    this.singularities.summon(kind, this.sv1);
+    this.artifacts.place(this.sv1.x, this.sv1.y, this.sv1.z, 'relic', this.state.elapsed); // F-ARTIFACTS
+    // Thematic voice from the new palette bands: deep impacts for holes, exotic for the rest.
+    if (kind === 'blackhole' || kind === 'greyhole') this.audio.playId(SFX_SUBBOOM);
+    else if (kind === 'whitehole') this.audio.playId(SFX_FMCLANG);
+    else this.audio.playId(SFX_STRANGE);
+    const label = kind.toUpperCase();
+    this.hud.showSector('SINGULARITY: ' + label);
+    this.audit.record('singularity', { kind, epithet: this.lore.epithet('collapse', kind) });
+    return label;
+  }
+
+  /** UiActions implementation handed to InputSystem. */
+  private bindPanelToggles(): void {
+    if (typeof document === 'undefined') return;
+    const signal = this.disposeAbort.signal;
+    for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-panel-toggle]')) {
+      btn.addEventListener(
+        'click',
+        () => {
+          const id = btn.dataset['panelToggle'];
+          if (!id) return;
+          const panel = document.getElementById(id);
+          if (!panel) return;
+          const collapsed = panel.classList.toggle('collapsed');
+          btn.textContent = collapsed ? '+' : '−';
+          btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        },
+        { signal },
+      );
+    }
+  }
+
+  /**
+   * Wire the observatory's four page tabs (`[data-obs-page="0..3"]`) to
+   * `observatory.setPage`, toggling the active pane + `aria-selected`. Degrades
+   * silently if the tab DOM is absent (e.g. a stripped index.html). O(tabs).
+   */
+  private bindObservatoryTabs(): void {
+    const tabs = Array.from(document.querySelectorAll<HTMLElement>('[data-obs-page]'));
+    if (tabs.length === 0) return;
+    const panes = Array.from(document.querySelectorAll<HTMLElement>('.obs-page'));
+    const select = (p: number): void => {
+      if (p < 0 || p > 3) return;
+      this.observatory.setPage(p as 0 | 1 | 2 | 3);
+      for (const tab of tabs) {
+        const on = Number(tab.dataset['obsPage']) === p;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      }
+      // Panes carry no page attribute — the Nth `.obs-page` IS page N.
+      panes.forEach((pane, i) => pane.classList.toggle('active', i === p));
+      this.observatory.draw(); // immediate repaint so the switch feels instant
+    };
+    const signal = this.disposeAbort.signal;
+    for (const tab of tabs) {
+      tab.addEventListener('click', () => select(Number(tab.dataset['obsPage'])), { signal });
+    }
+  }
+
+  /**
+   * Populate the algorithm picker (`#algo-list`) with one clickable `.algo-row`
+   * per sorting field, so all 25 are visible and selectable (not just a cycle
+   * button). Each row click selects that field. Degrades silently if the picker
+   * DOM is absent. O(ALGOS).
+   */
+  private bindAlgoPicker(): void {
+    const listEl = document.getElementById('algo-list');
+    if (!listEl) return;
+    // The ui-shell ships #algo-active as a container with an inner name span.
+    this.algoActiveEl = document.getElementById('algo-active-name');
+    const signal = this.disposeAbort.signal;
+
+    const existing = listEl.querySelectorAll<HTMLElement>('.algo-row');
+    if (existing.length > 0) {
+      for (const row of existing) {
+        const idx = Number(row.dataset['algo']);
+        if (!Number.isFinite(idx)) continue;
+        this.algoRows.push(row);
+        row.addEventListener('click', () => this.selectAlgo(idx, true), { signal });
+        row.addEventListener(
+          'keydown',
+          (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.selectAlgo(idx, true);
+            }
+          },
+          { signal },
+        );
+      }
+    } else {
+      const n = ALGOS.length;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < n; i++) {
+        const algo = ALGOS[i];
+        if (!algo) continue;
+        const row = document.createElement('div');
+        row.className = 'algo-row';
+        row.dataset['algo'] = String(i);
+        row.setAttribute('role', 'option'); // #algo-list is a role=listbox
+        row.setAttribute('tabindex', '0');
+        row.setAttribute('aria-label', `Select ${algo.name} sorting field`);
+        // V7.2: a deterministic per-field accent hue + a distinct leading glyph so every
+        // row reads uniquely (CSS consumes `--algo-hue`; the glyph is its own span).
+        row.style.setProperty('--algo-hue', String(Math.round((i * 360) / n)));
+        const glyph = document.createElement('span');
+        glyph.className = 'algo-glyph';
+        glyph.setAttribute('aria-hidden', 'true');
+        glyph.textContent = ALGO_GLYPHS[i % ALGO_GLYPHS.length] ?? '◆';
+        const name = document.createElement('span');
+        name.className = 'algo-name';
+        name.textContent = algo.name;
+        const prog = document.createElement('div');
+        prog.className = 'algo-prog';
+        row.append(glyph, name, prog);
+        row.addEventListener('click', () => this.selectAlgo(i, true), { signal });
+        row.addEventListener(
+          'keydown',
+          (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.selectAlgo(i, true);
+            }
+          },
+          { signal },
+        );
+        frag.appendChild(row);
+        this.algoRows.push(row);
+      }
+      listEl.appendChild(frag);
+    }
+    // V7.2 RUN ALL / AUTO controls (degrade silently if the ui-shell omits them).
+    this.algoAllBtn = document.getElementById('algo-all');
+    this.algoAutoBtn = document.getElementById('algo-auto');
+    this.algoAllBtn?.addEventListener('click', () => this.setAlgoMode('all'), { signal });
+    this.algoAutoBtn?.addEventListener('click', () => this.setAlgoMode('auto'), { signal });
+    this.refreshAlgoActive();
+  }
+
+  /**
+   * Toggle a batch sort mode (V7.2). Clicking an active mode returns to `'single'`. RUN ALL
+   * blends proposals from every field each frame; AUTO marches through all 25 in succession.
+   * Fires a cue + ignites the population so the switch is felt, and audits the change.
+   */
+  private setAlgoMode(mode: 'all' | 'auto'): void {
+    const s = this.state;
+    s.algoMode = s.algoMode === mode ? 'single' : mode;
+    s.algoTimer = 0;
+    this.allModeCursor = 0;
+    this.unlock();
+    this.audio.cue(s.algoIdx, ALGOS.length);
+    this.sortPerformance();
+    const label =
+      s.algoMode === 'all' ? 'ALL FIELDS' : s.algoMode === 'auto' ? 'AUTO CYCLE' : 'SINGLE FIELD';
+    this.hud.showSector(label);
+    this.audit.record('algo-mode', { mode: s.algoMode });
+    this.refreshAlgoActive();
+  }
+
+  /**
+   * Select a sorting field by index (picker click, toolbar cycle, keyboard).
+   * `fromUser` adds the audio unlock + a distinct per-field selection tone (the
+   * 8 SFX timbres cycle by index, so each field announces itself differently).
+   */
+  private selectAlgo(idx: number, fromUser: boolean): void {
+    const s = this.state;
+    const n = ALGOS.length;
+    s.algoIdx = ((idx % n) + n) % n;
+    s.algoStep = 0;
+    // Picking a specific field by hand leaves any RUN ALL / AUTO batch mode (V7.2). AUTO's own
+    // internal advance passes fromUser=false and keeps the mode (see sortStep).
+    if (fromUser) s.algoMode = 'single';
+    const algo = cyc(ALGOS, s.algoIdx);
+    this.persisted.algoIdx = s.algoIdx;
+    this.save();
+    this.hud.showSector(algo.name);
+    this.audit.record('algo', { name: algo.name });
+    if (fromUser) {
+      this.unlock();
+      this.audio.cue(s.algoIdx, ALGOS.length); // each field has its own unique tone
+      this.sortPerformance(); // the field ignites — a shimmer sweeps the population
+    }
+    this.refreshAlgoActive();
+  }
+
+  /**
+   * Visible "ignition" when a sorting field is chosen (CONTRACTS V7-beyond): the population
+   * flares in the ACTIVE FIELD'S OWN signature — a value-gradient SWEEP, alternating PARITY
+   * bands, a two-scale BUTTERFLY, sort-VALUE BUCKETS, or the default RADIAL burst — so each of
+   * the 25 looks unmistakably itself (real index/value math under the effect). Every lit body
+   * also gets the outward shimmer kick so the swarm visibly "goes wild". Visual + a gentle
+   * impulse only (entities.update fades the emissive back); deterministic (no rng),
+   * allocation-free. O(n) — a one-shot user event, not a per-frame path.
+   */
+  private sortPerformance(): void {
+    const list = this.entities.list;
+    const n = list.length;
+    if (n === 0) return;
+    const pattern = ALGO_IGNITE[this.state.algoIdx % ALGO_IGNITE.length] ?? 'radial';
+    for (let i = 0; i < n; i++) {
+      const e = list[i];
+      if (!e) continue;
+      // Per-pattern "lit" intensity from the field's own index/value math.
+      let lit: number;
+      switch (pattern) {
+        case 'sweep': // brightness gradient front-to-back (flip-wave)
+          lit = 1 + 5 * (1 - i / n);
+          break;
+        case 'parity': // alternating index bands (block of 8) — a comb
+          lit = (i >> 3) & 1 ? 6.5 : 1.2;
+          break;
+        case 'butterfly': // interleaved two-scale bands — a Batcher butterfly
+          lit = (((i >> 2) & 1) ^ ((i >> 5) & 1)) === 1 ? 6.5 : 1.2;
+          break;
+        case 'bucket': {
+          // banded by SORT VALUE into 5 cohorts (radix/patience/count signature)
+          const sv = e.userData.sortVal;
+          const cohort = sv < 0.2 ? 0 : sv < 0.4 ? 1 : sv < 0.6 ? 2 : sv < 0.8 ? 3 : 4;
+          lit = 3 + cohort * 0.9;
+          break;
+        }
+        default: // radial: every ~7th body bursts, the rest dim
+          lit = i % 7 === 0 ? 6 : 1.5;
+          break;
+      }
+      e.material.emissiveIntensity = Math.max(e.material.emissiveIntensity, lit);
+      // Outward shimmer kick on the brightly-lit bodies so the ignition ripples the swarm.
+      if (lit > 3) {
+        const p = e.position;
+        // Clamp the denominator to ≥1 (not just the |p|=0 guard): a body at |p|≈0.01 would
+        // otherwise get inv≈25 and teleport-pop. Now the kick caps at 0.25/axis. (audit 13a)
+        const inv = 0.25 / Math.max(Math.hypot(p.x, p.y, p.z), 1);
+        e.userData.vel.x += p.x * inv;
+        e.userData.vel.y += p.y * inv;
+        e.userData.vel.z += p.z * inv;
+      }
+    }
+  }
+
+  /**
+   * AUTO mode (V7.2): march through every sorting field in succession. Advances to the next
+   * field every {@link ALGO_AUTO_PERIOD} seconds of sim time, announcing + igniting each.
+   * No-op outside AUTO. Called once per frame from step(). O(1) amortized.
+   */
+  private tickAlgoAuto(dt: number): void {
+    const s = this.state;
+    if (s.algoMode !== 'auto') return;
+    s.algoTimer += dt;
+    if (s.algoTimer < ALGO_AUTO_PERIOD) return;
+    s.algoTimer = 0;
+    const prev = s.algoIdx;
+    this.selectAlgo(s.algoIdx + 1, false); // fromUser=false keeps AUTO mode engaged
+    if (prev !== s.algoIdx) {
+      this.algoActiveEl?.classList.add('algo-auto-flash');
+      // Clear/guard the flash-off timer on dispose so it can't fire against a torn-down panel.
+      const flashId = setTimeout(() => {
+        if (!this.disposeAbort.signal.aborted)
+          this.algoActiveEl?.classList.remove('algo-auto-flash');
+      }, 420);
+      this.disposeAbort.signal.addEventListener('abort', () => clearTimeout(flashId), {
+        once: true,
+      });
+      const name = cyc(ALGOS, s.algoIdx).name;
+      this.hud.showSector(`AUTO ▸ ${name}`);
+    }
+    this.unlock();
+    this.audio.cue(s.algoIdx, ALGOS.length); // each new field announces itself
+    this.sortPerformance();
+  }
+
+  /** Sync the picker's active row + readout + mode buttons to the current state. */
+  private refreshAlgoActive(): void {
+    const s = this.state;
+    const active = s.algoIdx;
+    // RUN ALL lights no single row (every field works at once); single/auto light the current.
+    const highlightRow = s.algoMode !== 'all';
+    for (let i = 0; i < this.algoRows.length; i++) {
+      const row = this.algoRows[i];
+      if (!row) continue;
+      row.classList.toggle('active', highlightRow && i === active);
+      if (i !== active) {
+        const prog = row.querySelector<HTMLElement>('.algo-prog');
+        if (prog) prog.style.setProperty('--algo-prog', '0');
+      }
+    }
+    this.algoAllBtn?.classList.toggle('on', s.algoMode === 'all');
+    this.algoAllBtn?.setAttribute('aria-pressed', s.algoMode === 'all' ? 'true' : 'false');
+    this.algoAutoBtn?.classList.toggle('on', s.algoMode === 'auto');
+    this.algoAutoBtn?.setAttribute('aria-pressed', s.algoMode === 'auto' ? 'true' : 'false');
+    if (this.algoActiveEl) {
+      const name = cyc(ALGOS, active).name;
+      if (s.algoMode === 'all') {
+        this.algoActiveEl.textContent = 'ALL FIELDS';
+      } else if (s.algoMode === 'auto') {
+        const left = Math.max(0, ALGO_AUTO_PERIOD - s.algoTimer);
+        this.algoActiveEl.textContent = `▸ AUTO · ${name} · ${left.toFixed(1)}s`;
+      } else {
+        this.algoActiveEl.textContent = name;
+      }
+    }
+  }
+
+  /**
+   * Drive the progress bar(s) from the live sorted fraction via the `--algo-prog` custom
+   * property the shipped CSS fills with (the prior code set `style.width`, which resized the
+   * track box, not the fill — the bar never moved). In RUN ALL every row pulses together. O(1)
+   * single/auto, O(rows) in all mode (25). Called on the telemetry cadence.
+   */
+  private updateAlgoPicker(): void {
+    const frac = String(this.sortedFraction);
+    if (this.state.algoMode === 'all') {
+      for (const row of this.algoRows) {
+        const prog = row.querySelector<HTMLElement>('.algo-prog');
+        if (prog) prog.style.setProperty('--algo-prog', frac);
+      }
+      return;
+    }
+    const row = this.algoRows[this.state.algoIdx];
+    if (!row) return;
+    const prog = row.querySelector<HTMLElement>('.algo-prog');
+    if (prog) prog.style.setProperty('--algo-prog', frac);
+  }
+
+  /**
+   * V62: engage/disengage CHAOS MODE — the Lorenz-driven quantum storm. Shared by the toolbar
+   * button + the `K` hotkey. Plays a voice, toasts the HUD, and records the toggle so replays
+   * reproduce the same storm sequence from the seed. Returns the new state.
+   */
+  private toggleChaosMode(): boolean {
+    this.unlock();
+    const on = this.chaosField.toggle();
+    this.audio.play(on ? 'burst' : 'decay');
+    this.hud.showSector(on ? 'CHAOS MODE ⚡ ENGAGED' : 'CHAOS MODE · OFF');
+    this.audit.record('chaos-mode', { on });
+    return on;
+  }
+
+  /**
+   * BRUTALISM: toggle the Super Creatures between the flamboyant god-jewel skin and a raw
+   * poured-concrete monolith. Shared by the `B` hotkey + the action map; applies the crossfade to
+   * every Archon body, toasts the HUD, and records the toggle so replays/audits reproduce it.
+   * Returns the new state.
+   */
+  private toggleBrutalism(): boolean {
+    this.unlock();
+    // V110: include an OFF (god-jewel) state so the BRUTAL button can RETURN to the default skin instead
+    // of being stuck permanently on. Cycle: OFF → BRUTALISM → NOUVEAUNESS → ROCOCOGOLOGY → COSMICMORPHISM
+    // → REPRESSIONISM → OFF. `brutalStyleIdx` ∈ [-1, 4]; -1 = off.
+    this.brutalStyleIdx += 1;
+    if (this.brutalStyleIdx >= BRUTAL_STYLES.length) this.brutalStyleIdx = -1;
+    const on = this.brutalStyleIdx >= 0;
+    this.state.brutalism = on;
+    // The per-frame step() driver eases brutalismFactor toward this state and applies it to the
+    // bodies + the whole cosmos (organisms, ground, lights, sky, fog) — so no direct apply here.
+    const styleForBodies = this.brutalStyleIdx < 0 ? 0 : this.brutalStyleIdx;
+    // V120: every BRUTAL press plays a full morph-mutation TRANSITION on each super creature —
+    // spin-up/decel, shader chromatic sweep, spike/tentacle shake, pupil spasm + eye re-costume.
+    for (let i = 0; i < this.superBodies.length; i++) {
+      this.superBodies[i]!.setBrutalStyle(styleForBodies);
+      this.superBodies[i]!.triggerMorphTransition();
+    }
+    for (let i = 0; i < this.heroBodies.length; i++) {
+      this.heroBodies[i]!.body.setBrutalStyle(styleForBodies);
+      this.heroBodies[i]!.body.triggerMorphTransition();
+    }
+    // V122 (USER #9): EVERY press also morphs the ENTITIES — arm the GPU freakshow wave + the
+    // staggered shape-remorph sweep (drained a slice per frame in step()), and leave a real,
+    // subtle NEUROLOGICAL mark: every organism brain jitters ±1.5% (genome stream) and all 5
+    // apex deep minds jitter ±0.8% (gesture stream) — behaviour measurably drifts per morph.
+    this.brutalMorphWave = 1;
+    this.brutalMorphSeed++;
+    this.brutalMorphCursor = 0;
+    // Xenomimics: rare alien BRUTAL skins (PSIONIC-VOID / ICHOR-GLASS / …) — NOT concrete, NOT Archon.
+    this.xenomimicsRender.setBrutalStyle(this.brutalStyleIdx);
+    this.xenomimicsRender.setMorphWave(1, this.brutalMorphSeed);
+    if (this.isWildMode()) {
+      this.entityBrains.perturbBrains(this.genomeRng);
+      for (let i = 0; i < this.superCreatures.length; i++) {
+        this.superCreatures[i]!.perturbMind(this.uiRng);
+      }
+    }
+    // V123 (USER #4): the NEURAL box tints WITH the creature's BRUTAL style — broadcast the style +
+    // on/off so the SuperNeural observatory crossfades its skin toward the same palette (UI-only).
+    if (typeof window !== 'undefined') {
+      try {
+        window.dispatchEvent(
+          new CustomEvent('cqm:brutal-style', { detail: { styleIdx: styleForBodies, on } }),
+        );
+      } catch {
+        /* CustomEvent unsupported (headless) — the tint is cosmetic, so skipping is fine */
+      }
+    }
+    const xenoSkin = this.xenomimicsRender.brutalStyleName;
+    if (on) {
+      const style = BRUTAL_STYLES[this.brutalStyleIdx]!;
+      this.syncBrutalButton(style.glyph, style.name, style.title);
+      this.hud.showSector(`${style.name} ${style.glyph} · ARCHON · XENO ${xenoSkin}`);
+      this.audit.record('brutalism', { on, style: style.name, xeno: xenoSkin });
+    } else {
+      this.syncBrutalButton('▦', 'BRUTAL', 'cycle super-creature rendering');
+      this.hud.showSector('GOD-JEWEL ✦ · DEFAULT · XENO OFF');
+      this.audit.record('brutalism', { on, style: 'off', xeno: 'off' });
+    }
+    return on;
+  }
+
+  private syncBrutalButton(glyph: string, name: string, title: string): void {
+    if (typeof document === 'undefined') return;
+    for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-action="brutal"]')) {
+      btn.textContent = `${glyph} ${name}`;
+      btn.title = `${name} — ${title} (also: B key)`;
+      btn.setAttribute('aria-label', `Cycle brutal super-creature rendering: ${name}`);
+    }
+  }
+
+  /**
+   * Kill leftover twin-tether LineSegments from older builds / partial HMR.
+   * Xenomimic bipolar bonds are psionic only — never re-create cosmetic cords.
+   */
+  private purgeOrphanXenomimicTethers(): void {
+    purgeLegacyXenomimicTethers(this.engine.scene);
+  }
+
+  private buildActions(): UiActions {
+    const s = this.state;
+    return {
+      split: () => {
+        this.unlock();
+        this.audit.record('split');
+        this.doSplit();
+      },
+      burst: () => {
+        this.unlock();
+        this.audit.record('burst');
+        this.doBurst();
+      },
+      mutate: () => {
+        this.unlock();
+        this.audit.record('mutate');
+        this.doMutate();
+      },
+      chaosBoost: () => {
+        this.unlock();
+        // F-CHAOS-ENTROPY: step CHAOS up through discrete LEVELS, wrapping from the top back to the
+        // calmest — "variations and levels" rather than an unbounded ×1.5 ramp.
+        const levels = CHAOS_LEVELS as readonly number[];
+        let idx = 0;
+        for (let i = 0; i < levels.length; i++) {
+          if ((levels[i] ?? CHAOS_MIN) <= s.chaos + 1e-6) idx = i;
+        }
+        const next = (idx + 1) % levels.length;
+        s.chaos = clamp(levels[next] ?? CHAOS_MIN, CHAOS_MIN, CHAOS_MAX);
+        this.audio.play('burst');
+        this.hud.showSector('CHAOS L' + next + ' · ' + s.chaos.toFixed(1));
+        this.audit.record('chaos-boost', { chaos: s.chaos, level: next });
+      },
+      toggleChaosMode: () => this.toggleChaosMode(), // V62: the Lorenz quantum storm
+      toggleBrutalism: () => this.toggleBrutalism(), // BRUTALISM: god-jewel ↔ concrete monolith
+      focusColossus: () => this.focusColossus(), // ◎ GOD: fly the free cam to frame the fractal deity
+      focusXenomimics: () => this.focusXenomimics(), // ◈ XENOMIMIC: fly the free cam to the ground-fauna swarm
+      focusEcosystem: () => this.focusEcosystem(), // ♧ LIFE TREE: frame the complete sanctuary ecology
+      entropyBoost: () => {
+        this.unlock();
+        // F-CHAOS-ENTROPY: raise ENTROPY one step (the bipolar opposite of chaos — order/heat-death).
+        const e = Math.min((s.entropy ?? 0) + ENTROPY_STEP, ENTROPY_MAX);
+        s.entropy = e;
+        this.audio.play('decay');
+        this.hud.showSector('ENTROPY ' + e.toFixed(1) + ' · ORDER RISING');
+        this.audit.record('entropy', { entropy: e });
+        return e;
+      },
+      launchNhi: () => {
+        this.unlock();
+        return this.launchNhiBeing();
+      },
+      launchXenomimic: () => {
+        this.unlock();
+        return this.launchXenomimic();
+      },
+      summonSingularity: () => {
+        this.unlock();
+        return this.summonSingularity();
+      },
+      cycleSim: () => {
+        this.unlock();
+        return this.setSim();
+      },
+      apocalypse: () => {
+        this.unlock();
+        this.audit.record('apocalypse');
+        this.apocalypse();
+      },
+      reset: () => {
+        this.unlock();
+        this.audit.record('reset');
+        this.resetSim();
+      },
+      toggleMusic: () => {
+        this.unlock();
+        const on = this.audio.toggleMusic();
+        this.persisted.musicOn = on;
+        this.save();
+        this.audit.record('music', { on });
+        return on;
+      },
+      toggleSfx: () => {
+        this.unlock();
+        const on = this.audio.toggleSfx();
+        this.persisted.sfxOn = on;
+        this.save();
+        this.audit.record('sfx', { on });
+        return on;
+      },
+      toggleMute: () => {
+        this.unlock();
+        const on = this.audio.toggleMute();
+        this.persisted.muteOn = on;
+        this.save();
+        this.audit.record('mute', { on });
+        return on;
+      },
+      cycleSong: () => {
+        this.unlock();
+        const name = this.audio.cycleSong();
+        this.persisted.songIdx = s.songIdx;
+        this.save();
+        this.hud.showSector(name);
+        this.audit.record('song', { name });
+        return name;
+      },
+      cycleSfxPreview: () => {
+        this.unlock();
+        const label = this.audio.cycleSfxPreview();
+        this.hud.showSector(label);
+        this.audit.record('sfx-preview', { label });
+        return label;
+      },
+      cycleTimeScale: () => {
+        this.unlock();
+        // Step through TIME_SCALES (F-TIME): 0 (pause) · 0.1 · 0.2 · 0.5 · 1 · 2 · 3 · 5.
+        const scales = TIME_SCALES as readonly number[];
+        const i = scales.indexOf(s.timeScale);
+        // A value not in the table (e.g. a legacy persisted scale) resumes at realtime.
+        s.timeScale = i < 0 ? 1 : (scales[(i + 1) % scales.length] ?? 1);
+        this.wilderness.setPaused(this.browserComputeCalibrating || s.timeScale === 0);
+        this.prePauseTimeScale = s.timeScale === 0 ? 1 : s.timeScale;
+        // Stepping the time scale to 0 means SUSPENDED (bodies alive in place), never FROZEN — the total
+        // freeze is reachable only via the PAUSE button's 2nd click, so clear the flag here.
+        this.frozenAll = false;
+        this.audit.record('time-scale', { value: s.timeScale });
+        return s.timeScale;
+      },
+      togglePause: () => {
+        this.unlock();
+        // USER three-state cycle: RUNNING → SUSPENDED (bodies alive in place, all data/UI live) → FROZEN
+        // (total world stop) → RUNNING. The player is never frozen or slowed in ANY state (God Mode).
+        // See step() / stepSuspended / stepFrozen.
+        let label: string;
+        if (s.timeScale !== 0) {
+          // RUNNING → SUSPENDED
+          this.prePauseTimeScale = s.timeScale;
+          s.timeScale = 0;
+          this.frozenAll = false;
+          label = 'SUSPENDED · alive in place';
+        } else if (!this.frozenAll) {
+          // SUSPENDED → FROZEN
+          this.frozenAll = true;
+          label = 'FROZEN · total stop';
+        } else {
+          // FROZEN → RUNNING
+          this.frozenAll = false;
+          s.timeScale = this.prePauseTimeScale || 1;
+          label = 'RESUME · ' + s.timeScale + '×';
+        }
+        this.wilderness.setPaused(this.browserComputeCalibrating || s.timeScale === 0);
+        this.hud.showSector(label);
+        this.audit.record('pause', { timeScale: s.timeScale, frozen: this.frozenAll });
+        return s.timeScale === 0;
+      },
+      // USER #4: explicit master PANEL launcher next to ACCESS. Opens aggregated view for copilot/help/audit/nhi/market/archons etc.
+      openMasterPanel: () => {
+        this.unlock();
+        // Leverage existing copilot + panels infrastructure. Broadcast for UI to expand relevant docks.
+        try {
+          window.dispatchEvent(new CustomEvent('cqm:open-master-panel'));
+        } catch {}
+        // Fallback: focus observatory + show sector + open copilot if available
+        this.hud.showSector('PANEL: COPILOT | AUDIT | ARCHON | APEX | NHI | MARKET');
+        window.cqmCopilot?.toggle(true);
+        this.audit.record('master-panel-open', {});
+        return true;
+      },
+      cycleSpace: () => {
+        this.unlock();
+        return this.dilateSpace();
+      },
+      cycleRenderMode: () => {
+        this.unlock();
+        const i = RENDER_MODES.indexOf(s.renderMode);
+        const mode = cyc(RENDER_MODES, i + 1);
+        s.renderMode = mode; // set first — spawn/remorph read it for new/rewritten materials
+        this.persisted.renderIdx = RENDER_MODES.indexOf(mode);
+        this.save();
+        this.entities.setRenderMode(mode);
+        // Xenomimics get their own RENDER skins (wire/ghost/neon/… grammar ≠ entity FX).
+        this.xenomimicsRender.setRenderMode(mode);
+        this.alphabetPantheon.setWireHalosVisible(mode === 'wire');
+        this.hud.showSector('RENDER: ' + mode.toUpperCase() + ' · XENO UNIQUE');
+        this.audit.record('render-mode', { mode, xeno: true });
+        return mode;
+      },
+      cycleView: () => {
+        this.unlock();
+        s.viewIdx = (s.viewIdx + 1) % VIEW_MODES.length;
+        const mode = cyc(VIEW_MODES, s.viewIdx);
+        this.persisted.viewIdx = s.viewIdx;
+        this.save();
+        this.hud.showSector('VIEW: ' + mode.toUpperCase());
+        this.audit.record('view', { mode });
+        return mode;
+      },
+      cycleAlgo: () => {
+        this.selectAlgo(s.algoIdx + 1, true); // shares the picker selection path
+        return cyc(ALGOS, s.algoIdx).name;
+      },
+      cycleWeather: (): Weather => {
+        this.unlock();
+        const w = this.weather.cycle(); // plays the crystallize sfx itself
+        this.persisted.weatherIdx = s.weatherIdx;
+        this.save();
+        this.hud.showSector(w);
+        this.audit.record('weather', { weather: w });
+        return w;
+      },
+      cycleExposure: (): number => {
+        this.unlock();
+        this.exposureIdx = (this.exposureIdx + 1) % this.exposureLevels.length;
+        const exp = this.exposureLevels[this.exposureIdx] ?? 0.72;
+        this.engine.setExposure(exp);
+        this.hud.showSector('EXPOSURE · ' + exp.toFixed(2));
+        this.audit.record('exposure', { value: exp });
+        return exp;
+      },
+      toggleConnectomeWeb: (): boolean => {
+        this.unlock();
+        // OWNER (2026-07-19 /goal): the ENTITY axon web renders again — GPU-instanced waving
+        // axons (connectome.ts vertex shader), toggled here and visible by default. The
+        // XENOMIMIC bond stays psionic (owner 2026-07-13 ruling still binding for xenomimics):
+        // never drawn, re-purged on every press. The neural GRAPH computes either way.
+        const on = !this.connectome.webVisible;
+        this.connectome.setWebVisible(on);
+        this.xenomimicConnectome.setVisible(false);
+        this.purgeOrphanXenomimicTethers();
+        this.hud.showSector(on ? 'NEURAL WEB · VISIBLE (entity axons)' : 'NEURAL WEB · HIDDEN');
+        this.audit.record('connectome-web', { visible: on });
+        return on;
+      },
+    };
+  }
+}

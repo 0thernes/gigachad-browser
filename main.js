@@ -1924,23 +1924,123 @@ function registerIpc() {
     }
   });
 
+  let _cachedPortedBrainsPayload = null;
+
   ipcMain.handle('hybrid-brain-portals', (event) => {
     if (!fromChrome(event)) return { ok: false };
     try {
       const { pathToFileURL } = require('url');
-      const rootDir = path.resolve(__dirname, '..');
-      const resolvePortal = (...parts) => {
-        const p = path.join(rootDir, ...parts);
-        return fs.existsSync(p) ? pathToFileURL(p).href : null;
+      const localBrainsDir = path.join(__dirname, 'brains');
+      const parentDir = path.resolve(__dirname, '..');
+      const resolvePortal = (localParts, fallbackParts) => {
+        const pLocal = path.join(localBrainsDir, ...localParts);
+        if (fs.existsSync(pLocal)) return pathToFileURL(pLocal).href;
+        if (fallbackParts) {
+          const pFallback = path.join(parentDir, ...fallbackParts);
+          if (fs.existsSync(pFallback)) return pathToFileURL(pFallback).href;
+        }
+        return null;
       };
       return {
         ok: true,
-        dimensionOmegaUrl: resolvePortal('dimension-omega-singularity', 'index.html'),
-        dimensionOmegaStudioUrl: resolvePortal('dimension-omega-singularity', 'studio.html'),
-        asmodensiusUrl: resolvePortal('Asmodensius-v40', 'creatures', '001', 'index.html'),
-        asmodensiusV3Url: resolvePortal('Asmodensius-v40', 'creatures', '001', 'index.v3.html'),
-        quantumManifoldUrl: resolvePortal('quantum_neural_manifold_3d.html')
+        selfContainedInRepo: true,
+        dimensionOmegaUrl: resolvePortal(['dimension-omega-singularity', 'index.html'], ['dimension-omega-singularity', 'index.html']),
+        dimensionOmegaStudioUrl: resolvePortal(['dimension-omega-singularity', 'studio.html'], ['dimension-omega-singularity', 'studio.html']),
+        asmodensiusUrl: resolvePortal(['asmodensius-v40', 'creatures', '001', 'index.html'], ['Asmodensius-v40', 'creatures', '001', 'index.html']),
+        asmodensiusV3Url: resolvePortal(['asmodensius-v40', 'creatures', '001', 'index.v3.html'], ['Asmodensius-v40', 'creatures', '001', 'index.v3.html']),
+        quantumManifoldUrl: resolvePortal(['quantum_neural_manifold_3d.html'], ['quantum_neural_manifold_3d.html']),
+        cqmXylosUrl: resolvePortal(['cqm-xylos', 'index.html'], ['Cosmogonic Quantum Mechalogodrom', 'index.html']),
+        cqmBibleUrl: resolvePortal(['cqm-xylos', 'bible.html'], ['Cosmogonic Quantum Mechalogodrom', 'bible.html']),
+        cqmSpecsUrl: resolvePortal(['cqm-xylos', 'specs.html'], ['Cosmogonic Quantum Mechalogodrom', 'specs.html']),
+        cqmDocsUrl: resolvePortal(['cqm-xylos', 'docs.html'], ['Cosmogonic Quantum Mechalogodrom', 'docs.html'])
       };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('ported-brains-bridge', (event) => {
+    if (!fromChrome(event)) return { ok: false };
+    try {
+      if (_cachedPortedBrainsPayload) return _cachedPortedBrainsPayload;
+      const localBrainsDir = path.join(__dirname, 'brains');
+      const wasmPath = path.join(localBrainsDir, 'cqm-xylos', 'cqm_kernels.wasm');
+      const celegansPath = path.join(localBrainsDir, 'asmodensius-v40', 'celegans_herm_full_edgelist.csv');
+
+      let wasmBase64 = null;
+      let wasmExports = [];
+      let wasmBench = null;
+      if (fs.existsSync(wasmPath)) {
+        const wasmBuf = fs.readFileSync(wasmPath);
+        wasmBase64 = wasmBuf.toString('base64');
+        const mod = new WebAssembly.Module(wasmBuf);
+        wasmExports = WebAssembly.Module.exports(mod).map((e) => e.name);
+        const inst = new WebAssembly.Instance(mod, {});
+        const ex = inst.exports;
+        const f64 = new Float64Array(ex.memory.buffer, 0, 256);
+        const chernPos = ex.cqm_moonlab_qwz_chern_fhs ? ex.cqm_moonlab_qwz_chern_fhs(1.0, 12, 0) : 1.0;
+        const skyrmionMzm = ex.cqm_libirrep_bdg_skyrmion_mzm ? ex.cqm_libirrep_bdg_skyrmion_mzm(12, 1, -3.0, 4.0, 1.0, 64) : 2;
+        wasmBench = {
+          byteLength: wasmBuf.length,
+          exportsCount: wasmExports.length,
+          chernNumberM1: Number(chernPos.toFixed(6)),
+          skyrmionMzmQ1: skyrmionMzm,
+          minBandGap: Number((f64[1] || 0).toFixed(4))
+        };
+      }
+
+      let celegansStats = { totalEdges: 0, uniqueNeurons: 0, chemicalEdges: 0, gapJunctionEdges: 0, topHubs: [], compactEdges: [] };
+      if (fs.existsSync(celegansPath)) {
+        const lines = fs.readFileSync(celegansPath, 'utf8').split(/\r?\n/);
+        const degMap = new Map();
+        const rawEdges = [];
+        let chemCount = 0;
+        let gapCount = 0;
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          const parts = line.split(',');
+          if (parts.length < 4) continue;
+          const src = parts[0].trim();
+          const dst = parts[1].trim();
+          const w = Number(parts[2].trim()) || 1;
+          const type = parts[3].trim().toLowerCase();
+          if (!src || !dst) continue;
+          const isGap = type.includes('elec') || type.includes('gap');
+          if (isGap) gapCount++;
+          else chemCount++;
+          degMap.set(src, (degMap.get(src) || 0) + w);
+          degMap.set(dst, (degMap.get(dst) || 0) + w);
+          rawEdges.push({ src, dst, w, t: isGap ? 1 : 0 });
+        }
+        const sortedHubs = Array.from(degMap.entries())
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 64);
+        const hubIndex = new Map(sortedHubs.map(([name], idx) => [name, idx]));
+        const compactEdges = rawEdges
+          .filter((e) => hubIndex.has(e.src) && hubIndex.has(e.dst))
+          .sort((a, b) => b.w - a.w)
+          .slice(0, 512)
+          .map((e) => [hubIndex.get(e.src), hubIndex.get(e.dst), e.w, e.t]);
+
+        celegansStats = {
+          totalEdges: rawEdges.length,
+          uniqueNeurons: degMap.size,
+          chemicalEdges: chemCount,
+          gapJunctionEdges: gapCount,
+          topHubs: sortedHubs.map(([name, weightedDeg]) => ({ name, weightedDeg })),
+          compactEdges
+        };
+      }
+
+      _cachedPortedBrainsPayload = {
+        ok: true,
+        wasmBase64,
+        wasmExports,
+        wasmBench,
+        celegansStats
+      };
+      return _cachedPortedBrainsPayload;
     } catch (err) {
       return { ok: false, error: err.message };
     }

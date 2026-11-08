@@ -1,0 +1,3 @@
+# Specialist: GWT2 / C10
+GWT2 already passes on dev with huge effects (base d 6.41 t 18.1, block 500); R21 lists GWT-2 FAIL with d 8.43, so the failure there is the non-ceiling rule, not effect size. The capacity-limited workspace (scGW, K=4, T=0.25) raises GWT2 by d +0.98 vs base and T=0.1 by +1.24; it cannot cure a ceiling. Test-design issue: needs harder distractors (see preregistration notes).
+C10 (CQM10): base fails with the sign reversed (d -0.73: fixed foraging drive keeps glucose in band better than the creature's own drive). No SC module changes that (all within +-0.12). Queued for a homeostatic specialist.

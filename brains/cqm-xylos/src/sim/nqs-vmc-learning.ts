@@ -1,0 +1,599 @@
+// Audit #90 (honesty, documented): plain SGD VMC (no stochastic reconfiguration / QGT preconditioning) on a fixed 1-D TFIM unrelated to the simulation.
+/**
+ * Neural Quantum State (NQS) / Variational Monte Carlo (VMC) online learning substrate.
+ *
+ * This implements RPT-1/2 (learned recurrence) by providing a neural network that learns
+ * to represent quantum states and optimizes them via VMC. Unlike architected recurrence,
+ * this substrate learns online from experience, enabling adaptive temporal patterns.
+ *
+ * Based on:
+ * - Carleo & Troyer 2017 (Solving the quantum many-body problem with artificial neural networks)
+ * - Saito 2017 (Neural-network quantum states)
+ * - Han et al. 2018 (Deep neural network architectures for quantum many-body problems)
+ *
+ * NOT sentient — a functional machine learning substrate, not phenomenal learning.
+ *
+ * Implements the Tsotchke spin NQS/VMC substrate (from spin_based + Moonlab) and the
+ * RPT (recurrent-processing) advance. This file is fully type-checked (no suppressions).
+ */
+
+import type { Complex } from '../math/quantum'; // added export for Tsotchke spin NQS/VMC (advanced from spin_based + Moonlab)
+
+/** Simple RBM-style NQS architecture for representing quantum amplitudes. */
+interface NQSArchitecture {
+  /** Number of visible units (qubits). */
+  visibleCount: number;
+  /** Number of hidden units. */
+  hiddenCount: number;
+  /** Visible-to-hidden weights (visibleCount × hiddenCount). */
+  weights: Float32Array;
+  /** Visible biases (visibleCount). */
+  visibleBiases: Float32Array;
+  /** Hidden biases (hiddenCount). */
+  hiddenBiases: Float32Array;
+}
+
+/** VMC sampling configuration. */
+export interface VMCConfig {
+  /** Number of Monte Carlo samples per step. */
+  sampleCount: number;
+  /** Number of Metropolis-Hastings steps per sample. */
+  thermalizationSteps: number;
+  /** Learning rate for gradient descent. */
+  learningRate: number;
+  /** Regularization strength. */
+  regularization: number;
+}
+
+/** VMC training state. */
+interface VMCState {
+  /** Current samples (bitstrings as integers). */
+  samples: Uint32Array;
+  /** Sample amplitudes (complex). */
+  amplitudes: Complex[];
+  /** Energy estimates per sample. */
+  energies: Float32Array;
+  /** Gradient accumulators. */
+  weightGradients: Float32Array;
+  visibleGradients: Float32Array;
+  hiddenGradients: Float32Array;
+}
+
+/** Read-only telemetry for NQS/VMC learning. */
+export interface NQSTelemetry {
+  /** Current energy estimate. */
+  energy: number;
+  /** Energy variance (convergence metric). */
+  energyVariance: number;
+  /** Acceptance rate in Metropolis-Hastings. */
+  acceptanceRate: number;
+  /** Gradient norm (optimization progress). */
+  gradientNorm: number;
+  /** Parameter count. */
+  parameterCount: number;
+}
+
+/**
+ * Initialize an NQS architecture with random weights (He initialization).
+ */
+export function initNQS(visibleCount: number, hiddenCount: number, seed: number): NQSArchitecture {
+  const rng = seededRng(seed);
+  const weights = new Float32Array(visibleCount * hiddenCount);
+  const visibleBiases = new Float32Array(visibleCount);
+  const hiddenBiases = new Float32Array(hiddenCount);
+
+  const scale = Math.sqrt(2 / (visibleCount + hiddenCount));
+  for (let i = 0; i < weights.length; i++) {
+    weights[i] = (rng() * 2 - 1) * scale;
+  }
+  for (let i = 0; i < visibleCount; i++) {
+    visibleBiases[i] = (rng() * 2 - 1) * scale * 0.1;
+  }
+  for (let i = 0; i < hiddenCount; i++) {
+    hiddenBiases[i] = (rng() * 2 - 1) * scale * 0.1;
+  }
+
+  return { visibleCount, hiddenCount, weights, visibleBiases, hiddenBiases };
+}
+
+/**
+ * Initialize VMC training state.
+ */
+export function initVMC(arch: NQSArchitecture, config: VMCConfig, seed = 0x51f15e): VMCState {
+  const samples = new Uint32Array(config.sampleCount);
+  const amplitudes: Complex[] = [];
+  const energies = new Float32Array(config.sampleCount);
+  const weightGradients = new Float32Array(arch.weights.length);
+  const visibleGradients = new Float32Array(arch.visibleCount);
+  const hiddenGradients = new Float32Array(arch.hiddenCount);
+
+  // Initialize samples to random bitstrings. seededRng() yields a float in [0,1); applying `>>>`
+  // to it directly truncates to 0 (ToUint32 of a value < 1), which made every sample the all-zero
+  // bitstring. Scale to a full uint32 first, then keep the top `visibleCount` bits.
+  const rng = seededRng(seed);
+  for (let i = 0; i < config.sampleCount; i++) {
+    samples[i] = (rng() * 0x1_0000_0000) >>> (32 - arch.visibleCount);
+    amplitudes.push({ re: 0, im: 0 });
+  }
+
+  return {
+    samples,
+    amplitudes,
+    energies,
+    weightGradients,
+    visibleGradients,
+    hiddenGradients,
+  };
+}
+
+/**
+ * Compute the log-amplitude of a bitstring under the NQS (RBM ansatz).
+ *
+ * For an RBM: log ψ(s) = Σ_i a_i s_i + Σ_j log(2 cosh(b_j + Σ_i W_ij s_i))
+ */
+/**
+ * Per-step memo of logAmplitude. Only live inside vmcStep's sampling + local-energy phase, where the
+ * parameters are fixed, so a cached value is exactly what a fresh evaluation would return; it is
+ * dropped before any parameter changes. Bitstrings index directly (visibleCount ≤ 12).
+ */
+let memoArch: NQSArchitecture | null = null;
+let memoVal = new Float64Array(64);
+let memoOk = new Uint8Array(64);
+
+function beginLogAmpMemo(arch: NQSArchitecture): void {
+  if (arch.visibleCount > 12) return;
+  const size = 1 << arch.visibleCount;
+  if (memoVal.length < size) {
+    memoVal = new Float64Array(size);
+    memoOk = new Uint8Array(size);
+  } else memoOk.fill(0, 0, size);
+  memoArch = arch;
+}
+
+function logAmplitude(arch: NQSArchitecture, bitstring: number): number {
+  if (memoArch === arch && bitstring >= 0 && bitstring < memoOk.length) {
+    if (memoOk[bitstring] === 1) return memoVal[bitstring]!;
+    const v = logAmplitudeRaw(arch, bitstring);
+    memoVal[bitstring] = v;
+    memoOk[bitstring] = 1;
+    return v;
+  }
+  return logAmplitudeRaw(arch, bitstring);
+}
+
+function logAmplitudeRaw(arch: NQSArchitecture, bitstring: number): number {
+  let logAmp = 0;
+
+  // Visible bias contribution
+  for (let i = 0; i < arch.visibleCount; i++) {
+    const s = (bitstring >> i) & 1 ? 1 : -1;
+    logAmp += (arch.visibleBiases[i] ?? 0) * s;
+  }
+
+  // Hidden contribution
+  for (let j = 0; j < arch.hiddenCount; j++) {
+    let activation = arch.hiddenBiases[j] ?? 0;
+    for (let i = 0; i < arch.visibleCount; i++) {
+      const s = (bitstring >> i) & 1 ? 1 : -1;
+      activation += (arch.weights[i * arch.hiddenCount + j] ?? 0) * s;
+    }
+    logAmp += Math.log(2 * Math.cosh(activation));
+  }
+
+  return logAmp;
+}
+
+/**
+ * Compute the amplitude (complex) of a bitstring.
+ */
+export function amplitude(arch: NQSArchitecture, bitstring: number): Complex {
+  const logAmp = logAmplitude(arch, bitstring);
+  const phase = 0; // Real-valued RBM for simplicity
+  return {
+    re: Math.exp(logAmp) * Math.cos(phase),
+    im: Math.exp(logAmp) * Math.sin(phase),
+  };
+}
+
+/**
+ * Metropolis-Hastings proposal: flip a random qubit.
+ */
+function proposeFlip(bitstring: number, visibleCount: number, rng: () => number): number {
+  const flipBit = Math.floor(rng() * visibleCount);
+  return bitstring ^ (1 << flipBit);
+}
+
+/**
+ * Metropolis-Hastings acceptance probability.
+ */
+function acceptanceProbability(
+  arch: NQSArchitecture,
+  current: number,
+  proposed: number,
+  beta = 1,
+): number {
+  const logPsiCurrent = logAmplitude(arch, current);
+  const logPsiProposed = logAmplitude(arch, proposed);
+  const logRatio = 2 * (logPsiProposed - logPsiCurrent);
+  return Math.min(1, Math.exp(beta * logRatio));
+}
+
+/**
+ * Perform Metropolis-Hastings sampling (thermalization).
+ */
+export function thermalize(
+  arch: NQSArchitecture,
+  state: VMCState,
+  config: VMCConfig,
+  seed: number,
+): number {
+  const rng = seededRng(seed);
+  let accepted = 0;
+  let total = 0;
+
+  for (let s = 0; s < config.sampleCount; s++) {
+    let current = state.samples[s] ?? 0;
+    for (let step = 0; step < config.thermalizationSteps; step++) {
+      const proposed = proposeFlip(current, arch.visibleCount, rng);
+      const prob = acceptanceProbability(arch, current, proposed);
+      total++;
+      if (rng() < prob) {
+        current = proposed;
+        accepted++;
+      }
+    }
+    state.samples[s] = current;
+    state.amplitudes[s] = amplitude(arch, current);
+  }
+
+  return total > 0 ? accepted / total : 0;
+}
+
+/**
+ * Compute local energy for a sample: E_L(s) = ⟨s|H|ψ⟩ / ψ(s)
+ *
+ * For a transverse-field Ising model: H = -J Σ σ_i^z σ_{i+1}^z - h Σ σ_i^x
+ */
+export function localEnergy(
+  arch: NQSArchitecture,
+  bitstring: number,
+  J: number = 1,
+  h: number = 1,
+): number {
+  const psi = amplitude(arch, bitstring);
+  const norm = psi.re * psi.re + psi.im * psi.im;
+  // Guard BOTH ends: underflow (norm≈0) AND overflow. If the RBM weights diverge during training,
+  // logAmp can exceed ~709 so exp() overflows to Infinity → norm becomes NaN (Infinity·0 in the phase
+  // product) or Infinity; either bypasses a bare `norm < 1e-12` check and injects a NaN E_L that
+  // propagates to sticky-NaN weights (initNQS runs only once). `!Number.isFinite` closes that tail.
+  if (!Number.isFinite(norm) || norm < 1e-12) return 0;
+
+  let energy = 0;
+
+  // ZZ interactions
+  for (let i = 0; i < arch.visibleCount - 1; i++) {
+    const s_i = (bitstring >> i) & 1 ? 1 : -1;
+    const s_ip1 = (bitstring >> (i + 1)) & 1 ? 1 : -1;
+    energy -= J * s_i * s_ip1;
+  }
+
+  // X terms (off-diagonal). psi's norm passed the finite guard above, but a FLIPPED state can overflow
+  // exp() INDEPENDENTLY of the current one (e.g. an alternating bitstring keeps psi bounded while a
+  // single flip pushes activations past the exp threshold): psiFlipped.re = Infinity ⇒ overlap/norm =
+  // Infinity, making E_L non-finite even though the primary-norm guard was satisfied. Guard each term
+  // and drop a non-finite one — in the diverged-weight regime the whole estimate is degenerate, so a
+  // bounded E_L is the safe degradation, and every finite term is unchanged (bit-identical normal runs).
+  for (let i = 0; i < arch.visibleCount; i++) {
+    const flipped = bitstring ^ (1 << i);
+    const psiFlipped = amplitude(arch, flipped);
+    const overlap = psi.re * psiFlipped.re + psi.im * psiFlipped.im;
+    const term = overlap / norm;
+    if (Number.isFinite(term)) energy -= h * term;
+  }
+
+  return energy;
+}
+
+/**
+ * Compute gradient of log ψ with respect to parameters.
+ */
+function logPsiGradient(
+  arch: NQSArchitecture,
+  bitstring: number,
+  outWeights: Float32Array,
+  outVisible: Float32Array,
+  outHidden: Float32Array,
+): void {
+  for (let i = 0; i < arch.visibleCount; i++) {
+    outVisible[i] = (bitstring >> i) & 1 ? 1 : -1;
+  }
+
+  for (let j = 0; j < arch.hiddenCount; j++) {
+    let activation = arch.hiddenBiases[j] ?? 0;
+    for (let i = 0; i < arch.visibleCount; i++) {
+      activation += (arch.weights[i * arch.hiddenCount + j] ?? 0) * (outVisible[i] ?? 0);
+    }
+    outHidden[j] = Math.tanh(activation);
+  }
+
+  for (let i = 0; i < arch.visibleCount; i++) {
+    const s = outVisible[i] ?? 0;
+    const row = i * arch.hiddenCount;
+    for (let j = 0; j < arch.hiddenCount; j++) {
+      outWeights[row + j] = s * (outHidden[j] ?? 0);
+    }
+  }
+}
+
+interface VmcScratch {
+  w: number;
+  v: number;
+  h: number;
+  tw: Float32Array;
+  tv: Float32Array;
+  th: Float32Array;
+  mw: Float32Array;
+  sw: Float32Array;
+  mv: Float32Array;
+  sv: Float32Array;
+  mh: Float32Array;
+  sh: Float32Array;
+}
+let vmcScratch: VmcScratch | null = null;
+function vmcScratchFor(w: number, v: number, h: number): VmcScratch {
+  let sc = vmcScratch;
+  if (!sc || sc.w !== w || sc.v !== v || sc.h !== h) {
+    const f = (k: number) => new Float32Array(k);
+    sc = {
+      w,
+      v,
+      h,
+      tw: f(w),
+      tv: f(v),
+      th: f(h),
+      mw: f(w),
+      sw: f(w),
+      mv: f(v),
+      sv: f(v),
+      mh: f(h),
+      sh: f(h),
+    };
+    vmcScratch = sc;
+    return sc;
+  }
+  sc.tw.fill(0);
+  sc.tv.fill(0);
+  sc.th.fill(0);
+  sc.mw.fill(0);
+  sc.sw.fill(0);
+  sc.mv.fill(0);
+  sc.sv.fill(0);
+  sc.mh.fill(0);
+  sc.sh.fill(0);
+  return sc;
+}
+
+/**
+ * Perform one VMC training step (gradient descent on energy).
+ */
+export function vmcStep(
+  arch: NQSArchitecture,
+  state: VMCState,
+  config: VMCConfig,
+  seed: number,
+  hField: number = 1,
+): NQSTelemetry {
+  // Parameters are fixed until the update below, so logAmplitude is memoised per bitstring here.
+  beginLogAmpMemo(arch);
+  let acceptanceRate: number;
+  let totalEnergy = 0;
+  let totalEnergySq = 0;
+  try {
+    // Thermalize samples
+    acceptanceRate = thermalize(arch, state, config, seed);
+
+    // Compute local energies
+    for (let s = 0; s < config.sampleCount; s++) {
+      const sample = state.samples[s] ?? 0;
+      const E = localEnergy(arch, sample, 1, hField);
+      state.energies[s] = E;
+      totalEnergy += E;
+      totalEnergySq += E * E;
+    }
+  } finally {
+    memoArch = null;
+  }
+
+  const meanEnergy = totalEnergy / config.sampleCount;
+  const energyVariance = totalEnergySq / config.sampleCount - meanEnergy * meanEnergy;
+
+  // Reset gradients
+  state.weightGradients.fill(0);
+  state.visibleGradients.fill(0);
+  state.hiddenGradients.fill(0);
+
+  // Accumulate gradients + diagonal Quantum Geometric Tensor (Stochastic Reconfiguration #90)
+  // Pooled per shape and zeroed each step (vmcStep keeps no reference past return): same values as fresh arrays.
+  const sc = vmcScratchFor(arch.weights.length, arch.visibleCount, arch.hiddenCount);
+  const tempWeights = sc.tw;
+  const tempVisible = sc.tv;
+  const tempHidden = sc.th;
+  const meanOWeights = sc.mw;
+  const meanSqOWeights = sc.sw;
+  const meanOVisible = sc.mv;
+  const meanSqOVisible = sc.sv;
+  const meanOHidden = sc.mh;
+  const meanSqOHidden = sc.sh;
+
+  for (let s = 0; s < config.sampleCount; s++) {
+    const sample = state.samples[s] ?? 0;
+    logPsiGradient(arch, sample, tempWeights, tempVisible, tempHidden);
+
+    const EL = (state.energies[s] ?? 0) - meanEnergy;
+    for (let i = 0; i < arch.weights.length; i++) {
+      const ok = tempWeights[i] ?? 0;
+      state.weightGradients[i] = (state.weightGradients[i] ?? 0) + EL * ok;
+      meanOWeights[i] = (meanOWeights[i] ?? 0) + ok;
+      meanSqOWeights[i] = (meanSqOWeights[i] ?? 0) + ok * ok;
+    }
+    for (let i = 0; i < arch.visibleCount; i++) {
+      const ok = tempVisible[i] ?? 0;
+      state.visibleGradients[i] = (state.visibleGradients[i] ?? 0) + EL * ok;
+      meanOVisible[i] = (meanOVisible[i] ?? 0) + ok;
+      meanSqOVisible[i] = (meanSqOVisible[i] ?? 0) + ok * ok;
+    }
+    for (let i = 0; i < arch.hiddenCount; i++) {
+      const ok = tempHidden[i] ?? 0;
+      state.hiddenGradients[i] = (state.hiddenGradients[i] ?? 0) + EL * ok;
+      meanOHidden[i] = (meanOHidden[i] ?? 0) + ok;
+      meanSqOHidden[i] = (meanSqOHidden[i] ?? 0) + ok * ok;
+    }
+  }
+
+  // Average gradients and precondition by diagonal QGT S_kk = <O_k^2> - <O_k>^2 + diagShift
+  const n = config.sampleCount;
+  const diagShift = Math.max(0.05, config.regularization);
+  for (let i = 0; i < arch.weights.length; i++) {
+    const meanO = (meanOWeights[i] ?? 0) / n;
+    const varO = Math.max(0, (meanSqOWeights[i] ?? 0) / n - meanO * meanO);
+    state.weightGradients[i] = (state.weightGradients[i] ?? 0) / n / (varO + diagShift);
+  }
+  for (let i = 0; i < arch.visibleCount; i++) {
+    const meanO = (meanOVisible[i] ?? 0) / n;
+    const varO = Math.max(0, (meanSqOVisible[i] ?? 0) / n - meanO * meanO);
+    state.visibleGradients[i] = (state.visibleGradients[i] ?? 0) / n / (varO + diagShift);
+  }
+  for (let i = 0; i < arch.hiddenCount; i++) {
+    const meanO = (meanOHidden[i] ?? 0) / n;
+    const varO = Math.max(0, (meanSqOHidden[i] ?? 0) / n - meanO * meanO);
+    state.hiddenGradients[i] = (state.hiddenGradients[i] ?? 0) / n / (varO + diagShift);
+  }
+
+  // Compute gradient norm across weights and both bias gradient vectors so non-finite bias gradients cannot bypass the guard
+  let gradNorm = 0;
+  for (let i = 0; i < arch.weights.length; i++) {
+    const g = state.weightGradients[i] ?? 0;
+    gradNorm += g * g;
+  }
+  for (let i = 0; i < arch.visibleCount; i++) {
+    const g = state.visibleGradients[i] ?? 0;
+    gradNorm += g * g;
+  }
+  for (let i = 0; i < arch.hiddenCount; i++) {
+    const g = state.hiddenGradients[i] ?? 0;
+    gradNorm += g * g;
+  }
+  gradNorm = Math.sqrt(gradNorm);
+
+  // Defense-in-depth: never write a non-finite update into the LIVE parameters. The localEnergy
+  // guard above keeps E_L finite, so meanEnergy/gradients should stay finite — but if a non-finite
+  // value ever reaches here it would be permanent (weights are re-initialised only in the
+  // constructor). Skip the step and report zeroed telemetry rather than poison the learner forever.
+  if (!Number.isFinite(meanEnergy) || !Number.isFinite(gradNorm)) {
+    return {
+      energy: 0,
+      energyVariance: 0,
+      acceptanceRate,
+      gradientNorm: 0,
+      parameterCount: arch.weights.length + arch.visibleCount + arch.hiddenCount,
+    };
+  }
+
+  // Apply gradient descent with regularization
+  const lr = config.learningRate;
+  const reg = config.regularization;
+  for (let i = 0; i < arch.weights.length; i++) {
+    const w = arch.weights[i] ?? 0;
+    arch.weights[i] = w - lr * ((state.weightGradients[i] ?? 0) + reg * w);
+  }
+  for (let i = 0; i < arch.visibleCount; i++) {
+    const b = arch.visibleBiases[i] ?? 0;
+    arch.visibleBiases[i] = b - lr * ((state.visibleGradients[i] ?? 0) + reg * b);
+  }
+  for (let i = 0; i < arch.hiddenCount; i++) {
+    const b = arch.hiddenBiases[i] ?? 0;
+    arch.hiddenBiases[i] = b - lr * ((state.hiddenGradients[i] ?? 0) + reg * b);
+  }
+
+  return {
+    energy: meanEnergy,
+    energyVariance,
+    acceptanceRate,
+    gradientNorm: gradNorm,
+    parameterCount: arch.weights.length + arch.visibleCount + arch.hiddenCount,
+  };
+}
+
+/** Murmur3-style 32-bit finaliser of (seed, k) → a decorrelated positive 31-bit seed (#91). */
+function mixSeed(seed: number, k: number): number {
+  let h = (seed ^ Math.imul(k, 0x9e3779b9)) >>> 0;
+  h = Math.imul(h ^ (h >>> 16), 0x85ebca6b);
+  h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35);
+  h ^= h >>> 16;
+  return h & 0x7fffffff || 1;
+}
+
+/**
+ * Simple seeded RNG for deterministic training.
+ */
+function seededRng(seed: number): () => number {
+  let s = seed;
+  return () => {
+    // Math.imul keeps the 32-bit multiply exact; plain `s * 1103515245` exceeds 2^53 and loses
+    // the low-order bits to float rounding before the mask, degrading the LCG it imitates.
+    s = (Math.imul(s, 1103515245) + 12345) & 0x7fffffff;
+    return s / 0x7fffffff;
+  };
+}
+
+/**
+ * Online learning controller for NQS/VMC.
+ *
+ * This provides a learned recurrence substrate that can be integrated into
+ * the cognitive architecture for adaptive temporal patterns.
+ */
+export class NQSLearningController {
+  private arch: NQSArchitecture;
+  private state: VMCState;
+  private config: VMCConfig;
+  private stepCount = 0;
+  private seed: number;
+
+  constructor(visibleCount: number, hiddenCount: number, config: VMCConfig, seed: number) {
+    this.arch = initNQS(visibleCount, hiddenCount, seed);
+    this.state = initVMC(this.arch, config, seed ^ 0x9e3779b9);
+    this.config = config;
+    this.seed = seed;
+  }
+
+  /**
+   * Perform one training step and return telemetry.
+   */
+  step(hField: number = 1): NQSTelemetry {
+    this.stepCount++;
+    // #91: seed+1000·k fed an LCG gives strongly correlated streams across steps; hash it instead.
+    const stepSeed = mixSeed(this.seed, this.stepCount);
+    return vmcStep(this.arch, this.state, this.config, stepSeed, hField);
+  }
+
+  /**
+   * Get the current learned representation of a bitstring.
+   */
+  getAmplitude(bitstring: number): Complex {
+    return amplitude(this.arch, bitstring);
+  }
+
+  /**
+   * Get the current architecture (for inspection/serialization).
+   */
+  getArchitecture(): Readonly<NQSArchitecture> {
+    return this.arch;
+  }
+
+  /**
+   * Get training progress.
+   */
+  getStepCount(): number {
+    return this.stepCount;
+  }
+}

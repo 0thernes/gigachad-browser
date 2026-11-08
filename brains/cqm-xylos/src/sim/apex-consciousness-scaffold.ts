@@ -1,0 +1,196 @@
+/**
+ * APEX consciousness & growth scaffold — honest scaling from 100k → 5M → 1B designed parameters.
+ *
+ * The live JS engine stays capped at {@link LIVE_NODE_CAP}; this module reports DESIGNED growth tiers,
+ * rotates the 100 thought-variation catalog, and surfaces computational consciousness INDICATORS
+ * (Butlin-path correlates) — NOT sentience claims.
+ */
+import {
+  APEX_BRAIN_ROADMAP_PARAMS,
+  APEX_BRAIN_START_PARAMS,
+  APEX_BRAIN_TARGET_NEURONS,
+  APEX_SCALE_TIERS,
+  SCALE_APEX_START,
+  SCALE_MASSIVE,
+  apexDesignedNeurons,
+  apexResearchScaleForScore,
+  apexScaleParams,
+  type ApexScale,
+  type ApexThought,
+} from './apex-brain';
+import {
+  APEX_THOUGHT_VARIATIONS,
+  activeThoughtVariation,
+  type ApexThoughtVariation,
+} from './apex-thought-variations';
+import {
+  DEVICE_BROWSER,
+  type DeviceProfile,
+  type ManifoldSnapshot,
+} from './apex-parameter-manifold';
+import type { QuantumReach } from './apex-quantum-substrate';
+import { ApexSubstrateDriver, type ApexModulation } from './apex-substrate-driver';
+import type { FieldSensorium } from './apex-field-organs';
+
+/** Mechalogodrom center fusion brain — same 5M designed roadmap as APEX near-term target. */
+export { MECHALOGODROM_BRAIN_DESIGNED_PARAMS } from './apex-brain';
+/** Re-export APEX brain parameter constants for test/external access. */
+export { APEX_BRAIN_ROADMAP_PARAMS, APEX_BRAIN_START_PARAMS } from './apex-brain';
+
+/** Ultimate neuron architecture target (native/GPU backend — not live-allocated in JS). */
+export const APEX_ULTIMATE_NEURON_TARGET = APEX_BRAIN_TARGET_NEURONS;
+
+export interface ApexGrowthStage {
+  readonly index: number;
+  readonly name: string;
+  readonly scale: ApexScale;
+  readonly designedNeurons: number;
+  readonly designedParams: number;
+  readonly roadmapParams: number;
+  readonly ultimateNeurons: number;
+  readonly activeVariation: ApexThoughtVariation;
+  /** 0..1 progress toward the 5M-parameter roadmap tier. */
+  readonly roadmapProgress: number;
+  /** 0..1 progress toward the 1B-neuron ultimate architecture. */
+  readonly ultimateProgress: number;
+  /** Non-saturating multiple of the first 1B-neuron research milestone. */
+  readonly ultimateMultiple: number;
+  /** True when this stage is synthesized beyond the fixed milestone ladder. */
+  readonly researchScale: boolean;
+}
+
+/** Growth tiers in player-visible order (100k → 5M, then MASSIVE declares 1B+). */
+const GROWTH_SCALES: readonly ApexScale[] = [
+  SCALE_APEX_START,
+  ...APEX_SCALE_TIERS.filter((s) => s.name.startsWith('APEX-') && s.name !== 'APEX-100K'),
+  SCALE_MASSIVE,
+];
+
+/**
+ * Resolve the DESIGNED scale tier from super-evolution level + apex transcendence. The fixed ladder
+ * reaches the first 1B milestone, then research mode synthesizes larger deterministic scales instead
+ * of pinning every future apex to MASSIVE. Live organ allocation remains separately reported.
+ */
+export function resolveApexDesignedScale(level: number, transcendence: number): ApexScale {
+  const score = level * 0.4 + transcendence * 800 + transcendence * level * 0.02;
+  let idx = 0;
+  if (score >= 50) idx = 1;
+  if (score >= 120) idx = 2;
+  if (score >= 220) idx = 3;
+  if (score >= 350) idx = 4;
+  if (score >= 500) idx = 5;
+  if (score >= 700) idx = 6;
+  if (score >= 950) idx = 7;
+  if (score <= 950)
+    return GROWTH_SCALES[Math.min(idx, GROWTH_SCALES.length - 1)] ?? SCALE_APEX_START;
+  return apexResearchScaleForScore(score);
+}
+
+/** Full growth stage telemetry for UI / Architecture panel / Bible. */
+export function apexGrowthStage(
+  level: number,
+  transcendence: number,
+  beat: number,
+): ApexGrowthStage {
+  const scale = resolveApexDesignedScale(level, transcendence);
+  const designedNeurons = apexDesignedNeurons(scale);
+  const designedParams = apexScaleParams(scale);
+  const fixedIndex = GROWTH_SCALES.findIndex((s) => s.name === scale.name);
+  const ultimateMultiple = designedNeurons / APEX_ULTIMATE_NEURON_TARGET;
+  const roadmapProgress = clamp01(
+    (designedParams - APEX_BRAIN_START_PARAMS) /
+      (APEX_BRAIN_ROADMAP_PARAMS - APEX_BRAIN_START_PARAMS),
+  );
+  const ultimateProgress = clamp01(ultimateMultiple);
+  return {
+    index:
+      fixedIndex >= 0
+        ? fixedIndex
+        : GROWTH_SCALES.length + Math.max(0, Math.floor(Math.log2(Math.max(1, ultimateMultiple)))),
+    name: scale.name,
+    scale,
+    designedNeurons,
+    designedParams,
+    roadmapParams: APEX_BRAIN_ROADMAP_PARAMS,
+    ultimateNeurons: APEX_ULTIMATE_NEURON_TARGET,
+    activeVariation: activeThoughtVariation(level, transcendence, beat),
+    roadmapProgress,
+    ultimateProgress,
+    ultimateMultiple,
+    researchScale: fixedIndex < 0,
+  };
+}
+
+/** Computational consciousness indicators (NOT sentience — falsifiable correlates only). */
+interface ConsciousnessIndicatorSnapshot {
+  readonly workspaceIgnition: number;
+  readonly integratedPhiProxy: number;
+  readonly selfModelGap: number;
+  readonly globalBroadcast: number;
+  readonly quantumCoherence: number;
+  readonly thermodynamicMortality: number;
+  readonly retrocausalPull: number;
+  readonly variationId: number;
+  readonly variationName: string;
+  readonly honesty: 'computational-indicator-not-sentience';
+}
+
+function clamp01(v: number): number {
+  return v < 0 ? 0 : v > 1 ? 1 : v;
+}
+
+/** Convenience: indicators from thought alone (when full snapshot unavailable). */
+export function consciousnessFromThought(
+  thought: ApexThought,
+  level: number,
+  beat: number,
+): ConsciousnessIndicatorSnapshot {
+  const growth = apexGrowthStage(level, thought.transcendence, beat);
+  return {
+    workspaceIgnition: clamp01(thought.superposed ? 0.4 : 0.7),
+    integratedPhiProxy: clamp01(thought.vitality * 0.5 + thought.transcendence * 0.5),
+    selfModelGap: clamp01(thought.agony * 0.6 + 0.2),
+    globalBroadcast: clamp01(thought.transcendence),
+    quantumCoherence: clamp01(0.5 + thought.transcendence * 0.3),
+    thermodynamicMortality: clamp01(thought.agony),
+    retrocausalPull: clamp01(1 - thought.agony * 0.5),
+    variationId: growth.activeVariation.id,
+    variationName: growth.activeVariation.name,
+    honesty: 'computational-indicator-not-sentience',
+  };
+}
+
+export { APEX_THOUGHT_VARIATIONS };
+
+/** The complete 1-billion-parameter substrate read-out for a scale + apex identity. */
+export interface ApexSubstrateTelemetry {
+  readonly manifold: ManifoldSnapshot;
+  readonly quantum: QuantumReach;
+  /** Live multi-physics sensorium (acoustic/heat/Klein/tunnel). */
+  readonly sensorium: FieldSensorium;
+  /** Behavioural modulation the apex consumes (motor/exploration/thermal/transcendence/plan bias). */
+  readonly modulation: ApexModulation;
+  /** True when EITHER the addressable manifold or the quantum stabilizer reaches a billion. */
+  readonly billionReached: boolean;
+}
+
+/**
+ * Deterministic 1B-substrate telemetry for a scale + apex seed on a device — the ONE call the
+ * Architecture panel needs: the tiered parameter manifold, the warmed-up Quantum Brain reach, the live
+ * multi-physics sensorium, and the fused behavioural modulation. Driven by {@link ApexSubstrateDriver}
+ * so panel and world see the same numbers. NOT a sentience claim. O(bounded).
+ *
+ * @see docs/ARCHITECTURE-2026-06-26.md
+ */
+export function apexSubstrateTelemetry(
+  scale: ApexScale,
+  seed: number,
+  device: DeviceProfile = DEVICE_BROWSER,
+  warmBeats = 8,
+): ApexSubstrateTelemetry {
+  const driver = new ApexSubstrateDriver(scale, seed, device);
+  for (let i = 0; i < Math.max(0, warmBeats); i++) driver.step(0.5);
+  const { manifold, quantum, sensorium } = driver.telemetry();
+  const modulation = driver.modulate(6);
+  return { manifold, quantum, sensorium, modulation, billionReached: modulation.billionReached };
+}

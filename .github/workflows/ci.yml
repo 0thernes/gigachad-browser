@@ -1,0 +1,45 @@
+name: GIGACHAD Browser — Full-Stack DevSecOps, 500-SOP & 25-Pass Forensic CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  forensic-full-stack-audit:
+    name: 25-Pass Forensic + 100-Pass + 500-SOP + Multi-Precision Wasm Audit (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, ubuntu-latest ]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify Proprietary Download-and-Use-Only License Integrity
+        shell: bash
+        run: |
+          test -f LICENSE
+          grep -q "PROPRIETARY DOWNLOAD-AND-USE-ONLY LICENSE" LICENSE
+
+      - name: Run Master Smoke + 500-SOP + 100-Pass + 25-Pass Forensic Neural Audit
+        run: npm run smoke
+
+      - name: Run Standalone 25-Pass + 100-Pass Forensic Verifier CLI
+        run: npm run forensic-25

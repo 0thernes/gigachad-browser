@@ -1,0 +1,5 @@
+import { Organism } from "/workspace/Asmodensius-v40/creatures/001/organism/organism";
+for (let s = 3109; s < 3113; s++) { const g: any = new Organism({ seed: s } as any); const F: number[] = [], E: number[] = []; let lo = 0, hi = 0, n = 0, rf = 0, rn = 0;
+  while (g.t < 4 * 1440) { const m = g.t % 1440; if (m === 600) g.gut.glc += 6; g.step(); F.push(g.efmF); E.push(g.blood.glc / 3 - 1); if (g.efmM?.trained && !g.asleep) { rf += g.efmRoll(); rn++; } if (g.t >= 2880 && m >= 600 && m < 720) { n++; lo += +(g.blood.glc <= 2); hi += +(g.blood.glc >= 4.5); } }
+  const a = F.slice(2880, -20), b = E.slice(2900); const ma = a.reduce((p, q) => p + q, 0) / a.length, mb = b.reduce((p, q) => p + q, 0) / b.length; let sab = 0, sa = 0, sb = 0; for (let i = 0; i < a.length; i++) { sab += (a[i] - ma) * (b[i] - mb); sa += (a[i] - ma) ** 2; sb += (b[i] - mb) ** 2; }
+  console.log(s, "trained", g.efmM?.trained, "corr(forecast, e+20)", (sab / Math.sqrt(sa * sb)).toFixed(2), "lo/hi", (lo / n).toFixed(2), (hi / n).toFixed(2), "roll mean", (rf / rn).toFixed(2), "foraged", g.foraged); }

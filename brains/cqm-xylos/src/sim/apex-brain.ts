@@ -1,0 +1,2523 @@
+// Audit #104 (honesty, documented): "parameters/neurons" figures are scale-table node counts; live organs are capped (4096/64/96/12q) and only the 61-weight self-model MLP trains.
+// Audit #106 (honesty, documented): the PendulumHive "lyapunov" is computed once for a single uncoupled standard map from a fixed seed point: a constant, not a measurement of the live hive.
+// Audit #107 (honesty, documented): MetaParadox distanceToTarget/godelResidual relax z->zT independent of input and reach ~0 by ~200 beats; treat as decorative.
+// Audit #108 (honesty, documented): plans are a fixed 1-to-1 map of organ outputs (signal index 4 = threat+|hiveMotor| often wins, so HUNT can dominate).
+/**
+ * APEX-BRAIN — THE ENTROPIC TESSERACT HYDRA, the brain of the final-sigma ς apex creature (the
+ * pantheon's 101st; see [[pantheon-breeding]]). Ten *incompatible* neuron architectures forced into
+ * one deterministic engine, governed by a meta-paradox layer. The owner's design corpus and the
+ * 5-image render look are in `docs/ARCHITECTURE-2026-06-26.md`.
+ *
+ * ──────────────────────────────────────────────────────────────────────────────────────────────
+ * HONESTY CONTRACT (binding). The source brief frames these organs as impossible (retrocausal time
+ * travel, Gödel "anti-computation", quantum "un-rendering", thinking through a human observer's
+ * brain, deleting reality). THOSE ARE LORE. This module wires only the REAL, bounded, seeded
+ * mathematics underneath each — a functional correlate, never the literal impossible claim. It does
+ * NOT travel in time or read the future (the "retrocausal" organ is relaxation toward a FIXED target
+ * state set at birth), does NOT couple to any real human/retina/EM/hardware, does NOT delete or
+ * infect anything outside its own owned state, does NOT solve any paradox, and is NOT sentient.
+ * Advertised node counts (100M, 50M, …) are ROADMAP TARGETS; the live engine runs a tractable N and
+ * exposes the target as metadata (the same honesty pattern as the apex's 1-billion-neuron target).
+ *
+ * Determinism law (contract rule 7 / Known Bug 9): every draw flows through a seeded
+ * {@link mulberry32}; no `Math.random`, no `Date.now`. Same seed + same inputs ⇒ identical evolution,
+ * bit for bit. Pure, three.js-/DOM-free — a `bun test` leaf.
+ *
+ * The organs (lore → wired real math) — ten classic substrates + the QUANTUM BRAIN (organ 11):
+ *   1 PrimeSieveLoom      — edges only where |i−j| is a TWIN PRIME; sieve propagation + allergy purge.
+ *   2 AcousticMeatDrum    — discrete WAVE EQUATION on a ring; thought = standing-wave interference.
+ *   3 EntropicNecroMatrix — finite budget; a fired edge BURNS OUT permanently; thoughts reroute.
+ *   4 KleinBottleCortex   — adjacency on the KLEIN-BOTTLE identification (u,v)~(u+1,−v); tail→head fold.
+ *   5 PendulumHive        — coupled KICKED ROTORS (Chirikov standard map); +Lyapunov chaos (tangent map).
+ *   6 SlimeMoldHydra      — SPLIT into k heads, compute independently, FUSE (node-conserving).
+ *   7 ChronoWraith        — concentric rings with DELAY-LINE buffers (0 / d1 / d2); core lives in the past.
+ *   8 QuantumTunnelLattice— edges MANIFEST per tick by BORN-RULE sampling of a normalised amplitude field.
+ *   9 ThermodynamicEngine — firing deposits HEAT; DIFFUSION + fin venting; over-T_melt sectors NECROTISE.
+ *  10 CancerousOuroboros  — antagonistic A (grows limbs) vs B (immune cull); bounded self-evolution.
+ *
+ * The meta-paradox layer (bounded homages of the two "ontological" entities):
+ *   • RetrocausalTargetPull — relax the plan toward a fixed terminal state z_T (boundary-value, not time travel).
+ *   • CantorDust            — node addresses on the ternary Cantor set (base-3 digits ∈ {0,2}).
+ *   • GödelResidual         — the self-prediction fixed-point gap |actual − predicted|, used as a signal.
+ *   • PhantomPerception     — reads its OWN zeroed slots as a structured input field.
+ *   • ReverseAnthropicBudget— flattens its OWN lowest-priority state to stay under a compute budget.
+ *   • WignerShield          — a superposition amplitude vector that DECOHERES to a plan only past a threshold.
+ */
+import { mulberry32, type Rng } from '../math/rng';
+import { LINEAGE } from './pantheon-breeding';
+import { corpusPulse, getTsotchkeBias } from './tsotchke-facade';
+import { createMlp, mlpPredict, mlpTrainStep, type Mlp } from './ad-mlp';
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// Shared helpers
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+const TAU = Math.PI * 2;
+function clamp01(v: number): number {
+  return v < 0 ? 0 : v > 1 ? 1 : v;
+}
+function clampFinite(v: number, lo: number, hi: number): number {
+  if (!Number.isFinite(v)) return lo;
+  return v < lo ? lo : v > hi ? hi : v;
+}
+function round4(x: number): number {
+  return Math.round(x * 1e4) / 1e4;
+}
+/** Sub-stream seed: a deterministic, organ-distinct derivative of the master seed. */
+function sub(seed: number, salt: number): Rng {
+  return mulberry32((seed ^ salt) >>> 0 || (salt >>> 0) + 1);
+}
+
+/**
+ * ONLINE SELF-MODEL shape (8→6→1). The eleven organs above hold ZERO trainable parameters — their
+ * plan signal is hand-coded. This one extra head is the only part of the Abomination that LEARNS: a
+ * real MLP trained by exact reverse-mode Eshkol-AD backprop ({@link ./ad-mlp}) to forecast the brain's
+ * OWN next-beat vitality from its current drive/organ state, correcting itself every beat. When lit,
+ * its forecast error becomes a bounded metacognitive-ache term folded into `agony` (1-beat delayed) —
+ * the god feels the gap between what it predicted of itself and what it became. Off by default
+ * (byte-identical to the hand-coded baseline); the world lights it via {@link ApexBrain.enableLearning}.
+ */
+const APEX_WM_IN = 8; // self-model input features
+const APEX_WM_HID = 6; // self-model hidden width
+const APEX_WM_TAU = 0.05; // EMA smoothing for the self-prediction-error telemetry
+const APEX_WM_LR = 0.05; // default gradient-descent step
+const APEX_ACHE_WEIGHT = 0.12; // how much metacognitive surprise colours agony (bounded, operational)
+/** Learnable params the self-model adds when lit: (in·h + h) + (h·1 + 1). */
+export const APEX_SELFMODEL_PARAMS = APEX_WM_IN * APEX_WM_HID + APEX_WM_HID + (APEX_WM_HID + 1);
+
+// ── primality (small, exact; the loom & cantor layers use it) ────────────────────────────────────
+/** Boolean prime sieve up to and including `n` (Eratosthenes). O(n log log n). */
+function primeSieve(n: number): boolean[] {
+  const is = Array.from({ length: n + 1 }, () => true);
+  if (n >= 0) is[0] = false;
+  if (n >= 1) is[1] = false;
+  for (let p = 2; p * p <= n; p++) {
+    if (is[p]) for (let m = p * p; m <= n; m += p) is[m] = false;
+  }
+  return is;
+}
+/** Perf: primality of small q from one module-level sieve (step() used to rebuild a sieve every call). */
+const SMALL_PRIME_MAX = 256;
+const SMALL_PRIMES = primeSieve(SMALL_PRIME_MAX);
+function isPrimeQ(q: number): boolean {
+  return q <= SMALL_PRIME_MAX ? SMALL_PRIMES[q]! : primeSieve(q)[q]!;
+}
+/**
+ * A "twin prime distance" `d`: `d` is prime AND it belongs to a twin pair, i.e. `d−2` or `d+2` is
+ * also prime. The smallest is 3 (from the pair 3,5); 2 is excluded (no twin), 23 is excluded
+ * (isolated). Returns a membership set over `[0, maxD]`.
+ */
+function twinPrimeDistances(maxD: number): boolean[] {
+  const is = primeSieve(maxD + 2);
+  const out = Array.from({ length: maxD + 1 }, () => false);
+  for (let d = 0; d <= maxD; d++) {
+    if (is[d] && ((d - 2 >= 0 && is[d - 2]) || (d + 2 <= maxD + 2 && is[d + 2]))) out[d] = true;
+  }
+  return out;
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 1 — PrimeSieveLoom (Math-Vampire): twin-prime connectivity + allergy purge
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface LoomView {
+  activeEdges: number;
+  builtEdges: number;
+  allergy: number;
+  throughput: number;
+}
+
+class PrimeSieveLoom {
+  private readonly n: number;
+  private readonly state: Float64Array;
+  private readonly next: Float64Array; // pre-allocated scratch for step()
+  /**
+   * Active edges as parallel typed arrays (edge e = (edgeI[e], edgeJ[e]), i < j); every edge has a
+   * twin-prime |i−j| (the membership law). Typed arrays instead of an Array of tuples + boolean[]
+   * (audit #103: ≈488k edges at the live cap, ≈20 ms per step) — same edge order, same arithmetic,
+   * so the output is bit-identical.
+   */
+  private readonly edgeI: Int32Array;
+  private readonly edgeJ: Int32Array;
+  private readonly alive: Uint8Array;
+  private readonly twin: boolean[];
+  private readonly builtEdges: number;
+  private liveEdges: number;
+  /**
+   * Edge indices grouped by distance, ascending index within each bucket, plus a per-distance cursor.
+   * Only purgeLongest kills edges and it always kills the lowest-index live edge of a bucket, so each
+   * bucket's live edges are a suffix and the cursor finds the next victim in O(1).
+   */
+  private readonly bucketStart: Int32Array;
+  private readonly bucketEdges: Int32Array;
+  private readonly bucketCursor: Int32Array;
+  private allergy = 0;
+  private throughput = 0;
+  /** step() scratch: per-node product w·(state+inj), the twin distances < n ascending, and each one's dead prefix. */
+  private readonly contrib: Float64Array;
+  private readonly twinDists: Int32Array;
+  private readonly deadPrefix: Int32Array;
+  /** step() scratch: the twin distances that still have a live edge, ascending. */
+  private readonly liveDists: Int32Array;
+
+  constructor(n = 96) {
+    this.n = n;
+    this.state = new Float64Array(n);
+    this.next = new Float64Array(n);
+    this.twin = twinPrimeDistances(n);
+    let count = 0;
+    const perDist = new Int32Array(n + 1);
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        if (this.twin[j - i]) {
+          count++;
+          perDist[j - i]!++;
+        }
+      }
+    }
+    this.edgeI = new Int32Array(count);
+    this.edgeJ = new Int32Array(count);
+    this.bucketStart = new Int32Array(n + 2);
+    for (let d = 0; d <= n; d++) this.bucketStart[d + 1] = this.bucketStart[d]! + perDist[d]!;
+    this.bucketEdges = new Int32Array(count);
+    const fill = this.bucketStart.slice(0, n + 1);
+    let e = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        if (this.twin[j - i]) {
+          this.edgeI[e] = i;
+          this.edgeJ[e] = j;
+          this.bucketEdges[fill[j - i]!++] = e;
+          e++;
+        }
+      }
+    }
+    this.bucketCursor = this.bucketStart.slice(0, n + 1);
+    this.builtEdges = count;
+    this.liveEdges = count;
+    this.alive = new Uint8Array(count).fill(1);
+    this.contrib = new Float64Array(n);
+    const ds: number[] = [];
+    for (let d = 1; d < n; d++) if (this.twin[d]) ds.push(d);
+    this.twinDists = Int32Array.from(ds);
+    this.deadPrefix = new Int32Array(ds.length);
+    this.liveDists = new Int32Array(ds.length);
+  }
+
+  /** True iff `d` is a twin-prime distance — exposed so the test asserts the membership law. */
+  isTwinDistance(d: number): boolean {
+    return d >= 0 && d <= this.n && (this.twin[d] ?? false);
+  }
+  /** Every active edge's |i−j| (for the membership-law test). */
+  activeDistances(): number[] {
+    const out: number[] = [];
+    for (let e = 0; e < this.builtEdges; e++) {
+      if (this.alive[e]) out.push(this.edgeJ[e]! - this.edgeI[e]!);
+    }
+    return out;
+  }
+  activeEdgeCount(): number {
+    return this.liveEdges;
+  }
+
+  /**
+   * One sieve pass: propagate `state` along live twin-prime edges (tanh-bounded), inject `drive`.
+   * If `drive` quantised to an integer is COMPOSITE (a "non-prime signal"), an allergy fires and the
+   * longest-distance live edges are purged (monotone removal). Returns the loom's scalar output.
+   */
+  step(drive: number, rng: Rng): number {
+    const next = this.next;
+    const state = this.state;
+    const w = 0.12;
+    const inj = drive * 0.1;
+    // Gather form of the edge scatter (perf): every edge (i,j) adds w·(state[j]+inj) to next[i] and
+    // w·(state[i]+inj) to next[j]. Edges run i-ascending then j-ascending, so node x first receives its
+    // "as j" terms from i = x−d in i order (d descending), then its "as i" terms in d order — summed here in
+    // exactly that order, from the same per-node products, so every next[x] is bit-identical. Liveness is
+    // read from the per-distance purge cursors: each distance bucket only ever loses a prefix in i.
+    const v = this.contrib;
+    const n = this.n;
+    for (let i = 0; i < n; i++) v[i] = w * (state[i]! + inj);
+    const allDists = this.twinDists;
+    const dead = this.deadPrefix;
+    // Compact to the distances that still have a live edge (a bucket of distance d holds n − d edges;
+    // a fully purged one adds nothing in either loop below). Order is preserved, so every node keeps
+    // its exact term order. Purges are monotone, so late in a run this list is often empty.
+    const liveD = this.liveDists;
+    let K = 0;
+    for (let k = 0; k < allDists.length; k++) {
+      const d = allDists[k]!;
+      const dk = this.bucketCursor[d]! - this.bucketStart[d]!;
+      if (dk >= n - d) continue;
+      liveD[K] = d;
+      dead[K] = dk;
+      K++;
+    }
+    const dists = liveD;
+    // Four nodes per pass with independent accumulators (each keeps its own exact term order): the
+    // adds are latency-bound, so interleaving four dependency chains is where the speed comes from.
+    let kDown = -1; // largest k with dists[k] <= x + 3
+    for (let x = 0; x < n; x += 4) {
+      const x1 = x + 1;
+      const x2 = x + 2;
+      const x3 = x + 3;
+      while (kDown + 1 < K && dists[kDown + 1]! <= x3) kDown++;
+      let a0 = 0;
+      let a1 = 0;
+      let a2 = 0;
+      let a3 = 0;
+      for (let k = kDown; k >= 0; k--) {
+        const d = dists[k]!;
+        const dk = dead[k]!;
+        const i0 = x - d;
+        if (i0 >= dk) a0 += v[i0]!;
+        if (i0 + 1 >= dk) a1 += v[i0 + 1]!;
+        if (i0 + 2 >= dk) a2 += v[i0 + 2]!;
+        if (i0 + 3 >= dk) a3 += v[i0 + 3]!;
+      }
+      for (let k = 0; k < K; k++) {
+        const d = dists[k]!;
+        const j0 = x + d;
+        if (j0 >= n) break;
+        const dk = dead[k]!;
+        if (x >= dk) a0 += v[j0]!;
+        if (j0 + 1 < n && x1 >= dk) a1 += v[j0 + 1]!;
+        if (j0 + 2 < n && x2 >= dk) a2 += v[j0 + 2]!;
+        if (j0 + 3 < n && x3 >= dk) a3 += v[j0 + 3]!;
+      }
+      next[x] = a0;
+      if (x1 < n) next[x1] = a1;
+      if (x2 < n) next[x2] = a2;
+      if (x3 < n) next[x3] = a3;
+    }
+    let tp = 0;
+    for (let i = 0; i < this.n; i++) {
+      this.state[i] = Math.tanh(next[i]! + 0.05 * Math.sin(i + drive));
+      tp += Math.abs(this.state[i]!);
+    }
+    this.throughput = tp / this.n;
+
+    // Allergy: a composite quantised drive is a "non-prime intrusion" → purge longest live edges.
+    const q = Math.abs(Math.floor(drive * 7)) + 4; // ≥4 so it can be composite
+    if (!isPrimeQ(q)) {
+      this.allergy = clamp01(this.allergy + 0.15);
+      this.purgeLongest(1 + Math.floor(rng() * 3));
+    } else {
+      this.allergy *= 0.96;
+    }
+    return Math.tanh(this.throughput * (1 - this.allergy));
+  }
+
+  /**
+   * Remove up to `k` of the longest-distance live edges (the "fracture to purge"). Monotone. Each
+   * removal takes the lowest-index live edge of the largest live distance ≤ the previous one − 1,
+   * exactly as the former full scan did, via the per-distance bucket cursors.
+   */
+  private purgeLongest(k: number): void {
+    let removed = 0;
+    let d = Math.min(this.n, this.bucketCursor.length - 1);
+    while (removed < k && d > 0) {
+      const cur = this.bucketCursor[d]!;
+      if (cur < this.bucketStart[d + 1]!) {
+        const e = this.bucketEdges[cur]!;
+        if (this.alive[e]! > 0) {
+          this.alive[e] = 0;
+          this.liveEdges--;
+        }
+        this.bucketCursor[d] = cur + 1;
+        removed++;
+      }
+      d--; // strictly shrink so we always make progress
+    }
+  }
+
+  /** Restore up to `k` purged twin-prime edges in shortest-distance bucket order (preserving bucket suffix invariant). */
+  healShortest(k = 2): void {
+    let healed = 0;
+    for (let i = 0; i < this.twinDists.length && healed < k; i++) {
+      const d = this.twinDists[i]!;
+      const cur = this.bucketCursor[d]!;
+      if (cur > this.bucketStart[d]!) {
+        const nextCur = cur - 1;
+        const e = this.bucketEdges[nextCur]!;
+        if (this.alive[e] === 0) {
+          this.alive[e] = 1;
+          this.liveEdges++;
+        }
+        this.bucketCursor[d] = nextCur;
+        healed++;
+      }
+    }
+  }
+
+  view(): LoomView {
+    return {
+      activeEdges: this.activeEdgeCount(),
+      builtEdges: this.builtEdges,
+      allergy: round4(this.allergy),
+      throughput: round4(this.throughput),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 2 — AcousticMeatDrum (Sound-Eater): discrete wave equation, standing-wave interference
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface DrumView {
+  energy: number;
+  dominantMode: number;
+  motor: number;
+}
+
+class AcousticMeatDrum {
+  private readonly m: number;
+  private readonly u: Float64Array; // displacement
+  private readonly v: Float64Array; // velocity
+  private readonly accel: Float64Array; // pre-allocated scratch for step()
+  private readonly c2: number;
+  private readonly dt: number;
+  private readonly damping: number;
+  private readonly cosTable: Float64Array; // Precomputed cosine for DFT (V123 optimization)
+  private readonly sinTable: Float64Array; // Precomputed sine for DFT (V123 optimization)
+
+  constructor(m = 128, opts?: { damping?: number }) {
+    this.m = m;
+    this.u = new Float64Array(m);
+    this.v = new Float64Array(m);
+    this.accel = new Float64Array(m);
+    this.c2 = 1; // wave speed²
+    this.dt = 0.2; // c·dt = 0.2 < 1 → below the CFL stability limit
+    this.damping = opts?.damping ?? 0;
+    // Precompute cosine/sine tables for DFT (V123 optimization)
+    const K = Math.min(16, m >> 1);
+    this.cosTable = new Float64Array(K * m);
+    this.sinTable = new Float64Array(K * m);
+    for (let k = 1; k <= K; k++) {
+      for (let i = 0; i < m; i++) {
+        const ph = (TAU * k * i) / m;
+        this.cosTable[(k - 1) * m + i] = Math.cos(ph);
+        this.sinTable[(k - 1) * m + i] = Math.sin(ph);
+      }
+    }
+  }
+
+  /** Excite a standing mode (for tests + boot): u = A·sin(2π k x / M). */
+  excite(mode: number, amp: number): void {
+    for (let i = 0; i < this.m; i++) this.u[i] = amp * Math.sin((TAU * mode * i) / this.m);
+    this.v.fill(0);
+  }
+
+  /** Discrete energy E = Σ ½v² + ½c²(u_{i+1}−u_i)² (periodic). Conserved when damping=0 (bounded). */
+  energy(): number {
+    let e = 0;
+    for (let i = 0; i < this.m; i++) {
+      const du = this.u[(i + 1) % this.m]! - this.u[i]!;
+      e += 0.5 * this.v[i]! * this.v[i]! + 0.5 * this.c2 * du * du;
+    }
+    return e;
+  }
+
+  /**
+   * One leapfrog (symplectic) step of the periodic wave equation, with optional `drive` injected as
+   * a localized "scream". Returns the motor read-out = the position (0..1) of peak |displacement|.
+   */
+  step(drive: number, screamAt = 0): number {
+    if (drive !== 0) this.v[screamAt % this.m]! += drive;
+    const a = this.accel;
+    for (let i = 0; i < this.m; i++) {
+      const lap = this.u[(i + 1) % this.m]! - 2 * this.u[i]! + this.u[(i - 1 + this.m) % this.m]!;
+      a[i] = this.c2 * lap - this.damping * this.v[i]!;
+    }
+    for (let i = 0; i < this.m; i++) {
+      this.v[i]! += a[i]! * this.dt;
+      this.u[i]! += this.v[i]! * this.dt;
+    }
+    let peak = 0;
+    let peakI = 0;
+    for (let i = 0; i < this.m; i++) {
+      const au = Math.abs(this.u[i]!);
+      if (au > peak) {
+        peak = au;
+        peakI = i;
+      }
+    }
+    return peakI / this.m;
+  }
+
+  /** Dominant spatial mode by a coarse DFT power scan (the interference "thought"). */
+  private dominant(): number {
+    let best = 0;
+    let bestP = -1;
+    const K = Math.min(16, this.m >> 1);
+    for (let k = 1; k <= K; k++) {
+      let re = 0;
+      let im = 0;
+      const offset = (k - 1) * this.m;
+      for (let i = 0; i < this.m; i++) {
+        re += this.u[i]! * this.cosTable[offset + i]!;
+        im -= this.u[i]! * this.sinTable[offset + i]!;
+      }
+      const p = re * re + im * im;
+      if (p > bestP) {
+        bestP = p;
+        best = k;
+      }
+    }
+    return best;
+  }
+
+  view(): DrumView {
+    let peak = 0;
+    let peakI = 0;
+    for (let i = 0; i < this.m; i++) {
+      const au = Math.abs(this.u[i]!);
+      if (au > peak) {
+        peak = au;
+        peakI = i;
+      }
+    }
+    return {
+      energy: round4(this.energy()),
+      dominantMode: this.dominant(),
+      motor: round4(peakI / this.m),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 3 — EntropicNecroMatrix (Dying Thinker): finite budget, edges burn out permanently
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface NecroView {
+  liveFraction: number;
+  budget: number;
+  lastPathLength: number;
+  vitality: number;
+  brainDead: boolean;
+}
+
+/** Audit #102: necro-matrix budget recovered per beat (units of one edge firing). */
+const NECRO_BUDGET_REGEN = 1.25;
+/** Audit #102: one burned necro edge heals every this many beats. */
+const NECRO_HEAL_EVERY = 1;
+/** Audit #102: beats a melted thermodynamic sector stays necrotic before it regrows. */
+const THERMO_HEAL_BEATS = 600;
+
+class EntropicNecroMatrix {
+  private readonly n: number;
+  private readonly adj: number[][]; // undirected adjacency (live edges only)
+  private readonly bfsPrev: Int32Array;
+  private readonly bfsSeen: Uint8Array;
+  private readonly bfsQueue: Int32Array;
+  private readonly bfsPath: Int32Array;
+  private dead = 0;
+  private readonly built: number;
+  private budget: number;
+  private readonly budget0: number;
+  private lastPath = 0;
+  /** Audit #102: burned edges in burn order, so the oldest can heal (FIFO, flat [a,b,...]). */
+  private readonly scars: number[] = [];
+  private beats = 0;
+
+  constructor(n = 64, rng: Rng = mulberry32(1)) {
+    this.n = n;
+    this.adj = Array.from({ length: n }, () => [] as number[]);
+    this.bfsPrev = new Int32Array(n);
+    this.bfsSeen = new Uint8Array(n);
+    this.bfsQueue = new Int32Array(n);
+    this.bfsPath = new Int32Array(n);
+    let edges = 0;
+    const link = (a: number, b: number): void => {
+      if (a === b || this.adj[a]!.includes(b)) return;
+      this.adj[a]!.push(b);
+      this.adj[b]!.push(a);
+      edges++;
+    };
+    for (let i = 0; i < n; i++) link(i, (i + 1) % n); // a ring keeps it connected
+    const chords = n * 2;
+    for (let c = 0; c < chords; c++) link(Math.floor(rng() * n), Math.floor(rng() * n));
+    this.built = edges;
+    this.budget0 = edges; // one unit per edge it can ever fire
+    this.budget = this.budget0;
+  }
+
+  private liveEdges(): number {
+    return this.built - this.dead;
+  }
+  liveFraction(): number {
+    return this.built > 0 ? this.liveEdges() / this.built : 0;
+  }
+  deadCount(): number {
+    return this.dead;
+  }
+  budgetLeft(): number {
+    return this.budget;
+  }
+
+  /** Burn an undirected edge (mark dead). Monotone: dead only ever increases. */
+  private burn(a: number, b: number): void {
+    const ia = this.adj[a]!.indexOf(b);
+    const ib = this.adj[b]!.indexOf(a);
+    if (ia < 0 || ib < 0) return;
+    this.adj[a]!.splice(ia, 1);
+    this.adj[b]!.splice(ib, 1);
+    this.dead++;
+    this.budget = Math.max(0, this.budget - 1);
+    this.scars.push(a, b);
+  }
+
+  /**
+   * Audit #102: slow regeneration. The budget recovers NECRO_BUDGET_REGEN per beat and the oldest
+   * scar heals every NECRO_HEAL_EVERY beats, so vitality reaches a wear/repair balance instead of
+   * draining irreversibly to brain-death ~37 s after boot. Deterministic (no rng).
+   */
+  private regenerate(): void {
+    this.beats++;
+    const healTarget = Math.max(1, this.lastPath);
+    this.budget = Math.min(
+      this.budget0,
+      this.budget + Math.max(NECRO_BUDGET_REGEN, healTarget + 0.25),
+    );
+    if (this.beats % NECRO_HEAL_EVERY === 0) {
+      for (let h = 0; h < healTarget && this.scars.length > 2; h++) {
+        const a = this.scars.shift()!;
+        const b = this.scars.shift()!;
+        if (!this.adj[a]!.includes(b)) {
+          this.adj[a]!.push(b);
+          this.adj[b]!.push(a);
+          this.dead = Math.max(0, this.dead - 1);
+        }
+      }
+    }
+  }
+
+  /**
+   * Think a thought: route from `src` to `dst` over LIVE edges (BFS), fire & BURN the path. As edges
+   * die the route lengthens/twists; brain-death = no route or no budget. Returns vitality 0..1.
+   */
+  step(src: number, dst: number): number {
+    this.regenerate();
+    if (this.budget <= 0) return 0;
+    const s = ((src % this.n) + this.n) % this.n;
+    const d = ((dst % this.n) + this.n) % this.n;
+    // Perf: BFS scratch is reused (was four fresh arrays per beat); same visit order, same path.
+    const prev = this.bfsPrev.fill(-1);
+    const seen = this.bfsSeen.fill(0);
+    const queue = this.bfsQueue;
+    let qLen = 0;
+    queue[qLen++] = s;
+    seen[s] = 1;
+    let found = false;
+    for (let qi = 0; qi < qLen && !found; qi++) {
+      const u = qi === 0 ? s : queue[qi]!; // s unboxed: keeps a non-integer src throwing as before
+      for (const w of this.adj[u]!) {
+        if (seen[w]) continue;
+        seen[w] = 1;
+        prev[w] = u;
+        if (w === d) {
+          found = true;
+          break;
+        }
+        queue[qLen++] = w;
+      }
+    }
+    if (found) {
+      const path = this.bfsPath;
+      let pLen = 0;
+      for (let cur = d; cur !== -1; cur = prev[cur]!) path[pLen++] = cur;
+      this.lastPath = pLen - 1;
+      for (let p = 0; p + 1 < pLen; p++) this.burn(path[p]!, path[p + 1]!);
+    } else {
+      // No live route: the desperate search still spends finite energy (a wasted thought), so the
+      // mind marches toward brain-death even once it fragments. Keeps budget monotone ↓.
+      this.lastPath = 0;
+      this.budget = Math.max(0, this.budget - 1);
+    }
+    return this.vitality();
+  }
+
+  private vitality(): number {
+    return clamp01(this.liveFraction() * (this.budget / this.budget0));
+  }
+  brainDead(): boolean {
+    return this.budget <= 0 || this.liveEdges() === 0;
+  }
+
+  view(): NecroView {
+    return {
+      liveFraction: round4(this.liveFraction()),
+      budget: this.budget,
+      lastPathLength: this.lastPath,
+      vitality: round4(this.vitality()),
+      brainDead: this.brainDead(),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 4 — KleinBottleCortex (Inside-Out Loom): Klein-bottle adjacency, tail→head fold
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface KleinView {
+  energy: number;
+  seamFlux: number;
+  headTailCorr: number;
+}
+
+class KleinBottleCortex {
+  private readonly w: number;
+  private readonly h: number;
+  private field: Float64Array;
+  private next: Float64Array;
+
+  constructor(w = 16, h = 12) {
+    this.w = w;
+    this.h = h;
+    this.field = new Float64Array(w * h);
+    this.next = new Float64Array(w * h);
+  }
+
+  /**
+   * The Klein-bottle identification on the (u,v) grid: v is periodic; wrapping u past the seam FLIPS
+   * v (v → H−1−v). `klein(klein(p)) === p` on the seam (an involution — the test asserts this).
+   */
+  klein(u: number, v: number): [number, number] {
+    let uu = u;
+    let vv = ((v % this.h) + this.h) % this.h;
+    if (u < 0 || u >= this.w) {
+      uu = ((u % this.w) + this.w) % this.w;
+      vv = this.h - 1 - vv; // the non-orientable flip across the u-seam
+    }
+    return [uu, vv];
+  }
+
+  /** Flat index of klein(u, v), computed without the tuple (same arithmetic). */
+  private idx(u: number, v: number): number {
+    let uu = u;
+    let vv = ((v % this.h) + this.h) % this.h;
+    if (u < 0 || u >= this.w) {
+      uu = ((u % this.w) + this.w) % this.w;
+      vv = this.h - 1 - vv;
+    }
+    return uu * this.h + vv;
+  }
+
+  /** Inject at the tail (u=0); diffuse over Klein adjacency. Tail signal reaches the head via the fold. */
+  step(drive: number): number {
+    for (let v = 0; v < this.h; v++) this.field[this.idx(0, v)]! += drive * 0.25;
+    for (let u = 0; u < this.w; u++) {
+      for (let v = 0; v < this.h; v++) {
+        const c = this.field[this.idx(u, v)]!;
+        const nb =
+          this.field[this.idx(u + 1, v)]! +
+          this.field[this.idx(u - 1, v)]! +
+          this.field[this.idx(u, v + 1)]! +
+          this.field[this.idx(u, v - 1)]!;
+        this.next[this.idx(u, v)] = Math.tanh(0.55 * c + 0.1 * nb);
+      }
+    }
+    const tmp = this.field;
+    this.field = this.next;
+    this.next = tmp;
+    return this.headTailCorr();
+  }
+
+  private energy(): number {
+    let e = 0;
+    for (let i = 0; i < this.field.length; i++) e += this.field[i]! * this.field[i]!;
+    return e / this.field.length;
+  }
+  /** Correlation between the head column (u=W−1) and the flipped tail column — the wormhole coupling. */
+  private headTailCorr(): number {
+    let dot = 0;
+    for (let v = 0; v < this.h; v++) {
+      dot += this.field[this.idx(this.w - 1, v)]! * this.field[this.idx(0, this.h - 1 - v)]!;
+    }
+    return Math.tanh(dot / this.h);
+  }
+  private seamFlux(): number {
+    let f = 0;
+    for (let v = 0; v < this.h; v++) f += Math.abs(this.field[this.idx(this.w - 1, v)]!);
+    return f / this.h;
+  }
+
+  /** view().energy alone (skips seam flux / head-tail correlation). */
+  energyView(): number {
+    return round4(this.energy());
+  }
+
+  view(): KleinView {
+    return {
+      energy: round4(this.energy()),
+      seamFlux: round4(this.seamFlux()),
+      headTailCorr: round4(this.headTailCorr()),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 5 — PendulumHive (Gravity Clock): coupled kicked rotors (Chirikov standard map), +Lyapunov
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface HiveView {
+  order: number;
+  meanMomentum: number;
+  lyapunov: number;
+  chaotic: boolean;
+  motor: number;
+}
+
+class PendulumHive {
+  private readonly k: number;
+  private readonly theta: Float64Array;
+  private readonly mom: Float64Array;
+  private readonly K: number; // kick strength (Chirikov); K≳1 ⇒ chaos
+  private readonly coupling: number;
+  /** Cached Lyapunov exponent: lyapunov() reads no instance state (depends only on readonly K), so
+   *  it is a constant. view() runs on the per-frame snapshot path — recomputing the 800-step
+   *  transcendental loop every call (twice per snapshot) was pure waste. */
+  private lam: number | null = null;
+
+  constructor(k = 24, kick = 2.7, coupling = 0.15, rng: Rng = mulberry32(2)) {
+    this.k = k;
+    this.K = kick;
+    this.coupling = coupling;
+    this.theta = new Float64Array(k);
+    this.mom = new Float64Array(k);
+    for (let i = 0; i < k; i++) {
+      this.theta[i] = rng() * TAU;
+      this.mom[i] = (rng() - 0.5) * 0.6;
+    }
+  }
+
+  /** One kicked-rotor step (toral standard map) per node + nearest-neighbour phase coupling. */
+  step(drive: number): number {
+    for (let i = 0; i < this.k; i++) {
+      const left = this.theta[(i - 1 + this.k) % this.k]!;
+      const right = this.theta[(i + 1) % this.k]!;
+      const coup =
+        this.coupling * (Math.sin(left - this.theta[i]!) + Math.sin(right - this.theta[i]!));
+      let p = this.mom[i]! + this.K * Math.sin(this.theta[i]!) + coup + drive * 0.05;
+      p = ((p % TAU) + TAU) % TAU;
+      if (p > Math.PI) p -= TAU;
+      let th = this.theta[i]! + p;
+      th = ((th % TAU) + TAU) % TAU;
+      this.mom[i] = p;
+      this.theta[i] = th;
+    }
+    return Math.sin(this.theta[0]!);
+  }
+
+  /** Kuramoto order parameter R∈[0,1] — phase coherence of the hive. */
+  private order(): number {
+    let cr = 0;
+    let ci = 0;
+    for (let i = 0; i < this.k; i++) {
+      cr += Math.cos(this.theta[i]!);
+      ci += Math.sin(this.theta[i]!);
+    }
+    return Math.hypot(cr, ci) / this.k;
+  }
+
+  /**
+   * Largest Lyapunov exponent of the single-node standard map via the TANGENT MAP (Benettin). The
+   * Jacobian of (p'=p+K sinθ, θ'=θ+p') is [[1, K cosθ],[1, 1+K cosθ]] (det 1, area-preserving). For
+   * K≳1 this is positive (chaos). Pure of the coupling — a clean per-node measure. O(steps).
+   */
+  lyapunov(steps = 1200): number {
+    let th = 0.2;
+    let p = 0.1;
+    let wx = 1;
+    let wy = 0;
+    let sum = 0;
+    const transient = 100;
+    for (let s = 0; s < transient + steps; s++) {
+      const c = this.K * Math.cos(th);
+      // tangent: w ← J·w, J = [[1, c],[1, 1+c]]
+      const nx = wx + c * wy;
+      const ny = wx + (1 + c) * wy;
+      // advance the base orbit (toral standard map)
+      p = p + this.K * Math.sin(th);
+      th = th + p;
+      th = ((th % TAU) + TAU) % TAU;
+      p = ((p % TAU) + TAU) % TAU;
+      const norm = Math.hypot(nx, ny) || 1e-12;
+      if (s >= transient) sum += Math.log(norm);
+      wx = nx / norm;
+      wy = ny / norm;
+    }
+    return sum / steps;
+  }
+
+  view(): HiveView {
+    if (this.lam === null) this.lam = round4(this.lyapunov(800));
+    const lam = this.lam;
+    let mp = 0;
+    for (let i = 0; i < this.k; i++) mp += this.mom[i]!;
+    return {
+      order: round4(this.order()),
+      meanMomentum: round4(mp / this.k),
+      lyapunov: lam,
+      chaotic: lam > 0,
+      motor: round4(Math.sin(this.theta[0]!)),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 6 — SlimeMoldHydra (Brain-Shedder): split into k heads, compute, fuse (node-conserving)
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface HydraView {
+  heads: number;
+  conflict: number;
+  coherence: number;
+  nodes: number;
+}
+
+class SlimeMoldHydra {
+  private readonly n: number;
+  private readonly state: Float64Array;
+  private readonly meansScratch: Float64Array;
+  private heads = 1;
+  private conflict = 0;
+
+  constructor(n = 60) {
+    this.n = n;
+    this.state = new Float64Array(n);
+    this.meansScratch = new Float64Array(n);
+    for (let i = 0; i < n; i++) this.state[i] = Math.sin(i * 0.7);
+  }
+
+  nodeCount(): number {
+    return this.n;
+  }
+
+  /**
+   * Split into `k` contiguous heads, each runs an independent local relaxation, then FUSE. Node count
+   * is conserved (the partition is exact). Fusion injects a perturbation ∝ inter-head disagreement
+   * (the "conflicting-memory cascade"). Deterministic.
+   */
+  step(k: number, drive: number, rng: Rng): number {
+    const kk = Math.max(1, Math.min(this.n, Math.floor(k)));
+    this.heads = kk;
+    const size = Math.floor(this.n / kk);
+    const means = this.meansScratch;
+    let sumMeans = 0;
+    for (let head = 0; head < kk; head++) {
+      const lo = head * size;
+      const hi = head === kk - 1 ? this.n : lo + size;
+      let mean = 0;
+      for (let i = lo; i < hi; i++) {
+        this.state[i] = Math.tanh(0.8 * this.state[i]! + 0.1 * drive + 0.05 * (rng() - 0.5));
+        mean += this.state[i]!;
+      }
+      const m = hi > lo ? mean / (hi - lo) : 0;
+      means[head] = m;
+      sumMeans += m;
+    }
+    // Conflict = variance of head means; fuse = nudge every node toward the global mean + conflict noise.
+    const gMean = sumMeans / kk;
+    let varSum = 0;
+    for (let head = 0; head < kk; head++) {
+      const m = means[head]!;
+      varSum += (m - gMean) * (m - gMean);
+    }
+    this.conflict = clamp01(Math.sqrt(varSum / kk));
+    for (let i = 0; i < this.n; i++) {
+      this.state[i] = clampFinite(
+        this.state[i]! + 0.2 * (gMean - this.state[i]!) + this.conflict * 0.1 * Math.sin(i),
+        -1,
+        1,
+      );
+    }
+    return this.conflict;
+  }
+
+  private coherence(): number {
+    let mean = 0;
+    for (let i = 0; i < this.n; i++) mean += this.state[i]!;
+    mean /= this.n;
+    let v = 0;
+    for (let i = 0; i < this.n; i++) v += (this.state[i]! - mean) * (this.state[i]! - mean);
+    return clamp01(1 - Math.sqrt(v / this.n));
+  }
+
+  view(): HydraView {
+    return {
+      heads: this.heads,
+      conflict: round4(this.conflict),
+      coherence: round4(this.coherence()),
+      nodes: this.n,
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 7 — ChronoWraith (Time-Echoer): concentric rings with delay-line buffers
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface WraithView {
+  outer: number;
+  mid: number;
+  core: number;
+  dissonance: number;
+}
+
+class ChronoWraith {
+  private readonly buf: Float64Array;
+  private readonly len: number;
+  private head = 0;
+  private readonly d1: number;
+  private readonly d2: number;
+  private outer = 0;
+  private mid = 0;
+  private core = 0;
+
+  constructor(d1 = 5, d2 = 30) {
+    this.d1 = d1;
+    this.d2 = d2;
+    this.len = d2 + 1;
+    this.buf = new Float64Array(this.len);
+  }
+
+  delayCore(): number {
+    return this.d2;
+  }
+
+  /** Push the present input; the rings read it at delays 0 / d1 / d2. Returns ring dissonance. */
+  step(x: number): number {
+    this.buf[this.head] = x;
+    this.outer = x;
+    this.mid = this.buf[(this.head - this.d1 + this.len) % this.len]!;
+    this.core = this.buf[(this.head - this.d2 + this.len) % this.len]!;
+    this.head = (this.head + 1) % this.len;
+    return Math.abs(this.outer - this.core) + Math.abs(this.outer - this.mid);
+  }
+  /** The core's current value — equals the input from `d2` ticks ago (delay-correctness invariant). */
+  coreValue(): number {
+    return this.core;
+  }
+
+  view(): WraithView {
+    return {
+      outer: round4(this.outer),
+      mid: round4(this.mid),
+      core: round4(this.core),
+      dissonance: round4(Math.abs(this.outer - this.core) + Math.abs(this.outer - this.mid)),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 8 — QuantumTunnelLattice (Teleporting Static): Born-rule manifested edges
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface TunnelView {
+  manifested: number;
+  entropy: number;
+  displacement: number;
+}
+
+class QuantumTunnelLattice {
+  private readonly n: number;
+  private readonly amp: Float64Array; // amplitude field ψ[i*n+j]
+  private manifest: Int32Array; // per node: the manifested target this tick (−1 none)
+  private phase = 0;
+
+  constructor(n = 48, rng: Rng = mulberry32(3)) {
+    this.n = n;
+    this.amp = new Float64Array(n * n);
+    this.manifest = new Int32Array(n).fill(-1);
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) this.amp[i * n + j] = rng();
+    }
+  }
+
+  /** Born probabilities p(i→·): |ψ_ij|² normalised over j. Each row sums to 1 (the test asserts it). */
+  rowProbabilities(i: number): number[] {
+    let z = 0;
+    const row: number[] = [];
+    for (let j = 0; j < this.n; j++) {
+      const a = this.amp[i * this.n + j]!;
+      const p = a * a;
+      row.push(p);
+      z += p;
+    }
+    if (z <= 0) return row.map(() => 1 / this.n);
+    return row.map((p) => p / z);
+  }
+
+  /** rowProbabilities(i) written into `out` (same values), for the per-step sampling loop. */
+  private rowProbabilitiesInto(i: number, out: Float64Array): void {
+    const n = this.n;
+    let z = 0;
+    for (let j = 0; j < n; j++) {
+      const a = this.amp[i * n + j]!;
+      const p = a * a;
+      out[j] = p;
+      z += p;
+    }
+    if (z <= 0) out.fill(1 / n, 0, n);
+    else for (let j = 0; j < n; j++) out[j] = out[j]! / z;
+  }
+
+  private probScratch = new Float64Array(0);
+
+  /** Evolve the amplitude field (deterministic phase rotation) and sample one manifested edge per node. */
+  step(drive: number, rng: Rng): number {
+    this.phase += 0.07 + 0.01 * drive;
+    for (let i = 0; i < this.n; i++) {
+      for (let j = 0; j < this.n; j++) {
+        const k = i * this.n + j;
+        this.amp[k] = 0.5 + 0.5 * Math.sin(this.amp[k]! * 3.1 + this.phase + i * 0.13 + j * 0.07);
+      }
+    }
+    let manifested = 0;
+    for (let i = 0; i < this.n; i++) {
+      if (this.probScratch.length < this.n) this.probScratch = new Float64Array(this.n);
+      const probs = this.probScratch;
+      this.rowProbabilitiesInto(i, probs);
+      const r = rng();
+      let cum = 0;
+      let pick = -1;
+      for (let j = 0; j < this.n; j++) {
+        cum += probs[j]!;
+        if (r <= cum) {
+          pick = j;
+          break;
+        }
+      }
+      this.manifest[i] = pick;
+      if (pick >= 0 && pick !== i) manifested++;
+    }
+    return manifested / this.n;
+  }
+
+  private entropy(): number {
+    // Shannon entropy of node 0's distribution (normalised to [0,1] by log n).
+    if (this.probScratch.length < this.n) this.probScratch = new Float64Array(this.n);
+    this.rowProbabilitiesInto(0, this.probScratch);
+    let h = 0;
+    for (let j = 0; j < this.n; j++) {
+      const pi = this.probScratch[j]!;
+      if (pi > 0) h -= pi * Math.log(pi);
+    }
+    return h / Math.log(this.n);
+  }
+  private displacement(): number {
+    let d = 0;
+    for (let i = 0; i < this.n; i++) {
+      const t = this.manifest[i]!;
+      if (t >= 0) d += Math.abs(t - i);
+    }
+    return d / (this.n * this.n);
+  }
+
+  /** view().manifested alone (skips entropy / displacement). */
+  manifestedCount(): number {
+    let m = 0;
+    for (let i = 0; i < this.n; i++) if (this.manifest[i]! >= 0 && this.manifest[i]! !== i) m++;
+    return m;
+  }
+
+  view(): TunnelView {
+    let m = 0;
+    for (let i = 0; i < this.n; i++) if (this.manifest[i]! >= 0 && this.manifest[i]! !== i) m++;
+    return {
+      manifested: m,
+      entropy: round4(this.entropy()),
+      displacement: round4(this.displacement()),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 9 — ThermodynamicEngine (Heat Boiler): heat deposit + diffusion + venting + necrosis
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface ThermoView {
+  totalHeat: number;
+  hottest: number;
+  necrotic: number;
+  paralysis: number;
+}
+
+class ThermodynamicEngine {
+  private readonly n: number;
+  private heat: Float64Array;
+  private readonly nextHeat: Float64Array; // pre-allocated scratch for step()
+  private dead: Uint8Array;
+  private readonly D = 0.2; // diffusion coeff (≤0.5 for explicit 1-D stability)
+  private readonly tMelt = 6;
+  private readonly vent = 0.08;
+  private necrotic = 0;
+  /** Audit #102: beats until each necrotic sector heals (0 = alive). */
+  private healIn: Uint16Array;
+
+  constructor(n = 64) {
+    this.n = n;
+    this.heat = new Float64Array(n);
+    this.nextHeat = new Float64Array(n);
+    this.dead = new Uint8Array(n);
+    this.healIn = new Uint16Array(n);
+  }
+
+  totalHeat(): number {
+    let t = 0;
+    for (let i = 0; i < this.n; i++) t += this.heat[i]!;
+    return t;
+  }
+  necroticCount(): number {
+    return this.necrotic;
+  }
+
+  /**
+   * `firing` (0..1 per sector) deposits heat; heat then DIFFUSES (1-D explicit) and the fin sectors
+   * VENT; any sector over `tMelt` NECROTISES (permanent). With `firing` all-zero, total heat is
+   * non-increasing (diffusion conserves, venting removes) — the test asserts this. Heat ≥ 0 always.
+   */
+  step(firing: (i: number) => number): number {
+    for (let i = 0; i < this.n; i++) {
+      if (this.dead[i]) continue;
+      this.heat[i]! += 0.9 * clamp01(firing(i));
+    }
+    const next = this.nextHeat;
+    for (let i = 0; i < this.n; i++) {
+      const lap =
+        this.heat[(i + 1) % this.n]! - 2 * this.heat[i]! + this.heat[(i - 1 + this.n) % this.n]!;
+      let h = this.heat[i]! + this.D * lap;
+      if (i % 8 === 0) h *= 1 - this.vent; // fins every 8th sector
+      if (h < 0) h = 0;
+      next[i] = h;
+    }
+    // Copy back (no per-step allocation — swap content into the persistent heat array)
+    this.heat.set(next);
+    for (let i = 0; i < this.n; i++) {
+      if (!this.dead[i] && this.heat[i]! > this.tMelt) {
+        this.dead[i] = 1;
+        this.heat[i] = 0;
+        this.necrotic++;
+        this.healIn[i] = THERMO_HEAL_BEATS;
+      } else if (this.dead[i] && this.healIn[i]! > 0 && --this.healIn[i]! === 0) {
+        // Audit #102: a melted sector re-grows after THERMO_HEAL_BEATS instead of staying dead.
+        this.dead[i] = 0;
+        this.necrotic = Math.max(0, this.necrotic - 1);
+      }
+    }
+    return this.totalHeat();
+  }
+
+  view(): ThermoView {
+    let hottest = 0;
+    for (let i = 0; i < this.n; i++) hottest = Math.max(hottest, this.heat[i]!);
+    return {
+      totalHeat: round4(this.totalHeat()),
+      hottest: round4(hottest),
+      necrotic: this.necrotic,
+      paralysis: round4(this.necrotic / this.n),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 10 — CancerousOuroboros (Self-Devourer): antagonistic A (grow) vs B (immune cull)
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+interface OuroborosView {
+  limbs: number;
+  cap: number;
+  births: number;
+  deaths: number;
+  weirdness: number;
+}
+
+class CancerousOuroboros {
+  private readonly cap: number;
+  private readonly weird: number[] = []; // each living limb's "mutation score" (deviation)
+  private births = 0;
+  private deaths = 0;
+
+  constructor(cap = 48) {
+    this.cap = cap;
+  }
+
+  limbCount(): number {
+    return this.weird.length;
+  }
+  capacity(): number {
+    return this.cap;
+  }
+
+  /**
+   * Network A grows ≤`growth` new limbs (mutated weirdness); network B (immune) culls every limb
+   * whose weirdness exceeds an adaptive threshold (the cull is bounded by the population). Population
+   * is hard-capped → bounded; A grows then B culls, so no node is both grown and culled the same tick.
+   */
+  step(growth: number, immunePressure: number, rng: Rng): number {
+    this.births = 0;
+    this.deaths = 0;
+    const g = Math.max(0, Math.floor(growth));
+    for (let i = 0; i < g && this.weird.length < this.cap; i++) {
+      this.weird.push(clamp01(0.3 + 0.7 * rng()));
+      this.births++;
+    }
+    // B: adaptive immune threshold falls as pressure rises → more aggressive culling.
+    const thr = clamp01(1 - 0.6 * clamp01(immunePressure));
+    for (let i = this.weird.length - 1; i >= 0; i--) {
+      if ((this.weird[i] ?? 0) > thr) {
+        this.weird.splice(i, 1);
+        this.deaths++;
+      }
+    }
+    return this.weird.length / this.cap;
+  }
+
+  private meanWeird(): number {
+    if (this.weird.length === 0) return 0;
+    let s = 0;
+    for (const w of this.weird) s += w;
+    return s / this.weird.length;
+  }
+
+  view(): OuroborosView {
+    return {
+      limbs: this.weird.length,
+      cap: this.cap,
+      births: this.births,
+      deaths: this.deaths,
+      weirdness: round4(this.meanWeird()),
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// META-PARADOX LAYER (bounded homages — see the honesty contract above)
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+/** Cantor-set node addresses: the integers in [0, 3^L) whose base-3 digits are all in {0,2}. */
+export function cantorDustAddresses(levels: number): number[] {
+  const out: number[] = [];
+  const total = 3 ** levels;
+  for (let n = 0; n < total; n++) {
+    let x = n;
+    let ok = true;
+    for (let d = 0; d < levels; d++) {
+      if (x % 3 === 1) {
+        ok = false;
+        break;
+      }
+      x = Math.floor(x / 3);
+    }
+    if (ok) out.push(n);
+  }
+  return out;
+}
+
+interface MetaView {
+  distanceToTarget: number;
+  godelResidual: number;
+  phantom: number;
+  superposed: boolean;
+  superEntropy: number;
+  decoheredPlan: number;
+  budgetLoad: number;
+  cantorPoints: number;
+}
+
+const APEX_PLANS = ['ASCEND', 'CONSUME', 'FRACTURE', 'DREAM', 'HUNT', 'TRANSCEND'] as const;
+type ApexPlan = (typeof APEX_PLANS)[number];
+export const APEX_PLAN_NAMES: readonly ApexPlan[] = APEX_PLANS;
+
+class MetaParadoxLayer {
+  private readonly dim: number;
+  private z: Float64Array; // the present plan-state
+  private readonly zT: Float64Array; // the fixed terminal "future corpse" (boundary value)
+  private readonly alpha = 0.04; // retrocausal relaxation rate
+  private predicted: Float64Array;
+  private residual = 0;
+  private phantom = 0;
+  private readonly psi: Float64Array; // superposition amplitudes over the plans
+  private superposed = true;
+  private decohered = -1;
+  private readonly budget: number;
+  private budgetLoad = 0;
+  private readonly cantor: number[];
+
+  constructor(seed: number, dim = APEX_PLANS.length) {
+    this.dim = dim;
+    const r = sub(seed, 0x5e7a11ad);
+    this.z = new Float64Array(dim);
+    this.zT = new Float64Array(dim);
+    this.predicted = new Float64Array(dim);
+    this.psi = new Float64Array(dim);
+    for (let i = 0; i < dim; i++) {
+      this.z[i] = r() - 0.5;
+      this.zT[i] = r() - 0.5; // the fixed terminal state, set ONCE at birth
+      this.psi[i] = r();
+    }
+    this.normalizePsi();
+    // Self-model init = current ψ, so beat 1's residual is well-defined (not a gap against zeros).
+    for (let i = 0; i < dim; i++) this.predicted[i] = this.psi[i]!;
+    this.budget = Math.max(1, dim - 1); // cap the superposition breadth (reverse-anthropic)
+    this.cantor = cantorDustAddresses(5); // 2^5 = 32 dust points
+  }
+
+  private normalizePsi(): void {
+    let z = 0;
+    for (let i = 0; i < this.dim; i++) z += this.psi[i]! * this.psi[i]!;
+    z = Math.sqrt(z) || 1;
+    for (let i = 0; i < this.dim; i++) this.psi[i]! /= z;
+  }
+  /** Born probabilities |ψ|² (sum to 1 — tested). */
+  planProbabilities(): number[] {
+    return Array.from(this.psi, (a) => a * a);
+  }
+  distanceToTarget(): number {
+    let d = 0;
+    for (let i = 0; i < this.dim; i++) d += (this.z[i]! - this.zT[i]!) ** 2;
+    return Math.sqrt(d);
+  }
+
+  /**
+   * One meta beat. `signal` (per-plan drive from the organs) nudges ψ; the plan-state z RELAXES toward
+   * the fixed terminal zT (retrocausal target-pull = boundary-value, NOT time travel); the Gödel
+   * RESIDUAL is the gap between last beat's self-prediction and the new z; phantom perception reads
+   * z's near-zero slots; ψ DECOHERES to a definite plan only when its peak probability passes a
+   * threshold; the self-budget flattens z's smallest entry if the load exceeds budget.
+   */
+  step(signal: number[]): void {
+    // Retrocausal relaxation toward the fixed future state (|z−zT| is non-increasing — tested).
+    for (let i = 0; i < this.dim; i++) this.z[i]! += this.alpha * (this.zT[i]! - this.z[i]!);
+
+    // NOTE: the Gödel residual is now computed at the END of the beat (against the signal-driven ψ,
+    // not the closed-form z). The old z-based self-model was a perfect model of z's own update, so the
+    // residual collapsed to exactly 0 after beat 1, deadening every consumer. `this.residual` here holds
+    // the PREVIOUS beat's value (a deterministic 1-beat pipeline), fed into phantom + the ψ nudge below.
+
+    // Phantom perception: structured read of z's near-zero ("vacuum") slots.
+    let zeros = 0;
+    let ph = 0;
+    for (let i = 0; i < this.dim; i++) {
+      if (Math.abs(this.z[i]!) < 0.05) {
+        zeros++;
+        ph += Math.sin(i * 1.7 + this.residual);
+      }
+    }
+    this.phantom = zeros > 0 ? Math.abs(ph) / zeros : 0;
+
+    // Superposition update from the organ signal, then renormalise (Born bookkeeping).
+    for (let i = 0; i < this.dim; i++) {
+      this.psi[i]! = Math.abs(
+        0.85 * this.psi[i]! + 0.15 * clamp01(signal[i] ?? 0) + 0.02 * this.residual,
+      );
+    }
+    this.normalizePsi();
+    const probs = this.planProbabilities();
+    let maxP = 0;
+    let arg = 0;
+    for (let i = 0; i < this.dim; i++) {
+      if (probs[i]! > maxP) {
+        maxP = probs[i]!;
+        arg = i;
+      }
+    }
+    // Wigner shield: stay "smeared" until a measurement threshold is crossed, then decohere to argmax.
+    if (maxP > 0.45) {
+      this.superposed = false;
+      this.decohered = arg;
+    } else {
+      this.superposed = true;
+      this.decohered = -1;
+    }
+
+    // Reverse-anthropic self-budget: cap the BREADTH of its OWN superposition. If more than `budget`
+    // plans carry non-trivial amplitude, prune (zero) the weakest and renormalise — it consumes its
+    // own low-priority possibilities, never anything outside. The retrocausal plan-state z is left
+    // untouched, so |z − zT| stays a clean monotone contraction.
+    const floorP = 1 / (4 * this.dim);
+    let active = 0;
+    for (let i = 0; i < this.dim; i++) if (this.psi[i]! * this.psi[i]! > floorP) active++;
+    this.budgetLoad = active;
+    if (active > this.budget) {
+      let minI = -1;
+      let minV = Infinity;
+      for (let i = 0; i < this.dim; i++) {
+        const a = this.psi[i]!;
+        if (a > 0 && a < minV) {
+          minV = a;
+          minI = i;
+        }
+      }
+      if (minI >= 0) this.psi[minI] = 0;
+      this.normalizePsi();
+    }
+
+    // Gödel self-reference residual: the gap between the realised (signal-driven) ψ and last beat's
+    // zero-input self-forecast — a genuine, non-degenerate self-model error created by the organ drive.
+    let res = 0;
+    for (let i = 0; i < this.dim; i++) res += Math.abs(this.psi[i]! - this.predicted[i]!);
+    this.residual = res / this.dim;
+    // Store next beat's zero-input forecast: what ψ would be if the incoming signal were 0 (0.85 decay,
+    // then the same L2 renormalisation ψ itself uses), so the residual measures the signal's departure.
+    let pn = 0;
+    for (let i = 0; i < this.dim; i++) {
+      this.predicted[i] = Math.abs(0.85 * this.psi[i]!);
+      pn += this.predicted[i]! * this.predicted[i]!;
+    }
+    pn = Math.sqrt(pn) || 1;
+    for (let i = 0; i < this.dim; i++) this.predicted[i]! /= pn;
+  }
+
+  superEntropy(): number {
+    const p = this.planProbabilities();
+    let h = 0;
+    for (const pi of p) if (pi > 0) h -= pi * Math.log(pi);
+    return h / Math.log(this.dim);
+  }
+  /** The committed plan once decohered, else the current argmax (telemetry only, while still smeared). */
+  plan(): ApexPlan {
+    if (this.decohered >= 0) return APEX_PLANS[this.decohered] ?? 'DREAM';
+    const p = this.planProbabilities();
+    let arg = 0;
+    let mx = -1;
+    for (let i = 0; i < this.dim; i++) {
+      if (p[i]! > mx) {
+        mx = p[i]!;
+        arg = i;
+      }
+    }
+    return APEX_PLANS[arg] ?? 'DREAM';
+  }
+  residualValue(): number {
+    return this.residual;
+  }
+  isSuperposed(): boolean {
+    return this.superposed;
+  }
+
+  view(): MetaView {
+    return {
+      distanceToTarget: round4(this.distanceToTarget()),
+      godelResidual: round4(this.residual),
+      phantom: round4(this.phantom),
+      superposed: this.superposed,
+      superEntropy: round4(this.superEntropy()),
+      decoheredPlan: this.decohered,
+      budgetLoad: round4(this.budgetLoad),
+      cantorPoints: this.cantor.length,
+    };
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// ORGAN 11 — QuantumBrainOrgan (the non-negotiable QUANTUM BRAIN): exact statevector + Tsotchke corpus
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+/**
+ * A genuine exact statevector quantum register (the apex's "quantum geometry deliberation" organ,
+ * doctrine organ #6 / master-report Layer 2). Unitary gates (Hadamard / RZ phase / CNOT) evolve a
+ * dense 2^nQ amplitude vector, so ⟨ψ|ψ⟩ = 1 holds exactly (the tested invariant). Telemetry is real
+ * quantum information: l1-coherence, single-qubit entanglement (linear entropy of the reduced ρ),
+ * Born entropy, and — wired to the **real Tsotchke corpus** via {@link corpusPulse} / {@link
+ * getTsotchkeBias} — QGT volume + non-stabilizerness ("magic"). The gate angles are driven by the
+ * percept AND the Tsotchke pulse, so the quantum layer changes action (it folds a plan-bias into the
+ * meta layer) — it is load-bearing, not decoration. This is exact classical *simulation* of quantum
+ * dynamics (no QPU, no speedup claim — the honest frame from the corpus).
+ */
+interface QuantumView {
+  qubits: number;
+  norm: number; // ⟨ψ|ψ⟩, must be ≈1
+  coherence: number; // l1-coherence (0..1)
+  entanglement: number; // 1-qubit linear entropy (0..1)
+  bornEntropy: number; // Shannon entropy of |amp|² (0..1)
+  qgtVolume: number; // Tsotchke QGT volume (real corpus)
+  magic: number; // Tsotchke non-stabilizerness proxy (real corpus)
+  collapsed: boolean;
+  plan: number; // collapsed plan index, or −1 while superposed
+}
+
+class QuantumBrainOrgan {
+  private readonly nQ: number;
+  private readonly dim: number;
+  private re: Float64Array;
+  private im: Float64Array;
+  private readonly formIdx: number;
+  private qgtVolume = 0;
+  private magic = 0;
+  private collapsed = false;
+  private collapseIdx = -1;
+
+  constructor(nQ = 6, seed = 1) {
+    this.nQ = nQ;
+    this.dim = 1 << nQ;
+    this.re = new Float64Array(this.dim);
+    this.im = new Float64Array(this.dim);
+    this.re[0] = 1; // |00…0⟩
+    this.formIdx = (seed >>> 3) % 25; // which Tsotchke repo/archetype drives this register
+    for (let q = 0; q < nQ; q++) this.hadamard(q); // boot into uniform superposition
+  }
+
+  qubitCount(): number {
+    return this.nQ;
+  }
+
+  /** ⟨ψ|ψ⟩ — exactly 1 under unitary evolution (the tested invariant). */
+  norm(): number {
+    let s = 0;
+    for (let i = 0; i < this.dim; i++) s += this.re[i]! * this.re[i]! + this.im[i]! * this.im[i]!;
+    return s;
+  }
+
+  /** Born probabilities |amp_i|² (sum to 1). */
+  bornProbabilities(): number[] {
+    const out: number[] = [];
+    for (let i = 0; i < this.dim; i++)
+      out.push(this.re[i]! * this.re[i]! + this.im[i]! * this.im[i]!);
+    return out;
+  }
+
+  private hadamard(q: number): void {
+    const bit = 1 << q;
+    const inv = Math.SQRT1_2;
+    for (let i = 0; i < this.dim; i++) {
+      if ((i & bit) === 0) {
+        const j = i | bit;
+        const ar = this.re[i]!;
+        const ai = this.im[i]!;
+        const br = this.re[j]!;
+        const bi = this.im[j]!;
+        this.re[i] = (ar + br) * inv;
+        this.im[i] = (ai + bi) * inv;
+        this.re[j] = (ar - br) * inv;
+        this.im[j] = (ai - bi) * inv;
+      }
+    }
+  }
+
+  /** RZ(θ): phase e^{∓iθ/2} on |0⟩/|1⟩ of qubit q. Phase-only → norm preserved. */
+  private rz(q: number, theta: number): void {
+    const bit = 1 << q;
+    const c0 = Math.cos(-theta / 2);
+    const s0 = Math.sin(-theta / 2);
+    const c1 = Math.cos(theta / 2);
+    const s1 = Math.sin(theta / 2);
+    for (let i = 0; i < this.dim; i++) {
+      const c = (i & bit) === 0 ? c0 : c1;
+      const s = (i & bit) === 0 ? s0 : s1;
+      const r = this.re[i]!;
+      const m = this.im[i]!;
+      this.re[i] = r * c - m * s;
+      this.im[i] = r * s + m * c;
+    }
+  }
+
+  /** CNOT(control,target): a basis permutation (toggles target where control=1) → unitary. */
+  private cnot(control: number, target: number): void {
+    const cb = 1 << control;
+    const tb = 1 << target;
+    for (let i = 0; i < this.dim; i++) {
+      if ((i & cb) !== 0 && (i & tb) === 0) {
+        const j = i | tb;
+        const r = this.re[i]!;
+        const m = this.im[i]!;
+        this.re[i] = this.re[j]!;
+        this.im[i] = this.im[j]!;
+        this.re[j] = r;
+        this.im[j] = m;
+      }
+    }
+  }
+
+  /**
+   * One quantum beat: a unitary layer (RZ phases from the percept + Tsotchke pulse, a CNOT
+   * entangling ring, then a Hadamard interference layer) evolves the register. Pulls real QGT
+   * volume + magic from the Tsotchke corpus. Stays superposed (Wigner shield) unless `measure`
+   * forces a collapse. Deterministic.
+   */
+  step(drive: number, seed: number): void {
+    const pulse = corpusPulse(seed, this.formIdx);
+    const bias = getTsotchkeBias(this.formIdx);
+    this.qgtVolume = pulse.qgtVolume;
+    this.magic = pulse.cliffordEnt;
+    if (this.collapsed) {
+      for (let q = 0; q < this.nQ; q++) this.hadamard(q);
+    }
+    this.collapsed = false;
+    this.collapseIdx = -1;
+    for (let q = 0; q < this.nQ; q++) {
+      const ang =
+        (drive + pulse.qgtVolume + bias.cliffordWeight * 0.5) * (q + 1) * 0.7 + pulse.adGradient;
+      this.rz(q, ang);
+    }
+    for (let q = 0; q < this.nQ; q++) this.cnot(q, (q + 1) % this.nQ); // entangling ring
+    for (let q = 0; q < this.nQ; q++) this.hadamard(q); // turn accumulated phase into amplitude interference across all qubits
+  }
+
+  /** Collapse the register by Born sampling (Wigner measurement); sets a definite basis state. */
+  measure(rng: Rng): number {
+    const probs = this.bornProbabilities();
+    const r = rng();
+    let cum = 0;
+    let idx = this.dim - 1;
+    for (let i = 0; i < this.dim; i++) {
+      cum += probs[i]!;
+      if (r <= cum) {
+        idx = i;
+        break;
+      }
+    }
+    this.re.fill(0);
+    this.im.fill(0);
+    this.re[idx] = 1;
+    this.collapsed = true;
+    this.collapseIdx = idx;
+    return idx;
+  }
+
+  /** Born probabilities folded onto `nPlans` groups — the quantum plan-bias the meta layer consumes. */
+  planBias(nPlans: number): number[] {
+    const out = Array.from({ length: nPlans }, () => 0);
+    const probs = this.bornProbabilities();
+    for (let i = 0; i < this.dim; i++) out[i % nPlans]! += probs[i]!;
+    return out;
+  }
+
+  /** l1-coherence of the pure state in the computational basis: (Σ|cᵢ|)² − 1, normalised by dim−1. */
+  private coherence(): number {
+    let s = 0;
+    for (let i = 0; i < this.dim; i++) s += Math.hypot(this.re[i]!, this.im[i]!);
+    const c = s * s - 1;
+    return clamp01(c / (this.dim - 1));
+  }
+
+  view(): QuantumView {
+    // single-qubit (q0) entanglement = linear entropy 2(1−tr ρ²) of the reduced density matrix.
+    // reduced density matrix of qubit 0
+    let r00 = 0;
+    let r11 = 0;
+    let oRe = 0;
+    let oIm = 0;
+    for (let i = 0; i < this.dim; i++) {
+      const p = this.re[i]! * this.re[i]! + this.im[i]! * this.im[i]!;
+      if ((i & 1) === 0) {
+        r00 += p;
+        const j = i | 1;
+        // ρ01 += amp_i * conj(amp_j)
+        oRe += this.re[i]! * this.re[j]! + this.im[i]! * this.im[j]!;
+        oIm += this.im[i]! * this.re[j]! - this.re[i]! * this.im[j]!;
+      } else {
+        r11 += p;
+      }
+    }
+    const purity = r00 * r00 + r11 * r11 + 2 * (oRe * oRe + oIm * oIm);
+    const entanglement = clamp01(2 * (1 - purity));
+    const probs = this.bornProbabilities();
+    let h = 0;
+    for (const pi of probs) if (pi > 0) h -= pi * Math.log(pi);
+    return {
+      qubits: this.nQ,
+      norm: round4(this.norm()),
+      coherence: round4(this.coherence()),
+      entanglement: round4(entanglement),
+      bornEntropy: round4(h / Math.log(this.dim)),
+      qgtVolume: round4(this.qgtVolume),
+      magic: round4(this.magic),
+      collapsed: this.collapsed,
+      plan: this.collapseIdx,
+    };
+  }
+}
+
+/** Organ classes exported so `tests/apex-brain.test.ts` can assert each organ's math directly. */
+export {
+  PrimeSieveLoom,
+  AcousticMeatDrum,
+  EntropicNecroMatrix,
+  KleinBottleCortex,
+  PendulumHive,
+  SlimeMoldHydra,
+  ChronoWraith,
+  QuantumTunnelLattice,
+  ThermodynamicEngine,
+  CancerousOuroboros,
+  MetaParadoxLayer,
+  QuantumBrainOrgan,
+};
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// THE COMPOSITE — ApexBrain (The Entropic Tesseract Hydra)
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+/** First billion-neuron research milestone for the apex (HONEST aspiration, not instantiated). */
+export const APEX_BRAIN_TARGET_NEURONS = 1_000_000_000;
+
+/** Pantheon glyph creatures (#0–#99) — designed brain parameter budget each. */
+export const PANTHEON_GLYPH_BRAIN_PARAMS = 25_000;
+
+/** APEX #101 starting designed parameter count; scales toward {@link APEX_BRAIN_ROADMAP_PARAMS}. */
+export const APEX_BRAIN_START_PARAMS = 100_000;
+
+/** Near-term APEX scaling target (before the full native 1B backend). */
+export const APEX_BRAIN_ROADMAP_PARAMS = 5_000_000;
+
+/** Mechalogodrom center fusion — designed parameter roadmap (matches APEX 5M tier). */
+export const MECHALOGODROM_BRAIN_DESIGNED_PARAMS = APEX_BRAIN_ROADMAP_PARAMS;
+
+/** Mechalogodrom live scaling starts at 250k designed params (grows toward {@link MECHALOGODROM_BRAIN_DESIGNED_PARAMS}). */
+export const MECHALOGODROM_BRAIN_START_PARAMS = 250_000;
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+// SCALING SCAFFOLDING — the architecture that scales from the live engine toward 1 BILLION neurons
+// ════════════════════════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Hard cap on the number of nodes ANY organ actually allocates in the JS/TS runtime. The DESIGNED
+ * scale (per {@link ApexScale}) can declare millions per organ — that is the architecture target and
+ * what a native C/C++/GPU backend (roadmap) would run — but the live deterministic engine only ever
+ * allocates up to this cap, so a billion-neuron design still runs (capped) in the browser today. The
+ * gap between designed and live is reported honestly (`designedNeurons` vs `liveNeurons`).
+ */
+export const LIVE_NODE_CAP = 4096;
+
+/** Per-organ node budget. Drives both the designed-neuron accounting and the (capped) live allocation. */
+export interface ApexScale {
+  readonly name: string;
+  readonly loom: number;
+  readonly acoustic: number;
+  readonly necro: number;
+  readonly kleinW: number;
+  readonly kleinH: number;
+  readonly pendulum: number;
+  readonly slime: number;
+  readonly chronoD1: number;
+  readonly chronoD2: number;
+  readonly tunnel: number;
+  readonly thermo: number;
+  readonly ouroboros: number;
+  readonly qubits: number;
+}
+
+/** The tractable live scale the engine boots at (every organ below the cap). */
+export const SCALE_LIVE: ApexScale = {
+  name: 'LIVE',
+  loom: 96,
+  acoustic: 128,
+  necro: 64,
+  kleinW: 16,
+  kleinH: 12,
+  pendulum: 24,
+  slime: 60,
+  chronoD1: 5,
+  chronoD2: 30,
+  tunnel: 48,
+  thermo: 64,
+  ouroboros: 48,
+  qubits: 6,
+};
+
+/** Designed ~100k-parameter APEX scale (playable roadmap tier; live allocation still capped). */
+export const SCALE_APEX_START: ApexScale = {
+  name: 'APEX-100K',
+  loom: 12_000,
+  acoustic: 12_000,
+  necro: 8000,
+  kleinW: 80,
+  kleinH: 80,
+  pendulum: 8000,
+  slime: 12_000,
+  chronoD1: 12,
+  chronoD2: 120,
+  tunnel: 15_000,
+  thermo: 10_000,
+  ouroboros: 10_000,
+  qubits: 8,
+};
+
+/** A mid-tier scale (still browser-safe; organs at the cap). */
+export const SCALE_MEDIUM: ApexScale = {
+  name: 'MEDIUM',
+  loom: 4096,
+  acoustic: 2048,
+  necro: 2048,
+  kleinW: 64,
+  kleinH: 64,
+  pendulum: 1024,
+  slime: 2048,
+  chronoD1: 30,
+  chronoD2: 180,
+  tunnel: 2048,
+  thermo: 2048,
+  ouroboros: 2048,
+  qubits: 10,
+};
+
+/** Designed ~250k-parameter APEX scale (first expansion tier). */
+const SCALE_APEX_250K: ApexScale = {
+  name: 'APEX-250K',
+  loom: 30_000,
+  acoustic: 30_000,
+  necro: 20_000,
+  kleinW: 120,
+  kleinH: 120,
+  pendulum: 20_000,
+  slime: 30_000,
+  chronoD1: 20,
+  chronoD2: 200,
+  tunnel: 37_500,
+  thermo: 25_000,
+  ouroboros: 25_000,
+  qubits: 9,
+};
+
+/** Designed ~500k-parameter APEX scale (second expansion tier). */
+const SCALE_APEX_500K: ApexScale = {
+  name: 'APEX-500K',
+  loom: 60_000,
+  acoustic: 60_000,
+  necro: 40_000,
+  kleinW: 160,
+  kleinH: 160,
+  pendulum: 40_000,
+  slime: 60_000,
+  chronoD1: 30,
+  chronoD2: 300,
+  tunnel: 75_000,
+  thermo: 50_000,
+  ouroboros: 50_000,
+  qubits: 10,
+};
+
+/** Designed ~1M-parameter APEX scale (third expansion tier). */
+const SCALE_APEX_1M: ApexScale = {
+  name: 'APEX-1M',
+  loom: 120_000,
+  acoustic: 120_000,
+  necro: 80_000,
+  kleinW: 240,
+  kleinH: 240,
+  pendulum: 80_000,
+  slime: 120_000,
+  chronoD1: 50,
+  chronoD2: 500,
+  tunnel: 150_000,
+  thermo: 100_000,
+  ouroboros: 100_000,
+  qubits: 11,
+};
+
+/** Designed ~2.5M-parameter APEX scale (fourth expansion tier). */
+const SCALE_APEX_2_5M: ApexScale = {
+  name: 'APEX-2.5M',
+  loom: 300_000,
+  acoustic: 300_000,
+  necro: 200_000,
+  kleinW: 400,
+  kleinH: 400,
+  pendulum: 200_000,
+  slime: 300_000,
+  chronoD1: 80,
+  chronoD2: 800,
+  tunnel: 375_000,
+  thermo: 250_000,
+  ouroboros: 250_000,
+  qubits: 12,
+};
+
+/** Designed ~5M-parameter APEX scale (near-term roadmap target). */
+export const SCALE_APEX_5M: ApexScale = {
+  name: 'APEX-5M',
+  loom: 600_000,
+  acoustic: 600_000,
+  necro: 400_000,
+  kleinW: 600,
+  kleinH: 600,
+  pendulum: 400_000,
+  slime: 600_000,
+  chronoD1: 120,
+  chronoD2: 1200,
+  tunnel: 750_000,
+  thermo: 500_000,
+  ouroboros: 500_000,
+  qubits: 12,
+};
+
+/**
+ * The APEX-1B "OCTOPUS" scale — 1 Billion parameters via tiered architecture.
+ * - 500M core (distributed across prime/acoustic/necro/slime)
+ * - 9 x 50M brains (distributed across pendulum/tunnel/thermo/ouroboros)
+ * - 100 x 50,000 parameter tentacles (Klein bottle & delay rings)
+ */
+export const SCALE_APEX_1B: ApexScale = {
+  name: 'APEX-1B-OCTOPUS',
+  loom: 200_000_000,
+  acoustic: 150_000_000,
+  necro: 100_000_000,
+  kleinW: 50_000,
+  kleinH: 50_000, // Part of the 100x50k tentacle tier
+  pendulum: 100_000_000,
+  slime: 50_000_000,
+  chronoD1: 5_000,
+  chronoD2: 45_000,
+  tunnel: 150_000_000, // 3x 50M
+  thermo: 100_000_000, // 2x 50M
+  ouroboros: 100_000_000, // 2x 50M
+  qubits: 12,
+};
+
+/** Back-compat alias for existing scaffold/tests; same 1B design, old visible scale name. */
+export const SCALE_MASSIVE: ApexScale = { ...SCALE_APEX_1B, name: 'MASSIVE' };
+
+/** The DESIGNED neuron count of a scale (the architecture target; ≥1e9 at {@link SCALE_MASSIVE}). */
+export function apexDesignedNeurons(s: ApexScale): number {
+  return (
+    s.loom +
+    s.acoustic +
+    s.necro +
+    s.kleinW * s.kleinH +
+    s.pendulum +
+    s.slime +
+    (s.chronoD2 + 1) +
+    s.tunnel +
+    s.thermo +
+    s.ouroboros +
+    (1 << Math.min(30, s.qubits))
+  );
+}
+
+/** Get the designed parameter count for a given scale (approximate). */
+export function apexScaleParams(s: ApexScale): number {
+  return Math.round(apexDesignedNeurons(s) * 2.5);
+}
+
+const APEX_PARAMS_PER_NEURON = 2.5;
+const MAX_RESEARCH_NEURONS = Math.floor(Number.MAX_SAFE_INTEGER / APEX_PARAMS_PER_NEURON);
+
+function finiteNeuronTarget(v: number, fallback: number): number {
+  if (!Number.isFinite(v) || v <= 0) return fallback;
+  return Math.max(1, Math.min(MAX_RESEARCH_NEURONS, Math.floor(v)));
+}
+
+function scaleCount(v: number, factor: number): number {
+  return finiteNeuronTarget(Math.round(v * factor), v);
+}
+
+function researchScaleName(neurons: number): string {
+  if (neurons >= 1e12) return `APEX-${(neurons / 1e12).toFixed(2)}T-RESEARCH`;
+  if (neurons >= 1e9) return `APEX-${(neurons / 1e9).toFixed(2)}B-RESEARCH`;
+  if (neurons >= 1e6) return `APEX-${(neurons / 1e6).toFixed(1)}M-RESEARCH`;
+  return `APEX-${neurons}-RESEARCH`;
+}
+
+/**
+ * Synthesize an APEX scale for any finite research target beyond the fixed milestone ladder.
+ *
+ * This removes the old arbitrary "MASSIVE is the last rung" behaviour. The organ proportions follow
+ * the APEX-1B-OCTOPUS design, Klein fields scale by area, and qubit reach grows with log2(target).
+ * Live allocation still uses the runtime's deterministic per-organ caps; this is designed/addressable
+ * scale, not a fake attempt to allocate billions of JS objects.
+ */
+export function apexScaleForTargetNeurons(targetNeurons: number, name?: string): ApexScale {
+  const base = apexDesignedNeurons(SCALE_APEX_1B);
+  const target = Math.max(base, finiteNeuronTarget(targetNeurons, base));
+  const f = target / base;
+  const areaF = Math.sqrt(f);
+  return {
+    name: name ?? researchScaleName(target),
+    loom: scaleCount(SCALE_APEX_1B.loom, f),
+    acoustic: scaleCount(SCALE_APEX_1B.acoustic, f),
+    necro: scaleCount(SCALE_APEX_1B.necro, f),
+    kleinW: scaleCount(SCALE_APEX_1B.kleinW, areaF),
+    kleinH: scaleCount(SCALE_APEX_1B.kleinH, areaF),
+    pendulum: scaleCount(SCALE_APEX_1B.pendulum, f),
+    slime: scaleCount(SCALE_APEX_1B.slime, f),
+    chronoD1: scaleCount(SCALE_APEX_1B.chronoD1, areaF),
+    chronoD2: scaleCount(SCALE_APEX_1B.chronoD2, areaF),
+    tunnel: scaleCount(SCALE_APEX_1B.tunnel, f),
+    thermo: scaleCount(SCALE_APEX_1B.thermo, f),
+    ouroboros: scaleCount(SCALE_APEX_1B.ouroboros, f),
+    qubits: Math.max(SCALE_APEX_1B.qubits, Math.min(52, Math.ceil(Math.log2(target)))),
+  };
+}
+
+/** Convert an open-ended evolution score into a synthesized APEX research scale. */
+export function apexResearchScaleForScore(score: number): ApexScale {
+  const base = apexDesignedNeurons(SCALE_APEX_1B);
+  const over = Math.max(0, Number.isFinite(score) ? score - 950 : 0);
+  const target = base * 2 ** (over / 450);
+  return apexScaleForTargetNeurons(target);
+}
+
+/** All fixed APEX milestone tiers in order; research scales are synthesized beyond this ladder. */
+export const APEX_SCALE_TIERS: readonly ApexScale[] = [
+  SCALE_LIVE,
+  SCALE_APEX_START,
+  SCALE_APEX_250K,
+  SCALE_APEX_500K,
+  SCALE_APEX_1M,
+  SCALE_APEX_2_5M,
+  SCALE_APEX_5M,
+  SCALE_MEDIUM,
+  SCALE_APEX_1B,
+];
+
+/** Clamp a designed organ size down to what the live runtime will actually allocate. */
+function liveSize(designed: number): number {
+  return Math.max(1, Math.min(designed, LIVE_NODE_CAP));
+}
+
+/** What the apex perceives each beat (all 0..1 unless noted). */
+export interface ApexPercept {
+  threat: number;
+  energy: number;
+  chaos: number;
+  novelty: number;
+  /** Evolution level (0..∞) — drives the staged-simulation transcendence (Sim 3 past 1000). */
+  level: number;
+}
+
+/** The unified read-out of one cognitive beat. */
+export interface ApexThought {
+  plan: ApexPlan;
+  superposed: boolean;
+  vitality: number; // 0..1 (necrosis + heat erosion)
+  agony: number; // 0..1 (self-consumption pressure)
+  transcendence: number; // 0..1 toward Simulation 3
+  simulation: 1 | 2 | 3;
+  motor: { x: number; y: number; z: number };
+}
+
+/** Full telemetry snapshot of all eleven organs + the meta layer. */
+export interface ApexBrainSnapshot {
+  beat: number;
+  scaleName: string;
+  targetNeurons: number;
+  /** DESIGNED neurons at the current scale (the architecture target — ≥1e9 at MASSIVE). */
+  designedNeurons: number;
+  /** Neurons the live runtime actually allocates (capped at {@link LIVE_NODE_CAP}). */
+  liveNeurons: number;
+  /** Live state parameters actually held (floats across all organ buffers + the statevector). */
+  parameterCount: number;
+  /** Is the online self-model learning this run? (false ⇒ the frozen hand-coded baseline). */
+  learning: boolean;
+  /** EMA of the self-model's vitality-forecast error — falls as the Abomination learns itself. */
+  selfModelErr: number;
+  thought: ApexThought;
+  meta: MetaView;
+  quantum: QuantumView;
+  loom: LoomView;
+  drum: DrumView;
+  necro: NecroView;
+  klein: KleinView;
+  hive: HiveView;
+  hydra: HydraView;
+  wraith: WraithView;
+  tunnel: TunnelView;
+  thermo: ThermoView;
+  ouroboros: OuroborosView;
+}
+
+/** Stable keys for the eleven ablatable organs — the unit the scientific harness kill-tests. */
+export const APEX_ORGAN_KEYS = [
+  'loom',
+  'drum',
+  'necro',
+  'klein',
+  'hive',
+  'hydra',
+  'wraith',
+  'tunnel',
+  'thermo',
+  'ouroboros',
+  'quantum',
+] as const;
+export type ApexOrganKey = (typeof APEX_ORGAN_KEYS)[number];
+const NO_ABLATION: ReadonlySet<ApexOrganKey> = new Set<ApexOrganKey>();
+
+export class ApexBrain {
+  readonly seed: number;
+  readonly targetNeurons = APEX_BRAIN_TARGET_NEURONS;
+  readonly scale: ApexScale;
+  /** DESIGNED neurons at this scale (architecture target; ≥1e9 at MASSIVE). */
+  readonly designedNeurons: number;
+  /** Neurons actually allocated in the live runtime (capped at {@link LIVE_NODE_CAP}). */
+  readonly liveNeurons: number;
+  private beat = 0;
+  /** Organs suppressed this run (the harness kill-test set). Empty ⇒ full-brain baseline. */
+  private readonly ablated: ReadonlySet<ApexOrganKey>;
+
+  private readonly loom: PrimeSieveLoom;
+  private readonly drum: AcousticMeatDrum;
+  private readonly necro: EntropicNecroMatrix;
+  /** Live necro node count — thought endpoints must span it (was hardcoded % 64, so at scales
+   *  where necro > 64 most edges were structurally unreachable). */
+  private readonly necroN: number;
+  private readonly klein: KleinBottleCortex;
+  private readonly hive: PendulumHive;
+  private readonly hydra: SlimeMoldHydra;
+  private readonly wraith: ChronoWraith;
+  private readonly tunnel: QuantumTunnelLattice;
+  private readonly thermo: ThermodynamicEngine;
+  private readonly ouroboros: CancerousOuroboros;
+  private readonly quantum: QuantumBrainOrgan;
+  private readonly meta: MetaParadoxLayer;
+
+  // sub-streams reused per organ (deterministic draws each beat)
+  private readonly rLoom: Rng;
+  private readonly rHydra: Rng;
+  private readonly rTunnel: Rng;
+  private readonly rOuro: Rng;
+
+  // ── ONLINE SELF-MODEL (the ONE learning part of the otherwise-frozen Abomination) ────────────────
+  // An 8→6→1 MLP trained by exact Eshkol-AD backprop to forecast the brain's own next-beat vitality.
+  // Null until enableLearning() lights it; while lit its forecast error is a bounded metacognitive-ache
+  // term in agony (1-beat delayed). Seeded from a SEPARATE organ-distinct substream ⇒ no organ rng draw.
+  private worldModel: Mlp | null = null;
+  private learn = false; // default OFF ⇒ tick()/snapshot() byte-identical to the hand-coded baseline
+  private wmLr = APEX_WM_LR; // gradient-descent step; 0 freezes the net (the ablation control)
+  private readonly wmInput = new Float64Array(APEX_WM_IN); // this beat's features (scratch)
+  private readonly prevInput = new Float64Array(APEX_WM_IN); // last beat's features — the training input
+  private readonly wmTarget = new Float64Array(1); // scratch target (this beat's actual vitality)
+  private prevValid = false; // guards the first beat (no prior beat to train on yet)
+  private prevPred = 0; // the forecast made LAST beat for THIS beat's vitality
+  private selfPredErr = 0; // EMA of |self-forecast − actual vitality| — FALLS as it learns
+
+  constructor(seed: number, opts?: { scale?: ApexScale; ablations?: ReadonlySet<ApexOrganKey> }) {
+    this.seed = seed >>> 0 || 1;
+    this.ablated = opts?.ablations ?? NO_ABLATION;
+    const s = opts?.scale ?? SCALE_LIVE;
+    this.scale = s;
+    // Each organ allocates the CAPPED live size; the designed scale can be far larger (up to 1B).
+    const loomN = liveSize(s.loom);
+    const acousticN = liveSize(s.acoustic);
+    const necroN = liveSize(s.necro);
+    const kleinW = liveSize(Math.min(s.kleinW, 64));
+    const kleinH = liveSize(Math.min(s.kleinH, 64));
+    const pendulumN = liveSize(Math.min(s.pendulum, 64));
+    const slimeN = liveSize(s.slime);
+    const chronoD2 = liveSize(Math.min(s.chronoD2, 256));
+    const chronoD1 = Math.max(1, Math.min(s.chronoD1, chronoD2 - 1));
+    const tunnelN = liveSize(Math.min(s.tunnel, 96)); // O(n²) organ → tighter cap
+    const thermoN = liveSize(s.thermo);
+    const ouroN = liveSize(s.ouroboros);
+    const qubits = Math.max(1, Math.min(s.qubits, 12)); // statevector = 2^q; cap at 4096 amplitudes
+
+    this.loom = new PrimeSieveLoom(loomN);
+    // Gentle damping (~0.4%/beat) bounds steady-state energy near O(1): tick() feeds a non-negative
+    // impulse every beat, so an UNDAMPED drum grows momentum/energy without bound and pegs the
+    // Foundationals drum channel (world.ts fndOrganActivity[1]) at a constant 1 shortly after boot.
+    this.drum = new AcousticMeatDrum(acousticN, { damping: 0.02 });
+    this.necro = new EntropicNecroMatrix(necroN, sub(this.seed, 0x03));
+    this.necroN = necroN;
+    this.klein = new KleinBottleCortex(kleinW, kleinH);
+    this.hive = new PendulumHive(pendulumN, 2.7, 0.15, sub(this.seed, 0x05));
+    this.hydra = new SlimeMoldHydra(slimeN);
+    this.wraith = new ChronoWraith(chronoD1, chronoD2);
+    this.tunnel = new QuantumTunnelLattice(tunnelN, sub(this.seed, 0x08));
+    this.thermo = new ThermodynamicEngine(thermoN);
+    this.ouroboros = new CancerousOuroboros(ouroN);
+    this.quantum = new QuantumBrainOrgan(qubits, this.seed);
+    this.meta = new MetaParadoxLayer(this.seed);
+    this.rLoom = sub(this.seed, 0x1001);
+    this.rHydra = sub(this.seed, 0x1006);
+    this.rTunnel = sub(this.seed, 0x1008);
+    this.rOuro = sub(this.seed, 0x100a);
+    this.drum.excite(Math.min(3, acousticN - 1), 0.6); // a faint standing wave at boot
+
+    this.designedNeurons = apexDesignedNeurons(s);
+    this.liveNeurons =
+      loomN +
+      acousticN +
+      necroN +
+      kleinW * kleinH +
+      pendulumN +
+      slimeN +
+      (chronoD2 + 1) +
+      tunnelN +
+      thermoN +
+      ouroN +
+      (1 << qubits) +
+      APEX_PLANS.length;
+  }
+
+  /** DESIGNED neuron count at the current scale (the architecture target). */
+  neuronCount(): number {
+    return this.designedNeurons;
+  }
+
+  /** True ⇔ organ `k` is ablated this run (its `.step()` is skipped in {@link tick}). */
+  private off(k: ApexOrganKey): boolean {
+    return this.ablated.has(k);
+  }
+
+  /** The organs suppressed this run (empty ⇒ full-brain baseline). Read-only. */
+  ablatedOrgans(): ReadonlySet<ApexOrganKey> {
+    return this.ablated;
+  }
+
+  /**
+   * Live state parameters actually held (floats across organ buffers + the 2·2^q statevector). This
+   * is the honest "running parameter count" — far below {@link neuronCount} at large scales, because
+   * the live runtime caps allocation and the full design awaits the native backend.
+   */
+  parameterCount(): number {
+    const q = this.quantum.qubitCount();
+    return this.liveNeurons + (1 << q) * 2; // statevector carries re+im per amplitude
+  }
+
+  /** Live params incl. the online self-model's learnable weights when learning is lit. */
+  liveParameterCount(): number {
+    return this.parameterCount() + (this.worldModel ? APEX_SELFMODEL_PARAMS : 0);
+  }
+  /** Is the online self-model learning this run? (false ⇒ the frozen hand-coded baseline). */
+  get isLearning(): boolean {
+    return this.learn;
+  }
+  /** EMA of the self-model's forecast error — the falsifiable "the Abomination is learning" readout. */
+  get selfModelError(): number {
+    return this.selfPredErr;
+  }
+
+  /**
+   * Ignite ONLINE learning: the Abomination's self-model (an {@link APEX_SELFMODEL_PARAMS}-param 8→6→1
+   * MLP trained by exact reverse-mode Eshkol-AD backprop) begins forecasting its own next-beat vitality
+   * and CORRECTING itself every beat, and its forecast error colours `agony` as a bounded metacognitive
+   * ache. Seeded from a SEPARATE organ-distinct substream (never an organ's rng) ⇒ zero determinism
+   * perturbation of the eleven organs. Idempotent. `lr = 0` freezes the net (the ablation control).
+   */
+  enableLearning(opts?: { lr?: number; salt?: number }): void {
+    if (opts?.lr !== undefined) this.wmLr = opts.lr;
+    if (this.worldModel) {
+      this.learn = true;
+      return;
+    }
+    this.worldModel = createMlp(
+      APEX_WM_IN,
+      APEX_WM_HID,
+      1,
+      sub(this.seed, 0x5e1f0000 ^ (opts?.salt ?? 0)),
+    );
+    this.learn = true;
+    this.prevValid = false;
+    this.selfPredErr = 0;
+  }
+
+  /** One cognitive beat across all eleven organs + the meta layer. Deterministic. */
+  tick(p: ApexPercept): ApexThought {
+    this.beat++;
+    this.lastLevel = p.level;
+    const drive = clamp01(0.4 * p.threat + 0.3 * p.chaos + 0.3 * p.novelty);
+
+    // Each organ is ABLATABLE — when off, its `.step()` is skipped and a neutral value substituted.
+    // With NO ablations every branch takes the live path in the original order → byte-identical
+    // determinism (the harness "empty ablation ≡ baseline" law).
+    // 1 Loom — sieve the drive through twin-prime connectivity.
+    const loomOut = this.off('loom') ? 0 : this.loom.step(drive * 4, this.rLoom);
+    // 2 Drum — the loom output screams into the acoustic chamber.
+    const drumMotor = this.off('drum') ? 0.5 : this.drum.step(loomOut * 0.5, (this.beat * 7) % 128);
+    // 7 Wraith — the present drive enters the delay rings; the core answers from the past.
+    const dissonance = this.off('wraith') ? 0 : this.wraith.step(drive);
+    const corePast = this.off('wraith') ? 0 : this.wraith.coreValue();
+    // 4 Klein — tail-inject the dissonance; read the head/tail fold coupling.
+    const fold = this.off('klein') ? 0 : this.klein.step(dissonance);
+    // 5 Hive — chaotic kicked rotors driven by the fold.
+    const hiveMotor = this.off('hive') ? 0 : this.hive.step(fold);
+    // 6 Hydra — split into heads sized by chaos, compute, fuse.
+    const heads = 1 + Math.floor(clamp01(p.chaos) * 3);
+    const conflict = this.off('hydra') ? 0 : this.hydra.step(heads, drive, this.rHydra);
+    // 8 Tunnel — manifest probabilistic edges; teleport density.
+    const tunnelDisp = this.off('tunnel') ? 0 : this.tunnel.step(drive, this.rTunnel);
+    // 9 Thermo — every organ's activity deposits heat; diffuse + vent + necrotise.
+    const fireLevel = clamp01(loomOut + Math.abs(hiveMotor) + conflict + tunnelDisp) * 0.5;
+    if (!this.off('thermo'))
+      this.thermo.step((i) => ((i + this.beat) % 5 === 0 ? fireLevel : fireLevel * 0.2));
+    // 3 Necro — think a thought along live edges; it burns out the path.
+    const src = (this.beat * 13) % this.necroN;
+    const dst = (this.beat * 29 + 7) % this.necroN;
+    const necroVit = this.off('necro') ? 1 : this.necro.step(src, dst);
+    // 10 Ouroboros — grow limbs vs immune cull, pressure from heat + agony.
+    const thermoView = this.thermo.view();
+    const immune = clamp01(thermoView.paralysis + dissonance * 0.2);
+    const limbFrac = this.off('ouroboros')
+      ? 0
+      : this.ouroboros.step(1 + Math.floor(p.novelty * 3), immune, this.rOuro);
+    // 11 QUANTUM BRAIN — evolve the exact statevector (Tsotchke-coupled) and read its plan-bias.
+    let qBias: readonly number[];
+    if (this.off('quantum')) {
+      qBias = APEX_PLANS.map(() => 1 / APEX_PLANS.length); // uniform ⇒ no quantum steer
+    } else {
+      this.quantum.step(drive, (this.seed ^ (this.beat * 0x9e3779b1)) >>> 0);
+      qBias = this.quantum.planBias(APEX_PLANS.length);
+      // Audit #105: the register is actually measured (Born sampling on a private seeded stream) every
+      // 16th beat AFTER its plan-bias is read, so snapshot().quantum.collapsed/plan report real outcomes.
+      if ((this.beat & 15) === 15) this.quantum.measure(mulberry32((this.seed ^ this.beat) >>> 0));
+    }
+
+    // Aggregate per-plan signal for the meta layer (six plans); the quantum Born plan-bias is folded
+    // in (≈30%), so the quantum register genuinely steers the committed plan — ablation-meaningful.
+    const signal = [
+      clamp01(p.level / 1000 + loomOut * 0.2), // ASCEND
+      clamp01(limbFrac + drive * 0.2), // CONSUME
+      clamp01(this.loom.view().allergy + immune), // FRACTURE
+      clamp01(corePast * 0.5 + 0.5), // DREAM
+      clamp01(p.threat + Math.abs(hiveMotor)), // HUNT
+      clamp01(p.level / 1000), // TRANSCEND
+    ].map((v, i) => clamp01(0.7 * v + 0.3 * (qBias[i] ?? 0) * APEX_PLANS.length));
+    this.meta.step(signal);
+
+    // ── ONLINE SELF-MODEL: forecast the brain's OWN next-beat vitality; its error aches in agony ──────
+    // metaAche = LAST beat's realized self-prediction error (a 1-beat delay). 0 when learning is off ⇒
+    // agony is byte-identical to the hand-coded baseline. When lit, the god feels the gap between what
+    // it predicted of itself and what it became — a real, bounded metacognitive signal.
+    const metaAche = this.learn ? this.selfPredErr : 0;
+    const thought = this.assemble(
+      p,
+      { drumMotor, hiveMotor, fold, necroVit, limbFrac, conflict },
+      metaAche,
+    );
+    if (this.learn && this.worldModel) {
+      const vit = thought.vitality; // the emergent output this beat = the self-model's regression target
+      if (this.prevValid) {
+        this.selfPredErr += APEX_WM_TAU * (Math.abs(this.prevPred - vit) - this.selfPredErr);
+        if (this.wmLr > 0) {
+          this.wmTarget[0] = vit;
+          mlpTrainStep(this.worldModel, this.prevInput, this.wmTarget, this.wmLr); // exact AD backprop
+        }
+      }
+      // record THIS beat's drive/organ features, forecast NEXT beat's vitality, remember for training.
+      this.wmInput[0] = clamp01(p.threat);
+      this.wmInput[1] = clamp01(p.chaos);
+      this.wmInput[2] = clamp01(p.novelty);
+      this.wmInput[3] = clamp01(p.level / 1000);
+      this.wmInput[4] = drive;
+      this.wmInput[5] = clamp01(loomOut * 0.25);
+      this.wmInput[6] = clamp01(corePast * 0.5 + 0.5);
+      this.wmInput[7] = immune;
+      this.prevInput.set(this.wmInput);
+      this.prevPred = clamp01(mlpPredict(this.worldModel, this.prevInput)[0] ?? 0);
+      this.prevValid = true;
+    }
+    return thought;
+  }
+
+  private assemble(
+    p: ApexPercept,
+    m: {
+      drumMotor: number;
+      hiveMotor: number;
+      fold: number;
+      necroVit: number;
+      limbFrac: number;
+      conflict: number;
+    },
+    metaAche = 0,
+    thermoParalysis = this.thermo.view().paralysis,
+    ouroDeaths = this.ouroboros.view().deaths,
+    loomAllergy = this.loom.view().allergy,
+  ): ApexThought {
+    const vitality = clamp01(m.necroVit * (1 - thermoParalysis));
+    // Agony = self-consumption (ouroboros culls) + prime-allergy + the hydra's internal civil-war
+    // disagreement (SlimeMoldHydra is load-bearing on a quantised output, the harness kill test) + a
+    // bounded metacognitive ache when the online self-model mis-forecasts the brain's own vitality.
+    const agony = clamp01(
+      ouroDeaths / 8 + loomAllergy + 0.25 * m.conflict + APEX_ACHE_WEIGHT * metaAche,
+    );
+    const transcendence = clamp01(p.level / 1000);
+    const simulation: 1 | 2 | 3 = transcendence >= 1 ? 3 : transcendence >= 0.5 ? 2 : 1;
+    return {
+      plan: this.meta.plan(),
+      superposed: this.meta.isSuperposed(),
+      vitality: round4(vitality),
+      agony: round4(agony),
+      transcendence: round4(transcendence),
+      simulation,
+      motor: {
+        x: round4(m.hiveMotor),
+        y: round4(m.drumMotor * 2 - 1),
+        z: round4(m.fold),
+      },
+    };
+  }
+
+  snapshot(): ApexBrainSnapshot {
+    const loom = this.loom.view();
+    const drum = this.drum.view();
+    const necro = this.necro.view();
+    const klein = this.klein.view();
+    const hive = this.hive.view();
+    const hydra = this.hydra.view();
+    const wraith = this.wraith.view();
+    const tunnel = this.tunnel.view();
+    const thermo = this.thermo.view();
+    const ouroboros = this.ouroboros.view();
+    const thought = this.assemble(
+      { threat: 0, energy: 0, chaos: 0, novelty: 0, level: this.lastLevel },
+      {
+        drumMotor: drum.motor,
+        hiveMotor: hive.motor,
+        fold: klein.headTailCorr,
+        necroVit: necro.vitality,
+        limbFrac: ouroboros.limbs / this.ouroboros.capacity(),
+        conflict: hydra.conflict,
+      },
+      this.learn ? this.selfPredErr : 0,
+      thermo.paralysis,
+      ouroboros.deaths,
+      loom.allergy,
+    );
+    return {
+      beat: this.beat,
+      scaleName: this.scale.name,
+      targetNeurons: this.targetNeurons,
+      designedNeurons: this.designedNeurons,
+      liveNeurons: this.liveNeurons,
+      parameterCount: this.parameterCount(),
+      learning: this.learn,
+      selfModelErr: this.selfPredErr,
+      thought,
+      meta: this.meta.view(),
+      quantum: this.quantum.view(),
+      loom,
+      drum,
+      necro,
+      klein,
+      hive,
+      hydra,
+      wraith,
+      tunnel,
+      thermo,
+      ouroboros,
+    };
+  }
+
+  /**
+   * The ten raw organ readings world.driveSuper feeds the Foundationals, read straight off the same
+   * (side-effect-free) organ views snapshot() uses — without building the thought, meta, quantum and
+   * the rest of the snapshot every frame. Returns the beat. Values are identical to the snapshot's.
+   */
+  organActivityInto(out: Float64Array | number[]): number {
+    out[0] = this.loom.view().throughput;
+    out[1] = round4(this.drum.energy()); // == drum.view().energy, without the dominant-mode DFT
+    out[2] = this.necro.view().liveFraction;
+    out[3] = this.klein.energyView();
+    out[4] = this.hive.view().order;
+    out[5] = this.hydra.view().coherence;
+    out[6] = this.wraith.view().core;
+    out[7] = this.tunnel.manifestedCount();
+    out[8] = this.thermo.view().totalHeat;
+    out[9] = this.ouroboros.view().births;
+    return this.beat;
+  }
+
+  private lastLevel = 0;
+}
+
+/**
+ * Construct the canonical apex brain, seeded from the final-sigma ς lineage glyph (index 100) so the
+ * pantheon and the brain agree on the apex's identity. A clean one-way dependency
+ * (apex-brain → pantheon-breeding); pantheon-breeding never imports this module.
+ */
+export function createApexBrain(seed: number = LINEAGE[100]!.seed): ApexBrain {
+  return new ApexBrain(seed);
+}

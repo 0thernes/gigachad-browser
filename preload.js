@@ -66,7 +66,8 @@ const ALLOWED_INVOKE = new Set([
   'deep-dark-web-probe',
   'alife-neural-weights-sync',
   'cortex-binary-weights-sync',
-  'cyber-hat-inspect'
+  'cyber-hat-inspect',
+  'ported-brains-bridge'
 ]);
 
 const ALLOWED_ON = new Set(['adblock-tick', 'open-url', 'command', 'permission-request', 'download-update', 'context-action', 'openrouter-oauth-complete', 'ai-thinking-step']);

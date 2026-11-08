@@ -1,0 +1,1652 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <!-- V81: revalidate the document so a returning visitor never reads a stale cached spec (the live
+         file updates on every deploy; this + the build-pages ?v= cache-buster keep the page current). -->
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <title>Technical Specification — Cosmogonic Quantum Mechalogodrom</title>
+    <meta
+      name="description"
+      content="Measured v0.23.0 technical specification: 295,227 tracked authored lines, 50,000-agent WebGL ceiling, 23-public-repository Tsotchke census with a 22-entry causal/runtime ledger, CONSOLIDATED-22-MASTER-ASSESSMENT links, and proxy-only consciousness/sentience labs."
+    />
+    <meta
+      property="og:title"
+      content="Technical Specification — Cosmogonic Quantum Mechalogodrom"
+    />
+    <meta
+      property="og:description"
+      content="Up to 50,000 agents (10,000 at 60 fps on integrated graphics). 3,726 exact tracked tests, portable coverage floors, Tsotchke depth ledger, and proxy-only consciousness/sentience labs. Seeded core is non-LLM; optional Copilot is fenced."
+    />
+    <meta name="theme-color" content="#030612" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23030612'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' fill='none' stroke='%230ef' stroke-width='1.6' transform='rotate(28 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' fill='none' stroke='%23fa0' stroke-width='1.6' transform='rotate(-28 16 16)'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%230ef'/%3E%3C/svg%3E"
+    />
+    <style>
+      /* SHARED SATELLITE CHROME (V81) — also in shared.css, inlined here so the
+         static page needs no external stylesheet and Bun.build stays happy. */
+      .sat-header {
+        border-bottom: 1px solid rgba(120, 160, 220, 0.18);
+        background: rgba(8, 14, 30, 0.72);
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .sat-header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .sat-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #cfe0fb;
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        font-weight: 600;
+      }
+      .sat-logo:hover {
+        color: #0ef;
+      }
+      .sat-logo svg {
+        width: 24px;
+        height: 24px;
+        display: block;
+      }
+      .sat-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .sat-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        color: #7f93b8;
+        text-decoration: none;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition:
+          background 0.12s,
+          border-color 0.12s,
+          color 0.12s;
+      }
+      .sat-nav a:hover,
+      .sat-nav a:focus-visible {
+        background: rgba(120, 160, 220, 0.1);
+        border-color: rgba(120, 160, 220, 0.18);
+        color: #cfe0fb;
+        outline: none;
+      }
+      .sat-nav a:focus-visible {
+        outline: 2px solid #0ef;
+        outline-offset: 2px;
+      }
+      .sat-nav a[aria-current='page'] {
+        border-color: rgba(0, 238, 255, 0.45);
+        color: #0ef;
+      }
+      @media (max-width: 640px) {
+        .sat-header-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .sat-nav {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+
+      /* Page-specific tokens below. */
+      :root {
+        --void: #030612;
+        --panel: rgba(8, 14, 30, 0.66);
+        --line: rgba(120, 160, 220, 0.18);
+        --ink: #cfe0fb;
+        --ink-faint: #7f93b8;
+        --accent: #0ef;
+        --accent2: #3da9c9;
+        --amber: #f0a040;
+        --fuchsia: #d060e0;
+        --warn: #ffce6b;
+        --good: #5fe39a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(1200px 800px at 80% -10%, rgba(13, 110, 130, 0.18), transparent 60%),
+          radial-gradient(900px 700px at 0% 100%, rgba(120, 40, 140, 0.14), transparent 55%),
+          var(--void);
+        color: var(--ink);
+        font:
+          14px/1.65 'JetBrains Mono',
+          ui-monospace,
+          'SF Mono',
+          monospace;
+        -webkit-font-smoothing: antialiased;
+        padding: 0 0 80px;
+        /* Centre the spec in the dead-middle of the viewport (both axes), not just
+           horizontally-centred-and-top-anchored — falls back to a normal top scroll when long. */
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .wrap {
+        max-width: 1040px;
+        width: 100%;
+        margin: auto;
+        padding: 0 20px;
+      }
+      header.hero {
+        padding: 64px 0 28px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--accent2);
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 46px);
+        line-height: 1.08;
+        margin: 10px 0 8px;
+        background: linear-gradient(100deg, #eaf4ff 10%, var(--accent) 55%, var(--fuchsia) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+      }
+      .lede {
+        color: var(--ink-faint);
+        max-width: 720px;
+        font-size: 14.5px;
+      }
+      .topnav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .topnav a {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 6px 12px;
+        background: var(--panel);
+        font-size: 12px;
+        letter-spacing: 1px;
+        backdrop-filter: blur(8px);
+      }
+      .topnav a:hover {
+        border-color: rgba(14, 238, 255, 0.4);
+        text-decoration: none;
+      }
+      section {
+        margin: 40px 0;
+      }
+      h2 {
+        font-size: 13px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent);
+        border-left: 2px solid var(--accent);
+        padding-left: 10px;
+        margin: 0 0 16px;
+      }
+      .tag {
+        display: inline-block;
+        background: rgba(14, 238, 255, 0.1);
+        border: 1px solid rgba(14, 238, 255, 0.25);
+        color: var(--accent);
+        border-radius: 5px;
+        font-size: 10px;
+        padding: 1px 7px;
+        letter-spacing: 2px;
+        margin-right: 8px;
+      }
+      /* Stat grid */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+      }
+      .stat {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px;
+        backdrop-filter: blur(10px);
+      }
+      .stat .n {
+        font-size: clamp(22px, 3.5vw, 30px);
+        font-weight: 600;
+        color: #eaf4ff;
+        line-height: 1;
+      }
+      .stat .n.cy {
+        color: var(--accent);
+      }
+      .stat .n.am {
+        color: var(--amber);
+      }
+      .stat .n.fu {
+        color: var(--fuchsia);
+      }
+      .stat .n.gd {
+        color: var(--good);
+      }
+      .stat .l {
+        font-size: 10.5px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-top: 7px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12.5px;
+        margin-top: 4px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 12px;
+        border-bottom: 1px solid rgba(120, 160, 220, 0.08);
+      }
+      th {
+        color: var(--accent2);
+        font-weight: 600;
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        background: rgba(10, 18, 38, 0.6);
+      }
+      td.r,
+      th.r {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      .barrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 9px 0;
+      }
+      .barrow .lab {
+        width: 190px;
+        flex: none;
+        font-size: 12px;
+      }
+      .barrow .track {
+        flex: 1;
+        height: 18px;
+        background: rgba(120, 160, 220, 0.08);
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+      }
+      .barrow .fill {
+        height: 100%;
+        border-radius: 5px;
+      }
+      .barrow .val {
+        width: 120px;
+        flex: none;
+        text-align: right;
+        font-size: 12px;
+        color: var(--ink-faint);
+        font-variant-numeric: tabular-nums;
+      }
+      pre.diagram {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px;
+        overflow-x: auto;
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--ink);
+        white-space: pre;
+      }
+      .callout {
+        background: linear-gradient(100deg, rgba(14, 238, 255, 0.08), rgba(208, 96, 224, 0.08));
+        border: 1px solid rgba(14, 238, 255, 0.28);
+        border-radius: 14px;
+        padding: 22px 24px;
+        margin-top: 18px;
+      }
+      .callout .big {
+        font-size: clamp(20px, 3.5vw, 28px);
+        font-weight: 600;
+        color: #eaf4ff;
+      }
+      .callout .big b {
+        color: var(--accent);
+      }
+      .callout p {
+        color: var(--ink-faint);
+        margin: 8px 0 0;
+        font-size: 13px;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      @media (max-width: 720px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+        .barrow .lab {
+          width: 120px;
+        }
+      }
+      footer {
+        margin-top: 48px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--ink-faint);
+        font-size: 12px;
+      }
+      .muted {
+        color: var(--ink-faint);
+      }
+      .legacy-comparison {
+        margin: 24px 0;
+      }
+      .legacy-comparison > summary {
+        cursor: pointer;
+        padding: 12px 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+      .capability-open {
+        font-weight: 700;
+      }
+      #capability-profile {
+        width: 100%;
+        min-width: 0;
+      }
+      #capability-profile figcaption {
+        margin: 12px 0;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sat-header">
+      <div class="sat-header-inner">
+        <a class="sat-logo" href="/" aria-label="Return to the simulation">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="15" fill="#030612" />
+            <ellipse
+              cx="16"
+              cy="16"
+              rx="13"
+              ry="5"
+              fill="none"
+              stroke="#0ef"
+              stroke-width="1.6"
+              transform="rotate(28 16 16)"
+            />
+            <ellipse
+              cx="16"
+              cy="16"
+              rx="13"
+              ry="5"
+              fill="none"
+              stroke="#fa0"
+              stroke-width="1.6"
+              transform="rotate(-28 16 16)"
+            />
+            <circle cx="16" cy="16" r="4.5" fill="#0ef" />
+          </svg>
+          <span>COSMOGONIC</span>
+        </a>
+        <nav class="sat-nav" aria-label="Satellite pages">
+          <a href="#capability-profile">CQM-25</a>
+          <a href="/">Dome</a>
+          <a href="/docs">Docs</a>
+          <a href="/spec" aria-current="page">Spec</a>
+          <a href="/bible">Bible</a>
+          <a href="/lab">Lab</a>
+          <a href="/lab/consciousness">Consciousness</a>
+          <a href="/lab/sentience">Sentience</a>
+        </nav>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Technical Specification · v0.23.0 · current-truth pass 2026-07-14</div>
+        <h1>Cosmogonic Quantum Mechalogodrom</h1>
+        <p class="lede">
+          A single-page TypeScript simulation — with an optional native <b>C++/Jolt</b> physics
+          engine — that renders up to <b>50,000 morphogenic organisms</b> (10,000 at 60 fps on
+          integrated graphics; the 50,000 mega-tier ceiling on ≥16-core machines), governed by
+          deterministic seeded physics and a pre-2016 classical-AI cognition stack. Bit-reproducible
+          from one 32-bit seed. The intelligence is <b>architectural, not parametric</b> — every
+          figure below was measured from the repository.
+        </p>
+        <nav class="topnav">
+          <a href="#capability-profile">CQM-25 — canonical standard</a>
+          <a href="/">&larr; the dome (/)</a>
+          <a href="/docs">architecture docs (/docs)</a>
+          <a href="/lab">the lab (/lab)</a>
+          <a href="/lab/consciousness">consciousness lab (/lab/consciousness)</a>
+          <a href="/lab/sentience">sentience analytics (/lab/sentience)</a>
+          <a
+            href="https://github.com/0thernes/cosmogonic-quantum-mechalogodrom/blob/main/docs/TECHNICAL-SPECIFICATION-2026-06-26.md"
+            >full spec on GitHub &rarr;</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section id="capability-profile" class="card">
+        <h2>CQM-25 — canonical capability standard</h2>
+        <p>
+          CQM-25 version 1.0.0 is the project's binding framework for capability descriptions,
+          evidence reviews and evaluation plans. Its 25 dimensions cover individual beings, adaptive
+          cognition, consciousness-related mechanisms and the engineering of constructed worlds. A
+          single organism is an eligible subject; ecology is one domain among several.
+        </p>
+        <p>
+          <a class="capability-open" href="./docs/alife/cqm-capability-profile.html"
+            >Read all 25 axes, evidence and acceptance protocols</a
+          >
+          &middot;
+          <a href="./docs/alife/cqm-capability-profile.md">Canonical specification</a> &middot;
+          <a href="./docs/alife/cqm-capability-profile.json">Data and protocols</a>.
+        </p>
+        <p>
+          <a
+            data-provisional-estimates
+            href="./docs/alife/cqm-capability-profile.html#provisional-estimates"
+            >View provisional author estimates for all 25 axes</a
+          >
+          — a separate, uncalibrated rating layer with its own rubric and evidence notes, not
+          executed benchmark results.
+        </p>
+        <p>
+          Review states describe available evidence. Numerical capability scores remain
+          uncalibrated, and the proposed experiments have not been executed as a unified benchmark.
+          Project adoption does not establish scientific validation, consciousness, sentience, AGI
+          or superintelligence. Historical nine-axis scores are retained separately below.
+        </p>
+        <div id="alife-metrics">
+          <figure style="margin: 0">
+            <img
+              src="./docs/reports/assets/alife-capability-profile-25.svg"
+              width="1000"
+              height="1444"
+              style="width: 100%; height: auto; display: block"
+              alt="Canonical CQM-25 framework: 25 operational dimensions and repository evidence states, with no numerical capability scores"
+            />
+            <figcaption>
+              CQM-25 is the current project framework. For readable axis definitions and evidence at
+              any screen size,
+              <a href="./docs/alife/cqm-capability-profile.html">open the full 25-axis reader</a>.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="tag">01</span> At a glance</h2>
+        <div class="stats">
+          <div class="stat">
+            <div class="n cy">295,227</div>
+            <div class="l">tracked authored lines</div>
+          </div>
+          <div class="stat">
+            <div class="n">940</div>
+            <div class="l">tracked authored files</div>
+          </div>
+          <div class="stat">
+            <div class="n gd">3,726</div>
+            <div class="l">tests · 84.64% line / 82.21% func cov</div>
+          </div>
+          <div class="stat">
+            <div class="n am">50,000</div>
+            <div class="l">peak entities</div>
+          </div>
+          <div class="stat">
+            <div class="n fu">~3.5M</div>
+            <div class="l">total AI params</div>
+          </div>
+          <div class="stat">
+            <div class="n">~14 MB</div>
+            <div class="l">of neural weights</div>
+          </div>
+          <div class="stat">
+            <div class="n cy">0</div>
+            <div class="l">NPU / AI-TOPS needed</div>
+          </div>
+          <div class="stat">
+            <div class="n">2</div>
+            <div class="l">languages · TS + C++</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="tag">02</span> Tracked census — 295,227 lines</h2>
+        <div class="barrow">
+          <span class="lab">TypeScript</span>
+          <span class="track"
+            ><span class="fill" style="width: 74.04%; background: var(--accent)"></span
+          ></span>
+          <span class="val">218,578 · 74.04%</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">Markdown (docs)</span>
+          <span class="track"
+            ><span class="fill" style="width: 8.44%; background: var(--accent2)"></span
+          ></span>
+          <span class="val">24,928 · 8.44%</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">HTML</span>
+          <span class="track"
+            ><span class="fill" style="width: 5.28%; background: var(--amber)"></span
+          ></span>
+          <span class="val">15,583 · 5.28%</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">JSON / data feeds</span>
+          <span class="track"
+            ><span class="fill" style="width: 5.69%; background: var(--accent2)"></span
+          ></span>
+          <span class="val">16,797 · 5.69%</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">CSS (Tailwind src)</span>
+          <span class="track"
+            ><span class="fill" style="width: 0.84%; background: var(--fuchsia)"></span
+          ></span>
+          <span class="val">2,476 · 0.84%</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">Native C/C++ headers/sources</span>
+          <span class="track"
+            ><span class="fill" style="width: 0.52%; background: var(--good)"></span
+          ></span>
+          <span class="val">1,527 · 0.52%</span>
+        </div>
+        <p class="muted" style="margin-top: 12px">
+          Tracked authored census = <b>measured 2026-07-14</b> with <code>bun run metrics</code>.
+          Source area: 327 files / 131,572 lines; tracked TypeScript: 762 files / 218,578 lines;
+          <code>src/</code> TypeScript: 325 files; native C/C++: 8 files / 1,527 lines; tests: 367
+          files / 63,495 lines. These line totals are a moving commit snapshot, unlike the exact
+          test count and portable coverage floor below. The quantum mind <b>ports</b> primitives
+          from external <b>quantum-research repos</b> — the <b>Eshkol</b> qubit-RNG, the
+          <b>Moonlab</b>/<b>QGTL</b> Quantum-Geometric-Tensor, a <b>Tsotchke</b> spin-glass
+          instinct, and the <b>Moonlab</b>
+          Clifford stabilizer tableau — reimplemented in seeded TypeScript and wired into the apex
+          creature (MIT © tsotchke; not vendored as binaries).
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="tag">03</span> Stack &amp; versions</h2>
+        <div class="grid2">
+          <table>
+            <tr>
+              <th>Runtime / framework</th>
+              <th class="r">version</th>
+            </tr>
+            <tr>
+              <td>Bun (runtime + bundler + test)</td>
+              <td class="r">1.3.14</td>
+            </tr>
+            <tr>
+              <td>TypeScript (strict)</td>
+              <td class="r">7.0.2</td>
+            </tr>
+            <tr>
+              <td>Three.js (WebGL2)</td>
+              <td class="r">0.185.1</td>
+            </tr>
+            <tr>
+              <td>Tailwind CSS</td>
+              <td class="r">^4.3.2</td>
+            </tr>
+            <tr>
+              <td>HTMX</td>
+              <td class="r">^2.0.10</td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <th>Library</th>
+              <th class="r">role</th>
+            </tr>
+            <tr>
+              <td>graphology (+louvain, +metrics)</td>
+              <td class="r">connectome</td>
+            </tr>
+            <tr>
+              <td>d3-delaunay</td>
+              <td class="r">Voronoi sky</td>
+            </tr>
+            <tr>
+              <td>simplex-noise</td>
+              <td class="r">fields</td>
+            </tr>
+            <tr>
+              <td>simple-statistics</td>
+              <td class="r">telemetry</td>
+            </tr>
+            <tr>
+              <td>@noble/hashes · mermaid · htmx</td>
+              <td class="r">lore · docs · ui</td>
+            </tr>
+          </table>
+        </div>
+        <p class="muted" style="margin-top: 12px">
+          <b>22 declared dependencies → 106 resolved</b> (725 MB) — a lean, facade-isolated tree. 10
+          dev tools: oxlint, prettier, tsc, mitata, bun-plugin-tailwind, @types/*.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="tag">04</span> Architecture — strict acyclic layering</h2>
+        <pre class="diagram">
+math / constants   (leaves: rng · scalar · spatial-hash · quantum · heap · games)
+       ▲
+sim/*  (30+ systems: entities · titans · shoggoths · nhi · factions · environment …)
+       ▲
+core (engine · quality) ── world.ts  (composition root: builds SimContext, ticks all)
+       ▲
+ui / render (observatory · hud · viz3d · instanced-entities · postfx · cosmic-web …)
+       ▲
+server.ts ──serves──▶  /  (app)   /docs   /spec   /lab   /lab/sentience</pre>
+        <p class="muted" style="margin-top: 12px">
+          Aesthetic law: <b>every system reads AND writes another</b> — the frame loop is an
+          explicit feedback web. The non-deterministic LLM copilot is structurally fenced out of the
+          seeded simulation. 6 ADRs record binding decisions. Verified acyclic across 50+ modules.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="tag">05</span> The intelligence — measured model sizes</h2>
+        <table>
+          <tr>
+            <th>Mind</th>
+            <th>Network</th>
+            <th class="r">parameters</th>
+          </tr>
+          <tr>
+            <td>Organism brain (× up to 50,000)</td>
+            <td>TinyMLP 6→6→4 · heritable genome</td>
+            <td class="r">70 weights</td>
+          </tr>
+          <tr>
+            <td>Faction brain (× 8)</td>
+            <td>TinyMLP 6→6→4</td>
+            <td class="r">70 weights</td>
+          </tr>
+          <tr>
+            <td>NHI intuition gene</td>
+            <td>TinyMLP 9→6→7 default · H=3/6/12 tiers</td>
+            <td class="r">109 live · 58/109/211 by tier</td>
+          </tr>
+          <tr>
+            <td>Ecology Predictor V3 (development-only)</td>
+            <td>101→H→1 + direct skip · H=8/16/32</td>
+            <td class="r">926/1,750/3,398</td>
+          </tr>
+          <tr>
+            <td>NHI alien voice</td>
+            <td>Markov 12×12</td>
+            <td class="r">144 weights</td>
+          </tr>
+          <tr>
+            <td>Wingman swarm (× 100)</td>
+            <td>TinyMLP escort controllers</td>
+            <td class="r">~250 weights ea</td>
+          </tr>
+          <tr>
+            <td>Super Creature mind (V45)</td>
+            <td>composite · 12 sub-nets · 5 stages × 25 variants</td>
+            <td class="r">~10,081 weights</td>
+          </tr>
+          <tr>
+            <td>Super Creature quantum mind (V75)</td>
+            <td>6-qubit statevector · RY/RZ + controlled-RY</td>
+            <td class="r">64 amplitudes</td>
+          </tr>
+          <tr>
+            <td>Quantum register (puppet-master)</td>
+            <td>5-qubit statevector</td>
+            <td class="r">32 amplitudes</td>
+          </tr>
+          <tr>
+            <td><b>Population total</b> (at the 50k mega tier)</td>
+            <td>the 50,000 organism brains dominate</td>
+            <td class="r"><b>~3.5 M weights</b></td>
+          </tr>
+        </table>
+        <p class="muted" style="margin-top: 10px">
+          Built from pre-2016 AI: FSM · GOAP planning · utility AI · tiny perceptrons · Markov
+          chains · episodic memory · game theory (best-response, Axelrod strategies,
+          regret-matching). The NHI super-mind composes all of it and <b>writes to the world</b> —
+          spawns ordinary swarmling minions, manipulates factions, plans a multi-step GOAP scheme
+          toward dominion, and hallucinates an alien dialect. Its inherited semantic network, exact
+          JSON checkpoint, and structured action outcomes are real production mechanisms; the
+          Predictor-V3 row is excluded from live-world neural mass because its development gate
+          failed. The always-active <b>Super Creature</b> goes deeper still: a ~10,081-parameter
+          composite consciousness (a Thaler creativity machine over 12 sub-nets, 5 stages × 25
+          thought variants) plus a real
+          <b>deterministic classical 6-qubit statevector controller</b>
+          (<code>src/sim/super-qubits.ts</code> — its OWN statevector + RY/RZ + controlled-RY gate
+          set, layered with four ported primitives: the <b>Eshkol</b> qubit-RNG (the Born sample),
+          the <b>QGTL Quantum-Geometric-Tensor</b> (thought-space curvature), a
+          <b>Tsotchke</b> spin-glass instinct, and the <b>Moonlab</b> Clifford stabilizer tableau —
+          all MIT-credited and wired in) whose Born-sampled "thought collapse" feeds the unified
+          4-tab neural observatory — all deterministic on dedicated seeded streams.
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>Super Creature 1.1 — ~20 coupled, cited faculties.</b> Atop those substrates the apex
+          mind runs roughly twenty real, deterministic, unit-tested faculties each beat, each
+          reading from AND writing to the others — a negotiated consensus, not parallel gadgets:
+          <b>Global-Workspace ignition</b> (GNW) · <b>Integrated-Information Φ</b> (IIT proxy
+          <em>plus</em> a statevector-derived min-cut Φ proxy) · <b>Active Inference</b> (Friston
+          FEP — variational + expected free energy) · <b>Metacognitive Executive</b> (Higher-Order
+          confidence → control) · <b>Successor Representation</b> (hippocampal predictive map) ·
+          <b>Neuromodulation</b> (Doya DA/5-HT/NE/ACh) · <b>Empowerment</b> (Blahut–Arimoto channel
+          capacity) · <b>Theory of Mind</b> · an <b>echo-state Reservoir</b> ·
+          <b>Neural Criticality</b> (edge-of-chaos σ̂→1) · a <b>spin-glass instinct</b> · a
+          <b>VSA/HRR holographic memory</b> · and a quantum core in the decision loop —
+          <b>Quantum Reservoir Computing</b>, a <b>Lindblad/GKSL deliberation qubit</b>,
+          <b>Grover</b> amplitude amplification, and <b>Quantum Natural Gradient</b> descent on its
+          own Fubini–Study geometry. The whole apex beat now measures
+          <b
+            >~1.99 ms per <code>SuperMind.think()</code> and ~9.77 ms for the staggered 5-mind
+            batch</b
+          >; the older sub-millisecond frame-budget claim is superseded until re-proven. All
+          grounded with real 2023–2026 citations in
+          <code>docs/SUPER-CREATURE-RESEARCH-2026-06-26.md</code> and assessed in
+          <code>docs/reports/</code> —
+          <b>modelled, never "conscious".</b>
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          The research-side evidence surfaces are split: <code>/lab/consciousness</code> shows the
+          ten-framework indicator dashboard, while <code>/lab/sentience</code> removes the visual
+          renderer and mass-runs the same kernel across 32 deterministic seeds. Its
+          <code>lab/sentience-data.json</code> feed exposes convergence/reward control gaps,
+          ablation load, entity index traces, and CSV/JSON exports for reports and AI analysis.
+          Boundary: computational indicators only, not proof of phenomenal sentience.
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>NHSI progress dashboard (canonical):</b>
+          <a href="./docs/NHSI-PROGRESS-DASHBOARD-2026-06-26.md"
+            >100 faculties (~30 deep-wired) · 25 Archons · Butlin 8/14 met + 6/14 partial</a
+          >
+          ·
+          <a href="./docs/TSOTCHKE-INTEGRATION-MAP-2026-06-26.md">Tsotchke depth ledger</a>
+          · gate <b>3,726 tests</b>
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>Current consolidated assessment:</b>
+          <a href="./docs/CONSOLIDATED-22-MASTER-ASSESSMENT-CURRENT-2026-07-07.md"
+            >CONSOLIDATED-22-MASTER-ASSESSMENT-CURRENT-2026-07-07</a
+          >
+          · consolidated 22-report master assessment: comprehensive synthesis of all brain systems,
+          consciousness theories, living entities, reasoning systems, scoring systems, and academic
+          assessment. Older mega-report drafts are local-only archive material; public reports route
+          through <a href="./docs/reports/README.md">docs/reports/README.md</a>; the
+          <a href="./docs/reports/DOME-ECOLOGY-VERIFICATION-2026-07-14.md"
+            >Dome ecology verification</a
+          >
+          records the Xenomimic tether and Big Tree release evidence ·
+          <!-- cqm-sync:local-measurement:start -->
+          local receipt note: 3,297 tests, zero failures, 3,589,864 expect() calls across 366 files,
+          93.60% line coverage, and 91.61% function coverage on the latest Windows verification run.
+          <!-- cqm-sync:local-measurement:end -->
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>Repository-preregistered organism-intelligence V4 result:</b>
+          <a href="./docs/reports/ORGANISM-INTELLIGENCE-V4-RESULTS-2026-07-11.md"
+            >human-readable report</a
+          >
+          ·
+          <a href="./docs/reports/assets/organism-intelligence-causal-benchmark-v4.json">receipt</a>
+          · <a href="./docs/reports/assets/cross-being-neural-causality-v1.csv">1,152-row CSV</a> ·
+          <a href="./docs/reports/assets/organism-intelligence-v4-cross-being-forest.svg"
+            >accessible forest</a
+          >. Ordinary, adaptive-predictor, and Petri family gates fail; Titans pass only the bounded
+          game-policy behavior gate. No score, neural-scaling, consciousness, sentience, or
+          general-intelligence uplift is authorized.
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>Phase-B mechanism development result:</b>
+          <a href="./docs/reports/PHASE-B-MECHANISM-DEVELOPMENT-V3-2026-07-11.md"
+            >human-readable falsification report</a
+          >
+          · <a href="./docs/reports/assets/phase-b-mechanism-development-v3.json">JSON</a> ·
+          <a href="./docs/reports/assets/phase-b-mechanism-development-v3.csv">CSV</a> ·
+          <a href="./docs/reports/assets/phase-b-mechanism-development-v3.svg">accessible SVG</a>.
+          The 101-input temporal Predictor-V3 retains 46,080/46,080 rows and fails all eight
+          advancement criteria. The separate 41,472-row NHI task retains every row, but paired
+          surface-conflict service declines; only HUNT/resource and SPAWN/social are
+          interpretation-eligible development diagnostics. No confirmatory manifest, adaptation,
+          learning, scaling, consciousness, or sentience claim follows.
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>Operational organism-intelligence V3 causal receipt:</b>
+          <a href="./docs/reports/2026-07-10-OPERATIONAL-ORGANISM-INTELLIGENCE-CAUSAL-AUDIT.md"
+            >human-readable audit</a
+          >
+          ·
+          <a href="./docs/reports/assets/organism-intelligence-causal-benchmark-v3.json"
+            >machine-readable evidence</a
+          >. The fixed, V1/V2-disjoint 30-seed synthetic <code>+x</code> goal evaluation passes the
+          goal-controller, corpus-conditioned goal-response, reversal-adaptation,
+          17-integrated-repository causality, numerical-safety, 10/10 consumer-counterfactual, and
+          three-process/30-batch performance gates. Uniform random-action and aggregate/surrogate
+          specificity controls do not separate, so it grants no numeric A-Life-score uplift and is
+          indicator-only—not consciousness, sentience, or quantum evidence.
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>Frontier report (2026-06-17):</b>
+          <a
+            href="https://github.com/0thernes/cosmogonic-quantum-mechalogodrom/blob/main/docs/SUPER-CREATURE-RESEARCH-2026-06-26.md"
+            >State of the Art — Combined (whole repository + Super Creature)</a
+          >
+        </p>
+        <p class="muted" style="margin-top: 10px">
+          <b>The cast (measured counts).</b> Up to 50,000 organisms across 100 morphotypes (250 in
+          phylum mode), each carrying a 70-weight brain + a 10-gene genome · 100 Shoggoths · 100
+          Puppet-masters (a 5-qubit quantum register each) · 20 Titans (4D freak-geometry) · 8
+          faction archetypes · Leviathans, singularities + weather (the environment) · one
+          always-active Super Creature trailed by a 100-drone wingman swarm · and the apex NHI
+          super-mind that perceives, plans (GOAP), and manipulates them all.
+        </p>
+
+        <h2 style="margin-top: 28px"><span class="tag">06</span> Contrast — this world vs. LLMs</h2>
+        <div class="barrow">
+          <span class="lab" style="color: var(--good)">This entire 50k world</span>
+          <span class="track"
+            ><span class="fill" style="width: 0.4%; background: var(--good); min-width: 4px"></span
+          ></span>
+          <span class="val">~3.5M · 1×</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">BERT-base</span>
+          <span class="track"
+            ><span class="fill" style="width: 6%; background: var(--accent2)"></span
+          ></span>
+          <span class="val">110 M · 31×</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">Llama-7B</span>
+          <span class="track"
+            ><span class="fill" style="width: 38%; background: var(--amber)"></span
+          ></span>
+          <span class="val">7 B · 2,000×</span>
+        </div>
+        <div class="barrow">
+          <span class="lab">GPT-3</span>
+          <span class="track"
+            ><span
+              class="fill"
+              style="width: 100%; background: linear-gradient(90deg, var(--fuchsia), #ff6b6b)"
+            ></span
+          ></span>
+          <span class="val">175 B · 50,000×</span>
+        </div>
+        <div class="callout">
+          <div class="big">
+            <b>~14 MB</b> of neural weights · <b>1/50,000th</b> of GPT-3 · <b>0</b> TOPS · runs on a
+            single CPU thread.
+          </div>
+          <p>
+            The entire emergent intelligence of a 50,000-agent cosmos is <b>~14 MB</b> — about one
+            high-resolution photo's worth of weights, for fifty thousand thinking minds. Depth here
+            is engineered — architecture, determinism, discipline — not downloaded.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="tag">07</span> Render &amp; compute</h2>
+        <table>
+          <tr>
+            <th>Concern</th>
+            <th>Specification</th>
+          </tr>
+          <tr>
+            <td>Renderer</td>
+            <td>
+              Three.js WebGL2 · ACES tone-mapping · InstancedMesh pools (≤80 pools, 1 draw call per
+              geometry×transparency — not 50k draws)
+            </td>
+          </tr>
+          <tr>
+            <td>Shaders</td>
+            <td>
+              owned fresnel + thin-film glass sheen · 10 render modes · GPU vertex-melt · optional
+              <code>?fx=1</code> bloom + PMREM env-map
+            </td>
+          </tr>
+          <tr>
+            <td>Sim loop</td>
+            <td>
+              single-thread · allocation-reused population paths · event-driven births ·
+              domain-separated seeded mulberry32 · perf-budget gated
+            </td>
+          </tr>
+          <tr>
+            <td>Determinism</td>
+            <td>same seed → identical run, bit-for-bit · Math.random/Date.now banned in sim</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2><span class="tag">08</span> Hardware footprint</h2>
+        <table>
+          <tr>
+            <th>Resource</th>
+            <th>Requirement</th>
+          </tr>
+          <tr>
+            <td>GPU</td>
+            <td>
+              Any WebGL2 device — integrated Intel/Apple/Android; tiers auto-scale to phones. No
+              discrete GPU needed.
+            </td>
+          </tr>
+          <tr>
+            <td>NPU / AI-TOPS</td>
+            <td>
+              <b>Zero.</b> No transformer inference. All organism brains ≈ 0.08 GFLOP/s — negligible
+              on one core.
+            </td>
+          </tr>
+          <tr>
+            <td>CPU</td>
+            <td>Any modern CPU; the single-thread sim is the bottleneck at 50k, not the GPU.</td>
+          </tr>
+          <tr>
+            <td>RAM</td>
+            <td>≈ 300–600 MB resident at full population.</td>
+          </tr>
+          <tr>
+            <td>Download</td>
+            <td>
+              App initial payload ≈ 960 KB entry + Three.js (~1–1.5 MB gzipped). The heavy Mermaid
+              bundle loads only on <code>/docs</code>.
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2><span class="tag">09</span> Build, CI/CD &amp; quality</h2>
+        <p>
+          <b>Gate (every commit):</b>
+          <code>prettier → tsc strict → oxlint → 3,726 tests → evidence checks → bun build</code>.
+          Public release floor is 84.64 % line / 82.21 % function;
+          <!-- cqm-sync:local-measurement:start -->
+          the current audit separately records a Windows-local measurement of 3,297 tests, zero
+          failures, 3,589,864 assertions across 366 files, line coverage 93.60%, and function
+          coverage 91.61%.
+          <!-- cqm-sync:local-measurement:end -->
+          <b>Build:</b> Bun bundles root app/spec/bible entrypoints and a split Docs entrypoint into
+          <code>dist/</code>, then <code>scripts/build-pages.ts</code> assembles the
+          Pages-equivalent site with Docs, Spec, Bible, Quantum Lab, Consciousness Lab, Sentience
+          Lab, and copied report targets. <b>CI/CD:</b> GitHub Actions runs the gate + builds and
+          deploys the real app to GitHub Pages on every push to <code>main</code>; tagged releases
+          ship a site tarball + CycloneDX SBOM. Three governing "master" personas encode the
+          discipline: the Executor, the Architect, the Physicist.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="tag">10</span> The inhabitants — measured roster</h2>
+        <table>
+          <tr>
+            <th>Inhabitant</th>
+            <th class="r">Count (mega tier)</th>
+            <th>What it is</th>
+          </tr>
+          <tr>
+            <td>Morphogenic organisms</td>
+            <td class="r">up to 50,000</td>
+            <td>
+              100 morphotypes · 10 phyla · 26 behaviour fields · 10 render modes; each carries a
+              70-weight TinyMLP brain as a heritable genome
+            </td>
+          </tr>
+          <tr>
+            <td>Xenomimic ground fauna</td>
+            <td class="r">2 boot &rarr; 1,000 hard cap</td>
+            <td>
+              10 indexed morphs; reciprocal mimic/anti twins share an exact 101-parameter MLP and
+              classically simulated three-qubit statevector; real terrain, plant grazing, Entity
+              predation/connectome, bounded audio, and weighted-fulcrum gait
+            </td>
+          </tr>
+          <tr>
+            <td>Factions</td>
+            <td class="r">8</td>
+            <td>
+              Watchers · Weavers · Wardens · Heralds · Leviathans · SwarmMinds · Oracles · Devourers
+              — each a DIFFERENT pre-2016 technique (FSM · behaviour-tree · utility · GOAP · rule ·
+              boids · Markov · MLP)
+            </td>
+          </tr>
+          <tr>
+            <td>Titans</td>
+            <td class="r">20</td>
+            <td>colossal 4D-tesseract beings; proxy-war pairs; a drag/hue aura warps the field</td>
+          </tr>
+          <tr>
+            <td>Puppet-masters</td>
+            <td class="r">100 (14 mobile)</td>
+            <td>
+              NPC schemers driven by a 5-qubit quantum register + GOAP/utility; their plots toast
+            </td>
+          </tr>
+          <tr>
+            <td>Shoggoths</td>
+            <td class="r">100 (16 mobile)</td>
+            <td>amorphous 8-tendril horrors; utility / threat-prey AI</td>
+          </tr>
+          <tr>
+            <td>Leviathans</td>
+            <td class="r">4</td>
+            <td>apex roaming megafauna</td>
+          </tr>
+          <tr>
+            <td>Xenomimics</td>
+            <td class="r">2 &rarr; up to 1,000</td>
+            <td>
+              entangled-twin ground fauna; 10 tessellated species; one ~100-parameter brain per pair
+              run at opposite thought-curvature over a real 3-qubit quantum singlet (IIT / GWT / FEP
+              wired in); graze the flora, breed, respawn 5s when grazed; coupled to the entity
+              connectome
+            </td>
+          </tr>
+          <tr>
+            <td>NHI beings</td>
+            <td class="r">up to 1,000 live</td>
+            <td>
+              non-human intelligences: 109-weight semantic intuition gene + 144-weight alien-voice
+              Markov + 7-action GOAP; exact checkpoints, structured world outcomes, and a 9-view
+              neural observatory
+            </td>
+          </tr>
+          <tr>
+            <td>Super Creature (+ twins)</td>
+            <td class="r">1 (+ up to 3)</td>
+            <td>
+              the apex mind: ~1,444-weight legacy spine + ~10,081-weight composite consciousness + a
+              deterministic classical 6-qubit statevector controller
+            </td>
+          </tr>
+          <tr>
+            <td>Apex Abomination / ApexBrain</td>
+            <td class="r">designed 1B · live cap 4,096 / organ</td>
+            <td>
+              apex research chassis with organ-level graph/quantum/control proxies; public claim is
+              synthetic neurology only, falsified by failed ablation lift, null parity, or lack of
+              deterministic replay
+            </td>
+          </tr>
+          <tr>
+            <td>Wingman swarm — the "minis"</td>
+            <td class="r">100 / creature</td>
+            <td>escort mini-robots ringing the Super Creature; ~250-weight TinyMLP brain each</td>
+          </tr>
+          <tr>
+            <td>Singularities</td>
+            <td class="r">event-driven</td>
+            <td>black-hole / gravitational-lens wells that dilate time and bend space</td>
+          </tr>
+          <tr>
+            <td>Monoliths · dioramas · gold-lattice</td>
+            <td class="r">16 · 8 · 7</td>
+            <td>scene megastructures + the Catmull-Rom data-pipeline web</td>
+          </tr>
+          <tr>
+            <td>Environment &amp; fields</td>
+            <td class="r">26 + 6</td>
+            <td>
+              26 behaviour fields + 6 weathers, plus connectome · reaction-diffusion · chaos
+              (Lorenz) · quantum + gold lattices · cosmic web · atmosphere · constellations
+            </td>
+          </tr>
+        </table>
+        <p class="muted" style="margin-top: 10px">
+          Counts are the desktop / mega-tier ceilings — phone and laptop tiers scale down (e.g. 14
+          puppet-masters, 16 shoggoths on touch). Every figure measured from
+          <code>src/sim/*</code> + <code>src/core/quality.ts</code>.
+        </p>
+        <table>
+          <tr>
+            <th>Benchmark card</th>
+            <th>Source handle</th>
+            <th>Metric</th>
+            <th>Falsifier</th>
+          </tr>
+          <tr>
+            <td>Shoggoth ecology</td>
+            <td><code>tests/shoggoths.test.ts</code></td>
+            <td>strain count, threat/prey response, finite transforms</td>
+            <td>no deterministic replay, no strain-specific behavior lift</td>
+          </tr>
+          <tr>
+            <td>Puppeteer agency</td>
+            <td><code>tests/puppet-masters.test.ts</code></td>
+            <td>GOAP/utility sequence, event gating, mobile cap</td>
+            <td>plots do not alter world state or vanish under ablation</td>
+          </tr>
+          <tr>
+            <td>Titan world conflict</td>
+            <td><code>tests/titans.test.ts</code></td>
+            <td>20 bodies, 190 pair relations, economy/war telemetry</td>
+            <td>pair ledger mismatch, non-finite vitals, no diplomacy dynamics</td>
+          </tr>
+          <tr>
+            <td>Apex Abomination</td>
+            <td><code>tests/apex-brain.test.ts</code></td>
+            <td>organ cap, staged transcendence, quantum/control proxy lift</td>
+            <td>null parity, failed ablation lift, or non-reproducible replay</td>
+          </tr>
+          <tr>
+            <td>GOD / Temple / Portal</td>
+            <td>
+              <code>tests/god-colossus.test.ts</code> · <code>tests/temple-code.test.ts</code>
+            </td>
+            <td>environment/operator coupling, symbolic field effect, portal constraints</td>
+            <td>decorative-only output or no measurable world coupling</td>
+          </tr>
+        </table>
+      </section>
+
+      <details class="legacy-comparison" data-legacy-comparison>
+        <summary>Historical nine-axis comparison — preserved 155-system rubric</summary>
+        <p>
+          The historical nine-axis, 155-system comparison maps by construct to 19 of the 25
+          canonical dimensions (<a href="./docs/alife/cqm-capability-profile.html#crosswalk"
+            >read the crosswalk</a
+          >). It retains its own rubric and scores; no score transfers in either direction. The
+          survey did not separately measure individuality, self-maintenance, homeostasis, repair,
+          social cognition or valence-related control.
+        </p>
+        <p>
+          CQM-25 above is the current project capability framework. This earlier comparison retains
+          its own definitions and scores for reproducibility; its rankings do not transfer to
+          CQM-25.
+        </p>
+        <p>
+          <a href="./docs/alife/cqm-alife-catalog.html"
+            >150-entry source-reviewed evidence catalog</a
+          >
+          &middot; <a href="./docs/alife/cqm-alife-audit.pdf">PDF</a> &middot;
+          <a href="./docs/alife/cqm-alife-catalog.xlsx">Workbook</a> &middot;
+          <a href="./docs/alife/README.md">Scope and provenance</a>. Source review supports
+          identities and conservative descriptions. The 155-entry single-rater rubric below is a
+          distinct dataset and does not establish scientific superiority.
+        </p>
+        <p class="muted">
+          Reproducible, code-grounded comparison against 154 peers including Tierra, Avida,
+          Polyworld, Framsticks, Karl Sims, Creatures, Lenia, ALIEN, ASAL, and more. The one
+          self-scored row was re-audited against actual source by a 9-agent pass, so the headline is
+          shown two ways &mdash; the conclusion survives, the superlative does not. Full report (11
+          charts, per-axis
+          <code>file:line</code>
+          grounding, adversarial novelty defense):
+          <a
+            href="https://github.com/0thernes/cosmogonic-quantum-mechalogodrom/blob/main/docs/reports/2026-07-01-25-POINT-SCRUTINY-SCORECARD.md"
+            >2026-07-01 A-Life Comparative Audit (v3, code-grounded)</a
+          >.
+        </p>
+        <table>
+          <tr>
+            <th>Metric</th>
+            <th>Self-scored</th>
+            <th>Code-grounded</th>
+          </tr>
+          <tr>
+            <td>Breadth (mean of 9 axes)</td>
+            <td>4.44 / 5</td>
+            <td><b>3.80 / 5</b></td>
+          </tr>
+          <tr>
+            <td>Rank among 155 systems</td>
+            <td>#1 / 155</td>
+            <td><b>#1 / 155</b></td>
+          </tr>
+          <tr>
+            <td>z-score vs population</td>
+            <td>+4.28&sigma;</td>
+            <td><b>+3.24&sigma;</b></td>
+          </tr>
+          <tr>
+            <td>z-score vs peers</td>
+            <td>+4.58&sigma;</td>
+            <td><b>+3.36&sigma;</b></td>
+          </tr>
+          <tr>
+            <td>Mahalanobis vs peer centroid</td>
+            <td>10.67</td>
+            <td><b>8.99</b></td>
+          </tr>
+          <tr>
+            <td>Systems that dominate it (9-D)</td>
+            <td>0</td>
+            <td><b>0</b></td>
+          </tr>
+        </table>
+        <p class="muted">
+          Strong separation in consciousness-theory instrumentation and substrate pluralism;
+          scientific maturity <b>low (1.5 / 5)</b>; novelty by integration (0 hard refutations), not
+          a first, not sentience (Butlin 8/14 met + 6/14 partial, computational indicators only).
+        </p>
+        <div style="margin: 12px auto 0; max-width: 540px">
+          <svg
+            style="width: 100%; height: auto; display: block"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 720 780"
+            font-family="ui-sans-serif,system-ui,Segoe UI,Roboto,sans-serif"
+            role="img"
+            aria-label="Nine-axis survey radar: Cosmogonic vs survey mean vs ALIEN"
+          >
+            <rect width="720" height="780" rx="14" fill="#0b1220" />
+            <title>Nine-axis survey radar: Cosmogonic vs survey mean vs ALIEN</title>
+            <desc>
+              Legacy comparison on a 0 to 5 scale; scores retain the existing rubric and are not
+              CQM-25 ratings. Consciousness-theory describes implemented theory mechanisms, not
+              demonstrated consciousness. Reproduction (CQM-25 01): Cosmogonic 4, survey mean 2.55,
+              ALIEN 4. Open-endedness (CQM-25 02): Cosmogonic 2, survey mean 2.51, ALIEN 4. Ecology
+              (CQM-25 03): Cosmogonic 3.4, survey mean 2.2, ALIEN 4. Morphology/Physics (CQM-25
+              04–05): Cosmogonic 3.8, survey mean 2.17, ALIEN 5. Cognition/Learning (CQM-25 06–12):
+              Cosmogonic 4.5, survey mean 1.85, ALIEN 3. Substrate pluralism (CQM-25 23): Cosmogonic
+              4.6, survey mean 1.09, ALIEN 3. Instrumentation (CQM-25 24): Cosmogonic 4.4, survey
+              mean 3.02, ALIEN 3. Consciousness-theory (CQM-25 13, 19–21): Cosmogonic 3.5, survey
+              mean 0.1, ALIEN 0.5. Visual scale (CQM-25 25): Cosmogonic 4, survey mean 2.76, ALIEN
+              5.
+            </desc>
+            <text x="28" y="40" fill="#cbd5e1" font-size="24" font-weight="700">
+              Nine-axis survey view
+            </text>
+            <text x="28" y="66" fill="#7c8aa5" font-size="14">
+              Historical 155-system peer rubric (0–5) · CQM-25 construct crosswalk
+            </text>
+            <rect x="28" y="82" width="12" height="12" rx="2" fill="#f59e0b" />
+            <text x="46" y="93" fill="#f59e0b" font-size="14">Cosmogonic</text>
+            <rect x="156.8216" y="82" width="12" height="12" rx="2" fill="#a78bfa" />
+            <text x="174.8216" y="93" fill="#a78bfa" font-size="14">survey mean</text>
+            <rect x="289.07039999999995" y="82" width="12" height="12" rx="2" fill="#34d399" />
+            <text x="307.07039999999995" y="93" fill="#34d399" font-size="14">
+              nearest peer (ALIEN)
+            </text>
+            <polygon
+              points="360,382 381.85,389.95 393.48,410.1 389.44,433 371.63,447.95 348.37,447.95 330.56,433 326.52,410.1 338.15,389.95"
+              fill="none"
+              stroke="#27344d"
+              stroke-width="0.8"
+            />
+            <text x="365" y="378" fill="#7c8aa5" font-size="11">1</text>
+            <polygon
+              points="360,348 403.71,363.91 426.97,404.19 418.89,450 383.26,479.9 336.74,479.9 301.11,450 293.03,404.19 316.29,363.91"
+              fill="none"
+              stroke="#27344d"
+              stroke-width="0.8"
+            />
+            <text x="365" y="344" fill="#7c8aa5" font-size="11">2</text>
+            <polygon
+              points="360,314 425.56,337.86 460.45,398.29 448.33,467 394.89,511.85 325.11,511.85 271.67,467 259.55,398.29 294.44,337.86"
+              fill="none"
+              stroke="#27344d"
+              stroke-width="0.8"
+            />
+            <text x="365" y="310" fill="#7c8aa5" font-size="11">3</text>
+            <polygon
+              points="360,280 447.42,311.82 493.93,392.38 477.78,484 406.51,543.8 313.49,543.8 242.22,484 226.07,392.38 272.58,311.82"
+              fill="none"
+              stroke="#27344d"
+              stroke-width="0.8"
+            />
+            <text x="365" y="276" fill="#7c8aa5" font-size="11">4</text>
+            <polygon
+              points="360,246 469.27,285.77 527.42,386.48 507.22,501 418.14,575.75 301.86,575.75 212.78,501 192.58,386.48 250.73,285.77"
+              fill="none"
+              stroke="#27344d"
+              stroke-width="0.8"
+            />
+            <text x="365" y="242" fill="#7c8aa5" font-size="11">5</text>
+            <line x1="360" y1="416" x2="360" y2="246" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="469.27" y2="285.77" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="527.42" y2="386.48" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="507.22" y2="501" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="418.14" y2="575.75" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="301.86" y2="575.75" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="212.78" y2="501" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="192.58" y2="386.48" stroke="#27344d" stroke-width="0.8" />
+            <line x1="360" y1="416" x2="250.73" y2="285.77" stroke="#27344d" stroke-width="0.8" />
+            <polygon
+              points="360,280 447.42,311.82 493.93,392.38 507.22,501 394.89,511.85 325.11,511.85 271.67,467 343.26,413.05 250.73,285.77"
+              fill="#34d399"
+              fill-opacity="0.10"
+              stroke="#34d399"
+              stroke-width="1.5"
+            />
+            <polygon
+              points="360,329.3 414.86,350.63 433.66,403.01 423.9,452.89 381.51,475.11 347.32,450.83 271.08,467.34 356.65,415.41 299.68,344.11"
+              fill="#a78bfa"
+              fill-opacity="0.12"
+              stroke="#a78bfa"
+              stroke-width="1.5"
+            />
+            <polygon
+              points="360,280 403.71,363.91 473.84,395.93 471.89,480.6 412.33,559.77 306.51,562.97 230.44,490.8 242.81,395.34 272.58,311.82"
+              fill="#f59e0b"
+              fill-opacity="0.22"
+              stroke="#f59e0b"
+              stroke-width="2.4"
+            />
+            <text
+              data-radar-axis="0"
+              aria-label="Reproduction"
+              x="360"
+              y="182"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="middle"
+            >
+              <tspan x="360" dy="0">Reproduction</tspan>
+            </text>
+            <text x="360" y="200" fill="#f59e0b" font-size="14.5" text-anchor="middle">
+              4.0 · mean 2.5
+            </text>
+            <text x="360" y="217" fill="#5eead4" font-size="13" text-anchor="middle">
+              CQM-25 01
+            </text>
+            <text
+              data-radar-axis="1"
+              aria-label="Open-endedness"
+              x="484.7"
+              y="227.4"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="start"
+            >
+              <tspan x="484.7" dy="0">Open-endedness</tspan>
+            </text>
+            <text x="484.7" y="245.4" fill="#f59e0b" font-size="14.5" text-anchor="start">
+              2.0 · mean 2.5
+            </text>
+            <text x="484.7" y="262.4" fill="#5eead4" font-size="13" text-anchor="start">
+              CQM-25 02
+            </text>
+            <text
+              data-radar-axis="2"
+              aria-label="Ecology"
+              x="551.1"
+              y="369.3"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="start"
+            >
+              <tspan x="551.1" dy="0">Ecology</tspan>
+            </text>
+            <text x="551.1" y="387.3" fill="#f59e0b" font-size="14.5" text-anchor="start">
+              3.4 · mean 2.2
+            </text>
+            <text x="551.1" y="404.3" fill="#5eead4" font-size="13" text-anchor="start">
+              CQM-25 03
+            </text>
+            <text
+              data-radar-axis="3"
+              aria-label="Morphology/Physics"
+              x="528"
+              y="490"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="start"
+            >
+              <tspan x="528" dy="0">Morphology/</tspan>
+              <tspan x="528" dy="20">Physics</tspan>
+            </text>
+            <text x="528" y="528" fill="#f59e0b" font-size="14.5" text-anchor="start">
+              3.8 · mean 2.2
+            </text>
+            <text x="528" y="545" fill="#5eead4" font-size="13" text-anchor="start">
+              CQM-25 04–05
+            </text>
+            <text
+              data-radar-axis="4"
+              aria-label="Cognition/Learning"
+              x="426.4"
+              y="614.3"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="start"
+            >
+              <tspan x="426.4" dy="0">Cognition/</tspan>
+              <tspan x="426.4" dy="20">Learning</tspan>
+            </text>
+            <text x="426.4" y="652.3" fill="#f59e0b" font-size="14.5" text-anchor="start">
+              4.5 · mean 1.9
+            </text>
+            <text x="426.4" y="669.3" fill="#5eead4" font-size="13" text-anchor="start">
+              CQM-25 06–12
+            </text>
+            <text
+              data-radar-axis="5"
+              aria-label="Substrate pluralism"
+              x="293.6"
+              y="614.3"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="end"
+            >
+              <tspan x="293.6" dy="0">Substrate</tspan>
+              <tspan x="293.6" dy="20">pluralism</tspan>
+            </text>
+            <text x="293.6" y="652.3" fill="#f59e0b" font-size="14.5" text-anchor="end">
+              4.6 · mean 1.1
+            </text>
+            <text x="293.6" y="669.3" fill="#5eead4" font-size="13" text-anchor="end">
+              CQM-25 23
+            </text>
+            <text
+              data-radar-axis="6"
+              aria-label="Instrumentation"
+              x="192"
+              y="529"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="end"
+            >
+              <tspan x="192" dy="0">Instrumentation</tspan>
+            </text>
+            <text x="192" y="547" fill="#f59e0b" font-size="14.5" text-anchor="end">
+              4.4 · mean 3.0
+            </text>
+            <text x="192" y="564" fill="#5eead4" font-size="13" text-anchor="end">CQM-25 24</text>
+            <text
+              data-radar-axis="7"
+              aria-label="Consciousness-theory"
+              x="168.9"
+              y="359.3"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="end"
+            >
+              <tspan x="168.9" dy="0">Consciousness</tspan>
+              <tspan x="168.9" dy="20">theory</tspan>
+            </text>
+            <text x="168.9" y="397.3" fill="#f59e0b" font-size="14.5" text-anchor="end">
+              3.5 · mean 0.1
+            </text>
+            <text x="168.9" y="414.3" fill="#5eead4" font-size="13" text-anchor="end">
+              CQM-25 13, 19–21
+            </text>
+            <text
+              data-radar-axis="8"
+              aria-label="Visual scale"
+              x="235.3"
+              y="227.4"
+              fill="#cbd5e1"
+              font-size="17"
+              font-weight="600"
+              text-anchor="end"
+            >
+              <tspan x="235.3" dy="0">Visual scale</tspan>
+            </text>
+            <text x="235.3" y="245.4" fill="#f59e0b" font-size="14.5" text-anchor="end">
+              4.0 · mean 2.8
+            </text>
+            <text x="235.3" y="262.4" fill="#5eead4" font-size="13" text-anchor="end">
+              CQM-25 25
+            </text>
+            <text x="28" y="754" fill="#7c8aa5" font-size="13">
+              breadth 3.80 · #1 of 155 · survey scores never become CQM-25 ratings
+            </text>
+          </svg>
+        </div>
+      </details>
+
+      <section id="xenomimics">
+        <h2><span class="tag">12</span> Xenomimics &mdash; canonical ground intelligence</h2>
+        <div class="stats">
+          <div class="stat">
+            <div class="n cy">10</div>
+            <div class="l">indexed morphs</div>
+          </div>
+          <div class="stat">
+            <div class="n am">101</div>
+            <div class="l">brain parameters / pair</div>
+          </div>
+          <div class="stat">
+            <div class="n fu">1,000</div>
+            <div class="l">hard body cap</div>
+          </div>
+          <div class="stat">
+            <div class="n gd">10</div>
+            <div class="l">indicator lanes</div>
+          </div>
+        </div>
+        <table>
+          <tr>
+            <th>Contract</th>
+            <th>Measured implementation</th>
+          </tr>
+          <tr>
+            <td>Population and lifecycle</td>
+            <td>
+              One pair at boot; smooth 2&rarr;1,000 target ramp; 1&ndash;3-pair litters; 150-second
+              default lifetime; 120-second natural revival; five-second eaten revival; bounded
+              respawn drain; XNO adds exactly one live body.
+            </td>
+          </tr>
+          <tr>
+            <td>Neurology</td>
+            <td>
+              Shared 6&rarr;8&rarr;5 MLP (48 + 8 + 40 + 5 = 101 parameters), opposite role
+              curvature, classical three-qubit statevector, IIT-style twin integration, GWT-style
+              broadcast, ten temperaments, and real Entity-activation input.
+            </td>
+          </tr>
+          <tr>
+            <td>Ecology and locomotion</td>
+            <td>
+              Live terrain sampler; flora-mutating grazing callback; Entity consumption/energy
+              transfer; curve, sway, crawl, sprint, leap, weighted fulcrum lean, landing recoil, and
+              canopy-safe ground clamping.
+            </td>
+          </tr>
+          <tr>
+            <td>Presentation budget</td>
+            <td>
+              Ten opaque instanced draws, four fixed per-instance vec4 lanes, one bounded connectome
+              draw, 48 maximum Entity bridges, fixed 15-node audio graph, four accepted
+              stings/second, and six transient voices.
+            </td>
+          </tr>
+          <tr>
+            <td>Operational surfaces</td>
+            <td>
+              XNO/Y, mimic View, XENOMIMIC dock panel, Telemetry below Entities, Observatory, Help,
+              Copilot, consciousness/sentience Lab adapters, audit log, and dedicated issue form.
+            </td>
+          </tr>
+        </table>
+        <div class="callout">
+          <p>
+            <span class="big"><b>Truth boundary:</b> indicator-only.</span> Coherence, integration,
+            broadcast, superposition, and collapse are deterministic classical simulation values.
+            They do not establish consciousness, sentience, phenomenal experience, or physical
+            quantum entanglement. See
+            <a href="./docs/XENOMIMICS-2026-07-12.md">the canonical Xenomimic contract</a>.
+          </p>
+        </div>
+      </section>
+
+      <footer>
+        Cosmogonic Quantum Mechalogodrom &middot; &copy; 2026 0thernes &middot; non-commercial
+        research &amp; play (no for-profit, keep credit) &middot; Patent Pending. Full per-file line
+        counts and the complete specification live in
+        <a
+          href="https://github.com/0thernes/cosmogonic-quantum-mechalogodrom/blob/main/docs/TECHNICAL-SPECIFICATION-2026-06-26.md"
+          >docs/TECHNICAL-SPECIFICATION-2026-06-26.md</a
+        >. &nbsp;<a href="/">&larr; back to the dome</a> &middot;
+        <a href="https://0thernes.github.io/cosmogonic-quantum-mechalogodrom/">GitHub Pages</a>
+      </footer>
+    </main>
+    <script type="module" src="./src/specs-page.ts"></script>
+  </body>
+</html>

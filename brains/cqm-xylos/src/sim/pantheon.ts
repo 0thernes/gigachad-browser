@@ -1,0 +1,130 @@
+// Audit #143 (honesty, documented): the 20 light archons have no world input: planBias is a function of archon index and frame%64.
+/**
+ * PANTHEON SOCIETY — tiered 25-Archon coordination (NEO-MIND § Archon pantheon).
+ *
+ *   • 1 × NEO (index 0) — apex cadence (handled by full SuperMind in world)
+ *   • 4 × OMEGA (indices 1–4) — mid-tier (full SuperMind at world boot)
+ *   • 20 × ALPHA (indices 5–24) — light echoes on staggered sub-beats
+ *
+ * Light echoes execute {@link archonThink} from the Eshkol substrate and deposit into the shared
+ * {@link MindField}. Deterministic; no rng in the beat loop.
+ */
+import { substrateVectorForArchon } from './tsotchke-registry';
+import { archonThink } from './eshkol-cognition';
+import { MindField, ARCHON_CHANNELS, FIELD_DIM } from './mind-field';
+import { GODFORMS, getArchonTier, APEX_INDIVIDUATED, type ArchonTier } from './godform';
+
+export { ARCHON_CHANNELS, FIELD_DIM };
+export { MindField };
+
+interface LightArchonSnapshot {
+  readonly index: number;
+  readonly name: string;
+  readonly tier: ArchonTier;
+  readonly decision: number;
+  readonly confidence: number;
+  /** V1.3: the Archon's PERSISTENT identity memory (EMA of its planBias across its own sub-beats). */
+  readonly memory: number;
+}
+
+interface PantheonSnapshot {
+  readonly lightCount: number;
+  readonly field: ReturnType<MindField['snapshot']>;
+  readonly lastLight: LightArchonSnapshot | null;
+}
+
+const LIGHT_FIRST = APEX_INDIVIDUATED; // light echoes begin after the individuated apex minds
+const LIGHT_COUNT = ARCHON_CHANNELS - LIGHT_FIRST;
+/** V1.3: EMA rate of each light Archon's persistent identity memory (individuation, not stateless echo). */
+const LIGHT_MEM_TAU = 0.2;
+
+/**
+ * Society layer for the 20 light Archons + shared mind-field.
+ */
+export class PantheonSociety {
+  readonly field = new MindField();
+  private readonly scratch = new Float32Array(FIELD_DIM);
+  private readonly depositScratch: number[] = Array.from({ length: FIELD_DIM }, () => 0);
+  private readonly fieldMeanScratch = new Float32Array(FIELD_DIM);
+  /** V1.3: one persistent identity scalar per light Archon — each evolves across its OWN sub-beats, so the
+   *  20 light echoes have continuity (distinct individuated minds) rather than stateless per-beat recomputes. */
+  private readonly lightMemory = new Float32Array(LIGHT_COUNT);
+  private lastLight: LightArchonSnapshot | null = null;
+
+  /** One world frame: diffuse field + tick one light Archon (staggered). */
+  beat(frame: number): PantheonSnapshot {
+    this.field.step();
+    const slot = frame % LIGHT_COUNT;
+    const idx = LIGHT_FIRST + slot;
+    const sub = substrateVectorForArchon(idx);
+    // Couple the shared MindField (which carries Apex deposits from the world) into the light Archon's substrate (#143)
+    this.field.mean(this.fieldMeanScratch);
+    this.field.sample(idx, this.scratch);
+    const priorMem = this.lightMemory[slot] ?? 0;
+    for (let k = 0; k < Math.min(sub.length, FIELD_DIM); k++) {
+      const baseVal = sub[k] ?? 0.5;
+      const fieldVal = 0.6 * (this.fieldMeanScratch[k] ?? 0) + 0.4 * (this.scratch[k] ?? 0);
+      sub[k] = baseVal * 0.7 + fieldVal * 0.2 + priorMem * 0.1;
+    }
+    const thought = archonThink(sub, frame + idx * 17);
+    this.depositScratch[0] = thought.planBias;
+    this.depositScratch[1] = thought.decisive ? 1 : 0;
+    this.depositScratch[2] = sub[0] ?? 0;
+    this.depositScratch[3] = sub[1] ?? 0;
+    this.depositScratch[4] = (frame % 360) / 360;
+    this.depositScratch[5] = idx / ARCHON_CHANNELS;
+    this.depositScratch[6] = thought.steps / 32;
+    this.depositScratch[7] = thought.planBias;
+    // V1.3 INDIVIDUATION: the active light Archon updates its PERSISTENT identity memory (EMA of its
+    // planBias) and that memory shapes its ongoing field contribution — so its history, not just this
+    // beat, drives its deposit. Deterministic (no rng), bounded; reproducibility + field.energy>0 hold.
+    const mem =
+      (this.lightMemory[slot] ?? 0) +
+      LIGHT_MEM_TAU * (thought.planBias - (this.lightMemory[slot] ?? 0));
+    this.lightMemory[slot] = mem;
+    this.field.deposit(
+      idx,
+      this.depositScratch,
+      0.35 + 0.65 * (0.5 * thought.planBias + 0.5 * mem),
+    );
+    this.lastLight = {
+      index: idx,
+      name: GODFORMS[idx] ?? `ARCHON-${idx}`,
+      tier: getArchonTier(idx),
+      decision: thought.planBias,
+      confidence: thought.decisive ? thought.planBias : 1 - thought.planBias,
+      memory: mem,
+    };
+    const mindField = this.field;
+    let cachedField: ReturnType<MindField['snapshot']> | undefined;
+    return {
+      lightCount: LIGHT_COUNT,
+      get field() {
+        if (cachedField === undefined) cachedField = mindField.snapshot();
+        return cachedField;
+      },
+      lastLight: this.lastLight,
+    };
+  }
+
+  depositApex(apexIdx: number, vector: ArrayLike<number>, strength: number): void {
+    this.field.deposit(apexIdx, vector, strength);
+  }
+
+  /** Read collective field bias for an apex Archon into `out`. */
+  collectiveBias(apexIdx: number, out: Float32Array | number[]): void {
+    this.field.mean(out);
+    this.field.sample(apexIdx, this.scratch);
+    for (let d = 0; d < FIELD_DIM; d++) {
+      out[d] = ((out[d] ?? 0) + (this.scratch[d] ?? 0)) * 0.5;
+    }
+  }
+
+  snapshot(): PantheonSnapshot {
+    return {
+      lightCount: LIGHT_COUNT,
+      field: this.field.snapshot(),
+      lastLight: this.lastLight,
+    };
+  }
+}

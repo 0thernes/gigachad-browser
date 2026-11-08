@@ -1,0 +1,13 @@
+// ARCHIVED 2026-10-31 (originality rule): CAP-C worm-connectome rate model, removed from creatures/001/harness/v27mech.ts. Not built.
+// ---- CAP-C: connectome rate model ----
+const GABA = (n: string) => /^(DD\d+|VD\d+|RMEL|RMER|RMED|RMEV|AVL|DVB|RIS)$/.test(n);
+export let CN = { gc: 1, gg: 0.5 }; export function setCN(p: Partial<typeof CN>) { CN = { ...CN, ...p }; }
+export type Conn = { names: string[]; chem: [number, number, number][]; gap: [number, number, number][] };
+export function loadConn(csv: string): Conn { const names: string[] = [], idx = new Map<string, number>(); const id = (s: string) => { s = s.trim(); if (!idx.has(s)) { idx.set(s, names.length); names.push(s); } return idx.get(s)!; };
+  const chem: [number, number, number][] = [], gap: [number, number, number][] = []; for (const line of csv.trim().split("\n").slice(1)) { const [a, b, w, t] = line.split(","); const e: [number, number, number] = [id(a), id(b), +w]; (t.trim() === "chemical" ? chem : gap).push(e); } return { names, chem, gap }; }
+export function shuffleConn(c: Conn, r: Rng): Conn { const perm = (E: [number, number, number][]) => { const T = E.map((e) => e[1]); for (let k = T.length - 1; k > 0; k--) { const m = Math.floor(r() * (k + 1)); [T[k], T[m]] = [T[m], T[k]]; } return E.map((e, k) => [e[0], T[k], e[2]] as [number, number, number]); }; return { names: c.names, chem: perm(c.chem), gap: perm(c.gap) }; }
+export function touchTrial(c: Conn, stim: string[], r: Rng): number { const N = c.names.length, ix = (s: string) => c.names.indexOf(s); const S = stim.map(ix).filter((i) => i >= 0); let x = new Float64Array(N);
+  const sgn = c.names.map((n) => (GABA(n) ? -1 : 1)); const inC = new Float64Array(N), inG = new Float64Array(N); for (const [, b, w] of c.chem) inC[b] += w; for (const [, b, w] of c.gap) inG[b] += w; /* v2.7a: synaptic scaling, each cell's input normalized by its total incoming synapse count */ const A = [ix("AVAL"), ix("AVAR")], B = [ix("AVBL"), ix("AVBR")]; let acc = 0;
+  for (let t = 0; t < 300; t++) { const h = new Float64Array(N); for (const i of S) h[i] += 1; for (const [a, b, w] of c.chem) h[b] += CN.gc * w / inC[b] * sgn[a] * x[a]; for (const [a, b, w] of c.gap) { h[b] += CN.gg * w / inG[b] * (x[a] - x[b]); }
+    const nx = new Float64Array(N); for (let i = 0; i < N; i++) nx[i] = Math.min(1, Math.max(0, x[i] + 0.1 * (-x[i] + Math.max(0, h[i] + gauss(r) * 0.05)))); x = nx;
+    if (t >= 200) acc += (x[A[0]] + x[A[1]]) / 2 - (x[B[0]] + x[B[1]]) / 2; } return acc / 100; }

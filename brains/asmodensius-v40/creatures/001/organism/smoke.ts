@@ -1,0 +1,5 @@
+import { Organism } from "./organism";
+const seed = +(process.argv[2] || 2000); const o = new Organism({ seed, ...(JSON.parse(process.argv[3] || "{}")) }); const t0 = Date.now();
+for (let d = 0; d < 4; d++) { const hrs = new Array(24).fill(0); let f0 = o.foraged, r0 = o.rewards; for (let i = 0; i < 1440; i++) { o.step(); if (o.asleep) hrs[Math.floor((o.t % 1440) / 60)]++; }
+  console.log(`d${d} sleep ${hrs.map((h) => Math.round(h / 6)).join("")} forage ${o.foraged - f0} rew ${o.rewards - r0} DA ${o.nm.DA.E.toFixed(2)} 5HT ${o.nm["5HT"].E.toFixed(2)} NE ${o.nm.NE.E.toFixed(2)} ACh ${o.nm.ACh.E.toFixed(2)} aa ${o.blood.aa.toFixed(2)} glc ${o.blood.glc.toFixed(2)} fat ${o.fat.toFixed(0)} gly ${o.liverGly.toFixed(1)} hr ${o.hr.toFixed(0)} lvl ${o.level} err ${o.ledgerError().toExponential(1)}`); }
+console.log("ms", Date.now() - t0, "probe", o.probe(60), o.probe(60, true), "ep", o.episodes.length, [...o.wSite].map((x) => x.toFixed(2)).join(" "), "\np", [...o.pTrue].map((x) => x.toFixed(2)).join(" "));

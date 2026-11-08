@@ -1,0 +1,13 @@
+cap	capability	n_projects	creature_status	evidence
+E	Evolution	55	covered	CQM-01, CQM-02
+R	Self-reproduction	39	covered	CAP-R (v2.7; near pass-by-construction)
+B	Embodied physics	50	covered	CAP-B (v2.7)
+N	Neural control	65	covered	RPT-1/2, GWT-1..4
+L	Learning/plasticity	46	covered	iit4, V2-10, RM-29, RM-36
+M	Metabolism/energy	31	covered	V2-AI, RM-9, RM-97
+S	Social/multi-agent	33	covered	CAP-S (v2.7)
+C	Connectome/bio-grounded	28	FAIL	CAP-C: connectome separates touch location but with reversed direction under the Dale/GABA sign rule
+I	Indicator tests	5	covered	Butlin/CQM harness items
+D	Deterministic/reproducible	50	covered	v2.1-24
+W	Runs in browser	13	not test-proven	v2.3 live suite still running (headless smoke run only)
+O	Open source	84	uncovered	repo must not be published; not testable

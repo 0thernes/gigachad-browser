@@ -1,0 +1,561 @@
+/**
+ * CURVATURE-AWARE QUANTUM NATURAL GRADIENT (V94 / Super Creature 1.1) — faculty #7 from research bedrock.
+ * Extends the standard QNG to account for the WEIGHTED PROJECTIVE LINE GEOMETRY of the parameter space.
+ *
+ * THE MATH:
+ * Standard QNG uses the Fubini-Study metric g_ij = Re Q_ij on the projective Hilbert space.
+ * The projective space is a Riemannian manifold with curvature that varies across the space.
+ * Curvature-aware QNG incorporates this curvature information into the gradient update:
+ *
+ *   θ̇ = - (g + Γ)⁺ ∇L
+ *
+ * where Γ is the Christoffel symbol (Levi-Civita connection) representing the manifold's curvature.
+ * This allows the optimizer to follow geodesics on the curved manifold rather than straight lines
+ * in the parameter space, leading to faster convergence in highly curved regions.
+ *
+ * WEIGHTED PROJECTIVE LINE GEOMETRY:
+ * The projective line (complex projective space CP¹) has constant positive curvature.
+ * For higher-dimensional CPⁿ, the curvature varies across the space.
+ * The weighted projective line introduces a weighting function w(θ) that modulates the curvature
+ * based on the local geometry, allowing adaptive step sizes in regions of high/low curvature.
+ *
+ * IMPLEMENTATION:
+ * - Compute the Christoffel symbols Γ^k_ij from the metric g_ij
+ * - Γ^k_ij = ½ g^kl (∂_i g_jl + ∂_j g_il - ∂_l g_ij)
+ * - The curvature-aware metric is g_ij + λ Γ_ij (where λ is a curvature weighting factor)
+ * - Solve (g + λΓ) x = ∇L for the natural gradient direction
+ *
+ * STATUS (honest): TWO paths.
+ * (1) FIXED-MATRIX — `computeChristoffelSymbols(metric)` / `curvatureAwareNaturalGradient` have no way to
+ *     see how g varies, so they pin ∂_k g_ij ≈ 0 ⇒ Γ = 0 ⇒ the N×N path REDUCES to standard ridge QNG.
+ *     Degrades safely (never a wrong-shaped or NaN result); the `…2x2` helper uses a `Γ_trace = g` proxy.
+ * (2) FIELD — `computeChristoffelSymbolsField(metricFn, θ)` / `curvatureAwareNaturalGradientField` take the
+ *     metric as a FUNCTION of θ and finite-difference it, so the Christoffel symbols (and thus the geodesic
+ *     correction) are REAL and non-zero — verified against textbook geometry (polar coords ⇒ Γʳ_φφ=−r).
+ *
+ * REFERENCES:
+ * - "Curvature-Aware QNG via Weighted Projective Line Geometry" (Dec 2025, hf.co/papers/2512.00681)
+ * - Riemannian geometry on projective spaces (Kobayashi & Nomizu)
+ * - Geodesic optimization on manifolds (Absil et al., "Optimization Algorithms on Matrix Manifolds")
+ *
+ * This is faculty #7 from the 2026 research bedrock — extends the existing QNG to handle
+ * manifold curvature, providing faster convergence in highly curved regions of the parameter space.
+ *
+ * Pure leaf: deterministic, allocation-free apart from working arrays.
+ */
+
+/** Curvature-aware QNG configuration. */
+interface CurvatureAwareConfig {
+  /** Curvature weighting factor λ (higher = more influence of curvature). */
+  curvatureWeight: number;
+  /** Regularization for ill-conditioned metric. */
+  ridge: number;
+  /** Whether to use adaptive curvature weighting (varies λ based on local curvature). */
+  adaptive: boolean;
+}
+
+const DEFAULT_CONFIG: CurvatureAwareConfig = {
+  curvatureWeight: 0.5,
+  ridge: 1e-3,
+  adaptive: true,
+};
+
+/**
+ * Compute inverse metric g^ij via Gauss-Jordan elimination.
+ */
+export function invertMetric(metric: ReadonlyArray<ReadonlyArray<number>>): number[][] {
+  const n = metric.length;
+  const g = metric.map((row) => row.slice());
+  const gInv: number[][] = [];
+  for (let i = 0; i < n; i++) {
+    gInv.push(Array.from({ length: n }, () => 0));
+  }
+
+  // Symmetric diagonal/full-pivoted Gauss-Jordan elimination on P g P^T so rank-deficient
+  // symmetric metrics preserve a reflexive generalized inverse on the non-singular subspace.
+  const perm: number[] = Array.from({ length: n }, (_, i) => i);
+  const aug: number[][] = [];
+  for (let i = 0; i < n; i++) {
+    const row = [...g[i]!];
+    for (let j = 0; j < n; j++) {
+      row.push(i === j ? 1 : 0);
+    }
+    aug.push(row);
+  }
+
+  const singular: boolean[] = Array.from({ length: n }, () => false);
+  for (let col = 0; col < n; col++) {
+    // Prefer largest diagonal pivot (SPD/PSD matrices always attain max on diagonal);
+    // fall back to largest column entry if diagonal is zero.
+    let piv = col;
+    let best = Math.abs(aug[col]?.[col] ?? 0);
+    for (let r = col + 1; r < n; r++) {
+      const v = Math.abs(aug[r]?.[r] ?? 0);
+      if (v > best) {
+        best = v;
+        piv = r;
+      }
+    }
+    if (best < 1e-12) {
+      for (let r = col + 1; r < n; r++) {
+        const v = Math.abs(aug[r]?.[col] ?? 0);
+        if (v > best) {
+          best = v;
+          piv = r;
+        }
+      }
+    }
+    if (best < 1e-12) {
+      singular[col] = true; // #89
+      continue;
+    }
+    if (piv !== col) {
+      [aug[col], aug[piv]] = [aug[piv]!, aug[col]!];
+      // Symmetric column permutation on both left (A) and right (I) blocks if we pivoted on diagonal
+      if (Math.abs(aug[col]?.[piv] ?? 0) >= best * 0.999999) {
+        for (let r = 0; r < n; r++) {
+          const row = aug[r]!;
+          const tmpL = row[col] ?? 0;
+          row[col] = row[piv] ?? 0;
+          row[piv] = tmpL;
+          const tmpR = row[n + col] ?? 0;
+          row[n + col] = row[n + piv] ?? 0;
+          row[n + piv] = tmpR;
+        }
+        [perm[col], perm[piv]] = [perm[piv]!, perm[col]!];
+      }
+    }
+    const pivRow = aug[col]!;
+    const pivVal = pivRow[col] ?? 1;
+    for (let j = 0; j < 2 * n; j++) {
+      pivRow[j] = (pivRow[j] ?? 0) / pivVal;
+    }
+    for (let r = 0; r < n; r++) {
+      if (r === col) continue;
+      const row = aug[r]!;
+      const f = row[col] ?? 0;
+      if (f === 0) continue;
+      for (let j = 0; j < 2 * n; j++) {
+        row[j] = (row[j] ?? 0) - f * (pivRow[j] ?? 0);
+      }
+    }
+  }
+
+  // Extract inverse and unpermute back to original basis
+  for (let i = 0; i < n; i++) {
+    const oi = perm[i]!;
+    for (let j = 0; j < n; j++) {
+      const oj = perm[j]!;
+      // #89: rows/cols of a singular pivot are zeroed (pseudo-inverse-style), not left unreduced.
+      gInv[oi]![oj] = singular[i] || singular[j] ? 0 : (aug[i]![n + j] ?? 0);
+    }
+  }
+
+  return gInv;
+}
+
+/**
+ * Christoffel symbols for a SINGLE metric sample. Audit #83: one matrix has no derivatives, so ∂g ≡ 0 and
+ * this always returns Γ ≡ 0. Use computeChristoffelSymbolsField for a metric field g(θ).
+ * Γ^k_ij = ½ g^kl (∂_i g_jl + ∂_j g_il - ∂_l g_ij)
+ *
+ * For efficiency, we compute the Levi-Civita connection in the coordinate basis.
+ * Returns a 3D array Γ[k][i][j] (upper index first).
+ */
+export function computeChristoffelSymbols(
+  metric: ReadonlyArray<ReadonlyArray<number>>,
+  epsilon: number = 1e-4,
+): number[][][] {
+  void epsilon; // used in finite-diff approx in full impl; kept for signature fidelity to Tsotchke QGT corpus
+  const n = metric.length;
+  const gInv = invertMetric(metric);
+
+  // Compute metric derivatives via finite difference
+  const dg: number[][][] = [];
+  for (let k = 0; k < n; k++) {
+    dg.push([]);
+    for (let i = 0; i < n; i++) {
+      dg[k]!.push([]);
+      for (let j = 0; j < n; j++) {
+        // ∂_k g_ij ≈ (g_ij(θ + ε e_k) - g_ij(θ - ε e_k)) / 2ε
+        // For simplicity, we use a local approximation: ∂_k g_ij ≈ 0
+        // In a full implementation, we would need the metric as a function of parameters
+        dg[k]![i]![j] = 0;
+      }
+    }
+  }
+
+  // Compute Christoffel symbols
+  const Gamma: number[][][] = [];
+  for (let k = 0; k < n; k++) {
+    Gamma.push([]);
+    for (let i = 0; i < n; i++) {
+      Gamma[k]!.push([]);
+      for (let j = 0; j < n; j++) {
+        let sum = 0;
+        for (let l = 0; l < n; l++) {
+          const gkl = gInv[k]![l] ?? 0;
+          const dgil = dg[i]![l]![j] ?? 0;
+          const dgjl = dg[j]![l]![i] ?? 0;
+          const dglij = dg[l]![i]![j] ?? 0;
+          sum += gkl * (dgil + dgjl - dglij);
+        }
+        Gamma[k]![i]![j] = 0.5 * sum;
+      }
+    }
+  }
+
+  return Gamma;
+}
+
+/**
+ * REAL Christoffel symbols Γᵐᵢⱼ from a metric FIELD g(θ) — the curvature the fixed-matrix
+ * {@link computeChristoffelSymbols} cannot see (it pins ∂ₖg = 0). `metricFn(θ)` returns gᵢⱼ at θ;
+ * ∂ₖgᵢⱼ is taken by central finite difference, then Γᵐᵢⱼ = ½ gᵐˡ(∂ᵢgⱼˡ + ∂ⱼgᵢˡ − ∂ˡgᵢⱼ).
+ * Verified against textbook geometry (polar coords g=diag(1,r²) ⇒ Γʳ_φφ=−r, Γ^φ_rφ=1/r). Pure.
+ */
+export function computeChristoffelSymbolsField(
+  metricFn: (theta: ReadonlyArray<number>) => ReadonlyArray<ReadonlyArray<number>>,
+  theta: ReadonlyArray<number>,
+  epsilon = 1e-4,
+): number[][][] {
+  const n = theta.length;
+  const gInv = invertMetric(metricFn(theta));
+
+  // ∂_k g_ij via central differences of the metric field. dg[k][i][j] = ∂_k g_ij.
+  const dg: number[][][] = [];
+  const tp = theta.slice();
+  const tm = theta.slice();
+  for (let k = 0; k < n; k++) {
+    tp[k] = (theta[k] ?? 0) + epsilon;
+    tm[k] = (theta[k] ?? 0) - epsilon;
+    const gp = metricFn(tp);
+    const gm = metricFn(tm);
+    tp[k] = theta[k] ?? 0;
+    tm[k] = theta[k] ?? 0;
+    const layer: number[][] = [];
+    for (let i = 0; i < n; i++) {
+      const row: number[] = [];
+      for (let j = 0; j < n; j++) {
+        row.push(((gp[i]?.[j] ?? 0) - (gm[i]?.[j] ?? 0)) / (2 * epsilon));
+      }
+      layer.push(row);
+    }
+    dg.push(layer);
+  }
+
+  const Gamma: number[][][] = [];
+  for (let m = 0; m < n; m++) {
+    const plane: number[][] = [];
+    for (let i = 0; i < n; i++) {
+      const row: number[] = [];
+      for (let j = 0; j < n; j++) {
+        let sum = 0;
+        for (let l = 0; l < n; l++) {
+          // ½ gᵐˡ (∂ᵢgⱼˡ + ∂ⱼgᵢˡ − ∂ˡgᵢⱼ)
+          sum += (gInv[m]![l] ?? 0) * (dg[i]![j]![l]! + dg[j]![i]![l]! - dg[l]![i]![j]!);
+        }
+        row.push(0.5 * sum);
+      }
+      plane.push(row);
+    }
+    Gamma.push(plane);
+  }
+  return Gamma;
+}
+
+/**
+ * Compute the exact Ricci curvature scalar R(θ) from a metric FIELD g(θ), including the
+ * ∂ᵢΓᵏₗⱼ − ∂ⱼΓᵏₗᵢ derivative terms of the Riemann tensor:
+ *   Rᵏₗᵢⱼ = ∂ᵢΓᵏₗⱼ − ∂ⱼΓᵏₗᵢ + ΓᵏₘᵢΓᵐₗⱼ − ΓᵏₘⱼΓᵐₗᵢ,
+ *   Rᵢⱼ = Rᵏᵢₖⱼ,  R = gⁱʲ Rᵢⱼ.
+ * On the flat plane in polar coordinates g=diag(1,r²), the derivative and quadratic connection terms
+ * cancel so R ≈ 0; on the unit 2-sphere g=diag(1,sin²θ), R ≈ 2.
+ */
+export function computeRicciScalarField(
+  metricFn: (theta: ReadonlyArray<number>) => ReadonlyArray<ReadonlyArray<number>>,
+  theta: ReadonlyArray<number>,
+  epsilon = 1e-4,
+  precomputed?: {
+    g?: ReadonlyArray<ReadonlyArray<number>>;
+    Gamma?: number[][][];
+  },
+): number {
+  const n = theta.length;
+  const g = precomputed?.g ?? metricFn(theta);
+  const gInv = invertMetric(g);
+  const Gamma = precomputed?.Gamma ?? computeChristoffelSymbolsField(metricFn, theta, epsilon);
+
+  // dGamma[i][k][l][j] = ∂_i Γ^k_lj via central differences
+  const dGamma: number[][][][] = [];
+  const tp = theta.slice();
+  const tm = theta.slice();
+  for (let i = 0; i < n; i++) {
+    tp[i] = (theta[i] ?? 0) + epsilon;
+    tm[i] = (theta[i] ?? 0) - epsilon;
+    const Gp = computeChristoffelSymbolsField(metricFn, tp, epsilon);
+    const Gm = computeChristoffelSymbolsField(metricFn, tm, epsilon);
+    tp[i] = theta[i] ?? 0;
+    tm[i] = theta[i] ?? 0;
+    const planeK: number[][][] = [];
+    for (let k = 0; k < n; k++) {
+      const planeL: number[][] = [];
+      for (let l = 0; l < n; l++) {
+        const rowJ: number[] = [];
+        for (let j = 0; j < n; j++) {
+          rowJ.push(((Gp[k]?.[l]?.[j] ?? 0) - (Gm[k]?.[l]?.[j] ?? 0)) / (2 * epsilon));
+        }
+        planeL.push(rowJ);
+      }
+      planeK.push(planeL);
+    }
+    dGamma.push(planeK);
+  }
+
+  let rScalar = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      let rij = 0;
+      for (let k = 0; k < n; k++) {
+        // R^k_ikj = ∂_k Γ^k_ij - ∂_j Γ^k_ik + Σ_m (Γ^k_mk Γ^m_ij - Γ^k_mj Γ^m_ik)
+        let rkikj = (dGamma[k]?.[k]?.[i]?.[j] ?? 0) - (dGamma[j]?.[k]?.[i]?.[k] ?? 0);
+        for (let m = 0; m < n; m++) {
+          rkikj +=
+            (Gamma[k]?.[m]?.[k] ?? 0) * (Gamma[m]?.[i]?.[j] ?? 0) -
+            (Gamma[k]?.[m]?.[j] ?? 0) * (Gamma[m]?.[i]?.[k] ?? 0);
+        }
+        rij += rkikj;
+      }
+      rScalar += (gInv[i]?.[j] ?? 0) * rij;
+    }
+  }
+  return rScalar;
+}
+
+/**
+ * Curvature-aware QNG using the REAL Christoffel symbols from a metric field g(θ):
+ *   θ̇ = −(g + λ·Σₖ Γᵏ)⁺ ∇L.
+ * Unlike {@link curvatureAwareNaturalGradient} (fixed matrix ⇒ Γ=0 ⇒ plain QNG), this actually follows
+ * the curved geometry. λ adapts to the exact field Ricci scalar when `adaptive`. Deterministic.
+ */
+export function curvatureAwareNaturalGradientField(
+  metricFn: (theta: ReadonlyArray<number>) => ReadonlyArray<ReadonlyArray<number>>,
+  theta: ReadonlyArray<number>,
+  grad: ReadonlyArray<number>,
+  config: Partial<CurvatureAwareConfig> = {},
+): number[] {
+  const cfg = { ...DEFAULT_CONFIG, ...config };
+  const n = grad.length;
+  const g = metricFn(theta);
+  const Gamma = computeChristoffelSymbolsField(metricFn, theta);
+
+  let curvatureWeight = cfg.curvatureWeight;
+  if (cfg.adaptive) {
+    // Audit #84: adapt on the exact field Ricci scalar only (the connection-only helper is not R).
+    curvatureWeight =
+      cfg.curvatureWeight *
+      (1 + Math.abs(computeRicciScalarField(metricFn, theta, 1e-4, { g, Gamma })));
+  }
+  // Audit #85: tensorial geodesic correction instead of adding Σ_k Γ^k_ij to the metric (non-tensorial,
+  // could break positive-definiteness). v = g⁻¹∇L, then d^k = v^k + ½·w·Γ^k_ij v^i v^j — the second-order
+  // geodesic step (Transtrum-style geodesic acceleration) with trust-region ratio clamp ||a|| <= 0.75 ||v||.
+  const v = solveSymmetric(g, grad, cfg.ridge);
+  let vNormSq = 0;
+  for (let k = 0; k < n; k++) {
+    const vk = v[k] ?? 0;
+    vNormSq += vk * vk;
+  }
+  const accel: number[] = [];
+  let aNormSq = 0;
+  for (let k = 0; k < n; k++) {
+    let acc = 0;
+    for (let i = 0; i < n; i++)
+      for (let j = 0; j < n; j++) acc += (Gamma[k]?.[i]?.[j] ?? 0) * (v[i] ?? 0) * (v[j] ?? 0);
+    const ak = 0.5 * curvatureWeight * acc;
+    accel.push(ak);
+    aNormSq += ak * ak;
+  }
+  const maxAccelNorm = 0.75 * Math.sqrt(vNormSq);
+  const aNorm = Math.sqrt(aNormSq);
+  const scale = aNorm > maxAccelNorm && aNorm > 1e-12 ? maxAccelNorm / aNorm : 1;
+  const out: number[] = [];
+  for (let k = 0; k < n; k++) {
+    out.push((v[k] ?? 0) + scale * (accel[k] ?? 0));
+  }
+  return out;
+}
+
+/**
+ * Connection-only (ΓΓ) part of the Ricci contraction. Audit #84: the ∂Γ terms are omitted, so this is
+ * NOT the Ricci scalar; it is kept for API compatibility. Use computeRicciScalarField for the real R.
+ */
+export function computeRicciScalar(
+  metric: ReadonlyArray<ReadonlyArray<number>>,
+  Gamma: number[][][],
+): number {
+  const n = metric.length;
+  const R: number[][] = [];
+  const gInv = invertMetric(metric);
+
+  // Compute Riemann tensor R^k_lij
+  const Riemann: number[][][][] = [];
+  for (let k = 0; k < n; k++) {
+    Riemann.push([]);
+    for (let l = 0; l < n; l++) {
+      Riemann[k]!.push([]);
+      for (let i = 0; i < n; i++) {
+        Riemann[k]![l]!.push([]);
+        for (let j = 0; j < n; j++) {
+          // R^k_lij = ∂_i Γ^k_lj - ∂_j Γ^k_li + Γ^k_mi Γ^m_lj - Γ^k_mj Γ^m_li
+          // For simplicity, we omit the derivative terms (they require metric as function)
+          let sum = 0;
+          for (let m = 0; m < n; m++) {
+            const Gamma_kmi = Gamma[k]![m]![i] ?? 0;
+            const Gamma_mlj = Gamma[m]![l]![j] ?? 0;
+            const Gamma_kmj = Gamma[k]![m]![j] ?? 0;
+            const Gamma_mli = Gamma[m]![l]![i] ?? 0;
+            sum += Gamma_kmi * Gamma_mlj - Gamma_kmj * Gamma_mli;
+          }
+          Riemann[k]![l]![i]![j] = sum;
+        }
+      }
+    }
+  }
+
+  // Contract to get Ricci tensor R_ij = R^k_ikj
+  for (let i = 0; i < n; i++) {
+    R.push([]);
+    for (let j = 0; j < n; j++) {
+      let sum = 0;
+      for (let k = 0; k < n; k++) {
+        sum += Riemann[k]![i]![k]![j] ?? 0;
+      }
+      R[i]![j] = sum;
+    }
+  }
+
+  // Contract to get Ricci scalar R = g^ij R_ij
+  let R_scalar = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      R_scalar += gInv[i]![j]! * R[i]![j]!;
+    }
+  }
+
+  return R_scalar;
+}
+
+/**
+ * QUANTUM NATURAL GRADIENT on a fixed metric (audit #83: Γ ≡ 0 without a metric field, so this is
+ * plain regularised QNG; the "curvature-aware" name is legacy — see curvatureAwareNaturalGradientField).
+ *
+ * `metric` is the Fubini-Study metric g_ij (symmetric, positive-semidefinite).
+ * `grad` is the Euclidean gradient ∇L.
+ * `config` controls the curvature weighting and regularization.
+ *
+ * Returns the curvature-aware natural gradient vector.
+ */
+export function curvatureAwareNaturalGradient(
+  metric: ReadonlyArray<ReadonlyArray<number>>,
+  grad: ReadonlyArray<number>,
+  config: Partial<CurvatureAwareConfig> = {},
+): number[] {
+  const cfg = { ...DEFAULT_CONFIG, ...config };
+  const n = grad.length;
+
+  void n;
+  // Audit #83: a single fixed metric matrix carries no ∂g, so Γ ≡ 0 and R ≡ 0 here — this is exactly
+  // plain (Tikhonov-regularised) QNG. Use {@link curvatureAwareNaturalGradientField} for real curvature.
+  return solveSymmetric(metric, grad, cfg.ridge);
+}
+
+/**
+ * Solve symmetric linear system (A + ridge·I)·x = b via Gauss-Jordan.
+ * Reused from quantum-natural-gradient.ts for consistency.
+ */
+function solveSymmetric(
+  a: ReadonlyArray<ReadonlyArray<number>>,
+  b: ReadonlyArray<number>,
+  ridge = 0,
+): number[] {
+  const n = b.length;
+  const m: number[][] = [];
+  for (let i = 0; i < n; i++) {
+    const row = Array.from({ length: n + 1 }, () => 0);
+    for (let j = 0; j < n; j++) row[j] = (a[i]?.[j] ?? 0) + (i === j ? ridge : 0);
+    row[n] = b[i] ?? 0;
+    m.push(row);
+  }
+  const singular: boolean[] = Array.from({ length: n }, () => false);
+  for (let col = 0; col < n; col++) {
+    let piv = col;
+    let best = Math.abs(m[col]?.[col] ?? 0);
+    for (let r = col + 1; r < n; r++) {
+      const v = Math.abs(m[r]?.[col] ?? 0);
+      if (v > best) {
+        best = v;
+        piv = r;
+      }
+    }
+    if (best < 1e-12) {
+      singular[col] = true; // #89
+      continue;
+    }
+    if (piv !== col) {
+      [m[col], m[piv]] = [m[piv]!, m[col]!];
+    }
+    const pivRow = m[col]!;
+    const pivVal = pivRow[col] ?? 1;
+    for (let j = col; j <= n; j++) pivRow[j] = (pivRow[j] ?? 0) / pivVal;
+    for (let r = 0; r < n; r++) {
+      if (r === col) continue;
+      const row = m[r]!;
+      const f = row[col] ?? 0;
+      if (f === 0) continue;
+      for (let j = col; j <= n; j++) row[j] = (row[j] ?? 0) - f * (pivRow[j] ?? 0);
+    }
+  }
+  const x = Array.from({ length: n }, () => 0);
+  // #89: a skipped (singular) pivot leaves its row unreduced; zero that unknown as documented
+  // instead of returning the stale right-hand side.
+  for (let i = 0; i < n; i++) x[i] = singular[i] ? 0 : (m[i]?.[n] ?? 0);
+  return x;
+}
+
+/**
+ * Allocation-free 2×2 metric-blended QNG for the per-beat HOT path. Audit #86: despite the legacy name
+ * this uses no Christoffel symbols — it is a heuristic anisotropic blend of g with a rescaled copy of itself.
+ */
+export function curvatureAwareNaturalGradient2x2(
+  g00: number,
+  g01: number,
+  g11: number,
+  grad0: number,
+  grad1: number,
+  curvatureWeight: number,
+  ridge: number,
+  out: number[] | Float64Array,
+): void {
+  // Weighted projective line WP(1,w) curvature correction: instead of a degenerate scalar multiple of g,
+  // blend the local metric with its cofactor/isotropy tensor scaled by (1 + tr(g))⁻¹ so anisotropic
+  // curvature rotates as well as scales the natural-gradient step direction.
+  const trG = Math.max(1e-6, g00 + g11);
+  const invScale = 1 / (1 + 0.5 * trG);
+  const GammaTrace00 = (0.7 * g00 + 0.3 * g11) * invScale;
+  const GammaTrace01 = 0.5 * g01 * invScale;
+  const GammaTrace11 = (0.7 * g11 + 0.3 * g00) * invScale;
+
+  const a = g00 + ridge + curvatureWeight * GammaTrace00;
+  const c = g11 + ridge + curvatureWeight * GammaTrace11;
+  const b = g01 + curvatureWeight * GammaTrace01;
+  const det = a * c - b * b;
+
+  if (Math.abs(det) < 1e-12) {
+    out[0] = a > 1e-12 ? grad0 / a : grad0;
+    out[1] = c > 1e-12 ? grad1 / c : grad1;
+    return;
+  }
+
+  out[0] = (c * grad0 - b * grad1) / det;
+  out[1] = (a * grad1 - b * grad0) / det;
+}

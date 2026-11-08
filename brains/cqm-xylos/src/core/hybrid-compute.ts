@@ -1,0 +1,378 @@
+/**
+ * Browser compute capability probes, routing proposals, and a CPU/WASM neural helper.
+ *
+ * Capability detection and proposed shard labels do not dispatch work. The entity-brain helper
+ * executes the Zig WASM export synchronously on its calling CPU thread. This module does not
+ * run a GPU pipeline, WebNN model, transform-feedback computation, or worker pool. The separate
+ * wilderness-webgpu module owns the integrated, calibrated ambient GPU kernel.
+ */
+
+import { getZigKernelReceipt, zigEntityBrainBatchForward } from '../math/zig-bridge';
+import { counterHash32 } from '../math/wild-entropy';
+import { detectWebGpu } from './webgpu-detect';
+
+export interface HybridHardwareCapabilities {
+  readonly cpuLogicalCores: number;
+  /** Suggested capacity, not the count of initialized workers. */
+  readonly workerCount: number;
+  readonly sharedArrayBufferAvailable: boolean;
+  readonly zigWasmAvailable: boolean;
+  /** @deprecated Unverified SIMD capability; always false in this module's probe results. */
+  readonly zigWasmSimdAvailable: boolean;
+  /** Adapter availability, not an executed compute workload. */
+  readonly webGpuComputeAvailable: boolean;
+  readonly webGpuAdapterName: string;
+  /** An NPU-context request succeeded; the probe context was destroyed and no model ran. */
+  readonly webNnNpuAvailable: boolean;
+  readonly webNnDeviceType: 'npu' | 'gpu' | 'cpu' | 'unavailable';
+}
+
+interface WorkerShardRange {
+  readonly shardIndex: number;
+  readonly startSlot: number;
+  readonly endSlot: number;
+  readonly count: number;
+  /** Proposed destination only; the CPU helper does not dispatch to this processor. */
+  readonly processor: 'cpu-worker' | 'gpu-compute' | 'npu-webnn';
+}
+
+export interface HybridWorkloadPlan {
+  readonly kind: 'proposal-only';
+  readonly totalEntities: number;
+  /** Heuristic budget estimate; no camera query, rendering cull, or edge count measurement. */
+  readonly proposedConnectomeLinks: number;
+  /** @deprecated Compatibility alias of proposedConnectomeLinks; not active rendered links. */
+  readonly activeConnectomeLinks: number;
+  readonly shards: readonly WorkerShardRange[];
+  readonly gpuAssignedEntities: number;
+  readonly npuAssignedEntities: number;
+  readonly cpuAssignedEntities: number;
+  readonly connectomeCameraCullRatio: number;
+}
+
+/** Minimal WebNN (`navigator.ml`) structural interface for browser NPU probing without external d.ts. */
+interface BrowserMLNavigator {
+  ml?: {
+    createContext?: (options?: {
+      deviceType?: 'npu' | 'gpu' | 'cpu';
+      powerPreference?: 'low-power' | 'high-performance' | 'default';
+    }) => Promise<unknown>;
+  };
+}
+
+/**
+ * Probe capabilities only. Optional adapter/context requests run concurrently with bounded
+ * deadlines. No GPU device or model is created, and acquired WebNN contexts are destroyed,
+ * including contexts whose request resolves after the deadline.
+ */
+export async function detectHybridHardware(timeoutMs = 1_000): Promise<HybridHardwareCapabilities> {
+  const rawCores =
+    typeof navigator !== 'undefined' && Number.isFinite(navigator.hardwareConcurrency)
+      ? Math.max(1, Math.trunc(navigator.hardwareConcurrency))
+      : 4;
+  const workerCount = Math.max(1, Math.min(16, rawCores > 2 ? rawCores - 1 : rawCores));
+  const sharedArrayBufferAvailable = typeof SharedArrayBuffer !== 'undefined';
+  const zigWasmAvailable = hasZigWasm();
+  const deadline = Number.isFinite(timeoutMs) ? Math.min(5_000, Math.max(0, timeoutMs)) : 1_000;
+  const [webGpu, webNnNpuAvailable] = await Promise.all([
+    detectWebGpu(deadline),
+    probeNpuContext(deadline),
+  ]);
+
+  return {
+    cpuLogicalCores: rawCores,
+    workerCount,
+    sharedArrayBufferAvailable,
+    zigWasmAvailable,
+    zigWasmSimdAvailable: false,
+    webGpuComputeAvailable: webGpu.available,
+    webGpuAdapterName:
+      webGpu.adapter ?? (webGpu.available ? 'WebGPU adapter available' : 'Unavailable'),
+    webNnNpuAvailable,
+    webNnDeviceType: webNnNpuAvailable ? 'npu' : 'unavailable',
+  };
+}
+
+function hasZigWasm(): boolean {
+  try {
+    return getZigKernelReceipt().ready;
+  } catch {
+    return false;
+  }
+}
+
+async function probeNpuContext(timeoutMs: number): Promise<boolean> {
+  if (typeof navigator === 'undefined') return false;
+  const ml = (navigator as unknown as BrowserMLNavigator).ml;
+  const createContext = ml?.createContext;
+  if (!ml || typeof createContext !== 'function') return false;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  // This handler remains attached after timeout so late resources are still released.
+  const request = Promise.resolve()
+    .then(() => createContext.call(ml, { deviceType: 'npu', powerPreference: 'low-power' }))
+    .then((context) => {
+      if (
+        context === null ||
+        typeof context !== 'object' ||
+        !('destroy' in context) ||
+        typeof context.destroy !== 'function'
+      )
+        return false;
+      context.destroy();
+      return true;
+    })
+    .catch(() => false);
+  try {
+    return await Promise.race([
+      request,
+      new Promise<false>((resolve) => {
+        timer = setTimeout(() => resolve(false), timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
+  }
+}
+
+/**
+ * Synchronous baseline hardware snapshot (used at boot before async WebGPU/WebNN promises settle,
+ * and in deterministic unit tests).
+ */
+export function getBaselineHybridHardware(
+  overrides: Partial<HybridHardwareCapabilities> = {},
+): HybridHardwareCapabilities {
+  const rawCores =
+    typeof navigator !== 'undefined' && Number.isFinite(navigator.hardwareConcurrency)
+      ? Math.max(1, Math.trunc(navigator.hardwareConcurrency))
+      : 8;
+  const workerCount = Math.max(1, Math.min(16, rawCores > 2 ? rawCores - 1 : rawCores));
+  return {
+    cpuLogicalCores: rawCores,
+    workerCount,
+    sharedArrayBufferAvailable: typeof SharedArrayBuffer !== 'undefined',
+    zigWasmAvailable: hasZigWasm(),
+    webGpuComputeAvailable: false,
+    webGpuAdapterName: 'Not probed',
+    webNnNpuAvailable: false,
+    webNnDeviceType: 'unavailable',
+    ...overrides,
+    zigWasmSimdAvailable: false,
+  };
+}
+
+/**
+ * Hypothetical partition of entities across capability labels. Every entity is assigned once,
+ * but nothing is dispatched. Ratios are fixed heuristics, not benchmark-derived optimization.
+ * The connectome estimate has no camera/fog inputs and is not applied to rendering.
+ */
+export function planHybridPartition(
+  totalEntities: number,
+  maxConnectomeLinks: number,
+  hw: HybridHardwareCapabilities,
+): HybridWorkloadPlan {
+  const n = Number.isFinite(totalEntities) ? Math.max(0, Math.trunc(totalEntities)) : 0;
+  const links = Number.isFinite(maxConnectomeLinks)
+    ? Math.max(0, Math.trunc(maxConnectomeLinks))
+    : 0;
+  if (n === 0) {
+    return {
+      kind: 'proposal-only',
+      totalEntities: 0,
+      proposedConnectomeLinks: 0,
+      activeConnectomeLinks: 0,
+      shards: [],
+      gpuAssignedEntities: 0,
+      npuAssignedEntities: 0,
+      cpuAssignedEntities: 0,
+      connectomeCameraCullRatio: 1,
+    };
+  }
+
+  const shards: WorkerShardRange[] = [];
+  let cursor = 0;
+
+  // Hypothetical 55% GPU / 20% NPU budgets, not execution or performance measurements.
+  const gpuCount = hw.webGpuComputeAvailable ? Math.floor(n * 0.55) : 0;
+  if (gpuCount > 0) {
+    shards.push({
+      shardIndex: shards.length,
+      startSlot: cursor,
+      endSlot: cursor + gpuCount,
+      count: gpuCount,
+      processor: 'gpu-compute',
+    });
+    cursor += gpuCount;
+  }
+
+  const npuCount = hw.webNnNpuAvailable ? Math.min(n - cursor, Math.floor(n * 0.2)) : 0;
+  if (npuCount > 0) {
+    shards.push({
+      shardIndex: shards.length,
+      startSlot: cursor,
+      endSlot: cursor + npuCount,
+      count: npuCount,
+      processor: 'npu-webnn',
+    });
+    cursor += npuCount;
+  }
+
+  // Partition the remaining proposed CPU workload; this does not initialize workers.
+  const remaining = n - cursor;
+  const requestedWorkers = Number.isFinite(hw.workerCount) ? Math.trunc(hw.workerCount) : 1;
+  const workers = Math.max(1, Math.min(16, requestedWorkers, remaining));
+  const baseChunk = Math.floor(remaining / workers);
+  const extra = remaining % workers;
+
+  for (let w = 0; w < workers && cursor < n; w++) {
+    const count = baseChunk + (w < extra ? 1 : 0);
+    if (count <= 0) continue;
+    shards.push({
+      shardIndex: shards.length,
+      startSlot: cursor,
+      endSlot: cursor + count,
+      count,
+      processor: 'cpu-worker',
+    });
+    cursor += count;
+  }
+
+  // Legacy heuristic budget only. No camera visibility or rendering edges are changed.
+  const connectomeCameraCullRatio =
+    links <= 120_000 ? 1.0 : Math.max(0.35, Math.min(1.0, Math.sqrt(120_000 / links)));
+
+  return {
+    kind: 'proposal-only',
+    totalEntities: n,
+    proposedConnectomeLinks: Math.round(links * connectomeCameraCullRatio),
+    activeConnectomeLinks: Math.round(links * connectomeCameraCullRatio),
+    shards,
+    gpuAssignedEntities: gpuCount,
+    npuAssignedEntities: npuCount,
+    cpuAssignedEntities: remaining,
+    connectomeCameraCullRatio,
+  };
+}
+
+/**
+ * Compatibility wrapper for the synchronous calling-thread CPU/WASM helper below.
+ * Proposed GPU/NPU/worker labels do not select a different execution backend.
+ */
+export function executeHybridEntityBrainBatch(
+  weights: Float32Array,
+  inputs: Float32Array,
+  outputs: Float32Array,
+  plan: HybridWorkloadPlan,
+  seed = 0,
+  tick = 0,
+  applyCounterJitter = false,
+  hiddenState?: Float32Array,
+): Float32Array {
+  return executeHybridEntityBrainBatchWithReceipt(
+    weights,
+    inputs,
+    outputs,
+    plan,
+    seed,
+    tick,
+    applyCounterJitter,
+    hiddenState,
+  ).outputs;
+}
+
+export interface HybridEntityBrainExecution {
+  readonly kind: 'execution-receipt';
+  readonly outputs: Float32Array;
+  readonly backendUsed: 'cpu-zig-wasm' | 'none';
+  readonly executionContext: 'calling-thread';
+  readonly kernelExport: 'cqm_entity_brain_batch_forward' | null;
+  readonly processedEntities: number;
+  readonly gpuExecutedEntities: 0;
+  readonly npuExecutedEntities: 0;
+}
+
+let hybridHiddenScratch = new Float32Array(6);
+
+/** Execute the actual WASM export on the calling CPU thread and verify its processed count. */
+export function executeHybridEntityBrainBatchWithReceipt(
+  weights: Float32Array,
+  inputs: Float32Array,
+  outputs: Float32Array,
+  plan: HybridWorkloadPlan,
+  seed = 0,
+  tick = 0,
+  applyCounterJitter = false,
+  hiddenState?: Float32Array,
+): HybridEntityBrainExecution {
+  const count = plan.totalEntities;
+  if (
+    !Number.isSafeInteger(count) ||
+    count < 0 ||
+    weights.length < count * 70 ||
+    inputs.length < count * 6 ||
+    outputs.length < count * 4
+  )
+    throw new RangeError('Entity-brain batch count exceeds its input/output buffers');
+  let covered = 0;
+  for (const shard of [...plan.shards].sort((a, b) => a.startSlot - b.startSlot)) {
+    if (
+      !Number.isSafeInteger(shard.startSlot) ||
+      !Number.isSafeInteger(shard.endSlot) ||
+      shard.startSlot !== covered ||
+      shard.endSlot < shard.startSlot ||
+      shard.endSlot > count ||
+      shard.count !== shard.endSlot - shard.startSlot
+    )
+      throw new RangeError('Entity-brain shards must cover the batch exactly once');
+    covered = shard.endSlot;
+  }
+  if (covered !== count) throw new RangeError('Entity-brain shards do not cover the batch');
+  // Audit #274: grow-only module scratch for the hidden layer instead of a fresh count·6 array per call.
+  // When caller supplies a persistent `hiddenState` buffer, preserve recurrent hidden activations across ticks.
+  const usePersistentHidden = hiddenState !== undefined && hiddenState.length >= count * 6;
+  const need = Math.max(6, count * 6);
+  if (!usePersistentHidden && hybridHiddenScratch.length < need) {
+    hybridHiddenScratch = new Float32Array(need);
+  }
+  const scratchHidden = usePersistentHidden ? hiddenState : hybridHiddenScratch;
+  let processedEntities = 0;
+
+  for (const shard of plan.shards) {
+    if (shard.count <= 0) continue;
+    const wSub = weights.subarray(shard.startSlot * 70, shard.endSlot * 70);
+    const inSub = inputs.subarray(shard.startSlot * 6, shard.endSlot * 6);
+    const hidSub = scratchHidden.subarray(shard.startSlot * 6, shard.endSlot * 6);
+    if (!usePersistentHidden) {
+      hidSub.fill(0); // stateless call: zero shared scratch so repeat calls with no hiddenState are idempotent
+    }
+    const outSub = outputs.subarray(shard.startSlot * 4, shard.endSlot * 4);
+
+    const processed = zigEntityBrainBatchForward(wSub, inSub, hidSub, outSub, shard.count);
+    if (processed !== shard.count)
+      throw new Error('Entity-brain WASM export returned an incomplete batch');
+    processedEntities += processed;
+
+    if (applyCounterJitter) {
+      for (let i = 0; i < shard.count; i++) {
+        const entityId = shard.startSlot + i;
+        const word = counterHash32(seed, tick, entityId, 0);
+        const jitter = (word / 4294967296 - 0.5) * 0.002;
+        const base = i * 4;
+        outSub[base] = outSub[base]! + jitter;
+        outSub[base + 1] = outSub[base + 1]! + jitter;
+        outSub[base + 2] = outSub[base + 2]! + jitter;
+        outSub[base + 3] = outSub[base + 3]! + jitter;
+      }
+    }
+  }
+
+  return {
+    kind: 'execution-receipt',
+    outputs,
+    backendUsed: processedEntities > 0 ? 'cpu-zig-wasm' : 'none',
+    executionContext: 'calling-thread',
+    kernelExport: processedEntities > 0 ? 'cqm_entity_brain_batch_forward' : null,
+    processedEntities,
+    gpuExecutedEntities: 0,
+    npuExecutedEntities: 0,
+  };
+}
