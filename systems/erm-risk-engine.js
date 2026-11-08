@@ -127,11 +127,15 @@ const ERM_RISK_REGISTER = [
 ];
 
 function evaluateErmPosture(runtimeState = {}) {
+  runtimeState = (runtimeState && typeof runtimeState === 'object') ? runtimeState : {};
   const rows = ERM_RISK_REGISTER.map((item) => {
     const inherentScore = item.inherentLikelihood * item.inherentImpact;
     let residualLikelihood = item.residualLikelihood;
     if (item.id === 'ERM-FS-02' && (runtimeState.piiFirewall === false || runtimeState.piiScrubEnabled === false)) residualLikelihood = 3;
     if (item.id === 'ERM-BE-04' && (runtimeState.sidecarReady === false || runtimeState.sidecarHealthy === false)) residualLikelihood = 2;
+    if (item.id === 'ERM-FS-03' && Number(runtimeState.failedAiCalls || 0) > 0) {
+      residualLikelihood = Math.min(4, item.residualLikelihood + Math.ceil(Number(runtimeState.failedAiCalls) / 3));
+    }
     const residualScore = residualLikelihood * item.residualImpact;
     const band = residualScore <= 4 ? 'LOW' : residualScore <= 9 ? 'MEDIUM' : 'HIGH';
     const defaultOwner = item.domain === 'Backend' ? 'main.js / laya_sidecar.py' : item.domain === 'Frontend' ? 'index.html' : 'main.js + index.html';

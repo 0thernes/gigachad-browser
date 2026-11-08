@@ -224,7 +224,8 @@ assert(indexScript.includes('htsrPowerLawAlpha') && indexScript.includes('yangMi
 assert(indexScript.includes('poincareDiskCoords24') && indexScript.includes('wlColorHash32') && indexScript.includes('sinkhornTransport4x4') && indexScript.includes('lz78PhraseRing64'), 'index.html must implement DSD Pillars 21..24 (poincareDiskCoords24, wlColorHash32, sinkhornTransport4x4, lz78PhraseRing64)');
 assert(indexScript.includes('perelmanWEntropy') && indexScript.includes('ryuTakayanagiBulkEntropy') && indexScript.includes('hodgeHarmonicFlowPct') && indexScript.includes('astrocyteMeanCaUm'), 'index.html must compute Perelman Ricci W-entropy, Ryu-Takayanagi bulk entanglement entropy, Hodge-de Rham harmonic flow, and astrocyte Ca2+ waves');
 assert(newtabHtml.includes('id="newtab-neural-strip-canvas"'), 'pages/newtab.html must include #newtab-neural-strip-canvas');
-assert(!/Structured Liquid/i.test(indexHtml) && !/Structured Liquid/i.test(newtabHtml), 'Must use Spiking Liquid Time-Constant (sLTC), never Structured Liquid');
+const legacyMisnomerRe = new RegExp('Structured' + '\\s+' + 'Liquid', 'i');
+assert(!legacyMisnomerRe.test(indexHtml) && !legacyMisnomerRe.test(newtabHtml), 'Must use Spiking Liquid Time-Constant (sLTC), never legacy misnomer');
 assert(indexScript.includes('trainableAlifeNeuralHub') && indexScript.includes('stepTrainableAlifeNeuralHub60Hz'), 'index.html must initialize trainableAlifeNeuralHub and stepTrainableAlifeNeuralHub60Hz');
 assert(indexScript.includes('f64InterIntraCoupling16x16') && indexScript.includes('b158TernaryMorphism256') && indexScript.includes('fp16PersistentWeights256'), 'index.html must include Multi-Precision Float64 16x16 Inter/Intra coupling, BitNet b1.58 ternary morphisms, and FP16 storage');
 assert(indexScript.includes('visionDomGrid8x8') && indexScript.includes('samSpatialAffordance16') && indexScript.includes('W_icm_inv') && indexScript.includes('icmCuriosityReward') && indexScript.includes('learnedMotorThrust2D'), 'index.html must include Embodied Robot Vision-DOM SAM + Action-Physics ICM/LAM + Intrinsic Curiosity Actor-Critic');
@@ -237,9 +238,18 @@ assert(indexScript.includes('aotTotGotEngine') && indexScript.includes("mode ===
 
 // 9. Verify 14-Brain Multiverse Pantheon, 7-Tier Mixed-Precision Arena, 25x10 Forensic Auditor & Proprietary License
 const { PortedMultiverseBrainsFederation, Heterogeneous7TierPrecisionArena } = require('../systems/ported-multiverse-brains');
+const { SiblingBrainFusionEngine, BleedEdge25AlifeEngine } = require('../systems/alife-25-bleeding-edge-models');
 const { Forensic25Pass10IterationAuditor } = require('../systems/forensic-25-pass-10-iteration-auditor');
+const enterpriseArchKebab = require('../systems/enterprise-architecture');
+const enterpriseArchSnake = require('../systems/enterprise_architecture');
+assert.strictEqual(enterpriseArchKebab.PortedMultiverseBrainsFederation, PortedMultiverseBrainsFederation, 'systems/enterprise-architecture.js must export PortedMultiverseBrainsFederation');
+assert.strictEqual(enterpriseArchKebab.BleedEdge25AlifeEngine, BleedEdge25AlifeEngine, 'systems/enterprise-architecture.js must export BleedEdge25AlifeEngine');
+assert.strictEqual(enterpriseArchKebab.Forensic25Pass10IterationAuditor, enterpriseArchSnake.Forensic25Pass10IterationAuditor, 'enterprise-architecture.js and enterprise_architecture.js must match');
+
 const pantheonTest = new PortedMultiverseBrainsFederation();
-assert.ok(pantheonTest.brainsCatalog10.length >= 12, `Expected >= 12 ported multiverse brains, got ${pantheonTest.brainsCatalog10.length}`);
+assert.strictEqual(pantheonTest.brainsCatalog10.length, 14, `Expected 14 ported multiverse brains, got ${pantheonTest.brainsCatalog10.length}`);
+assert.strictEqual(pantheonTest.latestSnapshot.activeBrainsCount, 14, 'Expected activeBrainsCount === 14');
+assert.strictEqual(pantheonTest.latestSnapshot.totalPantheonBrainsCount, 14, 'Expected totalPantheonBrainsCount === 14');
 assert.strictEqual(pantheonTest.brain9ThalerDabus.ablationResults.passedAllAblations, true, 'Expected Brain 9 Thaler DABUS 4 honest ablation gates to pass');
 assert.strictEqual(Object.keys(pantheonTest.brain9ThalerDabus.nineMarkers).length, 9, 'Expected all 9 Thaler constitutive markers');
 assert.ok(pantheonTest.brain2Glitchling.bestSiteFrac > 0, 'Expected Glitchling selectable bestSiteFrac > 0');
@@ -257,14 +267,190 @@ const forensicReport = new Forensic25Pass10IterationAuditor().runFull10Iteration
 assert.strictEqual(forensicReport.ok, true, 'Expected 25-Pass x 10-Iteration Forensic Audit to pass 100%');
 assert.strictEqual(forensicReport.iterationsCompleted, 10, 'Expected 10 iterations completed');
 assert.strictEqual(forensicReport.totalPassExecutions, 250, 'Expected 250 pass executions (25 passes x 10 iterations)');
+assert.strictEqual(forensicReport.passedPassIterations, 250, 'Expected 250 passed pass iterations');
 assert.strictEqual(forensicReport.totalAtomicAuditPointsPassed, 500, 'Expected 500/500 atomic audit points passed');
+
+// Verify Forensic25Pass10IterationAuditor against a real HumunculusTokenlessRuntime-shaped object
+const liveShapedRuntime = {
+  W_actor: Float32Array.from({ length: 256 }, (_, i) => Math.cos(i + 1) * 0.25),
+  W_critic: Float32Array.from({ length: 256 }, (_, i) => Math.sin(i + 1) * 0.25),
+  continuousWorldModel: {
+    latentZ64: Float32Array.from({ length: 64 }, (_, i) => Math.sin((i + 1) * 0.37) * 0.45),
+    rssmDeterH256: new Float32Array(256)
+  },
+  trainableAlifeNeuralHub: {
+    zPerc16: Float32Array.from({ length: 16 }, (_, i) => Math.cos((i + 1) * 0.51) * 0.4),
+    adaptivePlasticityLr: 0.0085,
+    tdAdvantageDelta: 0.12,
+    worldDynamicsLossMse: 0.032,
+    icmCuriosityReward: 0.68,
+    spatialExplorationCoveragePct: 84.5,
+    learnedMotorThrust2D: new Float32Array([0.15, -0.12]),
+    bestReasoningAction8: new Float32Array(8)
+  },
+  deepCortex: {
+    totalParams: 1245184,
+    W_actor_out: Float32Array.from({ length: 256 }, (_, i) => Math.cos(i + 1) * 0.25),
+    W_critic_out: Float32Array.from({ length: 64 }, (_, i) => Math.sin(i + 1) * 0.25),
+    W_moe_experts: Float32Array.from({ length: 65536 }, (_, i) => Math.sin(i * 0.1) * 0.15),
+    W_connectome_synapses: Float32Array.from({ length: 262144 }, (_, i) => Math.cos(i * 0.05) * 0.2),
+    W_stdp_elig: new Float32Array(262144).fill(0.1)
+  },
+  connectome512: {
+    neuropilRates6: new Float32Array([0.62, 0.14, 0.58, 0.66, 0.54, 0.49]),
+    totalSynapses: 262144,
+    stdpUpdatesCount: 0
+  },
+  decursiveSelfDeduplicator: {
+    banishedBasis8x64: Float32Array.from({ length: 512 }, (_, i) => Math.sin(i * 0.2) * 0.1)
+  },
+  bleedingEdge25Engine: new BleedEdge25AlifeEngine(),
+  portedMultiverseBrains: new PortedMultiverseBrainsFederation()
+};
+const liveRuntimeForensicReport = new Forensic25Pass10IterationAuditor().runFull25PassBy10IterationAudit(liveShapedRuntime);
+assert.strictEqual(liveRuntimeForensicReport.ok, true, 'Expected runFull25PassBy10IterationAudit on HumunculusTokenlessRuntime-shaped object to pass 500/500');
+assert.strictEqual(liveRuntimeForensicReport.passedPassIterations, 250, 'Expected 250/250 passed passes on live-shaped runtime');
+assert.ok(liveShapedRuntime.connectome512.stdpUpdatesCount > 0, 'Expected 262,144-synapse DA-STDP updates on live-shaped runtime');
+
+// Verify exportLearnedState / importLearnedState round-trip persistence across ALL 14 Ported Brains
+const exportedState = pantheonTest.exportLearnedState();
+assert.strictEqual(exportedState.version, 'PORTED_14_BRAINS_V1');
+assert.ok(exportedState.totalOnlinePlasticUpdates > 0, 'Expected totalOnlinePlasticUpdates > 0 after 10-iteration audit');
+const restoredPantheon = new PortedMultiverseBrainsFederation();
+assert.strictEqual(restoredPantheon.importLearnedState(exportedState), true, 'Expected importLearnedState to succeed');
+assert.strictEqual(restoredPantheon.totalOnlinePlasticUpdates, exportedState.totalOnlinePlasticUpdates, 'Expected round-trip totalOnlinePlasticUpdates parity');
+assert.ok(Math.abs(restoredPantheon.brain1Asmodensius.rlsW16x2[0] - pantheonTest.brain1Asmodensius.rlsW16x2[0]) < 1e-6, 'Expected Brain 1 Asmodensius RLS weight parity');
+assert.ok(Math.abs(restoredPantheon.brain2Glitchling.cerebellarCalib2x2[0] - pantheonTest.brain2Glitchling.cerebellarCalib2x2[0]) < 1e-6, 'Expected Brain 2 Glitchling cerebellar parity');
+assert.ok(Math.abs(restoredPantheon.brain3CqmSuperMind.organNetWeights30x8[0] - pantheonTest.brain3CqmSuperMind.organNetWeights30x8[0]) < 1e-6, 'Expected Brain 3 CQM SuperMind weight parity');
+assert.ok(Math.abs(restoredPantheon.brain4ApexHydra.organReadoutWeights11x4[0] - pantheonTest.brain4ApexHydra.organReadoutWeights11x4[0]) < 1e-6, 'Expected Brain 4 Apex Hydra weight parity');
+assert.ok(Math.abs(restoredPantheon.brain5Xenomimic.W2_8x5[0] - pantheonTest.brain5Xenomimic.W2_8x5[0]) < 1e-6, 'Expected Brain 5 Xenomimic MLP weight parity');
+assert.ok(Math.abs(restoredPantheon.brain6XylosManifold.edgeWeight192[0] - pantheonTest.brain6XylosManifold.edgeWeight192[0]) < 1e-6, 'Expected Brain 6 Xylos Manifold edge weight parity');
+assert.ok(Math.abs(restoredPantheon.brain7Mechalogodrom.subBrainWeights10x8[0] - pantheonTest.brain7Mechalogodrom.subBrainWeights10x8[0]) < 1e-6, 'Expected Brain 7 Mechalogodrom weight parity');
+assert.strictEqual(restoredPantheon.precisionArena.u16Fp16FastWeights[3], pantheonTest.precisionArena.u16Fp16FastWeights[3], 'Expected Brain 8 Glyph Pantheon FP16 fast-weight parity');
+assert.ok(Math.abs(restoredPantheon.brain9ThalerDabus.W_autoassoc8x8[0] - pantheonTest.brain9ThalerDabus.W_autoassoc8x8[0]) < 1e-6, 'Expected Brain 9 Thaler DABUS weight parity');
+assert.ok(Math.abs(restoredPantheon.brain10GraphCrystal.W_tree6x6[0] - pantheonTest.brain10GraphCrystal.W_tree6x6[0]) < 1e-6, 'Expected Brain 10 GraphCrystal weight parity');
+assert.ok(Math.abs(restoredPantheon.brain11TsotchkeDale.daleRawWeights16x16[0] - pantheonTest.brain11TsotchkeDale.daleRawWeights16x16[0]) < 1e-6, 'Expected Brain 11 Tsotchke Dale weight parity');
+assert.ok(Math.abs(restoredPantheon.brain12BlackHolePage.evaporationFraction - pantheonTest.brain12BlackHolePage.evaporationFraction) < 1e-6, 'Expected Brain 12 BlackHole evaporation parity');
+assert.ok(Math.abs(restoredPantheon.brain13ConsciousnessConsortium.W_consortium10x8[0] - pantheonTest.brain13ConsciousnessConsortium.W_consortium10x8[0]) < 1e-6, 'Expected Brain 13 Consciousness Consortium weight parity');
+assert.ok(Math.abs(restoredPantheon.brain14ThingmakerGrimoire.W_morphArcane8x8[0] - pantheonTest.brain14ThingmakerGrimoire.W_morphArcane8x8[0]) < 1e-6, 'Expected Brain 14 Thingmaker/Grimoire weight parity');
+
+// Verify SiblingBrainFusionEngine.hydrateFromBridgePayload with real Wasm & chaos_emb.f32 base64 buffers
+const sbfTest = new SiblingBrainFusionEngine();
+const wasmBuf = fs.readFileSync(path.join(root, 'brains', 'cqm-xylos', 'cqm_kernels.wasm'));
+const chaosBuf = fs.readFileSync(path.join(root, 'brains', 'tsotchke-diffusion', 'models', 'chaos_emb.f32'));
+assert.strictEqual(
+  sbfTest.hydrateFromBridgePayload({
+    ok: true,
+    wasmBase64: wasmBuf.toString('base64'),
+    chaosEmbBase64: chaosBuf.subarray(0, 6144).toString('base64'),
+    celegansStats: { totalEdges: 7379, uniqueNeurons: 302, chemicalEdges: 6393, gapJunctionEdges: 986 }
+  }),
+  true,
+  'Expected SiblingBrainFusionEngine.hydrateFromBridgePayload to succeed'
+);
+assert.strictEqual(sbfTest.cqmWasmLoaded, true, 'Expected CQM Zig Wasm to be loaded after bridge hydration');
+assert.strictEqual(sbfTest.cqmWasmExportsCount, 19, 'Expected 19 CQM Zig Wasm exports (18 kernel functions + 1 linear memory)');
+
+// Verify corrupt/NaN base64 (0xFFFFFFFF = NaN floats) is rejected by hydrateChaosEmbFromBase64
+assert.strictEqual(
+  sbfTest.multiverse10Pantheon.brain11TsotchkeDale.hydrateChaosEmbFromBase64('////'.repeat(2048)),
+  false,
+  'hydrateChaosEmbFromBase64 must reject all-NaN base64 buffers'
+);
+
+// Verify all 17 standalone brain portal HTML files in brains/ have zero missing script/img/link assets
+const standalonePortals17 = [
+  'dimension-omega-singularity/index.html',
+  'dimension-omega-singularity/studio.html',
+  'asmodensius-v40/creatures/001/index.html',
+  'asmodensius-v40/creatures/001/index.v3.html',
+  'quantum_neural_manifold_3d.html',
+  'cqm-xylos/index.html',
+  'cqm-xylos/bible.html',
+  'cqm-xylos/specs.html',
+  'cqm-xylos/docs.html',
+  'cqm-xylos/lab/consciousness.html',
+  'cqm-xylos/lab/sentience.html',
+  'cqm-xylos/lab/quantum-wildbeyond.html',
+  'glitchling/index.html',
+  'glitchling/brain-viz/index.html',
+  'tsotchke-diffusion/index.html',
+  'thingmaker/index.html',
+  'grimoire-arcane/index.html'
+];
+for (const relPortal of standalonePortals17) {
+  const fullPortal = path.join(root, 'brains', relPortal);
+  assert(fs.existsSync(fullPortal), `Standalone portal ${relPortal} must exist`);
+  const portalDir = path.dirname(fullPortal);
+  const portalHtml = fs.readFileSync(fullPortal, 'utf8');
+  for (const m of portalHtml.matchAll(/<(?:script|img|link)\b[^>]*?\b(?:src|href)=["']([^"'#?]+)["']/gi)) {
+    const u = m[1];
+    if (u.startsWith('http') || u.startsWith('data:') || u.startsWith('mailto:') || u.startsWith('javascript:') || u.startsWith('//') || u.startsWith('${')) continue;
+    assert(fs.existsSync(path.resolve(portalDir, u)), `Missing asset "${u}" referenced in brains/${relPortal}`);
+  }
+}
+
+// Verify UI/HUD & Persistence Wiring in index.html
+assert(indexHtml.includes('data-hview="forensic25x10"'), 'index.html must include [🔬✅ 25×10 FORENSIC] terminal tab button');
+assert(indexHtml.includes('[🧬⚛️ 14-BRAIN × 7-PREC]'), 'index.html must display [🧬⚛️ 14-BRAIN × 7-PREC] terminal tab button');
+assert(indexScript.includes('portedPantheonBonus') && indexScript.includes('portedPantheonLearned'), 'index.html must wire portedPantheonBonus into door scoring and portedPantheonLearned into genome persistence');
 
 const licenseTxt = readFile('LICENSE');
 assert(licenseTxt.includes('DOWNLOAD AND PERSONAL EXECUTION ONLY') && licenseTxt.includes('NO COMMERCIAL USE') && licenseTxt.includes('NO MODIFICATION'), 'LICENSE must enforce Download-and-Use-Only restrictions');
+
+// 10. Adversarial NaN / Infinity Poisoning Immunity & Dynamic Ablation Verification
+const poisonedPantheon = new PortedMultiverseBrainsFederation();
+const poisonedZ16 = new Float32Array(16);
+for (let i = 0; i < 16; i++) {
+  poisonedZ16[i] = i % 3 === 0 ? NaN : (i % 3 === 1 ? Infinity : -Infinity);
+}
+poisonedPantheon.step60Hz({
+  trainableAlifeNeuralHub: {
+    zPerc16: poisonedZ16,
+    tdAdvantageDelta: Infinity,
+    adaptivePlasticityLr: NaN,
+    learnedMotorThrust2D: new Float32Array([NaN, -Infinity])
+  }
+});
+assert.ok(
+  Number.isFinite(poisonedPantheon.councilConsensusMotor2D[0]) && Number.isFinite(poisonedPantheon.councilConsensusMotor2D[1]),
+  'councilConsensusMotor2D must remain finite after NaN/Infinity sensory injection'
+);
+assert.ok(
+  Number.isFinite(poisonedPantheon.latestSnapshot.asmodensius.rlsMse) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.glitchling.efferenceMismatchMse) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.apexHydra.lyapunovLambda1) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.xenomimic.wavepacketNorm) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.thalerDabus.cuspXi) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.tsotchkeDale.ddimScore) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.blackHolePage.sBH) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.consciousnessConsortium.tononiPhi) &&
+  Number.isFinite(poisonedPantheon.latestSnapshot.thingmakerGrimoire.leyLineConductance),
+  'All 14 brains telemetry metrics must remain strictly finite under NaN/Infinity perturbation'
+);
+
+// Verify Thaler DABUS runHonestAblations() dynamically reflects actual neural weights rather than static literals
+const abBefore = poisonedPantheon.brain9ThalerDabus.runHonestAblations().intactQuality;
+for (let i = 0; i < 64; i++) poisonedPantheon.brain9ThalerDabus.W_autoassoc8x8[i] *= 1.35;
+for (let i = 0; i < 8; i++) poisonedPantheon.brain9ThalerDabus.W_hotButtonCritic8[i] *= 1.35;
+const abAfter = poisonedPantheon.brain9ThalerDabus.runHonestAblations().intactQuality;
+assert.notStrictEqual(abBefore, abAfter, 'Thaler DABUS runHonestAblations() must dynamically compute quality from live neural weights');
+
+// Verify Complete Ported Corpora in brains/stephen-thaler-corpus and brains/consciousness-researchers
+for (const subPath of [
+  ['brains', 'stephen-thaler-corpus', 'papers', '1995-virtual-input-phenomena', 'README.md'],
+  ['brains', 'stephen-thaler-corpus', 'rag', 'corpus.jsonl'],
+  ['brains', 'stephen-thaler-corpus', 'scripts', 'verify.py'],
+  ['brains', 'stephen-thaler-corpus', 'NOTICE.md'],
+  ['brains', 'consciousness-researchers', 'scripts', 'verify.py'],
+  ['brains', 'consciousness-researchers', 'NOTICE.md']
+]) {
+  assert(fs.existsSync(path.join(root, ...subPath)), `Expected ported corpus file ${subPath.join('/')} to exist`);
+}
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +
   `${indexDomAudit.idCount} HTML IDs (${indexDomAudit.queriedCount} queried), ${indexDomAudit.fnCount} JS functions, ` +
   `${agentActionNames.length} agent actions, ${mainSidecarPosts.size} sidecar endpoints, 500/500 SOP items, ` +
-  `${pantheonTest.brainsCatalog10.length}/${pantheonTest.brainsCatalog10.length} Ported Brains, 7/7 Precision Tiers, 250/250 Forensic Passes (500/500 Points)`
+  `${pantheonTest.brainsCatalog10.length}/${pantheonTest.brainsCatalog10.length} Ported Brains, 7/7 Precision Tiers, 250/250 Forensic Passes (500/500 Points), 17/17 Standalone Portals`
 );

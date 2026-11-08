@@ -1,20 +1,20 @@
-# GIGACHAD Browser — Sovereign AI & 60Hz 10-Brain Multiverse Pantheon Embodied A-Life Browser
+# GIGACHAD Browser — Sovereign AI & 60Hz 14-Brain Multiverse Pantheon Embodied A-Life Browser
 
 > **⚠️ LICENSE NOTICE — PROPRIETARY DOWNLOAD-AND-USE-ONLY LICENSE (ALL RIGHTS RESERVED)**
 > Governed by [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md).
 > **GIGACHAD BROWSER is made available for personal download and local execution ONLY.**
 > **Commercial use, modification, editing, derivative works, redistribution of modified copies, or claiming authorship/ownership as your own are STRICTLY PROHIBITED.**
 
-A self-contained Electron 42 sovereign AI and 60Hz zero-LLM embodied artificial-life (A-Life) browser for Windows 11. Tabs are sandboxed `<webview>` guests, a Python sidecar on `127.0.0.1:8000` serves page tools, and an in-browser **10-Brain Multiverse Pantheon & Connectome Runtime** (`Humunculus × Asmodensius-v40 × Glitchling × CQM-Xylos Zig Wasm × Apex Hydra × Xenomimic × Xylos Manifold × Mechalogodrom Titan × Glyph 25K × Thaler DABUS × Empirical C. elegans Connectome × Dimension-Ω`) runs at 60Hz (`1,245,184` cortex parameters, `262,144` connectome synapses, `7,379` empirical *C. elegans* edges, `18` compiled Zig 0.17.0 WebAssembly kernels, and a **7-Tier Heterogeneous Precision Tensor Arena** beyond `Float32Array`) directly across the browser viewport and chrome.
+A self-contained Electron 42 sovereign AI and 60Hz zero-LLM embodied artificial-life (A-Life) browser for Windows 11. Tabs are sandboxed `<webview>` guests, a Python sidecar on `127.0.0.1:8000` serves page tools, and an in-browser **14-Brain Multiverse Pantheon & Connectome Runtime** (`Humunculus × Asmodensius-v40 × Glitchling × CQM-Xylos Zig Wasm × Apex Hydra × Xenomimic × Xylos Manifold × Mechalogodrom Titan × Glyph 25K × Thaler DABUS × Empirical C. elegans Connectome × Tsotchke DDIM × Kerr-Newman Black Hole Lab × 10-Researcher Consciousness Consortium × Thingmaker/Grimoire × Dimension-Ω`) runs at 60Hz (`1,245,184` cortex parameters, `262,144` connectome synapses, `7,379` empirical *C. elegans* edges, `18` compiled Zig 0.17.0 WebAssembly kernels, and a **7-Tier Heterogeneous Precision Tensor Arena** beyond `Float32Array`) directly across the browser viewport and chrome.
 
 ### Flagship Documentation & Audit Suite
-- 👉 **[`docs/GIGACHAD_BIBLE_GLOSSARY_INDEX_NOTATIONS.md`](docs/GIGACHAD_BIBLE_GLOSSARY_INDEX_NOTATIONS.md)** — Master Bible, Glossary, Index & Notations
+- 👉 **[`BIBLE.md`](BIBLE.md)** & **[`GLOSSARY.md`](GLOSSARY.md)** & **[`INDEX.md`](INDEX.md)** — Master Bible, Glossary, Index & Notations
 - 👉 **[`docs/DSA_AND_MATHEMATICAL_NOTATIONS.md`](docs/DSA_AND_MATHEMATICAL_NOTATIONS.md)** — 7-Tier Precision Arena, DSA Complexity Bounds & Differential Equations
 - 👉 **[`docs/OWASP_DEVSECOPS_FORTUNE100.md`](docs/OWASP_DEVSECOPS_FORTUNE100.md)** — OWASP Top 10, ASVS L3, Electron Sandbox & DevSecOps Architecture
 - 👉 **[`docs/SYSTEMS_ENGINEERING_ERM_ERD_ERP.md`](docs/SYSTEMS_ENGINEERING_ERM_ERD_ERP.md)** — 12-Entity ERD, 12-Risk ERM (`Grade A`), ERP & Kanban PM
 - 👉 **[`docs/CONTRAST_COMPARATIVE_AND_FORENSIC_AUDIT.md`](docs/CONTRAST_COMPARATIVE_AND_FORENSIC_AUDIT.md)** — Contrast Comparative Analysis & 25-Pass × 10-Iteration (`500/500`) Forensic Audit
-- 👉 **[`docs/SOP_500_POINT_CHECKLIST.md`](docs/SOP_500_POINT_CHECKLIST.md)** — 500-Point Grade-A Full-Stack Standard Operating Procedure
-- 👉 **[`brains/README.md`](brains/README.md)** — Master Index of the 607 Line-for-Line Ported Sibling Brain Files
+- 👉 **[`ISSUES.md`](ISSUES.md)** & **[`KANBAN.md`](KANBAN.md)** — Verified Cross-Brain Bug Fixes (`ISS-01`–`ISS-15`) & Bible Kanban
+- 👉 **[`brains/README.md`](brains/README.md)** — Master Index of all Line-for-Line Ported Sibling Brain Repositories
 
 ---
 
@@ -23,25 +23,30 @@ A self-contained Electron 42 sovereign AI and 60Hz zero-LLM embodied artificial-
 ### 1. 7-Tier Heterogeneous Precision Tensor Arena (Beyond `Float32Array`)
 Implemented in [`systems/ported-multiverse-brains.js`](systems/ported-multiverse-brains.js) (`Heterogeneous7TierPrecisionArena`, `131,072`-byte contiguous `SharedArrayBuffer`) and [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js) (`multiPrecisionBuffer64K`, `65,536`-byte `ArrayBuffer`):
 1. **`Float64Array` (`f64`, IEEE-754 64-bit Double Precision):** Unitary Crank-Nicolson 1D Schrödinger wavepacket $\psi(x,t)$, stiff conductance-based `sLTC` ODE integrators ($\tau_{\text{eff}}(t)$), Fubini-Study Quantum Geometric Tensor $g_{\mu\nu}$, Recursive Least Squares (`RLS`) covariance $P_t$, `MinSR` sample-space Cholesky natural-gradient solver, and exact DBSP bilinear $\Delta(AB)$ updates.
-2. **`BigInt64Array` (`i64`) & `BigUint64Array` (`u64`):** Exact Cyclotomic integer ring $\mathbb{Z}[\zeta_8] = \mathbb{Z}[x]/(x^4 + 1)$ arithmetic (`cqm_eshkol_cyclotomic8_mul`) with zero floating-point drift and 64-bit SWAR Kanerva Hyperdimensional Computing (`HDC`) bitboards.
+2. **`BigInt64Array` (`i64`) & `BigUint64Array` (`u64`):** Exact Cyclotomic integer ring $\mathbb{Z}[\zeta_8] = \mathbb{Z}[x]/(x^4 + 1)$ arithmetic (`cqm_eshkol_cyclotomic8_mul`) with zero floating-point drift, Lemire 128-bit unbiased multiply-shift entropy sampling, and 64-bit SWAR Kanerva Hyperdimensional Computing (`HDC`) bitboards.
 3. **`Int32Array` (`i32`) & `Uint32Array` (`u32`):** Compressed Sparse Row (`CSR`) graph pointers, Tarjan Union-Find disjoint-set forests (`gotUnionFindParent21`), and 256-bit `SimHash` / `POPCNT` Hamming similarity.
 4. **`Uint16Array` (`FP16` `[1-5-10]` + `BFloat16` `[1-8-7]` + 3D Morton Z-Order):** Hardware-accurate IEEE-754 16-bit half-precision fast weights, Brain-Float16 gradients, and 15-bit Morton space-filling curve codes.
 5. **`Int8Array` (`Q8_0` with Bernoulli Stochastic Rounding):** Symmetric `[-127, +127]` quantized weights updated online via `stochasticRoundInt8` ($\text{SR}(x) = \lfloor x \rfloor + \text{Bernoulli}(x - \lfloor x \rfloor)$) so sub-LSB plasticity updates never vanish.
 6. **`Uint8Array` (`BitNet b1.58` Ternary `{-1, 0, +1}` + Polychronous Axonal Delays):** 2-bit packed ternary weights (`4` weights per byte) executing **multiplication-free** synaptic accumulation plus `u8` conduction delay lines $d_{ij} \in [1..24]$.
 7. **`Float32Array` + Zig 0.17.0 WebAssembly (`cqm_kernels.wasm`):** Fast SIMD vector lanes coupled with 18 native Zig Wasm exports and the in-memory JIT FMA Wasm kernel (`0x0061736d`).
 
-### 2. Self-Contained 10-Brain Multiverse Pantheon (`brains/` + `PortedMultiverseBrainsFederation`)
-All sibling brain repositories (`607` source files) are ported line-for-line inside [`brains/`](brains/) and wired with **100% online plasticity** at 60Hz via [`systems/ported-multiverse-brains.js`](systems/ported-multiverse-brains.js) and [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js):
+### 2. Self-Contained 14-Brain Multiverse Pantheon (`brains/` + `PortedMultiverseBrainsFederation`)
+All sibling brain repositories are ported line-for-line inside [`brains/`](brains/) and wired with **100% online plasticity** at 60Hz via [`systems/ported-multiverse-brains.js`](systems/ported-multiverse-brains.js) and [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js):
 - **Brain #1 (`AsmodensiusCreature001FullBrain`):** 272-Neuron 14-Region CNS+ENS + Larkum 2-compartment NMDA plateaus + TRN Global Workspace Ignition + `Q3` Fubini-Study `QGT` + `Float64Array` `RLS` covariance $P_t$ + Kalman `Kal` + AgRP/POMC allostasis.
-- **Brain #2 (`GlitchlingResilienceCerbellarBrain`):** 4-Flaw somatic/cognitive perturbation recovery (`scramble`, `leaky`, `backwards`, `misfire`) + Marr-Albus cerebellar efference-copy motor un-mirroring + Gated-DeltaNet $S_t$ + Bernoulli Stochastic `Int8` Rounding.
+- **Brain #2 (`GlitchlingResilienceCerbellarBrain`):** 4-Flaw somatic/cognitive perturbation recovery (`scramble`, `leaky`, `backwards`, `misfire`) + 100×5 Area Matrix (`500` attributes) + `189` real 3D flaw events + fixed selectable `bestSiteFrac` + Marr-Albus cerebellar efference-copy motor un-mirroring + Gated-DeltaNet $S_t$ + Bernoulli Stochastic `Int8` Rounding.
 - **Brain #3 (`CqmSuperMind5StageEngine`):** 5-stage `PERCEIVE -> IMAGINE -> REASON -> FEEL -> ACT` creativity loop + 25 thought variants + 30 `AoT` organ-nets + Eshkol reverse-mode AD tape.
 - **Brain #4 (`ApexHydra11OrganEngine`):** 11 incompatible mathematical organs (`PrimeSieveLoom`, `AcousticMeatDrum`, `EntropicNecroMatrix`, `KleinBottleCortex`, `PendulumHive`, `SlimeMoldHydra`, `ChronoWraith`, `QuantumTunnelLattice`, `ThermodynamicEngine`, `CancerousOuroboros`, `MetaParadox`) with live tangent-map Chirikov Lyapunov $\lambda_1$ and Gödel fixed-point residual.
 - **Brain #5 (`XenomimicSchrodingerEntangledBrain`):** Unitary 1D Crank-Nicolson Schrödinger wavepacket $\psi(x,t)$ in `Float64Array` ($\|\psi\|_2 = 1.000000$) + Bell singlet + online `6 -> 8 -> 5` FEP MLP backpropagation.
 - **Brain #6 (`XylosRecurrentManifold48Brain`):** 48 foci and 192 directed plastic edges with Eshkol GWT softmax broadcast and online precision-weighted residual calibration.
 - **Brain #7 (`Mechalogodrom10ShellTitanBrain`):** 10 shell-geometry variant sub-brains computing 10 differential-geometry invariants (Möbius torsion, Gauss-Bonnet defect, Rhumb bearing, Kakeya needle efficiency, Collatz stopping time, Hopf dispersion, Clifford torus, Enneper surface, Aizawa radius, Weierstrass variation) + Bi-Poo exponential STDP.
 - **Brain #8 (`GlyphPantheon25KFastWeightBrain`):** 25,000-parameter Pantheon glyph brain with a `32×32` IEEE-754 `FP16` Oja fast-weight Hebbian overlay.
-- **Brain #9 (`ThalerDabusCreativityCatastropheBrain`):** US Patent `5,659,666` & `7,454,388` noise-perturbed autoassociative ideation net + Hot-Button valence critic governed by the Thom-Zeeman Cusp Catastrophe ODE $d\Xi/dt = -(4\Xi^3 + 2\alpha\Xi + \beta)$.
+- **Brain #9 (`ThalerDabusCreativityCatastropheBrain`):** US Patent `5,659,666` & `7,454,388` noise-perturbed autoassociative ideation net + Hot-Button valence critic + **All 9 Constitutive Thaler Markers** + **All 4 Honest Ablation Gates** + Thom-Zeeman Cusp Catastrophe ODE $d\Xi/dt = -(4\Xi^3 + 2\alpha\Xi + \beta)$.
 - **Brain #10 (`GraphMindCelegansCrystalTreeBrain`):** Empirical *C. elegans* 302-neuron / 7,379-synapse connectome (`6,393` chemical + `986` gap junctions) + Louvain modularity $Q$ + bitwise `goapPlan` Goal-Oriented Action Planner + Dimension-Omega 3D Riemannian Singularity Manifold.
+- **Brain #11 (`TsotchkeDaleStpDdimBrain`):** 220-Region Dale's Law `80/20` Excitatory/Inhibitory sign enforcement + Tsodyks-Markram Short-Term Synaptic Plasticity (`STP`) + 3-step `LIFGate` + binary `chaos_emb.f32` (`12×128`) Classifier-Free Guidance (`CFG`) DDIM diffusion.
+- **Brain #12 (`KerrNewmanBlackHoleBekensteinPageBrain`):** Kerr-Newman Black Hole horizons $r_\pm$, prograde photon sphere $r_{\text{ph}}$, Leaver QNM ringdown frequency $\omega_{\text{QNM}}$, Bekenstein-Hawking entropy $S_{\text{BH}}$, Unitary Page Curve $S_{\text{rad}}(t)$, and Lemire 128-bit unbiased `u64` entropy sampling (`brains/black-hole-simulation-lab/`, `brains/corpora/`, `brains/chaos-entropy/`).
+- **Brain #13 (`ConsciousnessResearchersConsortiumBrain`):** 10-Researcher Consciousness Consortium synthesizing Anil Seth, Antonio Damasio, Christof Koch, Chris Langton ($\lambda$), Giulio Tononi ($\Phi$), Johnjoe McFadden (CEMI), Karl Friston (EFE), Michael Graziano (AST), Stanislas Dehaene (GNW), and Thomas Metzinger (PSM).
+- **Brain #14 (`ThingmakerGrimoireArcaneMorphBrain`):** Procedural 3D Voxel Morphogenesis (`brains/thingmaker/`) coupled with Arcane Graph/Tree/Atom of Thought Ley-Line Conductance (`brains/grimoire-arcane/`).
+
 
 ### 3. Corecursive–Decursive `AoT` · `ToT` · `GoT` & 25 Bleeding-Edge Neural Models
 - **Corecursive `ToT` (Tree of Thought):** 21-node 4-ary implicit heap arena (`1` root $\to 4$ depth-1 $\to 16$ depth-2 leaves) with PUCT exploration and `DSD-24` decursive branch pruning.

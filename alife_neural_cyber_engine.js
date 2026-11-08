@@ -414,10 +414,11 @@
       const bellmanTdErr = TQ[0] - bestRootBackupQ;
       atg.totBellmanBackupLossMse = Number((0.90 * atg.totBellmanBackupLossMse + 0.10 * (bellmanTdErr * bellmanTdErr)).toFixed(5));
       atg.b_tot_qvalue = Math.max(-1.2, Math.min(1.2, atg.b_tot_qvalue - lr * bellmanTdErr));
+      const wCrit = dc.W_critic || dc.W_critic_out || runtime.W_critic;
       for (let c = 0; c < 16; c++) {
         atg.W_tot_qvalue16[c] = Math.max(-2.0, Math.min(2.0, atg.W_tot_qvalue16[c] - lr * bellmanTdErr * TStates[c]));
-        if (dc.W_critic) {
-          dc.W_critic[c] = Math.max(-1.8, Math.min(1.8, dc.W_critic[c] * 0.9995 - lr * 0.35 * bellmanTdErr * TStates[c]));
+        if (wCrit) {
+          wCrit[c] = Math.max(-1.8, Math.min(1.8, wCrit[c] * 0.9995 - lr * 0.35 * bellmanTdErr * TStates[c]));
         }
       }
       atg.totBestPath3[0] = 0;
@@ -557,12 +558,13 @@
           hub.bestReasoningAction8[f] = Math.tanh(0.65 * hub.bestReasoningAction8[f] + 0.35 * synthVal);
         }
       }
-      if (conn && conn.synWeights262K) {
+      const synWeightsArr = (conn && (conn.synWeights262K || conn.synapticWeights)) || dc.W_connectome_synapses;
+      if (synWeightsArr) {
         const synBase = (frame * 256) & (262144 - 256);
         for (let i = 0; i < 256; i++) {
           const u = i >>> 4;
           const v = i & 15;
-          conn.synWeights262K[synBase + i] = Math.max(-1.8, Math.min(1.8, conn.synWeights262K[synBase + i] * 0.999 + lr * 0.12 * GAdj[u * 16 + v] * atg.gotSynthesizedThought16[v]));
+          synWeightsArr[synBase + i] = Math.max(-1.8, Math.min(1.8, synWeightsArr[synBase + i] * 0.999 + lr * 0.12 * GAdj[u * 16 + v] * atg.gotSynthesizedThought16[v]));
         }
       }
 

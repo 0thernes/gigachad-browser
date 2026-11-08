@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-cqm-static-host="true">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
@@ -9,19 +9,19 @@
     <title>COSMOGONIC QUANTUM MECHALOGODROM</title>
     <meta
       name="description"
-      content="An experimental artificial life platform for embodied synthetic cognition and procedural morphogenesis, from individual beings to worlds across scales. Combines adaptive minds, computational physics and simulated quantum systems with expressive 3D forms, live inspection and causal experiments."
+      content="0thernes Corp — Non Human Super Intelligence (NHSI). Deterministic WebGL cosmos: Tsotchke quantum substrates, 5 Archons, digital biologics Petri. Seeded core is non-LLM; optional Copilot is fenced."
     />
     <meta property="og:title" content="COSMOGONIC QUANTUM MECHALOGODROM — 0thernes NHSI" />
     <meta
       property="og:description"
-      content="An experimental artificial life platform for embodied synthetic cognition and procedural morphogenesis, from individual beings to worlds across scales. Combines adaptive minds, computational physics and simulated quantum systems with expressive 3D forms, live inspection and causal experiments."
+      content="Petri-dish universe for digital biologics and Archon minds — ledgered deterministic Tsotchke-derived simulations, 3,393 tests, seed-reproducible. 0thernes Corp > Weyland Corp."
     />
     <meta name="theme-color" content="#030612" />
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23030612'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' fill='none' stroke='%230ef' stroke-width='1.6' transform='rotate(28 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' fill='none' stroke='%23fa0' stroke-width='1.6' transform='rotate(-28 16 16)'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%230ef'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="./src/styles/app.css" crossorigin="anonymous" />
+    
     <!-- PERF/LOAD (v0.20+): font faces live in their OWN sheet. In dev this plain link bundles + inlines
          them (localhost — no perf concern). In the PRODUCTION build, scripts/build.ts EXTRACTS the
          @font-face blocks (Bun merges every in-page stylesheet into ONE render-blocking chunk and inlines
@@ -29,7 +29,7 @@
          NON-render-blocking (media="print" → onload this.media='all', + <noscript>), so first paint isn't
          gated on the font bytes. `font-display: swap` (fonts.css) paints text in the fallback until the
          face lands. SAME Latin-subset fonts — zero visual change. -->
-    <link rel="stylesheet" href="./src/styles/fonts.css" crossorigin="anonymous" />
+    
     <!-- V86 critical shell: correct panel columns + hide orphan chrome before module JS runs -->
     <style id="cqm-critical-shell">
       @media (min-width: 769px) and (pointer: fine) {
@@ -69,7 +69,7 @@
         pointer-events: auto;
       }
     </style>
-  </head>
+  <link rel="stylesheet" href="./chunk-46ee41bda2.css"><link rel="stylesheet" href="./fonts-7c5f10e730.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="./fonts-7c5f10e730.css"></noscript><script type="module" crossorigin src="./chunk-nj4h8htg.js"></script></head>
   <body class="touch-none overflow-hidden bg-black font-mono text-slate-300">
     <!-- V121 BOOT LOADER (USER #6): a full-screen loading page shown from the FIRST paint until the
          first rendered world frame. Pure markup + compositor-driven CSS animations (transform /
@@ -1053,7 +1053,7 @@
       <!-- Audit panel (Bun host: HTMX polls the server-side ring; Pages build neutralizes hx-get) -->
       <section
         id="aP"
-        hx-get="/api/audit"
+        
         hx-trigger="load, every 5s"
         hx-swap="innerHTML"
         hx-target="#audit-list"
@@ -1443,7 +1443,7 @@
     </div>
 
     <a
-      href="/docs"
+      href="/cosmogonic-quantum-mechalogodrom/docs.html?v=visual-s"
       data-nav="docs"
       class="fixed right-16 bottom-2 z-20 rounded-btn border border-cyan-300/15 bg-void/90 px-2 py-1 font-ui text-3xs tracking-widest text-accent/80 uppercase backdrop-blur-md transition-all duration-100 hover:border-accent/40 hover:bg-accent/10 hover:text-accent"
       aria-label="Open architecture documentation"
@@ -1453,7 +1453,7 @@
 
     <!-- Technical specification page (portfolio spec sheet) — fuchsia accent to distinguish from Docs. -->
     <a
-      href="/spec"
+      href="/cosmogonic-quantum-mechalogodrom/specs.html?v=visual-s"
       data-nav="spec"
       class="fixed right-28 bottom-2 z-20 rounded-btn border border-fuchsia-300/15 bg-void/90 px-2 py-1 font-ui text-3xs tracking-widest text-fuchsia-300/80 uppercase backdrop-blur-md transition-all duration-100 hover:border-fuchsia-300/40 hover:bg-fuchsia-300/10 hover:text-fuchsia-200"
       aria-label="Open the technical specification"
@@ -1466,7 +1466,7 @@
          hrefs); CSS forces position:static so the source `fixed` utility can never re-strand it in the
          corner. (panel-dock.ts no longer competes for these nodes.) -->
     <a
-      href="/lab"
+      href="/cosmogonic-quantum-mechalogodrom/lab/?v=visual-s"
       data-nav="lab"
       class="fixed right-40 bottom-2 z-20 rounded-btn border border-accent/15 bg-void/90 px-2 py-1 font-ui text-3xs tracking-widest text-accent/80 uppercase backdrop-blur-md transition-all duration-100 hover:border-accent/40 hover:bg-accent/10 hover:text-accent"
       aria-label="Open the Quantum Wildbeyond lab artifact"
@@ -1475,7 +1475,7 @@
     >
 
     <a
-      href="/bible"
+      href="/cosmogonic-quantum-mechalogodrom/bible.html?v=visual-s"
       data-nav="bible"
       class="fixed right-52 bottom-2 z-20 rounded-btn border border-amber-300/20 bg-void/90 px-2 py-1 font-ui text-3xs tracking-widest text-amber-200/85 uppercase backdrop-blur-md transition-all duration-100 hover:border-amber-200/45 hover:bg-amber-200/10 hover:text-amber-100"
       aria-label="Open the Mechalogodrom Bible manual"
@@ -1571,6 +1571,6 @@
       })();
     </script>
 
-    <script type="module" src="./src/main.ts"></script>
+    <script src="./cqm-standalone-dome.js"></script>
   </body>
 </html>

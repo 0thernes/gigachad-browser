@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Consolidated 16-Report Current Assessment</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #07090d;
+        --panel: #111821;
+        --panel2: #151f2b;
+        --text: #f3f7fb;
+        --muted: #a8b5c4;
+        --line: #2b3948;
+        --accent: #75d5ff;
+        --good: #83e08f;
+        --warn: #ffd36a;
+        --bad: #ff8d8d;
+        --max: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 18% 0%, rgba(117, 213, 255, 0.14), transparent 30rem),
+          linear-gradient(180deg, #07090d, #0c1118 46%, #07090d);
+        color: var(--text);
+        font:
+          16px/1.56 ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        background: rgba(7, 9, 13, 0.88);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(14px);
+      }
+
+      nav {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0.8rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      nav strong {
+        font-size: 0.98rem;
+      }
+
+      nav span {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      .links a {
+        color: var(--muted);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.82rem;
+      }
+
+      main {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 2rem 1rem 5rem;
+      }
+
+      .hero {
+        min-height: 62vh;
+        display: grid;
+        align-content: center;
+        gap: 1rem;
+      }
+
+      .kicker {
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      h1,
+      h2,
+      h3 {
+        letter-spacing: 0;
+        line-height: 1.08;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 1000px;
+        font-size: clamp(2.25rem, 7vw, 5.5rem);
+      }
+
+      h2 {
+        margin: 0 0 1rem;
+        font-size: clamp(1.65rem, 4vw, 3rem);
+      }
+
+      h3 {
+        margin: 0 0 0.55rem;
+      }
+
+      p {
+        margin: 0 0 1rem;
+      }
+
+      .lead {
+        max-width: 900px;
+        color: #dbe5ef;
+        font-size: clamp(1rem, 2vw, 1.23rem);
+      }
+
+      section {
+        margin-top: 4rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card,
+      .metric,
+      .callout {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(21, 31, 43, 0.95), rgba(13, 18, 25, 0.95));
+      }
+
+      .card,
+      .callout {
+        padding: 1rem;
+      }
+
+      .metric {
+        padding: 0.9rem;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 1.5rem;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--line);
+        background: rgba(13, 18, 25, 0.85);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 0.7rem;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid var(--line);
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      th {
+        color: #e7eef7;
+        background: #131c27;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      td {
+        color: #dce6f0;
+      }
+
+      code {
+        background: #080c12;
+        color: #ecf5ff;
+        border: 1px solid #223041;
+        border-radius: 5px;
+        padding: 0.08rem 0.25rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 1.65rem;
+        padding: 0.1rem 0.45rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        font-size: 0.8rem;
+        font-weight: 760;
+      }
+
+      .good {
+        color: var(--good);
+      }
+
+      .warn {
+        color: var(--warn);
+      }
+
+      .bad {
+        color: var(--bad);
+      }
+
+      .callout {
+        border-left: 4px solid var(--accent);
+      }
+
+      .callout.warn {
+        border-left-color: var(--warn);
+      }
+
+      .callout.bad {
+        border-left-color: var(--bad);
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        padding: 2rem 1rem;
+      }
+
+      footer div {
+        max-width: var(--max);
+        margin: 0 auto;
+      }
+
+      @media (max-width: 860px) {
+        nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .grid,
+        .grid.two {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div>
+          <strong>Consolidated 16-Report Current Assessment</strong><br />
+          <span>2026-07-07 live dirty-checkout audit</span>
+        </div>
+        <div class="links">
+          <a href="#verdict">Verdict</a>
+          <a href="#gates">Gates</a>
+          <a href="#tiers">Tiers</a>
+          <a href="#facts">Facts</a>
+          <a href="#stale">Stale</a>
+          <a href="#scores">Scores</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="verdict">
+        <div class="kicker">Current, Not Stale, Not Hype</div>
+        <h1>Strong A-Life cognition instrument. Dirty report fleet. No sentience proof.</h1>
+        <p class="lead">
+          The 16 files converge on a serious, source-backed Cosmogonic cognition platform, but
+          several older reports are stale, overclaim-prone, or malformed. This browser view promotes
+          the current facts and demotes the hype-draft claims.
+        </p>
+        <div class="grid">
+          <div class="metric">
+            <strong>2,373</strong>
+            <span>live tests passing</span>
+          </div>
+          <div class="metric">
+            <strong>0</strong>
+            <span>sentience proof</span>
+          </div>
+          <div class="metric">
+            <strong>20</strong>
+            <span>current Titans in source</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="gates">
+        <h2>Gate Truth</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Status</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>typecheck</code></td>
+              <td><span class="pill good">passed</span></td>
+              <td>TypeScript currently checks.</td>
+            </tr>
+            <tr>
+              <td><code>lint</code></td>
+              <td><span class="pill good">passed</span></td>
+              <td>Source/tests/scripts lint currently passes.</td>
+            </tr>
+            <tr>
+              <td><code>sync:check</code></td>
+              <td><span class="pill good">passed</span></td>
+              <td>Canonical synced surfaces match the portable floor.</td>
+            </tr>
+            <tr>
+              <td><code>verify:receipts</code></td>
+              <td><span class="pill good">passed</span></td>
+              <td>2,373 pass / 0 fail / 2,866,547 expect calls / 92.02% line / 89.65% function.</td>
+            </tr>
+            <tr>
+              <td><code>verify:facts</code></td>
+              <td><span class="pill warn">warnings</span></td>
+              <td>9 potential drifts in the deep brain assessment.</td>
+            </tr>
+            <tr>
+              <td>16-file format audit</td>
+              <td><span class="pill bad">failed</span></td>
+              <td>Older markdowns need formatting; one Omni HTML file is malformed.</td>
+            </tr>
+            <tr>
+              <td><code>build</code></td>
+              <td><span class="pill bad">failed</span></td>
+              <td>Bun fails at <code>src/styles/app.css:0</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="tiers">
+        <h2>What To Trust</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Promote</h3>
+            <p>
+              <code>BRAIN...ASSESSMENT</code>, <code>FINAL-HURRAH</code>, <code>PASS2</code>,
+              <code>PASS3</code>, and <code>MEGA-ULTRATHINK</code>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Use With Caveats</h3>
+            <p>
+              <code>VERIFICATION</code>, <code>NHSI</code>, <code>PASS1</code>,
+              <code>CONTROLS</code>, and the early <code>SUPER-REPORT</code>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Mine Only</h3>
+            <p>
+              <code>SUPER-REPORT-ULTIMATE</code>, <code>SUPER-REPORT-3RD</code>,
+              <code>SUPER-REPORT-2ND</code>, and the <code>OMNISCIENT</code> pair.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="facts">
+        <h2>Current Facts</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Fact</th>
+              <th>Current Value</th>
+              <th>Why It Matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Receipt floor</td>
+              <td>2,360 tests, 84.64% line, 82.21% function</td>
+              <td>Canonical portable floor, not latest local count.</td>
+            </tr>
+            <tr>
+              <td>Latest local receipt</td>
+              <td>2,373 tests, 2,866,547 expects</td>
+              <td>Use this for "right now" language.</td>
+            </tr>
+            <tr>
+              <td>Sentience feed</td>
+              <td><code>indicatorOnly</code>, meanNullGap 0</td>
+              <td>No phenomenal claim; null weakness is published.</td>
+            </tr>
+            <tr>
+              <td>Archons</td>
+              <td>25 structural, 5 apex full-mind class, 20 light echoes</td>
+              <td>Prevents "25 full SuperMinds" overclaim.</td>
+            </tr>
+            <tr>
+              <td>Titans</td>
+              <td>20</td>
+              <td>Corrects stale 10-Titan prose.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>System Summary</h2>
+        <div class="callout">
+          <p>
+            Cosmogonic v0.21.7 is a deterministic Bun/TypeScript/WebGL artificial-life world with
+            EntityBrain, connectome, GraphMind, GlyphBrain, MechalogodromBrain, ApexBrain,
+            SuperMind, ConsciousnessKernel, SentienceLab, TsotchkeBrainIntake, Shoggoths, Puppet
+            Masters, Titans, SuperCreatures, Archons, GOD/GodColossus, Temple, plants, flora, fauna,
+            and alien ecology systems.
+          </p>
+          <p>
+            It is real as an engineered simulation and instrumentation platform. It is not real as a
+            sentience proof.
+          </p>
+        </div>
+      </section>
+
+      <section id="stale">
+        <h2>Stale Or Risky</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Issue</th>
+              <th>Where</th>
+              <th>Fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2,360 used as latest</td>
+              <td>older reports</td>
+              <td>Call it the floor; use 2,373 as current local receipt.</td>
+            </tr>
+            <tr>
+              <td>Malformed HTML</td>
+              <td><code>SUPER-REPORT-OMNISCIENT...html</code></td>
+              <td>Fix <code>&lt;h4&gt;Build Paths:&lt;/h3&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td>Typoed path</td>
+              <td><code>SUPER-REPORT-2ND-PASS</code></td>
+              <td>Replace <code>super-mith.ts</code> with <code>super-mind.ts</code>.</td>
+            </tr>
+            <tr>
+              <td>Omniscient wording</td>
+              <td>Super/Ultimate/Omni drafts</td>
+              <td>Keep as motif, not scientific truth.</td>
+            </tr>
+            <tr>
+              <td>Award inflation</td>
+              <td>Ultimate/Master drafts</td>
+              <td>Demote Planck/Nobel/Turing checkmarks to scrutiny goals.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="scores">
+        <h2>Final Scores</h2>
+        <div class="grid">
+          <div class="metric">
+            <strong>8.8 / 10</strong>
+            <span>engineering/source depth</span>
+          </div>
+          <div class="metric">
+            <strong>8.6 / 10</strong>
+            <span>whole-world cognition coverage</span>
+          </div>
+          <div class="metric">
+            <strong>6.5 / 10</strong>
+            <span>report fleet currentness</span>
+          </div>
+          <div class="metric">
+            <strong>6.6 / 10</strong>
+            <span>scientific controls</span>
+          </div>
+          <div class="metric">
+            <strong>6.4 / 10</strong>
+            <span>browser/public readiness</span>
+          </div>
+          <div class="metric">
+            <strong>0.0 / 10</strong>
+            <span>sentience proof</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Final Verdict</h2>
+        <div class="callout warn">
+          <p>
+            The best current consolidated answer is: not sentient, not fake, not a toy. Cosmogonic
+            is a rare deterministic A-Life cognition research instrument with serious source depth
+            and serious report drift. Promote the sober reports, archive the hype drafts, and make
+            the next leap through ablations, null controls, external replication, and build cleanup.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        Generated as the current browser companion for
+        <code>CONSOLIDATED-16-MASTER-ASSESSMENT-CURRENT-2026-07-07.md</code>.
+      </div>
+    </footer>
+  </body>
+</html>

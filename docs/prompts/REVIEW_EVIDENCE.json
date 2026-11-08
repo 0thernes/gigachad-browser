@@ -1,0 +1,352 @@
+{
+  "purpose": "Limited source evidence for prompt authoring, not release qualification",
+  "review_date_client": "2026-11-08 America/Los_Angeles",
+  "captured_at_utc": "2026-11-08T08:51:46.125438+00:00",
+  "head": "283311b62a7d228fc478cde45594251fb482738e",
+  "working_tree_note": "Pre-existing and concurrent edits were present; only docs/prompts authored by this task.",
+  "inventory": {
+    "tracked_files": 1103,
+    "tracked_brain_files": 1034,
+    "method": "git ls-files; counts are inventory, not semantic review coverage"
+  },
+  "selected_browser_files": {
+    "AGENTS.md": {
+      "exists": true,
+      "bytes": 653,
+      "sha256": "a0193860bb57fc4a46d8c5dd97bd396cee5debefafb9283f7ba8ea302e94d529",
+      "mtime_utc": "2026-11-02T13:21:46+00:00"
+    },
+    "package.json": {
+      "exists": true,
+      "bytes": 1232,
+      "sha256": "f33d71204aa6d8a2fc3d4fbad6bbca44dfaa8291e7be9fc406b518a32378841d",
+      "mtime_utc": "2026-11-08T04:01:50.324087+00:00"
+    },
+    "preload.js": {
+      "exists": true,
+      "bytes": 2381,
+      "sha256": "22c69d4bf8da863c40dfc93cc3e5c7977249e7f45bf962cb3e9e63475f0004ea",
+      "mtime_utc": "2026-11-08T03:28:24.874411+00:00"
+    },
+    "main.js": {
+      "exists": true,
+      "bytes": 147015,
+      "sha256": "7cc469f18e46a7bbd44d480789ad1507f17065cb97e40d90c130e45ab61834ae",
+      "mtime_utc": "2026-11-08T08:47:04.996687+00:00"
+    },
+    "index.html": {
+      "exists": true,
+      "bytes": 1443152,
+      "sha256": "2d7430fb024eb178aee226b6237a954bfa7ee27a1439da98d3323915a990b41d",
+      "mtime_utc": "2026-11-08T08:41:31.336840+00:00"
+    },
+    "config.js": {
+      "exists": true,
+      "bytes": 13108,
+      "sha256": "35a0a2de4c42bc6990a24d03a3f7f0a9587301dacb32d5ae4d867b89be03d373",
+      "mtime_utc": "2026-11-04T16:21:36.159750+00:00"
+    },
+    "laya_sidecar.py": {
+      "exists": true,
+      "bytes": 67668,
+      "sha256": "a3c8b86f6a7233e5c021880b2bbce5034e52a36fbc89ddf85a541c2e4d1987b7",
+      "mtime_utc": "2026-11-08T08:47:03.134071+00:00"
+    },
+    ".github/workflows/ci.yml": {
+      "exists": true,
+      "bytes": 1364,
+      "sha256": "06402ef69da3107ab7bf557787a2add7e6a4131b99360c40fb7dac43188ba1f1",
+      "mtime_utc": "2026-11-08T07:58:32.634352+00:00"
+    },
+    "scripts/smoke.js": {
+      "exists": true,
+      "bytes": 3686,
+      "sha256": "1cd2b1a1d891d59e613f74eee80d6c08856ac560cba922805d188e9a686ea4f4",
+      "mtime_utc": "2026-11-08T04:06:45.020333+00:00"
+    },
+    "scripts/smoke_master_audit.js": {
+      "exists": true,
+      "bytes": 25422,
+      "sha256": "b607d7ed12a64b017420e0f60aeb01b1ca3a2ed0c26521269f44f94330eaa52f",
+      "mtime_utc": "2026-11-08T08:51:42.390605+00:00"
+    },
+    "systems/ported-multiverse-brains.js": {
+      "exists": true,
+      "bytes": 102009,
+      "sha256": "42b29ed08ceb4772803f5e2a4ee3b1fe6f59f61fb8bd10f0893d1693960028db",
+      "mtime_utc": "2026-11-08T08:44:50.107584+00:00"
+    },
+    "systems/alife-25-bleeding-edge-models.js": {
+      "exists": true,
+      "bytes": 92488,
+      "sha256": "dd5a4b6226833830c249c0bcfcb6b0d990ec37116d1a5d6c33bd6895f5958616",
+      "mtime_utc": "2026-11-08T08:32:06.256529+00:00"
+    },
+    "systems/forensic-25-pass-10-iteration-auditor.js": {
+      "exists": true,
+      "bytes": 21727,
+      "sha256": "5b7d24310d362516eded519f3618729a9eae27da0e699b54f13974e81116e525",
+      "mtime_utc": "2026-11-08T08:50:13.814945+00:00"
+    },
+    "systems/sop-500-checklist.js": {
+      "exists": true,
+      "bytes": 50654,
+      "sha256": "eba1d0c2d7a5eee8e716074f6a50d7636ece15053690e4b0ddb7adfbc6fbc964",
+      "mtime_utc": "2026-11-08T08:47:16.413627+00:00"
+    },
+    "brains/README.md": {
+      "exists": true,
+      "bytes": 6286,
+      "sha256": "5ec1b47fe17a1ab83b58b24d07f5b27acddacacec4a13e320474ddbb1f18cf30",
+      "mtime_utc": "2026-11-08T08:31:49.290852+00:00"
+    },
+    "LICENSE": {
+      "exists": true,
+      "bytes": 3331,
+      "sha256": "ea7dc232aff93191e925324eacaafc87273b207043e8988206d419b11b6eea76",
+      "mtime_utc": "2026-11-08T08:42:15.592976+00:00"
+    }
+  },
+  "selected_source_comparisons": [
+    {
+      "source_relative_to_workspace_parent": "Asmodensius-v40/creatures/001/organism/organism.ts",
+      "destination_relative_to_browser": "brains/asmodensius-v40/creatures/001/organism/organism.ts",
+      "source": {
+        "exists": true,
+        "bytes": 178805,
+        "sha256": "3f2dd819b947e0cade0511043d49d00e7297c5f99edb163749fbe9fbb42eb2c9",
+        "mtime_utc": "2026-11-02T23:06:32.773880+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 178805,
+        "sha256": "3f2dd819b947e0cade0511043d49d00e7297c5f99edb163749fbe9fbb42eb2c9",
+        "mtime_utc": "2026-11-02T23:06:32.773880+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "glitchling-jam/core/organism.ts",
+      "destination_relative_to_browser": "brains/glitchling/core/organism.ts",
+      "source": {
+        "exists": true,
+        "bytes": 152111,
+        "sha256": "08c262641d0f53192213a6ef27975e19e12101fafba7afccf559fe0308db9c48",
+        "mtime_utc": "2026-11-01T17:47:37+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 152111,
+        "sha256": "08c262641d0f53192213a6ef27975e19e12101fafba7afccf559fe0308db9c48",
+        "mtime_utc": "2026-11-01T17:47:37+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "glitchling-jam/glitchling.ts",
+      "destination_relative_to_browser": "brains/glitchling/glitchling.ts",
+      "source": {
+        "exists": true,
+        "bytes": 8216,
+        "sha256": "4907871e5a0b539b069755574cd6946f6d895865fab629d2a4ccf4b33c002b83",
+        "mtime_utc": "2026-11-01T18:18:48+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 8338,
+        "sha256": "25e4f655325606da81ef5be7c08ed523178671322178c4d7d2e288606a7ecf80",
+        "mtime_utc": "2026-11-08T07:48:54.449070+00:00"
+      },
+      "byte_identical": false
+    },
+    {
+      "source_relative_to_workspace_parent": "glitchling-jam/brain-viz/data.js",
+      "destination_relative_to_browser": "brains/glitchling/brain-viz/data.js",
+      "source": {
+        "exists": true,
+        "bytes": 216336,
+        "sha256": "287c439c5deb74624085e2771f50f5effba83d3fccced59564c40081e8b48df2",
+        "mtime_utc": "2026-11-01T17:53:53+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 256315,
+        "sha256": "7ab486913219562af3addc4ae75ec132b8cfa2b3aaaa54295bcc71febd42a8ff",
+        "mtime_utc": "2026-11-08T07:49:07.497566+00:00"
+      },
+      "byte_identical": false
+    },
+    {
+      "source_relative_to_workspace_parent": "dimension-omega-singularity/index.html",
+      "destination_relative_to_browser": "brains/dimension-omega-singularity/index.html",
+      "source": {
+        "exists": true,
+        "bytes": 320066,
+        "sha256": "051c06ce63e151406595834c13666480e7dbdd073bbee81f89d89f9de5d79be2",
+        "mtime_utc": "2026-11-05T17:58:58.422676+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 320066,
+        "sha256": "051c06ce63e151406595834c13666480e7dbdd073bbee81f89d89f9de5d79be2",
+        "mtime_utc": "2026-11-05T17:58:58.422676+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "dimension-omega-singularity/studio.html",
+      "destination_relative_to_browser": "brains/dimension-omega-singularity/studio.html",
+      "source": {
+        "exists": true,
+        "bytes": 59826,
+        "sha256": "879806d3f6afb514004fad1173b8c1a78dd3c125fad085282293e898044b8c93",
+        "mtime_utc": "2026-11-04T18:29:59.658267+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 59826,
+        "sha256": "879806d3f6afb514004fad1173b8c1a78dd3c125fad085282293e898044b8c93",
+        "mtime_utc": "2026-11-04T18:29:59.658267+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "Thingmaker/index.html",
+      "destination_relative_to_browser": "brains/thingmaker/index.html",
+      "source": {
+        "exists": true,
+        "bytes": 80733,
+        "sha256": "2207206c63cb4eed37ea31384520ea3ab546ecf5dc447a1456eb0d5800fdc0b6",
+        "mtime_utc": "2026-10-25T13:42:10.477495+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 80733,
+        "sha256": "2207206c63cb4eed37ea31384520ea3ab546ecf5dc447a1456eb0d5800fdc0b6",
+        "mtime_utc": "2026-10-25T13:42:10.477495+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "GRIMOIRE - Algorithms of the Arcane/index.html",
+      "destination_relative_to_browser": "brains/grimoire-arcane/index.html",
+      "source": {
+        "exists": true,
+        "bytes": 34820,
+        "sha256": "8b77a1ef5578f1935948961a2ed5b93ff41352b7b64cc605cf87185b5121aaad",
+        "mtime_utc": "2026-07-05T18:21:23.597459+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 34820,
+        "sha256": "8b77a1ef5578f1935948961a2ed5b93ff41352b7b64cc605cf87185b5121aaad",
+        "mtime_utc": "2026-07-05T18:21:23.597459+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "GRIMOIRE - Algorithms of the Arcane/viz.js",
+      "destination_relative_to_browser": "brains/grimoire-arcane/viz.js",
+      "source": {
+        "exists": true,
+        "bytes": 416768,
+        "sha256": "6649188c61821e1381d1ad697cc0628b49e61aca8c7fe56668ccf758f3d3b105",
+        "mtime_utc": "2026-07-05T18:22:16.372536+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 416768,
+        "sha256": "6649188c61821e1381d1ad697cc0628b49e61aca8c7fe56668ccf758f3d3b105",
+        "mtime_utc": "2026-07-05T18:22:16.372536+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "tsotchke-pages/app.js",
+      "destination_relative_to_browser": "brains/tsotchke-diffusion/app.js",
+      "source": {
+        "exists": true,
+        "bytes": 5059,
+        "sha256": "8f6d24140e3c2cc2c665400ffa7f6c34101d478064219059a42555e0a5cb5047",
+        "mtime_utc": "2026-10-27T03:42:42+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 5059,
+        "sha256": "8f6d24140e3c2cc2c665400ffa7f6c34101d478064219059a42555e0a5cb5047",
+        "mtime_utc": "2026-10-27T03:42:42+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "tsotchke-pages/sampler.js",
+      "destination_relative_to_browser": "brains/tsotchke-diffusion/sampler.js",
+      "source": {
+        "exists": true,
+        "bytes": 5400,
+        "sha256": "1475646130c3fb859efea0721aff5fc42a8802f4ae0a258b3593c3afaaa4237c",
+        "mtime_utc": "2026-10-27T03:35:16+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 5400,
+        "sha256": "1475646130c3fb859efea0721aff5fc42a8802f4ae0a258b3593c3afaaa4237c",
+        "mtime_utc": "2026-10-27T03:35:16+00:00"
+      },
+      "byte_identical": true
+    },
+    {
+      "source_relative_to_workspace_parent": "Chaos Entropy Art Engine/core/src/lib.rs",
+      "destination_relative_to_browser": "brains/chaos-entropy/lib.rs",
+      "source": {
+        "exists": true,
+        "bytes": 8347,
+        "sha256": "e9a2d9406b501cc0f2ca554322f4a52c5f73099602e9415cc0a9f3dba8874fb2",
+        "mtime_utc": "2026-06-13T04:56:13.556393+00:00"
+      },
+      "destination": {
+        "exists": true,
+        "bytes": 8347,
+        "sha256": "e9a2d9406b501cc0f2ca554322f4a52c5f73099602e9415cc0a9f3dba8874fb2",
+        "mtime_utc": "2026-06-13T04:56:13.556393+00:00"
+      },
+      "byte_identical": true
+    }
+  ],
+  "readonly_probe": {
+    "runtime": "v25.8.2",
+    "command_argv": [
+      "node",
+      "-e",
+      "const s=require('./systems/sop-500-checklist.js').summarizeSop500(); const m=require('./systems/ported-multiverse-brains.js'); const a=new m.Heterogeneous7TierPrecisionArena(); let ex; try{new m.PortedMultiverseBrainsFederation().exportLearnedState();ex='returned'}catch(e){ex=e.message} console.log(JSON.stringify({sop:{total:s.totalItems,verified:s.verifiedCount,grade:s.grade},fp16:{input:0.00001,decoded:a.decodeFp16(a.encodeFp16(0.00001))},exportState:ex}))"
+    ],
+    "exit_code": 0,
+    "result": {
+      "sop": {
+        "total": 500,
+        "verified": 500,
+        "grade": "A+"
+      },
+      "fp16": {
+        "input": 1e-05,
+        "decoded": 0
+      },
+      "exportState": "returned"
+    }
+  },
+  "not_performed": [
+    "full smoke suite",
+    "Electron UI validation",
+    "clean package build/install",
+    "broad security validation",
+    "60 Hz benchmarking",
+    "held-out training/ablation campaign",
+    "full line-by-line semantic audit"
+  ],
+  "final_prompt": {
+    "exists": true,
+    "bytes": 32049,
+    "sha256": "1cd472b47ac1ce3e6ea4a79fe694230fa6451890c827001d097d5991c33cb43f",
+    "mtime_utc": "2026-11-08T08:46:15.550617+00:00"
+  }
+}

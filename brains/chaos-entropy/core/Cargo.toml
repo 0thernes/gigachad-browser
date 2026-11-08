@@ -1,0 +1,18 @@
+[package]
+name = "ceae-core"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Chaos Entropy Art Engine — deterministic combinatoric image fast path (skeleton)"
+
+# Zero dependencies by design at this stage: the determinism contract is easier
+# to audit when the sampler is pure std. New dependencies require an ADR.
+[dependencies]
+
+[lib]
+name = "ceae_core"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ceae"
+path = "src/main.rs"

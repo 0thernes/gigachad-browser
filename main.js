@@ -153,6 +153,17 @@ function isOurChrome(rawUrl) {
   }
 }
 
+const BRAINS_DIR = path.join(ROOT, 'brains');
+
+function isInsideBrainsDir(targetPath) {
+  const normBase = path.resolve(BRAINS_DIR);
+  const normTarget = path.resolve(targetPath);
+  const rel = process.platform === 'win32'
+    ? path.relative(normBase.toLowerCase(), normTarget.toLowerCase())
+    : path.relative(normBase, normTarget);
+  return Boolean(rel && !rel.startsWith('..') && !path.isAbsolute(rel));
+}
+
 function isAllowedGuestUrl(rawUrl) {
   if (!rawUrl) return false;
   let parsed;
@@ -160,12 +171,23 @@ function isAllowedGuestUrl(rawUrl) {
   if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'about:') return true;
   if (parsed.protocol === 'file:') {
     try {
-      return sameFilePath(fileURLToPath(parsed), NEW_TAB_FILE);
+      const fPath = fileURLToPath(parsed);
+      return sameFilePath(fPath, NEW_TAB_FILE) || isInsideBrainsDir(fPath);
     } catch (_) {
       return false;
     }
   }
   return false;
+}
+
+function isSafeExternalUrl(rawUrl) {
+  if (!rawUrl) return false;
+  try {
+    const parsed = new URL(rawUrl);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch (_) {
+    return false;
+  }
 }
 
 function isLoopbackHttp(rawUrl) {
@@ -462,7 +484,7 @@ function wireHost(win) {
   });
   win.webContents.on('did-attach-webview', (_event, guest) => {
     guest.setWindowOpenHandler(({ url }) => {
-      if (isAllowedGuestUrl(url) && /^https?:/i.test(url)) {
+      if (isAllowedGuestUrl(url) && isSafeExternalUrl(url)) {
         win.webContents.send('open-url', url);
       }
       return { action: 'deny' };
@@ -707,7 +729,9 @@ function installSessionHooks() {
     }, 20000);
   };
   vaultSession.setPermissionRequestHandler(permissionHandler);
+  vaultSession.setPermissionCheckHandler((_wc, permission) => quietAllow.has(permission));
   session.defaultSession.setPermissionRequestHandler((_wc, _permission, callback) => callback(false));
+  session.defaultSession.setPermissionCheckHandler(() => false);
 
   vaultSession.on('will-download', (_event, item) => {
     const dest = uniqueDownloadPath(item.getFilename() || 'download.bin');
@@ -1717,12 +1741,16 @@ function registerIpc() {
       saveJson(userFile('temporal_snapshots.json'), temporalSnapshots);
     }
     try {
+      const bodyStr = JSON.stringify(enriched);
+      if (Buffer.byteLength(bodyStr, 'utf8') > 2_000_000) {
+        return { ok: false, status: 413, error: 'Body too large', data: { error: 'Body too large' } };
+      }
       const result = await fetchJson(`${requested}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(enriched)
+        body: bodyStr
       }, endpoint === '/tts' ? 20000 : 4000);
-      if (!result.ok) return { ok: false, error: result.data?.error || `HTTP ${result.status}`, data: result.data };
+      if (!result.ok) return { ok: false, status: result.status, error: result.data?.error || `HTTP ${result.status}`, data: result.data };
       if (endpoint === '/ner_pii' && result.data?.pii_redacted_count) piiBlockedTotal += result.data.pii_redacted_count;
       return { ok: true, data: result.data };
     } catch (err) {
@@ -1926,13 +1954,89 @@ function registerIpc() {
   });
 
   let _cachedPortedBrainsPayload = null;
+  let _localBrainsHttpServer = null;
+  let _localBrainsHttpPort = 0;
 
-  ipcMain.handle('hybrid-brain-portals', (event) => {
+  function ensureLocalBrainsHttpServer() {
+    if (_localBrainsHttpPort > 0 && _localBrainsHttpServer) {
+      return Promise.resolve(_localBrainsHttpPort);
+    }
+    const localBrainsDir = path.resolve(__dirname, 'brains');
+    const mimeByExt = {
+      '.html': 'text/html; charset=utf-8',
+      '.js': 'text/javascript; charset=utf-8',
+      '.mjs': 'text/javascript; charset=utf-8',
+      '.css': 'text/css; charset=utf-8',
+      '.json': 'application/json; charset=utf-8',
+      '.wasm': 'application/wasm',
+      '.svg': 'image/svg+xml',
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.gif': 'image/gif',
+      '.webp': 'image/webp',
+      '.f32': 'application/octet-stream',
+      '.bin': 'application/octet-stream',
+      '.csv': 'text/csv; charset=utf-8',
+      '.md': 'text/markdown; charset=utf-8',
+      '.txt': 'text/plain; charset=utf-8',
+      '.woff2': 'font/woff2',
+      '.woff': 'font/woff'
+    };
+    return new Promise((resolve) => {
+      try {
+        const srv = http.createServer((req, res) => {
+          try {
+            const parsedUrl = new URL(req.url || '/', 'http://127.0.0.1');
+            const relDecoded = decodeURIComponent(parsedUrl.pathname).replace(/^\/+/, '');
+            let candidate = path.resolve(localBrainsDir, relDecoded);
+            if (!candidate.startsWith(localBrainsDir + path.sep) && candidate !== localBrainsDir) {
+              res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+              res.end('Forbidden');
+              return;
+            }
+            if (fs.existsSync(candidate) && fs.statSync(candidate).isDirectory()) {
+              candidate = path.join(candidate, 'index.html');
+            }
+            if (!fs.existsSync(candidate) || !fs.statSync(candidate).isFile()) {
+              res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+              res.end('Not Found');
+              return;
+            }
+            const ext = path.extname(candidate).toLowerCase();
+            const contentType = mimeByExt[ext] || 'application/octet-stream';
+            res.writeHead(200, {
+              'Content-Type': contentType,
+              'Access-Control-Allow-Origin': 'http://127.0.0.1:' + _localBrainsHttpPort,
+              'X-Content-Type-Options': 'nosniff'
+            });
+            fs.createReadStream(candidate).pipe(res);
+          } catch (_) {
+            res.writeHead(500);
+            res.end('Internal Error');
+          }
+        });
+        srv.unref();
+        srv.listen(0, '127.0.0.1', () => {
+          _localBrainsHttpServer = srv;
+          _localBrainsHttpPort = srv.address().port;
+          resolve(_localBrainsHttpPort);
+        });
+        srv.once('error', () => resolve(0));
+      } catch (_) {
+        resolve(0);
+      }
+    });
+  }
+
+  ipcMain.handle('hybrid-brain-portals', async (event) => {
     if (!fromChrome(event)) return { ok: false };
     try {
       const { pathToFileURL } = require('url');
       const localBrainsDir = path.join(__dirname, 'brains');
       const parentDir = path.resolve(__dirname, '..');
+      const httpPort = await ensureLocalBrainsHttpServer();
+      const httpBaseUrl = httpPort > 0 ? `http://127.0.0.1:${httpPort}` : null;
       const resolvePortal = (localParts, fallbackParts) => {
         const pLocal = path.join(localBrainsDir, ...localParts);
         if (fs.existsSync(pLocal)) return pathToFileURL(pLocal).href;
@@ -1942,9 +2046,44 @@ function registerIpc() {
         }
         return null;
       };
+      const resolveHttpPortal = (localParts) => {
+        if (!httpBaseUrl) return null;
+        const pLocal = path.join(localBrainsDir, ...localParts);
+        if (fs.existsSync(pLocal)) return `${httpBaseUrl}/${localParts.join('/')}`;
+        return null;
+      };
+      const portalDefs = {
+        dimensionOmegaUrl: ['dimension-omega-singularity', 'index.html'],
+        dimensionOmegaStudioUrl: ['dimension-omega-singularity', 'studio.html'],
+        asmodensiusUrl: ['asmodensius-v40', 'creatures', '001', 'index.html'],
+        asmodensiusV3Url: ['asmodensius-v40', 'creatures', '001', 'index.v3.html'],
+        quantumManifoldUrl: ['quantum_neural_manifold_3d.html'],
+        cqmXylosUrl: ['cqm-xylos', 'index.html'],
+        cqmBibleUrl: ['cqm-xylos', 'bible.html'],
+        cqmSpecsUrl: ['cqm-xylos', 'specs.html'],
+        cqmDocsUrl: ['cqm-xylos', 'docs.html'],
+        cqmConsciousnessLabUrl: ['cqm-xylos', 'lab', 'consciousness.html'],
+        cqmSentienceLabUrl: ['cqm-xylos', 'lab', 'sentience.html'],
+        cqmWildBeyondUrl: ['cqm-xylos', 'lab', 'quantum-wildbeyond.html'],
+        glitchlingUrl: ['glitchling', 'index.html'],
+        glitchlingVizUrl: ['glitchling', 'brain-viz', 'index.html'],
+        tsotchkeDiffusionUrl: ['tsotchke-diffusion', 'index.html'],
+        thingmakerUrl: ['thingmaker', 'index.html'],
+        grimoireArcaneUrl: ['grimoire-arcane', 'index.html']
+      };
+      const httpPortals = {};
+      let allLocalPresent = true;
+      for (const [k, parts] of Object.entries(portalDefs)) {
+        if (!fs.existsSync(path.join(localBrainsDir, ...parts))) {
+          allLocalPresent = false;
+        }
+        httpPortals[k] = resolveHttpPortal(parts);
+      }
       return {
         ok: true,
-        selfContainedInRepo: true,
+        selfContainedInRepo: allLocalPresent,
+        httpBaseUrl,
+        httpPortals,
         dimensionOmegaUrl: resolvePortal(['dimension-omega-singularity', 'index.html'], ['dimension-omega-singularity', 'index.html']),
         dimensionOmegaStudioUrl: resolvePortal(['dimension-omega-singularity', 'studio.html'], ['dimension-omega-singularity', 'studio.html']),
         asmodensiusUrl: resolvePortal(['asmodensius-v40', 'creatures', '001', 'index.html'], ['Asmodensius-v40', 'creatures', '001', 'index.html']),
@@ -1954,6 +2093,9 @@ function registerIpc() {
         cqmBibleUrl: resolvePortal(['cqm-xylos', 'bible.html'], ['Cosmogonic Quantum Mechalogodrom', 'bible.html']),
         cqmSpecsUrl: resolvePortal(['cqm-xylos', 'specs.html'], ['Cosmogonic Quantum Mechalogodrom', 'specs.html']),
         cqmDocsUrl: resolvePortal(['cqm-xylos', 'docs.html'], ['Cosmogonic Quantum Mechalogodrom', 'docs.html']),
+        cqmConsciousnessLabUrl: resolvePortal(['cqm-xylos', 'lab', 'consciousness.html'], ['Cosmogonic Quantum Mechalogodrom', 'lab', 'consciousness.html']),
+        cqmSentienceLabUrl: resolvePortal(['cqm-xylos', 'lab', 'sentience.html'], ['Cosmogonic Quantum Mechalogodrom', 'lab', 'sentience.html']),
+        cqmWildBeyondUrl: resolvePortal(['cqm-xylos', 'lab', 'quantum-wildbeyond.html'], ['Cosmogonic Quantum Mechalogodrom', 'lab', 'quantum-wildbeyond.html']),
         glitchlingUrl: resolvePortal(['glitchling', 'index.html'], ['glitchling-jam', 'index.html']),
         glitchlingVizUrl: resolvePortal(['glitchling', 'brain-viz', 'index.html'], ['glitchling-jam', 'brain-viz', 'index.html']),
         tsotchkeDiffusionUrl: resolvePortal(['tsotchke-diffusion', 'index.html'], ['tsotchke-pages', 'index.html']),
@@ -1972,6 +2114,7 @@ function registerIpc() {
       const localBrainsDir = path.join(__dirname, 'brains');
       const wasmPath = path.join(localBrainsDir, 'cqm-xylos', 'cqm_kernels.wasm');
       const celegansPath = path.join(localBrainsDir, 'asmodensius-v40', 'celegans_herm_full_edgelist.csv');
+      const chaosEmbPath = path.join(localBrainsDir, 'tsotchke-diffusion', 'models', 'chaos_emb.f32');
 
       let wasmBase64 = null;
       let wasmExports = [];
@@ -1993,6 +2136,15 @@ function registerIpc() {
           skyrmionMzmQ1: skyrmionMzm,
           minBandGap: Number((f64[1] || 0).toFixed(4))
         };
+      }
+
+      let chaosEmbBase64 = null;
+      let chaosEmbTotalFloats = 0;
+      if (fs.existsSync(chaosEmbPath)) {
+        const chaosBuf = fs.readFileSync(chaosEmbPath);
+        const sliceLen = Math.min(chaosBuf.length, 6144);
+        chaosEmbBase64 = chaosBuf.subarray(0, sliceLen).toString('base64');
+        chaosEmbTotalFloats = Math.floor(sliceLen / 4);
       }
 
       let celegansStats = { totalEdges: 0, uniqueNeurons: 0, chemicalEdges: 0, gapJunctionEdges: 0, topHubs: [], compactEdges: [] };
@@ -2041,9 +2193,12 @@ function registerIpc() {
 
       _cachedPortedBrainsPayload = {
         ok: true,
+        pantheonBrainsCount: 14,
         wasmBase64,
         wasmExports,
         wasmBench,
+        chaosEmbBase64,
+        chaosEmbTotalFloats,
         celegansStats
       };
       return _cachedPortedBrainsPayload;
@@ -2971,6 +3126,19 @@ app.whenReady().then(async () => {
                       gates &&
                       gates.allPassed === true
                     ),
+                    multiverse14Ok: Boolean(
+                      humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.activeBrainsCount === 14 &&
+                      humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.glitchlingFlawEventsCount === 189 &&
+                      humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.thalerNineMarkersObject &&
+                      Object.keys(humunculusRuntime.portedMultiverseBrains.lastSnapshot.thalerNineMarkersObject).length === 9 &&
+                      humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.consciousness10Score > 0 &&
+                      humunculusRuntime.formatRetroTerminalText('brainfusion').includes('14-BRAIN MULTIVERSE PANTHEON')
+                    ),
+                    forensic25x10Ok: Boolean(
+                      humunculusRuntime.forensic25x10Auditor?.runFull25PassBy10IterationAudit(humunculusRuntime)?.ok === true &&
+                      humunculusRuntime.formatRetroTerminalText('forensic25x10').includes('250/250 PASSES') &&
+                      humunculusRuntime.formatRetroTerminalText('forensic25x10').includes('500/500 POINTS')
+                    ),
                     domOk: Boolean(
                       document.getElementById('host-alife-viewport-canvas') &&
                       document.getElementById('host-alife-hud-dock') &&
@@ -3067,6 +3235,7 @@ app.whenReady().then(async () => {
 
 app.on('window-all-closed', () => app.quit());
 app.on('will-quit', () => {
+  if (_localBrainsHttpServer) { try { _localBrainsHttpServer.close(); } catch (_) {} }
   if (sidecarProcess && sidecarProcess.exitCode == null) { try { sidecarProcess.kill(); } catch (_) {} }
   if (llamaProcess && llamaProcess.exitCode == null) { try { llamaProcess.kill(); } catch (_) {} }
 });

@@ -1411,7 +1411,20 @@ class SidecarHandler(BaseHTTPRequestHandler):
         except ValueError:
             self._send({"error": "Bad Content-Length"}, 400)
             return None
+        if length < 0:
+            self._send({"error": "Negative Content-Length"}, 400)
+            return None
         if length > MAX_BODY:
+            # Drain unread request body bytes (bounded to 32 MB) before closing so Windows TCP does not send RST (ECONNRESET)
+            remaining = min(length, 32_000_000)
+            try:
+                while remaining > 0:
+                    chunk = self.rfile.read(min(remaining, 65536))
+                    if not chunk:
+                        break
+                    remaining -= len(chunk)
+            except Exception:
+                pass
             self._send({"error": "Body too large"}, 413)
             return None
         raw = self.rfile.read(length) if length else b"{}"

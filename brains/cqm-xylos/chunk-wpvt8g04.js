@@ -1,0 +1,2 @@
+import{U as q,V as J,W as L,X as z,Y as N,_ as O,ea as W,pa as X,qa as Y}from"./chunk-jhx8pth2.js";var $=class extends Y{static{q(this,"PacketTokenBuilder")}constructor(){super(["packet"])}},b={parser:{TokenBuilder:q(()=>new $,"TokenBuilder"),ValueConverter:q(()=>new X,"ValueConverter")}};function A(Z=N){let w=z(L(Z),O),H=z(J({shared:w}),W,b);return w.ServiceRegistry.register(H),{shared:w,Packet:H}}q(A,"createPacketServices");
+export{b as K,A as L};

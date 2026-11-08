@@ -176,17 +176,18 @@ const ERD_RELATIONSHIPS = [
 ];
 
 function auditErdIntegrity(stores = {}) {
+  stores = (stores && typeof stores === 'object') ? stores : {};
   const rawSession = stores.sessionTabs || stores.tabSessions || [];
   const sessionTabs = Array.isArray(rawSession) ? rawSession : (Array.isArray(rawSession?.tabs) ? rawSession.tabs : []);
-  const history = stores.history || stores.historyRecords || [];
-  const bookmarks = stores.bookmarks || stores.bookmarkItems || [];
-  const closedTabs = stores.closedTabs || stores.closedTabStack || [];
-  const memoryVault = stores.memoryVault || stores.memoryVaultNotes || [];
-  const oneTabVault = stores.oneTabVault || stores.oneTabGroups || [];
+  const history = Array.isArray(stores.history || stores.historyRecords) ? (stores.history || stores.historyRecords) : [];
+  const bookmarks = Array.isArray(stores.bookmarks || stores.bookmarkItems) ? (stores.bookmarks || stores.bookmarkItems) : [];
+  const closedTabs = Array.isArray(stores.closedTabs || stores.closedTabStack) ? (stores.closedTabs || stores.closedTabStack) : [];
+  const memoryVault = Array.isArray(stores.memoryVault || stores.memoryVaultNotes) ? (stores.memoryVault || stores.memoryVaultNotes) : [];
+  const oneTabVault = Array.isArray(stores.oneTabVault || stores.oneTabGroups) ? (stores.oneTabVault || stores.oneTabGroups) : [];
   const vibePatches = stores.vibePatches || stores.vibeSitePatches || {};
   const temporalSnapshots = stores.temporalSnapshots || {};
-  const kanbanBoard = stores.kanbanBoard || stores.kanbanCards || [];
-  const downloads = stores.downloads || stores.downloadsList || [];
+  const kanbanBoard = Array.isArray(stores.kanbanBoard || stores.kanbanCards) ? (stores.kanbanBoard || stores.kanbanCards) : [];
+  const downloads = Array.isArray(stores.downloads || stores.downloadsList) ? (stores.downloads || stores.downloadsList) : [];
 
   const counts = {
     TabSession: Array.isArray(sessionTabs) ? sessionTabs.length : 0,

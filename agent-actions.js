@@ -62,8 +62,14 @@
       if (!Number.isInteger(mark) || mark < 1) return { error: 'mark must be a positive integer' };
       cmd.mark = mark;
     }
-    if (raw.x != null && raw.x !== '') cmd.x = Number(raw.x);
-    if (raw.y != null && raw.y !== '') cmd.y = Number(raw.y);
+    if (raw.x != null && raw.x !== '') {
+      const nx = Number(raw.x);
+      if (Number.isFinite(nx)) cmd.x = nx;
+    }
+    if (raw.y != null && raw.y !== '') {
+      const ny = Number(raw.y);
+      if (Number.isFinite(ny)) cmd.y = ny;
+    }
     if (action === 'type' || action === 'insert_only') cmd.text = String(raw.text == null ? '' : raw.text);
     if (action === 'type' && raw.pressEnter === false) cmd.pressEnter = false;
     if (action === 'scroll') cmd.direction = String(raw.direction || 'down').toLowerCase() === 'up' ? 'up' : 'down';
@@ -103,13 +109,20 @@
         const tm = Number(raw.toMark);
         if (Number.isInteger(tm) && tm >= 1) cmd.toMark = tm;
       }
-      if (raw.toX != null && raw.toX !== '') cmd.toX = Number(raw.toX);
-      if (raw.toY != null && raw.toY !== '') cmd.toY = Number(raw.toY);
+      if (raw.toX != null && raw.toX !== '') {
+        const ntx = Number(raw.toX);
+        if (Number.isFinite(ntx)) cmd.toX = ntx;
+      }
+      if (raw.toY != null && raw.toY !== '') {
+        const nty = Number(raw.toY);
+        if (Number.isFinite(nty)) cmd.toY = nty;
+      }
     }
     if (action === 'watch_page') {
-      if (raw.url) {
+      if (raw.url != null && String(raw.url).trim() !== '') {
         const u = normalizeUrl(raw.url);
-        if (u.url) cmd.url = u.url;
+        if (u.error) return u;
+        cmd.url = u.url;
       }
       const sec = Number(raw.intervalSec ?? raw.interval ?? 60);
       cmd.intervalSec = Number.isFinite(sec) ? Math.max(15, Math.min(3600, Math.round(sec))) : 60;

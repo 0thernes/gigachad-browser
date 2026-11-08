@@ -248,6 +248,9 @@ def main():
         assert ddw["ipfs_merkle_cid_v1"].startswith("bafybei") and len(ddw["circuit_hops"]) == 3, ddw
         assert_honest(ddw, "/deep_dark_web_intel")
 
+        status_413, body_413 = request("POST", "/classify", {"text": "A" * 2_050_000})
+        assert status_413 == 413 and body_413.get("error") == "Body too large", (status_413, body_413)
+
         print("sidecar smoke passed")
     finally:
         proc.terminate()

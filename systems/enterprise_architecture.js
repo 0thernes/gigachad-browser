@@ -16,6 +16,7 @@ const erp = require('./erp-resource-planner');
 const sop = require('./sop-500-checklist');
 const pass100 = require('./pass-100-verifier');
 const portedMultiverse = require('./ported-multiverse-brains');
+const bleedingEdge25 = require('./alife-25-bleeding-edge-models');
 const forensic25x10 = require('./forensic-25-pass-10-iteration-auditor');
 
 module.exports = {
@@ -25,5 +26,6 @@ module.exports = {
   ...sop,
   ...pass100,
   ...portedMultiverse,
+  ...bleedingEdge25,
   ...forensic25x10
 };

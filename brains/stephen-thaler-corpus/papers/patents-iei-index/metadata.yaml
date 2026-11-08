@@ -1,0 +1,24 @@
+slug: patents-iei-index
+year: 2024
+kind: web
+status: seed
+title: Imagination Engines patents index (public patents.html harvest spine)
+markers:
+- bootstrap
+- glory
+- reentrant
+domains:
+- patents
+- invention
+- neural-systems
+urls:
+- https://imagination-engines.com/patents.html
+docs:
+- README
+- SUMMARY
+- DETAIL
+- GLOSSARY
+- BIBLE
+- SPEC
+- INDEX
+- CONNECTIONS

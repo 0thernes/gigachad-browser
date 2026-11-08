@@ -89,4 +89,21 @@ for (const item of SOP_500_ITEMS) {
 assert.strictEqual(seenIds.size, 500);
 assert.strictEqual(seenReqs.size, 500, 'All 500 SOP requirement descriptions must be unique');
 
+// 5. Adversarial Null-Safety & Edge-Case Regression Tests across ERD, ERM, and ERP
+const nullErd = auditErdIntegrity(null);
+assert.strictEqual(nullErd.ok, true, 'auditErdIntegrity(null) must not throw and should return clean empty report');
+const nonArrayErd = auditErdIntegrity({ history: 'not-an-array', bookmarks: 123, kanbanBoard: {} });
+assert.strictEqual(nonArrayErd.ok, true, 'auditErdIntegrity with non-array fields must not throw');
+
+const nullErm = evaluateErmPosture(null);
+assert.strictEqual(nullErm.ok, true, 'evaluateErmPosture(null) must not throw');
+const ermAiFailures = evaluateErmPosture({ piiScrubEnabled: true, sidecarHealthy: true, failedAiCalls: 6 });
+assert.ok(ermAiFailures.avgResidualScore > ermReport.avgResidualScore, 'failedAiCalls > 0 must elevate ERM-FS-03 residual risk');
+
+const nullErp = evaluateErpPlan(null, null);
+assert.strictEqual(nullErp.ok, true, 'evaluateErpPlan(null, null) must not throw');
+const p95DegradedErp = evaluateErpPlan({ aiP50Ms: 400, aiP95Ms: 9000 });
+assert.strictEqual(p95DegradedErp.sla.p95Status, 'WARN', 'High p95 latency must trigger p95Status WARN');
+assert.strictEqual(p95DegradedErp.sla.slaStatus, 'DEGRADED', 'High p95 latency must degrade overall slaStatus even when p50 is low');
+
 console.log('smoke_systems ok (ERD=12 entities, ERM=Grade A, ERP=OPTIMAL, SOP=500/500 verified)');

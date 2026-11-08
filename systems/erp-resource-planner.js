@@ -31,6 +31,8 @@ const ERP_RESOURCE_QUOTAS = {
 };
 
 function evaluateErpPlan(telemetry = {}, stores = {}) {
+  telemetry = (telemetry && typeof telemetry === 'object') ? telemetry : {};
+  stores = (stores && typeof stores === 'object') ? stores : {};
   const vramUsed = Number(telemetry.vramUsed ?? telemetry.vramUsedMb ?? 0);
   const vramTotal = Number(telemetry.vramTotal ?? telemetry.vramTotalMb ?? 12288);
   const vramUtilizationPct = vramTotal > 0 ? Math.round((vramUsed / vramTotal) * 100) : 0;
@@ -90,7 +92,9 @@ function evaluateErpPlan(telemetry = {}, stores = {}) {
 
   const p50 = Number(telemetry.aiP50Ms || 0);
   const p95 = Number(telemetry.aiP95Ms || 0);
-  const slaStatus = (p50 === 0 || p50 <= ERP_RESOURCE_QUOTAS.sla.localLlmP50TargetMs) ? 'MEETING_SLA' : 'DEGRADED';
+  const p50Ok = p50 === 0 || p50 <= ERP_RESOURCE_QUOTAS.sla.localLlmP50TargetMs;
+  const p95Ok = p95 === 0 || p95 <= ERP_RESOURCE_QUOTAS.sla.localLlmP95TargetMs;
+  const slaStatus = (p50Ok && p95Ok) ? 'MEETING_SLA' : 'DEGRADED';
 
   return {
     ok: true,

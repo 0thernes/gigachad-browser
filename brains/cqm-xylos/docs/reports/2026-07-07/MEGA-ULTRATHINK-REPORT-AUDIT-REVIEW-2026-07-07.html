@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cosmogonic Mega Ultrathink Audit Report 2026-07-07</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #08090b;
+        --panel: #11151b;
+        --panel-2: #161d25;
+        --ink: #f4f7fb;
+        --muted: #aab7c5;
+        --line: #2b3542;
+        --accent: #7bdff2;
+        --accent-2: #f7c948;
+        --good: #7ee787;
+        --warn: #f2cc60;
+        --bad: #ff8a8a;
+        --max: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 18% 0%, rgba(123, 223, 242, 0.12), transparent 34rem),
+          linear-gradient(180deg, #08090b 0%, #0d1117 46%, #090a0d 100%);
+        color: var(--ink);
+        font:
+          16px/1.58 ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        background: rgba(8, 9, 11, 0.86);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(16px);
+      }
+
+      .nav {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0.8rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .brand {
+        font-weight: 760;
+        letter-spacing: 0;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 0.35rem;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        border: 1px solid transparent;
+        padding: 0.35rem 0.55rem;
+        border-radius: 6px;
+        font-size: 0.86rem;
+      }
+
+      .nav-links a:hover {
+        color: var(--ink);
+        border-color: var(--line);
+        text-decoration: none;
+      }
+
+      main {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 2rem 1rem 5rem;
+      }
+
+      .hero {
+        min-height: 68vh;
+        display: grid;
+        align-content: center;
+        gap: 1.4rem;
+        padding: 3rem 0 2rem;
+      }
+
+      .kicker {
+        color: var(--accent);
+        font-weight: 720;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+      }
+
+      h1,
+      h2,
+      h3 {
+        letter-spacing: 0;
+        line-height: 1.08;
+      }
+
+      h1 {
+        max-width: 980px;
+        margin: 0;
+        font-size: clamp(2.2rem, 7vw, 5.9rem);
+      }
+
+      h2 {
+        margin: 0 0 1rem;
+        font-size: clamp(1.7rem, 4vw, 3.1rem);
+      }
+
+      h3 {
+        margin: 0 0 0.7rem;
+        font-size: 1.15rem;
+      }
+
+      p {
+        margin: 0 0 1rem;
+      }
+
+      .lead {
+        max-width: 900px;
+        color: #d8e2ec;
+        font-size: clamp(1rem, 2vw, 1.28rem);
+      }
+
+      .truth {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .truth div,
+      .metric,
+      .panel,
+      details {
+        background: linear-gradient(180deg, rgba(22, 29, 37, 0.96), rgba(14, 18, 24, 0.96));
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .truth div {
+        padding: 0.9rem;
+      }
+
+      .label {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .value {
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 1.42rem;
+        font-weight: 780;
+      }
+
+      section {
+        margin-top: 4rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel {
+        padding: 1rem;
+      }
+
+      .panel p:last-child {
+        margin-bottom: 0;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        min-height: 1.7rem;
+        padding: 0.15rem 0.45rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .status.good {
+        color: var(--good);
+      }
+
+      .status.warn {
+        color: var(--warn);
+      }
+
+      .status.bad {
+        color: var(--bad);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(17, 21, 27, 0.84);
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 0.7rem 0.75rem;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: #dce8f5;
+        background: #141b23;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      td {
+        color: #d9e4ef;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      code {
+        color: #dce8f5;
+        background: #0a0d12;
+        border: 1px solid #202935;
+        border-radius: 5px;
+        padding: 0.08rem 0.25rem;
+        font-size: 0.9em;
+      }
+
+      .score-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+
+      .metric {
+        padding: 0.9rem;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 1.35rem;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      details {
+        padding: 0.9rem 1rem;
+      }
+
+      details + details {
+        margin-top: 0.65rem;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 760;
+      }
+
+      .callout {
+        border-left: 4px solid var(--accent);
+        background: rgba(123, 223, 242, 0.08);
+        padding: 1rem;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .warning {
+        border-left-color: var(--warn);
+        background: rgba(242, 204, 96, 0.09);
+      }
+
+      .danger {
+        border-left-color: var(--bad);
+        background: rgba(255, 138, 138, 0.08);
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.55rem;
+      }
+
+      .flow div {
+        background: #10161d;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.75rem;
+        min-height: 4.8rem;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        padding: 2rem 1rem;
+      }
+
+      footer div {
+        max-width: var(--max);
+        margin: 0 auto;
+      }
+
+      @media (max-width: 860px) {
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .truth,
+        .grid,
+        .grid.two,
+        .score-grid,
+        .flow {
+          grid-template-columns: 1fr;
+        }
+
+        th,
+        td {
+          padding: 0.62rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <div class="brand">Cosmogonic Audit 2026-07-07</div>
+        <nav class="nav-links" aria-label="Report sections">
+          <a href="#verdict">Verdict</a>
+          <a href="#scope">Scope</a>
+          <a href="#truth">Truth</a>
+          <a href="#systems">Systems</a>
+          <a href="#gates">Gates</a>
+          <a href="#roadmap">Roadmap</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="verdict">
+        <div class="kicker">Mega Ultrathink Audit + Browser Companion</div>
+        <h1>Rare artificial-life cognition instrument. Not sentience proof.</h1>
+        <p class="lead">
+          This last-pass review reconciles the Gemini, Antigravity, Composer, Devin, Codex,
+          Claude/Super-report, NHSI dashboard, and new mega-master reports into one sober master
+          verdict: keep the weirdness, keep the ambition, but scope every claim to source, test,
+          falsifier, and denominator.
+        </p>
+        <div class="truth" aria-label="Headline metrics">
+          <div>
+            <span class="label">Sentience proof</span>
+            <span class="value">0.0 / 10</span>
+          </div>
+          <div>
+            <span class="label">Engineering artifact</span>
+            <span class="value">8.8 / 10</span>
+          </div>
+          <div>
+            <span class="label">Theory indicators</span>
+            <span class="value">8.1 / 10</span>
+          </div>
+          <div>
+            <span class="label">Publishable seed</span>
+            <span class="value">6.5 / 10</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="scope">
+        <h2>Scope</h2>
+        <div class="two grid">
+          <div class="panel">
+            <h3>Reviewed Inputs</h3>
+            <p>
+              Twelve explicitly requested workspace reports, two late-arriving
+              omniscient/omnicognitive report files, and six original Downloads reports were
+              included as evidence.
+            </p>
+            <p>
+              The full markdown audit is
+              <a href="./MEGA-ULTRATHINK-REPORT-AUDIT-REVIEW-2026-07-07.md"
+                >MEGA-ULTRATHINK-REPORT-AUDIT-REVIEW-2026-07-07.md</a
+              >.
+            </p>
+          </div>
+          <div class="panel">
+            <h3>Critic Consensus</h3>
+            <p>
+              Use <code>FINAL-HURRAH</code> as prose spine, Pass 3 as world-neurology inventory,
+              Pass 2 as falsifier method, and <code>BRAIN...ASSESSMENT</code> as the deep canonical
+              source. Treat Super/Ultimate/Omniscient drafts as coverage material, not literal
+              truth.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="truth">
+        <h2>Truth Boundary</h2>
+        <div class="callout danger">
+          <strong>Binding claim:</strong> the project has computational indicators, not proof of
+          phenomenal consciousness, biological sentience, subjective experience, welfare status, or
+          a solved hard problem of consciousness.
+        </div>
+        <table aria-label="Correct and incorrect claims">
+          <thead>
+            <tr>
+              <th>Topic</th>
+              <th>Correct Wording</th>
+              <th>Avoid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sentience</td>
+              <td>indicator-only, no sentience proof</td>
+              <td>sentient, conscious, hard problem solved</td>
+            </tr>
+            <tr>
+              <td>Butlin-style rubric</td>
+              <td>8 of 14 met, 6 of 14 partial</td>
+              <td>all indicators met</td>
+            </tr>
+            <tr>
+              <td>Tsotchke</td>
+              <td>real corpus, depth-classed integration</td>
+              <td>every repo fully wired at equal depth</td>
+            </tr>
+            <tr>
+              <td>Archons</td>
+              <td>25 structural Archons, 5 apex full-mind class plus 20 light echoes</td>
+              <td>25 complete SuperMind beings</td>
+            </tr>
+            <tr>
+              <td>Academic level</td>
+              <td>MIT/PhD-grade engineering seed, not Nobel/Fields today</td>
+              <td>Planck/Nobel/Turing/Fields achieved</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Corrected Scorecard</h2>
+        <div class="score-grid">
+          <div class="metric">
+            <strong>8.7</strong>
+            <span>Source-backed brain architecture</span>
+          </div>
+          <div class="metric">
+            <strong>8.5</strong>
+            <span>Whole-world neurology inventory</span>
+          </div>
+          <div class="metric">
+            <strong>6.6</strong>
+            <span>Scientific controls</span>
+          </div>
+          <div class="metric">
+            <strong>7.4</strong>
+            <span>Verification culture</span>
+          </div>
+          <div class="metric">
+            <strong>8.2</strong>
+            <span>Tsotchke integration</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="systems">
+        <h2>Whole-World Neurology Atlas</h2>
+        <table aria-label="System atlas">
+          <thead>
+            <tr>
+              <th>System</th>
+              <th>Source</th>
+              <th>Role</th>
+              <th>Gap</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SuperMind</td>
+              <td><code>src/sim/super-mind.ts</code></td>
+              <td>Apex multi-theory planning/attention system</td>
+              <td>No subjective proof</td>
+            </tr>
+            <tr>
+              <td>ApexBrain</td>
+              <td><code>src/sim/apex-brain.ts</code></td>
+              <td>High-capacity apex organ controller</td>
+              <td>Designed scale exceeds live biological proof</td>
+            </tr>
+            <tr>
+              <td>ConsciousnessKernel</td>
+              <td><code>src/sim/consciousness-kernel.ts</code></td>
+              <td>Multi-framework indicator web</td>
+              <td>Theory proxies only</td>
+            </tr>
+            <tr>
+              <td>Shoggoths</td>
+              <td><code>src/sim/shoggoths.ts</code></td>
+              <td>100 entities, 16 strains, tendrils and consumption</td>
+              <td>No biological Shoggoth brain claim</td>
+            </tr>
+            <tr>
+              <td>Puppet Masters</td>
+              <td><code>src/sim/puppet-masters.ts</code></td>
+              <td>100 world-meddling Puppeteer entities</td>
+              <td>Needs browser readout verification</td>
+            </tr>
+            <tr>
+              <td>Titans</td>
+              <td><code>src/sim/titans.ts</code></td>
+              <td>20 colossi with economy, diplomacy, war dynamics</td>
+              <td><code>specs.html</code> has one stale 10-Titan sentence</td>
+            </tr>
+            <tr>
+              <td>Archons / Pantheon</td>
+              <td><code>src/sim/godform.ts</code>, <code>src/sim/pantheon.ts</code></td>
+              <td>25 named/structural mythic society layer</td>
+              <td>5 apex vs 20 light distinction must stay visible</td>
+            </tr>
+            <tr>
+              <td>Flora / fauna / alien ecology</td>
+              <td><code>vegetation.ts</code>, <code>alien-flora.ts</code></td>
+              <td>Growth, ecology, non-human world substrate</td>
+              <td>Simulation ecology, not biological plant sentience</td>
+            </tr>
+            <tr>
+              <td>GOD / Temple / releases</td>
+              <td><code>god-colossus.ts</code>, <code>monolith-temple.ts</code></td>
+              <td>Large mythic event surfaces and ritual state transforms</td>
+              <td>Mythic expression, not divine consciousness</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>360 / 180 / 270 / 90</h2>
+        <div class="flow">
+          <div>
+            <h3>360</h3>
+            <p>Total ecology: bodies, brains, fields, pantheons, labs, dashboards, tests.</p>
+          </div>
+          <div>
+            <h3>180</h3>
+            <p>Skeptic view: no biological brain, no subjective report, null gaps remain.</p>
+          </div>
+          <div>
+            <h3>270</h3>
+            <p>Academic view: strong artifact, not Nobel/Fields/Turing discovery today.</p>
+          </div>
+          <div>
+            <h3>90</h3>
+            <p>Engineering view: fix stale pages, format docs, generate canonical reports.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="gates">
+        <h2>Controls and Verification</h2>
+        <table aria-label="Gate status">
+          <thead>
+            <tr>
+              <th>Gate</th>
+              <th>Status</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>typecheck</code></td>
+              <td><span class="status good">passed</span></td>
+              <td>No current type failure reported by critic verification.</td>
+            </tr>
+            <tr>
+              <td><code>lint</code></td>
+              <td><span class="status good">passed</span></td>
+              <td>No current lint failure reported by critic verification.</td>
+            </tr>
+            <tr>
+              <td><code>sync:check</code></td>
+              <td><span class="status good">passed</span></td>
+              <td>Managed receipt/version/NHSI token surfaces clean.</td>
+            </tr>
+            <tr>
+              <td><code>verify:receipts</code></td>
+              <td><span class="status good">passed</span></td>
+              <td>2,370 pass, 0 fail, 2,866,509 expects, 92.02% line, 89.65% function.</td>
+            </tr>
+            <tr>
+              <td><code>format:check</code></td>
+              <td><span class="status bad">red</span></td>
+              <td>
+                Dirty report files need formatting, so full <code>bun run check</code> is not green.
+              </td>
+            </tr>
+            <tr>
+              <td><code>verify:facts</code></td>
+              <td><span class="status warn">warnings</span></td>
+              <td>Human-triage warning surface, not a hard proof oracle.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout warning">
+          <strong>Correct gate wording:</strong> controls and receipts are materially stronger than
+          vibes, but the current dirty checkout is not full-gate green.
+        </div>
+      </section>
+
+      <section>
+        <h2>Academic Benchmark</h2>
+        <table aria-label="Academic benchmark">
+          <thead>
+            <tr>
+              <th>Benchmark</th>
+              <th>Verdict</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MIT-level systems project</td>
+              <td><span class="status good">yes</span></td>
+              <td>Broad engineering, simulation depth, tests, dashboard culture.</td>
+            </tr>
+            <tr>
+              <td>PhD-level prototype</td>
+              <td><span class="status warn">partial</span></td>
+              <td>Research question and method need tightening.</td>
+            </tr>
+            <tr>
+              <td>Max Planck-level paper</td>
+              <td><span class="status warn">not yet</span></td>
+              <td>Needs real neurodata baseline and external replication.</td>
+            </tr>
+            <tr>
+              <td>Nobel-level discovery</td>
+              <td><span class="status bad">no</span></td>
+              <td>No biological or physical discovery.</td>
+            </tr>
+            <tr>
+              <td>Turing-level impact</td>
+              <td><span class="status bad">no</span></td>
+              <td>No field-defining algorithm/tool/platform impact yet.</td>
+            </tr>
+            <tr>
+              <td>Fields-level mathematics</td>
+              <td><span class="status bad">no</span></td>
+              <td>No new proof or theorem.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Report Promotion Decision</h2>
+        <details open>
+          <summary>Promote</summary>
+          <p>
+            <code>BRAIN...ASSESSMENT</code> as deep source, <code>FINAL-HURRAH</code> as prose
+            spine, Pass 2 as method backbone, and Pass 3 as whole-world inventory.
+          </p>
+        </details>
+        <details>
+          <summary>Use With Warning</summary>
+          <p>
+            <code>VERIFICATION-ANALYTICAL-DATA</code> and <code>NHSI-PROGRESS-DASHBOARD</code>
+            are valuable but must be date-scoped and translated into sober audit language.
+          </p>
+        </details>
+        <details>
+          <summary>Mine, Do Not Canonize</summary>
+          <p>
+            <code>SUPER-REPORT-ULTIMATE</code> and <code>OMNISCIENT-OMNICOGNITIVE</code>
+            contain useful coverage and matrices but overstate literal omniscience and academic
+            readiness.
+          </p>
+        </details>
+      </section>
+
+      <section id="roadmap">
+        <h2>Next Moves</h2>
+        <div class="grid">
+          <div class="panel">
+            <h3>48 Hours</h3>
+            <p>
+              Fix <code>super-mith.ts</code>, correct Titan count drift, format dirty docs, and stop
+              saying full-gate green until true.
+            </p>
+          </div>
+          <div class="panel">
+            <h3>2 Weeks</h3>
+            <p>
+              Add Tsotchke per-repo ablations, freeze the indicator table, and publish
+              Shoggoth/Puppet/Titan telemetry.
+            </p>
+          </div>
+          <div class="panel">
+            <h3>1 Quarter</h3>
+            <p>
+              Prepare a methods paper, real connectome/body experiment, replication bundle, and
+              generated report surface.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Final Word</h2>
+        <div class="callout">
+          <p>
+            The repo is strongest when it is not pretending. Its rare value is a mythic, measurable,
+            source-backed A-Life cognition ecology. The path forward is not louder prose. It is
+            sharper evidence.
+          </p>
+          <p>
+            <strong
+              >Measure the gods. Scope the claims. Keep the weirdness. Make every miracle
+              falsifiable.</strong
+            >
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        HTML companion for
+        <code>docs/MEGA-ULTRATHINK-REPORT-AUDIT-REVIEW-2026-07-07.md</code>. Binding honesty: every
+        consciousness/sentience metric is a computational indicator, not phenomenal experience.
+      </div>
+    </footer>
+  </body>
+</html>

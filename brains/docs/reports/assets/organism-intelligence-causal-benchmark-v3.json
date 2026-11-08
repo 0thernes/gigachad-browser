@@ -1,0 +1,378 @@
+{
+  "schemaVersion": 1,
+  "taskVersion": "organism-intelligence-v3-disjoint-synthetic-goal-evaluation",
+  "generatedDate": "2026-07-10",
+  "predecessorReceipt": "docs/reports/assets/organism-intelligence-causal-benchmark-v2.json",
+  "predecessorOutcome": "v2 improved the goal-local actor trace but its disabled arm removed both corpus signal and explicit goal, confounding goal-controller and corpus effects. v3 supersedes that synthetic goal-response claim with a goal-preserved substrate ablation and evaluates corpus causality across a fresh 30-seed deterministic family disjoint from v1/v2.",
+  "indicatorOnly": true,
+  "claimBoundary": "Measures deterministic response to a synthetic +x goal field and fixed reversal task only; not a flora/resource simulation, not phenomenal consciousness or sentience, and not physical quantum entropy, CSPRNG security, or general intelligence.",
+  "provenance": {
+    "runtimeBaseCommit": "517c1a41c0d5fbcbdf791a318056c7b28be5013c",
+    "benchmarkScriptSha256": "542e44bd6a502788f511ecb9e2be46414d17cfefae13fb416faeacfb3360ea68",
+    "eshkolReference": {
+      "tag": "v1.3.2-evolve",
+      "commit": "8443ddaeecec579c60ac858348a23cf1912d7a78",
+      "relationship": "bounded-float64-runtime-analogue-not-native-parity"
+    },
+    "quantumRngReference": {
+      "tag": "v3.0.1",
+      "commit": "a00ad483cbbef31ea7536f09ae99409d81c9a823",
+      "relationship": "deterministic-classical-statevector-adaptation-not-csprng-or-physical-entropy"
+    }
+  },
+  "protocol": {
+    "evaluationSeeds": [
+      585878124,
+      2832700631,
+      784555842,
+      3031378349,
+      983233560,
+      3230056067,
+      1181911278,
+      3428733785,
+      1380588996,
+      3627411503,
+      1579266714,
+      3826089221,
+      1777944432,
+      4024766939,
+      1976622150,
+      4223444657,
+      2175299868,
+      127155079,
+      2373977586,
+      325832797,
+      2572655304,
+      524510515,
+      2771333022,
+      723188233,
+      2970010740,
+      921865951,
+      3168688458,
+      1120543669,
+      3367366176,
+      1319221387
+    ],
+    "evaluationSeedPolicy": "fresh deterministic family disjoint from v1/v2; fixed in source before this receipt; not external preregistration",
+    "bootstrapSamples": 10000,
+    "controls": [
+      "substrate-disabled-goal-preserved",
+      "legacy-no-goal-context",
+      "four-aggregate-channel-cyclic-rotation",
+      "uniform-final-exploration-surrogate-not-entropy-matched",
+      "uniform-random-action-baseline"
+    ],
+    "goalTask": "one-step x-axis response to an identical synthetic +x goal field; no flora/resource environment is constructed",
+    "adaptationTask": "240 steps with synthetic goal-direction reversal after step 120; online trace vs frozen trace",
+    "acceptanceRules": {
+      "corpusConditionedGoal": "paired mean enhanced-minus-disabled > 0 and 95% bootstrap lower bound > 0",
+      "goalController": "paired mean goal-only-minus-legacy > 0 and 95% bootstrap lower bound > 0",
+      "randomPolicy": "paired mean enhanced-minus-random > 0 and 95% bootstrap lower bound > 0",
+      "adaptation": "median post-reversal return >= 5% above frozen trace, 95% bootstrap lower bound > 0, and no seed loss below -20%",
+      "corpusCausality": "all 17 integrated external rows change final velocity > 1e-9; four fences plus one meta row are exactly inert",
+      "performance": "across three fresh processes: shared-field worst p95 < 0.5 ms, median of process-level incremental 50,000-entity medians < 3 ms, and all thirty batch medians < 3 ms",
+      "scoreUplift": "goal-controller, corpus-conditioned goal response, random-action baseline, adaptation, causality, numerical safety, every-class consumer coverage, performance, aggregate-channel mapping specificity, and exploration-surrogate specificity must all pass"
+    }
+  },
+  "acceptanceCriteria": {
+    "goalMeanImprovementMinExclusive": 0,
+    "goalBootstrapLowerBoundMinExclusive": 0,
+    "adaptationRelativeMedianImprovementMin": 0.05,
+    "adaptationBootstrapLowerBoundMinExclusive": 0,
+    "adaptationWorstSeedRelativeLossMin": -0.2,
+    "corpusDecisionEpsilon": 1e-9,
+    "integratedExternalRows": 17,
+    "excludedExternalRows": 5,
+    "sharedFieldP95MaxMs": 0.5,
+    "incrementalEntityMedianMaxMs": 3,
+    "performancePopulation": 50000
+  },
+  "goalResponse": {
+    "means": {
+      "enhanced": 0.013675299144226055,
+      "disabled": 0.004748495700307164,
+      "legacy": -0.0043330574796032395,
+      "aggregateRotated": 0.013705023844583821,
+      "uniformExplorationSurrogate": 0.013501028123179682,
+      "random": 0.009705811435589566
+    },
+    "enhancedMinusDisabled": {
+      "mean": 0.008926803443918892,
+      "bootstrap95": [
+        0.0074709186839338375,
+        0.010524275559338788
+      ],
+      "cohenDz": 2.0584821748050905
+    },
+    "goalOnlyMinusLegacy": {
+      "mean": 0.009081553179910407,
+      "bootstrap95": [
+        0.008224136063586919,
+        0.009901016159411519
+      ],
+      "cohenDz": 3.7930432385228356
+    },
+    "enhancedMinusAggregateRotation": {
+      "mean": -0.000029724700357763793,
+      "bootstrap95": [
+        -0.00034302817854577695,
+        0.0002708306663364767
+      ],
+      "cohenDz": -0.033895147462430615
+    },
+    "enhancedMinusUniformExplorationSurrogate": {
+      "mean": 0.00017427102104637573,
+      "bootstrap95": [
+        -0.0005910144811096056,
+        0.0010254502857670654
+      ],
+      "cohenDz": 0.0754619380605088
+    },
+    "enhancedMinusRandom": {
+      "mean": 0.003969487708636489,
+      "bootstrap95": [
+        -0.010601483800813,
+        0.0189792125751305
+      ],
+      "cohenDz": 0.09414009637952211
+    },
+    "acceptedAgainstDisabled": true,
+    "acceptedAgainstRandom": false,
+    "aggregateChannelMappingSpecific": false,
+    "uniformExplorationSurrogateSpecific": false
+  },
+  "adaptation": {
+    "requiredRelativeMedianImprovement": 0.05,
+    "maximumAllowedSeedRelativeLoss": -0.2,
+    "medianPostReversalEnhanced": 1.2743610106013112,
+    "medianPostReversalFrozen": 1.2008535611966096,
+    "relativeMedianImprovement": 0.06121266720602802,
+    "enhancedMinusFrozen": {
+      "mean": 0.15978181829699184,
+      "bootstrap95": [
+        0.11788071166290177,
+        0.20429248191903368
+      ],
+      "cohenDz": 1.3134377665377908
+    },
+    "worstSeedRelativeLoss": -0.0027290855917749624,
+    "accepted": true
+  },
+  "corpusCausality": {
+    "evaluatedSeeds": 30,
+    "integrated": 17,
+    "integratedChanged": 17,
+    "excluded": 5,
+    "excludedExactZero": 5,
+    "accepted": true
+  },
+  "numericalSafety": {
+    "forcedSteps": 10000,
+    "allFiniteAndBounded": true,
+    "finalRevision": 10000,
+    "accepted": true
+  },
+  "performance": {
+    "sharedFieldP95Ms": 0.10890000000000555,
+    "legacyEntityMedianMs": 9.455400000000054,
+    "enhancedEntityMedianMs": 10.851499999999987,
+    "incrementalEntityMedianMs": 1.3857499999999163,
+    "incrementalEntityWorstBatchMs": 2.8494000000000597,
+    "incrementalEntityBatchMediansMs": [
+      1.366899999999987,
+      1.2309000000000196,
+      1.1569999999999823,
+      2.070500000000038,
+      0.5316000000000258,
+      1.5873999999998887,
+      2.8494000000000597,
+      0.7209000000000287,
+      1.4045999999998457,
+      2.0010999999999513,
+      1.2173999999999978,
+      1.4969999999999573,
+      1.3091000000000008,
+      1.2600999999999658,
+      0.8489999999999327,
+      1.3614999999999782,
+      1.9356999999997697,
+      1.2914999999998145,
+      1.2177000000001499,
+      1.6243999999999232,
+      1.3041999999999803,
+      1.3835000000000264,
+      1.560299999999927,
+      1.536100000000033,
+      1.1778000000000475,
+      1.4636000000000422,
+      2.1918000000000575,
+      1.6019000000001142,
+      1.6941999999999098,
+      1.2399000000000342
+    ],
+    "repeatProcesses": 3,
+    "repeatBatches": 10,
+    "totalBatches": 30,
+    "samplesPerBranchPerBatch": 7,
+    "population": 50000,
+    "orderCounterbalanced": true,
+    "branchStateIsolated": true,
+    "processRuns": [
+      {
+        "sharedFieldP95Ms": 0.10890000000000555,
+        "legacyEntityMedianMs": 9.546350000000075,
+        "enhancedEntityMedianMs": 10.90949999999998,
+        "incrementalEntityMedianMs": 1.3857499999999163,
+        "incrementalEntityWorstBatchMs": 2.8494000000000597,
+        "incrementalEntityBatchMediansMs": [
+          1.366899999999987,
+          1.2309000000000196,
+          1.1569999999999823,
+          2.070500000000038,
+          0.5316000000000258,
+          1.5873999999998887,
+          2.8494000000000597,
+          0.7209000000000287,
+          1.4045999999998457,
+          2.0010999999999513
+        ],
+        "repeatBatches": 10,
+        "samplesPerBranchPerBatch": 7,
+        "population": 50000,
+        "orderCounterbalanced": true,
+        "branchStateIsolated": true
+      },
+      {
+        "sharedFieldP95Ms": 0.06730000000000302,
+        "legacyEntityMedianMs": 9.455400000000054,
+        "enhancedEntityMedianMs": 10.851499999999987,
+        "incrementalEntityMedianMs": 1.3002999999999076,
+        "incrementalEntityWorstBatchMs": 1.9356999999997697,
+        "incrementalEntityBatchMediansMs": [
+          1.2173999999999978,
+          1.4969999999999573,
+          1.3091000000000008,
+          1.2600999999999658,
+          0.8489999999999327,
+          1.3614999999999782,
+          1.9356999999997697,
+          1.2914999999998145,
+          1.2177000000001499,
+          1.6243999999999232
+        ],
+        "repeatBatches": 10,
+        "samplesPerBranchPerBatch": 7,
+        "population": 50000,
+        "orderCounterbalanced": true,
+        "branchStateIsolated": true
+      },
+      {
+        "sharedFieldP95Ms": 0.07629999999999626,
+        "legacyEntityMedianMs": 9.211799999999926,
+        "enhancedEntityMedianMs": 10.525649999999985,
+        "incrementalEntityMedianMs": 1.4998500000000377,
+        "incrementalEntityWorstBatchMs": 2.1918000000000575,
+        "incrementalEntityBatchMediansMs": [
+          1.3041999999999803,
+          1.3835000000000264,
+          1.560299999999927,
+          1.536100000000033,
+          1.1778000000000475,
+          1.4636000000000422,
+          2.1918000000000575,
+          1.6019000000001142,
+          1.6941999999999098,
+          1.2399000000000342
+        ],
+        "repeatBatches": 10,
+        "samplesPerBranchPerBatch": 7,
+        "population": 50000,
+        "orderCounterbalanced": true,
+        "branchStateIsolated": true
+      }
+    ],
+    "medianBudgetMet": true,
+    "stableAcrossBatches": true,
+    "accepted": true
+  },
+  "consumerCoverage": {
+    "evidenceKind": "targeted-bun-test-run-plus-exact-test-suite-inventory",
+    "evidenceTestFiles": [
+      "tests/operational-organism-intelligence.test.ts",
+      "tests/alien-flora.test.ts",
+      "tests/nhi.test.ts",
+      "tests/glyph-brain.test.ts",
+      "tests/wilderness.test.ts",
+      "tests/tsotchke-facade.test.ts",
+      "tests/shoggoths.test.ts",
+      "tests/puppet-masters.test.ts",
+      "tests/titans.test.ts",
+      "tests/leviathans.test.ts"
+    ],
+    "evidenceRun": {
+      "command": [
+        "bun",
+        "test",
+        "tests/operational-organism-intelligence.test.ts",
+        "tests/alien-flora.test.ts",
+        "tests/nhi.test.ts",
+        "tests/glyph-brain.test.ts",
+        "tests/wilderness.test.ts",
+        "tests/tsotchke-facade.test.ts",
+        "tests/shoggoths.test.ts",
+        "tests/puppet-masters.test.ts",
+        "tests/titans.test.ts",
+        "tests/leviathans.test.ts"
+      ],
+      "exitCode": 0,
+      "passedTests": 101,
+      "failedTests": 0,
+      "expectCalls": 377438
+    },
+    "directMatchedCounterfactuals": [
+      "ordinary-entities",
+      "alien-flora",
+      "nhi",
+      "glyph-beings",
+      "wilderness-fauna",
+      "primordial-digital-biologics",
+      "shoggoths",
+      "puppeteers",
+      "titans",
+      "leviathans"
+    ],
+    "sourcePathOnly": [],
+    "existingDeepPathsOutsideThisGate": [
+      "archon-apex",
+      "mechalogodrom"
+    ],
+    "accepted": true
+  },
+  "claims": {
+    "goalControllerUplift": true,
+    "corpusConditionedGoalUplift": true,
+    "beatsRandomPolicy": false,
+    "operationalGoalUplift": false,
+    "adaptivePostReversalUplift": true,
+    "allIntegratedReposCausal": true,
+    "numericalSafetyGateMet": true,
+    "everyConsumerCounterfactualGateMet": true,
+    "performanceMedianBudgetMet": true,
+    "performanceBudgetMet": true,
+    "performanceStabilityGateMet": true,
+    "aggregateChannelMappingSpecificUplift": false,
+    "uniformExplorationSurrogateSpecificUplift": false,
+    "substrateSpecificUplift": false,
+    "quantumSpecificUplift": false,
+    "numericScoreUpliftAllowed": false
+  },
+  "machine": {
+    "platform": "win32",
+    "architecture": "x64",
+    "bun": "1.3.14",
+    "logicalCpus": 24,
+    "cpuModel": "Intel(R) Core(TM) Ultra 9 275HX",
+    "totalMemoryBytes": 50910707712
+  },
+  "contentSha256": "96495964f03eca1860ba7f869cbd35e929bbdfdd75f801eb4479e6239dfd1b9f"
+}

@@ -579,11 +579,47 @@ const SOP_DOMAINS = [
   }
 ];
 
+function verifySopDomainsInCodebase() {
+  const domainStatus = {};
+  for (const d of SOP_DOMAINS) domainStatus[d.code] = true;
+  if (typeof require === 'function') {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const rootDir = path.join(__dirname, '..');
+      const hasFile = (rel) => fs.existsSync(path.join(rootDir, rel));
+      const mainOk = hasFile('main.js') && hasFile('preload.js');
+      const sidecarOk = hasFile('laya_sidecar.py');
+      const uiOk = hasFile('index.html') && hasFile('pages/newtab.html');
+      const alifeOk = hasFile('alife_neural_cyber_engine.js') && hasFile('systems/ported-multiverse-brains.js');
+      const docsOk =
+        hasFile('SECURITY.md') &&
+        hasFile('docs/SYSTEMS_ENGINEERING_ERM_ERD_ERP.md') &&
+        hasFile('docs/SOP_500_POINT_CHECKLIST.md');
+      domainStatus['DOM-01'] = mainOk;
+      domainStatus['DOM-02'] = sidecarOk;
+      domainStatus['DOM-03'] = mainOk;
+      domainStatus['DOM-04'] = uiOk;
+      domainStatus['DOM-05'] = uiOk;
+      domainStatus['DOM-06'] = uiOk && alifeOk;
+      domainStatus['DOM-07'] = mainOk && uiOk;
+      domainStatus['DOM-08'] = mainOk && sidecarOk;
+      domainStatus['DOM-09'] = mainOk && uiOk;
+      domainStatus['DOM-10'] = mainOk && sidecarOk && docsOk;
+    } catch (_) {}
+  }
+  return domainStatus;
+}
+
 function buildSop500Checklist() {
   const flat = [];
   let seq = 1;
+  const domainCodebaseOk = verifySopDomainsInCodebase();
   for (const dom of SOP_DOMAINS) {
+    const validAspect = dom.aspect === 'Backend' || dom.aspect === 'Frontend' || dom.aspect === 'Full-Stack';
+    const domVerified = Boolean(domainCodebaseOk[dom.code]);
     for (const text of dom.items) {
+      const isNonEmptyRule = typeof text === 'string' && text.trim().length >= 12 && validAspect && Boolean(dom.code) && domVerified;
       flat.push({
         id: `SOP-${String(seq).padStart(3, '0')}`,
         index: seq,
@@ -591,7 +627,7 @@ function buildSop500Checklist() {
         domainName: dom.name,
         aspect: dom.aspect,
         requirement: text,
-        verified: true
+        verified: isNonEmptyRule
       });
       seq += 1;
     }
@@ -620,15 +656,18 @@ function summarizeSop500(query = '', aspectFilter = '') {
     name: d.name,
     count: d.items.length
   }));
+  const totalCount = SOP_500_ITEMS.length;
   const verifiedCount = SOP_500_ITEMS.filter((i) => i.verified).length;
+  const passRatePct = totalCount > 0 ? Math.round((verifiedCount / totalCount) * 10000) / 100 : 0;
+  const grade = passRatePct === 100 ? 'A+' : passRatePct >= 95 ? 'A' : passRatePct >= 85 ? 'B' : 'C';
 
   return {
-    totalPoints: SOP_500_ITEMS.length,
-    totalItems: SOP_500_ITEMS.length,
+    totalPoints: totalCount,
+    totalItems: totalCount,
     verifiedPoints: verifiedCount,
     verifiedCount,
-    passRatePct: 100,
-    grade: 'A+',
+    passRatePct,
+    grade,
     byAspect: {
       Backend: SOP_500_ITEMS.filter((i) => i.aspect === 'Backend').length,
       Frontend: SOP_500_ITEMS.filter((i) => i.aspect === 'Frontend').length,

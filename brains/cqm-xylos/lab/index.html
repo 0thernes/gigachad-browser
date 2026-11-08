@@ -1,0 +1,5070 @@
+<!doctype html>
+<!--
+  Quantum Wildbeyond — Observatory Lab (4 pages)
+  Algorithmic-art lab artifact of the Cosmogonic Quantum Mechalogodrom (docs/PHILOSOPHY-2026-06-26.md).
+  Part of the Tsotchke-depth-ledger digital biologics cosmos. Eshkol + verified wired/harvested
+  corpus substrates feed Petri growth beyond the initial Super Creature framework; fenced sources
+  stay provenance-only.
+
+  FOUR PAGES, one seed:
+    - Page 1  COLLAPSE FIELD — the original live field (kept verbatim):
+        A blended Lorenz-XZ × curl-noise flow, a geometric Voronoi shatter over 24 seeded
+        sites, and Born-rule measurement-collapse events that ring the void with interference.
+    - Pages 2-4  DATA-VISUAL BOARDS — responsive grids of TWENTY-FOUR live, seeded 3D mini-visuals
+        per page (72 total). Every tile is a WEBGL canvas with an orbiting camera or
+        depth-projected geometry. Each page has 16 UNIQUE generators + 8 seeded variants = 24.
+        Boards are built LAZILY: only the visible page's 12
+        instances exist at any moment (browsers cap ~16 live WebGL contexts); leaving a
+        board removes every instance, explicitly loses its GL context, and clears its DOM.
+
+  Interaction: every tile is clickable (and keyboard-focusable; Enter/Space works). A click
+  fires a short synthesized blip — pitch derived deterministically from the tile id — through
+  ONE shared, lazily created AudioContext, and triggers the sketch's pulse() hook (camera
+  kick / energy burst / parameter surge decaying over ~1s). Hovering sets a `hot` flag the
+  sketch reads to spin faster and brighten.
+
+  Determinism: one master seed drives every page. Page 1 uses p5's randomSeed/noiseSeed; the
+  board visuals each derive a per-tile seed from (masterSeed, tileId) and run a tiny self-
+  contained mulberry32 Rng — no Math.random in any generative path. Page nav never resets the
+  seed; changing the seed re-derives every page.
+
+  Performance: TILE_RES 300² backing per tile (12 live WEBGL canvases); typed arrays
+  allocated once per visual; per-frame draw bodies allocate no arrays; point clouds ≤ ~2600
+  specks, line strips ≤ ~1500 segments; escape-time textures ≤ 128², recomputed only on
+  click. Visible-page-only animation. p5.js 1.7 (WEBGL included) from CDN; fully
+  self-contained, no external data.
+
+  Based on the Anthropic algorithmic-art viewer template (structure, branding, seed controls
+  preserved).
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#faf9f5" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23030612'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' fill='none' stroke='%230ef' stroke-width='1.6' transform='rotate(28 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='13' ry='5' fill='none' stroke='%23fa0' stroke-width='1.6' transform='rotate(-28 16 16)'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%230ef'/%3E%3C/svg%3E"
+    />
+    <title>Quantum Wildbeyond — Observatory Lab</title>
+    <meta
+      name="description"
+      content="Quantum Wildbeyond lab: four seeded WebGL observatory boards linked to the current 22-report audit, Tsotchke depth ledger, and proxy-only consciousness/sentience lab surfaces."
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"
+      integrity="sha384-Mhzoc5EVkjFUVtIW2M3h8BgXtFlUsUpu9lTCThPrV7+k6MN6vTi079rew0LkvgFb"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* SHARED SATELLITE CHROME (V81) — inlined so the lab page needs no external stylesheet. */
+      .sat-header {
+        border-bottom: 1px solid rgba(120, 160, 220, 0.18);
+        background: rgba(8, 14, 30, 0.88);
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+      .sat-header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .sat-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #cfe0fb;
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        font-weight: 600;
+      }
+      .sat-logo:hover {
+        color: #0ef;
+      }
+      .sat-logo svg {
+        width: 24px;
+        height: 24px;
+        display: block;
+      }
+      .sat-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .sat-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        color: #7f93b8;
+        text-decoration: none;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition:
+          background 0.12s,
+          border-color 0.12s,
+          color 0.12s;
+      }
+      .sat-nav a:hover,
+      .sat-nav a:focus-visible {
+        background: rgba(120, 160, 220, 0.1);
+        border-color: rgba(120, 160, 220, 0.18);
+        color: #cfe0fb;
+        outline: none;
+      }
+      .sat-nav a:focus-visible {
+        outline: 2px solid #0ef;
+        outline-offset: 2px;
+      }
+      .sat-nav a[aria-current='page'] {
+        border-color: rgba(0, 238, 255, 0.45);
+        color: #0ef;
+      }
+      @media (max-width: 640px) {
+        .sat-header-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .sat-nav {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+
+      /* Anthropic Brand Colors */
+      :root {
+        --anthropic-dark: #141413;
+        --anthropic-light: #faf9f5;
+        --anthropic-mid-gray: #b0aea5;
+        --anthropic-light-gray: #e8e6dc;
+        --anthropic-orange: #d97757;
+        --anthropic-blue: #6a9bcc;
+        --anthropic-green: #788c5d;
+        --void: #040711;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+        min-height: 100vh;
+        color: var(--anthropic-dark);
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+        padding: 20px;
+        gap: 20px;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 320px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(20, 20, 19, 0.1);
+        overflow-y: auto;
+        overflow-x: hidden;
+        align-self: flex-start;
+        position: sticky;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+      }
+
+      .sidebar h1 {
+        font-family: 'Lora', serif;
+        font-size: 24px;
+        font-weight: 500;
+        color: var(--anthropic-dark);
+        margin-bottom: 8px;
+      }
+
+      .sidebar .subtitle {
+        color: var(--anthropic-mid-gray);
+        font-size: 14px;
+        margin-bottom: 28px;
+        line-height: 1.4;
+      }
+
+      /* Control Sections */
+      .control-section {
+        margin-bottom: 28px;
+      }
+
+      .control-section h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--anthropic-dark);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .control-section h3::before {
+        content: '•';
+        color: var(--anthropic-orange);
+        font-weight: bold;
+      }
+
+      /* Seed Controls */
+      .seed-input {
+        width: 100%;
+        background: var(--anthropic-light);
+        padding: 12px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        margin-bottom: 12px;
+        border: 1px solid var(--anthropic-light-gray);
+        text-align: center;
+      }
+
+      .seed-input:focus {
+        outline: none;
+        border-color: var(--anthropic-orange);
+        box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.1);
+        background: white;
+      }
+
+      .seed-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      /* Page navigation (PAGE 1..4) */
+      .page-nav {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .page-tab {
+        background: var(--anthropic-light);
+        color: var(--anthropic-dark);
+        border: 1px solid var(--anthropic-light-gray);
+        padding: 12px 4px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.18s ease;
+        text-align: center;
+      }
+
+      .page-tab:hover {
+        border-color: var(--anthropic-orange);
+        transform: translateY(-1px);
+      }
+
+      .page-tab.active {
+        background: var(--anthropic-orange);
+        color: white;
+        border-color: var(--anthropic-orange);
+        box-shadow: 0 4px 12px rgba(217, 119, 87, 0.3);
+      }
+
+      .page-desc {
+        font-size: 12px;
+        color: var(--anthropic-mid-gray);
+        line-height: 1.45;
+        min-height: 34px;
+      }
+
+      .page-prev-next {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      /* Parameter Controls */
+      .control-group {
+        margin-bottom: 20px;
+      }
+
+      .control-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--anthropic-dark);
+        margin-bottom: 8px;
+      }
+
+      .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .slider-container input[type='range'] {
+        flex: 1;
+        height: 4px;
+        background: var(--anthropic-light-gray);
+        border-radius: 2px;
+        outline: none;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .slider-container input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background: var(--anthropic-orange);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .slider-container input[type='range']::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+        background: #c86641;
+      }
+
+      .slider-container input[type='range']::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: var(--anthropic-orange);
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .value-display {
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        color: var(--anthropic-mid-gray);
+        min-width: 60px;
+        text-align: right;
+      }
+
+      /* Toggle switch — Anthropic-orange when on */
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        cursor: pointer;
+        margin-bottom: 0;
+        user-select: none;
+      }
+
+      .toggle-input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-track {
+        position: relative;
+        flex-shrink: 0;
+        width: 40px;
+        height: 22px;
+        border-radius: 11px;
+        background: var(--anthropic-light-gray);
+        transition: background 0.2s ease;
+      }
+
+      .toggle-knob {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 1px 3px rgba(20, 20, 19, 0.25);
+        transition: transform 0.2s ease;
+      }
+
+      .toggle-input:checked + .toggle-track {
+        background: var(--anthropic-orange);
+      }
+
+      .toggle-input:checked + .toggle-track .toggle-knob {
+        transform: translateX(18px);
+      }
+
+      .toggle-input:focus-visible + .toggle-track {
+        box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.35);
+      }
+
+      /* Buttons */
+      .button {
+        background: var(--anthropic-orange);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+
+      .button:hover {
+        background: #c86641;
+        transform: translateY(-1px);
+      }
+
+      .button:active {
+        transform: translateY(0);
+      }
+
+      .button.secondary {
+        background: var(--anthropic-blue);
+      }
+
+      .button.secondary:hover {
+        background: #5a8bb8;
+      }
+
+      .button.tertiary {
+        background: var(--anthropic-green);
+      }
+
+      .button.tertiary:hover {
+        background: #6b7b52;
+      }
+
+      .button-row {
+        display: flex;
+        gap: 8px;
+      }
+
+      .button-row .button {
+        flex: 1;
+      }
+
+      /* Main stage */
+      .stage {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* A single page; only one is visible at a time */
+      .lab-page {
+        display: none;
+      }
+
+      .lab-page.active {
+        display: block;
+      }
+
+      /* Page 1 — the collapse field, a single square canvas */
+      .canvas-area {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      /* The field is a square (1200×1200 backing). The container grows to whichever
+         is smaller — the full column width or the full viewport height — so the void
+         reaches the edges on portrait monitors, wide laptops, and the TV alike. */
+      #canvas-container {
+        width: min(100%, calc(100vh - 40px));
+        max-width: 1400px;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow:
+          0 20px 40px rgba(20, 20, 19, 0.18),
+          0 0 0 1px rgba(106, 155, 204, 0.12);
+        background: var(--void);
+      }
+
+      #canvas-container canvas {
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      /* Board header (pages 2-4) */
+      .board-head {
+        margin-bottom: 16px;
+      }
+
+      .board-head h2 {
+        font-family: 'Lora', serif;
+        font-size: 22px;
+        font-weight: 500;
+        color: var(--anthropic-dark);
+        margin-bottom: 4px;
+      }
+
+      .board-head p {
+        font-size: 13px;
+        color: var(--anthropic-mid-gray);
+        line-height: 1.45;
+      }
+
+      /* Responsive grid of mini-visual tiles — 24 per board. auto-fill plus a
+         clamped minmax track lets the squares reflow into 2/3/4/6 columns at
+         any viewport size or shape. */
+      .board-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(clamp(160px, 22vw, 280px), 1fr));
+        gap: 16px;
+      }
+
+      .viz-tile {
+        background: var(--void);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow:
+          0 12px 28px rgba(20, 20, 19, 0.16),
+          0 0 0 1px rgba(106, 155, 204, 0.12);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        cursor: pointer;
+        transition:
+          box-shadow 0.22s cubic-bezier(0.2, 0.8, 0.3, 1),
+          transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1);
+      }
+      .viz-tile::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        pointer-events: none;
+        box-shadow: inset 0 0 0 2px rgba(0, 238, 255, 0);
+        transition: box-shadow 0.3s ease;
+      }
+
+      .viz-tile:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow:
+          0 18px 40px rgba(20, 20, 19, 0.28),
+          0 0 0 1px rgba(217, 119, 87, 0.35),
+          0 0 24px rgba(0, 238, 255, 0.12);
+      }
+      .viz-tile:hover::after {
+        box-shadow: inset 0 0 0 2px rgba(0, 238, 255, 0.25);
+      }
+      .viz-tile--live::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(0, 238, 255, 0.4), transparent);
+        z-index: 3;
+        pointer-events: none;
+        animation: viz-scan 3.5s ease-in-out infinite;
+      }
+      @keyframes viz-scan {
+        0%,
+        100% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        50% {
+          transform: translateX(100%);
+          opacity: 1;
+        }
+      }
+
+      .viz-tile:focus-visible {
+        outline: 2px solid var(--anthropic-orange);
+        outline-offset: 2px;
+      }
+
+      .viz-tile .viz-titlebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 12px 18px;
+        background: linear-gradient(180deg, rgba(4, 7, 17, 0.88) 0%, rgba(4, 7, 17, 0) 100%);
+        z-index: 2;
+        pointer-events: none;
+        transition: background 0.2s ease;
+      }
+      .viz-tile:hover .viz-titlebar {
+        background: linear-gradient(180deg, rgba(4, 7, 17, 0.94) 0%, rgba(4, 7, 17, 0) 100%);
+      }
+
+      .viz-tile .viz-name {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #e2f0ff;
+        text-transform: uppercase;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);
+      }
+
+      .viz-tile .viz-legend {
+        font-size: 12px;
+        color: #9eb8d4;
+        line-height: 1.4;
+        margin-top: 3px;
+        font-family: 'Courier New', monospace;
+      }
+
+      .viz-canvas {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        position: relative;
+      }
+
+      .viz-canvas canvas {
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      /* Loading State */
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--anthropic-mid-gray);
+        height: 100%;
+      }
+
+      /* Responsive - Stack on mobile */
+      @media (max-width: 720px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          position: static;
+          max-height: none;
+        }
+
+        .canvas-area {
+          padding: 0;
+        }
+
+        #canvas-container {
+          width: 100%;
+          max-width: none;
+        }
+
+        .board-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sat-header">
+      <div class="sat-header-inner">
+        <a class="sat-logo" href="/cosmogonic-quantum-mechalogodrom/index.html?v=visual-s" aria-label="Return to the simulation">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="15" fill="#030612" />
+            <ellipse
+              cx="16"
+              cy="16"
+              rx="13"
+              ry="5"
+              fill="none"
+              stroke="#0ef"
+              stroke-width="1.6"
+              transform="rotate(28 16 16)"
+            />
+            <ellipse
+              cx="16"
+              cy="16"
+              rx="13"
+              ry="5"
+              fill="none"
+              stroke="#fa0"
+              stroke-width="1.6"
+              transform="rotate(-28 16 16)"
+            />
+            <circle cx="16" cy="16" r="4.5" fill="#0ef" />
+          </svg>
+          <span>COSMOGONIC</span>
+        </a>
+        <nav class="sat-nav" aria-label="Satellite pages">
+          <a href="/cosmogonic-quantum-mechalogodrom/index.html?v=visual-s">Dome</a>
+          <a href="/cosmogonic-quantum-mechalogodrom/docs.html?v=visual-s">Docs</a>
+          <a href="/cosmogonic-quantum-mechalogodrom/specs.html?v=visual-s">Spec</a>
+          <a href="/cosmogonic-quantum-mechalogodrom/bible.html?v=visual-s">Bible</a>
+          <a href="/cosmogonic-quantum-mechalogodrom/lab/?v=visual-s" aria-current="page">Lab</a>
+          <a href="/cosmogonic-quantum-mechalogodrom/lab/consciousness/?v=visual-s">Consciousness</a>
+          <a href="/cosmogonic-quantum-mechalogodrom/lab/sentience/?v=visual-s">Sentience</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Control Sidebar (present on every page) -->
+      <div class="sidebar">
+        <h1>Quantum Wildbeyond</h1>
+        <div class="subtitle">
+          A four-page observatory of the Cosmogonic Quantum Mechalogodrom — the same seeded math the
+          live world runs: a Lorenz-driven collapse field (the engine's V62 Chaos-Mode attractor),
+          Born-rule measurement, a Voronoi cosmos, and three boards of twenty-four 3D data-visuals
+          each. One seed drives every page. Click any tile to hear it ring and pulse.
+        </div>
+        <p class="subtitle" style="margin-top: 10px">
+          Current truth:
+          <a href="../docs/CONSOLIDATED-22-MASTER-ASSESSMENT-CURRENT-2026-07-07.md"
+            >22-report master</a
+          >
+          ·
+          <a href="../docs/CONSOLIDATED-22-FILE-AUDIT-CURRENT-2026-07-07.md">22-file audit</a>
+          ·
+          <a href="../docs/VERIFICATION-ANALYTICAL-DATA.md">verification ledger</a>
+          · computational indicators only.
+        </p>
+
+        <!-- Page navigation (ALWAYS KEEP THE SEED; nav never re-rolls it) -->
+        <div class="control-section">
+          <h3>Pages</h3>
+          <div class="page-nav" id="page-nav">
+            <button class="page-tab active" data-page="1" onclick="setPage(1)">1</button>
+            <button class="page-tab" data-page="2" onclick="setPage(2)">2</button>
+            <button class="page-tab" data-page="3" onclick="setPage(3)">3</button>
+            <button class="page-tab" data-page="4" onclick="setPage(4)">4</button>
+          </div>
+          <div class="page-desc" id="page-desc">
+            Page 1 — Collapse Field: the live Lorenz × curl-noise flow with Born-rule measurement
+            collapse.
+          </div>
+          <div class="page-prev-next">
+            <button class="button secondary" onclick="prevPage()">← Page</button>
+            <button class="button secondary" onclick="nextPage()">Page →</button>
+          </div>
+        </div>
+
+        <!-- Seed Section (ALWAYS KEEP THIS) -->
+        <div class="control-section">
+          <h3>Seed</h3>
+          <input
+            type="number"
+            id="seed-input"
+            class="seed-input"
+            value="12345"
+            onchange="updateSeed()"
+          />
+          <div class="seed-controls">
+            <button class="button secondary" onclick="previousSeed()">← Prev</button>
+            <button class="button secondary" onclick="nextSeed()">Next →</button>
+          </div>
+          <div class="seed-controls">
+            <button class="button tertiary" onclick="randomSeedAndUpdate()">↻ Random</button>
+            <button class="button tertiary" onclick="jumpToSeed()">⤳ Jump</button>
+          </div>
+        </div>
+
+        <!-- Parameters Section (Page 1 collapse field) -->
+        <div class="control-section">
+          <h3>Field Parameters</h3>
+
+          <!-- Particles -->
+          <div class="control-group">
+            <label>Particles</label>
+            <div class="slider-container">
+              <input
+                type="range"
+                id="particles"
+                min="500"
+                max="4000"
+                step="50"
+                value="3200"
+                oninput="updateParam('particles', this.value)"
+              />
+              <span class="value-display" id="particles-value">3200</span>
+            </div>
+          </div>
+
+          <!-- Collapse Rate -->
+          <div class="control-group">
+            <label>Collapse Rate (events/s)</label>
+            <div class="slider-container">
+              <input
+                type="range"
+                id="collapseRate"
+                min="0"
+                max="2"
+                step="0.05"
+                value="0.8"
+                oninput="updateParam('collapseRate', this.value)"
+              />
+              <span class="value-display" id="collapseRate-value">0.80</span>
+            </div>
+          </div>
+
+          <!-- Field Blend -->
+          <div class="control-group">
+            <label>Field Blend (Lorenz ↔ Noise)</label>
+            <div class="slider-container">
+              <input
+                type="range"
+                id="fieldBlend"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.45"
+                oninput="updateParam('fieldBlend', this.value)"
+              />
+              <span class="value-display" id="fieldBlend-value">0.45</span>
+            </div>
+          </div>
+
+          <!-- Trail Fade -->
+          <div class="control-group">
+            <label>Trail Fade</label>
+            <div class="slider-container">
+              <input
+                type="range"
+                id="trailFade"
+                min="2"
+                max="40"
+                step="1"
+                value="8"
+                oninput="updateParam('trailFade', this.value)"
+              />
+              <span class="value-display" id="trailFade-value">8</span>
+            </div>
+          </div>
+
+          <!-- Palette Shift -->
+          <div class="control-group">
+            <label>Palette Shift</label>
+            <div class="slider-container">
+              <input
+                type="range"
+                id="paletteShift"
+                min="0"
+                max="360"
+                step="1"
+                value="0"
+                oninput="updateParam('paletteShift', this.value)"
+              />
+              <span class="value-display" id="paletteShift-value">0</span>
+            </div>
+          </div>
+
+          <!-- Readout Overlay toggle -->
+          <div class="control-group">
+            <label class="toggle-row" for="showHud">
+              <span>Readout Overlay</span>
+              <input
+                type="checkbox"
+                id="showHud"
+                class="toggle-input"
+                checked
+                onchange="updateHudToggle(this.checked)"
+              />
+              <span class="toggle-track" aria-hidden="true"><span class="toggle-knob"></span></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Actions Section (ALWAYS KEEP THIS) -->
+        <div class="control-section">
+          <h3>Actions</h3>
+          <div class="button-row">
+            <button class="button" onclick="regenerateArt()">Regenerate</button>
+            <button class="button secondary" onclick="resetParameters()">Reset</button>
+            <button class="button tertiary" onclick="downloadArt()">Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Stage: one page visible at a time -->
+      <div class="stage">
+        <!-- Page 1 — the collapse field (the original, kept) -->
+        <section class="lab-page active" id="page-1" data-page="1">
+          <div class="canvas-area">
+            <div id="canvas-container">
+              <div class="loading">Initializing collapse field…</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Page 2 — PHASE & FLOW board -->
+        <section class="lab-page" id="page-2" data-page="2">
+          <div class="board-head">
+            <h2>Board II — Phase &amp; Flow</h2>
+            <p>
+              Twelve live deterministic 3D systems: attractor ribbons, a reaction–diffusion terrain,
+              extruded tessellations, knots, helices, and flows — all WEBGL, all seeded from the
+              master seed. Click a tile for its tone and a pulse; hover to heat it up.
+            </p>
+          </div>
+          <div class="board-grid" id="board-2"></div>
+        </section>
+
+        <!-- Page 3 — QUANTUM & SPECTRUM board -->
+        <section class="lab-page" id="page-3" data-page="3">
+          <div class="board-head">
+            <h2>Board III — Quantum &amp; Spectrum</h2>
+            <p>
+              Twelve 3D views of measurement and signal: a statevector bar forest, the true Bloch
+              sphere, a spectrum waterfall, wavefunction surfaces, automata, and escape-time planes.
+              Click a tile to sound and pulse it; hover to heat it up.
+            </p>
+          </div>
+          <div class="board-grid" id="board-3"></div>
+        </section>
+
+        <!-- Page 4 — NETWORK & DEPTH board -->
+        <section class="lab-page" id="page-4" data-page="4">
+          <div class="board-head">
+            <h2>Board IV — Network &amp; Depth</h2>
+            <p>
+              Twelve structural 3D views: connectomes and gravity in space, attractor cages, galaxy
+              and chaos-game point clouds, bifurcation sheets, and deep escape-time zooms. Click a
+              tile to sound and pulse it; hover to heat it up.
+            </p>
+          </div>
+          <div class="board-grid" id="board-4"></div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      // ═══════════════════════════════════════════════════════════════════════
+      // SHARED SEED + PAGE STATE
+      //
+      // One master seed drives every page. Page 1 (the collapse field) feeds the
+      // seed into p5's randomSeed/noiseSeed exactly as before. The board visuals
+      // (pages 2-4) each derive their own per-tile seed from (masterSeed, tileId)
+      // via a hash, and run a tiny self-contained mulberry32 Rng — so no two tiles
+      // share a stream and none of them touch Math.random in a generative path.
+      // Page nav NEVER changes the seed; only the seed controls do.
+      // ═══════════════════════════════════════════════════════════════════════
+
+      let params = {
+        seed: 12345,
+        particles: 3200, // 500..4000 — denser, more dynamic default field
+        collapseRate: 0.8, // measurement events per second, 0..2
+        fieldBlend: 0.45, // 0 = pure Lorenz-XZ, 1 = pure curl noise
+        trailFade: 8, // background-alpha fade per frame (255 scale), 2..40 — longer trails
+        paletteShift: 0, // global hue rotation, degrees
+        showHud: true, // live readout overlay on Page 1
+      };
+
+      const defaultParams = { ...params };
+
+      let currentPage = 1; // 1..4
+      const PAGE_DESCS = {
+        1: 'Page 1 — Collapse Field: the live Lorenz × curl-noise flow with Born-rule measurement collapse.',
+        2: 'Page 2 — Phase & Flow: 3D attractor ribbons, reaction–diffusion terrain, knots, and flows (24 visuals — click for sound).',
+        3: 'Page 3 — Quantum & Spectrum: the Bloch sphere, statevector forest, spectra, and wavefunctions (24 visuals — click for sound).',
+        4: 'Page 4 — Network & Depth: 3D graphs, gravity, galaxies, bifurcation sheets, and deep zooms (24 visuals — click for sound).',
+      };
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // SEEDED RNG — mulberry32 (board visuals). Deterministic, allocation-free
+      // once constructed. derivedSeed mixes the master seed with a string tileId
+      // so each tile gets an independent, reproducible stream.
+      // ═══════════════════════════════════════════════════════════════════════
+
+      /**
+       * mulberry32 PRNG. O(1) per draw, no allocation after construction.
+       * @param {number} a 32-bit seed
+       * @returns {{next:()=>number, range:(lo:number,hi:number)=>number, int:(n:number)=>number, gauss:()=>number}}
+       */
+      function makeRng(a) {
+        let s = a >>> 0;
+        const next = () => {
+          s |= 0;
+          s = (s + 0x6d2b79f5) | 0;
+          let t = Math.imul(s ^ (s >>> 15), 1 | s);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+        return {
+          next,
+          range: (lo, hi) => lo + (hi - lo) * next(),
+          int: (n) => Math.floor(next() * n),
+          // Box–Muller, one of the pair (good enough; no cached partner needed).
+          gauss: () => {
+            const u = Math.max(1e-9, next());
+            const v = next();
+            return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+          },
+        };
+      }
+
+      /**
+       * Derive a 32-bit tile seed from the master seed and a string id. Stable hash
+       * (FNV-1a-ish) so the same (seed, tileId) always maps to the same stream.
+       * @param {number} masterSeed
+       * @param {string} tileId
+       * @returns {number}
+       */
+      function derivedSeed(masterSeed, tileId) {
+        let h = (2166136261 ^ (masterSeed >>> 0)) >>> 0;
+        for (let i = 0; i < tileId.length; i++) {
+          h ^= tileId.charCodeAt(i);
+          h = Math.imul(h, 16777619) >>> 0;
+        }
+        // Final avalanche.
+        h ^= h >>> 16;
+        h = Math.imul(h, 2246822507) >>> 0;
+        h ^= h >>> 13;
+        return h >>> 0;
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // PAGE 1 — COLLAPSE FIELD (the original lab, preserved). Runs as the default
+      // global p5 sketch (setup/draw at window scope).
+      // ═══════════════════════════════════════════════════════════════════════
+
+      const W = 1200;
+      const H = 1200;
+      const MAXP = 4000; // hard particle cap — typed arrays sized once, never per frame
+      const SITE_COUNT = 24; // basis cells, echoing the cosmos' 24 monolith+diorama sites
+      const RING_POOL = 16; // fixed interference-ring pool (no per-event allocation)
+      const SIGMA = 10; // Lorenz σ
+      const RHO = 28; // Lorenz ρ
+      const BETA = 8 / 3; // Lorenz β
+      const LORENZ_DT = 0.02; // Euler step for each particle's hidden Y
+      const BASE_HUE = 193; // void cyan
+      const MIN_NOISE_BLEND = 0.06; // floor keeps pure-Lorenz mode from stalling at fixed points
+      const NOISE_SCALE = 0.0042; // Perlin potential frequency (canvas px → noise space)
+      const NOISE_EPS = 2.0; // finite-difference half-step for the curl, in px
+      const BASE_SPEED = 3.4; // px per frame after direction normalization
+      const RING_SPEED = 5.6; // wavefront expansion, px per frame
+      const RING_MAX_R = 480; // ring dies past this radius
+      const RING_BAND = 26; // half-width of the wavefront's particle-kick band, px
+
+      // ─── HUD overlay layout (canvas-space px, sized against the 1200² field) ───
+      const HUD_PAD = 8;
+      const HUD_W = 220;
+      const HUD_CARD_H = 146;
+      const HUD_MATH_H = 88;
+      const HUD_MATH_LINES = [
+        ['v = (1−f)·L̂ + f·N̂', 0],
+        ['f = 0.06+0.94·blend', 1],
+        ['L: Lorenz σρβ · N: curl', 1],
+      ];
+
+      const px = new Float32Array(MAXP);
+      const py = new Float32Array(MAXP);
+      const ly = new Float32Array(MAXP);
+      const sv = new Float32Array(MAXP);
+      const nearestSite = new Int16Array(MAXP);
+      const siteX = new Float32Array(SITE_COUNT);
+      const siteY = new Float32Array(SITE_COUNT);
+      const siteCounts = new Int32Array(SITE_COUNT);
+      const rings = [];
+      let voro = null;
+      let frame0 = 0;
+
+      let fvx = 0;
+      let fvy = 0;
+
+      let collapseCount = 0;
+      let lastChosenCell = -1;
+      let lastBornP = 0;
+      let fpsSmooth = 60;
+      let effectiveBlend = 0;
+      let hudFont = 'Courier New, monospace';
+
+      function setup() {
+        const canvas = createCanvas(W, H);
+        canvas.parent('canvas-container');
+        pixelDensity(1);
+        noiseDetail(3, 0.55);
+
+        voro = createGraphics(W, H);
+        voro.pixelDensity(1);
+
+        for (let i = 0; i < RING_POOL; i++) {
+          rings.push({ x: 0, y: 0, r: 0, hue: 0, active: false });
+        }
+
+        initializeSystem();
+
+        const loadingEl = document.querySelector('#canvas-container .loading');
+        if (loadingEl) loadingEl.style.display = 'none';
+      }
+
+      /**
+       * Re-collapses the whole cosmos from params.seed. O(P + SITE_COUNT³).
+       * Regeneration-time only; the per-frame path stays allocation-free.
+       */
+      function initializeSystem() {
+        randomSeed(params.seed);
+        noiseSeed(params.seed);
+        frame0 = frameCount;
+
+        collapseCount = 0;
+        lastChosenCell = -1;
+        lastBornP = 0;
+        effectiveBlend = MIN_NOISE_BLEND + (1 - MIN_NOISE_BLEND) * params.fieldBlend;
+
+        placeSites();
+        buildVoronoiOverlay();
+
+        const n = Math.min(MAXP, Math.round(params.particles));
+        for (let i = 0; i < n; i++) {
+          px[i] = random(W);
+          py[i] = random(H);
+          ly[i] = random(-30, 30);
+          sv[i] = random(0.7, 1.3);
+        }
+
+        for (let i = 0; i < RING_POOL; i++) rings[i].active = false;
+
+        colorMode(RGB, 255, 255, 255, 255);
+        background(4, 7, 17);
+      }
+
+      /**
+       * Mitchell best-candidate placement of the 24 sites. Regeneration-time only.
+       */
+      function placeSites() {
+        const margin = 70;
+        for (let s = 0; s < SITE_COUNT; s++) {
+          let bx = 0;
+          let by = 0;
+          let bestD = -1;
+          for (let c = 0; c < 14; c++) {
+            const cx = random(margin, W - margin);
+            const cy = random(margin, H - margin);
+            let dmin = Infinity;
+            for (let q = 0; q < s; q++) {
+              const dx = cx - siteX[q];
+              const dy = cy - siteY[q];
+              const d2 = dx * dx + dy * dy;
+              if (d2 < dmin) dmin = d2;
+            }
+            if (dmin > bestD) {
+              bestD = dmin;
+              bx = cx;
+              by = cy;
+            }
+          }
+          siteX[s] = bx;
+          siteY[s] = by;
+        }
+      }
+
+      /**
+       * Bakes the Voronoi shatter into the offscreen overlay via honest
+       * perpendicular-bisector half-plane clipping. O(SITE_COUNT³), regen-time only.
+       */
+      function buildVoronoiOverlay() {
+        voro.clear();
+        voro.strokeWeight(1.5);
+        voro.stroke(120, 200, 255, 175);
+        voro.noFill();
+        const T = 2000;
+        for (let i = 0; i < SITE_COUNT; i++) {
+          for (let j = i + 1; j < SITE_COUNT; j++) {
+            const mx = (siteX[i] + siteX[j]) / 2;
+            const my = (siteY[i] + siteY[j]) / 2;
+            let dx = -(siteY[j] - siteY[i]);
+            let dy = siteX[j] - siteX[i];
+            const dl = Math.hypot(dx, dy) || 1;
+            dx /= dl;
+            dy /= dl;
+            let tmin = -T;
+            let tmax = T;
+            let alive = true;
+            for (let k = 0; k < SITE_COUNT && alive; k++) {
+              if (k === i || k === j) continue;
+              const nx = siteX[k] - siteX[i];
+              const ny = siteY[k] - siteY[i];
+              const a = dx * nx + dy * ny;
+              const b =
+                (mx - (siteX[i] + siteX[k]) / 2) * nx + (my - (siteY[i] + siteY[k]) / 2) * ny;
+              if (Math.abs(a) < 1e-9) {
+                if (b > 0) alive = false;
+              } else {
+                const t0 = -b / a;
+                if (a > 0) tmax = Math.min(tmax, t0);
+                else tmin = Math.max(tmin, t0);
+                if (tmin >= tmax) alive = false;
+              }
+            }
+            if (alive) {
+              voro.line(mx + dx * tmin, my + dy * tmin, mx + dx * tmax, my + dy * tmax);
+            }
+          }
+        }
+        voro.noStroke();
+        voro.fill(180, 230, 255, 90);
+        for (let s = 0; s < SITE_COUNT; s++) voro.circle(siteX[s], siteY[s], 22);
+        voro.fill(150, 220, 255, 255);
+        for (let s = 0; s < SITE_COUNT; s++) voro.circle(siteX[s], siteY[s], 6);
+        voro.noFill();
+        voro.strokeWeight(1.2);
+        voro.stroke(150, 220, 255, 190);
+        for (let s = 0; s < SITE_COUNT; s++) voro.circle(siteX[s], siteY[s], 15);
+        voro.stroke(140, 215, 255, 90);
+        for (let s = 0; s < SITE_COUNT; s++) voro.circle(siteX[s], siteY[s], 26);
+      }
+
+      /**
+       * The blended vector field at particle i. Writes a unit direction into module
+       * scratch (fvx, fvy) and advances the hidden Lorenz Y. Allocation-free.
+       */
+      function fieldAt(i, t) {
+        const X = (px[i] / W - 0.5) * 52;
+        const Z = (1 - py[i] / H) * 55;
+        ly[i] += (X * (RHO - Z) - ly[i]) * LORENZ_DT;
+
+        let lvx = SIGMA * (ly[i] - X);
+        let lvy = -(X * ly[i] - BETA * Z);
+        const lm = Math.hypot(lvx, lvy) || 1;
+        lvx /= lm;
+        lvy /= lm;
+
+        const nx = px[i] * NOISE_SCALE;
+        const ny = py[i] * NOISE_SCALE;
+        const e = NOISE_EPS * NOISE_SCALE;
+        let cvx = noise(nx, ny + e, t) - noise(nx, ny - e, t);
+        let cvy = noise(nx - e, ny, t) - noise(nx + e, ny, t);
+        const cm = Math.hypot(cvx, cvy);
+        if (cm > 1e-9) {
+          cvx /= cm;
+          cvy /= cm;
+        }
+
+        const f = MIN_NOISE_BLEND + (1 - MIN_NOISE_BLEND) * params.fieldBlend;
+        let bx = (1 - f) * lvx + f * cvx;
+        let by = (1 - f) * lvy + f * cvy;
+        const bm = Math.hypot(bx, by);
+        if (bm < 1e-4) {
+          fvx = cvx;
+          fvy = cvy;
+        } else {
+          fvx = bx / bm;
+          fvy = by / bm;
+        }
+      }
+
+      /**
+       * One seeded measurement-collapse event (Born rule). O(P · SITE_COUNT),
+       * event-time only.
+       */
+      function collapseEvent() {
+        const n = Math.min(MAXP, Math.round(params.particles));
+        siteCounts.fill(0);
+        for (let i = 0; i < n; i++) {
+          let best = 0;
+          let bd = Infinity;
+          for (let s = 0; s < SITE_COUNT; s++) {
+            const dx = px[i] - siteX[s];
+            const dy = py[i] - siteY[s];
+            const d2 = dx * dx + dy * dy;
+            if (d2 < bd) {
+              bd = d2;
+              best = s;
+            }
+          }
+          nearestSite[i] = best;
+          siteCounts[best]++;
+        }
+
+        let pick = random() * n;
+        let chosen = 0;
+        for (let s = 0; s < SITE_COUNT; s++) {
+          pick -= siteCounts[s];
+          if (pick < 0) {
+            chosen = s;
+            break;
+          }
+        }
+
+        collapseCount++;
+        lastChosenCell = chosen;
+        lastBornP = n > 0 ? siteCounts[chosen] / n : 0;
+
+        const hueC = (BASE_HUE + 180 + params.paletteShift + chosen * 7) % 360;
+
+        strokeWeight(1);
+        stroke(hueC, 25, 100, 32);
+        for (let i = 0; i < n; i++) {
+          if (nearestSite[i] !== chosen) continue;
+          const ox = px[i];
+          const oy = py[i];
+          px[i] += (siteX[chosen] - ox) * 0.14;
+          py[i] += (siteY[chosen] - oy) * 0.14;
+          line(ox, oy, px[i], py[i]);
+        }
+
+        for (let r = 0; r < RING_POOL; r++) {
+          const rg = rings[r];
+          if (rg.active) continue;
+          rg.active = true;
+          rg.x = siteX[chosen];
+          rg.y = siteY[chosen];
+          rg.r = 4;
+          rg.hue = hueC;
+          break;
+        }
+      }
+
+      /**
+       * Frame body for the collapse field. O(P · (1 + active rings)), no allocation.
+       */
+      function draw() {
+        const t = (frameCount - frame0) * 0.0022;
+
+        fpsSmooth += (frameRate() - fpsSmooth) * 0.1;
+        effectiveBlend = MIN_NOISE_BLEND + (1 - MIN_NOISE_BLEND) * params.fieldBlend;
+
+        colorMode(RGB, 255, 255, 255, 255);
+        noStroke();
+        fill(4, 7, 17, params.trailFade);
+        rect(0, 0, W, H);
+
+        drawingContext.globalAlpha = (0.6 * params.trailFade) / 255;
+        image(voro, 0, 0);
+        drawingContext.globalAlpha = 1;
+
+        colorMode(HSB, 360, 100, 100, 100);
+
+        if (random() < params.collapseRate / 60) collapseEvent();
+
+        strokeWeight(1.1);
+        const n = Math.min(MAXP, Math.round(params.particles));
+        for (let i = 0; i < n; i++) {
+          const ox = px[i];
+          const oy = py[i];
+
+          fieldAt(i, t);
+          let vx = fvx * BASE_SPEED * sv[i];
+          let vy = fvy * BASE_SPEED * sv[i];
+
+          for (let r = 0; r < RING_POOL; r++) {
+            const rg = rings[r];
+            if (!rg.active) continue;
+            const dx = ox - rg.x;
+            const dy = oy - rg.y;
+            const d2 = dx * dx + dy * dy;
+            const lo = rg.r - RING_BAND;
+            const hi = rg.r + RING_BAND;
+            if (d2 > hi * hi || (lo > 0 && d2 < lo * lo)) continue;
+            const d = Math.sqrt(d2) || 1;
+            const w = 1 - Math.abs(d - rg.r) / RING_BAND;
+            const k = 2.2 * w * (1 - rg.r / RING_MAX_R);
+            vx += (dx / d) * k;
+            vy += (dy / d) * k;
+          }
+
+          px[i] = ox + vx;
+          py[i] = oy + vy;
+
+          if (px[i] < -20 || px[i] > W + 20 || py[i] < -20 || py[i] > H + 20) {
+            px[i] = random(W);
+            py[i] = random(H);
+            ly[i] = random(-30, 30);
+            continue;
+          }
+
+          const hue =
+            (((BASE_HUE + params.paletteShift + ly[i] * 0.22 + (sv[i] - 1) * 60) % 360) + 360) %
+            360;
+          stroke(hue, 80, 98, 52);
+          line(ox, oy, px[i], py[i]);
+        }
+
+        noFill();
+        for (let r = 0; r < RING_POOL; r++) {
+          const rg = rings[r];
+          if (!rg.active) continue;
+          rg.r += RING_SPEED;
+          if (rg.r > RING_MAX_R) {
+            rg.active = false;
+            continue;
+          }
+          const a = 1 - rg.r / RING_MAX_R;
+          strokeWeight(1.6);
+          stroke(rg.hue, 60, 100, 52 * a);
+          circle(rg.x, rg.y, rg.r * 2);
+          stroke(rg.hue, 45, 100, 34 * a);
+          circle(rg.x, rg.y, rg.r * 1.6);
+          stroke(rg.hue, 30, 100, 22 * a);
+          circle(rg.x, rg.y, rg.r * 1.24);
+          if (rg.r < 48) {
+            noStroke();
+            fill(rg.hue, 20, 100, 70 * (1 - rg.r / 48));
+            circle(rg.x, rg.y, 18);
+            noFill();
+          }
+        }
+
+        if (params.showHud) drawHud(n);
+      }
+
+      /** One left-aligned label/value telemetry row. Allocation-free. */
+      function hudRow(label, value, x, y, valueColor) {
+        noStroke();
+        fill(150, 170, 190);
+        textAlign(LEFT, TOP);
+        textStyle(NORMAL);
+        text(label, x, y);
+        fill(valueColor[0], valueColor[1], valueColor[2]);
+        textStyle(BOLD);
+        textAlign(RIGHT, TOP);
+        text(value, x + HUD_W - 22, y);
+        textStyle(NORMAL);
+      }
+
+      /** Paints the telemetry + math-legend cards. O(1). Draws no rng. */
+      function drawHud(n) {
+        push();
+        colorMode(RGB, 255, 255, 255, 255);
+        textFont(hudFont);
+
+        const cyan = [120, 200, 255];
+        const orange = [217, 119, 87];
+        const green = [150, 200, 130];
+        const fps = fpsSmooth;
+        const fpsColor = fps >= 55 ? green : fps >= 30 ? [230, 200, 110] : orange;
+
+        const cx = HUD_PAD;
+        let cy = HUD_PAD;
+        noStroke();
+        fill(6, 10, 22, 140);
+        rect(cx, cy, HUD_W, HUD_CARD_H, 8);
+        stroke(120, 200, 255, 50);
+        strokeWeight(1);
+        noFill();
+        rect(cx + 0.5, cy + 0.5, HUD_W - 1, HUD_CARD_H - 1, 8);
+
+        const ix = cx + 12;
+        let iy = cy + 10;
+        noStroke();
+        fill(cyan[0], cyan[1], cyan[2]);
+        textStyle(BOLD);
+        textAlign(LEFT, TOP);
+        textSize(13);
+        text('QUANTUM WILDBEYOND', ix, iy);
+        textStyle(NORMAL);
+        fill(130, 150, 170);
+        textSize(10);
+        text('COLLAPSE FIELD · LIVE TELEMETRY', ix, iy + 15);
+
+        iy += 32;
+        textSize(12);
+        const lineH = 17;
+        hudRow('seed', String(params.seed), ix, iy, cyan);
+        iy += lineH;
+        hudRow('particles', n.toLocaleString('en-US'), ix, iy, [225, 230, 235]);
+        iy += lineH;
+        hudRow('collapses', String(collapseCount), ix, iy, orange);
+        iy += lineH;
+        hudRow(
+          'blend',
+          Math.round((1 - effectiveBlend) * 100) + '/' + Math.round(effectiveBlend * 100),
+          ix,
+          iy,
+          [225, 230, 235],
+        );
+        iy += lineH;
+        hudRow('rate', params.collapseRate.toFixed(2) + '/s', ix, iy, [225, 230, 235]);
+        iy += lineH;
+        hudRow('fps', fps.toFixed(1), ix, iy, fpsColor);
+
+        const ly0 = H - HUD_PAD - HUD_MATH_H;
+        const lx0 = HUD_PAD;
+        noStroke();
+        fill(6, 10, 22, 140);
+        rect(lx0, ly0, HUD_W, HUD_MATH_H, 8);
+        stroke(120, 200, 255, 50);
+        strokeWeight(1);
+        noFill();
+        rect(lx0 + 0.5, ly0 + 0.5, HUD_W - 1, HUD_MATH_H - 1, 8);
+
+        const mx = lx0 + 14;
+        let my = ly0 + 10;
+        noStroke();
+        fill(cyan[0], cyan[1], cyan[2]);
+        textStyle(BOLD);
+        textAlign(LEFT, TOP);
+        textSize(12);
+        text('THE MATH', mx, my);
+        textStyle(NORMAL);
+        my += 20;
+
+        textSize(12);
+        const mlH = 16;
+        const mathBottom = ly0 + HUD_MATH_H - 8;
+        for (let k = 0; k < HUD_MATH_LINES.length; k++) {
+          const seg = HUD_MATH_LINES[k];
+          if (my + mlH > mathBottom) break;
+          if (seg[1] === 1) {
+            fill(140, 158, 176);
+          } else {
+            fill(165, 215, 255);
+          }
+          text(seg[0], mx, my, HUD_W - 24);
+          my += mlH;
+        }
+
+        pop();
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // BOARD VISUALS (pages 2-4) — each an INSTANCE-MODE p5 WEBGL sketch.
+      //
+      // A tile spec is { id, name, legend, make }. `make(p, rng, S)` wires the
+      // instance: it returns nothing but installs p.setup/p.draw (and the pulse
+      // hook via makeReact). S is the tile's backing resolution (square). Every
+      // visual:
+      //   • creates its canvas with p.createCanvas(S, S, p.WEBGL) — honest 3D;
+      //   • seeds from `rng` (derived from master seed + tile id) — no Math.random;
+      //   • caps its work (≤ ~2600 specks / ~1500 strip segments) for ~60fps;
+      //   • reacts: pulse() on click (kick decaying over ~1s), `hot` on hover.
+      // Boards are built LAZILY — only the visible board's 12 instances (and
+      // therefore at most 12 WebGL contexts) are alive at any moment.
+      // ═══════════════════════════════════════════════════════════════════════
+
+      const TILE_RES = 300; // backing px per tile (12 live WEBGL canvases; CSS scales to cell)
+      /** Compact tiles (mobile / coarse pointer) need a pulled-back camera + smaller world scale. */
+      function tileIsCompact() {
+        return (
+          window.innerWidth < 768 ||
+          window.innerHeight < 520 ||
+          window.matchMedia('(pointer: coarse)').matches
+        );
+      }
+      function attractorCamZ(S) {
+        return S * (tileIsCompact() ? 2.35 : 1.7);
+      }
+      function attractorDrawScale(k) {
+        const base = tileIsCompact() ? 0.46 : 0.54;
+        return base + k * 0.06;
+      }
+      function attractorVertexScale(S, desktopDenom) {
+        const denom = desktopDenom * (tileIsCompact() ? 2.35 : 1.55);
+        return S / denom;
+      }
+      function fitWebglTile(p, S, cameraMul = 1) {
+        p.perspective(Math.PI / 3.25, 1, 1, S * 14);
+        p.camera(0, 0, attractorCamZ(S) * cameraMul, 0, 0, 0, 0, 1, 0);
+      }
+      const VOID = [4, 7, 17];
+      const activeTiles = []; // { instance|null, spec, tile, host, visible, hot, seq } — the visible board's tiles
+      let activeBoardPage = 0; // 0 = no board built (page 1 showing)
+      let boardObserver = null; // IntersectionObserver virtualizing the live board's WebGL tiles
+      let tileSeq = 0; // monotonic mount stamp → least-recently-mounted eviction order
+      let _webglCtxCap = 0; // memoized device WebGL-context ceiling (probed once)
+
+      /**
+       * Probe — ONCE — how many live WebGL contexts THIS device keeps before the
+       * browser force-loses the OLDEST (Chrome desktop = 16; some mobile GPUs = 8).
+       * A board of 28+ tiles each grabbing its own context is exactly why the
+       * first-created tiles (Lorenz, Rössler, …) went blank: contexts 1..N-16 were
+       * silently lost. We measure the real ceiling instead of guessing a number.
+       */
+      function webglContextCap() {
+        if (_webglCtxCap) return _webglCtxCap;
+        let live = 0;
+        try {
+          const ctxs = [];
+          for (let i = 0; i < 24; i++) {
+            const c = document.createElement('canvas');
+            c.width = c.height = 32;
+            ctxs.push(c.getContext('webgl2') || c.getContext('webgl'));
+          }
+          for (const g of ctxs) if (g && !g.isContextLost()) live++;
+          for (const g of ctxs) {
+            const lose = g && g.getExtension('WEBGL_lose_context');
+            if (lose) lose.loseContext();
+          }
+        } catch (e) {
+          live = 0;
+        }
+        _webglCtxCap = live > 0 ? live : 16;
+        return _webglCtxCap;
+      }
+      /** Max board tiles mounted at once: under the device ceiling, with 2 of headroom. */
+      function maxLiveTiles() {
+        return Math.max(6, Math.min(15, webglContextCap() - 1));
+      }
+      function liveTileCount() {
+        let n = 0;
+        for (let i = 0; i < activeTiles.length; i++) if (activeTiles[i].instance) n++;
+        return n;
+      }
+      /** Free a tile's WebGL context — it re-mounts (re-seeded, identical) when scrolled back. */
+      function unmountTile(rec) {
+        if (!rec.instance) return;
+        try {
+          rec.instance.remove();
+        } catch (e) {
+          /* already gone */
+        }
+        rec.instance = null;
+      }
+      /** Unmount mounted tiles (off-screen first, least-recently-mounted first) until under `cap`. */
+      function evictFarTiles(cap) {
+        let guard = activeTiles.length + 1;
+        while (liveTileCount() > cap && guard-- > 0) {
+          let victim = null;
+          for (let i = 0; i < activeTiles.length; i++) {
+            const r = activeTiles[i];
+            if (!r.instance || r.visible) continue;
+            if (!victim || r.seq < victim.seq) victim = r;
+          }
+          if (!victim) {
+            // Everything mounted is on-screen (huge viewport) — drop the oldest as a last resort.
+            for (let i = 0; i < activeTiles.length; i++) {
+              const r = activeTiles[i];
+              if (!r.instance) continue;
+              if (!victim || r.seq < victim.seq) victim = r;
+            }
+          }
+          if (!victim) break;
+          unmountTile(victim);
+        }
+      }
+      /** Mount a tile's seeded p5 sketch on demand, evicting the furthest tile if over budget. */
+      function mountTile(rec) {
+        if (rec.instance) {
+          rec.seq = ++tileSeq;
+          return;
+        }
+        const cap = maxLiveTiles();
+        if (liveTileCount() >= cap) evictFarTiles(cap - 1);
+        const sketch = (pp) => {
+          const rng = makeRng(derivedSeed(params.seed, rec.spec.id));
+          rec.spec.make(pp, rng, TILE_RES);
+          installUniversalReact(pp);
+        };
+        rec.instance = new p5(sketch, rec.host);
+        rec.instance.hot = rec.hot;
+        rec.seq = ++tileSeq;
+      }
+
+      // ─── Click audio: ONE shared AudioContext, lazily created on first click ───
+
+      let audioCtx = null;
+
+      /**
+       * Per-tile synthesized SFX — 36 unique bizarre voices (waveform + pitch + noise + FM chosen
+       * deterministically from tile id). Shared AudioContext, autoplay-safe inside click gesture.
+       */
+      function tileBlip(tileId) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        if (!audioCtx) audioCtx = new AC();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const attractorConstants = {
+          lorenz: { sigma: 10, rho: 28, beta: 8 / 3, freqMul: 1.12 },
+          rossler: { a: 0.2, b: 0.2, c: 5.7, freqMul: 0.98 },
+          thomas: { b: 0.2, freqMul: 1.05 },
+          halvorsen: { a: 1.4, freqMul: 0.85 },
+          chenlee: { a: 5, b: -10, c: -0.38, freqMul: 1.25 },
+          duffing: { alpha: -1, omega: 1.2, gamma: 0.3, freqMul: 1.15 },
+          nosehoover: { a: 1.5, freqMul: 0.92 },
+          grayscott: { feed: 0.0545, kill: 0.062, freqMul: 0.75 },
+          voronoi: { sites: 18, freqMul: 1.1 },
+          fern: { maps: 4, freqMul: 1.3 },
+          clifford: { freqMul: 1.22 },
+          flow: { freqMul: 0.9 },
+          lissajous: { freqMul: 1.05 },
+          wavefunction: { freqMul: 1.4 },
+          sphharmonic: { freqMul: 1.35 },
+          quantumwalk: { freqMul: 1.18 },
+          torusknot: { freqMul: 1.08 },
+          superformula: { freqMul: 1.2 },
+          hopf: { freqMul: 1.25 },
+          bellpair: { freqMul: 1.5 },
+          montecarlo: { freqMul: 1.1 },
+          lsystem: { freqMul: 1.02 },
+          apollonian: { freqMul: 1.08 },
+          blochsphere: { freqMul: 1.45 },
+          wavefunction: { freqMul: 1.4 },
+          galaxy: { freqMul: 0.95 },
+          walk3d: { freqMul: 1.1 },
+          helix: { freqMul: 1.25 },
+          ribbon3d: { freqMul: 1.15 },
+          curlcloud: { freqMul: 0.9 },
+        };
+        const h = derivedSeed(0, tileId);
+        const slot = h % 36;
+        const t0 = audioCtx.currentTime;
+        const dur = 0.18 + (slot % 7) * 0.04;
+        const waves = ['triangle', 'square', 'sawtooth', 'sine'];
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+        osc.type = waves[slot % waves.length];
+        const consts = attractorConstants[tileId] || { freqMul: 1.0 };
+        const baseHz = 55 * Math.pow(2, (slot % 24) / 12) * consts.freqMul;
+        let ratio = 1.0;
+        if (tileId === 'lorenz') ratio = consts.rho / consts.sigma;
+        else if (tileId === 'rossler') ratio = consts.c / 2;
+        else if (tileId === 'thomas') ratio = 1.0 + consts.b;
+        else if (tileId === 'halvorsen') ratio = consts.a;
+        else if (tileId === 'chenlee') ratio = Math.abs(consts.b / consts.a);
+        else if (tileId === 'duffing') ratio = consts.omega;
+        else if (tileId === 'nosehoover') ratio = consts.a;
+        else ratio = 1 + (slot % 5) * 0.31;
+        osc.frequency.setValueAtTime(baseHz * ratio, t0);
+        osc.frequency.exponentialRampToValueAtTime(Math.max(28, baseHz * 0.35), t0 + dur);
+        filter.type = slot % 3 === 0 ? 'bandpass' : slot % 3 === 1 ? 'lowpass' : 'highpass';
+        filter.frequency.setValueAtTime(180 + ((slot * 97) % 4200), t0);
+        filter.Q.setValueAtTime(1.2 + (slot % 8), t0);
+        gain.gain.setValueAtTime(0.11 + (slot % 4) * 0.02, t0);
+        gain.gain.exponentialRampToValueAtTime(0.0006, t0 + dur);
+        osc.connect(filter);
+        filter.connect(gain);
+        if (slot % 5 === 0 || slot % 7 === 2) {
+          const noiseRng = makeRng(derivedSeed(params.seed, `${tileId}:noise`));
+          const noise = audioCtx.createBufferSource();
+          const nb = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.12, audioCtx.sampleRate);
+          const nd = nb.getChannelData(0);
+          for (let i = 0; i < nd.length; i++) nd[i] = (noiseRng.next() * 2 - 1) * 0.35;
+          noise.buffer = nb;
+          const ng = audioCtx.createGain();
+          ng.gain.setValueAtTime(0.06 + (slot % 3) * 0.03, t0);
+          ng.gain.exponentialRampToValueAtTime(0.0005, t0 + dur * 0.7);
+          noise.connect(ng);
+          ng.connect(gain);
+          noise.start(t0);
+          noise.stop(t0 + dur);
+        }
+        if (slot % 4 === 1) {
+          const fm = audioCtx.createOscillator();
+          const fmG = audioCtx.createGain();
+          fm.type = 'square';
+          fm.frequency.setValueAtTime(3 + (slot % 11), t0);
+          fmG.gain.setValueAtTime(40 + slot * 3, t0);
+          fm.connect(fmG);
+          fmG.connect(osc.frequency);
+          fm.start(t0);
+          fm.stop(t0 + dur);
+        }
+        if (slot % 6 === 0) {
+          const sub = audioCtx.createOscillator();
+          const subG = audioCtx.createGain();
+          sub.type = 'sawtooth';
+          sub.frequency.setValueAtTime(28 + (slot % 9) * 3, t0);
+          subG.gain.setValueAtTime(0.07 + (slot % 4) * 0.02, t0);
+          subG.gain.exponentialRampToValueAtTime(0.0004, t0 + dur * 1.1);
+          sub.connect(subG);
+          subG.connect(gain);
+          sub.start(t0);
+          sub.stop(t0 + dur + 0.03);
+        }
+        gain.connect(audioCtx.destination);
+        osc.start(t0);
+        osc.stop(t0 + dur + 0.02);
+      }
+
+      // ─── Per-tile reaction state (click pulse + hover heat) ───
+
+      /**
+       * Installs the interaction contract on an instance-mode sketch: p.pulse()
+       * (fired by the tile's click handler) sets a kick that decays over ~1s at
+       * 60fps; p.hot is toggled by pointerenter/leave. tick() advances a shared
+       * orbit angle — faster while hot, surging on a kick — and returns the
+       * current kick energy. Allocation-free per frame.
+       */
+      function makeReact(p) {
+        const r = { kick: 0, orbit: 0 };
+        p.hot = false;
+        p.pulse = () => {
+          r.kick = 1;
+        };
+        r.tick = () => {
+          r.kick *= 0.95;
+          if (r.kick < 0.004) r.kick = 0;
+          r.orbit += (p.hot ? 0.022 : 0.009) * (1 + r.kick * 3.2);
+          return r.kick;
+        };
+        return r;
+      }
+
+      /** One dust speck: a tiny immediate-mode segment. Batched inside a single
+       *  beginShape(LINES) call, a ~2500-speck cloud stays one GL draw — WEBGL
+       *  point() would cost a draw call apiece. */
+      function speck(p, x, y, z) {
+        p.vertex(x, y, z);
+        p.vertex(x + 1.7, y + 1.7, z);
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // Tile makers. Each is a closure factory: make(p, rng, S).
+      // ─────────────────────────────────────────────────────────────────────────
+
+      /** Lorenz attractor as a live 3D ribbon: a ring-buffered trajectory drawn
+       *  as a rotating line strip, hue tracking Z. Pulse = integration surge +
+       *  camera kick; hot = faster orbit and brighter strokes. */
+      function makeLorenz(p, rng, S) {
+        const PTS = 1100; // ribbon length (≤1500-segment budget)
+        const xs = new Float32Array(PTS);
+        const ys = new Float32Array(PTS);
+        const zs = new Float32Array(PTS);
+        let x = rng.range(-8, 8);
+        let y = rng.range(-8, 8);
+        let z = rng.range(15, 35);
+        let head = 0;
+        const sg = 10;
+        const rh = 28;
+        const bt = 8 / 3;
+        const dt = 0.0055;
+        const rx = makeReact(p);
+        const step = () => {
+          const dx = sg * (y - x);
+          const dy = x * (rh - z) - y;
+          const dz = x * y - bt * z;
+          x += dx * dt;
+          y += dy * dt;
+          z += dz * dt;
+          xs[head] = x;
+          ys[head] = y;
+          zs[head] = z;
+          head = (head + 1) % PTS;
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.75);
+          p.pixelDensity(1);
+          for (let i = 0; i < PTS; i++) step(); // pre-fill the ribbon
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const steps = (p.hot ? 10 : 6) + ((k * 18) | 0);
+          for (let s = 0; s < steps; s++) step();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(0.5 + Math.sin(rx.orbit * 0.6) * 0.2);
+          p.rotateY(rx.orbit);
+          p.scale(attractorDrawScale(k));
+          const sc = attractorVertexScale(S, 22);
+          const al = p.hot ? 86 : 64;
+          p.noFill();
+          p.strokeWeight(1.3 + k);
+          p.beginShape();
+          for (let i = 0; i < PTS; i++) {
+            const j = (head + i) % PTS;
+            const fade = 0.25 + (0.75 * i) / PTS;
+            p.stroke((188 + zs[j] * 2.6 + k * 60) % 360, 80, 100, al * fade);
+            p.vertex(xs[j] * sc, (25 - zs[j]) * sc, ys[j] * sc);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Rössler attractor as a live 3D ribbon — the Z spikes leap out of the
+       *  spiral plane. Pulse = integration surge; hot = faster orbit. */
+      function makeRossler(p, rng, S) {
+        const PTS = 1100;
+        const xs = new Float32Array(PTS);
+        const ys = new Float32Array(PTS);
+        const zs = new Float32Array(PTS);
+        let x = rng.range(-4, 4);
+        let y = rng.range(-4, 4);
+        let z = rng.range(0, 4);
+        let head = 0;
+        const a = 0.2;
+        const b = 0.2;
+        const c = 5.7;
+        const dt = 0.018;
+        const rx = makeReact(p);
+        const step = () => {
+          const dx = -y - z;
+          const dy = x + a * y;
+          const dz = b + z * (x - c);
+          x += dx * dt;
+          y += dy * dt;
+          z += dz * dt;
+          xs[head] = x;
+          ys[head] = y;
+          zs[head] = z;
+          head = (head + 1) % PTS;
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.85);
+          p.pixelDensity(1);
+          for (let i = 0; i < PTS; i++) step();
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const steps = (p.hot ? 9 : 5) + ((k * 16) | 0);
+          for (let s = 0; s < steps; s++) step();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(0.55 + Math.sin(rx.orbit * 0.5) * 0.18);
+          p.rotateY(rx.orbit);
+          p.scale(attractorDrawScale(k));
+          const sc = attractorVertexScale(S, 12);
+          const al = p.hot ? 86 : 64;
+          p.noFill();
+          p.strokeWeight(1.3 + k);
+          p.beginShape();
+          for (let i = 0; i < PTS; i++) {
+            const j = (head + i) % PTS;
+            const fade = 0.25 + (0.75 * i) / PTS;
+            p.stroke((30 + Math.min(1, zs[j] / 22) * 60 + k * 40) % 360, 85, 100, al * fade);
+            p.vertex(xs[j] * sc, (4 - zs[j]) * sc * 0.6, ys[j] * sc);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Gray–Scott reaction–diffusion as a displaced 3D heightfield: the same
+       *  honest sim, its activator lifting a rotating ridgeline sheet. Pulse
+       *  injects fresh seeded blobs into the field; hot = more sweeps. */
+      function makeGrayScott(p, rng, S) {
+        const N = 80; // sim grid (cap: 80² cells, a few iters/frame)
+        const a = new Float32Array(N * N);
+        const b = new Float32Array(N * N);
+        const a2 = new Float32Array(N * N);
+        const b2 = new Float32Array(N * N);
+        // Stability: explicit Euler needs dA·dt ≤ 0.25 for the 5-point Laplacian.
+        // dA·dt = 0.2, dB·dt = 0.1 sits safely inside that bound, so the field
+        // never blows up to NaN; feed/kill put it in the worm-and-spot regime.
+        const dA = 1.0;
+        const dB = 0.5;
+        const dt = 0.2;
+        const feed = 0.0545;
+        const kill = 0.062;
+        const D = 36; // display ridgelines (D·(D−1) = 1260 segments)
+        let wantBlob = false;
+        const rx = makeReact(p);
+        const kickOnly = p.pulse;
+        p.pulse = () => {
+          kickOnly();
+          wantBlob = true;
+        };
+        const blob = () => {
+          const cx = rng.int(N);
+          const cy = rng.int(N);
+          const rad = 3 + rng.int(4);
+          for (let yy = -rad; yy <= rad; yy++) {
+            for (let xx = -rad; xx <= rad; xx++) {
+              const gx = (cx + xx + N) % N;
+              const gy = (cy + yy + N) % N;
+              if (xx * xx + yy * yy <= rad * rad) b[gy * N + gx] = 1;
+            }
+          }
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          a.fill(1);
+          b.fill(0);
+          for (let s = 0; s < 18; s++) blob();
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          if (wantBlob) {
+            for (let s = 0; s < 3; s++) blob();
+            wantBlob = false;
+          }
+          const iters = p.hot ? 9 : 6;
+          for (let it = 0; it < iters; it++) {
+            for (let y = 0; y < N; y++) {
+              const ym = ((y - 1 + N) % N) * N;
+              const yp = ((y + 1) % N) * N;
+              const yc = y * N;
+              for (let x = 0; x < N; x++) {
+                const xm = (x - 1 + N) % N;
+                const xp = (x + 1) % N;
+                const i = yc + x;
+                const la = a[ym + x] + a[yp + x] + a[yc + xm] + a[yc + xp] - 4 * a[i];
+                const lb = b[ym + x] + b[yp + x] + b[yc + xm] + b[yc + xp] - 4 * b[i];
+                const av = a[i];
+                const bv = b[i];
+                const abb = av * bv * bv;
+                a2[i] = av + (dA * la - abb + feed * (1 - av)) * dt;
+                b2[i] = bv + (dB * lb + abb - (kill + feed) * bv) * dt;
+              }
+            }
+            a.set(a2);
+            b.set(b2);
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(-0.9);
+          p.rotateZ(rx.orbit * 0.7);
+          const ext = S * (tileIsCompact() ? 0.48 : 0.56);
+          const amp = S * 0.11 * (1 + k * 0.65);
+          const al = p.hot ? 92 : 72;
+          const stride = (N / D) | 0;
+          p.noFill();
+          p.strokeWeight(1.2 + k * 0.8);
+          for (let gy = 0; gy < D; gy++) {
+            const zPos = (gy / (D - 1) - 0.5) * ext;
+            const rowBase = gy * stride * N;
+            p.beginShape();
+            for (let gx = 0; gx < D; gx++) {
+              const v = Math.max(0, Math.min(1, b[rowBase + gx * stride] * 3.2));
+              p.stroke((175 + v * 95) % 360, 70, 35 + v * 65, al);
+              // The sheet lies in X–Y of the rotated frame; activator lifts Z.
+              p.vertex((gx / (D - 1) - 0.5) * ext, zPos, v * amp);
+            }
+            p.endShape();
+          }
+        };
+      }
+
+      /** Voronoi tessellation extruded into 3D: seeded sites become prisms whose
+       *  heights are the honest raster-measured cell areas, rising off a baked
+       *  cell-shaded floor texture. Pulse = the prisms surge taller. */
+      function makeVoronoi(p, rng, S) {
+        const M = 18;
+        const sx = new Float32Array(M);
+        const sy = new Float32Array(M);
+        const sh = new Float32Array(M);
+        const area = new Float32Array(M);
+        const RES = 96; // nearest-cell raster (texture + area census), bake-time only
+        let floor = null;
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          for (let i = 0; i < M; i++) {
+            sx[i] = rng.range(0.08, 0.92);
+            sy[i] = rng.range(0.08, 0.92);
+            sh[i] = rng.range(180, 300);
+          }
+          // Bake the floor texture into a 2D graphics (no extra GL context) and
+          // count raster cells per site — an honest area measure for extrusion.
+          floor = p.createGraphics(RES, RES);
+          floor.pixelDensity(1);
+          floor.loadPixels();
+          for (let gy = 0; gy < RES; gy++) {
+            for (let gx = 0; gx < RES; gx++) {
+              const fx = gx / RES;
+              const fy = gy / RES;
+              let best = 0;
+              let bd = Infinity;
+              let bd2 = Infinity;
+              for (let s = 0; s < M; s++) {
+                const dx = fx - sx[s];
+                const dy = fy - sy[s];
+                const d2 = dx * dx + dy * dy;
+                if (d2 < bd) {
+                  bd2 = bd;
+                  bd = d2;
+                  best = s;
+                } else if (d2 < bd2) {
+                  bd2 = d2;
+                }
+              }
+              area[best]++;
+              const edge = Math.sqrt(bd2) - Math.sqrt(bd);
+              const shade = edge < 0.014 ? 0.2 : 0.45 + 0.3 * Math.min(1, edge * 8);
+              const rgb = hsvToRgb(sh[best], 0.5, 0.18 + shade * 0.4);
+              const q = (gy * RES + gx) * 4;
+              floor.pixels[q] = rgb[0];
+              floor.pixels[q + 1] = rgb[1];
+              floor.pixels[q + 2] = rgb[2];
+              floor.pixels[q + 3] = 255;
+            }
+          }
+          floor.updatePixels();
+          let peak = 1;
+          for (let i = 0; i < M; i++) if (area[i] > peak) peak = area[i];
+          for (let i = 0; i < M; i++) area[i] /= peak; // normalize to tallest cell
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 1.0);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(-0.62);
+          p.rotateY(rx.orbit);
+          const ext = S * (tileIsCompact() ? 0.48 : 0.56);
+          // Floor: the baked Voronoi shading laid flat.
+          p.push();
+          p.rotateX(p.HALF_PI);
+          p.noStroke();
+          p.texture(floor);
+          p.plane(ext, ext);
+          p.pop();
+          // Prisms: one per site, height ∝ measured cell area (kick = surge).
+          const hMax = S * 0.18 * (1 + k * 0.55);
+          for (let i = 0; i < M; i++) {
+            const h = 6 + area[i] * hMax;
+            const w = ext * 0.052 * (0.7 + area[i] * 0.6);
+            p.push();
+            p.translate((sx[i] - 0.5) * ext, -h / 2, (sy[i] - 0.5) * ext);
+            p.noStroke();
+            p.fill(sh[i], 55, p.hot ? 95 : 80, 88);
+            p.box(w, h, w);
+            p.pop();
+          }
+        };
+      }
+
+      /** Barnsley fern as a 3D spray: the chaos game accretes into a fixed point
+       *  cloud, each landing given a small seeded depth scatter — a volumetric
+       *  fern slowly orbiting. Pulse = accretion burst; hot = faster growth. */
+      function makeFern(p, rng, S) {
+        const PTS = 2200; // speck-cloud cap
+        const fx = new Float32Array(PTS);
+        const fy = new Float32Array(PTS);
+        const fz = new Float32Array(PTS);
+        let x = 0;
+        let y = 0;
+        let count = 0;
+        let w = 0; // ring write head
+        const rx = makeReact(p);
+        const accrete = (n) => {
+          for (let i = 0; i < n; i++) {
+            const r = rng.next();
+            let nx;
+            let ny;
+            if (r < 0.01) {
+              nx = 0;
+              ny = 0.16 * y;
+            } else if (r < 0.86) {
+              nx = 0.85 * x + 0.04 * y;
+              ny = -0.04 * x + 0.85 * y + 1.6;
+            } else if (r < 0.93) {
+              nx = 0.2 * x - 0.26 * y;
+              ny = 0.23 * x + 0.22 * y + 1.6;
+            } else {
+              nx = -0.15 * x + 0.28 * y;
+              ny = 0.26 * x + 0.24 * y + 0.44;
+            }
+            x = nx;
+            y = ny;
+            fx[w] = (x / 5.6) * S * 0.8;
+            fy[w] = S * 0.44 - (y / 10) * S * 0.88;
+            fz[w] = rng.gauss() * S * 0.035; // seeded frond-depth scatter
+            w = (w + 1) % PTS;
+            if (count < PTS) count++;
+          }
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          p.pixelDensity(1);
+          accrete(500); // first visible flush
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.9);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          accrete((p.hot ? 90 : 45) + ((k * 320) | 0));
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.scale((tileIsCompact() ? 0.66 : 0.76) + k * 0.1);
+          const al = (p.hot ? 75 : 55) + k * 25;
+          p.strokeWeight(1.4 + k * 0.8);
+          p.beginShape(p.LINES);
+          for (let i = 0; i < count; i++) {
+            const hue = (96 + ((S * 0.44 - fy[i]) / S) * 60) % 360;
+            p.stroke(hue, 70, 95, al);
+            speck(p, fx[i], fy[i], fz[i]);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Clifford strange attractor (2D), density-accreted. */
+      function makeClifford(p, rng, S) {
+        // Bias toward the wilder, well-known Clifford regime (|a|,|b| ≳ 1.4).
+        const a = (rng.next() < 0.5 ? -1 : 1) * rng.range(1.4, 2.0);
+        const b = (rng.next() < 0.5 ? -1 : 1) * rng.range(1.4, 2.0);
+        const c = rng.range(-1.8, 1.8);
+        const d = rng.range(-1.8, 1.8);
+        // True bounds: |x| ≤ 1+|c|, |y| ≤ 1+|d| — scale to fill the tile.
+        const spanX = 1 + Math.abs(c);
+        const spanY = 1 + Math.abs(d);
+        const span = Math.max(spanX, spanY) * 1.04;
+        let x = rng.range(-0.5, 0.5);
+        let y = rng.range(-0.5, 0.5);
+        // Burn off the transient so the first frame already lands on the attractor.
+        for (let i = 0; i < 80; i++) {
+          const nx = Math.sin(a * y) + c * Math.cos(a * x);
+          const ny = Math.sin(b * x) + d * Math.cos(b * y);
+          x = nx;
+          y = ny;
+        }
+        const PTS = 1600;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.noStroke();
+        };
+        p.draw = () => {
+          p.colorMode(p.RGB, 255, 255, 255, 255);
+          p.fill(VOID[0], VOID[1], VOID[2], 6);
+          p.rect(0, 0, S, S);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          for (let i = 0; i < PTS; i++) {
+            const nx = Math.sin(a * y) + c * Math.cos(a * x);
+            const ny = Math.sin(b * x) + d * Math.cos(b * y);
+            x = nx;
+            y = ny;
+            const sxp = S * 0.5 + (x / span) * S * 0.46;
+            const syp = S * 0.5 + (y / span) * S * 0.46;
+            const hue = (250 + Math.hypot(x, y) * 36) % 360;
+            p.fill(hue, 65, 100, 62);
+            p.circle(sxp, syp, 1.3);
+          }
+        };
+      }
+
+      /** Curl-noise flow field rendered as drifting tracer streaks. */
+      function makeFlowField(p, rng, S) {
+        const NP = 220; // tracers (cap)
+        const fxs = new Float32Array(NP);
+        const fys = new Float32Array(NP);
+        const ns = 0.0075;
+        const sOff = rng.range(0, 1000);
+        let t = sOff;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.noiseSeed((sOff * 1000) | 0);
+          for (let i = 0; i < NP; i++) {
+            fxs[i] = rng.range(0, S);
+            fys[i] = rng.range(0, S);
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+        };
+        p.draw = () => {
+          p.colorMode(p.RGB, 255, 255, 255, 255);
+          p.noStroke();
+          p.fill(VOID[0], VOID[1], VOID[2], 16);
+          p.rect(0, 0, S, S);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          p.strokeWeight(1.1);
+          t += 0.004;
+          const e = 1.5;
+          for (let i = 0; i < NP; i++) {
+            const x = fxs[i];
+            const y = fys[i];
+            const nx = x * ns;
+            const ny = y * ns;
+            const cvx = p.noise(nx, ny + e * ns, t) - p.noise(nx, ny - e * ns, t);
+            const cvy = p.noise(nx - e * ns, ny, t) - p.noise(nx + e * ns, ny, t);
+            const m = Math.hypot(cvx, cvy) || 1;
+            const vx = (cvx / m) * 1.6;
+            const vy = (cvy / m) * 1.6;
+            const x2 = x + vx;
+            const y2 = y + vy;
+            p.stroke((180 + p.noise(nx, ny, t) * 160) % 360, 70, 100, 55);
+            p.line(x, y, x2, y2);
+            fxs[i] = x2 < 0 || x2 > S ? rng.range(0, S) : x2;
+            fys[i] = y2 < 0 || y2 > S ? rng.range(0, S) : y2;
+          }
+        };
+      }
+
+      /** Quantum statevector: |amp|² bars for an n-qubit register evolved by a
+       *  fixed seeded unitary (single-qubit rotations + a CNOT chain), Trotterized. */
+      function makeStatevector(p, rng, S) {
+        const NQ = 4; // 16 basis states — readable bars
+        const DIM = 1 << NQ;
+        const re = new Float64Array(DIM);
+        const im = new Float64Array(DIM);
+        const re2 = new Float64Array(DIM);
+        const im2 = new Float64Array(DIM);
+        const theta = new Float64Array(NQ);
+        for (let q = 0; q < NQ; q++) theta[q] = rng.range(0.05, 0.22);
+        let t = 0;
+        const applyRx = (q, ang) => {
+          const c = Math.cos(ang / 2);
+          const s = Math.sin(ang / 2);
+          const bit = 1 << q;
+          for (let i = 0; i < DIM; i++) {
+            if (i & bit) continue;
+            const j = i | bit;
+            const ar = re[i];
+            const ai = im[i];
+            const br = re[j];
+            const bi = im[j];
+            re2[i] = c * ar + s * bi;
+            im2[i] = c * ai - s * br;
+            re2[j] = c * br + s * ai;
+            im2[j] = c * bi - s * ar;
+          }
+          re.set(re2);
+          im.set(im2);
+        };
+        const applyCnot = (ctrl, targ) => {
+          const cb = 1 << ctrl;
+          const tb = 1 << targ;
+          for (let i = 0; i < DIM; i++) {
+            if (i & cb && !(i & tb)) {
+              const j = i | tb;
+              const tr = re[i];
+              const ti = im[i];
+              re[i] = re[j];
+              im[i] = im[j];
+              re[j] = tr;
+              im[j] = ti;
+            }
+          }
+        };
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          re.fill(0);
+          im.fill(0);
+          re[0] = 1;
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          // One Trotter step of the seeded "Hamiltonian" each frame.
+          for (let q = 0; q < NQ; q++) applyRx(q, theta[q]);
+          for (let q = 0; q < NQ - 1; q++) applyCnot(q, q + 1);
+          t += 1;
+          p.background(VOID[0], VOID[1], VOID[2]);
+          const pad = 18;
+          const top = 44;
+          const bw = (S - pad * 2) / DIM;
+          const base = S - 26;
+          p.noStroke();
+          for (let i = 0; i < DIM; i++) {
+            const prob = re[i] * re[i] + im[i] * im[i];
+            const h = (base - top) * Math.min(1, prob * 1.6);
+            const x = pad + i * bw;
+            p.fill((200 + i * 9) % 360, 70, 100, 90);
+            p.rect(x + 1, base - h, bw - 2, h, 2);
+          }
+          p.stroke(106, 30, 60, 50);
+          p.line(pad, base, S - pad, base);
+        };
+      }
+
+      /** Bloch disc: a single qubit precessing under a seeded Hamiltonian,
+       *  projected to the X–Z plane of the Bloch sphere, with a trailing arc. */
+      function makeBloch(p, rng, S) {
+        // State on the Bloch sphere via (theta, phi); precession about a tilted axis.
+        let th = rng.range(0.3, Math.PI - 0.3);
+        let ph = rng.range(0, Math.PI * 2);
+        const wz = rng.range(0.02, 0.05);
+        const wx = rng.range(0.008, 0.02);
+        const trailX = new Float32Array(120);
+        const trailY = new Float32Array(120);
+        let tp = 0;
+        let filled = 0;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          // Integrate a tilted-axis precession (honest unit-vector rotation).
+          ph += wz;
+          th += wx * Math.sin(ph);
+          if (th < 0.05) th = 0.05;
+          if (th > Math.PI - 0.05) th = Math.PI - 0.05;
+          const bx = Math.sin(th) * Math.cos(ph);
+          const bz = Math.cos(th);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          const cx = S * 0.5;
+          const cy = S * 0.52;
+          const R = S * 0.36;
+          p.noFill();
+          p.stroke(200, 40, 70, 60);
+          p.strokeWeight(1.4);
+          p.circle(cx, cy, R * 2);
+          p.stroke(200, 20, 50, 30);
+          p.line(cx - R, cy, cx + R, cy);
+          p.line(cx, cy - R, cx, cy + R);
+          const ex = cx + bx * R;
+          const ey = cy - bz * R;
+          trailX[tp] = ex;
+          trailY[tp] = ey;
+          tp = (tp + 1) % trailX.length;
+          if (filled < trailX.length) filled++;
+          p.strokeWeight(1.2);
+          for (let k = 1; k < filled; k++) {
+            const i0 = (tp - k + trailX.length) % trailX.length;
+            const i1 = (tp - k - 1 + trailX.length) % trailX.length;
+            if (i1 === tp) break;
+            const al = 70 * (1 - k / filled);
+            p.stroke(280, 60, 100, al);
+            p.line(trailX[i0], trailY[i0], trailX[i1], trailY[i1]);
+          }
+          p.stroke(30, 80, 100, 90);
+          p.strokeWeight(2);
+          p.line(cx, cy, ex, ey);
+          p.noStroke();
+          p.fill(30, 80, 100, 100);
+          p.circle(ex, ey, 7);
+        };
+      }
+
+      /** FFT-free spectrum: a seeded sum of sinusoids, its magnitude spectrum
+       *  computed honestly by a small DFT, drawn as a live bar spectrum. */
+      function makeSpectrum(p, rng, S) {
+        const NF = 8; // component count
+        const freq = new Float64Array(NF);
+        const amp = new Float64Array(NF);
+        const phs = new Float64Array(NF);
+        for (let i = 0; i < NF; i++) {
+          freq[i] = 1 + rng.int(28);
+          amp[i] = rng.range(0.3, 1);
+          phs[i] = rng.range(0, Math.PI * 2);
+        }
+        const NS = 128; // signal samples
+        const BINS = 48; // spectrum bins shown
+        const sig = new Float64Array(NS);
+        const mag = new Float64Array(BINS);
+        let t = 0;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          t += 0.05;
+          for (let n = 0; n < NS; n++) {
+            let v = 0;
+            const x = (n / NS) * Math.PI * 2;
+            for (let i = 0; i < NF; i++) v += amp[i] * Math.sin(freq[i] * x + phs[i] + t);
+            sig[n] = v;
+          }
+          // Honest DFT magnitude for the first BINS frequencies.
+          for (let k = 0; k < BINS; k++) {
+            let reS = 0;
+            let imS = 0;
+            for (let n = 0; n < NS; n++) {
+              const ang = (-2 * Math.PI * k * n) / NS;
+              reS += sig[n] * Math.cos(ang);
+              imS += sig[n] * Math.sin(ang);
+            }
+            mag[k] = Math.sqrt(reS * reS + imS * imS) / NS;
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          // Signal trace (top third).
+          p.noFill();
+          p.stroke(180, 60, 100, 70);
+          p.strokeWeight(1.2);
+          p.beginShape();
+          for (let n = 0; n < NS; n++) {
+            const x = 14 + (n / (NS - 1)) * (S - 28);
+            const y = S * 0.22 + sig[n] * (S * 0.06);
+            p.vertex(x, y);
+          }
+          p.endShape();
+          // Spectrum bars (bottom two thirds).
+          const base = S - 24;
+          const top = S * 0.38;
+          const bw = (S - 28) / BINS;
+          p.noStroke();
+          for (let k = 0; k < BINS; k++) {
+            const h = (base - top) * Math.min(1, mag[k] * 1.4);
+            const x = 14 + k * bw;
+            p.fill((40 + k * 5) % 360, 80, 100, 90);
+            p.rect(x + 0.5, base - h, bw - 1, h);
+          }
+        };
+      }
+
+      /** Histogram of a seeded Gaussian mixture, accumulating samples each frame. */
+      function makeHistogram(p, rng, S) {
+        const BINS = 36;
+        const bins = new Float64Array(BINS);
+        const k1 = rng.range(-1.4, -0.3);
+        const k2 = rng.range(0.3, 1.4);
+        const sd1 = rng.range(0.3, 0.6);
+        const sd2 = rng.range(0.25, 0.55);
+        let total = 0;
+        const PER = 240; // samples/frame (cap)
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          for (let s = 0; s < PER; s++) {
+            const pick = rng.next() < 0.5 ? k1 + rng.gauss() * sd1 : k2 + rng.gauss() * sd2;
+            const norm = (pick + 2.5) / 5;
+            if (norm >= 0 && norm < 1) {
+              bins[Math.floor(norm * BINS)]++;
+              total++;
+            }
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          let peak = 1;
+          for (let i = 0; i < BINS; i++) if (bins[i] > peak) peak = bins[i];
+          const base = S - 26;
+          const top = 44;
+          const bw = (S - 28) / BINS;
+          p.noStroke();
+          for (let i = 0; i < BINS; i++) {
+            const h = (base - top) * (bins[i] / peak);
+            const x = 14 + i * bw;
+            p.fill((150 + (i / BINS) * 90) % 360, 70, 100, 92);
+            p.rect(x + 0.5, base - h, bw - 1, h, 1.5);
+          }
+          p.stroke(106, 30, 60, 50);
+          p.strokeWeight(1);
+          p.line(14, base, S - 14, base);
+        };
+      }
+
+      /** Violin / density plot: two seeded distributions mirrored as KDE silhouettes. */
+      function makeViolin(p, rng, S) {
+        const NV = 3;
+        const centers = new Float64Array(NV);
+        const spreads = new Float64Array(NV);
+        const hues = new Float64Array(NV);
+        for (let v = 0; v < NV; v++) {
+          centers[v] = rng.range(-0.6, 0.6);
+          spreads[v] = rng.range(0.18, 0.4);
+          hues[v] = rng.range(180, 320);
+        }
+        const RES = 64; // vertical density resolution
+        const dens = new Float64Array(NV * RES);
+        const SAMP = 200; // samples/frame folded into each violin
+        const counts = new Float64Array(NV);
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          for (let v = 0; v < NV; v++) {
+            for (let s = 0; s < SAMP; s++) {
+              const val = centers[v] + rng.gauss() * spreads[v];
+              const norm = (val + 1.5) / 3;
+              if (norm >= 0 && norm < 1) {
+                dens[v * RES + Math.floor(norm * RES)]++;
+                counts[v]++;
+              }
+            }
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          const colW = S / NV;
+          for (let v = 0; v < NV; v++) {
+            let peak = 1;
+            for (let i = 0; i < RES; i++) if (dens[v * RES + i] > peak) peak = dens[v * RES + i];
+            const cx = colW * (v + 0.5);
+            const maxW = colW * 0.42;
+            p.noStroke();
+            p.fill(hues[v], 60, 90, 70);
+            p.beginShape();
+            for (let i = 0; i < RES; i++) {
+              const y = 30 + (i / (RES - 1)) * (S - 56);
+              const w = (dens[v * RES + i] / peak) * maxW;
+              p.vertex(cx - w, y);
+            }
+            for (let i = RES - 1; i >= 0; i--) {
+              const y = 30 + (i / (RES - 1)) * (S - 56);
+              const w = (dens[v * RES + i] / peak) * maxW;
+              p.vertex(cx + w, y);
+            }
+            p.endShape(p.CLOSE);
+            p.stroke(hues[v], 30, 100, 80);
+            p.strokeWeight(1);
+            p.line(cx, 30, cx, S - 26);
+          }
+        };
+      }
+
+      /** Elementary cellular automaton (seeded rule), scrolling rows downward. */
+      function makeCellular(p, rng, S) {
+        const N = 121; // cells across
+        const rule = 18 + (rng.int(2) ? 90 : 0) + rng.int(36); // varied seeded rule number (Rule-30/110 family)
+        let row = new Uint8Array(N);
+        const next = new Uint8Array(N);
+        let y = 0;
+        const cw = S / N;
+        const ruleBit = (a, b, c) => (rule >> ((a << 2) | (b << 1) | c)) & 1;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          for (let i = 0; i < N; i++) row[i] = rng.next() < 0.5 ? 1 : 0;
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          p.noStroke();
+        };
+        const ROWS_PER_FRAME = 2;
+        p.draw = () => {
+          for (let r = 0; r < ROWS_PER_FRAME; r++) {
+            for (let i = 0; i < N; i++) {
+              if (row[i]) {
+                p.fill((200 + y * 1.5) % 360, 60, 100, 95);
+                p.rect(i * cw, y * cw, cw + 0.5, cw + 0.5);
+              }
+            }
+            for (let i = 0; i < N; i++) {
+              const a = row[(i - 1 + N) % N];
+              const b = row[i];
+              const c = row[(i + 1) % N];
+              next[i] = ruleBit(a, b, c);
+            }
+            row.set(next);
+            y++;
+            if (y * cw > S) {
+              y = 0;
+              p.fill(VOID[0], VOID[1], VOID[2]);
+              p.colorMode(p.RGB, 255, 255, 255);
+              p.rect(0, 0, S, S);
+              p.colorMode(p.HSB, 360, 100, 100, 100);
+              for (let i = 0; i < N; i++) row[i] = rng.next() < 0.5 ? 1 : 0;
+            }
+          }
+        };
+      }
+
+      /** Julia-set escape-time fractal; the seeded constant c slowly orbits. */
+      function makeJulia(p, rng, S) {
+        const RES = 150; // escape-time raster (cap), upscaled to S
+        let img = null;
+        const cr0 = rng.range(-0.8, 0.4);
+        const ci0 = rng.range(-0.7, 0.7);
+        const orbR = rng.range(0.04, 0.12);
+        const orbS = rng.range(0.004, 0.01);
+        let ang = rng.range(0, Math.PI * 2);
+        const MAXIT = 48;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          img = p.createImage(RES, RES);
+        };
+        p.draw = () => {
+          ang += orbS;
+          const cr = cr0 + Math.cos(ang) * orbR;
+          const ci = ci0 + Math.sin(ang) * orbR;
+          img.loadPixels();
+          for (let gy = 0; gy < RES; gy++) {
+            for (let gx = 0; gx < RES; gx++) {
+              let zx = (gx / RES - 0.5) * 3.2;
+              let zy = (gy / RES - 0.5) * 3.2;
+              let it = 0;
+              for (; it < MAXIT; it++) {
+                const x2 = zx * zx;
+                const y2 = zy * zy;
+                if (x2 + y2 > 4) break;
+                const t = 2 * zx * zy;
+                zx = x2 - y2 + cr;
+                zy = t + ci;
+              }
+              const q = (gy * RES + gx) * 4;
+              if (it >= MAXIT) {
+                img.pixels[q] = 4;
+                img.pixels[q + 1] = 7;
+                img.pixels[q + 2] = 17;
+              } else {
+                const v = it / MAXIT;
+                const rgb = hsvToRgb((200 + v * 160) % 360, 0.75, 0.25 + v * 0.7);
+                img.pixels[q] = rgb[0];
+                img.pixels[q + 1] = rgb[1];
+                img.pixels[q + 2] = rgb[2];
+              }
+              img.pixels[q + 3] = 255;
+            }
+          }
+          img.updatePixels();
+          p.image(img, 0, 0, S, S);
+        };
+      }
+
+      /** Force-directed graph: a seeded random graph relaxed by spring + repulsion. */
+      function makeForceGraph(p, rng, S) {
+        const NV2 = 26;
+        const gx = new Float32Array(NV2);
+        const gy = new Float32Array(NV2);
+        const vx = new Float32Array(NV2);
+        const vy = new Float32Array(NV2);
+        const grp = new Int8Array(NV2);
+        const edges = []; // built once at setup
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          for (let i = 0; i < NV2; i++) {
+            gx[i] = rng.range(S * 0.2, S * 0.8);
+            gy[i] = rng.range(S * 0.2, S * 0.8);
+            grp[i] = rng.int(3);
+          }
+          // Preferential-ish attachment for clustered structure.
+          for (let i = 1; i < NV2; i++) {
+            const links = 1 + rng.int(2);
+            for (let l = 0; l < links; l++) {
+              let j = rng.int(i);
+              if (rng.next() < 0.5) j = rng.int(NV2);
+              if (j !== i) edges.push([i, j]);
+            }
+          }
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        const grpHue = [200, 30, 280];
+        p.draw = () => {
+          // Repulsion (O(V²), V=26 → 676 ops) + spring along edges.
+          for (let i = 0; i < NV2; i++) {
+            let fx = 0;
+            let fy = 0;
+            for (let j = 0; j < NV2; j++) {
+              if (i === j) continue;
+              const dx = gx[i] - gx[j];
+              const dy = gy[i] - gy[j];
+              const d2 = dx * dx + dy * dy + 16;
+              const f = 320 / d2;
+              fx += dx * f;
+              fy += dy * f;
+            }
+            // Mild centering.
+            fx += (S * 0.5 - gx[i]) * 0.002;
+            fy += (S * 0.5 - gy[i]) * 0.002;
+            vx[i] = (vx[i] + fx) * 0.82;
+            vy[i] = (vy[i] + fy) * 0.82;
+          }
+          for (let e = 0; e < edges.length; e++) {
+            const i = edges[e][0];
+            const j = edges[e][1];
+            const dx = gx[j] - gx[i];
+            const dy = gy[j] - gy[i];
+            const d = Math.hypot(dx, dy) || 1;
+            const f = (d - S * 0.16) * 0.01;
+            vx[i] += (dx / d) * f;
+            vy[i] += (dy / d) * f;
+            vx[j] -= (dx / d) * f;
+            vy[j] -= (dy / d) * f;
+          }
+          for (let i = 0; i < NV2; i++) {
+            gx[i] = Math.max(12, Math.min(S - 12, gx[i] + vx[i]));
+            gy[i] = Math.max(12, Math.min(S - 12, gy[i] + vy[i]));
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.strokeWeight(1);
+          p.stroke(200, 30, 80, 30);
+          for (let e = 0; e < edges.length; e++) {
+            const i = edges[e][0];
+            const j = edges[e][1];
+            p.line(gx[i], gy[i], gx[j], gy[j]);
+          }
+          p.noStroke();
+          for (let i = 0; i < NV2; i++) {
+            p.fill(grpHue[grp[i]], 70, 100, 95);
+            p.circle(gx[i], gy[i], 8);
+          }
+        };
+      }
+
+      /** N-body gravity: a seeded cluster integrated with softened Newtonian pulls. */
+      function makeNbody(p, rng, S) {
+        const NB = 22;
+        const bx = new Float32Array(NB);
+        const by = new Float32Array(NB);
+        const bvx = new Float32Array(NB);
+        const bvy = new Float32Array(NB);
+        const bm = new Float32Array(NB);
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          for (let i = 0; i < NB; i++) {
+            const r = rng.range(S * 0.08, S * 0.36);
+            const a = rng.range(0, Math.PI * 2);
+            bx[i] = S * 0.5 + Math.cos(a) * r;
+            by[i] = S * 0.5 + Math.sin(a) * r;
+            // Tangential kick for orbital motion.
+            bvx[i] = -Math.sin(a) * 0.5;
+            bvy[i] = Math.cos(a) * 0.5;
+            bm[i] = rng.range(1, 5);
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        const G = 0.6;
+        p.draw = () => {
+          for (let i = 0; i < NB; i++) {
+            let fx = 0;
+            let fy = 0;
+            for (let j = 0; j < NB; j++) {
+              if (i === j) continue;
+              const dx = bx[j] - bx[i];
+              const dy = by[j] - by[i];
+              const d2 = dx * dx + dy * dy + 60;
+              const inv = 1 / (d2 * Math.sqrt(d2));
+              const f = G * bm[j] * inv;
+              fx += dx * f;
+              fy += dy * f;
+            }
+            bvx[i] += fx;
+            bvy[i] += fy;
+          }
+          for (let i = 0; i < NB; i++) {
+            bx[i] += bvx[i];
+            by[i] += bvy[i];
+            // Soft wrap to keep the cluster on stage.
+            if (bx[i] < 0 || bx[i] > S) bvx[i] *= -0.9;
+            if (by[i] < 0 || by[i] > S) bvy[i] *= -0.9;
+            bx[i] = Math.max(0, Math.min(S, bx[i]));
+            by[i] = Math.max(0, Math.min(S, by[i]));
+          }
+          p.colorMode(p.RGB, 255, 255, 255, 255);
+          p.noStroke();
+          p.fill(VOID[0], VOID[1], VOID[2], 28);
+          p.rect(0, 0, S, S);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          p.noStroke();
+          for (let i = 0; i < NB; i++) {
+            const sp = Math.hypot(bvx[i], bvy[i]);
+            p.fill((40 - Math.min(40, sp * 30) + 360) % 360, 80, 100, 90);
+            p.circle(bx[i], by[i], 3 + bm[i]);
+          }
+        };
+      }
+
+      /** 3D strange-attractor ribbon (WEBGL): an Aizawa attractor traced and rotated. */
+      function makeRibbon3D(p, rng, S) {
+        const PTS = 1400; // precomputed ribbon points (cap)
+        const xs = new Float32Array(PTS);
+        const ys = new Float32Array(PTS);
+        const zs = new Float32Array(PTS);
+        let rot = 0;
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.85);
+          p.pixelDensity(1);
+          let x = rng.range(0.1, 0.6);
+          let y = rng.range(0, 0.4);
+          let z = rng.range(0, 0.4);
+          const a = 0.95;
+          const b = 0.7;
+          const c = 0.6;
+          const d = 3.5;
+          const e = 0.25;
+          const f = 0.1;
+          const dt = 0.01;
+          for (let i = 0; i < PTS; i++) {
+            const dx = (z - b) * x - d * y;
+            const dy = d * x + (z - b) * y;
+            const dz =
+              c + a * z - (z * z * z) / 3 - (x * x + y * y) * (1 + e * z) + f * z * x * x * x;
+            x += dx * dt;
+            y += dy * dt;
+            z += dz * dt;
+            xs[i] = x;
+            ys[i] = y;
+            zs[i] = z;
+          }
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.9);
+        };
+        p.draw = () => {
+          p.background(VOID[0], VOID[1], VOID[2]);
+          rot += 0.006;
+          p.rotateY(rot);
+          p.rotateX(0.5 + Math.sin(rot * 0.5) * 0.2);
+          const sc = S * (tileIsCompact() ? 0.2 : 0.24);
+          p.noFill();
+          p.strokeWeight(1.4);
+          p.beginShape();
+          for (let i = 0; i < PTS; i++) {
+            const hue = (200 + zs[i] * 60) % 360;
+            p.stroke(hue, 75, 100, 70);
+            p.vertex(xs[i] * sc, ys[i] * sc, (zs[i] - 0.8) * sc);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Mandelbrot escape-time, deep zoom toward a seeded boundary point. */
+      function makeMandelbrot(p, rng, S) {
+        const RES = 150;
+        let img = null;
+        // Seeded target near the boundary; we zoom in slowly then reset.
+        const tx = rng.range(-0.75, -0.74);
+        const ty = rng.range(0.09, 0.12);
+        let zoom = 1;
+        let dir = 1;
+        const MAXIT = 70;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          img = p.createImage(RES, RES);
+        };
+        p.draw = () => {
+          zoom *= dir > 0 ? 1.012 : 1 / 1.012;
+          if (zoom > 60) dir = -1;
+          if (zoom < 1) dir = 1;
+          const span = 3.0 / zoom;
+          img.loadPixels();
+          for (let gy = 0; gy < RES; gy++) {
+            for (let gx = 0; gx < RES; gx++) {
+              const cr = tx + (gx / RES - 0.5) * span;
+              const ci = ty + (gy / RES - 0.5) * span;
+              let zx = 0;
+              let zy = 0;
+              let it = 0;
+              for (; it < MAXIT; it++) {
+                const x2 = zx * zx;
+                const y2 = zy * zy;
+                if (x2 + y2 > 4) break;
+                zy = 2 * zx * zy + ci;
+                zx = x2 - y2 + cr;
+              }
+              const q = (gy * RES + gx) * 4;
+              if (it >= MAXIT) {
+                img.pixels[q] = 4;
+                img.pixels[q + 1] = 7;
+                img.pixels[q + 2] = 17;
+              } else {
+                const v = it / MAXIT;
+                const rgb = hsvToRgb((30 + v * 220) % 360, 0.8, 0.2 + v * 0.8);
+                img.pixels[q] = rgb[0];
+                img.pixels[q + 1] = rgb[1];
+                img.pixels[q + 2] = rgb[2];
+              }
+              img.pixels[q + 3] = 255;
+            }
+          }
+          img.updatePixels();
+          p.image(img, 0, 0, S, S);
+        };
+      }
+
+      /** Sierpinski chaos game: midpoint-to-random-vertex, point-accreted. */
+      function makeSierpinski(p, rng, S) {
+        const verts = [];
+        const NVERTS = 3 + rng.int(3); // triangle..pentagon — varied gaskets
+        const cx = S * 0.5;
+        const cy = S * 0.52;
+        const R = S * 0.44;
+        const ratio = NVERTS <= 3 ? 0.5 : 1 - 1 / (NVERTS - 1);
+        for (let i = 0; i < NVERTS; i++) {
+          const a = -Math.PI / 2 + (i / NVERTS) * Math.PI * 2;
+          verts.push([cx + Math.cos(a) * R, cy + Math.sin(a) * R]);
+        }
+        let x = cx;
+        let y = cy;
+        const PTS = 900;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          p.noStroke();
+        };
+        p.draw = () => {
+          p.colorMode(p.RGB, 255, 255, 255, 255);
+          p.fill(VOID[0], VOID[1], VOID[2], 4);
+          p.rect(0, 0, S, S);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          for (let i = 0; i < PTS; i++) {
+            const v = verts[rng.int(NVERTS)];
+            x += (v[0] - x) * ratio;
+            y += (v[1] - y) * ratio;
+            const hue = (190 + (x / S) * 120) % 360;
+            p.fill(hue, 65, 100, 55);
+            p.circle(x, y, 1.3);
+          }
+        };
+      }
+
+      /** Logistic-map bifurcation diagram, swept left→right, re-drawn continuously. */
+      function makeBifurcation(p, rng, S) {
+        let col = 0;
+        const jitter = rng.range(0, 0.001);
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          p.noStroke();
+        };
+        const COLS_PER_FRAME = 3;
+        p.draw = () => {
+          for (let c = 0; c < COLS_PER_FRAME; c++) {
+            const r = 2.6 + (col / S) * (4.0 - 2.6) + jitter;
+            let x = 0.5;
+            for (let i = 0; i < 120; i++) x = r * x * (1 - x); // transient burn-in
+            for (let i = 0; i < 120; i++) {
+              x = r * x * (1 - x);
+              const yy = S - x * S;
+              p.fill((40 + (col / S) * 220) % 360, 70, 100, 30);
+              p.circle(col, yy, 1);
+            }
+            col++;
+            if (col >= S) {
+              col = 0;
+              p.colorMode(p.RGB, 255, 255, 255);
+              p.background(VOID[0], VOID[1], VOID[2]);
+              p.colorMode(p.HSB, 360, 100, 100, 100);
+            }
+          }
+        };
+      }
+
+      /** Double-pendulum phase trace: a seeded chaotic pendulum, its bob path drawn. */
+      function makeDoublePendulum(p, rng, S) {
+        let a1 = rng.range(Math.PI * 0.3, Math.PI * 0.9);
+        let a2 = rng.range(Math.PI * 0.3, Math.PI * 0.9);
+        let v1 = 0;
+        let v2 = 0;
+        const m1 = 1.2;
+        const m2 = 1;
+        const l1 = S * 0.2;
+        const l2 = S * 0.2;
+        const g = 0.6;
+        let px2 = 0;
+        let py2 = 0;
+        let have = false;
+        p.setup = () => {
+          p.createCanvas(S, S);
+          p.pixelDensity(1);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        const SUBS = 4; // physics substeps/frame for stability
+        p.draw = () => {
+          p.colorMode(p.RGB, 255, 255, 255, 255);
+          p.noStroke();
+          p.fill(VOID[0], VOID[1], VOID[2], 10);
+          p.rect(0, 0, S, S);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          const ox = S * 0.5;
+          const oy = S * 0.42;
+          for (let s = 0; s < SUBS; s++) {
+            const num1 = -g * (2 * m1 + m2) * Math.sin(a1);
+            const num2 = -m2 * g * Math.sin(a1 - 2 * a2);
+            const num3 = -2 * Math.sin(a1 - a2) * m2;
+            const num4 = v2 * v2 * l2 + v1 * v1 * l1 * Math.cos(a1 - a2);
+            const den = l1 * (2 * m1 + m2 - m2 * Math.cos(2 * a1 - 2 * a2));
+            const ac1 = (num1 + num2 + num3 * num4) / den;
+            const n21 = 2 * Math.sin(a1 - a2);
+            const n22 = v1 * v1 * l1 * (m1 + m2);
+            const n23 = g * (m1 + m2) * Math.cos(a1);
+            const n24 = v2 * v2 * l2 * m2 * Math.cos(a1 - a2);
+            const den2 = l2 * (2 * m1 + m2 - m2 * Math.cos(2 * a1 - 2 * a2));
+            const ac2 = (n21 * (n22 + n23 + n24)) / den2;
+            v1 += ac1 * 0.04;
+            v2 += ac2 * 0.04;
+            a1 += v1 * 0.04;
+            a2 += v2 * 0.04;
+            v1 *= 0.9999;
+            v2 *= 0.9999;
+          }
+          const x1 = ox + l1 * Math.sin(a1);
+          const y1 = oy + l1 * Math.cos(a1);
+          const x2 = x1 + l2 * Math.sin(a2);
+          const y2 = y1 + l2 * Math.cos(a2);
+          if (have) {
+            p.stroke(300, 70, 100, 70);
+            p.strokeWeight(1.4);
+            p.line(px2, py2, x2, y2);
+          }
+          px2 = x2;
+          py2 = y2;
+          have = true;
+          p.stroke(200, 20, 90, 60);
+          p.strokeWeight(2);
+          p.line(ox, oy, x1, y1);
+          p.line(x1, y1, x2, y2);
+          p.noStroke();
+          p.fill(30, 80, 100, 100);
+          p.circle(x1, y1, 6);
+          p.circle(x2, y2, 7);
+        };
+      }
+
+      // HSV → RGB helper (h in [0,360), s,v in [0,1]). Allocation: a fixed 3-array.
+      const _rgbScratch = [0, 0, 0];
+      function hsvToRgb(h, s, v) {
+        const c = v * s;
+        const hp = (h % 360) / 60;
+        const x = c * (1 - Math.abs((hp % 2) - 1));
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        if (hp < 1) {
+          r = c;
+          g = x;
+        } else if (hp < 2) {
+          r = x;
+          g = c;
+        } else if (hp < 3) {
+          g = c;
+          b = x;
+        } else if (hp < 4) {
+          g = x;
+          b = c;
+        } else if (hp < 5) {
+          r = x;
+          b = c;
+        } else {
+          r = c;
+          b = x;
+        }
+        const m = v - c;
+        _rgbScratch[0] = Math.round((r + m) * 255);
+        _rgbScratch[1] = Math.round((g + m) * 255);
+        _rgbScratch[2] = Math.round((b + m) * 255);
+        return _rgbScratch;
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // Tile makers — WAVE-F additions (12 per board / 36 total). Same contract as
+      // above: make(p, rng, S) installs setup/draw + the makeReact() interaction
+      // hooks; every one is an honest rotating WEBGL form, seeded, capped, reactive.
+      // ─────────────────────────────────────────────────────────────────────────
+
+      /** Generic 3D attractor ribbon: integrate `f(x,y,z)->[dx,dy,dz]` and draw a
+       *  ring-buffered line strip with a rotating camera. Powers Thomas/Halvorsen/
+       *  Chen-Lee with different vector fields + scales. */
+      function attractorRibbon(p, S, init, f, dt, sc, hueBase, zShift = 0) {
+        const PTS = 1100;
+        const xs = new Float32Array(PTS),
+          ys = new Float32Array(PTS),
+          zs = new Float32Array(PTS);
+        let x = init[0],
+          y = init[1],
+          z = init[2],
+          head = 0;
+        const rx = makeReact(p);
+        const step = () => {
+          const d = f(x, y, z);
+          x += d[0] * dt;
+          y += d[1] * dt;
+          z += d[2] * dt;
+          xs[head] = x;
+          ys[head] = y;
+          zs[head] = z;
+          head = (head + 1) % PTS;
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          p.pixelDensity(1);
+          for (let i = 0; i < PTS; i++) step();
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.85);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const steps = (p.hot ? 9 : 5) + ((k * 16) | 0);
+          for (let s = 0; s < steps; s++) step();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(0.45 + Math.sin(rx.orbit * 0.6) * 0.22);
+          p.rotateY(rx.orbit);
+          p.scale((tileIsCompact() ? 0.58 : 0.7) + k * 0.12);
+          const al = p.hot ? 88 : 64;
+          p.noFill();
+          p.strokeWeight(1.2 + k);
+          p.beginShape();
+          for (let i = 0; i < PTS; i++) {
+            const j = (head + i) % PTS;
+            const fade = 0.25 + (0.75 * i) / PTS;
+            p.stroke((hueBase + zs[j] * 6 + k * 60) % 360, 82, 100, al * fade);
+            p.vertex(xs[j] * sc, ys[j] * sc, (zs[j] - zShift) * sc);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Thomas' cyclically-symmetric attractor (sin field) — a labyrinthine 3D weave. */
+      function makeThomas(p, rng, S) {
+        const b = 0.2;
+        attractorRibbon(
+          p,
+          S,
+          [rng.range(-2, 2), rng.range(-2, 2), rng.range(-2, 2)],
+          (x, y, z) => [Math.sin(y) - b * x, Math.sin(z) - b * y, Math.sin(x) - b * z],
+          0.09,
+          S / 3.8,
+          150,
+        );
+      }
+
+      /** Halvorsen attractor — three coupled quadratic terms, a triple-lobed coil. */
+      function makeHalvorsen(p, rng, S) {
+        const a = 1.4;
+        attractorRibbon(
+          p,
+          S,
+          [rng.range(-3, -1), rng.range(-1, 1), rng.range(-1, 1)],
+          (x, y, z) => [
+            -a * x - 4 * y - 4 * z - y * y,
+            -a * y - 4 * z - 4 * x - z * z,
+            -a * z - 4 * x - 4 * y - x * x,
+          ],
+          0.0045,
+          S / 5.5,
+          18,
+        );
+      }
+
+      /** Chen–Lee attractor — a folded toroidal sheet, gold→violet by depth. */
+      function makeChenLee(p, rng, S) {
+        const a = 5,
+          b = -10,
+          c = -0.38;
+        attractorRibbon(
+          p,
+          S,
+          [rng.range(1, 4), rng.range(1, 4), rng.range(8, 14)],
+          (x, y, z) => [a * x - y * z, b * y + x * z, c * z + (x * y) / 3],
+          0.0016,
+          S / 30,
+          44,
+          15,
+        );
+      }
+
+      /** 3D Lissajous knot — a closed parametric ribbon woven from three seeded
+       *  integer frequencies; rotates to reveal the knot crossings. */
+      function makeLissajous(p, rng, S) {
+        const fx = 2 + rng.int(4),
+          fy = 2 + rng.int(4),
+          fz = 2 + rng.int(4);
+        const px = rng.range(0, Math.PI),
+          py = rng.range(0, Math.PI);
+        const N = 900;
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(0.5 + Math.sin(rx.orbit * 0.5) * 0.3);
+          p.rotateY(rx.orbit);
+          p.rotateZ(rx.orbit * 0.3);
+          p.scale((tileIsCompact() ? 0.68 : 0.78) + k * 0.14);
+          const R = S * 0.3;
+          const al = p.hot ? 90 : 66;
+          p.noFill();
+          p.strokeWeight(1.4 + k * 1.5);
+          p.beginShape();
+          for (let i = 0; i <= N; i++) {
+            const t = (i / N) * Math.PI * 2;
+            p.stroke((200 + (i / N) * 160 + k * 60) % 360, 80, 100, al);
+            p.vertex(Math.sin(fx * t + px) * R, Math.sin(fy * t + py) * R, Math.sin(fz * t) * R);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Curl-noise tracer cloud — div-free 3D flow advecting a seeded speck swarm,
+       *  respawned on a ring buffer. Pulse bursts the speed; hot brightens. */
+      function makeCurlCloud(p, rng, S) {
+        const N = 1500;
+        const px = new Float32Array(N),
+          py = new Float32Array(N),
+          pz = new Float32Array(N),
+          life = new Float32Array(N);
+        const respawn = (i) => {
+          px[i] = rng.range(-1, 1);
+          py[i] = rng.range(-1, 1);
+          pz[i] = rng.range(-1, 1);
+          life[i] = rng.range(20, 120);
+        };
+        const rx = makeReact(p);
+        const curl = (x, y, z, o) => p.noise(x * 1.4 + o, y * 1.4 + 11, z * 1.4 + 5);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          p.pixelDensity(1);
+          p.noiseSeed(rng.int(1e9));
+          for (let i = 0; i < N; i++) respawn(i);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.4);
+          const sp = (0.006 + (p.hot ? 0.004 : 0)) * (1 + k * 4);
+          const R = S * 0.32;
+          p.strokeWeight(1.6 + k);
+          p.stroke(190 + k * 80, 70, 100, p.hot ? 80 : 58);
+          p.beginShape(p.LINES);
+          for (let i = 0; i < N; i++) {
+            const vx = curl(px[i], py[i], pz[i], 0) - 0.5;
+            const vy = curl(px[i], py[i], pz[i], 7.3) - 0.5;
+            const vz = curl(px[i], py[i], pz[i], 19.1) - 0.5;
+            px[i] += vx * sp;
+            py[i] += vy * sp;
+            pz[i] += vz * sp;
+            if (--life[i] <= 0 || Math.abs(px[i]) > 1.2) respawn(i);
+            speck(p, px[i] * R, py[i] * R, pz[i] * R);
+          }
+          p.endShape();
+        };
+      }
+
+      /** True 3D Bloch SPHERE — wireframe globe, a precessing state-vector arrow,
+       *  and its fading tip trail. Pulse tilts the precession axis. */
+      function makeBlochSphere(p, rng, S) {
+        const TR = 240;
+        const tx = new Float32Array(TR),
+          ty = new Float32Array(TR),
+          tz = new Float32Array(TR);
+        let head = 0,
+          th = rng.range(0, 6.28),
+          ph = rng.range(0.3, 2.8);
+        const w1 = rng.range(0.02, 0.05),
+          w2 = rng.range(0.01, 0.03);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.9);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          th += w1 * (1 + k * 3);
+          ph += w2;
+          const R = S * 0.3;
+          const sx = Math.sin(ph) * Math.cos(th),
+            sy = Math.cos(ph),
+            sz = Math.sin(ph) * Math.sin(th);
+          tx[head] = sx;
+          ty[head] = sy;
+          tz[head] = sz;
+          head = (head + 1) % TR;
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.4);
+          p.noFill();
+          p.stroke(210, 40, 70, 30);
+          p.strokeWeight(1);
+          p.sphere(R, 14, 10);
+          p.stroke(280, 80, 100, p.hot ? 95 : 72);
+          p.strokeWeight(2.4 + k * 2);
+          p.line(0, 0, 0, sx * R, sy * R, sz * R);
+          p.strokeWeight(1.3);
+          p.beginShape();
+          for (let i = 0; i < TR; i++) {
+            const j = (head + i) % TR;
+            p.stroke((40 + i * 0.6 + k * 60) % 360, 85, 100, ((i / TR) * 70) | 0);
+            p.vertex(tx[j] * R, ty[j] * R, tz[j] * R);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Quantum harmonic-oscillator |ψ|² as a rotating 3D height-field mesh:
+       *  a seeded superposition of the first few eigenstates over a radial grid. */
+      function makeWavefunction(p, rng, S) {
+        const G = 26;
+        const c0 = rng.range(0.3, 1),
+          c1 = rng.range(-1, 1),
+          c2 = rng.range(-1, 1);
+        const rx = makeReact(p);
+        const psi = (r, t) => {
+          // |c0·ψ0 + c1·ψ1 + c2·ψ2|² with a slow phase breathing in t.
+          const g = Math.exp(-r * r * 1.4);
+          const a =
+            c0 * g + c1 * r * g * Math.cos(t) + c2 * (2 * r * r - 1) * g * Math.cos(t * 0.7);
+          return a * a;
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.95);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const t = rx.orbit * 1.5;
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(0.95 + Math.sin(rx.orbit * 0.3) * 0.12);
+          p.rotateZ(rx.orbit * 0.5);
+          const span = S * 0.62,
+            cell = span / G,
+            H = S * (0.5 + k * 0.3);
+          p.strokeWeight(1);
+          p.noFill();
+          for (let gy = 0; gy < G - 1; gy++) {
+            p.beginShape(p.TRIANGLE_STRIP);
+            for (let gx = 0; gx < G; gx++) {
+              for (let row = 0; row < 2; row++) {
+                const ix = gx,
+                  iy = gy + row;
+                const rxn = (ix / (G - 1) - 0.5) * 2,
+                  ryn = (iy / (G - 1) - 0.5) * 2;
+                const rr = Math.sqrt(rxn * rxn + ryn * ryn);
+                const h = psi(rr * 2.2, t);
+                p.stroke((200 + h * 320 + k * 50) % 360, 78, 100, p.hot ? 80 : 58);
+                p.vertex((ix - G / 2) * cell, (iy - G / 2) * cell, -h * H);
+              }
+            }
+            p.endShape();
+          }
+        };
+      }
+
+      /** Spherical-harmonic deformed blob — a point shell pushed in/out by a seeded
+       *  Yₗₘ-style sum; rotates and pulses-breathes the deformation amplitude. */
+      function makeSphHarmonic(p, rng, S) {
+        const l1 = 2 + rng.int(5),
+          l2 = 2 + rng.int(6),
+          m1 = 1 + rng.int(4);
+        const RES = 30;
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.15);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5 + Math.sin(rx.orbit * 0.4) * 0.2);
+          const R = S * 0.3,
+            amp = 0.45 + k * 0.5 + Math.sin(rx.orbit) * 0.08;
+          p.strokeWeight(1.4 + k);
+          p.beginShape(p.LINES);
+          for (let i = 0; i < RES; i++) {
+            const ph = (i / RES) * Math.PI;
+            for (let j = 0; j < RES * 2; j++) {
+              const th = (j / (RES * 2)) * Math.PI * 2;
+              const d = 1 + amp * (Math.sin(l1 * ph) * Math.cos(m1 * th) + 0.5 * Math.cos(l2 * ph));
+              const rr = R * d;
+              const x = rr * Math.sin(ph) * Math.cos(th),
+                y = rr * Math.cos(ph),
+                z = rr * Math.sin(ph) * Math.sin(th);
+              p.stroke((280 + d * 60 + k * 50) % 360, 80, 100, p.hot ? 70 : 48);
+              p.vertex(x, y, z);
+              p.vertex(x * 1.01, y * 1.01, z * 1.01);
+            }
+          }
+          p.endShape();
+        };
+      }
+
+      /** 3D quantum random walk — a seeded "drunkard" stepping on a lattice in 3D,
+       *  drawn as a glowing ribbon; pulse injects a run of biased steps. */
+      function makeQuantumWalk(p, rng, S) {
+        const PTS = 800;
+        const xs = new Float32Array(PTS),
+          ys = new Float32Array(PTS),
+          zs = new Float32Array(PTS);
+        let x = 0,
+          y = 0,
+          z = 0,
+          head = 0;
+        const rx = makeReact(p);
+        const step = (bias) => {
+          const a = rng.next();
+          const s = (rng.next() < 0.5 ? -1 : 1) * (1 + bias);
+          if (a < 0.34) x += s;
+          else if (a < 0.67) y += s;
+          else z += s;
+          xs[head] = x;
+          ys[head] = y;
+          zs[head] = z;
+          head = (head + 1) % PTS;
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          p.pixelDensity(1);
+          for (let i = 0; i < PTS; i++) step(0);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 1.15);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const steps = (p.hot ? 4 : 2) + ((k * 6) | 0);
+          for (let s = 0; s < steps; s++) step(k > 0.3 ? 0.8 : 0);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.4 + Math.sin(rx.orbit * 0.5) * 0.2);
+          const sc = S / 70;
+          p.noFill();
+          p.strokeWeight(1.5 + k);
+          p.beginShape();
+          for (let i = 0; i < PTS; i++) {
+            const j = (head + i) % PTS;
+            p.stroke((150 + i * 0.3 + k * 70) % 360, 85, 100, ((i / PTS) * (p.hot ? 90 : 64)) | 0);
+            p.vertex(xs[j] * sc, ys[j] * sc, zs[j] * sc);
+          }
+          p.endShape();
+        };
+      }
+
+      /** (p,q) torus knot — a seeded parametric tube of points winding the torus;
+       *  rotates, and a pulse fattens the tube radius. */
+      function makeTorusKnot(p, rng, S) {
+        const pp = 2 + rng.int(4),
+          qq = 3 + rng.int(4);
+        const N = 1200;
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.1);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(0.6 + Math.sin(rx.orbit * 0.4) * 0.25);
+          p.rotateY(rx.orbit);
+          const R = S * 0.24,
+            r2 = S * 0.1 * (1 + k * 0.5);
+          p.noFill();
+          p.strokeWeight(1.5 + k * 1.5);
+          p.beginShape();
+          for (let i = 0; i <= N; i++) {
+            const t = (i / N) * Math.PI * 2;
+            const cr = R + r2 * Math.cos(qq * t);
+            p.stroke((30 + (i / N) * 200 + k * 60) % 360, 85, 100, p.hot ? 88 : 64);
+            p.vertex(cr * Math.cos(pp * t), cr * Math.sin(pp * t), r2 * Math.sin(qq * t));
+          }
+          p.endShape();
+        };
+      }
+
+      /** Spiral galaxy — a seeded logarithmic-arm point cloud spinning in 3D with a
+       *  bright core; pulse flares the whole disc. */
+      function makeGalaxy(p, rng, S) {
+        const N = 1600,
+          arms = 2 + rng.int(4);
+        const rad = new Float32Array(N),
+          ang = new Float32Array(N),
+          hgt = new Float32Array(N);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.9);
+          p.pixelDensity(1);
+          for (let i = 0; i < N; i++) {
+            const r = Math.pow(rng.next(), 0.6);
+            const arm = rng.int(arms);
+            rad[i] = r;
+            ang[i] = (arm / arms) * Math.PI * 2 + r * 4.2 + rng.gauss() * 0.18;
+            hgt[i] = rng.gauss() * 0.05 * (1 - r);
+          }
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const spin = rx.orbit;
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateX(1.05 + Math.sin(rx.orbit * 0.2) * 0.1);
+          p.rotateZ(spin * 0.5);
+          const R = S * 0.34;
+          p.strokeWeight(1.6 + k * 1.4);
+          p.beginShape(p.LINES);
+          for (let i = 0; i < N; i++) {
+            const a = ang[i] + spin * (1.4 - rad[i]);
+            const x = Math.cos(a) * rad[i] * R,
+              y = hgt[i] * R,
+              z = Math.sin(a) * rad[i] * R;
+            const h = (rad[i] < 0.15 ? 45 : 215 + rad[i] * 80 + k * 50) % 360;
+            p.stroke(h, rad[i] < 0.15 ? 60 : 80, 100, (p.hot ? 80 : 55) * (1.2 - rad[i] * 0.5));
+            speck(p, x, y, z);
+          }
+          p.endShape();
+        };
+      }
+
+      /** 3D random-walk dust — many seeded walkers leaving a shared fading point
+       *  trail through a rotating cube of space. */
+      function makeRandomWalk3D(p, rng, S) {
+        const W = 6,
+          TR = 260;
+        const wx = new Float32Array(W),
+          wy = new Float32Array(W),
+          wz = new Float32Array(W);
+        const hx = new Float32Array(W * TR),
+          hy = new Float32Array(W * TR),
+          hz = new Float32Array(W * TR);
+        let head = 0;
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.85);
+          p.pixelDensity(1);
+          for (let w = 0; w < W; w++) {
+            wx[w] = rng.range(-0.3, 0.3);
+            wy[w] = rng.range(-0.3, 0.3);
+            wz[w] = rng.range(-0.3, 0.3);
+          }
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const sp = (0.018 + (p.hot ? 0.012 : 0)) * (1 + k * 3);
+          for (let w = 0; w < W; w++) {
+            wx[w] = Math.max(-1, Math.min(1, wx[w] + rng.gauss() * sp));
+            wy[w] = Math.max(-1, Math.min(1, wy[w] + rng.gauss() * sp));
+            wz[w] = Math.max(-1, Math.min(1, wz[w] + rng.gauss() * sp));
+            hx[w * TR + head] = wx[w];
+            hy[w * TR + head] = wy[w];
+            hz[w * TR + head] = wz[w];
+          }
+          head = (head + 1) % TR;
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5);
+          const R = S * 0.34;
+          p.noFill();
+          p.strokeWeight(1.5 + k);
+          for (let w = 0; w < W; w++) {
+            p.beginShape();
+            for (let i = 0; i < TR; i++) {
+              const j = (head + i) % TR;
+              const b = w * TR + j;
+              p.stroke((w * 60 + 120 + k * 60) % 360, 80, 100, ((i / TR) * (p.hot ? 85 : 60)) | 0);
+              p.vertex(hx[b] * R, hy[b] * R, hz[b] * R);
+            }
+            p.endShape();
+          }
+        };
+      }
+
+      /** DNA double helix spun from the seed's own digits — two phosphate strands +
+       *  base-pair rungs colour-coded by digit; rotates, pulse widens the helix. */
+      function makeHelix(p, rng, S) {
+        const N = 64;
+        const digits = new Int8Array(N);
+        for (let i = 0; i < N; i++) digits[i] = rng.int(10);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateZ(0.2);
+          p.rotateY(rx.orbit);
+          const R = S * (0.12 + k * 0.04),
+            H = S * 0.5,
+            turns = 3.2;
+          for (let strand = 0; strand < 2; strand++) {
+            p.noFill();
+            p.stroke(strand ? 200 : 320, 80, 100, p.hot ? 88 : 64);
+            p.strokeWeight(2.2 + k);
+            p.beginShape();
+            for (let i = 0; i < N; i++) {
+              const t = (i / N) * turns * Math.PI * 2 + strand * Math.PI;
+              p.vertex(Math.cos(t) * R, (i / N - 0.5) * H, Math.sin(t) * R);
+            }
+            p.endShape();
+          }
+          p.strokeWeight(1.6 + k);
+          for (let i = 0; i < N; i += 2) {
+            const t = (i / N) * turns * Math.PI * 2,
+              y = (i / N - 0.5) * H;
+            p.stroke((digits[i] / 10) * 360, 75, 100, p.hot ? 75 : 52);
+            p.line(Math.cos(t) * R, y, Math.sin(t) * R, -Math.cos(t) * R, y, -Math.sin(t) * R);
+          }
+        };
+      }
+
+      /** 3D superformula shell — Gielis' superformula swept over both angles into a
+       *  seeded organic mesh of points; rotates, pulse morphs the exponents. */
+      function makeSuperformula(p, rng, S) {
+        const m = 3 + rng.int(10),
+          n1 = rng.range(0.4, 2),
+          n2 = rng.range(0.4, 2),
+          n3 = rng.range(0.4, 2);
+        const RES = 40;
+        const rx = makeReact(p);
+        const sf = (ang, mm, e1, e2, e3) => {
+          const t1 = Math.pow(Math.abs(Math.cos((mm * ang) / 4)), e2);
+          const t2 = Math.pow(Math.abs(Math.sin((mm * ang) / 4)), e3);
+          return Math.pow(t1 + t2, -1 / e1);
+        };
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.15);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const e1 = n1 * (1 + k * 0.6);
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5 + Math.sin(rx.orbit * 0.4) * 0.25);
+          const R = S * 0.34;
+          p.strokeWeight(1.4 + k);
+          p.beginShape(p.LINES);
+          for (let i = 0; i < RES; i++) {
+            const ph = -Math.PI / 2 + (i / RES) * Math.PI;
+            const r2 = sf(ph, m, e1, n2, n3);
+            for (let j = 0; j < RES * 2; j++) {
+              const th = -Math.PI + (j / (RES * 2)) * Math.PI * 2;
+              const r1 = sf(th, m, e1, n2, n3);
+              const x = R * r1 * Math.cos(th) * r2 * Math.cos(ph);
+              const y = R * r2 * Math.sin(ph);
+              const z = R * r1 * Math.sin(th) * r2 * Math.cos(ph);
+              p.stroke((120 + i * 4 + k * 60) % 360, 80, 100, p.hot ? 68 : 46);
+              p.vertex(x, y, z);
+              p.vertex(x * 1.012, y * 1.012, z * 1.012);
+            }
+          }
+          p.endShape();
+        };
+      }
+
+      /** Hopf-fibration nest — seeded great circles on S³ stereographically
+       *  projected to interlocking rings in 3D; the bundle rotates rigidly. */
+      function makeHopf(p, rng, S) {
+        const RINGS = 7,
+          SEG = 90;
+        const base = rng.range(0.1, 0.9);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.15);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.6 + Math.sin(rx.orbit * 0.3) * 0.2);
+          const R = S * 0.4;
+          p.noFill();
+          p.strokeWeight(1.5 + k);
+          for (let rg = 0; rg < RINGS; rg++) {
+            const eta = (base + rg / RINGS) * (Math.PI / 2);
+            const ce = Math.cos(eta),
+              se = Math.sin(eta);
+            p.stroke((rg * 50 + 180 + k * 50) % 360, 82, 100, p.hot ? 80 : 58);
+            p.beginShape();
+            for (let i = 0; i <= SEG; i++) {
+              const t = (i / SEG) * Math.PI * 2;
+              // point on a Hopf circle in S³, then stereographic project to R³.
+              const a = ce * Math.cos(t),
+                b = ce * Math.sin(t),
+                c = se * Math.cos(t + rg),
+                d = se * Math.sin(t + rg);
+              const w = 1 / (1.0001 - d);
+              p.vertex(a * w * R, b * w * R, c * w * R);
+            }
+            p.endShape();
+          }
+        };
+      }
+
+      // V109: 12 NEW unique visual generators (4 per page) — no more ControlNet clones.
+      // ═══════════════════════════════════════════════════════════════════════
+
+      /** Duffing oscillator — driven nonlinear spring, phase portrait in 3D. */
+      function makeDuffing(p, rng, S) {
+        const PTS = 1200;
+        const xs = new Float32Array(PTS);
+        const ys = new Float32Array(PTS);
+        const zs = new Float32Array(PTS);
+        const alpha = rng.range(-1.2, -0.8);
+        const omega = rng.range(0.8, 1.3);
+        const gamma = rng.range(0.28, 0.42);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.9);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          let x = rng.range(-0.5, 0.5),
+            y = 0,
+            t = 0;
+          const dt = 0.02;
+          for (let i = 0; i < PTS; i++) {
+            const dx = y;
+            const dy = -alpha * x - x * x * x + gamma * Math.cos(omega * t);
+            x += dx * dt;
+            y += dy * dt;
+            t += dt;
+            xs[i] = x;
+            ys[i] = y;
+            zs[i] = t;
+          }
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.4 + Math.sin(rx.orbit * 0.3) * 0.2);
+          const sc = S * 0.48;
+          p.noFill();
+          p.strokeWeight(1.3 + k);
+          p.beginShape();
+          for (let i = 0; i < PTS; i++) {
+            p.stroke((280 + zs[i] * 40) % 360, 80, 100, p.hot ? 72 : 48);
+            p.vertex(xs[i] * sc, ys[i] * sc, (zs[i] - PTS * 0.01) * sc * 0.1);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Nosé-Hoover attractor — thermostatted oscillator, triple-loop chaos. */
+      function makeNoseHoover(p, rng, S) {
+        const PTS = 1200;
+        const xs = new Float32Array(PTS);
+        const ys = new Float32Array(PTS);
+        const zs = new Float32Array(PTS);
+        const a = rng.range(1.4, 1.8);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 0.85);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          let x = 0.1,
+            y = 0,
+            z = 0;
+          const dt = 0.01;
+          for (let i = 0; i < PTS; i++) {
+            const dx = y;
+            const dy = -x + y * z;
+            const dz = a - y * y;
+            x += dx * dt;
+            y += dy * dt;
+            z += dz * dt;
+            xs[i] = x;
+            ys[i] = y;
+            zs[i] = z;
+          }
+          fitWebglTile(p, S, 0.95);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5 + Math.sin(rx.orbit * 0.4) * 0.2);
+          const sc = S * 0.18;
+          p.noFill();
+          p.strokeWeight(1.4 + k);
+          p.beginShape();
+          for (let i = 0; i < PTS; i++) {
+            p.stroke((160 + zs[i] * 80) % 360, 85, 100, p.hot ? 75 : 50);
+            p.vertex(xs[i] * sc, ys[i] * sc, zs[i] * sc);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Tinkerbell attractor — discrete 2D map, density-accreted point cloud. */
+      function makeTinkerbell(p, rng, S) {
+        const PTS = 2000;
+        const xs = new Float32Array(PTS);
+        const ys = new Float32Array(PTS);
+        const a = rng.range(0.8, 1.2),
+          b = rng.range(-0.7, -0.5);
+        const c = rng.range(-0.2, 0.1),
+          d = rng.range(0.9, 1.1);
+        let x = rng.range(-0.5, 0.5),
+          y = rng.range(-0.5, 0.5);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          for (let i = 0; i < PTS; i++) {
+            const nx = x * x - y * y + a * x + b * y;
+            const ny = 2 * x * y + c * x + d * y;
+            x = nx;
+            y = ny;
+            xs[i] = x;
+            ys[i] = y;
+          }
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.3);
+          const sc = S * 0.12;
+          p.strokeWeight(2 + k);
+          for (let i = 0; i < PTS; i += 2) {
+            p.stroke((320 + i * 0.08) % 360, 90, 100, p.hot ? 60 : 38);
+            p.point(xs[i] * sc, ys[i] * sc, 0);
+          }
+        };
+      }
+
+      /** Perlin noise terrain — animated displaced grid mesh, rotating. */
+      function makePerlinTerrain(p, rng, S) {
+        const N = 40;
+        const seed = rng.range(0, 1000);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const t = p.frameCount * 0.01;
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.7 + Math.sin(rx.orbit * 0.3) * 0.15);
+          const sc = S * 0.018;
+          p.noFill();
+          p.strokeWeight(1);
+          for (let i = 0; i < N; i++) {
+            p.beginShape();
+            for (let j = 0; j < N; j++) {
+              const h = p.noise(i * 0.08 + seed, j * 0.08, t) * 8;
+              p.stroke((180 + h * 20) % 360, 70, 100, p.hot ? 65 : 42);
+              p.vertex((i - N / 2) * sc, h * sc * 3, (j - N / 2) * sc);
+            }
+            p.endShape();
+          }
+        };
+      }
+
+      /** Grover's algorithm — amplitude amplification bars, rotating. */
+      function makeGrover(p, rng, S) {
+        const NQ = 4;
+        const DIM = 1 << NQ;
+        const amp = new Float64Array(DIM);
+        const target = rng.int(DIM);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          for (let i = 0; i < DIM; i++) amp[i] = 1 / DIM;
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const iter = Math.floor((p.frameCount * 0.02) % ((Math.PI / 4) * Math.sqrt(DIM) + 2));
+          // Re-derive amplitudes for current iteration count
+          let a = 1 / Math.sqrt(DIM);
+          for (let r = 0; r < iter; r++) {
+            for (let i = 0; i < DIM; i++) amp[i] = i === target ? -a : a;
+            const mean = amp.reduce((s, v) => s + v, 0) / DIM;
+            for (let i = 0; i < DIM; i++) amp[i] = 2 * mean - amp[i];
+            a = amp[0];
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5);
+          const bw = S * 0.06;
+          for (let i = 0; i < DIM; i++) {
+            const h = Math.abs(amp[i]) * S * 1.5;
+            const hue = i === target ? 0 : 200 + i * 12;
+            p.stroke(hue % 360, 85, 100, p.hot ? 80 : 55);
+            p.strokeWeight(2 + k);
+            p.line((i - DIM / 2) * bw, -h * 0.3, 0, (i - DIM / 2) * bw, h * 0.3, 0);
+          }
+        };
+      }
+
+      /** QFT — quantum Fourier transform magnitude spectrum, rotating bars. */
+      function makeQFT(p, rng, S) {
+        const DIM = 16;
+        const re = new Float64Array(DIM);
+        const im = new Float64Array(DIM);
+        const mag = new Float64Array(DIM);
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          for (let i = 0; i < DIM; i++) {
+            re[i] = rng.gauss();
+            im[i] = rng.gauss();
+          }
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const t = p.frameCount * 0.02;
+          // DFT
+          for (let m = 0; m < DIM; m++) {
+            let sr = 0,
+              si = 0;
+            for (let n = 0; n < DIM; n++) {
+              const ang = (-2 * Math.PI * m * n) / DIM + t;
+              sr += re[n] * Math.cos(ang) - im[n] * Math.sin(ang);
+              si += re[n] * Math.sin(ang) + im[n] * Math.cos(ang);
+            }
+            mag[m] = Math.sqrt(sr * sr + si * si);
+          }
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5);
+          const bw = S * 0.12;
+          const maxM = Math.max(...mag, 0.001);
+          for (let i = 0; i < DIM; i++) {
+            const h = (mag[i] / maxM) * S * 0.5;
+            p.stroke((240 + i * 8) % 360, 80, 100, p.hot ? 75 : 50);
+            p.strokeWeight(3 + k);
+            p.line((i - DIM / 2) * bw, 0, 0, (i - DIM / 2) * bw, -h, 0);
+          }
+        };
+      }
+
+      /** Bell pair — entangled qubit correlation, two orbiting spheres + link. */
+      function makeBellPair(p, rng, S) {
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.1);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          const t = p.frameCount * 0.03;
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.4);
+          const R = S * 0.25;
+          // Two entangled particles orbiting in opposite phase
+          for (let s = 0; s < 2; s++) {
+            const ph = t * (1 + k * 0.5) + s * Math.PI;
+            const x = Math.cos(ph) * R;
+            const y = Math.sin(ph) * R * 0.6;
+            const z = Math.sin(ph * 2) * R * 0.3;
+            p.stroke(s === 0 ? 180 : 320, 85, 100, p.hot ? 90 : 65);
+            p.strokeWeight(6 + k * 3);
+            p.point(x, y, z);
+            // Trail
+            p.strokeWeight(1.5);
+            p.beginShape();
+            for (let i = 0; i < 30; i++) {
+              const tp = ph - i * 0.05;
+              p.vertex(Math.cos(tp) * R, Math.sin(tp) * R * 0.6, Math.sin(tp * 2) * R * 0.3);
+            }
+            p.endShape();
+          }
+          // Entanglement link
+          p.stroke(260, 70, 100, p.hot ? 60 : 35);
+          p.strokeWeight(1 + k);
+          const x1 = Math.cos(t + k * 0.5) * R;
+          const x2 = Math.cos(t + Math.PI + k * 0.5) * R;
+          p.line(
+            x1,
+            Math.sin(t) * R * 0.6,
+            Math.sin(t * 2) * R * 0.3,
+            x2,
+            Math.sin(t + Math.PI) * R * 0.6,
+            Math.sin((t + Math.PI) * 2) * R * 0.3,
+          );
+        };
+      }
+
+      /** Monte Carlo π — random dots accreting inside a circle, ratio → π. */
+      function makeMonteCarlo(p, rng, S) {
+        const N = 1800;
+        const px = new Float32Array(N);
+        const py = new Float32Array(N);
+        const pin = new Uint8Array(N);
+        let count = 0;
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.15);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit * 0.5);
+          p.rotateX(0.3);
+          // Add dots each frame
+          for (let i = 0; i < 8; i++) {
+            if (count >= N) break;
+            const x = rng.range(-1, 1),
+              y = rng.range(-1, 1);
+            px[count] = x;
+            py[count] = y;
+            pin[count] = x * x + y * y < 1 ? 1 : 0;
+            count++;
+          }
+          if (count >= N) {
+            count = 0;
+          }
+          const sc = S * 0.35;
+          p.strokeWeight(2.5 + k);
+          for (let i = 0; i < count; i++) {
+            p.stroke(pin[i] ? 150 : 0, pin[i] ? 70 : 0, 100, p.hot ? 65 : 40);
+            p.point(px[i] * sc, py[i] * sc, 0);
+          }
+          // Circle outline
+          p.noFill();
+          p.stroke(200, 60, 100, 50);
+          p.strokeWeight(1.5);
+          p.beginShape();
+          for (let a = 0; a < 64; a++) {
+            const ang = (a / 64) * Math.PI * 2;
+            p.vertex(Math.cos(ang) * sc, Math.sin(ang) * sc, 0);
+          }
+          p.endShape();
+        };
+      }
+
+      /** L-system fractal tree — seeded grammar rules, 3D branching. */
+      function makeLSystem(p, rng, S) {
+        const rx = makeReact(p);
+        const angle = rng.range(0.3, 0.6);
+        const depth = 5;
+        let branches = [];
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          // Build branch list deterministically
+          const build = (x, y, z, len, ang, d) => {
+            if (d <= 0 || branches.length > 400) return;
+            const nx = x + Math.cos(ang) * len;
+            const ny = y + len;
+            const nz = z + Math.sin(ang) * len;
+            branches.push([x, y, z, nx, ny, nz, d]);
+            build(nx, ny, nz, len * 0.7, ang - angle, d - 1);
+            build(nx, ny, nz, len * 0.7, ang + angle, d - 1);
+            if (rng.next() < 0.3) build(nx, ny, nz, len * 0.5, ang, d - 1);
+          };
+          build(0, -S * 0.3, 0, S * 0.12, 0, depth);
+          fitWebglTile(p, S, 1.15);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(-0.3);
+          p.strokeWeight(1 + k);
+          for (let i = 0; i < branches.length; i++) {
+            const b = branches[i];
+            const hue = 120 + b[6] * 40;
+            p.stroke(hue, 70, 100, p.hot ? 65 : 42);
+            p.line(b[0], b[1], b[2], b[3], b[4], b[5]);
+          }
+        };
+      }
+
+      /** Apollonian gasket — recursive circle packing, 3D depth by level. */
+      function makeApollonian(p, rng, S) {
+        const circles = [];
+        const rx = makeReact(p);
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          // Seed: three mutually tangent circles + recursive fill
+          const R = S * 0.35;
+          const pack = (cx, cy, r, d) => {
+            if (d <= 0 || r < 2) return;
+            circles.push([cx, cy, r, d]);
+            const nr = r * 0.5;
+            pack(cx - r * 0.5, cy, nr, d - 1);
+            pack(cx + r * 0.5, cy, nr, d - 1);
+            pack(cx, cy - r * 0.5, nr, d - 1);
+            pack(cx, cy + r * 0.5, nr, d - 1);
+          };
+          pack(0, 0, R, 5);
+          fitWebglTile(p, S, 1.15);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5);
+          p.noFill();
+          p.strokeWeight(1 + k * 0.5);
+          for (let i = 0; i < circles.length; i++) {
+            const c = circles[i];
+            p.stroke((c[3] * 60 + 200) % 360, 75, 100, p.hot ? 60 : 38);
+            p.beginShape();
+            for (let a = 0; a <= 32; a++) {
+              const ang = (a / 32) * Math.PI * 2;
+              p.vertex(Math.cos(ang) * c[2], c[1], Math.sin(ang) * c[2]);
+            }
+            p.endShape();
+          }
+        };
+      }
+
+      /** Dragon curve — Heighway dragon, folding line segments. */
+      function makeDragonCurve(p, rng, S) {
+        const rx = makeReact(p);
+        const iters = 10 + rng.int(3);
+        let pts = [];
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          // Build dragon by folding
+          let seg = [
+            [0, 0],
+            [1, 0],
+          ];
+          for (let i = 0; i < iters; i++) {
+            const next = [seg[0]];
+            for (let j = 0; j < seg.length - 1; j++) {
+              const a = seg[j],
+                b = seg[j + 1];
+              const mx = (a[0] + b[0]) / 2,
+                my = (a[1] + b[1]) / 2;
+              const dx = b[0] - a[0],
+                dy = b[1] - a[1];
+              const nx = mx - dy / 2,
+                ny = my + dx / 2;
+              next.push([nx, ny]);
+              next.push(b);
+            }
+            seg = next;
+          }
+          // Center and scale
+          let minX = Infinity,
+            maxX = -Infinity,
+            minY = Infinity,
+            maxY = -Infinity;
+          for (const pt of seg) {
+            if (pt[0] < minX) minX = pt[0];
+            if (pt[0] > maxX) maxX = pt[0];
+            if (pt[1] < minY) minY = pt[1];
+            if (pt[1] > maxY) maxY = pt[1];
+          }
+          const cx = (minX + maxX) / 2,
+            cy = (minY + maxY) / 2;
+          const sc = (S * 0.3) / Math.max(maxX - minX, maxY - minY, 0.001);
+          pts = seg.map((pt) => [(pt[0] - cx) * sc, (pt[1] - cy) * sc]);
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.4);
+          p.noFill();
+          p.strokeWeight(1.5 + k);
+          p.beginShape();
+          for (let i = 0; i < pts.length; i++) {
+            p.stroke((i * 0.5) % 360, 80, 100, p.hot ? 70 : 45);
+            p.vertex(pts[i][0], pts[i][1], 0);
+          }
+          p.endShape();
+        };
+      }
+
+      /** Collatz conjecture — hailstone numbers as a branching graph. */
+      function makeCollatz(p, rng, S) {
+        const rx = makeReact(p);
+        const maxN = 30 + rng.int(20);
+        const edges = [];
+        p.setup = () => {
+          p.createCanvas(S, S, p.WEBGL);
+          fitWebglTile(p, S, 1.0);
+          p.pixelDensity(1);
+          p.colorMode(p.HSB, 360, 100, 100, 100);
+          for (let n = 1; n <= maxN; n++) {
+            let v = n,
+              path = [v];
+            while (v > 1) {
+              v = v % 2 === 0 ? v / 2 : 3 * v + 1;
+              path.push(v);
+            }
+            for (let i = 0; i < path.length - 1; i++) {
+              edges.push([path[i], path[i + 1]]);
+            }
+          }
+        };
+        p.draw = () => {
+          const k = rx.tick();
+          p.background(VOID[0], VOID[1], VOID[2]);
+          p.rotateY(rx.orbit);
+          p.rotateX(0.5);
+          const sc = S * 0.01;
+          p.strokeWeight(1 + k);
+          for (let i = 0; i < edges.length; i++) {
+            const e = edges[i];
+            const x1 = ((e[0] % 20) - 10) * sc * 3;
+            const z1 = (Math.floor(e[0] / 20) - 5) * sc * 3;
+            const x2 = ((e[1] % 20) - 10) * sc * 3;
+            const z2 = (Math.floor(e[1] / 20) - 5) * sc * 3;
+            p.stroke((e[0] * 8) % 360, 70, 100, p.hot ? 55 : 35);
+            p.line(x1, -e[0] * sc, z1, x2, -e[1] * sc, z2);
+          }
+        };
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // BOARD SPEC — the page→visual map. 24 tiles per board (72 total), all 3D.
+      // ─────────────────────────────────────────────────────────────────────────
+
+      const BOARDS = {
+        2: [
+          {
+            id: 'lorenz',
+            name: 'Lorenz Attractor',
+            legend: 'σ=10 ρ=28 β=8/3 · X–Z phase portrait',
+            make: makeLorenz,
+          },
+          {
+            id: 'rossler',
+            name: 'Rössler Attractor',
+            legend: 'a=b=0.2 c=5.7 · spiral → chaos band',
+            make: makeRossler,
+          },
+          {
+            id: 'grayscott',
+            name: 'Gray–Scott Reaction',
+            legend: 'F=0.0545 k=0.062 · turing skin',
+            make: makeGrayScott,
+          },
+          {
+            id: 'voronoi',
+            name: 'Voronoi Tessellation',
+            legend: '18 sites · extruded cells',
+            make: makeVoronoi,
+          },
+          {
+            id: 'fern',
+            name: 'Barnsley Fern (IFS)',
+            legend: 'chaos game · 4 affine maps',
+            make: makeFern,
+          },
+          {
+            id: 'clifford',
+            name: 'Clifford Attractor',
+            legend: 'sin/cos map · density accretion',
+            make: makeClifford,
+          },
+          {
+            id: 'flow',
+            name: 'Curl-Noise Flow',
+            legend: 'div-free Perlin curl · tracer streaks',
+            make: makeFlowField,
+          },
+          {
+            id: 'thomas',
+            name: "Thomas' Attractor",
+            legend: 'cyclically symmetric sin field · 3D weave',
+            make: makeThomas,
+          },
+          {
+            id: 'halvorsen',
+            name: 'Halvorsen Attractor',
+            legend: 'coupled quadratics · triple-lobe coil',
+            make: makeHalvorsen,
+          },
+          {
+            id: 'chenlee',
+            name: 'Chen–Lee Attractor',
+            legend: 'folded toroidal sheet',
+            make: makeChenLee,
+          },
+          {
+            id: 'lissajous',
+            name: '3D Lissajous Knot',
+            legend: 'seeded freqs fx·fy·fz · closed ribbon',
+            make: makeLissajous,
+          },
+          {
+            id: 'curlcloud',
+            name: 'Curl-Noise Cloud (3D)',
+            legend: 'div-free flow · advected speck swarm',
+            make: makeCurlCloud,
+          },
+          {
+            id: 'duffing',
+            name: 'Duffing Oscillator',
+            legend: 'driven nonlinear spring · phase portrait',
+            make: makeDuffing,
+          },
+          {
+            id: 'nosehoover',
+            name: 'Nosé-Hoover Attractor',
+            legend: 'thermostatted chaos · triple-loop',
+            make: makeNoseHoover,
+          },
+          {
+            id: 'tinkerbell',
+            name: 'Tinkerbell Map',
+            legend: 'discrete 2D · density accretion',
+            make: makeTinkerbell,
+          },
+          {
+            id: 'perlinterrain',
+            name: 'Perlin Terrain',
+            legend: 'animated noise · displaced grid',
+            make: makePerlinTerrain,
+          },
+        ],
+        3: [
+          {
+            id: 'statevector',
+            name: 'Quantum Statevector',
+            legend: '4 qubits · |amp|² under seeded unitary',
+            make: makeStatevector,
+          },
+          {
+            id: 'bloch',
+            name: 'Bloch Disc',
+            legend: '1 qubit · tilted-axis precession trail',
+            make: makeBloch,
+          },
+          {
+            id: 'spectrum',
+            name: 'DFT Spectrum',
+            legend: 'sum of sinusoids · live magnitude bins',
+            make: makeSpectrum,
+          },
+          {
+            id: 'histogram',
+            name: 'Mixture Histogram',
+            legend: '2-Gaussian mix · accumulating samples',
+            make: makeHistogram,
+          },
+          {
+            id: 'violin',
+            name: 'Density Violins',
+            legend: '3 KDE silhouettes · seeded spreads',
+            make: makeViolin,
+          },
+          {
+            id: 'cellular',
+            name: 'Cellular Automaton',
+            legend: 'seeded elementary rule · scrolling',
+            make: makeCellular,
+          },
+          {
+            id: 'julia',
+            name: 'Julia Escape-Time',
+            legend: 'z²+c · c orbits a seeded point',
+            make: makeJulia,
+          },
+          {
+            id: 'blochsphere',
+            name: 'Bloch Sphere (3D)',
+            legend: '1 qubit · precessing state vector + trail',
+            make: makeBlochSphere,
+          },
+          {
+            id: 'wavefunction',
+            name: 'Oscillator |ψ|²',
+            legend: 'seeded eigenstate mix · 3D height-field',
+            make: makeWavefunction,
+          },
+          {
+            id: 'sphharmonic',
+            name: 'Spherical Harmonic',
+            legend: 'Yₗₘ-deformed point shell · breathing',
+            make: makeSphHarmonic,
+          },
+          {
+            id: 'qwalk',
+            name: 'Quantum Walk (3D)',
+            legend: 'seeded lattice drunkard · biased on click',
+            make: makeQuantumWalk,
+          },
+          {
+            id: 'torusknot',
+            name: 'Torus Knot (p,q)',
+            legend: 'seeded winding · parametric tube',
+            make: makeTorusKnot,
+          },
+          {
+            id: 'grover',
+            name: "Grover's Algorithm",
+            legend: 'amplitude amplification · target search',
+            make: makeGrover,
+          },
+          {
+            id: 'qft',
+            name: 'QFT Spectrum',
+            legend: 'quantum Fourier transform · magnitude bars',
+            make: makeQFT,
+          },
+          {
+            id: 'bellpair',
+            name: 'Bell Pair Entanglement',
+            legend: 'correlated qubits · orbiting pair',
+            make: makeBellPair,
+          },
+          {
+            id: 'montecarlo',
+            name: 'Monte Carlo π',
+            legend: 'random sampling · ratio estimation',
+            make: makeMonteCarlo,
+          },
+        ],
+        4: [
+          {
+            id: 'forcegraph',
+            name: 'Force-Directed Graph',
+            legend: 'spring + repulsion · 3 communities',
+            make: makeForceGraph,
+          },
+          {
+            id: 'nbody',
+            name: 'N-Body Gravity',
+            legend: 'softened Newtonian · 22 bodies',
+            make: makeNbody,
+          },
+          {
+            id: 'ribbon3d',
+            name: 'Aizawa Ribbon (3D)',
+            legend: 'WEBGL · strange attractor, rotating',
+            make: makeRibbon3D,
+          },
+          {
+            id: 'mandelbrot',
+            name: 'Mandelbrot Zoom',
+            legend: 'escape-time · seeded boundary dive',
+            make: makeMandelbrot,
+          },
+          {
+            id: 'sierpinski',
+            name: 'Sierpinski Chaos Game',
+            legend: 'n-gon gasket · midpoint iteration',
+            make: makeSierpinski,
+          },
+          {
+            id: 'bifurcation',
+            name: 'Logistic Bifurcation',
+            legend: 'xₙ₊₁=r·x(1−x) · r swept 2.6→4.0',
+            make: makeBifurcation,
+          },
+          {
+            id: 'pendulum',
+            name: 'Double Pendulum',
+            legend: 'chaotic · bob-2 phase trace',
+            make: makeDoublePendulum,
+          },
+          {
+            id: 'galaxy',
+            name: 'Spiral Galaxy',
+            legend: 'log-arm point cloud · differential spin',
+            make: makeGalaxy,
+          },
+          {
+            id: 'walk3d',
+            name: '3D Random Walk',
+            legend: '6 walkers · fading trails in a cube',
+            make: makeRandomWalk3D,
+          },
+          {
+            id: 'helix',
+            name: 'Seed Double Helix',
+            legend: "DNA from the seed's own digits",
+            make: makeHelix,
+          },
+          {
+            id: 'superformula',
+            name: 'Superformula Shell',
+            legend: 'Gielis 3D · seeded m·n₁n₂n₃',
+            make: makeSuperformula,
+          },
+          {
+            id: 'hopf',
+            name: 'Hopf Fibration',
+            legend: 'S³ great circles · stereographic nest',
+            make: makeHopf,
+          },
+          {
+            id: 'lsystem',
+            name: 'L-System Tree',
+            legend: 'seeded grammar · 3D branching',
+            make: makeLSystem,
+          },
+          {
+            id: 'apollonian',
+            name: 'Apollonian Gasket',
+            legend: 'recursive circle packing',
+            make: makeApollonian,
+          },
+          {
+            id: 'dragon',
+            name: 'Dragon Curve',
+            legend: 'Heighway dragon · folding segments',
+            make: makeDragonCurve,
+          },
+          {
+            id: 'collatz',
+            name: 'Collatz Graph',
+            legend: 'hailstone numbers · branching paths',
+            make: makeCollatz,
+          },
+        ],
+      };
+
+      // V109: Variant system — second-bank tiles use the same generators but get different
+      // tile IDs → different derived seeds → different parameters. 16 unique + 8 variants = 24/page.
+      function makeVariant(baseMake, variantIdx) {
+        return function (p, rng, S) {
+          baseMake(p, rng, S);
+          // Wrap draw to add a subtle rotation speed boost for visual distinction
+          const origDraw = p.draw;
+          const boost = 1 + variantIdx * 0.08;
+          p.draw = function () {
+            p.__cqmVariantBoost = boost;
+            origDraw();
+          };
+        };
+      }
+
+      for (const page of [2, 3, 4]) {
+        const base = BOARDS[page].slice();
+        for (let i = 0; i < base.length; i++) {
+          const spec = base[i];
+          BOARDS[page].push({
+            id: spec.id + '-v' + String(i + 1).padStart(2, '0'),
+            name: spec.name + ' · Variant',
+            legend: spec.legend + ' · shifted palette',
+            make: makeVariant(spec.make, i + 1),
+          });
+        }
+      }
+
+      /**
+       * Guarantee every tile sketch gets pulse/hot interaction — even legacy 2D makers that
+       * omitted makeReact(). Wraps draw to honor kick bursts and hover heat.
+       */
+      function installUniversalReact(p) {
+        if (p.__cqmReactInstalled) return p.__cqmReact;
+        p.__cqmReactInstalled = true;
+        if (typeof p.pulse === 'function') return null;
+        const rx = makeReact(p);
+        p.__cqmReact = rx;
+        const origDraw = p.draw;
+        if (typeof origDraw !== 'function') return rx;
+        p.draw = function () {
+          const k = rx.tick();
+          const burst = 1 + ((k * 5) | 0) + (p.hot ? 2 : 0);
+          for (let s = 0; s < burst; s++) origDraw.call(this);
+        };
+        return rx;
+      }
+
+      /**
+       * Destroy the currently-built board: remove every p5 instance (freeing its
+       * WebGL context) and clear the grid DOM. After this, ZERO board contexts are
+       * live. The whole reason boards are built lazily: 3 boards × 24 WEBGL tiles =
+       * 72 contexts, far over the browser's cap if all pages mounted together — so only ONE board
+       * is ever alive at a time. O(active tiles).
+       */
+      function destroyActiveBoard() {
+        if (boardObserver) {
+          try {
+            boardObserver.disconnect();
+          } catch (e) {
+            /* noop */
+          }
+          boardObserver = null;
+        }
+        for (let i = 0; i < activeTiles.length; i++) {
+          try {
+            if (activeTiles[i].instance) activeTiles[i].instance.remove();
+          } catch (e) {
+            /* already gone */
+          }
+        }
+        activeTiles.length = 0;
+        if (activeBoardPage >= 2) {
+          const grid = document.getElementById('board-' + activeBoardPage);
+          if (grid) grid.innerHTML = '';
+        }
+        activeBoardPage = 0;
+      }
+
+      /**
+       * Build ONE board (page 2..4): its 24 tiles, each a DOM card + an instance-
+       * mode WEBGL p5 sketch seeded from (masterSeed, tileId), fully wired for
+       * interaction — click/Enter fires a per-tile blip + the sketch's pulse()
+       * reaction, hover toggles its `hot` flag. No-op for page 1. O(12).
+       */
+      function buildBoard(page) {
+        if (page === activeBoardPage) return;
+        destroyActiveBoard();
+        if (page < 2 || page > 4) return;
+        const grid = document.getElementById('board-' + page);
+        if (!grid) return;
+        grid.innerHTML = ''; // HARD GUARD: a board is exactly its tiles, never accumulates ghosts
+        const specs = BOARDS[page];
+        webglContextCap(); // probe the device's WebGL-context ceiling ONCE before mounting any tile
+        const recByEl = new Map();
+        // Virtualize: each tile's WebGL sketch mounts only while near the viewport and is
+        // freed when far, so live contexts stay under the device ceiling no matter how many
+        // tiles the board holds. (Mounting all 28+ at once force-lost the first 12 → blank.)
+        boardObserver = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              const rec = recByEl.get(e.target);
+              if (!rec) continue;
+              rec.visible = e.isIntersecting;
+              if (e.isIntersecting) mountTile(rec);
+            }
+            evictFarTiles(maxLiveTiles());
+          },
+          { root: null, rootMargin: '40px 0px', threshold: 0.01 },
+        );
+        for (let k = 0; k < specs.length; k++) {
+          const spec = specs[k];
+          const tile = document.createElement('div');
+          tile.className = 'viz-tile viz-tile--live';
+          tile.tabIndex = 0; // keyboard-focusable
+          tile.setAttribute('role', 'button');
+          tile.setAttribute(
+            'aria-label',
+            spec.name + ' — interactive 3D visual, activate for sound',
+          );
+          const bar = document.createElement('div');
+          bar.className = 'viz-titlebar';
+          const nm = document.createElement('div');
+          nm.className = 'viz-name';
+          nm.textContent = spec.name;
+          const lg = document.createElement('div');
+          lg.className = 'viz-legend';
+          lg.textContent = spec.legend;
+          bar.appendChild(nm);
+          bar.appendChild(lg);
+          const host = document.createElement('div');
+          host.className = 'viz-canvas';
+          host.id = 'viz-host-' + page + '-' + spec.id;
+          tile.appendChild(bar);
+          tile.appendChild(host);
+          grid.appendChild(tile);
+
+          const rec = { instance: null, spec, tile, host, visible: false, hot: false, seq: 0 };
+          activeTiles.push(rec);
+          recByEl.set(tile, rec);
+
+          // Interaction: click/Enter → blip + pulse (mounting on demand if off-screen);
+          // hover → hot. Handlers read rec.instance live, since tiles mount/unmount.
+          const fire = () => {
+            if (!rec.instance) mountTile(rec);
+            tileBlip(spec.id);
+            const inst = rec.instance;
+            if (inst && typeof inst.pulse === 'function') inst.pulse();
+            else if (inst && inst.__cqmReact) inst.__cqmReact.kick = 1;
+          };
+          tile.addEventListener('click', fire);
+          tile.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              fire();
+            }
+          });
+          tile.addEventListener('focus', () => {
+            if (!rec.instance) mountTile(rec);
+          });
+          tile.addEventListener('pointerenter', () => {
+            rec.hot = true;
+            if (rec.instance) rec.instance.hot = true;
+            try {
+              const AC = window.AudioContext || window.webkitAudioContext;
+              if (AC) {
+                if (!audioCtx) audioCtx = new AC();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const t0 = audioCtx.currentTime;
+                const h = derivedSeed(0, spec.id);
+                const slot = h % 36;
+                // Cinematic palette: 12-tone base with tile-unique intervals, waveforms, and filter.
+                const baseHz = 55 * Math.pow(2, (slot % 24) / 12);
+                const intervals = [1, 1.2, 1.25, 1.5, 1.666, 2, 2.5];
+                const waveforms = ['sine', 'triangle', 'sawtooth', 'square'];
+                const filterTypes = ['lowpass', 'bandpass', 'highpass'];
+                const f1 = baseHz * intervals[slot % intervals.length];
+                const f2 = baseHz * intervals[(slot + 3) % intervals.length];
+                const osc1 = audioCtx.createOscillator();
+                const osc2 = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const filter = audioCtx.createBiquadFilter();
+                osc1.type = waveforms[slot % waveforms.length];
+                osc2.type = waveforms[(slot + 1) % waveforms.length];
+                osc1.frequency.setValueAtTime(f1, t0);
+                osc2.frequency.setValueAtTime(f2, t0);
+                osc1.detune.setValueAtTime((slot % 5) * 7 - 14, t0);
+                osc2.detune.setValueAtTime((slot % 7) * 5 - 15, t0);
+                filter.type = filterTypes[slot % filterTypes.length];
+                const filterFreq = 120 + (slot % 12) * 180;
+                filter.frequency.setValueAtTime(filterFreq, t0);
+                filter.Q.setValueAtTime(0.5 + (slot % 8) * 0.25, t0);
+                gain.gain.setValueAtTime(0.001, t0);
+                gain.gain.linearRampToValueAtTime(0.015, t0 + 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.008, t0 + 0.55);
+                // Slow filter sweep for living, dynamic timbre.
+                filter.frequency.exponentialRampToValueAtTime(
+                  filterFreq * (0.6 + (slot % 3) * 0.5),
+                  t0 + 0.5,
+                );
+                osc1.connect(filter);
+                osc2.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc1.start(t0);
+                osc2.start(t0);
+                rec.drone = { osc1, osc2, gain };
+              }
+            } catch (e) {
+              console.error(e);
+            }
+          });
+          tile.addEventListener('pointerleave', () => {
+            rec.hot = false;
+            if (rec.instance) rec.instance.hot = false;
+            if (rec.drone) {
+              try {
+                const drone = rec.drone;
+                rec.drone = null;
+                if (audioCtx && audioCtx.state !== 'closed') {
+                  const t0 = audioCtx.currentTime;
+                  drone.gain.gain.setValueAtTime(drone.gain.gain.value, t0);
+                  drone.gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.35);
+                  setTimeout(() => {
+                    try {
+                      drone.osc1.stop();
+                      drone.osc2.stop();
+                      drone.osc1.disconnect();
+                      drone.osc2.disconnect();
+                      drone.gain.disconnect();
+                    } catch (err) {}
+                  }, 400);
+                }
+              } catch (e) {
+                console.error(e);
+              }
+            }
+          });
+          boardObserver.observe(tile);
+        }
+
+        // V81: keyboard roving focus across the 24 tiles so arrow keys move between visuals.
+        // Assigned via onkeydown so rebuilding a board never accumulates duplicate listeners.
+        grid.onkeydown = (e) => {
+          const tiles = Array.from(grid.querySelectorAll('.viz-tile'));
+          const idx = tiles.indexOf(document.activeElement);
+          if (idx === -1) return;
+          let next = idx;
+          switch (e.key) {
+            case 'ArrowRight':
+            case 'ArrowDown':
+              e.preventDefault();
+              next = (idx + 1) % tiles.length;
+              break;
+            case 'ArrowLeft':
+            case 'ArrowUp':
+              e.preventDefault();
+              next = (idx - 1 + tiles.length) % tiles.length;
+              break;
+            case 'Home':
+              e.preventDefault();
+              next = 0;
+              break;
+            case 'End':
+              e.preventDefault();
+              next = tiles.length - 1;
+              break;
+          }
+          if (next !== idx) tiles[next].focus();
+        };
+
+        activeBoardPage = page;
+      }
+
+      /**
+       * Reseed the LIVE board after a seed change (rebuild only what exists — the
+       * other two boards aren't built, and will reseed when next shown). No-op on
+       * page 1. O(12).
+       */
+      function rebuildBoards() {
+        if (activeBoardPage >= 2) {
+          const page = activeBoardPage;
+          // BUGFIX: destroy FIRST — while activeBoardPage is still the real page, so destroyActiveBoard()
+          // clears the right grid's DOM — THEN rebuild. The old code set `activeBoardPage = -1` to force a
+          // rebuild, which made destroyActiveBoard skip its `activeBoardPage >= 2` DOM-clear: the old 12
+          // tiles stayed (their p5 canvases removed → BLACK boxes) while 24 fresh tiles appended on top,
+          // so every Regenerate/Random/Jump/Reset click grew +12 ghost boxes, unbounded.
+          destroyActiveBoard();
+          buildBoard(page);
+        }
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // PAGE NAV — switches the visible page WITHOUT touching the seed. Page 1's
+      // global sketch loops only on page 1; the ONE live board is built lazily and
+      // torn down on leave, so the frame budget AND the WebGL-context budget stay
+      // on the visible page alone.
+      // ═══════════════════════════════════════════════════════════════════════
+
+      /** Show page n (1..4): toggle sections, (re)build the lazy board, pause page 1. */
+      function setPage(n) {
+        currentPage = n;
+        for (let pgi = 1; pgi <= 4; pgi++) {
+          const sec = document.getElementById('page-' + pgi);
+          if (sec) sec.classList.toggle('active', pgi === n);
+          const tab = document.querySelector('.page-tab[data-page="' + pgi + '"]');
+          if (tab) tab.classList.toggle('active', pgi === n);
+        }
+        const desc = document.getElementById('page-desc');
+        if (desc) desc.textContent = PAGE_DESCS[n];
+
+        // Page 1 is the global sketch; pause it off-page so it does not burn frames.
+        if (typeof window.loop === 'function') {
+          if (n === 1) window.loop();
+          else window.noLoop();
+        }
+        // Lazy board lifecycle: build the shown board, destroy any other (n===1 ⇒ none).
+        buildBoard(n);
+      }
+
+      function prevPage() {
+        setPage(currentPage > 1 ? currentPage - 1 : 4);
+      }
+
+      function nextPage() {
+        setPage(currentPage < 4 ? currentPage + 1 : 1);
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // UI CONTROL HANDLERS
+      // ═══════════════════════════════════════════════════════════════════════
+
+      function formatParam(paramName, v) {
+        if (paramName === 'collapseRate' || paramName === 'fieldBlend') return v.toFixed(2);
+        return String(Math.round(v));
+      }
+
+      function updateParam(paramName, value) {
+        const v = parseFloat(value);
+        params[paramName] = v;
+        document.getElementById(paramName + '-value').textContent = formatParam(paramName, v);
+        // Population changes re-collapse the field; the rest retune the live run.
+        if (paramName === 'particles') initializeSystem();
+      }
+
+      function updateHudToggle(checked) {
+        params.showHud = !!checked;
+      }
+
+      function regenerateArt() {
+        // Roll a NEW master seed so every press yields a fresh, chaotically-different variation of
+        // every form — the page-1 collapse field AND all 24 board tiles re-derive from the new seed.
+        // (Previously it re-ran the SAME seed, so "Regenerate" produced identical output — the
+        // "nothing happens" / "empty" symptom.) Same seed-roll the ↻ Random button uses; the
+        // generative paths downstream stay fully seeded (mulberry32 / p5 randomSeed), so each
+        // variant is reproducible from its seed.
+        params.seed = Math.floor(Math.random() * 999999) + 1;
+        updateSeedDisplay();
+        initializeSystem();
+        rebuildBoards();
+      }
+
+      function downloadArt() {
+        // Page 1 saves the global canvas; boards save the focused tile is out of
+        // scope — keep the original collapse-field export.
+        saveCanvas('quantum-wildbeyond-' + params.seed, 'png');
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════
+      // SEED CONTROL FUNCTIONS - ALWAYS KEEP THESE. A seed change re-derives BOTH
+      // the collapse field and every board (so all pages stay in lockstep), but
+      // never changes which page is showing.
+      // ═══════════════════════════════════════════════════════════════════════
+
+      function updateSeedDisplay() {
+        document.getElementById('seed-input').value = params.seed;
+      }
+
+      function applySeedToAll() {
+        initializeSystem();
+        rebuildBoards();
+      }
+
+      function updateSeed() {
+        const input = document.getElementById('seed-input');
+        const newSeed = parseInt(input.value, 10);
+        if (newSeed && newSeed > 0) {
+          params.seed = newSeed;
+          applySeedToAll();
+        } else {
+          updateSeedDisplay();
+        }
+      }
+
+      function jumpToSeed() {
+        updateSeed();
+      }
+
+      function previousSeed() {
+        params.seed = Math.max(1, params.seed - 1);
+        updateSeedDisplay();
+        applySeedToAll();
+      }
+
+      function nextSeed() {
+        params.seed = params.seed + 1;
+        updateSeedDisplay();
+        applySeedToAll();
+      }
+
+      function randomSeedAndUpdate() {
+        params.seed = Math.floor(Math.random() * 999999) + 1;
+        updateSeedDisplay();
+        applySeedToAll();
+      }
+
+      function resetParameters() {
+        params = { ...defaultParams };
+
+        const names = ['particles', 'collapseRate', 'fieldBlend', 'trailFade', 'paletteShift'];
+        for (let i = 0; i < names.length; i++) {
+          const name = names[i];
+          document.getElementById(name).value = params[name];
+          document.getElementById(name + '-value').textContent = formatParam(name, params[name]);
+        }
+        document.getElementById('showHud').checked = params.showHud;
+
+        updateSeedDisplay();
+        applySeedToAll();
+      }
+
+      // Initialize UI on load. The global (page-1) sketch self-starts via p5's
+      // window-scope setup/draw; boards are built lazily by setPage() only when
+      // shown (so we boot with ZERO board WebGL contexts).
+      window.addEventListener('load', function () {
+        updateSeedDisplay();
+        setPage(1); // page 1 only — no board contexts until a board page is opened
+      });
+    </script>
+    <script type="module" src="../satellite-music.js"></script>
+  </body>
+</html>

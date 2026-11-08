@@ -1,0 +1,247 @@
+{
+  "generatedFrom": "docs/reports/2026-06-26-alife-comparison-matrix.csv",
+  "method": "population statistics over all systems incl. Cosmogonic; breadth = mean of 9 axes",
+  "nSystems": 155,
+  "nPeers": 154,
+  "cosmogonic": {
+    "breadthMean": 3.8,
+    "breadthRank": 1,
+    "zScorePopulation": 3.24,
+    "zScoreVsPeers": 3.36,
+    "percentile": 100,
+    "peerMaturity": 1.5
+  },
+  "survey": {
+    "breadthMeanAll": 2.03,
+    "breadthStdAll": 0.55,
+    "breadthMeanPeers": 2.02,
+    "breadthStdPeers": 0.53,
+    "medianBreadth": 2.06,
+    "medianPeerMaturity": 4,
+    "corrBreadthVsMaturity": -0.121
+  },
+  "perAxis": [
+    {
+      "axis": "Reproduction",
+      "mean": 2.55,
+      "std": 1.74,
+      "max": 5,
+      "cosmo": 4,
+      "cosmoZ": 0.83,
+      "leaders": [
+        "Tierra",
+        "Avida",
+        "Framsticks",
+        "Creatures",
+        "Darwin Pond",
+        "Gene Pool",
+        "MABE",
+        "Aevol",
+        "Avida-ED",
+        "Nanopond",
+        "Network Tierra",
+        "NEAT (NeuroEvolution of Augmenting Topologies)",
+        "HyperNEAT",
+        "ES-HyperNEAT",
+        "Stringmol",
+        "Evoloop / SDSR Loop"
+      ]
+    },
+    {
+      "axis": "Open-endedness",
+      "mean": 2.51,
+      "std": 1.21,
+      "max": 5,
+      "cosmo": 2,
+      "cosmoZ": -0.42,
+      "leaders": [
+        "Picbreeder",
+        "POET",
+        "ASAL",
+        "Geb",
+        "Novelty Search",
+        "OMNI (Open-endedness via Models of human Notions of Interestingness)",
+        "Minimal Criterion Coevolution (MCC)",
+        "OMNI-EPIC",
+        "Darwin Godel Machine (DGM)"
+      ]
+    },
+    {
+      "axis": "Ecology",
+      "mean": 2.2,
+      "std": 1.33,
+      "max": 5,
+      "cosmo": 3.4,
+      "cosmoZ": 0.9,
+      "leaders": [
+        "Polyworld",
+        "Sugarscape",
+        "Swarm"
+      ]
+    },
+    {
+      "axis": "Morphology/Physics",
+      "mean": 2.17,
+      "std": 1.64,
+      "max": 5,
+      "cosmo": 3.8,
+      "cosmoZ": 0.99,
+      "leaders": [
+        "Framsticks",
+        "Karl Sims VC",
+        "Gene Pool",
+        "breve",
+        "OpenWorm",
+        "EvoGym",
+        "ALIEN",
+        "GOLEM (Genetically Organized Lifelike Electro Mechanics)",
+        "Voxelyze / VoxCAD",
+        "3D Virtual Creature Evolution (3DVCE)",
+        "DERL (Deep Evolutionary Reinforcement Learning)",
+        "UNIMAL (Universal Animal design space)",
+        "Evolving Soft Robots (Cheney / Unshackling Evolution)",
+        "RoboGrammar",
+        "Keiwan Evolution",
+        "Xenobots (reconfigurable organisms)",
+        "Voxcraft-sim"
+      ]
+    },
+    {
+      "axis": "Cognition/Learning",
+      "mean": 1.85,
+      "std": 1.63,
+      "max": 5,
+      "cosmo": 4.5,
+      "cosmoZ": 1.63,
+      "leaders": [
+        "DERL (Deep Evolutionary Reinforcement Learning)",
+        "UNIMAL (Universal Animal design space)",
+        "Transform2Act",
+        "NerveNet",
+        "Hide-and-Seek Multi-Agent Autocurricula",
+        "XLand (Open-Ended Learning Team)"
+      ]
+    },
+    {
+      "axis": "Substrate pluralism",
+      "mean": 1.09,
+      "std": 0.41,
+      "max": 4.6,
+      "cosmo": 4.6,
+      "cosmoZ": 8.66,
+      "leaders": [
+        "COSMOGONIC"
+      ]
+    },
+    {
+      "axis": "Instrumentation",
+      "mean": 3.02,
+      "std": 1.07,
+      "max": 5,
+      "cosmo": 4.4,
+      "cosmoZ": 1.29,
+      "leaders": [
+        "Game of Life",
+        "EvoGym",
+        "Aevol",
+        "Avida-ED",
+        "MAP-Elites",
+        "Quality-Diversity (illumination algorithms)",
+        "NetLogo",
+        "MASON",
+        "Repast",
+        "GAMA Platform",
+        "Mesa",
+        "Melting Pot",
+        "Craftax",
+        "PhysiCell"
+      ]
+    },
+    {
+      "axis": "Consciousness-theory",
+      "mean": 0.1,
+      "std": 0.64,
+      "max": 5,
+      "cosmo": 3.5,
+      "cosmoZ": 5.33,
+      "leaders": [
+        "LIDA",
+        "Conscious Turing Machine (CTM)"
+      ]
+    },
+    {
+      "axis": "Visual scale",
+      "mean": 2.76,
+      "std": 1.18,
+      "max": 5,
+      "cosmo": 4,
+      "cosmoZ": 1.05,
+      "leaders": [
+        "Karl Sims VC",
+        "Creatures",
+        "Picbreeder",
+        "Lenia",
+        "ALIEN",
+        "Flow Lenia",
+        "Particle Lenia",
+        "Spore",
+        "Noita",
+        "Clusters (Particle Life)",
+        "Sandspiel",
+        "Electric Sheep"
+      ]
+    }
+  ],
+  "nearestNeighbours": [
+    {
+      "name": "ALIEN",
+      "full": "ALIEN",
+      "d": 4.75
+    },
+    {
+      "name": "Creatures",
+      "full": "Creatures",
+      "d": 5.1
+    },
+    {
+      "name": "Framsticks",
+      "full": "Framsticks",
+      "d": 5.61
+    },
+    {
+      "name": "Division Blocks",
+      "full": "Division Blocks",
+      "d": 5.62
+    },
+    {
+      "name": "biosim4",
+      "full": "biosim4",
+      "d": 5.64
+    },
+    {
+      "name": "The Bibites",
+      "full": "The Bibites",
+      "d": 5.75
+    },
+    {
+      "name": "OpenWorm",
+      "full": "OpenWorm",
+      "d": 5.8
+    },
+    {
+      "name": "Biomaker CA",
+      "full": "Biomaker CA",
+      "d": 5.87
+    },
+    {
+      "name": "Karl Sims VC",
+      "full": "Karl Sims Evolved Virtual Creatures",
+      "d": 5.9
+    },
+    {
+      "name": "DERL (Deep Evolutionary Reinforcement Learning)",
+      "full": "DERL (Deep Evolutionary Reinforcement Learning)",
+      "d": 5.9
+    }
+  ]
+}

@@ -30,7 +30,7 @@
 - **Nine Constitutive Markers (Thaler):** The 9 architectural markers of Stephen Thaler's Creativity Machine (`glory`, `life-review`, `rhythm`, `virtual-input`, `hot-button`, `reentrant`, `fractal`, `bootstrap`, `chaining`).
 - **Page Curve ($S_{\text{rad}}(t)$):** Unitary black hole evaporation curve $S_{\text{rad}}(t) = \min(S_{\text{thermal}}(t), S_{\text{BH}}(t))$ preserving quantum information via island extremal surfaces.
 - **Recursive Least Squares (`RLS`):** Second-order online linear/readout learner updating inverse covariance $P_t \in \mathbb{R}^{8 \times 8}$ in `Float64Array` via the Sherman-Morrison rank-1 formula in $O(d^2)$ time.
-- **Spiking Liquid Time-Constant (`sLTC`):** Continuous-time spiking neural ODE whose effective time constant $\tau_{\text{eff}, i}(x, t)$ adapts dynamically to synaptic conductance at every RK4 integration step. *(Never "Structured Liquid".)*
+- **Spiking Liquid Time-Constant (`sLTC`):** Continuous-time spiking neural ODE whose effective time constant $\tau_{\text{eff}, i}(x, t)$ adapts dynamically to synaptic conductance at every RK4 integration step. *(Strictly `sLTC`, zero legacy misnomers.)*
 - **Stochastic Rounding (`stochasticRoundInt8`):** Unbiased probabilistic quantizer $\text{SR}(x) = \lfloor x \rfloor + \mathbb{I}(U < x - \lfloor x \rfloor)$ allowing arbitrarily small learning steps to accumulate in `Int8Array` (`Q8_0`) weights without underflow stagnation.
 - **Tree of Thought (`ToT`):** Multi-branch lookahead search tree pruned by Expected Free Energy $G(\pi)$.
 - **Tsodyks-Markram Short-Term Plasticity (`STP`):** Presynaptic vesicle depletion and recovery dynamics $\dot{r} = \frac{1-r}{\tau_{\text{rec}}} - U \cdot r \cdot |x(t)|$ in `TsotchkeDaleStpDdimBrain`.

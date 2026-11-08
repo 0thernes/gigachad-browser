@@ -1,0 +1,21 @@
+BlackHoleDS / OPPENGROK Black Hole Simulation Lab
+Copyright (c) 2026 0thernes <0_0@0thernes.art>. All Rights Reserved.
+
+This is proprietary software. It is NOT open source and is NOT in the public
+domain. No license is granted except the limited right to view the source as
+expressly stated in the LICENSE file at the repository root.
+
+You may not use, run, copy, modify, distribute, sublicense, or incorporate
+this software or any part of it — including its algorithms, methods, data
+layouts, or expression — into any other software, product, dataset, or
+machine-learning training corpus, except under a separate written agreement
+signed by the Author. For licensing inquiries: 0_0@0thernes.art.
+
+The full terms are in the LICENSE file. The licensing decision and its
+rationale are recorded in ADR-0009 (docs/log/DECISIONS.md), which supersedes
+the former AGPL-3.0 decision in ADR-0006.
+
+Scientific note: this project models black-hole physics with explicit
+truth-tier labels (see docs/vision/SCIENTIFIC_INTEGRITY_CHARTER.md). It is a
+research and learning codebase, not a validated production solver. No warranty
+of scientific accuracy or fitness for any purpose is made or implied.

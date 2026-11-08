@@ -81,4 +81,17 @@ const formCmd = parseAgentReply('{"action":"fill_form","fields":{"email":"user@e
 assert.equal(formCmd.actions[0].action, 'fill_form');
 assert.equal(formCmd.actions[0].fields.email, 'user@example.com');
 
+const blockedWatchJs = parseAgentReply('{"action":"watch_page","url":"javascript:alert(1)","intervalSec":60}');
+assert.ok(blockedWatchJs.error && blockedWatchJs.error.includes('http'), 'watch_page must reject javascript: URLs');
+assert.equal(blockedWatchJs.actions.length, 0);
+
+const blockedWatchFile = parseAgentReply('{"action":"watch_page","url":"file:///etc/passwd","intervalSec":60}');
+assert.ok(blockedWatchFile.error && blockedWatchFile.error.includes('http'), 'watch_page must reject file: URLs');
+assert.equal(blockedWatchFile.actions.length, 0);
+
+const nanCoords = parseAgentReply('{"action":"click","mark":3,"x":"not-a-number","y":"NaN"}');
+assert.equal(nanCoords.actions[0].action, 'click');
+assert.equal(nanCoords.actions[0].x, undefined, 'Non-finite x coordinate must not become NaN');
+assert.equal(nanCoords.actions[0].y, undefined, 'Non-finite y coordinate must not become NaN');
+
 console.log('agent action smoke passed');

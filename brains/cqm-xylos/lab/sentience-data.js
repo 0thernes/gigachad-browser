@@ -1,0 +1,5400 @@
+window.__CQM_SENTIENCE_DATA__ = {
+  "version": "sentience-lab-v1",
+  "generatedAt": "2026-07-07T00:00:00.000Z",
+  "claim": "indicatorOnly",
+  "proofBoundary": "Headless mass-run analytics over computational consciousness indicators; evidence of load-bearing mechanisms, not proof of phenomenal sentience.",
+  "rootSeed": 539363076,
+  "seedBatch": [
+    1011265784, 2044229561, 2706994553, 2371426144, 214672024, 3645716557, 76331177, 3393756084,
+    2559906128, 2124050121, 3697351393, 3035609664, 3746881312, 2406748429, 878035361, 992814772,
+    1946589880, 934865961, 2978192345, 3468676208, 2336127992, 470520861, 1506456329, 1381348964,
+    1155702160, 3702511289, 2507020225, 836954224, 2070681280, 696015741, 3718869505, 3428778852
+  ],
+  "sourceDocs": [
+    "docs/CONSOLIDATED-22-MASTER-ASSESSMENT-CURRENT-2026-07-07.md",
+    "docs/VERIFICATION-ANALYTICAL-DATA.md",
+    "docs/SUPER-CREATURE-RESEARCH-2026-06-26.md"
+  ],
+  "sweep": {
+    "runs": 32,
+    "singularityRate": 1,
+    "ablationRate": 0.40625,
+    "emergenceRate": 0,
+    "meanStructuredIndex": 0.569244,
+    "meanNullIndex": 0.571825,
+    "meanNullGap": 0,
+    "meanConvergenceGap": 0.062741,
+    "meanRewardGap": 0.111229,
+    "eventTotal": 86
+  },
+  "runSummaries": [
+    {
+      "seed": 1011265784,
+      "structuredIndex": 0.546101,
+      "nullIndex": 0.549352,
+      "nullGap": 0,
+      "structuredConvergence": 0.390651,
+      "nullConvergence": 0.310049,
+      "convergenceGap": 0.080602,
+      "rewardGap": 0.128364,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2044229561,
+      "structuredIndex": 0.528545,
+      "nullIndex": 0.530642,
+      "nullGap": 0,
+      "structuredConvergence": 0.374322,
+      "nullConvergence": 0.294813,
+      "convergenceGap": 0.079509,
+      "rewardGap": 0.13512,
+      "events": 1,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2706994553,
+      "structuredIndex": 0.556095,
+      "nullIndex": 0.558844,
+      "nullGap": 0,
+      "structuredConvergence": 0.382295,
+      "nullConvergence": 0.31507,
+      "convergenceGap": 0.067225,
+      "rewardGap": 0.126483,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2371426144,
+      "structuredIndex": 0.583724,
+      "nullIndex": 0.587011,
+      "nullGap": 0,
+      "structuredConvergence": 0.409184,
+      "nullConvergence": 0.340516,
+      "convergenceGap": 0.068668,
+      "rewardGap": 0.119879,
+      "events": 1,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 214672024,
+      "structuredIndex": 0.576719,
+      "nullIndex": 0.580871,
+      "nullGap": 0,
+      "structuredConvergence": 0.412535,
+      "nullConvergence": 0.322278,
+      "convergenceGap": 0.090257,
+      "rewardGap": 0.12808,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3645716557,
+      "structuredIndex": 0.523238,
+      "nullIndex": 0.526031,
+      "nullGap": 0,
+      "structuredConvergence": 0.385333,
+      "nullConvergence": 0.304747,
+      "convergenceGap": 0.080586,
+      "rewardGap": 0.119183,
+      "events": 4,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 76331177,
+      "structuredIndex": 0.634073,
+      "nullIndex": 0.634827,
+      "nullGap": 0,
+      "structuredConvergence": 0.404536,
+      "nullConvergence": 0.386095,
+      "convergenceGap": 0.018441,
+      "rewardGap": 0.037743,
+      "events": 4,
+      "peakMoving": 7,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3393756084,
+      "structuredIndex": 0.566868,
+      "nullIndex": 0.569052,
+      "nullGap": 0,
+      "structuredConvergence": 0.385614,
+      "nullConvergence": 0.325479,
+      "convergenceGap": 0.060135,
+      "rewardGap": 0.105476,
+      "events": 8,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2559906128,
+      "structuredIndex": 0.561943,
+      "nullIndex": 0.564457,
+      "nullGap": 0,
+      "structuredConvergence": 0.374838,
+      "nullConvergence": 0.317075,
+      "convergenceGap": 0.057763,
+      "rewardGap": 0.122707,
+      "events": 3,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2124050121,
+      "structuredIndex": 0.581328,
+      "nullIndex": 0.582995,
+      "nullGap": 0,
+      "structuredConvergence": 0.405288,
+      "nullConvergence": 0.359759,
+      "convergenceGap": 0.045528,
+      "rewardGap": 0.086926,
+      "events": 2,
+      "peakMoving": 7,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3697351393,
+      "structuredIndex": 0.547782,
+      "nullIndex": 0.550621,
+      "nullGap": 0,
+      "structuredConvergence": 0.365623,
+      "nullConvergence": 0.300684,
+      "convergenceGap": 0.064939,
+      "rewardGap": 0.12151,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3035609664,
+      "structuredIndex": 0.56775,
+      "nullIndex": 0.570651,
+      "nullGap": 0,
+      "structuredConvergence": 0.384404,
+      "nullConvergence": 0.317879,
+      "convergenceGap": 0.066526,
+      "rewardGap": 0.118878,
+      "events": 1,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3746881312,
+      "structuredIndex": 0.562254,
+      "nullIndex": 0.565297,
+      "nullGap": 0,
+      "structuredConvergence": 0.377172,
+      "nullConvergence": 0.317302,
+      "convergenceGap": 0.05987,
+      "rewardGap": 0.124105,
+      "events": 2,
+      "peakMoving": 9,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2406748429,
+      "structuredIndex": 0.580134,
+      "nullIndex": 0.581955,
+      "nullGap": 0,
+      "structuredConvergence": 0.385542,
+      "nullConvergence": 0.345801,
+      "convergenceGap": 0.039741,
+      "rewardGap": 0.088506,
+      "events": 6,
+      "peakMoving": 8,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 878035361,
+      "structuredIndex": 0.575077,
+      "nullIndex": 0.578063,
+      "nullGap": 0,
+      "structuredConvergence": 0.38957,
+      "nullConvergence": 0.3259,
+      "convergenceGap": 0.06367,
+      "rewardGap": 0.110659,
+      "events": 1,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 992814772,
+      "structuredIndex": 0.523842,
+      "nullIndex": 0.527903,
+      "nullGap": 0,
+      "structuredConvergence": 0.389332,
+      "nullConvergence": 0.29134,
+      "convergenceGap": 0.097992,
+      "rewardGap": 0.137711,
+      "events": 7,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 1946589880,
+      "structuredIndex": 0.549207,
+      "nullIndex": 0.55328,
+      "nullGap": 0,
+      "structuredConvergence": 0.398304,
+      "nullConvergence": 0.297958,
+      "convergenceGap": 0.100346,
+      "rewardGap": 0.150175,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 934865961,
+      "structuredIndex": 0.608971,
+      "nullIndex": 0.611157,
+      "nullGap": 0,
+      "structuredConvergence": 0.410745,
+      "nullConvergence": 0.357517,
+      "convergenceGap": 0.053227,
+      "rewardGap": 0.086255,
+      "events": 5,
+      "peakMoving": 9,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2978192345,
+      "structuredIndex": 0.600663,
+      "nullIndex": 0.601822,
+      "nullGap": 0,
+      "structuredConvergence": 0.402793,
+      "nullConvergence": 0.358635,
+      "convergenceGap": 0.044157,
+      "rewardGap": 0.087763,
+      "events": 2,
+      "peakMoving": 8,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3468676208,
+      "structuredIndex": 0.552788,
+      "nullIndex": 0.555792,
+      "nullGap": 0,
+      "structuredConvergence": 0.383911,
+      "nullConvergence": 0.320671,
+      "convergenceGap": 0.063241,
+      "rewardGap": 0.121584,
+      "events": 3,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2336127992,
+      "structuredIndex": 0.552382,
+      "nullIndex": 0.555277,
+      "nullGap": 0,
+      "structuredConvergence": 0.379844,
+      "nullConvergence": 0.300513,
+      "convergenceGap": 0.079331,
+      "rewardGap": 0.129829,
+      "events": 1,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 470520861,
+      "structuredIndex": 0.594166,
+      "nullIndex": 0.596915,
+      "nullGap": 0,
+      "structuredConvergence": 0.406122,
+      "nullConvergence": 0.362841,
+      "convergenceGap": 0.04328,
+      "rewardGap": 0.088504,
+      "events": 3,
+      "peakMoving": 9,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 1506456329,
+      "structuredIndex": 0.591571,
+      "nullIndex": 0.593198,
+      "nullGap": 0,
+      "structuredConvergence": 0.396241,
+      "nullConvergence": 0.355269,
+      "convergenceGap": 0.040972,
+      "rewardGap": 0.086399,
+      "events": 2,
+      "peakMoving": 8,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 1381348964,
+      "structuredIndex": 0.572747,
+      "nullIndex": 0.575374,
+      "nullGap": 0,
+      "structuredConvergence": 0.389301,
+      "nullConvergence": 0.331204,
+      "convergenceGap": 0.058097,
+      "rewardGap": 0.115316,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 1155702160,
+      "structuredIndex": 0.548189,
+      "nullIndex": 0.550746,
+      "nullGap": 0,
+      "structuredConvergence": 0.381182,
+      "nullConvergence": 0.316637,
+      "convergenceGap": 0.064545,
+      "rewardGap": 0.117374,
+      "events": 3,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3702511289,
+      "structuredIndex": 0.575162,
+      "nullIndex": 0.578394,
+      "nullGap": 0,
+      "structuredConvergence": 0.385932,
+      "nullConvergence": 0.306054,
+      "convergenceGap": 0.079878,
+      "rewardGap": 0.127884,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2507020225,
+      "structuredIndex": 0.543092,
+      "nullIndex": 0.545649,
+      "nullGap": 0,
+      "structuredConvergence": 0.378807,
+      "nullConvergence": 0.305084,
+      "convergenceGap": 0.073723,
+      "rewardGap": 0.12909,
+      "events": 1,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 836954224,
+      "structuredIndex": 0.578701,
+      "nullIndex": 0.580656,
+      "nullGap": 0,
+      "structuredConvergence": 0.397124,
+      "nullConvergence": 0.345248,
+      "convergenceGap": 0.051876,
+      "rewardGap": 0.107039,
+      "events": 1,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 2070681280,
+      "structuredIndex": 0.57292,
+      "nullIndex": 0.575085,
+      "nullGap": 0,
+      "structuredConvergence": 0.389269,
+      "nullConvergence": 0.326009,
+      "convergenceGap": 0.06326,
+      "rewardGap": 0.111839,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 696015741,
+      "structuredIndex": 0.61086,
+      "nullIndex": 0.61255,
+      "nullGap": 0,
+      "structuredConvergence": 0.399792,
+      "nullConvergence": 0.354665,
+      "convergenceGap": 0.045127,
+      "rewardGap": 0.082227,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": false,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3718869505,
+      "structuredIndex": 0.558216,
+      "nullIndex": 0.560699,
+      "nullGap": 0,
+      "structuredConvergence": 0.380231,
+      "nullConvergence": 0.321105,
+      "convergenceGap": 0.059125,
+      "rewardGap": 0.111313,
+      "events": 2,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    },
+    {
+      "seed": 3428778852,
+      "structuredIndex": 0.590708,
+      "nullIndex": 0.593223,
+      "nullGap": 0,
+      "structuredConvergence": 0.392066,
+      "nullConvergence": 0.346004,
+      "convergenceGap": 0.046062,
+      "rewardGap": 0.095411,
+      "events": 5,
+      "peakMoving": 10,
+      "singularityProven": true,
+      "ablationProven": true,
+      "emergenceProven": false
+    }
+  ],
+  "frameworkAggregates": [
+    {
+      "id": "butlin14",
+      "name": "Butlin AI-consciousness indicators",
+      "bucket": "rubric",
+      "source": "Butlin et al. 2023, arXiv:2308.08708",
+      "meanAblationLoss": 0.008853,
+      "meanCausalEffect": 0.008371,
+      "meanNullSeparation": 0.41032,
+      "connectedness": 0.1,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "thaler9",
+      "name": "Thaler Creativity Machine / DABUS",
+      "bucket": "perturbational",
+      "source": "Thaler, US 5,659,666 / US 7,454,388; Neural Networks 8(1):55-65 (1995)",
+      "meanAblationLoss": 0.006454,
+      "meanCausalEffect": 0.006221,
+      "meanNullSeparation": 0.41278,
+      "connectedness": 0.12,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "iit4",
+      "name": "Integrated Information Theory 4.0",
+      "bucket": "information",
+      "source": "Albantakis et al. 2023, PLoS Comput Biol 10.1371/journal.pcbi.1011465",
+      "meanAblationLoss": 0.014129,
+      "meanCausalEffect": 0.013695,
+      "meanNullSeparation": 0.429964,
+      "connectedness": 0.6,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "activeInference",
+      "name": "Free Energy Principle / Active Inference",
+      "bucket": "thermodynamic",
+      "source": "Kirchhoff, Parr, Palacios, Friston, Kiverstein 2018, J. R. Soc. Interface 20170792",
+      "meanAblationLoss": 0.014122,
+      "meanCausalEffect": 0.013458,
+      "meanNullSeparation": 0.441418,
+      "connectedness": 1.14,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "attentionSchema",
+      "name": "Attention Schema Theory",
+      "bucket": "control",
+      "source": "Graziano & Webb 2015, Front. Psychol. 6:500",
+      "meanAblationLoss": 0.007758,
+      "meanCausalEffect": 0.007222,
+      "meanNullSeparation": 0.392779,
+      "connectedness": 0.82,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "fieldIntegration",
+      "name": "CEMI electromagnetic-field integration",
+      "bucket": "field",
+      "source": "McFadden 2020, Neurosci. Conscious. niaa016; 2025 Front. Syst. Neurosci.",
+      "meanAblationLoss": 0.01046,
+      "meanCausalEffect": 0.009828,
+      "meanNullSeparation": 0.413349,
+      "connectedness": 0.92,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "ual",
+      "name": "Unlimited Associative Learning",
+      "bucket": "learning",
+      "source": "Ginsburg & Jablonka; Birch et al., Biol. Philos. 10.1007/s10539-020-09772-0",
+      "meanAblationLoss": 0.002226,
+      "meanCausalEffect": 0.00209,
+      "meanNullSeparation": 0.43997,
+      "connectedness": 0.32,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "sensorimotor",
+      "name": "Sensorimotor Enactivism",
+      "bucket": "embodiment",
+      "source": "O'Regan & Noe 2001, Behav. Brain Sci. 24(5):939-1031",
+      "meanAblationLoss": 0.006725,
+      "meanCausalEffect": 0.006517,
+      "meanNullSeparation": 0.42464,
+      "connectedness": 0.64,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "projective",
+      "name": "Projective Consciousness Model",
+      "bucket": "geometry",
+      "source": "Williford, Bennequin, Friston, Rudrauf 2018, Front. Psychol. 9:2571",
+      "meanAblationLoss": 0.001347,
+      "meanCausalEffect": 0.001341,
+      "meanNullSeparation": 0.442065,
+      "connectedness": 0.18,
+      "loadBearingRate": 0
+    },
+    {
+      "id": "ctm",
+      "name": "Conscious Turing Machine",
+      "bucket": "computational",
+      "source": "Blum & Blum 2022, PNAS 10.1073/pnas.2115934119; arXiv:2403.17101",
+      "meanAblationLoss": 0.011851,
+      "meanCausalEffect": 0.011263,
+      "meanNullSeparation": 0.409553,
+      "connectedness": 0.74,
+      "loadBearingRate": 0
+    }
+  ],
+  "entityTelemetry": [
+    {
+      "id": "plant-grove-000",
+      "kind": "plant",
+      "label": "Plant Grove",
+      "seed": 28938,
+      "activeFrameworks": 5,
+      "dominantFramework": "fieldIntegration",
+      "weakestPresentFramework": "butlin14",
+      "meanIndex": 0.42828,
+      "peakIndex": 0.433273,
+      "finalIndex": 0.432501,
+      "volatility": 0.00306,
+      "slope": -0.003679,
+      "eventCount": 0,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.433192,
+          "convergence": 0.374797,
+          "emergence": 0.03613,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.433273,
+          "convergence": 0.374272,
+          "emergence": 0.036183,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.433184,
+          "convergence": 0.37355,
+          "emergence": 0.036194,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.432952,
+          "convergence": 0.372647,
+          "emergence": 0.036168,
+          "moving": 1,
+          "coherence": 0.760924,
+          "nullMargin": 0.237346,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.432608,
+          "convergence": 0.371597,
+          "emergence": 0.03611,
+          "moving": 1,
+          "coherence": 0.773507,
+          "nullMargin": 0.378493,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.432188,
+          "convergence": 0.370452,
+          "emergence": 0.036027,
+          "moving": 1,
+          "coherence": 0.891365,
+          "nullMargin": 0.512343,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.431726,
+          "convergence": 0.369273,
+          "emergence": 0.035925,
+          "moving": 1,
+          "coherence": 0.935805,
+          "nullMargin": 0.534407,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.431254,
+          "convergence": 0.368122,
+          "emergence": 0.035812,
+          "moving": 1,
+          "coherence": 0.958035,
+          "nullMargin": 0.512278,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.430795,
+          "convergence": 0.367045,
+          "emergence": 0.035693,
+          "moving": 1,
+          "coherence": 0.927405,
+          "nullMargin": 0.631287,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.430367,
+          "convergence": 0.366071,
+          "emergence": 0.035573,
+          "moving": 1,
+          "coherence": 0.684445,
+          "nullMargin": 0.26107,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.429976,
+          "convergence": 0.365199,
+          "emergence": 0.035455,
+          "moving": 2,
+          "coherence": 0.844442,
+          "nullMargin": 0.431086,
+          "eventCount": 0
+        },
+        {
+          "tick": 44,
+          "index": 0.429622,
+          "convergence": 0.364405,
+          "emergence": 0.035342,
+          "moving": 2,
+          "coherence": 0.886717,
+          "nullMargin": 0.520288,
+          "eventCount": 0
+        },
+        {
+          "tick": 48,
+          "index": 0.429296,
+          "convergence": 0.363649,
+          "emergence": 0.035234,
+          "moving": 1,
+          "coherence": 0.698106,
+          "nullMargin": 0.24107,
+          "eventCount": 0
+        },
+        {
+          "tick": 52,
+          "index": 0.428984,
+          "convergence": 0.362887,
+          "emergence": 0.035132,
+          "moving": 1,
+          "coherence": 0.861848,
+          "nullMargin": 0.442856,
+          "eventCount": 0
+        },
+        {
+          "tick": 56,
+          "index": 0.42867,
+          "convergence": 0.362082,
+          "emergence": 0.035035,
+          "moving": 1,
+          "coherence": 0.958126,
+          "nullMargin": 0.633568,
+          "eventCount": 0
+        },
+        {
+          "tick": 60,
+          "index": 0.428336,
+          "convergence": 0.361217,
+          "emergence": 0.034943,
+          "moving": 1,
+          "coherence": 0.982996,
+          "nullMargin": 0.628817,
+          "eventCount": 0
+        },
+        {
+          "tick": 64,
+          "index": 0.42797,
+          "convergence": 0.360296,
+          "emergence": 0.034856,
+          "moving": 1,
+          "coherence": 0.991521,
+          "nullMargin": 0.623325,
+          "eventCount": 0
+        },
+        {
+          "tick": 68,
+          "index": 0.427563,
+          "convergence": 0.359349,
+          "emergence": 0.034775,
+          "moving": 1,
+          "coherence": 0.992893,
+          "nullMargin": 0.698908,
+          "eventCount": 0
+        },
+        {
+          "tick": 72,
+          "index": 0.427111,
+          "convergence": 0.358425,
+          "emergence": 0.034701,
+          "moving": 1,
+          "coherence": 0.991203,
+          "nullMargin": 0.601133,
+          "eventCount": 0
+        },
+        {
+          "tick": 76,
+          "index": 0.42662,
+          "convergence": 0.357585,
+          "emergence": 0.034636,
+          "moving": 1,
+          "coherence": 0.988872,
+          "nullMargin": 0.615451,
+          "eventCount": 0
+        },
+        {
+          "tick": 80,
+          "index": 0.426104,
+          "convergence": 0.356888,
+          "emergence": 0.034583,
+          "moving": 1,
+          "coherence": 0.986528,
+          "nullMargin": 0.569816,
+          "eventCount": 0
+        },
+        {
+          "tick": 84,
+          "index": 0.425581,
+          "convergence": 0.356393,
+          "emergence": 0.034545,
+          "moving": 1,
+          "coherence": 0.982467,
+          "nullMargin": 0.521492,
+          "eventCount": 0
+        },
+        {
+          "tick": 88,
+          "index": 0.425075,
+          "convergence": 0.356141,
+          "emergence": 0.034524,
+          "moving": 1,
+          "coherence": 0.965147,
+          "nullMargin": 0.46696,
+          "eventCount": 0
+        },
+        {
+          "tick": 92,
+          "index": 0.424616,
+          "convergence": 0.356158,
+          "emergence": 0.034524,
+          "moving": 0,
+          "coherence": 0.835867,
+          "nullMargin": 0.556267,
+          "eventCount": 0
+        },
+        {
+          "tick": 96,
+          "index": 0.42423,
+          "convergence": 0.356452,
+          "emergence": 0.034546,
+          "moving": 0,
+          "coherence": 0.698811,
+          "nullMargin": 0.338288,
+          "eventCount": 0
+        },
+        {
+          "tick": 100,
+          "index": 0.423946,
+          "convergence": 0.35701,
+          "emergence": 0.03459,
+          "moving": 1,
+          "coherence": 0.610489,
+          "nullMargin": 0.150248,
+          "eventCount": 0
+        },
+        {
+          "tick": 104,
+          "index": 0.423785,
+          "convergence": 0.357803,
+          "emergence": 0.034658,
+          "moving": 1,
+          "coherence": 0.759526,
+          "nullMargin": 0.338475,
+          "eventCount": 0
+        },
+        {
+          "tick": 108,
+          "index": 0.423765,
+          "convergence": 0.358792,
+          "emergence": 0.034747,
+          "moving": 1,
+          "coherence": 0.610156,
+          "nullMargin": 0.202042,
+          "eventCount": 0
+        },
+        {
+          "tick": 112,
+          "index": 0.423896,
+          "convergence": 0.35993,
+          "emergence": 0.034853,
+          "moving": 3,
+          "coherence": 0.642671,
+          "nullMargin": 0.242265,
+          "eventCount": 0
+        },
+        {
+          "tick": 116,
+          "index": 0.42418,
+          "convergence": 0.361175,
+          "emergence": 0.034972,
+          "moving": 3,
+          "coherence": 0.774256,
+          "nullMargin": 0.331577,
+          "eventCount": 0
+        },
+        {
+          "tick": 120,
+          "index": 0.424612,
+          "convergence": 0.362488,
+          "emergence": 0.035098,
+          "moving": 4,
+          "coherence": 0.741396,
+          "nullMargin": 0.38,
+          "eventCount": 0
+        },
+        {
+          "tick": 124,
+          "index": 0.425178,
+          "convergence": 0.363846,
+          "emergence": 0.035225,
+          "moving": 4,
+          "coherence": 0.915346,
+          "nullMargin": 0.544596,
+          "eventCount": 0
+        },
+        {
+          "tick": 128,
+          "index": 0.42586,
+          "convergence": 0.365237,
+          "emergence": 0.035346,
+          "moving": 4,
+          "coherence": 0.951849,
+          "nullMargin": 0.573842,
+          "eventCount": 0
+        },
+        {
+          "tick": 132,
+          "index": 0.426637,
+          "convergence": 0.366655,
+          "emergence": 0.035455,
+          "moving": 4,
+          "coherence": 0.965236,
+          "nullMargin": 0.528509,
+          "eventCount": 0
+        },
+        {
+          "tick": 136,
+          "index": 0.427482,
+          "convergence": 0.368097,
+          "emergence": 0.035546,
+          "moving": 4,
+          "coherence": 0.966095,
+          "nullMargin": 0.628261,
+          "eventCount": 0
+        },
+        {
+          "tick": 140,
+          "index": 0.428372,
+          "convergence": 0.369553,
+          "emergence": 0.035617,
+          "moving": 4,
+          "coherence": 0.951581,
+          "nullMargin": 0.51934,
+          "eventCount": 0
+        },
+        {
+          "tick": 144,
+          "index": 0.42928,
+          "convergence": 0.370996,
+          "emergence": 0.035663,
+          "moving": 4,
+          "coherence": 0.916669,
+          "nullMargin": 0.453379,
+          "eventCount": 0
+        },
+        {
+          "tick": 148,
+          "index": 0.430185,
+          "convergence": 0.372383,
+          "emergence": 0.035686,
+          "moving": 4,
+          "coherence": 0.813085,
+          "nullMargin": 0.458871,
+          "eventCount": 0
+        },
+        {
+          "tick": 152,
+          "index": 0.431067,
+          "convergence": 0.373654,
+          "emergence": 0.035687,
+          "moving": 4,
+          "coherence": 0.47955,
+          "nullMargin": 0.106186,
+          "eventCount": 0
+        },
+        {
+          "tick": 156,
+          "index": 0.431907,
+          "convergence": 0.374743,
+          "emergence": 0.035667,
+          "moving": 4,
+          "coherence": 0.901398,
+          "nullMargin": 0.520904,
+          "eventCount": 0
+        },
+        {
+          "tick": 159,
+          "index": 0.432501,
+          "convergence": 0.375406,
+          "emergence": 0.035642,
+          "moving": 4,
+          "coherence": 0.968243,
+          "nullMargin": 0.529779,
+          "eventCount": 0
+        }
+      ]
+    },
+    {
+      "id": "creature-strain-017",
+      "kind": "creature",
+      "label": "Creature Strain",
+      "seed": 49319,
+      "activeFrameworks": 9,
+      "dominantFramework": "sensorimotor",
+      "weakestPresentFramework": "attentionSchema",
+      "meanIndex": 0.653427,
+      "peakIndex": 0.65567,
+      "finalIndex": 0.65153,
+      "volatility": 0.001238,
+      "slope": 0.000828,
+      "eventCount": 0,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.655122,
+          "convergence": 0.530307,
+          "emergence": 0.082094,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.655301,
+          "convergence": 0.533692,
+          "emergence": 0.082247,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.655213,
+          "convergence": 0.537054,
+          "emergence": 0.082377,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.654893,
+          "convergence": 0.540392,
+          "emergence": 0.082482,
+          "moving": 4,
+          "coherence": 0.910134,
+          "nullMargin": 0.571491,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.654399,
+          "convergence": 0.543688,
+          "emergence": 0.082558,
+          "moving": 4,
+          "coherence": 0.911356,
+          "nullMargin": 0.536203,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.653801,
+          "convergence": 0.5469,
+          "emergence": 0.082605,
+          "moving": 3,
+          "coherence": 0.83873,
+          "nullMargin": 0.451679,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.653176,
+          "convergence": 0.549967,
+          "emergence": 0.082624,
+          "moving": 3,
+          "coherence": 0.787844,
+          "nullMargin": 0.324394,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.652598,
+          "convergence": 0.552809,
+          "emergence": 0.082616,
+          "moving": 2,
+          "coherence": 0.806392,
+          "nullMargin": 0.343214,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.652128,
+          "convergence": 0.55533,
+          "emergence": 0.082585,
+          "moving": 3,
+          "coherence": 0.734197,
+          "nullMargin": 0.283757,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.65181,
+          "convergence": 0.557421,
+          "emergence": 0.082535,
+          "moving": 3,
+          "coherence": 0.91795,
+          "nullMargin": 0.538514,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.651665,
+          "convergence": 0.558961,
+          "emergence": 0.082469,
+          "moving": 3,
+          "coherence": 0.925304,
+          "nullMargin": 0.502875,
+          "eventCount": 0
+        },
+        {
+          "tick": 44,
+          "index": 0.65169,
+          "convergence": 0.559829,
+          "emergence": 0.082388,
+          "moving": 2,
+          "coherence": 0.799443,
+          "nullMargin": 0.434853,
+          "eventCount": 0
+        },
+        {
+          "tick": 48,
+          "index": 0.651859,
+          "convergence": 0.559914,
+          "emergence": 0.082294,
+          "moving": 3,
+          "coherence": 0.810079,
+          "nullMargin": 0.388149,
+          "eventCount": 0
+        },
+        {
+          "tick": 52,
+          "index": 0.652129,
+          "convergence": 0.559142,
+          "emergence": 0.082187,
+          "moving": 3,
+          "coherence": 0.939676,
+          "nullMargin": 0.594089,
+          "eventCount": 0
+        },
+        {
+          "tick": 56,
+          "index": 0.652448,
+          "convergence": 0.55749,
+          "emergence": 0.082065,
+          "moving": 3,
+          "coherence": 0.948406,
+          "nullMargin": 0.572418,
+          "eventCount": 0
+        },
+        {
+          "tick": 60,
+          "index": 0.652761,
+          "convergence": 0.555001,
+          "emergence": 0.08193,
+          "moving": 3,
+          "coherence": 0.849287,
+          "nullMargin": 0.488919,
+          "eventCount": 0
+        },
+        {
+          "tick": 64,
+          "index": 0.653017,
+          "convergence": 0.551774,
+          "emergence": 0.081782,
+          "moving": 4,
+          "coherence": 0.911012,
+          "nullMargin": 0.566908,
+          "eventCount": 0
+        },
+        {
+          "tick": 68,
+          "index": 0.653181,
+          "convergence": 0.54796,
+          "emergence": 0.081622,
+          "moving": 4,
+          "coherence": 0.955984,
+          "nullMargin": 0.592936,
+          "eventCount": 0
+        },
+        {
+          "tick": 72,
+          "index": 0.653233,
+          "convergence": 0.543737,
+          "emergence": 0.081455,
+          "moving": 4,
+          "coherence": 0.935939,
+          "nullMargin": 0.505501,
+          "eventCount": 0
+        },
+        {
+          "tick": 76,
+          "index": 0.653174,
+          "convergence": 0.539296,
+          "emergence": 0.081286,
+          "moving": 3,
+          "coherence": 0.789042,
+          "nullMargin": 0.423728,
+          "eventCount": 0
+        },
+        {
+          "tick": 80,
+          "index": 0.653023,
+          "convergence": 0.53483,
+          "emergence": 0.081118,
+          "moving": 3,
+          "coherence": 0.9078,
+          "nullMargin": 0.513241,
+          "eventCount": 0
+        },
+        {
+          "tick": 84,
+          "index": 0.652818,
+          "convergence": 0.53052,
+          "emergence": 0.080958,
+          "moving": 3,
+          "coherence": 0.820154,
+          "nullMargin": 0.406248,
+          "eventCount": 0
+        },
+        {
+          "tick": 88,
+          "index": 0.652604,
+          "convergence": 0.526528,
+          "emergence": 0.080812,
+          "moving": 4,
+          "coherence": 0.906689,
+          "nullMargin": 0.517757,
+          "eventCount": 0
+        },
+        {
+          "tick": 92,
+          "index": 0.652432,
+          "convergence": 0.522985,
+          "emergence": 0.080683,
+          "moving": 4,
+          "coherence": 0.933994,
+          "nullMargin": 0.525293,
+          "eventCount": 0
+        },
+        {
+          "tick": 96,
+          "index": 0.652349,
+          "convergence": 0.519992,
+          "emergence": 0.080577,
+          "moving": 3,
+          "coherence": 0.832235,
+          "nullMargin": 0.41775,
+          "eventCount": 0
+        },
+        {
+          "tick": 100,
+          "index": 0.65239,
+          "convergence": 0.51761,
+          "emergence": 0.080496,
+          "moving": 3,
+          "coherence": 0.840333,
+          "nullMargin": 0.431369,
+          "eventCount": 0
+        },
+        {
+          "tick": 104,
+          "index": 0.652574,
+          "convergence": 0.515869,
+          "emergence": 0.080443,
+          "moving": 4,
+          "coherence": 0.786567,
+          "nullMargin": 0.387788,
+          "eventCount": 0
+        },
+        {
+          "tick": 108,
+          "index": 0.652901,
+          "convergence": 0.514774,
+          "emergence": 0.080418,
+          "moving": 3,
+          "coherence": 0.808838,
+          "nullMargin": 0.397069,
+          "eventCount": 0
+        },
+        {
+          "tick": 112,
+          "index": 0.65335,
+          "convergence": 0.514319,
+          "emergence": 0.080423,
+          "moving": 3,
+          "coherence": 0.840232,
+          "nullMargin": 0.431686,
+          "eventCount": 0
+        },
+        {
+          "tick": 116,
+          "index": 0.653879,
+          "convergence": 0.5145,
+          "emergence": 0.08046,
+          "moving": 4,
+          "coherence": 0.775224,
+          "nullMargin": 0.345124,
+          "eventCount": 0
+        },
+        {
+          "tick": 120,
+          "index": 0.654435,
+          "convergence": 0.515318,
+          "emergence": 0.080529,
+          "moving": 4,
+          "coherence": 0.902735,
+          "nullMargin": 0.490277,
+          "eventCount": 0
+        },
+        {
+          "tick": 124,
+          "index": 0.654953,
+          "convergence": 0.516778,
+          "emergence": 0.080633,
+          "moving": 3,
+          "coherence": 0.888238,
+          "nullMargin": 0.484054,
+          "eventCount": 0
+        },
+        {
+          "tick": 128,
+          "index": 0.655367,
+          "convergence": 0.518873,
+          "emergence": 0.080772,
+          "moving": 3,
+          "coherence": 0.73237,
+          "nullMargin": 0.31301,
+          "eventCount": 0
+        },
+        {
+          "tick": 132,
+          "index": 0.655618,
+          "convergence": 0.521564,
+          "emergence": 0.080945,
+          "moving": 4,
+          "coherence": 0.810196,
+          "nullMargin": 0.378592,
+          "eventCount": 0
+        },
+        {
+          "tick": 136,
+          "index": 0.655657,
+          "convergence": 0.524763,
+          "emergence": 0.081149,
+          "moving": 3,
+          "coherence": 0.85543,
+          "nullMargin": 0.436066,
+          "eventCount": 0
+        },
+        {
+          "tick": 140,
+          "index": 0.655452,
+          "convergence": 0.528322,
+          "emergence": 0.081374,
+          "moving": 3,
+          "coherence": 0.742314,
+          "nullMargin": 0.353876,
+          "eventCount": 0
+        },
+        {
+          "tick": 144,
+          "index": 0.654993,
+          "convergence": 0.532032,
+          "emergence": 0.081612,
+          "moving": 3,
+          "coherence": 0.76253,
+          "nullMargin": 0.418057,
+          "eventCount": 0
+        },
+        {
+          "tick": 148,
+          "index": 0.654295,
+          "convergence": 0.535645,
+          "emergence": 0.081848,
+          "moving": 2,
+          "coherence": 0.694986,
+          "nullMargin": 0.281469,
+          "eventCount": 0
+        },
+        {
+          "tick": 152,
+          "index": 0.653395,
+          "convergence": 0.53891,
+          "emergence": 0.08207,
+          "moving": 2,
+          "coherence": 0.762651,
+          "nullMargin": 0.400038,
+          "eventCount": 0
+        },
+        {
+          "tick": 156,
+          "index": 0.652355,
+          "convergence": 0.541616,
+          "emergence": 0.082266,
+          "moving": 3,
+          "coherence": 0.917245,
+          "nullMargin": 0.524392,
+          "eventCount": 0
+        },
+        {
+          "tick": 159,
+          "index": 0.65153,
+          "convergence": 0.543203,
+          "emergence": 0.082392,
+          "moving": 3,
+          "coherence": 0.974241,
+          "nullMargin": 0.553334,
+          "eventCount": 0
+        }
+      ]
+    },
+    {
+      "id": "shoggoth-choir-004",
+      "kind": "shoggoth",
+      "label": "Shoggoth Choir",
+      "seed": 23049,
+      "activeFrameworks": 9,
+      "dominantFramework": "fieldIntegration",
+      "weakestPresentFramework": "projective",
+      "meanIndex": 0.742161,
+      "peakIndex": 0.744469,
+      "finalIndex": 0.744089,
+      "volatility": 0.00144,
+      "slope": 0.001562,
+      "eventCount": 0,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.742874,
+          "convergence": 0.552618,
+          "emergence": 0.066742,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.74307,
+          "convergence": 0.551757,
+          "emergence": 0.066598,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.743135,
+          "convergence": 0.551428,
+          "emergence": 0.066457,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.743082,
+          "convergence": 0.551515,
+          "emergence": 0.066317,
+          "moving": 5,
+          "coherence": 0.986783,
+          "nullMargin": 0.61197,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.742932,
+          "convergence": 0.551909,
+          "emergence": 0.066179,
+          "moving": 5,
+          "coherence": 0.978628,
+          "nullMargin": 0.621508,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.742711,
+          "convergence": 0.552536,
+          "emergence": 0.066045,
+          "moving": 5,
+          "coherence": 0.964299,
+          "nullMargin": 0.610714,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.742453,
+          "convergence": 0.553382,
+          "emergence": 0.065919,
+          "moving": 4,
+          "coherence": 0.924576,
+          "nullMargin": 0.520104,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.742186,
+          "convergence": 0.554482,
+          "emergence": 0.065811,
+          "moving": 4,
+          "coherence": 0.742665,
+          "nullMargin": 0.343443,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.741937,
+          "convergence": 0.555892,
+          "emergence": 0.065729,
+          "moving": 4,
+          "coherence": 0.755327,
+          "nullMargin": 0.352575,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.741722,
+          "convergence": 0.557647,
+          "emergence": 0.065681,
+          "moving": 4,
+          "coherence": 0.771596,
+          "nullMargin": 0.387402,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.741549,
+          "convergence": 0.559728,
+          "emergence": 0.065672,
+          "moving": 4,
+          "coherence": 0.899441,
+          "nullMargin": 0.476503,
+          "eventCount": 0
+        },
+        {
+          "tick": 44,
+          "index": 0.741412,
+          "convergence": 0.562049,
+          "emergence": 0.065705,
+          "moving": 4,
+          "coherence": 0.856012,
+          "nullMargin": 0.42879,
+          "eventCount": 0
+        },
+        {
+          "tick": 48,
+          "index": 0.741302,
+          "convergence": 0.564457,
+          "emergence": 0.065775,
+          "moving": 3,
+          "coherence": 0.667256,
+          "nullMargin": 0.210247,
+          "eventCount": 0
+        },
+        {
+          "tick": 52,
+          "index": 0.741202,
+          "convergence": 0.566761,
+          "emergence": 0.065877,
+          "moving": 3,
+          "coherence": 0.760396,
+          "nullMargin": 0.308027,
+          "eventCount": 0
+        },
+        {
+          "tick": 56,
+          "index": 0.741095,
+          "convergence": 0.568768,
+          "emergence": 0.066004,
+          "moving": 2,
+          "coherence": 0.823028,
+          "nullMargin": 0.491934,
+          "eventCount": 0
+        },
+        {
+          "tick": 60,
+          "index": 0.740969,
+          "convergence": 0.57032,
+          "emergence": 0.066145,
+          "moving": 2,
+          "coherence": 0.774811,
+          "nullMargin": 0.37478,
+          "eventCount": 0
+        },
+        {
+          "tick": 64,
+          "index": 0.740818,
+          "convergence": 0.571327,
+          "emergence": 0.066292,
+          "moving": 3,
+          "coherence": 0.831949,
+          "nullMargin": 0.411272,
+          "eventCount": 0
+        },
+        {
+          "tick": 68,
+          "index": 0.740646,
+          "convergence": 0.571784,
+          "emergence": 0.066438,
+          "moving": 3,
+          "coherence": 0.962433,
+          "nullMargin": 0.579378,
+          "eventCount": 0
+        },
+        {
+          "tick": 72,
+          "index": 0.740465,
+          "convergence": 0.571766,
+          "emergence": 0.066575,
+          "moving": 3,
+          "coherence": 0.982324,
+          "nullMargin": 0.606666,
+          "eventCount": 0
+        },
+        {
+          "tick": 76,
+          "index": 0.740296,
+          "convergence": 0.571421,
+          "emergence": 0.066699,
+          "moving": 3,
+          "coherence": 0.981831,
+          "nullMargin": 0.593711,
+          "eventCount": 0
+        },
+        {
+          "tick": 80,
+          "index": 0.740161,
+          "convergence": 0.570942,
+          "emergence": 0.066805,
+          "moving": 3,
+          "coherence": 0.969522,
+          "nullMargin": 0.601573,
+          "eventCount": 0
+        },
+        {
+          "tick": 84,
+          "index": 0.740088,
+          "convergence": 0.570536,
+          "emergence": 0.066893,
+          "moving": 3,
+          "coherence": 0.910569,
+          "nullMargin": 0.543385,
+          "eventCount": 0
+        },
+        {
+          "tick": 88,
+          "index": 0.740099,
+          "convergence": 0.570391,
+          "emergence": 0.06696,
+          "moving": 4,
+          "coherence": 0.84503,
+          "nullMargin": 0.443937,
+          "eventCount": 0
+        },
+        {
+          "tick": 92,
+          "index": 0.74021,
+          "convergence": 0.570635,
+          "emergence": 0.067006,
+          "moving": 4,
+          "coherence": 0.932526,
+          "nullMargin": 0.568036,
+          "eventCount": 0
+        },
+        {
+          "tick": 96,
+          "index": 0.740427,
+          "convergence": 0.571311,
+          "emergence": 0.06703,
+          "moving": 3,
+          "coherence": 0.889783,
+          "nullMargin": 0.442574,
+          "eventCount": 0
+        },
+        {
+          "tick": 100,
+          "index": 0.740746,
+          "convergence": 0.572364,
+          "emergence": 0.067032,
+          "moving": 3,
+          "coherence": 0.808751,
+          "nullMargin": 0.447838,
+          "eventCount": 0
+        },
+        {
+          "tick": 104,
+          "index": 0.741153,
+          "convergence": 0.573646,
+          "emergence": 0.067011,
+          "moving": 3,
+          "coherence": 0.768854,
+          "nullMargin": 0.361685,
+          "eventCount": 0
+        },
+        {
+          "tick": 108,
+          "index": 0.741621,
+          "convergence": 0.574954,
+          "emergence": 0.06697,
+          "moving": 3,
+          "coherence": 0.866326,
+          "nullMargin": 0.476765,
+          "eventCount": 0
+        },
+        {
+          "tick": 112,
+          "index": 0.742122,
+          "convergence": 0.576089,
+          "emergence": 0.066911,
+          "moving": 3,
+          "coherence": 0.784009,
+          "nullMargin": 0.344244,
+          "eventCount": 0
+        },
+        {
+          "tick": 116,
+          "index": 0.742625,
+          "convergence": 0.576911,
+          "emergence": 0.066839,
+          "moving": 3,
+          "coherence": 0.851172,
+          "nullMargin": 0.431877,
+          "eventCount": 0
+        },
+        {
+          "tick": 120,
+          "index": 0.743098,
+          "convergence": 0.577385,
+          "emergence": 0.066764,
+          "moving": 4,
+          "coherence": 0.846271,
+          "nullMargin": 0.446464,
+          "eventCount": 0
+        },
+        {
+          "tick": 124,
+          "index": 0.743519,
+          "convergence": 0.577577,
+          "emergence": 0.066694,
+          "moving": 4,
+          "coherence": 0.906968,
+          "nullMargin": 0.508991,
+          "eventCount": 0
+        },
+        {
+          "tick": 128,
+          "index": 0.74387,
+          "convergence": 0.577628,
+          "emergence": 0.066638,
+          "moving": 3,
+          "coherence": 0.783166,
+          "nullMargin": 0.370688,
+          "eventCount": 0
+        },
+        {
+          "tick": 132,
+          "index": 0.744141,
+          "convergence": 0.577687,
+          "emergence": 0.066602,
+          "moving": 3,
+          "coherence": 0.774454,
+          "nullMargin": 0.385758,
+          "eventCount": 0
+        },
+        {
+          "tick": 136,
+          "index": 0.744329,
+          "convergence": 0.577849,
+          "emergence": 0.066588,
+          "moving": 4,
+          "coherence": 0.84734,
+          "nullMargin": 0.393821,
+          "eventCount": 0
+        },
+        {
+          "tick": 140,
+          "index": 0.744437,
+          "convergence": 0.578112,
+          "emergence": 0.066594,
+          "moving": 3,
+          "coherence": 0.743267,
+          "nullMargin": 0.353998,
+          "eventCount": 0
+        },
+        {
+          "tick": 144,
+          "index": 0.744469,
+          "convergence": 0.578368,
+          "emergence": 0.06661,
+          "moving": 4,
+          "coherence": 0.784099,
+          "nullMargin": 0.367135,
+          "eventCount": 0
+        },
+        {
+          "tick": 148,
+          "index": 0.744434,
+          "convergence": 0.578437,
+          "emergence": 0.066626,
+          "moving": 3,
+          "coherence": 0.834437,
+          "nullMargin": 0.414079,
+          "eventCount": 0
+        },
+        {
+          "tick": 152,
+          "index": 0.744344,
+          "convergence": 0.578126,
+          "emergence": 0.066632,
+          "moving": 3,
+          "coherence": 0.898234,
+          "nullMargin": 0.521423,
+          "eventCount": 0
+        },
+        {
+          "tick": 156,
+          "index": 0.744211,
+          "convergence": 0.577307,
+          "emergence": 0.06662,
+          "moving": 3,
+          "coherence": 0.976236,
+          "nullMargin": 0.598769,
+          "eventCount": 0
+        },
+        {
+          "tick": 159,
+          "index": 0.744089,
+          "convergence": 0.576348,
+          "emergence": 0.066597,
+          "moving": 3,
+          "coherence": 0.988351,
+          "nullMargin": 0.601621,
+          "eventCount": 0
+        }
+      ]
+    },
+    {
+      "id": "puppeteer-hand-003",
+      "kind": "puppeteer",
+      "label": "Puppeteer Hand",
+      "seed": 40567,
+      "activeFrameworks": 10,
+      "dominantFramework": "ctm",
+      "weakestPresentFramework": "thaler9",
+      "meanIndex": 0.738602,
+      "peakIndex": 0.740435,
+      "finalIndex": 0.738622,
+      "volatility": 0.000929,
+      "slope": 0.000056,
+      "eventCount": 4,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.736811,
+          "convergence": 0.593601,
+          "emergence": 0.075422,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.736988,
+          "convergence": 0.591243,
+          "emergence": 0.07509,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.737243,
+          "convergence": 0.588544,
+          "emergence": 0.074713,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.737574,
+          "convergence": 0.5858,
+          "emergence": 0.074315,
+          "moving": 7,
+          "coherence": 0.84702,
+          "nullMargin": 0.469303,
+          "eventCount": 1
+        },
+        {
+          "tick": 16,
+          "index": 0.73797,
+          "convergence": 0.583287,
+          "emergence": 0.073919,
+          "moving": 7,
+          "coherence": 0.90683,
+          "nullMargin": 0.518433,
+          "eventCount": 1
+        },
+        {
+          "tick": 20,
+          "index": 0.738411,
+          "convergence": 0.581231,
+          "emergence": 0.073549,
+          "moving": 7,
+          "coherence": 0.9407,
+          "nullMargin": 0.534478,
+          "eventCount": 1
+        },
+        {
+          "tick": 24,
+          "index": 0.738872,
+          "convergence": 0.579785,
+          "emergence": 0.073228,
+          "moving": 7,
+          "coherence": 0.944927,
+          "nullMargin": 0.545164,
+          "eventCount": 1
+        },
+        {
+          "tick": 28,
+          "index": 0.73932,
+          "convergence": 0.579026,
+          "emergence": 0.072972,
+          "moving": 6,
+          "coherence": 0.904287,
+          "nullMargin": 0.514554,
+          "eventCount": 1
+        },
+        {
+          "tick": 32,
+          "index": 0.739726,
+          "convergence": 0.578965,
+          "emergence": 0.072794,
+          "moving": 6,
+          "coherence": 0.763883,
+          "nullMargin": 0.291782,
+          "eventCount": 1
+        },
+        {
+          "tick": 36,
+          "index": 0.740059,
+          "convergence": 0.579556,
+          "emergence": 0.072698,
+          "moving": 7,
+          "coherence": 0.874592,
+          "nullMargin": 0.489661,
+          "eventCount": 1
+        },
+        {
+          "tick": 40,
+          "index": 0.740295,
+          "convergence": 0.580711,
+          "emergence": 0.072685,
+          "moving": 7,
+          "coherence": 0.917091,
+          "nullMargin": 0.535871,
+          "eventCount": 1
+        },
+        {
+          "tick": 44,
+          "index": 0.740418,
+          "convergence": 0.582309,
+          "emergence": 0.072747,
+          "moving": 6,
+          "coherence": 0.776055,
+          "nullMargin": 0.366587,
+          "eventCount": 1
+        },
+        {
+          "tick": 48,
+          "index": 0.740422,
+          "convergence": 0.584206,
+          "emergence": 0.07287,
+          "moving": 7,
+          "coherence": 0.851302,
+          "nullMargin": 0.429184,
+          "eventCount": 1
+        },
+        {
+          "tick": 52,
+          "index": 0.740308,
+          "convergence": 0.586237,
+          "emergence": 0.073037,
+          "moving": 7,
+          "coherence": 0.941309,
+          "nullMargin": 0.558787,
+          "eventCount": 1
+        },
+        {
+          "tick": 56,
+          "index": 0.740091,
+          "convergence": 0.588227,
+          "emergence": 0.073229,
+          "moving": 6,
+          "coherence": 0.928036,
+          "nullMargin": 0.547163,
+          "eventCount": 1
+        },
+        {
+          "tick": 60,
+          "index": 0.739791,
+          "convergence": 0.589998,
+          "emergence": 0.073426,
+          "moving": 6,
+          "coherence": 0.814992,
+          "nullMargin": 0.395809,
+          "eventCount": 1
+        },
+        {
+          "tick": 64,
+          "index": 0.739436,
+          "convergence": 0.591385,
+          "emergence": 0.073608,
+          "moving": 6,
+          "coherence": 0.936626,
+          "nullMargin": 0.582246,
+          "eventCount": 1
+        },
+        {
+          "tick": 68,
+          "index": 0.739059,
+          "convergence": 0.592248,
+          "emergence": 0.073763,
+          "moving": 6,
+          "coherence": 0.936263,
+          "nullMargin": 0.542115,
+          "eventCount": 1
+        },
+        {
+          "tick": 72,
+          "index": 0.738691,
+          "convergence": 0.592491,
+          "emergence": 0.073879,
+          "moving": 7,
+          "coherence": 0.805881,
+          "nullMargin": 0.421894,
+          "eventCount": 1
+        },
+        {
+          "tick": 76,
+          "index": 0.738361,
+          "convergence": 0.592069,
+          "emergence": 0.073951,
+          "moving": 7,
+          "coherence": 0.906299,
+          "nullMargin": 0.508087,
+          "eventCount": 1
+        },
+        {
+          "tick": 80,
+          "index": 0.738089,
+          "convergence": 0.590987,
+          "emergence": 0.073978,
+          "moving": 5,
+          "coherence": 0.814023,
+          "nullMargin": 0.404117,
+          "eventCount": 1
+        },
+        {
+          "tick": 84,
+          "index": 0.737889,
+          "convergence": 0.589305,
+          "emergence": 0.073963,
+          "moving": 5,
+          "coherence": 0.749087,
+          "nullMargin": 0.351518,
+          "eventCount": 1
+        },
+        {
+          "tick": 88,
+          "index": 0.737764,
+          "convergence": 0.58713,
+          "emergence": 0.07391,
+          "moving": 5,
+          "coherence": 0.85995,
+          "nullMargin": 0.460713,
+          "eventCount": 1
+        },
+        {
+          "tick": 92,
+          "index": 0.73771,
+          "convergence": 0.584611,
+          "emergence": 0.073828,
+          "moving": 6,
+          "coherence": 0.785725,
+          "nullMargin": 0.3697,
+          "eventCount": 1
+        },
+        {
+          "tick": 96,
+          "index": 0.737715,
+          "convergence": 0.581933,
+          "emergence": 0.073724,
+          "moving": 6,
+          "coherence": 0.874411,
+          "nullMargin": 0.506994,
+          "eventCount": 1
+        },
+        {
+          "tick": 100,
+          "index": 0.737764,
+          "convergence": 0.579303,
+          "emergence": 0.073611,
+          "moving": 6,
+          "coherence": 0.758548,
+          "nullMargin": 0.339345,
+          "eventCount": 1
+        },
+        {
+          "tick": 104,
+          "index": 0.737842,
+          "convergence": 0.576932,
+          "emergence": 0.0735,
+          "moving": 5,
+          "coherence": 0.740503,
+          "nullMargin": 0.291431,
+          "eventCount": 1
+        },
+        {
+          "tick": 108,
+          "index": 0.737937,
+          "convergence": 0.575013,
+          "emergence": 0.073402,
+          "moving": 5,
+          "coherence": 0.808106,
+          "nullMargin": 0.357443,
+          "eventCount": 2
+        },
+        {
+          "tick": 112,
+          "index": 0.738037,
+          "convergence": 0.573688,
+          "emergence": 0.073325,
+          "moving": 4,
+          "coherence": 0.853711,
+          "nullMargin": 0.451258,
+          "eventCount": 2
+        },
+        {
+          "tick": 116,
+          "index": 0.738135,
+          "convergence": 0.57303,
+          "emergence": 0.073275,
+          "moving": 3,
+          "coherence": 0.652832,
+          "nullMargin": 0.252624,
+          "eventCount": 2
+        },
+        {
+          "tick": 120,
+          "index": 0.738226,
+          "convergence": 0.573021,
+          "emergence": 0.073251,
+          "moving": 5,
+          "coherence": 0.74192,
+          "nullMargin": 0.296114,
+          "eventCount": 3
+        },
+        {
+          "tick": 124,
+          "index": 0.738307,
+          "convergence": 0.573555,
+          "emergence": 0.073249,
+          "moving": 5,
+          "coherence": 0.847034,
+          "nullMargin": 0.433242,
+          "eventCount": 3
+        },
+        {
+          "tick": 128,
+          "index": 0.738377,
+          "convergence": 0.574452,
+          "emergence": 0.07326,
+          "moving": 4,
+          "coherence": 0.736323,
+          "nullMargin": 0.324148,
+          "eventCount": 3
+        },
+        {
+          "tick": 132,
+          "index": 0.738434,
+          "convergence": 0.575497,
+          "emergence": 0.073272,
+          "moving": 5,
+          "coherence": 0.809541,
+          "nullMargin": 0.407406,
+          "eventCount": 4
+        },
+        {
+          "tick": 136,
+          "index": 0.738481,
+          "convergence": 0.576481,
+          "emergence": 0.073277,
+          "moving": 3,
+          "coherence": 0.73393,
+          "nullMargin": 0.342623,
+          "eventCount": 4
+        },
+        {
+          "tick": 140,
+          "index": 0.738518,
+          "convergence": 0.577253,
+          "emergence": 0.073268,
+          "moving": 3,
+          "coherence": 0.83728,
+          "nullMargin": 0.400146,
+          "eventCount": 4
+        },
+        {
+          "tick": 144,
+          "index": 0.738549,
+          "convergence": 0.577754,
+          "emergence": 0.073245,
+          "moving": 3,
+          "coherence": 0.951985,
+          "nullMargin": 0.570067,
+          "eventCount": 4
+        },
+        {
+          "tick": 148,
+          "index": 0.738575,
+          "convergence": 0.578026,
+          "emergence": 0.073214,
+          "moving": 3,
+          "coherence": 0.972391,
+          "nullMargin": 0.61569,
+          "eventCount": 4
+        },
+        {
+          "tick": 152,
+          "index": 0.738598,
+          "convergence": 0.578195,
+          "emergence": 0.073184,
+          "moving": 3,
+          "coherence": 0.974654,
+          "nullMargin": 0.598582,
+          "eventCount": 4
+        },
+        {
+          "tick": 156,
+          "index": 0.738616,
+          "convergence": 0.57843,
+          "emergence": 0.073168,
+          "moving": 3,
+          "coherence": 0.960368,
+          "nullMargin": 0.565671,
+          "eventCount": 4
+        },
+        {
+          "tick": 159,
+          "index": 0.738622,
+          "convergence": 0.578749,
+          "emergence": 0.073175,
+          "moving": 3,
+          "coherence": 0.906843,
+          "nullMargin": 0.526643,
+          "eventCount": 4
+        }
+      ]
+    },
+    {
+      "id": "mechalogodrom-core-001",
+      "kind": "mechalogodrom",
+      "label": "Mechalogodrom Core",
+      "seed": 19772,
+      "activeFrameworks": 10,
+      "dominantFramework": "iit4",
+      "weakestPresentFramework": "thaler9",
+      "meanIndex": 0.851968,
+      "peakIndex": 0.85399,
+      "finalIndex": 0.85399,
+      "volatility": 0.000549,
+      "slope": 0.00057,
+      "eventCount": 1,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.852551,
+          "convergence": 0.755471,
+          "emergence": 0.045942,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.852168,
+          "convergence": 0.753814,
+          "emergence": 0.046048,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.851866,
+          "convergence": 0.751796,
+          "emergence": 0.046127,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.85165,
+          "convergence": 0.749529,
+          "emergence": 0.046181,
+          "moving": 5,
+          "coherence": 0.929888,
+          "nullMargin": 0.533034,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.851513,
+          "convergence": 0.747045,
+          "emergence": 0.046215,
+          "moving": 5,
+          "coherence": 0.798636,
+          "nullMargin": 0.395263,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.851444,
+          "convergence": 0.744341,
+          "emergence": 0.046232,
+          "moving": 5,
+          "coherence": 0.818723,
+          "nullMargin": 0.413002,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.851422,
+          "convergence": 0.741429,
+          "emergence": 0.046236,
+          "moving": 5,
+          "coherence": 0.763765,
+          "nullMargin": 0.358764,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.851429,
+          "convergence": 0.738378,
+          "emergence": 0.046234,
+          "moving": 5,
+          "coherence": 0.795665,
+          "nullMargin": 0.411184,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.85145,
+          "convergence": 0.735315,
+          "emergence": 0.046231,
+          "moving": 6,
+          "coherence": 0.911462,
+          "nullMargin": 0.498006,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.851473,
+          "convergence": 0.7324,
+          "emergence": 0.046233,
+          "moving": 6,
+          "coherence": 0.941605,
+          "nullMargin": 0.547749,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.851491,
+          "convergence": 0.72978,
+          "emergence": 0.046242,
+          "moving": 5,
+          "coherence": 0.887856,
+          "nullMargin": 0.477326,
+          "eventCount": 1
+        },
+        {
+          "tick": 44,
+          "index": 0.851504,
+          "convergence": 0.727541,
+          "emergence": 0.046256,
+          "moving": 6,
+          "coherence": 0.696775,
+          "nullMargin": 0.292005,
+          "eventCount": 1
+        },
+        {
+          "tick": 48,
+          "index": 0.851513,
+          "convergence": 0.725689,
+          "emergence": 0.046272,
+          "moving": 6,
+          "coherence": 0.895112,
+          "nullMargin": 0.522536,
+          "eventCount": 1
+        },
+        {
+          "tick": 52,
+          "index": 0.851523,
+          "convergence": 0.724149,
+          "emergence": 0.046281,
+          "moving": 6,
+          "coherence": 0.88431,
+          "nullMargin": 0.476745,
+          "eventCount": 1
+        },
+        {
+          "tick": 56,
+          "index": 0.851542,
+          "convergence": 0.722807,
+          "emergence": 0.046275,
+          "moving": 6,
+          "coherence": 0.721221,
+          "nullMargin": 0.306541,
+          "eventCount": 1
+        },
+        {
+          "tick": 60,
+          "index": 0.851577,
+          "convergence": 0.721549,
+          "emergence": 0.046246,
+          "moving": 6,
+          "coherence": 0.866508,
+          "nullMargin": 0.460785,
+          "eventCount": 1
+        },
+        {
+          "tick": 64,
+          "index": 0.851633,
+          "convergence": 0.720314,
+          "emergence": 0.046189,
+          "moving": 6,
+          "coherence": 0.904872,
+          "nullMargin": 0.522334,
+          "eventCount": 1
+        },
+        {
+          "tick": 68,
+          "index": 0.851716,
+          "convergence": 0.719117,
+          "emergence": 0.046106,
+          "moving": 5,
+          "coherence": 0.840219,
+          "nullMargin": 0.434734,
+          "eventCount": 1
+        },
+        {
+          "tick": 72,
+          "index": 0.851828,
+          "convergence": 0.718048,
+          "emergence": 0.046003,
+          "moving": 5,
+          "coherence": 0.81358,
+          "nullMargin": 0.412515,
+          "eventCount": 1
+        },
+        {
+          "tick": 76,
+          "index": 0.851965,
+          "convergence": 0.717246,
+          "emergence": 0.045891,
+          "moving": 5,
+          "coherence": 0.820123,
+          "nullMargin": 0.440969,
+          "eventCount": 1
+        },
+        {
+          "tick": 80,
+          "index": 0.852119,
+          "convergence": 0.71685,
+          "emergence": 0.045783,
+          "moving": 5,
+          "coherence": 0.814383,
+          "nullMargin": 0.423768,
+          "eventCount": 1
+        },
+        {
+          "tick": 84,
+          "index": 0.852276,
+          "convergence": 0.71696,
+          "emergence": 0.045694,
+          "moving": 5,
+          "coherence": 0.899958,
+          "nullMargin": 0.530366,
+          "eventCount": 1
+        },
+        {
+          "tick": 88,
+          "index": 0.85242,
+          "convergence": 0.717603,
+          "emergence": 0.045636,
+          "moving": 4,
+          "coherence": 0.845765,
+          "nullMargin": 0.497052,
+          "eventCount": 1
+        },
+        {
+          "tick": 92,
+          "index": 0.852529,
+          "convergence": 0.718734,
+          "emergence": 0.04562,
+          "moving": 3,
+          "coherence": 0.794045,
+          "nullMargin": 0.400469,
+          "eventCount": 1
+        },
+        {
+          "tick": 96,
+          "index": 0.852588,
+          "convergence": 0.720244,
+          "emergence": 0.045649,
+          "moving": 4,
+          "coherence": 0.722213,
+          "nullMargin": 0.290651,
+          "eventCount": 1
+        },
+        {
+          "tick": 100,
+          "index": 0.852582,
+          "convergence": 0.721996,
+          "emergence": 0.045724,
+          "moving": 4,
+          "coherence": 0.859317,
+          "nullMargin": 0.491106,
+          "eventCount": 1
+        },
+        {
+          "tick": 104,
+          "index": 0.852507,
+          "convergence": 0.723866,
+          "emergence": 0.04584,
+          "moving": 3,
+          "coherence": 0.750918,
+          "nullMargin": 0.341384,
+          "eventCount": 1
+        },
+        {
+          "tick": 108,
+          "index": 0.852367,
+          "convergence": 0.725784,
+          "emergence": 0.04599,
+          "moving": 4,
+          "coherence": 0.831861,
+          "nullMargin": 0.418703,
+          "eventCount": 1
+        },
+        {
+          "tick": 112,
+          "index": 0.852177,
+          "convergence": 0.727756,
+          "emergence": 0.046163,
+          "moving": 4,
+          "coherence": 0.926476,
+          "nullMargin": 0.552259,
+          "eventCount": 1
+        },
+        {
+          "tick": 116,
+          "index": 0.851963,
+          "convergence": 0.729866,
+          "emergence": 0.046346,
+          "moving": 4,
+          "coherence": 0.910535,
+          "nullMargin": 0.530397,
+          "eventCount": 1
+        },
+        {
+          "tick": 120,
+          "index": 0.851756,
+          "convergence": 0.73226,
+          "emergence": 0.046524,
+          "moving": 3,
+          "coherence": 0.789327,
+          "nullMargin": 0.364033,
+          "eventCount": 1
+        },
+        {
+          "tick": 124,
+          "index": 0.851589,
+          "convergence": 0.735101,
+          "emergence": 0.046685,
+          "moving": 3,
+          "coherence": 0.797153,
+          "nullMargin": 0.401228,
+          "eventCount": 1
+        },
+        {
+          "tick": 128,
+          "index": 0.851495,
+          "convergence": 0.738523,
+          "emergence": 0.046815,
+          "moving": 4,
+          "coherence": 0.896927,
+          "nullMargin": 0.471616,
+          "eventCount": 1
+        },
+        {
+          "tick": 132,
+          "index": 0.851501,
+          "convergence": 0.74258,
+          "emergence": 0.046901,
+          "moving": 3,
+          "coherence": 0.877533,
+          "nullMargin": 0.496241,
+          "eventCount": 1
+        },
+        {
+          "tick": 136,
+          "index": 0.851621,
+          "convergence": 0.747194,
+          "emergence": 0.046933,
+          "moving": 3,
+          "coherence": 0.7526,
+          "nullMargin": 0.374706,
+          "eventCount": 1
+        },
+        {
+          "tick": 140,
+          "index": 0.851859,
+          "convergence": 0.752125,
+          "emergence": 0.046905,
+          "moving": 4,
+          "coherence": 0.850991,
+          "nullMargin": 0.463995,
+          "eventCount": 1
+        },
+        {
+          "tick": 144,
+          "index": 0.852205,
+          "convergence": 0.75697,
+          "emergence": 0.046813,
+          "moving": 3,
+          "coherence": 0.806917,
+          "nullMargin": 0.391322,
+          "eventCount": 1
+        },
+        {
+          "tick": 148,
+          "index": 0.852636,
+          "convergence": 0.761206,
+          "emergence": 0.046657,
+          "moving": 4,
+          "coherence": 0.816574,
+          "nullMargin": 0.391966,
+          "eventCount": 1
+        },
+        {
+          "tick": 152,
+          "index": 0.853121,
+          "convergence": 0.764307,
+          "emergence": 0.046446,
+          "moving": 4,
+          "coherence": 0.9614,
+          "nullMargin": 0.583704,
+          "eventCount": 1
+        },
+        {
+          "tick": 156,
+          "index": 0.853623,
+          "convergence": 0.765898,
+          "emergence": 0.046191,
+          "moving": 4,
+          "coherence": 0.985561,
+          "nullMargin": 0.612264,
+          "eventCount": 1
+        },
+        {
+          "tick": 159,
+          "index": 0.85399,
+          "convergence": 0.766046,
+          "emergence": 0.045983,
+          "moving": 4,
+          "coherence": 0.991195,
+          "nullMargin": 0.627295,
+          "eventCount": 1
+        }
+      ]
+    },
+    {
+      "id": "apex-abomination-000",
+      "kind": "apex",
+      "label": "APEX Abomination",
+      "seed": 43496,
+      "activeFrameworks": 10,
+      "dominantFramework": "iit4",
+      "weakestPresentFramework": "butlin14",
+      "meanIndex": 0.880706,
+      "peakIndex": 0.884645,
+      "finalIndex": 0.8797,
+      "volatility": 0.001575,
+      "slope": -0.002646,
+      "eventCount": 1,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.884623,
+          "convergence": 0.789778,
+          "emergence": 0.032629,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.884627,
+          "convergence": 0.794045,
+          "emergence": 0.032809,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.884472,
+          "convergence": 0.798302,
+          "emergence": 0.033071,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.884172,
+          "convergence": 0.802419,
+          "emergence": 0.033398,
+          "moving": 6,
+          "coherence": 0.959406,
+          "nullMargin": 0.618407,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.883746,
+          "convergence": 0.806178,
+          "emergence": 0.033769,
+          "moving": 5,
+          "coherence": 0.868753,
+          "nullMargin": 0.488389,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.883226,
+          "convergence": 0.809271,
+          "emergence": 0.034156,
+          "moving": 5,
+          "coherence": 0.817668,
+          "nullMargin": 0.439636,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.88265,
+          "convergence": 0.811351,
+          "emergence": 0.034534,
+          "moving": 5,
+          "coherence": 0.837115,
+          "nullMargin": 0.474791,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.882056,
+          "convergence": 0.812118,
+          "emergence": 0.034875,
+          "moving": 5,
+          "coherence": 0.757095,
+          "nullMargin": 0.339285,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.881485,
+          "convergence": 0.811418,
+          "emergence": 0.035158,
+          "moving": 5,
+          "coherence": 0.843541,
+          "nullMargin": 0.422213,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.880973,
+          "convergence": 0.809283,
+          "emergence": 0.035368,
+          "moving": 5,
+          "coherence": 0.9072,
+          "nullMargin": 0.474157,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.880547,
+          "convergence": 0.805902,
+          "emergence": 0.035497,
+          "moving": 4,
+          "coherence": 0.741303,
+          "nullMargin": 0.277473,
+          "eventCount": 0
+        },
+        {
+          "tick": 44,
+          "index": 0.880226,
+          "convergence": 0.801528,
+          "emergence": 0.03554,
+          "moving": 5,
+          "coherence": 0.830381,
+          "nullMargin": 0.438685,
+          "eventCount": 0
+        },
+        {
+          "tick": 48,
+          "index": 0.880015,
+          "convergence": 0.796415,
+          "emergence": 0.035503,
+          "moving": 5,
+          "coherence": 0.89074,
+          "nullMargin": 0.51355,
+          "eventCount": 0
+        },
+        {
+          "tick": 52,
+          "index": 0.87991,
+          "convergence": 0.790795,
+          "emergence": 0.035393,
+          "moving": 4,
+          "coherence": 0.748028,
+          "nullMargin": 0.286947,
+          "eventCount": 0
+        },
+        {
+          "tick": 56,
+          "index": 0.879896,
+          "convergence": 0.784893,
+          "emergence": 0.035224,
+          "moving": 5,
+          "coherence": 0.700969,
+          "nullMargin": 0.281713,
+          "eventCount": 0
+        },
+        {
+          "tick": 60,
+          "index": 0.879954,
+          "convergence": 0.778951,
+          "emergence": 0.035014,
+          "moving": 5,
+          "coherence": 0.774281,
+          "nullMargin": 0.357568,
+          "eventCount": 0
+        },
+        {
+          "tick": 64,
+          "index": 0.880062,
+          "convergence": 0.773242,
+          "emergence": 0.034781,
+          "moving": 5,
+          "coherence": 0.893024,
+          "nullMargin": 0.459157,
+          "eventCount": 0
+        },
+        {
+          "tick": 68,
+          "index": 0.8802,
+          "convergence": 0.768045,
+          "emergence": 0.034548,
+          "moving": 4,
+          "coherence": 0.770837,
+          "nullMargin": 0.352436,
+          "eventCount": 0
+        },
+        {
+          "tick": 72,
+          "index": 0.879998,
+          "convergence": 0.765158,
+          "emergence": 0.034564,
+          "moving": 4,
+          "coherence": 0.762417,
+          "nullMargin": 0.269898,
+          "eventCount": 1
+        },
+        {
+          "tick": 76,
+          "index": 0.879723,
+          "convergence": 0.763561,
+          "emergence": 0.034664,
+          "moving": 4,
+          "coherence": 0.804058,
+          "nullMargin": 0.36205,
+          "eventCount": 1
+        },
+        {
+          "tick": 80,
+          "index": 0.879492,
+          "convergence": 0.762815,
+          "emergence": 0.034772,
+          "moving": 3,
+          "coherence": 0.835889,
+          "nullMargin": 0.45361,
+          "eventCount": 1
+        },
+        {
+          "tick": 84,
+          "index": 0.879309,
+          "convergence": 0.762867,
+          "emergence": 0.034881,
+          "moving": 3,
+          "coherence": 0.776972,
+          "nullMargin": 0.368484,
+          "eventCount": 1
+        },
+        {
+          "tick": 88,
+          "index": 0.879178,
+          "convergence": 0.763556,
+          "emergence": 0.034984,
+          "moving": 3,
+          "coherence": 0.777589,
+          "nullMargin": 0.396651,
+          "eventCount": 1
+        },
+        {
+          "tick": 92,
+          "index": 0.879102,
+          "convergence": 0.764643,
+          "emergence": 0.03507,
+          "moving": 4,
+          "coherence": 0.8559,
+          "nullMargin": 0.436944,
+          "eventCount": 1
+        },
+        {
+          "tick": 96,
+          "index": 0.879083,
+          "convergence": 0.765875,
+          "emergence": 0.03513,
+          "moving": 3,
+          "coherence": 0.813571,
+          "nullMargin": 0.37657,
+          "eventCount": 1
+        },
+        {
+          "tick": 100,
+          "index": 0.879124,
+          "convergence": 0.767059,
+          "emergence": 0.035158,
+          "moving": 4,
+          "coherence": 0.769217,
+          "nullMargin": 0.376913,
+          "eventCount": 1
+        },
+        {
+          "tick": 104,
+          "index": 0.879224,
+          "convergence": 0.768109,
+          "emergence": 0.035155,
+          "moving": 4,
+          "coherence": 0.942007,
+          "nullMargin": 0.552814,
+          "eventCount": 1
+        },
+        {
+          "tick": 108,
+          "index": 0.87938,
+          "convergence": 0.769058,
+          "emergence": 0.035127,
+          "moving": 4,
+          "coherence": 0.964384,
+          "nullMargin": 0.579443,
+          "eventCount": 1
+        },
+        {
+          "tick": 112,
+          "index": 0.879583,
+          "convergence": 0.770033,
+          "emergence": 0.035085,
+          "moving": 4,
+          "coherence": 0.952462,
+          "nullMargin": 0.555963,
+          "eventCount": 1
+        },
+        {
+          "tick": 116,
+          "index": 0.879819,
+          "convergence": 0.77118,
+          "emergence": 0.035044,
+          "moving": 4,
+          "coherence": 0.868179,
+          "nullMargin": 0.45581,
+          "eventCount": 1
+        },
+        {
+          "tick": 120,
+          "index": 0.88007,
+          "convergence": 0.7726,
+          "emergence": 0.035018,
+          "moving": 4,
+          "coherence": 0.72822,
+          "nullMargin": 0.308617,
+          "eventCount": 1
+        },
+        {
+          "tick": 124,
+          "index": 0.88031,
+          "convergence": 0.774287,
+          "emergence": 0.03502,
+          "moving": 3,
+          "coherence": 0.853251,
+          "nullMargin": 0.442077,
+          "eventCount": 1
+        },
+        {
+          "tick": 128,
+          "index": 0.880516,
+          "convergence": 0.77611,
+          "emergence": 0.035059,
+          "moving": 3,
+          "coherence": 0.77302,
+          "nullMargin": 0.349482,
+          "eventCount": 1
+        },
+        {
+          "tick": 132,
+          "index": 0.880663,
+          "convergence": 0.777829,
+          "emergence": 0.035138,
+          "moving": 4,
+          "coherence": 0.82072,
+          "nullMargin": 0.43519,
+          "eventCount": 1
+        },
+        {
+          "tick": 136,
+          "index": 0.880734,
+          "convergence": 0.779152,
+          "emergence": 0.035254,
+          "moving": 3,
+          "coherence": 0.856436,
+          "nullMargin": 0.421242,
+          "eventCount": 1
+        },
+        {
+          "tick": 140,
+          "index": 0.88072,
+          "convergence": 0.779826,
+          "emergence": 0.0354,
+          "moving": 3,
+          "coherence": 0.909418,
+          "nullMargin": 0.535564,
+          "eventCount": 1
+        },
+        {
+          "tick": 144,
+          "index": 0.880625,
+          "convergence": 0.779726,
+          "emergence": 0.035564,
+          "moving": 3,
+          "coherence": 0.978232,
+          "nullMargin": 0.601955,
+          "eventCount": 1
+        },
+        {
+          "tick": 148,
+          "index": 0.880465,
+          "convergence": 0.778912,
+          "emergence": 0.035734,
+          "moving": 3,
+          "coherence": 0.988722,
+          "nullMargin": 0.642774,
+          "eventCount": 1
+        },
+        {
+          "tick": 152,
+          "index": 0.880201,
+          "convergence": 0.777972,
+          "emergence": 0.035939,
+          "moving": 3,
+          "coherence": 0.955596,
+          "nullMargin": 0.591376,
+          "eventCount": 1
+        },
+        {
+          "tick": 156,
+          "index": 0.879896,
+          "convergence": 0.777128,
+          "emergence": 0.036145,
+          "moving": 3,
+          "coherence": 0.944774,
+          "nullMargin": 0.577075,
+          "eventCount": 1
+        },
+        {
+          "tick": 159,
+          "index": 0.8797,
+          "convergence": 0.776631,
+          "emergence": 0.036269,
+          "moving": 3,
+          "coherence": 0.946179,
+          "nullMargin": 0.576266,
+          "eventCount": 1
+        }
+      ]
+    },
+    {
+      "id": "pantheon-chorus-025",
+      "kind": "pantheon",
+      "label": "Pantheon Chorus",
+      "seed": 9722,
+      "activeFrameworks": 10,
+      "dominantFramework": "iit4",
+      "weakestPresentFramework": "sensorimotor",
+      "meanIndex": 0.863859,
+      "peakIndex": 0.865917,
+      "finalIndex": 0.864577,
+      "volatility": 0.001109,
+      "slope": -0.002262,
+      "eventCount": 2,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.865917,
+          "convergence": 0.734287,
+          "emergence": 0.038229,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.865916,
+          "convergence": 0.735852,
+          "emergence": 0.038244,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.86591,
+          "convergence": 0.738099,
+          "emergence": 0.038333,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.865882,
+          "convergence": 0.74086,
+          "emergence": 0.038494,
+          "moving": 4,
+          "coherence": 0.960977,
+          "nullMargin": 0.618788,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.865817,
+          "convergence": 0.743934,
+          "emergence": 0.038722,
+          "moving": 3,
+          "coherence": 0.877926,
+          "nullMargin": 0.475978,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.865699,
+          "convergence": 0.747131,
+          "emergence": 0.039009,
+          "moving": 3,
+          "coherence": 0.837656,
+          "nullMargin": 0.430493,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.865521,
+          "convergence": 0.750301,
+          "emergence": 0.039345,
+          "moving": 3,
+          "coherence": 0.918868,
+          "nullMargin": 0.508775,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.865283,
+          "convergence": 0.753341,
+          "emergence": 0.039718,
+          "moving": 3,
+          "coherence": 0.943755,
+          "nullMargin": 0.564091,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.864993,
+          "convergence": 0.756175,
+          "emergence": 0.040112,
+          "moving": 2,
+          "coherence": 0.858687,
+          "nullMargin": 0.441658,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.864665,
+          "convergence": 0.758722,
+          "emergence": 0.040511,
+          "moving": 3,
+          "coherence": 0.758545,
+          "nullMargin": 0.348223,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.864322,
+          "convergence": 0.760861,
+          "emergence": 0.040894,
+          "moving": 3,
+          "coherence": 0.904663,
+          "nullMargin": 0.491395,
+          "eventCount": 0
+        },
+        {
+          "tick": 44,
+          "index": 0.863986,
+          "convergence": 0.762414,
+          "emergence": 0.041239,
+          "moving": 3,
+          "coherence": 0.919677,
+          "nullMargin": 0.452267,
+          "eventCount": 0
+        },
+        {
+          "tick": 48,
+          "index": 0.86368,
+          "convergence": 0.763157,
+          "emergence": 0.041525,
+          "moving": 2,
+          "coherence": 0.816739,
+          "nullMargin": 0.448395,
+          "eventCount": 0
+        },
+        {
+          "tick": 52,
+          "index": 0.863428,
+          "convergence": 0.762867,
+          "emergence": 0.041733,
+          "moving": 3,
+          "coherence": 0.750379,
+          "nullMargin": 0.327736,
+          "eventCount": 0
+        },
+        {
+          "tick": 56,
+          "index": 0.863246,
+          "convergence": 0.761386,
+          "emergence": 0.04185,
+          "moving": 4,
+          "coherence": 0.734542,
+          "nullMargin": 0.310538,
+          "eventCount": 0
+        },
+        {
+          "tick": 60,
+          "index": 0.863145,
+          "convergence": 0.758679,
+          "emergence": 0.041868,
+          "moving": 5,
+          "coherence": 0.787297,
+          "nullMargin": 0.346383,
+          "eventCount": 0
+        },
+        {
+          "tick": 64,
+          "index": 0.863128,
+          "convergence": 0.754862,
+          "emergence": 0.041789,
+          "moving": 4,
+          "coherence": 0.799285,
+          "nullMargin": 0.401068,
+          "eventCount": 0
+        },
+        {
+          "tick": 68,
+          "index": 0.863192,
+          "convergence": 0.750184,
+          "emergence": 0.041621,
+          "moving": 5,
+          "coherence": 0.722717,
+          "nullMargin": 0.32206,
+          "eventCount": 0
+        },
+        {
+          "tick": 72,
+          "index": 0.863323,
+          "convergence": 0.744975,
+          "emergence": 0.04138,
+          "moving": 6,
+          "coherence": 0.797992,
+          "nullMargin": 0.401441,
+          "eventCount": 0
+        },
+        {
+          "tick": 76,
+          "index": 0.863503,
+          "convergence": 0.739592,
+          "emergence": 0.041089,
+          "moving": 6,
+          "coherence": 0.905895,
+          "nullMargin": 0.537451,
+          "eventCount": 1
+        },
+        {
+          "tick": 80,
+          "index": 0.863709,
+          "convergence": 0.734368,
+          "emergence": 0.040774,
+          "moving": 6,
+          "coherence": 0.881063,
+          "nullMargin": 0.484783,
+          "eventCount": 1
+        },
+        {
+          "tick": 84,
+          "index": 0.863914,
+          "convergence": 0.729575,
+          "emergence": 0.040461,
+          "moving": 7,
+          "coherence": 0.841009,
+          "nullMargin": 0.45733,
+          "eventCount": 1
+        },
+        {
+          "tick": 88,
+          "index": 0.864056,
+          "convergence": 0.725563,
+          "emergence": 0.0402,
+          "moving": 6,
+          "coherence": 0.875996,
+          "nullMargin": 0.515794,
+          "eventCount": 1
+        },
+        {
+          "tick": 92,
+          "index": 0.863823,
+          "convergence": 0.723602,
+          "emergence": 0.040203,
+          "moving": 6,
+          "coherence": 0.863563,
+          "nullMargin": 0.484241,
+          "eventCount": 1
+        },
+        {
+          "tick": 96,
+          "index": 0.863565,
+          "convergence": 0.722254,
+          "emergence": 0.040242,
+          "moving": 6,
+          "coherence": 0.914979,
+          "nullMargin": 0.55895,
+          "eventCount": 1
+        },
+        {
+          "tick": 100,
+          "index": 0.863286,
+          "convergence": 0.721442,
+          "emergence": 0.040314,
+          "moving": 6,
+          "coherence": 0.860139,
+          "nullMargin": 0.487698,
+          "eventCount": 1
+        },
+        {
+          "tick": 104,
+          "index": 0.862997,
+          "convergence": 0.721048,
+          "emergence": 0.040411,
+          "moving": 6,
+          "coherence": 0.769474,
+          "nullMargin": 0.391931,
+          "eventCount": 1
+        },
+        {
+          "tick": 108,
+          "index": 0.862715,
+          "convergence": 0.720942,
+          "emergence": 0.040518,
+          "moving": 6,
+          "coherence": 0.764431,
+          "nullMargin": 0.354227,
+          "eventCount": 1
+        },
+        {
+          "tick": 112,
+          "index": 0.862468,
+          "convergence": 0.721027,
+          "emergence": 0.040621,
+          "moving": 6,
+          "coherence": 0.897967,
+          "nullMargin": 0.512021,
+          "eventCount": 1
+        },
+        {
+          "tick": 116,
+          "index": 0.862284,
+          "convergence": 0.721268,
+          "emergence": 0.040705,
+          "moving": 5,
+          "coherence": 0.749122,
+          "nullMargin": 0.285058,
+          "eventCount": 1
+        },
+        {
+          "tick": 120,
+          "index": 0.862194,
+          "convergence": 0.721711,
+          "emergence": 0.040756,
+          "moving": 6,
+          "coherence": 0.865172,
+          "nullMargin": 0.462089,
+          "eventCount": 1
+        },
+        {
+          "tick": 124,
+          "index": 0.862227,
+          "convergence": 0.72247,
+          "emergence": 0.040766,
+          "moving": 6,
+          "coherence": 0.946124,
+          "nullMargin": 0.54913,
+          "eventCount": 1
+        },
+        {
+          "tick": 128,
+          "index": 0.862405,
+          "convergence": 0.723695,
+          "emergence": 0.040731,
+          "moving": 6,
+          "coherence": 0.94135,
+          "nullMargin": 0.562048,
+          "eventCount": 1
+        },
+        {
+          "tick": 132,
+          "index": 0.862739,
+          "convergence": 0.72552,
+          "emergence": 0.040649,
+          "moving": 6,
+          "coherence": 0.834598,
+          "nullMargin": 0.40763,
+          "eventCount": 2
+        },
+        {
+          "tick": 136,
+          "index": 0.863087,
+          "convergence": 0.728602,
+          "emergence": 0.040617,
+          "moving": 6,
+          "coherence": 0.721229,
+          "nullMargin": 0.339074,
+          "eventCount": 2
+        },
+        {
+          "tick": 140,
+          "index": 0.863236,
+          "convergence": 0.733726,
+          "emergence": 0.040767,
+          "moving": 6,
+          "coherence": 0.795134,
+          "nullMargin": 0.377491,
+          "eventCount": 2
+        },
+        {
+          "tick": 144,
+          "index": 0.863462,
+          "convergence": 0.739424,
+          "emergence": 0.0409,
+          "moving": 5,
+          "coherence": 0.712483,
+          "nullMargin": 0.317511,
+          "eventCount": 2
+        },
+        {
+          "tick": 148,
+          "index": 0.863744,
+          "convergence": 0.745318,
+          "emergence": 0.041008,
+          "moving": 6,
+          "coherence": 0.824567,
+          "nullMargin": 0.379687,
+          "eventCount": 2
+        },
+        {
+          "tick": 152,
+          "index": 0.864053,
+          "convergence": 0.750933,
+          "emergence": 0.04109,
+          "moving": 6,
+          "coherence": 0.802692,
+          "nullMargin": 0.441176,
+          "eventCount": 2
+        },
+        {
+          "tick": 156,
+          "index": 0.864361,
+          "convergence": 0.755793,
+          "emergence": 0.041142,
+          "moving": 7,
+          "coherence": 0.951954,
+          "nullMargin": 0.566605,
+          "eventCount": 2
+        },
+        {
+          "tick": 159,
+          "index": 0.864577,
+          "convergence": 0.75871,
+          "emergence": 0.041162,
+          "moving": 7,
+          "coherence": 0.982096,
+          "nullMargin": 0.60177,
+          "eventCount": 2
+        }
+      ]
+    },
+    {
+      "id": "glyph-resonator-011",
+      "kind": "glyph",
+      "label": "Glyph Resonator",
+      "seed": 24863,
+      "activeFrameworks": 8,
+      "dominantFramework": "fieldIntegration",
+      "weakestPresentFramework": "activeInference",
+      "meanIndex": 0.721981,
+      "peakIndex": 0.724945,
+      "finalIndex": 0.721966,
+      "volatility": 0.002698,
+      "slope": 0.000691,
+      "eventCount": 0,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.724859,
+          "convergence": 0.47353,
+          "emergence": 0.050825,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.724945,
+          "convergence": 0.471608,
+          "emergence": 0.050585,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.724863,
+          "convergence": 0.470158,
+          "emergence": 0.050408,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.724611,
+          "convergence": 0.469269,
+          "emergence": 0.050302,
+          "moving": 3,
+          "coherence": 0.98862,
+          "nullMargin": 0.627775,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.724193,
+          "convergence": 0.469001,
+          "emergence": 0.050275,
+          "moving": 3,
+          "coherence": 0.982202,
+          "nullMargin": 0.584481,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.723623,
+          "convergence": 0.469386,
+          "emergence": 0.050328,
+          "moving": 3,
+          "coherence": 0.967833,
+          "nullMargin": 0.60776,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.722919,
+          "convergence": 0.470433,
+          "emergence": 0.050462,
+          "moving": 2,
+          "coherence": 0.903025,
+          "nullMargin": 0.532614,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.722111,
+          "convergence": 0.472127,
+          "emergence": 0.050672,
+          "moving": 2,
+          "coherence": 0.733056,
+          "nullMargin": 0.320404,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.721234,
+          "convergence": 0.474442,
+          "emergence": 0.050951,
+          "moving": 2,
+          "coherence": 0.724311,
+          "nullMargin": 0.365269,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.720334,
+          "convergence": 0.47734,
+          "emergence": 0.051288,
+          "moving": 2,
+          "coherence": 0.848713,
+          "nullMargin": 0.437581,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.719456,
+          "convergence": 0.480771,
+          "emergence": 0.051671,
+          "moving": 2,
+          "coherence": 0.961604,
+          "nullMargin": 0.591899,
+          "eventCount": 0
+        },
+        {
+          "tick": 44,
+          "index": 0.718652,
+          "convergence": 0.484675,
+          "emergence": 0.052083,
+          "moving": 2,
+          "coherence": 0.978539,
+          "nullMargin": 0.655558,
+          "eventCount": 0
+        },
+        {
+          "tick": 48,
+          "index": 0.717969,
+          "convergence": 0.488982,
+          "emergence": 0.05251,
+          "moving": 2,
+          "coherence": 0.977264,
+          "nullMargin": 0.589822,
+          "eventCount": 0
+        },
+        {
+          "tick": 52,
+          "index": 0.717449,
+          "convergence": 0.493613,
+          "emergence": 0.052934,
+          "moving": 2,
+          "coherence": 0.963766,
+          "nullMargin": 0.567344,
+          "eventCount": 0
+        },
+        {
+          "tick": 56,
+          "index": 0.717128,
+          "convergence": 0.498483,
+          "emergence": 0.05334,
+          "moving": 2,
+          "coherence": 0.89795,
+          "nullMargin": 0.538949,
+          "eventCount": 0
+        },
+        {
+          "tick": 60,
+          "index": 0.717028,
+          "convergence": 0.503502,
+          "emergence": 0.053716,
+          "moving": 3,
+          "coherence": 0.816104,
+          "nullMargin": 0.477302,
+          "eventCount": 0
+        },
+        {
+          "tick": 64,
+          "index": 0.717158,
+          "convergence": 0.508569,
+          "emergence": 0.05405,
+          "moving": 3,
+          "coherence": 0.891642,
+          "nullMargin": 0.562062,
+          "eventCount": 0
+        },
+        {
+          "tick": 68,
+          "index": 0.717512,
+          "convergence": 0.513562,
+          "emergence": 0.054335,
+          "moving": 2,
+          "coherence": 0.761941,
+          "nullMargin": 0.290624,
+          "eventCount": 0
+        },
+        {
+          "tick": 72,
+          "index": 0.718067,
+          "convergence": 0.51832,
+          "emergence": 0.054562,
+          "moving": 2,
+          "coherence": 0.92275,
+          "nullMargin": 0.533167,
+          "eventCount": 0
+        },
+        {
+          "tick": 76,
+          "index": 0.718784,
+          "convergence": 0.522633,
+          "emergence": 0.054726,
+          "moving": 2,
+          "coherence": 0.904723,
+          "nullMargin": 0.498653,
+          "eventCount": 0
+        },
+        {
+          "tick": 80,
+          "index": 0.719614,
+          "convergence": 0.52625,
+          "emergence": 0.05482,
+          "moving": 2,
+          "coherence": 0.708002,
+          "nullMargin": 0.242805,
+          "eventCount": 0
+        },
+        {
+          "tick": 84,
+          "index": 0.7205,
+          "convergence": 0.528897,
+          "emergence": 0.054842,
+          "moving": 4,
+          "coherence": 0.806535,
+          "nullMargin": 0.452033,
+          "eventCount": 0
+        },
+        {
+          "tick": 88,
+          "index": 0.721384,
+          "convergence": 0.530327,
+          "emergence": 0.054788,
+          "moving": 4,
+          "coherence": 0.920306,
+          "nullMargin": 0.518648,
+          "eventCount": 0
+        },
+        {
+          "tick": 92,
+          "index": 0.722211,
+          "convergence": 0.53037,
+          "emergence": 0.054659,
+          "moving": 3,
+          "coherence": 0.89125,
+          "nullMargin": 0.449217,
+          "eventCount": 0
+        },
+        {
+          "tick": 96,
+          "index": 0.722942,
+          "convergence": 0.528972,
+          "emergence": 0.054461,
+          "moving": 3,
+          "coherence": 0.79066,
+          "nullMargin": 0.286017,
+          "eventCount": 0
+        },
+        {
+          "tick": 100,
+          "index": 0.723546,
+          "convergence": 0.526204,
+          "emergence": 0.054203,
+          "moving": 3,
+          "coherence": 0.869611,
+          "nullMargin": 0.515449,
+          "eventCount": 0
+        },
+        {
+          "tick": 104,
+          "index": 0.724012,
+          "convergence": 0.522243,
+          "emergence": 0.053895,
+          "moving": 4,
+          "coherence": 0.795008,
+          "nullMargin": 0.386989,
+          "eventCount": 0
+        },
+        {
+          "tick": 108,
+          "index": 0.724342,
+          "convergence": 0.517331,
+          "emergence": 0.05355,
+          "moving": 4,
+          "coherence": 0.89242,
+          "nullMargin": 0.545039,
+          "eventCount": 0
+        },
+        {
+          "tick": 112,
+          "index": 0.724548,
+          "convergence": 0.511726,
+          "emergence": 0.05318,
+          "moving": 3,
+          "coherence": 0.765142,
+          "nullMargin": 0.311219,
+          "eventCount": 0
+        },
+        {
+          "tick": 116,
+          "index": 0.72465,
+          "convergence": 0.505676,
+          "emergence": 0.052795,
+          "moving": 3,
+          "coherence": 0.798519,
+          "nullMargin": 0.391182,
+          "eventCount": 0
+        },
+        {
+          "tick": 120,
+          "index": 0.72467,
+          "convergence": 0.499407,
+          "emergence": 0.052405,
+          "moving": 4,
+          "coherence": 0.838128,
+          "nullMargin": 0.324705,
+          "eventCount": 0
+        },
+        {
+          "tick": 124,
+          "index": 0.72463,
+          "convergence": 0.493124,
+          "emergence": 0.052018,
+          "moving": 3,
+          "coherence": 0.839539,
+          "nullMargin": 0.438232,
+          "eventCount": 0
+        },
+        {
+          "tick": 128,
+          "index": 0.724547,
+          "convergence": 0.487029,
+          "emergence": 0.051643,
+          "moving": 3,
+          "coherence": 0.863358,
+          "nullMargin": 0.433175,
+          "eventCount": 0
+        },
+        {
+          "tick": 132,
+          "index": 0.72443,
+          "convergence": 0.481328,
+          "emergence": 0.051292,
+          "moving": 3,
+          "coherence": 0.954744,
+          "nullMargin": 0.572017,
+          "eventCount": 0
+        },
+        {
+          "tick": 136,
+          "index": 0.724284,
+          "convergence": 0.476233,
+          "emergence": 0.05098,
+          "moving": 3,
+          "coherence": 0.961472,
+          "nullMargin": 0.640406,
+          "eventCount": 0
+        },
+        {
+          "tick": 140,
+          "index": 0.724099,
+          "convergence": 0.471945,
+          "emergence": 0.050725,
+          "moving": 3,
+          "coherence": 0.89237,
+          "nullMargin": 0.506804,
+          "eventCount": 0
+        },
+        {
+          "tick": 144,
+          "index": 0.72386,
+          "convergence": 0.468637,
+          "emergence": 0.050545,
+          "moving": 4,
+          "coherence": 0.838871,
+          "nullMargin": 0.46122,
+          "eventCount": 0
+        },
+        {
+          "tick": 148,
+          "index": 0.723539,
+          "convergence": 0.466419,
+          "emergence": 0.050456,
+          "moving": 3,
+          "coherence": 0.89777,
+          "nullMargin": 0.540947,
+          "eventCount": 0
+        },
+        {
+          "tick": 152,
+          "index": 0.723104,
+          "convergence": 0.465322,
+          "emergence": 0.050469,
+          "moving": 3,
+          "coherence": 0.752952,
+          "nullMargin": 0.361838,
+          "eventCount": 0
+        },
+        {
+          "tick": 156,
+          "index": 0.72252,
+          "convergence": 0.465284,
+          "emergence": 0.050585,
+          "moving": 3,
+          "coherence": 0.871538,
+          "nullMargin": 0.514487,
+          "eventCount": 0
+        },
+        {
+          "tick": 159,
+          "index": 0.721966,
+          "convergence": 0.46586,
+          "emergence": 0.050737,
+          "moving": 2,
+          "coherence": 0.807903,
+          "nullMargin": 0.379653,
+          "eventCount": 0
+        }
+      ]
+    },
+    {
+      "id": "xenomimic-twin-000",
+      "kind": "xenomimic",
+      "label": "Xenomimic Bipolar Twin",
+      "seed": 465948,
+      "activeFrameworks": 10,
+      "dominantFramework": "iit4",
+      "weakestPresentFramework": "attentionSchema",
+      "meanIndex": 0.809024,
+      "peakIndex": 0.811291,
+      "finalIndex": 0.808378,
+      "volatility": 0.000861,
+      "slope": -0.001902,
+      "eventCount": 2,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.811291,
+          "convergence": 0.732432,
+          "emergence": 0.063381,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.810934,
+          "convergence": 0.732679,
+          "emergence": 0.063385,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.810582,
+          "convergence": 0.732551,
+          "emergence": 0.06339,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.81026,
+          "convergence": 0.732211,
+          "emergence": 0.0634,
+          "moving": 7,
+          "coherence": 0.959459,
+          "nullMargin": 0.601374,
+          "eventCount": 0
+        },
+        {
+          "tick": 16,
+          "index": 0.809982,
+          "convergence": 0.731792,
+          "emergence": 0.063417,
+          "moving": 6,
+          "coherence": 0.895104,
+          "nullMargin": 0.503647,
+          "eventCount": 0
+        },
+        {
+          "tick": 20,
+          "index": 0.809757,
+          "convergence": 0.731338,
+          "emergence": 0.063444,
+          "moving": 6,
+          "coherence": 0.815149,
+          "nullMargin": 0.428917,
+          "eventCount": 0
+        },
+        {
+          "tick": 24,
+          "index": 0.809581,
+          "convergence": 0.730788,
+          "emergence": 0.063481,
+          "moving": 6,
+          "coherence": 0.897991,
+          "nullMargin": 0.519231,
+          "eventCount": 0
+        },
+        {
+          "tick": 28,
+          "index": 0.809443,
+          "convergence": 0.730011,
+          "emergence": 0.063528,
+          "moving": 5,
+          "coherence": 0.89899,
+          "nullMargin": 0.521991,
+          "eventCount": 0
+        },
+        {
+          "tick": 32,
+          "index": 0.809329,
+          "convergence": 0.728865,
+          "emergence": 0.063583,
+          "moving": 5,
+          "coherence": 0.754768,
+          "nullMargin": 0.322847,
+          "eventCount": 0
+        },
+        {
+          "tick": 36,
+          "index": 0.809223,
+          "convergence": 0.727269,
+          "emergence": 0.063646,
+          "moving": 6,
+          "coherence": 0.853012,
+          "nullMargin": 0.435285,
+          "eventCount": 0
+        },
+        {
+          "tick": 40,
+          "index": 0.809114,
+          "convergence": 0.725248,
+          "emergence": 0.063714,
+          "moving": 6,
+          "coherence": 0.929987,
+          "nullMargin": 0.547754,
+          "eventCount": 0
+        },
+        {
+          "tick": 44,
+          "index": 0.808995,
+          "convergence": 0.722923,
+          "emergence": 0.063789,
+          "moving": 6,
+          "coherence": 0.869314,
+          "nullMargin": 0.500118,
+          "eventCount": 0
+        },
+        {
+          "tick": 48,
+          "index": 0.808867,
+          "convergence": 0.720481,
+          "emergence": 0.063867,
+          "moving": 6,
+          "coherence": 0.783952,
+          "nullMargin": 0.407152,
+          "eventCount": 0
+        },
+        {
+          "tick": 52,
+          "index": 0.808736,
+          "convergence": 0.718112,
+          "emergence": 0.063948,
+          "moving": 6,
+          "coherence": 0.890277,
+          "nullMargin": 0.471827,
+          "eventCount": 0
+        },
+        {
+          "tick": 56,
+          "index": 0.808613,
+          "convergence": 0.715966,
+          "emergence": 0.064028,
+          "moving": 5,
+          "coherence": 0.890424,
+          "nullMargin": 0.496526,
+          "eventCount": 0
+        },
+        {
+          "tick": 60,
+          "index": 0.808511,
+          "convergence": 0.714127,
+          "emergence": 0.064101,
+          "moving": 5,
+          "coherence": 0.822152,
+          "nullMargin": 0.366602,
+          "eventCount": 0
+        },
+        {
+          "tick": 64,
+          "index": 0.808444,
+          "convergence": 0.712616,
+          "emergence": 0.06416,
+          "moving": 5,
+          "coherence": 0.820539,
+          "nullMargin": 0.4705,
+          "eventCount": 0
+        },
+        {
+          "tick": 68,
+          "index": 0.808423,
+          "convergence": 0.711414,
+          "emergence": 0.064201,
+          "moving": 6,
+          "coherence": 0.80361,
+          "nullMargin": 0.434082,
+          "eventCount": 0
+        },
+        {
+          "tick": 72,
+          "index": 0.808457,
+          "convergence": 0.710484,
+          "emergence": 0.064218,
+          "moving": 7,
+          "coherence": 0.883546,
+          "nullMargin": 0.4608,
+          "eventCount": 0
+        },
+        {
+          "tick": 76,
+          "index": 0.808549,
+          "convergence": 0.709799,
+          "emergence": 0.064211,
+          "moving": 6,
+          "coherence": 0.88789,
+          "nullMargin": 0.490959,
+          "eventCount": 0
+        },
+        {
+          "tick": 80,
+          "index": 0.808695,
+          "convergence": 0.709352,
+          "emergence": 0.064183,
+          "moving": 6,
+          "coherence": 0.880202,
+          "nullMargin": 0.461853,
+          "eventCount": 1
+        },
+        {
+          "tick": 84,
+          "index": 0.808887,
+          "convergence": 0.709154,
+          "emergence": 0.064139,
+          "moving": 6,
+          "coherence": 0.950114,
+          "nullMargin": 0.585339,
+          "eventCount": 1
+        },
+        {
+          "tick": 88,
+          "index": 0.809107,
+          "convergence": 0.709215,
+          "emergence": 0.064087,
+          "moving": 6,
+          "coherence": 0.93117,
+          "nullMargin": 0.570815,
+          "eventCount": 1
+        },
+        {
+          "tick": 92,
+          "index": 0.809335,
+          "convergence": 0.709523,
+          "emergence": 0.064039,
+          "moving": 7,
+          "coherence": 0.805463,
+          "nullMargin": 0.412369,
+          "eventCount": 1
+        },
+        {
+          "tick": 96,
+          "index": 0.809544,
+          "convergence": 0.710024,
+          "emergence": 0.064002,
+          "moving": 6,
+          "coherence": 0.886022,
+          "nullMargin": 0.477205,
+          "eventCount": 1
+        },
+        {
+          "tick": 100,
+          "index": 0.809708,
+          "convergence": 0.710611,
+          "emergence": 0.063986,
+          "moving": 6,
+          "coherence": 0.840995,
+          "nullMargin": 0.435779,
+          "eventCount": 1
+        },
+        {
+          "tick": 104,
+          "index": 0.809801,
+          "convergence": 0.711123,
+          "emergence": 0.063995,
+          "moving": 6,
+          "coherence": 0.927317,
+          "nullMargin": 0.497435,
+          "eventCount": 1
+        },
+        {
+          "tick": 108,
+          "index": 0.809806,
+          "convergence": 0.71137,
+          "emergence": 0.064029,
+          "moving": 6,
+          "coherence": 0.86711,
+          "nullMargin": 0.522836,
+          "eventCount": 1
+        },
+        {
+          "tick": 112,
+          "index": 0.80971,
+          "convergence": 0.711172,
+          "emergence": 0.064086,
+          "moving": 6,
+          "coherence": 0.817238,
+          "nullMargin": 0.434097,
+          "eventCount": 1
+        },
+        {
+          "tick": 116,
+          "index": 0.809513,
+          "convergence": 0.710408,
+          "emergence": 0.064161,
+          "moving": 6,
+          "coherence": 0.867832,
+          "nullMargin": 0.480648,
+          "eventCount": 1
+        },
+        {
+          "tick": 120,
+          "index": 0.809228,
+          "convergence": 0.709064,
+          "emergence": 0.064246,
+          "moving": 6,
+          "coherence": 0.944825,
+          "nullMargin": 0.591196,
+          "eventCount": 1
+        },
+        {
+          "tick": 124,
+          "index": 0.808877,
+          "convergence": 0.707261,
+          "emergence": 0.064334,
+          "moving": 6,
+          "coherence": 0.956121,
+          "nullMargin": 0.55567,
+          "eventCount": 1
+        },
+        {
+          "tick": 128,
+          "index": 0.808494,
+          "convergence": 0.705255,
+          "emergence": 0.064415,
+          "moving": 6,
+          "coherence": 0.903117,
+          "nullMargin": 0.523716,
+          "eventCount": 1
+        },
+        {
+          "tick": 132,
+          "index": 0.808121,
+          "convergence": 0.703401,
+          "emergence": 0.064486,
+          "moving": 6,
+          "coherence": 0.772948,
+          "nullMargin": 0.341952,
+          "eventCount": 1
+        },
+        {
+          "tick": 136,
+          "index": 0.807801,
+          "convergence": 0.702102,
+          "emergence": 0.064542,
+          "moving": 6,
+          "coherence": 0.861737,
+          "nullMargin": 0.451974,
+          "eventCount": 1
+        },
+        {
+          "tick": 140,
+          "index": 0.807574,
+          "convergence": 0.701741,
+          "emergence": 0.064583,
+          "moving": 6,
+          "coherence": 0.882809,
+          "nullMargin": 0.424279,
+          "eventCount": 1
+        },
+        {
+          "tick": 144,
+          "index": 0.807475,
+          "convergence": 0.702619,
+          "emergence": 0.064607,
+          "moving": 6,
+          "coherence": 0.692026,
+          "nullMargin": 0.252583,
+          "eventCount": 1
+        },
+        {
+          "tick": 148,
+          "index": 0.807522,
+          "convergence": 0.704899,
+          "emergence": 0.064615,
+          "moving": 5,
+          "coherence": 0.766386,
+          "nullMargin": 0.355183,
+          "eventCount": 1
+        },
+        {
+          "tick": 152,
+          "index": 0.807719,
+          "convergence": 0.708563,
+          "emergence": 0.064605,
+          "moving": 5,
+          "coherence": 0.681612,
+          "nullMargin": 0.215461,
+          "eventCount": 1
+        },
+        {
+          "tick": 156,
+          "index": 0.808054,
+          "convergence": 0.713388,
+          "emergence": 0.064574,
+          "moving": 5,
+          "coherence": 0.683889,
+          "nullMargin": 0.275007,
+          "eventCount": 2
+        },
+        {
+          "tick": 159,
+          "index": 0.808378,
+          "convergence": 0.717524,
+          "emergence": 0.064536,
+          "moving": 5,
+          "coherence": 0.680896,
+          "nullMargin": 0.30077,
+          "eventCount": 2
+        }
+      ]
+    },
+    {
+      "id": "archon-godform-005",
+      "kind": "archon",
+      "label": "Archon Godform",
+      "seed": 42176,
+      "activeFrameworks": 10,
+      "dominantFramework": "iit4",
+      "weakestPresentFramework": "butlin14",
+      "meanIndex": 0.910822,
+      "peakIndex": 0.91437,
+      "finalIndex": 0.908731,
+      "volatility": 0.002275,
+      "slope": -0.004242,
+      "eventCount": 1,
+      "trace": [
+        {
+          "tick": 0,
+          "index": 0.909065,
+          "convergence": 0.798616,
+          "emergence": 0.020346,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 4,
+          "index": 0.909943,
+          "convergence": 0.799096,
+          "emergence": 0.019751,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 8,
+          "index": 0.910834,
+          "convergence": 0.800296,
+          "emergence": 0.019201,
+          "moving": 0,
+          "coherence": 0,
+          "nullMargin": 0,
+          "eventCount": 0
+        },
+        {
+          "tick": 12,
+          "index": 0.911692,
+          "convergence": 0.802129,
+          "emergence": 0.01872,
+          "moving": 9,
+          "coherence": 0.914014,
+          "nullMargin": 0.549744,
+          "eventCount": 1
+        },
+        {
+          "tick": 16,
+          "index": 0.912472,
+          "convergence": 0.804492,
+          "emergence": 0.018326,
+          "moving": 9,
+          "coherence": 0.941126,
+          "nullMargin": 0.574468,
+          "eventCount": 1
+        },
+        {
+          "tick": 20,
+          "index": 0.913141,
+          "convergence": 0.807282,
+          "emergence": 0.018032,
+          "moving": 8,
+          "coherence": 0.906084,
+          "nullMargin": 0.506596,
+          "eventCount": 1
+        },
+        {
+          "tick": 24,
+          "index": 0.913673,
+          "convergence": 0.81039,
+          "emergence": 0.017843,
+          "moving": 8,
+          "coherence": 0.797865,
+          "nullMargin": 0.399017,
+          "eventCount": 1
+        },
+        {
+          "tick": 28,
+          "index": 0.914055,
+          "convergence": 0.813692,
+          "emergence": 0.017758,
+          "moving": 7,
+          "coherence": 0.875013,
+          "nullMargin": 0.474429,
+          "eventCount": 1
+        },
+        {
+          "tick": 32,
+          "index": 0.914285,
+          "convergence": 0.817036,
+          "emergence": 0.01777,
+          "moving": 6,
+          "coherence": 0.740063,
+          "nullMargin": 0.367621,
+          "eventCount": 1
+        },
+        {
+          "tick": 36,
+          "index": 0.914369,
+          "convergence": 0.820247,
+          "emergence": 0.017864,
+          "moving": 6,
+          "coherence": 0.851342,
+          "nullMargin": 0.408578,
+          "eventCount": 1
+        },
+        {
+          "tick": 40,
+          "index": 0.914326,
+          "convergence": 0.823139,
+          "emergence": 0.018021,
+          "moving": 6,
+          "coherence": 0.928965,
+          "nullMargin": 0.526128,
+          "eventCount": 1
+        },
+        {
+          "tick": 44,
+          "index": 0.914175,
+          "convergence": 0.825547,
+          "emergence": 0.01822,
+          "moving": 6,
+          "coherence": 0.903822,
+          "nullMargin": 0.528707,
+          "eventCount": 1
+        },
+        {
+          "tick": 48,
+          "index": 0.913943,
+          "convergence": 0.827354,
+          "emergence": 0.018442,
+          "moving": 6,
+          "coherence": 0.724073,
+          "nullMargin": 0.390311,
+          "eventCount": 1
+        },
+        {
+          "tick": 52,
+          "index": 0.913655,
+          "convergence": 0.8285,
+          "emergence": 0.018668,
+          "moving": 6,
+          "coherence": 0.849635,
+          "nullMargin": 0.44453,
+          "eventCount": 1
+        },
+        {
+          "tick": 56,
+          "index": 0.913332,
+          "convergence": 0.828969,
+          "emergence": 0.018884,
+          "moving": 5,
+          "coherence": 0.855562,
+          "nullMargin": 0.443835,
+          "eventCount": 1
+        },
+        {
+          "tick": 60,
+          "index": 0.912991,
+          "convergence": 0.828763,
+          "emergence": 0.019083,
+          "moving": 4,
+          "coherence": 0.762253,
+          "nullMargin": 0.339362,
+          "eventCount": 1
+        },
+        {
+          "tick": 64,
+          "index": 0.912644,
+          "convergence": 0.827886,
+          "emergence": 0.019258,
+          "moving": 4,
+          "coherence": 0.842573,
+          "nullMargin": 0.42014,
+          "eventCount": 1
+        },
+        {
+          "tick": 68,
+          "index": 0.912295,
+          "convergence": 0.826349,
+          "emergence": 0.019412,
+          "moving": 4,
+          "coherence": 0.869765,
+          "nullMargin": 0.482337,
+          "eventCount": 1
+        },
+        {
+          "tick": 72,
+          "index": 0.911944,
+          "convergence": 0.824204,
+          "emergence": 0.019548,
+          "moving": 5,
+          "coherence": 0.855896,
+          "nullMargin": 0.416944,
+          "eventCount": 1
+        },
+        {
+          "tick": 76,
+          "index": 0.911588,
+          "convergence": 0.821579,
+          "emergence": 0.019672,
+          "moving": 4,
+          "coherence": 0.840344,
+          "nullMargin": 0.417648,
+          "eventCount": 1
+        },
+        {
+          "tick": 80,
+          "index": 0.911222,
+          "convergence": 0.818689,
+          "emergence": 0.019795,
+          "moving": 4,
+          "coherence": 0.785848,
+          "nullMargin": 0.38716,
+          "eventCount": 1
+        },
+        {
+          "tick": 84,
+          "index": 0.910845,
+          "convergence": 0.815812,
+          "emergence": 0.019925,
+          "moving": 4,
+          "coherence": 0.734066,
+          "nullMargin": 0.323471,
+          "eventCount": 1
+        },
+        {
+          "tick": 88,
+          "index": 0.910458,
+          "convergence": 0.813236,
+          "emergence": 0.020068,
+          "moving": 4,
+          "coherence": 0.756298,
+          "nullMargin": 0.300752,
+          "eventCount": 1
+        },
+        {
+          "tick": 92,
+          "index": 0.910066,
+          "convergence": 0.811189,
+          "emergence": 0.020228,
+          "moving": 4,
+          "coherence": 0.604267,
+          "nullMargin": 0.189556,
+          "eventCount": 1
+        },
+        {
+          "tick": 96,
+          "index": 0.909675,
+          "convergence": 0.809783,
+          "emergence": 0.020401,
+          "moving": 4,
+          "coherence": 0.743631,
+          "nullMargin": 0.331324,
+          "eventCount": 1
+        },
+        {
+          "tick": 100,
+          "index": 0.909297,
+          "convergence": 0.808976,
+          "emergence": 0.020581,
+          "moving": 3,
+          "coherence": 0.819845,
+          "nullMargin": 0.406802,
+          "eventCount": 1
+        },
+        {
+          "tick": 104,
+          "index": 0.908943,
+          "convergence": 0.808579,
+          "emergence": 0.020754,
+          "moving": 3,
+          "coherence": 0.770087,
+          "nullMargin": 0.359385,
+          "eventCount": 1
+        },
+        {
+          "tick": 108,
+          "index": 0.908625,
+          "convergence": 0.808299,
+          "emergence": 0.020906,
+          "moving": 3,
+          "coherence": 0.782035,
+          "nullMargin": 0.298344,
+          "eventCount": 1
+        },
+        {
+          "tick": 112,
+          "index": 0.908356,
+          "convergence": 0.807823,
+          "emergence": 0.021024,
+          "moving": 4,
+          "coherence": 0.894444,
+          "nullMargin": 0.486474,
+          "eventCount": 1
+        },
+        {
+          "tick": 116,
+          "index": 0.908146,
+          "convergence": 0.80693,
+          "emergence": 0.021096,
+          "moving": 3,
+          "coherence": 0.822851,
+          "nullMargin": 0.3752,
+          "eventCount": 1
+        },
+        {
+          "tick": 120,
+          "index": 0.908005,
+          "convergence": 0.805566,
+          "emergence": 0.021122,
+          "moving": 3,
+          "coherence": 0.910429,
+          "nullMargin": 0.492536,
+          "eventCount": 1
+        },
+        {
+          "tick": 124,
+          "index": 0.907937,
+          "convergence": 0.803879,
+          "emergence": 0.021104,
+          "moving": 3,
+          "coherence": 0.899795,
+          "nullMargin": 0.52263,
+          "eventCount": 1
+        },
+        {
+          "tick": 128,
+          "index": 0.907943,
+          "convergence": 0.80217,
+          "emergence": 0.021055,
+          "moving": 4,
+          "coherence": 0.86914,
+          "nullMargin": 0.47653,
+          "eventCount": 1
+        },
+        {
+          "tick": 132,
+          "index": 0.908016,
+          "convergence": 0.800798,
+          "emergence": 0.020993,
+          "moving": 4,
+          "coherence": 0.945013,
+          "nullMargin": 0.58197,
+          "eventCount": 1
+        },
+        {
+          "tick": 136,
+          "index": 0.908142,
+          "convergence": 0.800077,
+          "emergence": 0.020938,
+          "moving": 4,
+          "coherence": 0.931987,
+          "nullMargin": 0.533188,
+          "eventCount": 1
+        },
+        {
+          "tick": 140,
+          "index": 0.908302,
+          "convergence": 0.80019,
+          "emergence": 0.02091,
+          "moving": 3,
+          "coherence": 0.785284,
+          "nullMargin": 0.405473,
+          "eventCount": 1
+        },
+        {
+          "tick": 144,
+          "index": 0.908469,
+          "convergence": 0.801139,
+          "emergence": 0.020923,
+          "moving": 4,
+          "coherence": 0.776492,
+          "nullMargin": 0.390944,
+          "eventCount": 1
+        },
+        {
+          "tick": 148,
+          "index": 0.908615,
+          "convergence": 0.802733,
+          "emergence": 0.020988,
+          "moving": 3,
+          "coherence": 0.732118,
+          "nullMargin": 0.301778,
+          "eventCount": 1
+        },
+        {
+          "tick": 152,
+          "index": 0.908716,
+          "convergence": 0.804616,
+          "emergence": 0.021106,
+          "moving": 4,
+          "coherence": 0.8147,
+          "nullMargin": 0.360505,
+          "eventCount": 1
+        },
+        {
+          "tick": 156,
+          "index": 0.908752,
+          "convergence": 0.806338,
+          "emergence": 0.021272,
+          "moving": 3,
+          "coherence": 0.802682,
+          "nullMargin": 0.384888,
+          "eventCount": 1
+        },
+        {
+          "tick": 159,
+          "index": 0.908731,
+          "convergence": 0.807257,
+          "emergence": 0.021422,
+          "moving": 3,
+          "coherence": 0.940913,
+          "nullMargin": 0.565646,
+          "eventCount": 1
+        }
+      ]
+    }
+  ],
+  "entityFrameworkEdges": [
+    {
+      "entityId": "plant-grove-000",
+      "frameworkId": "butlin14",
+      "weight": 0.326111,
+      "status": "partial"
+    },
+    {
+      "entityId": "plant-grove-000",
+      "frameworkId": "activeInference",
+      "weight": 0.430068,
+      "status": "partial"
+    },
+    {
+      "entityId": "plant-grove-000",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.495802,
+      "status": "partial"
+    },
+    {
+      "entityId": "plant-grove-000",
+      "frameworkId": "ual",
+      "weight": 0.453604,
+      "status": "partial"
+    },
+    {
+      "entityId": "plant-grove-000",
+      "frameworkId": "sensorimotor",
+      "weight": 0.416006,
+      "status": "partial"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "butlin14",
+      "weight": 0.696281,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "thaler9",
+      "weight": 0.624282,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "iit4",
+      "weight": 0.625773,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "activeInference",
+      "weight": 0.735688,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "attentionSchema",
+      "weight": 0.568632,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.541981,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "ual",
+      "weight": 0.712566,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "sensorimotor",
+      "weight": 0.753196,
+      "status": "met"
+    },
+    {
+      "entityId": "creature-strain-017",
+      "frameworkId": "ctm",
+      "weight": 0.612834,
+      "status": "met"
+    },
+    {
+      "entityId": "shoggoth-choir-004",
+      "frameworkId": "butlin14",
+      "weight": 0.702206,
+      "status": "met"
+    },
+    {
+      "entityId": "shoggoth-choir-004",
+      "frameworkId": "thaler9",
+      "weight": 0.850798,
+      "status": "met"
+    },
+    {
+      "entityId": "shoggoth-choir-004",
+      "frameworkId": "iit4",
+      "weight": 0.780046,
+      "status": "met"
+    },
+    {
+      "entityId": "shoggoth-choir-004",
+      "frameworkId": "activeInference",
+      "weight": 0.722688,
+      "status": "met"
+    },
+    {
+      "entityId": "shoggoth-choir-004",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.815485,
+      "status": "met"
+    },
+    { "entityId": "shoggoth-choir-004", "frameworkId": "ual", "weight": 0.799043, "status": "met" },
+    {
+      "entityId": "shoggoth-choir-004",
+      "frameworkId": "sensorimotor",
+      "weight": 0.765189,
+      "status": "met"
+    },
+    {
+      "entityId": "shoggoth-choir-004",
+      "frameworkId": "projective",
+      "weight": 0.628003,
+      "status": "met"
+    },
+    { "entityId": "shoggoth-choir-004", "frameworkId": "ctm", "weight": 0.599806, "status": "met" },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "butlin14",
+      "weight": 0.785672,
+      "status": "met"
+    },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "thaler9",
+      "weight": 0.656306,
+      "status": "met"
+    },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "iit4",
+      "weight": 0.748778,
+      "status": "met"
+    },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "activeInference",
+      "weight": 0.741496,
+      "status": "met"
+    },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "attentionSchema",
+      "weight": 0.850778,
+      "status": "met"
+    },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.599037,
+      "status": "met"
+    },
+    { "entityId": "puppeteer-hand-003", "frameworkId": "ual", "weight": 0.695907, "status": "met" },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "sensorimotor",
+      "weight": 0.700299,
+      "status": "met"
+    },
+    {
+      "entityId": "puppeteer-hand-003",
+      "frameworkId": "projective",
+      "weight": 0.76541,
+      "status": "met"
+    },
+    { "entityId": "puppeteer-hand-003", "frameworkId": "ctm", "weight": 0.833406, "status": "met" },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "butlin14",
+      "weight": 0.800263,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "thaler9",
+      "weight": 0.836762,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "iit4",
+      "weight": 0.977102,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "activeInference",
+      "weight": 0.814083,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "attentionSchema",
+      "weight": 0.820399,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.871935,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "ual",
+      "weight": 0.822193,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "sensorimotor",
+      "weight": 0.792848,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "projective",
+      "weight": 0.885071,
+      "status": "met"
+    },
+    {
+      "entityId": "mechalogodrom-core-001",
+      "frameworkId": "ctm",
+      "weight": 0.905134,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "butlin14",
+      "weight": 0.847862,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "thaler9",
+      "weight": 0.824004,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "iit4",
+      "weight": 0.98073,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "activeInference",
+      "weight": 0.888827,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "attentionSchema",
+      "weight": 0.837943,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.862974,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "ual",
+      "weight": 0.884295,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "sensorimotor",
+      "weight": 0.870147,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "projective",
+      "weight": 0.856469,
+      "status": "met"
+    },
+    {
+      "entityId": "apex-abomination-000",
+      "frameworkId": "ctm",
+      "weight": 0.93757,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "butlin14",
+      "weight": 0.818307,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "thaler9",
+      "weight": 0.809832,
+      "status": "met"
+    },
+    { "entityId": "pantheon-chorus-025", "frameworkId": "iit4", "weight": 0.9804, "status": "met" },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "activeInference",
+      "weight": 0.829751,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "attentionSchema",
+      "weight": 0.881118,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.855524,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "ual",
+      "weight": 0.848375,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "sensorimotor",
+      "weight": 0.788669,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "projective",
+      "weight": 0.880319,
+      "status": "met"
+    },
+    {
+      "entityId": "pantheon-chorus-025",
+      "frameworkId": "ctm",
+      "weight": 0.944025,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "butlin14",
+      "weight": 0.635475,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "thaler9",
+      "weight": 0.761786,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "iit4",
+      "weight": 0.834757,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "activeInference",
+      "weight": 0.539473,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.826426,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "ual",
+      "weight": 0.702499,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "projective",
+      "weight": 0.779695,
+      "status": "met"
+    },
+    {
+      "entityId": "glyph-resonator-011",
+      "frameworkId": "ctm",
+      "weight": 0.702048,
+      "status": "met"
+    },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "butlin14",
+      "weight": 0.752133,
+      "status": "met"
+    },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "thaler9",
+      "weight": 0.816909,
+      "status": "met"
+    },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "iit4",
+      "weight": 0.883522,
+      "status": "met"
+    },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "activeInference",
+      "weight": 0.832565,
+      "status": "met"
+    },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "attentionSchema",
+      "weight": 0.721379,
+      "status": "met"
+    },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.809163,
+      "status": "met"
+    },
+    { "entityId": "xenomimic-twin-000", "frameworkId": "ual", "weight": 0.809314, "status": "met" },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "sensorimotor",
+      "weight": 0.812604,
+      "status": "met"
+    },
+    {
+      "entityId": "xenomimic-twin-000",
+      "frameworkId": "projective",
+      "weight": 0.847127,
+      "status": "met"
+    },
+    { "entityId": "xenomimic-twin-000", "frameworkId": "ctm", "weight": 0.810232, "status": "met" },
+    {
+      "entityId": "archon-godform-005",
+      "frameworkId": "butlin14",
+      "weight": 0.865322,
+      "status": "met"
+    },
+    {
+      "entityId": "archon-godform-005",
+      "frameworkId": "thaler9",
+      "weight": 0.866423,
+      "status": "met"
+    },
+    { "entityId": "archon-godform-005", "frameworkId": "iit4", "weight": 0.98122, "status": "met" },
+    {
+      "entityId": "archon-godform-005",
+      "frameworkId": "activeInference",
+      "weight": 0.912846,
+      "status": "met"
+    },
+    {
+      "entityId": "archon-godform-005",
+      "frameworkId": "attentionSchema",
+      "weight": 0.927365,
+      "status": "met"
+    },
+    {
+      "entityId": "archon-godform-005",
+      "frameworkId": "fieldIntegration",
+      "weight": 0.873304,
+      "status": "met"
+    },
+    { "entityId": "archon-godform-005", "frameworkId": "ual", "weight": 0.917362, "status": "met" },
+    {
+      "entityId": "archon-godform-005",
+      "frameworkId": "sensorimotor",
+      "weight": 0.893904,
+      "status": "met"
+    },
+    {
+      "entityId": "archon-godform-005",
+      "frameworkId": "projective",
+      "weight": 0.891413,
+      "status": "met"
+    },
+    { "entityId": "archon-godform-005", "frameworkId": "ctm", "weight": 0.968559, "status": "met" }
+  ],
+  "exportSchema": [
+    "seed -> structured/null summary",
+    "framework -> ablation/null/causal aggregate",
+    "entity -> sampled index/convergence/emergence trace",
+    "entity-framework -> weighted support edge"
+  ]
+};

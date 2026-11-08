@@ -207,11 +207,29 @@
       f32[0] = val;
       const x = u32[0];
       const sign = (x >>> 16) & 0x8000;
-      let exp = ((x >>> 23) & 0xff) - 127 + 15;
-      let mant = (x >>> 13) & 0x03ff;
-      if (exp <= 0) return sign;
+      const f32Exp = (x >>> 23) & 0xff;
+      const f32Mant = x & 0x007fffff;
+      if (f32Exp === 0xff) return f32Mant ? (sign | 0x7e00) : (sign | 0x7c00);
+      if (f32Exp === 0) return sign;
+      const exp = f32Exp - 127 + 15;
+      if (exp <= 0) {
+        if (exp < -10) return sign;
+        const mant24 = f32Mant | 0x00800000;
+        const shift = 14 - exp;
+        const halfBit = (mant24 >>> (shift - 1)) & 1;
+        const sticky = mant24 & ((1 << (shift - 1)) - 1);
+        const lsb = (mant24 >>> shift) & 1;
+        const subMant = (mant24 >>> shift) + (halfBit && (sticky !== 0 || lsb !== 0) ? 1 : 0);
+        return (sign | subMant) & 0xffff;
+      }
       if (exp >= 31) return sign | 0x7c00;
-      return sign | (exp << 10) | mant;
+      const lsb = (f32Mant >>> 13) & 1;
+      const rounded = f32Mant + 0x0fff + lsb;
+      const carry = (rounded >>> 23) & 1;
+      const finalExp = exp + carry;
+      if (finalExp >= 31) return sign | 0x7c00;
+      const mant = (rounded >>> 13) & 0x03ff;
+      return (sign | (finalExp << 10) | mant) & 0xffff;
     }
 
     static fp16BitsToFloat32(h) {
@@ -926,7 +944,7 @@
       this.aotPremises4[3] = Number((runtime.mesh?.viscera?.atp || 0.88).toFixed(3));
 
       // Evaluate Root Value V(a_0) using the 1,245,184-param Critic + Connectome
-      const wCrit = dc.W_critic;
+      const wCrit = dc.W_critic || dc.W_critic_out || runtime.W_critic;
       const wExperts = dc.W_moe_experts || dc.W_cortical_experts; // 524,288 floats (8 experts × 256 × 256)
       let rootVal = 0;
       for (let i = 0; i < 16; i++) {
@@ -1195,7 +1213,7 @@
       this.gotTreeBackupTdError = tdError;
       this.gotPlasticityUpdatesCount += 1;
 
-      const wAct = dc.W_actor;
+      const wAct = dc.W_actor || dc.W_actor_out || runtime.W_actor;
       const activeExpertOff = (this.totBestBranchOpIdx & 7) * 65536;
       for (let i = 0; i < 16; i++) {
         const atomVal = this.aotContractedVector16[i];
@@ -1214,16 +1232,17 @@
       }
 
       // Modulate 512-Node Connectome Synapses (262,144 conductances) via 3-factor DA-STDP gated by δ_GoT
-      const synWeightsArr = cn && (cn.synWeights262K || cn.synapticWeights);
+      const synWeightsArr = (cn && (cn.synWeights262K || cn.synapticWeights)) || dc.W_connectome_synapses;
+      const eligArr = (cn && cn.eligibilityTraces) || dc.W_stdp_elig;
       if (synWeightsArr) {
         const synSliceOffset = ((atomHash & 1023) * 256) % (262144 - 64);
         const daMod = Math.max(-0.5, Math.min(0.5, tdError * 0.8 + 0.12));
         for (let s = 0; s < 32; s++) {
           const idx = synSliceOffset + s;
-          const elig = (cn.eligibilityTraces && cn.eligibilityTraces[idx]) || 0.08;
+          const elig = (eligArr && eligArr[idx]) || 0.08;
           synWeightsArr[idx] = Math.max(-1.5, Math.min(1.5, synWeightsArr[idx] + lr * daMod * elig));
         }
-        cn.stdpUpdatesCount = (cn.stdpUpdatesCount || 0) + 32;
+        if (cn) cn.stdpUpdatesCount = (cn.stdpUpdatesCount || 0) + 32;
       }
 
       // Steer physical 2D motor thrust toward the winning AoT/GoT decision vector
@@ -1370,7 +1389,7 @@
       };
 
       // -----------------------------------------------------------------------
-      // BRAIN 5..10: Ported 10-Brain Multiverse Pantheon & 7-Tier Arena Federation
+      // BRAIN 1..14: Ported 14-Brain Multiverse Pantheon & 7-Tier Arena Federation
       // -----------------------------------------------------------------------
       let PantheonCtor = globalScope.PortedMultiverseBrainsFederation;
       if (!PantheonCtor && typeof require === 'function') {
@@ -1379,9 +1398,10 @@
         } catch (_) {}
       }
       this.multiverse10Pantheon = PantheonCtor ? new PantheonCtor() : null;
+      this.multiverse14Pantheon = this.multiverse10Pantheon;
 
       this.fusionHeadline =
-        '10-BRAIN MULTIVERSE FUSION LIVE · CQM-Xylos Zig Wasm (18 Kernels) × Asmodensius-v40 × Glitchling × C. elegans (302N/7,379S) × Dimension-Ω × CQM Pantheon';
+        '14-BRAIN MULTIVERSE FUSION LIVE · CQM-Xylos Zig Wasm (18 Kernels) × Asmodensius-v40 × Glitchling × C. elegans (302N/7,379S) × Dimension-Ω × DABUS × Tsotchke × Consortium';
 
       this._initPortedBrainsFromNodeOrIpc();
     }
@@ -1409,7 +1429,10 @@
       this.celegansGapJunctionEdges = stats.gapJunctionEdges || 986;
       if (Array.isArray(stats.topHubs) && stats.topHubs.length > 0) {
         for (let i = 0; i < Math.min(64, stats.topHubs.length); i++) {
-          this.celegansHubNames64[i] = stats.topHubs[i].name;
+          const hubEntry = stats.topHubs[i];
+          if (hubEntry && typeof hubEntry.name === 'string') {
+            this.celegansHubNames64[i] = hubEntry.name;
+          }
         }
       }
       if (Array.isArray(stats.compactEdges) && stats.compactEdges.length > 0) {
@@ -1417,6 +1440,7 @@
         this.celegansActiveEdgeCount = count;
         for (let e = 0; e < count; e++) {
           const edge = stats.compactEdges[e];
+          if (!Array.isArray(edge) || edge.length < 3) continue;
           this.celegansEdgeSrc512[e] = edge[0] & 63;
           this.celegansEdgeDst512[e] = edge[1] & 63;
           this.celegansEdgeWeight512[e] = Math.max(-127, Math.min(127, edge[2] | 0));
@@ -1481,19 +1505,46 @@
         const bridge = globalScope.gigachad || globalScope.gigachadBridge;
         if (!this.cqmWasmLoaded && bridge && typeof bridge.invoke === 'function') {
           bridge.invoke('ported-brains-bridge').then((res) => {
-            if (!res || !res.ok) return;
-            if (res.wasmBase64 && typeof atob === 'function') {
-              const binStr = atob(res.wasmBase64);
-              const bytes = new Uint8Array(binStr.length);
-              for (let i = 0; i < binStr.length; i++) bytes[i] = binStr.charCodeAt(i);
-              this._instantiateCqmWasmFromBuffer(bytes);
-            }
-            if (res.celegansStats) {
-              this._applyCelegansCompactGraph(res.celegansStats);
-            }
+            this.hydrateFromBridgePayload(res);
           }).catch(() => {});
         }
       } catch (_) {}
+    }
+
+    /**
+     * Hydrate CQM-Xylos Zig 0.17.0 WebAssembly binary, C. elegans 7,379-synapse connectome,
+     * and Tsotchke `chaos_emb.f32` chaotic attractor embeddings from an Electron IPC payload.
+     */
+    hydrateFromBridgePayload(res) {
+      if (!res || typeof res !== 'object') return false;
+      let hydrated = false;
+      try {
+        if (typeof res.wasmBase64 === 'string' && res.wasmBase64.length > 64) {
+          let bytes = null;
+          if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
+            const buf = Buffer.from(res.wasmBase64, 'base64');
+            bytes = new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
+          } else if (typeof atob === 'function') {
+            const binStr = atob(res.wasmBase64);
+            bytes = new Uint8Array(binStr.length);
+            for (let i = 0; i < binStr.length; i++) bytes[i] = binStr.charCodeAt(i);
+          }
+          if (bytes) {
+            this._instantiateCqmWasmFromBuffer(bytes);
+            if (this.cqmWasmLoaded) hydrated = true;
+          }
+        }
+        if (res.celegansStats) {
+          this._applyCelegansCompactGraph(res.celegansStats);
+          hydrated = true;
+        }
+        if (this.multiverse10Pantheon && typeof this.multiverse10Pantheon.hydrateFromBridgePayload === 'function') {
+          if (this.multiverse10Pantheon.hydrateFromBridgePayload(res)) {
+            hydrated = true;
+          }
+        }
+      } catch (_) {}
+      return hydrated;
     }
 
     /**
@@ -1581,11 +1632,14 @@
           this.cqmMetrics.minSrUpdateNorm = Number((updNorm || 0.03).toFixed(5));
 
           // Feed MinSR natural-gradient step directly into deepCortex Actor weights!
-          const wAct = hub.deepCortex && hub.deepCortex.W_actor;
+          const dc = (runtime && runtime.deepCortex) || (hub && hub.deepCortex);
+          const wAct = (dc && (dc.W_actor || dc.W_actor_out)) || (runtime && runtime.W_actor) || (hub && hub.W_robot_actor);
           if (wAct) {
             for (let p = 0; p < 4; p++) {
               const natStep = f64View[52 + p] || 0;
-              wAct[p] = Math.max(-2.0, Math.min(2.0, wAct[p] + natStep));
+              if (Number.isFinite(natStep)) {
+                wAct[p] = Math.max(-2.0, Math.min(2.0, wAct[p] + natStep));
+              }
             }
           }
         }
@@ -1776,17 +1830,18 @@
       );
 
       // =====================================================================
-      // 5. PORTED 10-BRAIN MULTIVERSE PANTHEON & 7-TIER PRECISION ARENA STEP
+      // 5. PORTED 14-BRAIN MULTIVERSE PANTHEON & 7-TIER PRECISION ARENA STEP
       // =====================================================================
       if (!this.multiverse10Pantheon && globalScope.PortedMultiverseBrainsFederation) {
         this.multiverse10Pantheon = new globalScope.PortedMultiverseBrainsFederation();
+        this.multiverse14Pantheon = this.multiverse10Pantheon;
       }
       if (this.multiverse10Pantheon) {
         this.multiverse10Pantheon.step60Hz(runtime, tick, frameCount);
         runtime.portedMultiverseBrains = this.multiverse10Pantheon;
       }
 
-      // Couple fused 10-brain output directly into world-model latent state & 2D motor thrust
+      // Couple fused 14-brain output directly into world-model latent state & 2D motor thrust
       for (let i = 0; i < 8; i++) {
         wm.latentZ64[i] = Math.tanh(wm.latentZ64[i] * 0.88 + this.larkumBurstRate16[i] * 0.08 + this.celegansVoltage64[i] * 0.04);
       }
@@ -1796,7 +1851,7 @@
       }
 
       this.fusionHeadline =
-        `10-BRAIN FUSION · CQM-Zig[Wasm=${this.cqmWasmLoaded ? '18-EXP' : 'JS'} · MinSR=${this.cqmMetrics.minSrUpdateNorm} · Chern=${this.cqmMetrics.qwzChernNumber} · MZM=${this.cqmMetrics.bdgSkyrmionMzmCount}] × ` +
+        `14-BRAIN FUSION · CQM-Zig[Wasm=${this.cqmWasmLoaded ? '18-EXP' : 'JS'} · MinSR=${this.cqmMetrics.minSrUpdateNorm} · Chern=${this.cqmMetrics.qwzChernNumber} · MZM=${this.cqmMetrics.bdgSkyrmionMzmCount}] × ` +
         `Asmodensius[272N · NMDA=${this.asmodensiusState.nmdaBurstFractionPct}% · GWT=${this.asmodensiusState.gwtIgnitionActive ? 'IGNITED' : 'GATED'}] × ` +
         `Glitchling[Cerebellar+SR_Int8] × C.elegans[${this.celegansUniqueNeurons}N/${this.celegansTotalEdges}S · AVB-AVA=${this.celegansTelemetry.commandAvaAvbBalance}]`;
 

@@ -1,0 +1,133 @@
+PROPRIETARY LICENSE — ALL RIGHTS RESERVED
+
+BlackHoleDS / OPPENGROK Black Hole Simulation Lab
+Copyright (c) 2026 0thernes <0_0@0thernes.art>. All Rights Reserved.
+
+================================================================================
+1. OWNERSHIP AND RESERVATION OF RIGHTS
+================================================================================
+
+This software, together with its source code, object code, headers, build
+configuration, documentation, research notes, knowledge corpus, schemas,
+diagrams, generated and example images, and every other file in this
+repository (collectively, the "Work"), is the exclusive property of 0thernes
+("the Author") and is protected by copyright, database, trade-secret, and
+other intellectual-property laws of the United States and of every other
+jurisdiction in which protection is available.
+
+ALL RIGHTS ARE RESERVED. No right, title, license, or interest in or to the
+Work — whether by grant, implication, estoppel, exhaustion, or otherwise — is
+transferred to any person or entity except as expressly stated in a separate
+written agreement signed by the Author. The absence of a permissive open-source
+license is intentional: this is NOT open-source software, and it is NOT placed
+in the public domain.
+
+================================================================================
+2. NO LICENSE GRANTED
+================================================================================
+
+Except as expressly and unambiguously permitted in Section 3 below, you may
+NOT, in whole or in part:
+
+  (a) use, run, or execute the Work for any purpose;
+  (b) copy, reproduce, or download the Work other than the transient,
+      automatic caching performed by a web browser or version-control client
+      while merely viewing a page on which the Author has chosen to display it;
+  (c) modify, adapt, translate, port, or create derivative works of the Work;
+  (d) distribute, publish, sublicense, sell, rent, lease, lend, host, or
+      otherwise make the Work available to any third party;
+  (e) incorporate the Work, or any portion, concept, algorithm, method, data
+      layout, or expression embodied in it, into any other software, product,
+      model-training corpus, dataset, or service;
+  (f) remove, obscure, or alter any copyright, authorship, truth-tier, or
+      proprietary notice; or
+  (g) reverse engineer, decompile, or disassemble any compiled artifact,
+      except to the minimum extent that this prohibition is unenforceable
+      under applicable mandatory law.
+
+================================================================================
+3. LIMITED PERMISSIONS
+================================================================================
+
+The Author grants you a single, revocable, non-exclusive, non-transferable,
+non-sublicensable permission to VIEW and READ the source code of the Work
+solely where the Author has made it visible to you, and solely for the purpose
+of personal evaluation, study, and reference. This permission grants NO right
+to compile, execute, modify, or redistribute the Work, and conveys no patent
+license of any kind. It terminates automatically upon any breach of this
+License and may be revoked by the Author at any time, with or without cause.
+
+Any use beyond this — including commercial use, academic publication that
+reproduces non-trivial portions, integration into another system, or use as
+training data for machine-learning systems — requires a separate written
+license from the Author. Requests: 0_0@0thernes.art.
+
+================================================================================
+4. CONTRIBUTIONS
+================================================================================
+
+Unless a separate signed agreement states otherwise, any contribution you
+submit to the Work (code, documentation, data, or otherwise) is assigned to
+the Author upon submission, and you waive any moral rights in it to the extent
+permitted by law, so that the Author may continue to license the Work as a
+unified proprietary whole. Do not submit material you are not entitled to
+assign.
+
+================================================================================
+5. NO WARRANTY
+================================================================================
+
+THE WORK IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS, IMPLIED, OR STATUTORY, INCLUDING WITHOUT LIMITATION THE IMPLIED
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND
+NON-INFRINGEMENT. THE AUTHOR DOES NOT WARRANT THAT THE WORK IS SCIENTIFICALLY
+ACCURATE, ERROR-FREE, OR FIT FOR ANY OPERATIONAL, ENGINEERING, NAVIGATIONAL,
+MEDICAL, OR SAFETY-CRITICAL PURPOSE. THE WORK IS A RESEARCH AND LEARNING
+CODEBASE, NOT A VALIDATED PRODUCTION SOLVER (see
+docs/vision/SCIENTIFIC_INTEGRITY_CHARTER.md).
+
+================================================================================
+6. LIMITATION OF LIABILITY
+================================================================================
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING WITHOUT LIMITATION PROCUREMENT OF SUBSTITUTE
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT, ARISING IN ANY WAY OUT OF THE USE OF OR INABILITY TO USE
+THE WORK, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+================================================================================
+7. TERMINATION
+================================================================================
+
+Any breach of this License terminates all permissions granted under it
+immediately and automatically, without notice. Upon termination you must cease
+all use of the Work and destroy all copies in your possession or control.
+Sections 1, 2, 4, 5, 6, 8, and 9 survive termination.
+
+================================================================================
+8. GOVERNING LAW
+================================================================================
+
+This License is governed by the laws of the jurisdiction of the Author's
+principal residence, without regard to its conflict-of-laws rules. The U.N.
+Convention on Contracts for the International Sale of Goods does not apply. If
+any provision is held unenforceable, it shall be limited or severed to the
+minimum extent necessary so that the remainder of this License remains in full
+force and effect.
+
+================================================================================
+9. RELICENSING
+================================================================================
+
+The Author, as sole copyright holder, may at any time release the Work, or any
+version of it, under different terms (including a future open-source license).
+Any such release applies only to the version(s) the Author explicitly
+designates and does not retroactively grant rights in any other version. The
+license history and rationale are recorded in docs/log/DECISIONS.md
+(see ADR-0009, which supersedes the former AGPL-3.0 decision in ADR-0006).
+
+For licensing inquiries, commercial terms, or written permissions, contact:
+0thernes <0_0@0thernes.art>.
