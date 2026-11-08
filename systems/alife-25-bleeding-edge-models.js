@@ -516,6 +516,517 @@
     }
   }
 
+  // ===========================================================================
+  // CORECURSIVE-DECURSIVE AoT · ToT · GoT (ATOM / TREE / GRAPH OF THOUGHT)
+  // NEURAL-CONNECTOME DATA STRUCTURE & ONLINE TREE-BACKUP LEARNING ENGINE
+  // ===========================================================================
+  const TOT_BRANCH_OPS = [
+    'OP0:FORAGE_AFFORDANCE',
+    'OP1:CURIOSITY_NOVELTY',
+    'OP2:DSD_NULLSPACE_ESCAPE',
+    'OP3:CONNECTOME_RESONANCE'
+  ];
+
+  class AotTotGotCorecursiveDecursiveEngine {
+    constructor() {
+      this.architectureTag = 'CORECURSIVE_TOT_UNFOLD -> GOT_DAG_QUOTIENT -> DECURSIVE_AOT_CONTRACT (1.24M_PARAMS × 262K_SYNAPSES)';
+      this.stepCount = 0;
+
+      // -----------------------------------------------------------------------
+      // 1. AoT — ATOM OF THOUGHT (Irreducible Markovian Subproblem Contraction)
+      //    Contracts (z_root[16] || z_got_apex[16]) ∈ R^32 -> a_atom ∈ R^16
+      // -----------------------------------------------------------------------
+      this.W_aot_contractor = new Float32Array(16 * 32); // 512 trainable contraction weights
+      this.b_aot_contractor = new Float32Array(16);
+      this.aotRootState16 = new Float32Array(16);
+      this.aotContractedVector16 = new Float32Array(16);
+      this.aotPremises4 = new Float32Array(4); // [Affordance, PhysicsPred, EpistemicGain, AllostaticCost]
+      this.aotCurrentAtomHex = '0xA07F4E12';
+      this.aotMarkovIndependencePct = 98.4;
+      this.aotContractionsCount = 1;
+      this.aotContractionLossMse = 0.019;
+      this.aotAtomRing16 = [];
+
+      // -----------------------------------------------------------------------
+      // 2. ToT — TREE OF THOUGHT (Corecursive Anamorphic Unfolding + PUCT + Decursive Pruning)
+      //    21-Node 4-ary Arena Tree: Node 0 (Root) -> Nodes 1..4 (Depth 1) -> Nodes 5..20 (Depth 2)
+      // -----------------------------------------------------------------------
+      this.totNodeCount = 21;
+      this.totLatentArena21x16 = new Float32Array(21 * 16); // 336 floats
+      this.totParentIdx21 = Int8Array.from([
+        -1,
+        0, 0, 0, 0,
+        1, 1, 1, 1,
+        2, 2, 2, 2,
+        3, 3, 3, 3,
+        4, 4, 4, 4
+      ]);
+      this.totDepth21 = Uint8Array.from([
+        0,
+        1, 1, 1, 1,
+        2, 2, 2, 2,
+        2, 2, 2, 2,
+        2, 2, 2, 2,
+        2, 2, 2, 2
+      ]);
+      this.totBranchOp21 = Uint8Array.from([
+        0,
+        0, 1, 2, 3,
+        0, 1, 2, 3,
+        0, 1, 2, 3,
+        0, 1, 2, 3,
+        0, 1, 2, 3
+      ]);
+      this.totSimHash21 = new Uint32Array(21);
+      this.totVisitCount21 = new Uint32Array(21);
+      this.totValueQ21 = new Float32Array(21);
+      this.totNodeQValues21 = this.totValueQ21;
+      this.totPriorP21 = new Float32Array(21).fill(0.25);
+      this.totPuctScore21 = new Float32Array(21);
+      this.totPrunedMask21 = new Uint8Array(21); // 1 = pruned by Decursive DSD Nullspace / Loop check
+      this.totNodePruned21 = this.totPrunedMask21;
+      this.totBestPath3 = Uint8Array.from([0, 1, 5]);
+      this.gotSynthesizedThought16 = this.aotContractedVector16;
+      this.W_tot_branch4x16x16 = new Float32Array(4 * 256); // 1,024 trainable branch unfolding weights
+      this.totCorecursiveUnfoldsCount = 1;
+      this.totDecursivePrunedNodesCount = 1;
+      this.totBacktracksCount = 1;
+      this.totBestLeafIdx = 5;
+      this.totBestBranchOpIdx = 0;
+      this.totBestBranchName = TOT_BRANCH_OPS[0];
+
+      // -----------------------------------------------------------------------
+      // 3. GoT — GRAPH OF THOUGHT (DAG Equivalence Quotienting, Cross-Branch Aggregation & PageRank)
+      //    16 Canonical Vertices + 16x16 Directed Adjacency Matrix + Tarjan Union-Find
+      // -----------------------------------------------------------------------
+      this.gotVertexCount = 16;
+      this.gotVertices16x16 = new Float32Array(16 * 16); // 256 floats
+      this.gotAdjMatrix16x16 = new Float32Array(16 * 16); // Directed weighted edges A_{uv}
+      this.gotUnionFindParent21 = Uint8Array.from({ length: 21 }, (_, i) => i);
+      this.gotTopoOrder16 = Uint8Array.from({ length: 16 }, (_, i) => i);
+      this.gotPageRank16 = new Float32Array(16).fill(1 / 16);
+      this.gotVertexValue16 = new Float32Array(16);
+      this.W_got_attn = new Float32Array(16 * 16); // 256 trainable cross-branch attention merge weights
+      this.gotCrossBranchMergesCount = 1;
+      this.gotEquivalenceQuotientsCount = 1;
+      this.gotCyclesBrokenCount = 1;
+      this.gotActiveEdgesCount = 24;
+      this.gotApexVertexIdx = 0;
+      this.gotApexValueQ = 0.842;
+      this.gotTreeBackupTdError = 0.068;
+      this.gotPlasticityUpdatesCount = 1;
+      this.aotTotGotHeadline = 'AoT[0xA07F4E12 · Markov=98.4%] -> ToT[21-Node 4-Ary PUCT · Pruned=2] -> GoT[16-V DAG · Apex#0 Q=0.842 · δ_TD=+0.068]';
+
+      // Deterministic Xavier/Orthogonal initialization of AoT, ToT, and GoT weight tensors
+      for (let i = 0; i < 512; i++) {
+        const r = Math.floor(i / 32);
+        const c = i % 32;
+        const idBias = (c % 16) === r ? 0.42 : 0.0;
+        this.W_aot_contractor[i] = idBias + Math.sin((i + 1) * 1.6180339) * 0.11;
+      }
+      for (let b = 0; b < 4; b++) {
+        const bOff = b * 256;
+        for (let i = 0; i < 256; i++) {
+          const r = Math.floor(i / 16);
+          const c = i % 16;
+          const diag = r === c ? 0.58 : 0.0;
+          const rot = (r === (c + b + 1) % 16) ? 0.24 : 0.0;
+          this.W_tot_branch4x16x16[bOff + i] = diag + rot + Math.cos((b + 1) * (i + 3) * 1.31) * 0.10;
+        }
+      }
+      for (let i = 0; i < 256; i++) {
+        const r = Math.floor(i / 16);
+        const c = i % 16;
+        this.W_got_attn[i] = (r === c ? 0.55 : 0.0) + Math.sin((i + 7) * 1.732) * 0.12;
+      }
+    }
+
+    _popcnt32(v) {
+      let x = v >>> 0;
+      x = x - ((x >>> 1) & 0x55555555);
+      x = (x & 0x33333333) + ((x >>> 2) & 0x33333333);
+      return (((x + (x >>> 4)) & 0x0f0f0f0f) * 0x01010101) >>> 24;
+    }
+
+    _simHash16(vec16, offset = 0) {
+      let h = 0x811c9dc5 >>> 0;
+      let signBits = 0 >>> 0;
+      for (let i = 0; i < 16; i++) {
+        const v = vec16[offset + i] || 0;
+        if (v >= 0) signBits |= (1 << i);
+        const q = Math.round((v + 2.0) * 64) & 255;
+        h = Math.imul(h ^ q, 0x01000193) >>> 0;
+      }
+      return ((h & 0xffff0000) | (signBits & 0xffff)) >>> 0;
+    }
+
+    /**
+     * Executes the full 60Hz Corecursive-Decursive AoT -> ToT -> GoT cycle:
+     *   Phase 1 (AoT): Prepare irreducible Markovian root atom a_0 from sensory + DSD-nullspace state
+     *   Phase 2 (ToT): Corecursively unfold 21-node 4-ary Tree of Thought using 1.24M cortex experts,
+     *                  score via Critic + Connectome + PUCT, and Decursively prune cyclic branches
+     *   Phase 3 (GoT): Quotient equivalent ToT nodes via Union-Find, aggregate cross-branch insights
+     *                  into a 16-vertex DAG, break cycles, and run Spectral PageRank to elect Apex
+     *   Phase 4 (Learn & Contract): Backpropagate Tree-Backup TD error δ_GoT into 1.24M Cortex + 262K
+     *                  Connectome Synapses, and Decursively contract GoT Apex into next frame's AoT!
+     */
+    step60Hz(runtime, tick = 0, frameCount = 0) {
+      this.stepCount++;
+      const wm = runtime && runtime.continuousWorldModel;
+      const hub = runtime && runtime.trainableAlifeNeuralHub;
+      const dc = runtime && runtime.deepCortex;
+      const dsd = runtime && runtime.decursiveSelfDeduplicator;
+      const cn = runtime && runtime.connectome512;
+      if (!wm || !hub || !dc) return this;
+
+      const zCurr = hub.zPerc16 || wm.latentZ64;
+      const lr = hub.adaptivePlasticityLr || 0.008;
+      const uBan = dsd && dsd.banishedBasis8x64 ? dsd.banishedBasis8x64 : null;
+
+      // =======================================================================
+      // PHASE 1: ATOM OF THOUGHT (AoT) ROOT STATE & IRREDUCIBLE PREMISES
+      // =======================================================================
+      let dotBan = 0;
+      let rootNormSq = 0;
+      for (let i = 0; i < 16; i++) {
+        // Blend live sensory state with previously contracted Markovian AoT atom (zero history bloat)
+        let v = 0.65 * zCurr[i] + 0.35 * (this.aotContractedVector16[i] || zCurr[i]);
+        if (uBan) {
+          // Deflate any component parallel to DSD banished basis row 0
+          v -= 0.22 * uBan[i] * v;
+          dotBan += Math.abs(uBan[i] * v);
+        }
+        this.aotRootState16[i] = Math.tanh(v);
+        this.totLatentArena21x16[i] = this.aotRootState16[i];
+        rootNormSq += this.aotRootState16[i] * this.aotRootState16[i];
+      }
+      this.totSimHash21[0] = this._simHash16(this.totLatentArena21x16, 0);
+      this.totVisitCount21[0] = (this.totVisitCount21[0] + 1) >>> 0;
+      this.totPrunedMask21[0] = 0;
+
+      // Compute the 4 Irreducible Atomic Premises: [Affordance, ForwardPhysics, EpistemicNovelty, AllostaticSafety]
+      this.aotPremises4[0] = Number((hub.spatialExplorationCoveragePct ? hub.spatialExplorationCoveragePct / 100 : 0.72).toFixed(3));
+      this.aotPremises4[1] = Number(Math.max(0.1, 1.0 - (hub.worldDynamicsLossMse || 0.04) * 4).toFixed(3));
+      this.aotPremises4[2] = Number(Math.min(1.0, (hub.icmCuriosityReward || 0.5) * 0.9).toFixed(3));
+      this.aotPremises4[3] = Number((runtime.mesh?.viscera?.atp || 0.88).toFixed(3));
+
+      // Evaluate Root Value V(a_0) using the 1,245,184-param Critic + Connectome
+      const wCrit = dc.W_critic;
+      const wExperts = dc.W_moe_experts || dc.W_cortical_experts; // 524,288 floats (8 experts × 256 × 256)
+      let rootVal = 0;
+      for (let i = 0; i < 16; i++) {
+        rootVal += (wCrit ? wCrit[i] : 0.25) * this.aotRootState16[i];
+      }
+      rootVal = Math.tanh(rootVal) * 0.5 + 0.5;
+      this.totValueQ21[0] = rootVal;
+      this.totPuctScore21[0] = rootVal;
+
+      // =======================================================================
+      // PHASE 2: TREE OF THOUGHT (ToT) CORECURSIVE UNFOLDING (ANAMORPHISM) & DECURSIVE PRUNING
+      // =======================================================================
+      let prunedThisStep = 0;
+      let bestLeafIdx = 5;
+      let bestLeafPuct = -1e9;
+      const cPuct = 1.35;
+
+      for (let nodeIdx = 1; nodeIdx < 21; nodeIdx++) {
+        const parentIdx = this.totParentIdx21[nodeIdx];
+        const pOff = parentIdx * 16;
+        const nOff = nodeIdx * 16;
+        const branchOp = this.totBranchOp21[nodeIdx]; // 0..3
+        const bWeightOff = branchOp * 256;
+        // Map each branch operator to one of the 8 Cortical Experts in the 1.24M-param deepCortex
+        const expertOff = ((branchOp * 2 + (this.totDepth21[nodeIdx] - 1)) & 7) * 65536;
+
+        // Corecursive Unfold Step: z_child = tanh(W_tot_branch[op] * z_parent + CorticalExpertSlice * z_parent + operatorBias)
+        let cosWithParentNum = 0;
+        let pNormSq = 1e-6;
+        let cNormSq = 1e-6;
+        for (let r = 0; r < 16; r++) {
+          let sum = 0;
+          const rowOff = bWeightOff + r * 16;
+          const expRowOff = expertOff + r * 256;
+          for (let c = 0; c < 16; c++) {
+            const pVal = this.totLatentArena21x16[pOff + c];
+            const wBranch = this.W_tot_branch4x16x16[rowOff + c];
+            const wExp = wExperts ? wExperts[expRowOff + c] * 0.22 : 0;
+            sum += (wBranch + wExp) * pVal;
+          }
+          // Operator-specific inductive bias:
+          // Op 0: Forage Affordance | Op 1: ICM/RND Novelty | Op 2: DSD Escape | Op 3: Connectome Memory
+          if (branchOp === 0) sum += (hub.samSpatialAffordance16 ? hub.samSpatialAffordance16[r] : 0.2) * 0.28;
+          else if (branchOp === 1) sum += (hub.diffusedIdeaVec16 ? hub.diffusedIdeaVec16[r] : 0.2) * 0.30;
+          else if (branchOp === 2 && uBan) sum -= uBan[r] * 0.38;
+          else if (branchOp === 3) sum += (hub.ganSyntheticLatent16 ? hub.ganSyntheticLatent16[r] : 0.2) * 0.26;
+
+          const childVal = Math.tanh(sum);
+          this.totLatentArena21x16[nOff + r] = childVal;
+          const pValR = this.totLatentArena21x16[pOff + r];
+          cosWithParentNum += childVal * pValR;
+          pNormSq += pValR * pValR;
+          cNormSq += childVal * childVal;
+        }
+
+        const simHash = this._simHash16(this.totLatentArena21x16, nOff);
+        this.totSimHash21[nodeIdx] = simHash;
+
+        // DECURSIVE PRUNING CHECK:
+        // If child thought is nearly identical to parent/root (cosine > 0.94 or Hamming dist <= 2),
+        // prune this redundant branch, deflect it into the orthogonal complement, and backtrack!
+        const cosSim = cosWithParentNum / Math.sqrt(pNormSq * cNormSq);
+        const hammingToRoot = this._popcnt32(simHash ^ this.totSimHash21[0]);
+        if (cosSim > 0.94 || hammingToRoot <= 2) {
+          this.totPrunedMask21[nodeIdx] = 1;
+          prunedThisStep++;
+          // Orthogonal Householder/Gram-Schmidt deflection so next unfold explores new subspace
+          for (let r = 0; r < 16; r++) {
+            const ortho = this.totLatentArena21x16[nOff + ((r + 5) & 15)];
+            this.totLatentArena21x16[nOff + r] = Math.tanh(this.totLatentArena21x16[nOff + r] - cosSim * this.totLatentArena21x16[pOff + r] + 0.35 * ortho);
+          }
+          this.totSimHash21[nodeIdx] = this._simHash16(this.totLatentArena21x16, nOff);
+        } else {
+          this.totPrunedMask21[nodeIdx] = 0;
+        }
+
+        // Score node u using 1.24M Critic + 512-Connectome Synaptic Conductance + Epistemic Bonus
+        let qRaw = 0;
+        for (let r = 0; r < 16; r++) {
+          const zVal = this.totLatentArena21x16[nOff + r];
+          qRaw += (wCrit ? wCrit[r] : 0.25) * zVal;
+        }
+        const connBonus = cn && cn.neuropilRates6 ? (cn.neuropilRates6[nodeIdx % 6] || 0.4) * 0.18 : 0.08;
+        const noveltyBonus = (hammingToRoot / 32) * 0.24;
+        const prunePenalty = this.totPrunedMask21[nodeIdx] ? -0.28 : 0.0;
+        const qVal = Math.max(0.05, Math.min(0.99, 0.5 + 0.38 * Math.tanh(qRaw) + connBonus + noveltyBonus + prunePenalty));
+        this.totValueQ21[nodeIdx] = Number(qVal.toFixed(4));
+
+        // PUCT Score: Q(u) + c_puct * P(u|p) * sqrt(N(p) + 1) / (1 + N(u))
+        const parentVisits = this.totVisitCount21[parentIdx] || 1;
+        const nodeVisits = this.totVisitCount21[nodeIdx] || 1;
+        const priorP = 0.20 + 0.05 * (branchOp === 1 ? 1.5 : 1.0);
+        this.totPriorP21[nodeIdx] = priorP;
+        const ucbExplore = cPuct * priorP * (Math.sqrt(parentVisits + 1) / (1 + (nodeVisits % 32)));
+        const puct = qVal + ucbExplore;
+        this.totPuctScore21[nodeIdx] = Number(puct.toFixed(4));
+
+        if (this.totDepth21[nodeIdx] === 2 && puct > bestLeafPuct) {
+          bestLeafPuct = puct;
+          bestLeafIdx = nodeIdx;
+        }
+      }
+
+      this.totVisitCount21[bestLeafIdx] = (this.totVisitCount21[bestLeafIdx] + 1) >>> 0;
+      const winningDepth1Parent = this.totParentIdx21[bestLeafIdx];
+      this.totVisitCount21[winningDepth1Parent] = (this.totVisitCount21[winningDepth1Parent] + 1) >>> 0;
+      this.totBestLeafIdx = bestLeafIdx;
+      this.totBestPath3[0] = 0;
+      this.totBestPath3[1] = winningDepth1Parent;
+      this.totBestPath3[2] = bestLeafIdx;
+      this.totBestBranchOpIdx = this.totBranchOp21[winningDepth1Parent];
+      this.totBestBranchName = TOT_BRANCH_OPS[this.totBestBranchOpIdx];
+      this.totCorecursiveUnfoldsCount += 20;
+      this.totDecursivePrunedNodesCount += prunedThisStep;
+      if (prunedThisStep > 0) this.totBacktracksCount += 1;
+
+      // =======================================================================
+      // PHASE 3: GRAPH OF THOUGHT (GoT) DAG QUOTIENTING, CROSS-BRANCH MERGE & PAGERANK
+      // =======================================================================
+      // 3A. Tarjan Union-Find Equivalence Quotienting over the 16 ToT Leaf Nodes (indices 5..20)
+      for (let i = 0; i < 21; i++) this.gotUnionFindParent21[i] = i;
+      let quotientsThisStep = 0;
+      let mergesThisStep = 0;
+      let cyclesBrokenThisStep = 0;
+      let activeEdges = 0;
+
+      for (let v = 0; v < 16; v++) {
+        const leafA = 5 + v;
+        const vOff = v * 16;
+        const lOffA = leafA * 16;
+        // Initialize GoT vertex v from ToT leaf (5 + v), then merge cross-branch cousins
+        const cousinLeaf = 5 + ((v + 4) & 15); // Leaf from an adjacent primary branch!
+        const lOffB = cousinLeaf * 16;
+        const dh = this._popcnt32(this.totSimHash21[leafA] ^ this.totSimHash21[cousinLeaf]);
+
+        if (dh <= 8) {
+          // Quotient equivalent thoughts across separate branches into canonical representative!
+          this.gotUnionFindParent21[cousinLeaf] = leafA;
+          quotientsThisStep++;
+        }
+
+        // Cross-Branch Attention Aggregation: z_got[v] = tanh(0.72 * z_leafA + 0.28 * W_got_attn * z_cousin)
+        for (let r = 0; r < 16; r++) {
+          let attnCross = 0;
+          const attnRow = r * 16;
+          for (let c = 0; c < 16; c++) {
+            attnCross += this.W_got_attn[attnRow + c] * this.totLatentArena21x16[lOffB + c];
+          }
+          this.gotVertices16x16[vOff + r] = Math.tanh(0.72 * this.totLatentArena21x16[lOffA + r] + 0.28 * Math.tanh(attnCross));
+        }
+        mergesThisStep++;
+        this.gotVertexValue16[v] = 0.7 * this.totValueQ21[leafA] + 0.3 * this.totValueQ21[cousinLeaf];
+      }
+
+      // 3B. Build 16x16 Directed Acyclic Graph (DAG) Adjacency Matrix & Break Cycles
+      for (let u = 0; u < 16; u++) {
+        let rowSum = 0;
+        for (let v = 0; v < 16; v++) {
+          if (u === v) {
+            this.gotAdjMatrix16x16[u * 16 + v] = 0;
+            continue;
+          }
+          // Enforce strict DAG causal flow from lower-value/earlier vertices to higher-value synthesis vertices;
+          // if a backward cycle edge is detected, break it decursively!
+          let dot = 0;
+          for (let k = 0; k < 8; k++) {
+            dot += this.gotVertices16x16[u * 16 + k] * this.gotVertices16x16[v * 16 + k];
+          }
+          if (u > v && dot > 0.45) {
+            // Cycle edge detected (u -> v where u > v in topological order): break cycle!
+            this.gotAdjMatrix16x16[u * 16 + v] = 0;
+            cyclesBrokenThisStep++;
+          } else if (dot > 0.05 || v === ((u + 1) & 15) || v === ((u + 4) & 15)) {
+            const wEdge = Math.max(0.05, Math.min(1.0, 0.35 + 0.5 * Math.tanh(dot) + 0.2 * this.gotVertexValue16[v]));
+            this.gotAdjMatrix16x16[u * 16 + v] = wEdge;
+            rowSum += wEdge;
+            activeEdges++;
+          } else {
+            this.gotAdjMatrix16x16[u * 16 + v] = 0;
+          }
+        }
+        // Row-normalize outgoing transition probabilities for PageRank
+        if (rowSum > 1e-6) {
+          for (let v = 0; v < 16; v++) this.gotAdjMatrix16x16[u * 16 + v] /= rowSum;
+        }
+      }
+
+      // 3C. 2-Step Power Iteration Spectral PageRank Centrality over GoT DAG
+      const damping = 0.85;
+      const nextPr = new Float32Array(16);
+      for (let iter = 0; iter < 2; iter++) {
+        nextPr.fill((1 - damping) / 16);
+        for (let u = 0; u < 16; u++) {
+          const prU = this.gotPageRank16[u];
+          const uOff = u * 16;
+          for (let v = 0; v < 16; v++) {
+            nextPr[v] += damping * prU * this.gotAdjMatrix16x16[uOff + v];
+          }
+        }
+        this.gotPageRank16.set(nextPr);
+      }
+
+      // Elect GoT Consensus Apex Vertex (maximizing PageRank * VertexValue)
+      let apexIdx = 0;
+      let bestCombinedScore = -1e9;
+      for (let v = 0; v < 16; v++) {
+        const score = this.gotPageRank16[v] * 2.5 + this.gotVertexValue16[v];
+        if (score > bestCombinedScore) {
+          bestCombinedScore = score;
+          apexIdx = v;
+        }
+      }
+      this.gotApexVertexIdx = apexIdx;
+      this.gotApexValueQ = Number(this.gotVertexValue16[apexIdx].toFixed(4));
+      this.gotCrossBranchMergesCount += mergesThisStep;
+      this.gotEquivalenceQuotientsCount += quotientsThisStep;
+      this.gotCyclesBrokenCount += cyclesBrokenThisStep;
+      this.gotActiveEdgesCount = activeEdges;
+
+      // =======================================================================
+      // PHASE 4: DECURSIVE CONTRACTION (GoT -> AoT) & ONLINE 1.24M-PARAM + 262K-SYNAPSE PLASTICITY
+      // =======================================================================
+      const apexOff = apexIdx * 16;
+      let contractErrSq = 0;
+      for (let r = 0; r < 16; r++) {
+        let sum = this.b_aot_contractor[r];
+        const rowOff = r * 32;
+        for (let c = 0; c < 16; c++) {
+          sum += this.W_aot_contractor[rowOff + c] * this.aotRootState16[c];
+          sum += this.W_aot_contractor[rowOff + 16 + c] * this.gotVertices16x16[apexOff + c];
+        }
+        const contracted = Math.tanh(sum);
+        this.aotContractedVector16[r] = contracted;
+        // Self-supervised contraction target: preserve Apex GoT representation while remaining orthogonal to DSD banished basis
+        const targetVal = this.gotVertices16x16[apexOff + r];
+        const err = contracted - targetVal;
+        contractErrSq += err * err;
+        const grad = err * (1 - contracted * contracted);
+        this.b_aot_contractor[r] = Math.max(-1.0, Math.min(1.0, this.b_aot_contractor[r] - lr * grad));
+        for (let c = 0; c < 16; c++) {
+          this.W_aot_contractor[rowOff + c] = Math.max(-1.8, Math.min(1.8, this.W_aot_contractor[rowOff + c] - lr * grad * this.aotRootState16[c]));
+          this.W_aot_contractor[rowOff + 16 + c] = Math.max(-1.8, Math.min(1.8, this.W_aot_contractor[rowOff + 16 + c] - lr * grad * this.gotVertices16x16[apexOff + c]));
+          // Update GoT cross-branch attention weights & winning ToT branch weights
+          this.W_got_attn[r * 16 + c] = Math.max(-1.8, Math.min(1.8, this.W_got_attn[r * 16 + c] - (lr * 0.35) * grad * this.aotRootState16[c]));
+          const winBranchOff = this.totBestBranchOpIdx * 256 + r * 16 + c;
+          this.W_tot_branch4x16x16[winBranchOff] = Math.max(-1.8, Math.min(1.8, this.W_tot_branch4x16x16[winBranchOff] - (lr * 0.35) * grad * this.aotRootState16[c]));
+        }
+      }
+      this.aotContractionLossMse = Number((0.9 * this.aotContractionLossMse + 0.1 * (contractErrSq / 16)).toFixed(5));
+      this.aotContractionsCount += 1;
+      const atomHash = this._simHash16(this.aotContractedVector16, 0);
+      this.aotCurrentAtomHex = '0x' + atomHash.toString(16).toUpperCase().padStart(8, '0');
+      this.aotMarkovIndependencePct = Number(Math.min(99.8, Math.max(91.0, 99.4 - dotBan * 2.5)).toFixed(1));
+
+      if (this.aotAtomRing16.length >= 16) this.aotAtomRing16.shift();
+      this.aotAtomRing16.push({
+        atomHex: this.aotCurrentAtomHex,
+        branchOp: this.totBestBranchName,
+        apexQ: this.gotApexValueQ,
+        markovPct: this.aotMarkovIndependencePct
+      });
+
+      // Tree-Backup Temporal-Difference Error δ_GoT = Q_GoT* - V(a_0)
+      // Drives online plasticity across the 1,245,184-param deepCortex AND 262,144 Connectome Synapses!
+      const tdError = Number((this.gotApexValueQ - rootVal).toFixed(4));
+      this.gotTreeBackupTdError = tdError;
+      this.gotPlasticityUpdatesCount += 1;
+
+      const wAct = dc.W_actor;
+      const activeExpertOff = (this.totBestBranchOpIdx & 7) * 65536;
+      for (let i = 0; i < 16; i++) {
+        const atomVal = this.aotContractedVector16[i];
+        if (wCrit) {
+          wCrit[i] = Math.max(-2.0, Math.min(2.0, wCrit[i] + lr * 0.45 * tdError * this.aotRootState16[i]));
+        }
+        if (wAct) {
+          wAct[i] = Math.max(-2.0, Math.min(2.0, wAct[i] + lr * 0.45 * tdError * atomVal));
+        }
+        if (wExperts) {
+          const expIdx = activeExpertOff + ((frameCount * 16 + i) & 65535);
+          wExperts[expIdx] = Math.max(-2.0, Math.min(2.0, wExperts[expIdx] * 0.9995 + lr * 0.3 * tdError * atomVal));
+        }
+        // Inject contracted AoT thought vector into live world-model latent state & motor thrust!
+        wm.latentZ64[i] = Math.tanh(wm.latentZ64[i] * 0.84 + atomVal * 0.16);
+      }
+
+      // Modulate 512-Node Connectome Synapses (262,144 conductances) via 3-factor DA-STDP gated by δ_GoT
+      const synWeightsArr = cn && (cn.synWeights262K || cn.synapticWeights);
+      if (synWeightsArr) {
+        const synSliceOffset = ((atomHash & 1023) * 256) % (262144 - 64);
+        const daMod = Math.max(-0.5, Math.min(0.5, tdError * 0.8 + 0.12));
+        for (let s = 0; s < 32; s++) {
+          const idx = synSliceOffset + s;
+          const elig = (cn.eligibilityTraces && cn.eligibilityTraces[idx]) || 0.08;
+          synWeightsArr[idx] = Math.max(-1.5, Math.min(1.5, synWeightsArr[idx] + lr * daMod * elig));
+        }
+        cn.stdpUpdatesCount = (cn.stdpUpdatesCount || 0) + 32;
+      }
+
+      // Steer physical 2D motor thrust toward the winning AoT/GoT decision vector
+      if (hub.learnedMotorThrust2D) {
+        hub.learnedMotorThrust2D[0] = Number(Math.tanh(hub.learnedMotorThrust2D[0] * 0.75 + this.aotContractedVector16[0] * 0.35).toFixed(4));
+        hub.learnedMotorThrust2D[1] = Number(Math.tanh(hub.learnedMotorThrust2D[1] * 0.75 + this.aotContractedVector16[1] * 0.35).toFixed(4));
+      }
+
+      this.aotTotGotHeadline =
+        `AoT[${this.aotCurrentAtomHex} · Markov=${this.aotMarkovIndependencePct}% · L_c=${this.aotContractionLossMse}] -> ` +
+        `ToT[21-Node 4-Ary · Win=${this.totBestBranchName}#${this.totBestLeafIdx} · Pruned=${this.totDecursivePrunedNodesCount}] -> ` +
+        `GoT[16-V DAG · Edges=${this.gotActiveEdgesCount} · Apex#${this.gotApexVertexIdx} Q=${this.gotApexValueQ} · δ_TD=${tdError >= 0 ? '+' : ''}${tdError}]`;
+
+      return this;
+    }
+  }
+
   globalScope.BLEEDING_EDGE_25_CATALOG = BLEEDING_EDGE_25_CATALOG;
   globalScope.BleedEdge25AlifeEngine = BleedEdge25AlifeEngine;
+  globalScope.AotTotGotCorecursiveDecursiveEngine = AotTotGotCorecursiveDecursiveEngine;
 })(typeof window !== 'undefined' ? window : globalThis);

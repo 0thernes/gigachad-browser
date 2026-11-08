@@ -2844,6 +2844,12 @@ app.whenReady().then(async () => {
                       humunculusRuntime.frontierNeuralCyberEngine?.wasmKernel?.active === true &&
                       humunculusRuntime.frontierNeuralCyberEngine?.jepaMultiHorizonLoss > 0 &&
                       humunculusRuntime.frontierNeuralCyberEngine?.flowMatchingLossMse > 0 &&
+                      humunculusRuntime.aotTotGotEngine?.totLatentArena21x16?.length === 336 &&
+                      humunculusRuntime.aotTotGotEngine?.gotVertices16x16?.length === 256 &&
+                      humunculusRuntime.aotTotGotEngine?.gotAdjMatrix16x16?.length === 256 &&
+                      humunculusRuntime.aotTotGotEngine?.aotContractedVector16?.length === 16 &&
+                      humunculusRuntime.aotTotGotEngine?.gotApexValueQ > 0 &&
+                      humunculusRuntime.formatRetroTerminalText('aottotgot').includes('CORECURSIVE-DECURSIVE AoT') &&
                       humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
                       typeof resolveDeepDarkWebGatewayUrl === 'function' &&
                       typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&

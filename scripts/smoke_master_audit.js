@@ -216,6 +216,9 @@ assert(indexScript.includes('visionDomGrid8x8') && indexScript.includes('samSpat
 const frontierEngineJs = readFile('alife_neural_cyber_engine.js');
 assert(indexHtml.includes('<script src="alife_neural_cyber_engine.js"></script>'), 'index.html must load external alife_neural_cyber_engine.js');
 assert(frontierEngineJs.includes('UNPRECEDENTED_25_CATALOG') && frontierEngineJs.includes('compileInMemoryWasmNeuralKernel') && frontierEngineJs.includes('alife-neural-weights-sync'), 'alife_neural_cyber_engine.js must define UNPRECEDENTED_25_CATALOG, in-memory Wasm JIT kernel, and disk binary weight sync');
+const bleeding25Js = readFile('systems/alife-25-bleeding-edge-models.js');
+assert(bleeding25Js.includes('AotTotGotCorecursiveDecursiveEngine') && bleeding25Js.includes('totLatentArena21x16') && bleeding25Js.includes('gotAdjMatrix16x16') && bleeding25Js.includes('W_aot_contractor'), 'systems/alife-25-bleeding-edge-models.js must implement AotTotGotCorecursiveDecursiveEngine (AoT, ToT, GoT)');
+assert(indexScript.includes('aotTotGotEngine') && indexScript.includes("mode === 'aottotgot'"), 'index.html must wire aotTotGotEngine and aottotgot terminal view');
 
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +
