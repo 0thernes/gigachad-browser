@@ -14508,6 +14508,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             this.frontierNeuralCyberEngine.syncWeightsToDisk(this, ipcRenderer).catch(() => {});
           }
         }
+        if (this.bleedingEdge25Engine) {
+          this.bleedingEdge25Engine.step60Hz(this, this.simulationTick || frame, frame);
+        }
       }
 
       // Hard-wired DSD-16 + Clifford Multivector + sLTC/SSM/Connectome + Deep/Dark Web + Cryptochrome Door Scorer:

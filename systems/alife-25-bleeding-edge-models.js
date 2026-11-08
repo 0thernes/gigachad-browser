@@ -245,6 +245,9 @@
       if (!wm || !hub) return this;
 
       const z = wm.latentZ64;
+      const sCurr = hub.zPerc16 || z;
+      const sPrev = hub.zPrev16 || z;
+      const sPred = hub.zPredNext16 || sCurr;
       const lr = hub.adaptivePlasticityLr || 0.008;
 
       // 1. I-JEPA Latent World Predictor (Predict target EMA representation without pixel noise)
@@ -254,7 +257,7 @@
         let targetEma = 0;
         const row = i * 16;
         for (let j = 0; j < 16; j++) {
-          pred += this.W_jepa_pred[row + j] * hub.sensoryCurr16[j];
+          pred += this.W_jepa_pred[row + j] * sCurr[j];
           targetEma += this.W_jepa_ema[row + j] * z[j];
         }
         pred = Math.tanh(pred);
@@ -263,7 +266,7 @@
         jepaErrSq += err * err;
         const dPred = err * (1 - pred * pred);
         for (let j = 0; j < 16; j++) {
-          this.W_jepa_pred[row + j] -= lr * dPred * hub.sensoryCurr16[j];
+          this.W_jepa_pred[row + j] -= lr * dPred * sCurr[j];
           // EMA update of target encoder (momentum τ_ema = 0.995)
           this.W_jepa_ema[row + j] = 0.995 * this.W_jepa_ema[row + j] + 0.005 * this.W_jepa_pred[row + j];
         }
@@ -320,12 +323,12 @@
         let kvPred = 0;
         for (let j = 0; j < 16; j++) {
           const fastMod = this.W_hyper_u[i] * this.W_hyper_v[j] * 0.12;
-          kvPred += (this.W_ttt_fast16x16[row + j] + fastMod) * hub.sensoryPrev16[j];
+          kvPred += (this.W_ttt_fast16x16[row + j] + fastMod) * sPrev[j];
         }
-        const kvErr = kvPred - hub.sensoryCurr16[i];
+        const kvErr = kvPred - sCurr[i];
         tttErrSq += kvErr * kvErr;
         for (let j = 0; j < 16; j++) {
-          this.W_ttt_fast16x16[row + j] -= (lr * 0.6) * kvErr * hub.sensoryPrev16[j];
+          this.W_ttt_fast16x16[row + j] -= (lr * 0.6) * kvErr * sPrev[j];
         }
       }
       this.tttReconstructionLoss = Number(Math.max(0.0004, tttErrSq / 16).toFixed(5));
@@ -339,8 +342,8 @@
         let actPos = 0;
         let actNeg = 0;
         for (let j = 0; j < 16; j++) {
-          actPos += this.W_ff_layer[row + j] * hub.sensoryCurr16[j];
-          const fakeNeg = -hub.sensoryPrev16[(j + 5) % 16] * 0.85;
+          actPos += this.W_ff_layer[row + j] * sCurr[j];
+          const fakeNeg = -sPrev[(j + 5) % 16] * 0.85;
           actNeg += this.W_ff_layer[row + j] * fakeNeg;
         }
         goodPos += actPos * actPos;
@@ -348,7 +351,7 @@
         const pPos = 1 / (1 + Math.exp(-(actPos * actPos - thetaFF)));
         const pNeg = 1 / (1 + Math.exp(-(actNeg * actNeg - thetaFF)));
         for (let j = 0; j < 16; j++) {
-          this.W_ff_layer[row + j] += (lr * 0.25) * ((1 - pPos) * actPos * hub.sensoryCurr16[j] - pNeg * actNeg * (-hub.sensoryPrev16[(j + 5) % 16]));
+          this.W_ff_layer[row + j] += (lr * 0.25) * ((1 - pPos) * actPos * sCurr[j] - pNeg * actNeg * (-sPrev[(j + 5) % 16]));
         }
       }
       this.ffGoodnessPos = Number(Math.max(0.5, goodPos).toFixed(3));
@@ -357,7 +360,7 @@
       // 7. Predictive Coding Network (PCN Rao-Ballard Precision-Weighted Free Energy) & 15. Astrocyte Glial Gate
       let pcnF = 0;
       for (let i = 0; i < 16; i++) {
-        const predErr = hub.sensoryCurr16[i] - hub.predSensory16[i];
+        const predErr = sCurr[i] - sPred[i];
         this.pcnPrecisionPi16[i] = Math.max(0.25, Math.min(4.0, 0.95 * this.pcnPrecisionPi16[i] + 0.05 / (predErr * predErr + 0.08)));
         pcnF += 0.5 * (this.pcnPrecisionPi16[i] * predErr * predErr - Math.log(this.pcnPrecisionPi16[i]));
         // Astrocyte slow calcium wave protects consolidated weights from catastrophic forgetting
@@ -385,13 +388,13 @@
         let tOut = 0;
         let pOut = 0;
         for (let j = 0; j < 16; j++) {
-          tOut += this.W_rnd_target[row + j] * hub.sensoryCurr16[j];
-          pOut += this.W_rnd_pred[row + j] * hub.sensoryCurr16[j];
+          tOut += this.W_rnd_target[row + j] * sCurr[j];
+          pOut += this.W_rnd_pred[row + j] * sCurr[j];
         }
         const rErr = pOut - tOut;
         rndErrSq += rErr * rErr;
         for (let j = 0; j < 16; j++) {
-          this.W_rnd_pred[row + j] -= (lr * 0.5) * rErr * hub.sensoryCurr16[j];
+          this.W_rnd_pred[row + j] -= (lr * 0.5) * rErr * sCurr[j];
         }
       }
       this.rndNoveltyBonus = Number(Math.max(0.002, Math.min(1.5, rndErrSq / 16)).toFixed(4));
@@ -410,7 +413,7 @@
       let posDot = 0;
       let koopNorm = 0;
       for (let i = 0; i < 16; i++) {
-        posDot += hub.predNextZ16[i] * z[i];
+        posDot += sPred[i] * z[i];
         koopNorm += this.W_koopman16x16[i * 16 + i] * this.W_koopman16x16[i * 16 + i];
         this.kuramotoHopfieldPhase16[i] = (this.kuramotoHopfieldPhase16[i] + 0.08 + 0.03 * Math.sin(this.kuramotoHopfieldPhase16[(i + 1) % 16] - this.kuramotoHopfieldPhase16[i])) % (Math.PI * 2);
       }
@@ -467,7 +470,7 @@
             ...Array.from(this.W_jepa_pred.subarray(0, 64)),
             ...Array.from(this.W_cfm_vel.subarray(0, 64)),
             ...Array.from(this.W_ttt_fast16x16.subarray(0, 64)),
-            ...Array.from(hub.W_dyn.subarray(0, 64))
+            ...Array.from((hub.W_dyn1 || this.W_jepa_pred).subarray(0, 64))
           ],
           float64State: Array.from(hub.f64InterIntraCoupling16x16.subarray(0, 32)),
           int8Quantized: Array.from(hub.int8QuantizedWeights256.subarray(0, 128)),
