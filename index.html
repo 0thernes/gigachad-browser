@@ -1843,6 +1843,9 @@
         <button type="button" class="gold" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('asmodensius')" title="Open standalone Asmodensius v40 Creature #001 Lab in a Browser Tab">🧬 Asmodensius v40 ↗</button>
         <button type="button" class="purple" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('cqm-xylos')" title="Open standalone CQM-Xylos Cosmogonic Quantum Mechalogodrom (Zig 0.17 Wasm) in a Browser Tab">⚛️ CQM-Xylos Wasm ↗</button>
         <button type="button" class="cyan" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('glitchling')" title="Open standalone Glitchling 4-Flaw Adversarial Resilience Brain in a Browser Tab">👾 Glitchling ↗</button>
+        <button type="button" class="gold" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('tsotchke')" title="Open standalone Tsotchke Chaotic Attractor Diffusion (Dale 80/20 E:I + STP + DDIM) in a Browser Tab">🌀 Tsotchke DDIM ↗</button>
+        <button type="button" class="purple" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('thingmaker')" title="Open standalone Thingmaker Generative Studio in a Browser Tab">🛠️ Thingmaker ↗</button>
+        <button type="button" class="cyan" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('grimoire')" title="Open standalone Grimoire Arcane Visualizer in a Browser Tab">📖 Grimoire ↗</button>
         <button type="button" class="cyan" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('cqm-bible')" title="Open standalone CQM-Xylos Cosmological &amp; Mathematical Bible in a Browser Tab">📜 CQM Bible ↗</button>
         <button type="button" style="padding:3px 8px; font-size:11px;" onclick="openHybridPortalTab('manifold3d')" title="Open standalone 3D Quantum Neural Manifold in a Browser Tab">🔮 3D Manifold ↗</button>
       </div>
@@ -17824,6 +17827,15 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       } else if (which === 'glitchling' && res.glitchlingUrl) {
         targetUrl = res.glitchlingUrl;
         tabTitle = '👾 Glitchling 4-Flaw Resilience Brain';
+      } else if (which === 'tsotchke' && res.tsotchkeDiffusionUrl) {
+        targetUrl = res.tsotchkeDiffusionUrl;
+        tabTitle = '🌀 Tsotchke Chaotic Diffusion (Dale 80/20 + STP + DDIM)';
+      } else if (which === 'thingmaker' && res.thingmakerUrl) {
+        targetUrl = res.thingmakerUrl;
+        tabTitle = '🛠️ Thingmaker Generative Studio';
+      } else if (which === 'grimoire' && res.grimoireArcaneUrl) {
+        targetUrl = res.grimoireArcaneUrl;
+        tabTitle = '📖 Grimoire Arcane Visualizer';
       }
       if (!targetUrl) {
         appendLog('step', `⚠️ Portal file for ${which} not found on disk.`);

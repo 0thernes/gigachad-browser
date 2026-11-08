@@ -1,0 +1,273 @@
+# Single source of truth — Stephen L. Thaler study registry
+version: 0.1.0
+author: Alexander Donahue / 0thernes
+updated: 2026-07-12
+disclaimer: Independent study notes. No endorsement by Stephen Thaler or Imagination Engines.
+
+papers:
+  - slug: 1995-virtual-input-phenomena
+    year: 1995
+    kind: paper
+    status: seed
+    title: "Virtual input phenomena within the death of a simple pattern associator"
+    short_title: Virtual input phenomena
+    venue: "Neural Networks 8(1):55–65"
+    authors: ["Stephen L. Thaler"]
+    doi: "10.1016/0893-6080(94)00065-T"
+    urls:
+      - "https://www.sciencedirect.com/science/article/abs/pii/089360809400065T"
+    markers: [virtual-input, life-review, glory]
+    domains: [neural-networks, consciousness, psychology, near-death]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+      - src/sim/gedanken-death.ts
+
+  - slug: 1997-us5659666-dagui
+    year: 1997
+    kind: patent
+    status: seed
+    title: "Device for the Autonomous Generation of Useful Information (DAGUI / Creativity Machine)"
+    short_title: US 5,659,666 DAGUI
+    venue: "United States Patent 5,659,666"
+    authors: ["Stephen L. Thaler"]
+    patent_number: "US5659666A"
+    urls:
+      - "https://patents.google.com/patent/US5659666A/en"
+      - "https://patentimages.storage.googleapis.com/e2/86/f9/3c44dc09d46968/US5659666.pdf"
+    markers: [glory, rhythm, reentrant, chaining]
+    domains: [machine-learning, deep-learning, invention, neural-networks]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+      - src/sim/super-mind.ts
+
+  - slug: 1997-seminal-cognition-cm
+    year: 1997
+    kind: paper
+    status: seed
+    title: "A quantitative model of seminal cognition: the creativity machine paradigm"
+    short_title: Seminal cognition / CM paradigm
+    venue: "Mind II Conference, Dublin (as cited in later CM literature)"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://imagination-engines.com/founder.html"
+    markers: [glory, rhythm, reentrant]
+    domains: [cognition, consciousness, creativity]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+
+  - slug: 2008-us7454388-bootstrap
+    year: 2008
+    kind: patent
+    status: seed
+    title: "Device for the autonomous bootstrapping of useful information"
+    short_title: US 7,454,388 bootstrapping
+    venue: "United States Patent 7,454,388"
+    authors: ["Stephen L. Thaler"]
+    patent_number: "US7454388B2"
+    urls:
+      - "https://patents.google.com/patent/US7454388B2/en"
+    markers: [bootstrap, chaining, hot-button]
+    domains: [machine-learning, invention, neural-networks]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+
+  - slug: 2012-cm-withstanding-consciousness
+    year: 2012
+    kind: paper
+    status: seed
+    title: "The Creativity Machine Paradigm: Withstanding the Argument from Consciousness"
+    short_title: Withstanding Argument from Consciousness
+    venue: "Imagination Engines / ResearchGate preprint-style distribution (2012)"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://www.researchgate.net/publication/284031928_The_Creativity_Machine_Paradigm_Withstanding_the_Argument_from_Consciousness"
+    markers: [reentrant, hot-button, glory]
+    domains: [consciousness, philosophy-of-mind, creativity]
+    cosmogonic:
+      - lab/consciousness.html
+      - src/sim/thaler-sentience.ts
+
+  - slug: 2013-beyond-cliff-of-creativity
+    year: 2013
+    kind: paper
+    status: seed
+    title: "Beyond the cliff of creativity"
+    short_title: Beyond the cliff of creativity
+    venue: "Medical Hypotheses (2013)"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://www.sciencedirect.com/science/article/abs/pii/S0306987712005671"
+    markers: [glory, fractal, rhythm]
+    domains: [creativity, psychology, medical-hypotheses]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+
+  - slug: 2014-synaptic-perturbation-consciousness
+    year: 2014
+    kind: paper
+    status: seed
+    title: "Synaptic perturbation and consciousness"
+    short_title: Synaptic perturbation and consciousness
+    venue: "International Journal of Machine Consciousness / IJMC 6(2):75–107 (as cited)"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://www.worldscientific.com/doi/10.1142/S1793843014400137"
+    markers: [glory, reentrant, virtual-input, life-review]
+    domains: [consciousness, neural-networks, synaptic-noise]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+      - src/sim/super-mind.ts
+
+  - slug: 2016-cycles-insanity-creativity
+    year: 2016
+    kind: paper
+    status: seed
+    title: "Cycles of insanity and creativity within contemplative neural systems"
+    short_title: Cycles of insanity and creativity
+    venue: "Medical Hypotheses (2016)"
+    authors: ["Stephen L. Thaler"]
+    pmid: "27515220"
+    urls:
+      - "https://pubmed.ncbi.nlm.nih.gov/27515220/"
+    markers: [glory, fractal, rhythm, hot-button]
+    domains: [psychology, creativity, mental-illness-models, neural-dynamics]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+
+  - slug: 2019-us10423875-dabus-line
+    year: 2019
+    kind: patent
+    status: seed
+    title: "Electorally and electro-optically based neuroprocessors (DABUS-line architecture as publicly described)"
+    short_title: US 10,423,875 DABUS line
+    venue: "United States Patent 10,423,875"
+    authors: ["Stephen L. Thaler"]
+    patent_number: "US10423875B2"
+    urls:
+      - "https://patents.google.com/patent/US10423875B2/en"
+      - "https://imagination-engines.com/founder.html"
+    markers: [bootstrap, chaining, hot-button, reentrant]
+    domains: [artificial-invention, sentience-models, neural-systems, law-adjacent]
+    cosmogonic:
+      - src/sim/super-mind.ts
+      - lab/sentience.html
+
+  - slug: founder-imagination-engines-overview
+    year: 2024
+    kind: web
+    status: seed
+    title: "Imagination Engines founder overview — diamonds, NDE nets, Creativity Machine, DABUS, sentient AI"
+    short_title: IEI founder overview
+    venue: "imagination-engines.com/founder.html"
+    authors: ["Stephen L. Thaler", "Imagination Engines, Inc."]
+    urls:
+      - "https://imagination-engines.com/founder.html"
+      - "https://imagination-engines.com/"
+    markers: [glory, life-review, hot-button, reentrant, bootstrap, chaining]
+    domains: [overview, biography, paradigm-map]
+    cosmogonic:
+      - bible.html
+      - docs/reports/
+
+
+  - slug: 1998-alloys-cm-materials
+    year: 1998
+    kind: paper
+    status: seed
+    title: "Creativity Machine applications in materials / alloys process space (as cited in CM literature)"
+    short_title: CM materials/alloys applications
+    venue: "J Alloys Compd. lineage (as cited by later CM reviews)"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://imagination-engines.com/founder.html"
+    markers: [glory, chaining]
+    domains: [materials-science, neural-networks, invention]
+    cosmogonic:
+      - src/sim/thaler-sentience.ts
+
+  - slug: 1997-fragmentation-universe-consciousness
+    year: 1997
+    kind: monograph
+    status: seed
+    title: "The Fragmentation of the Universe and the Devolution of Consciousness"
+    short_title: Fragmentation / devolution of consciousness
+    venue: "U.S. Library of Congress TXU00775586 (as cited)"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://imagination-engines.com/founder.html"
+    markers: [reentrant, life-review]
+    domains: [consciousness, philosophy]
+    cosmogonic:
+      - lab/consciousness.html
+
+  - slug: springer-cm-paradigm-encyclopedia
+    year: 2013
+    kind: book-chapter
+    status: seed
+    title: "The Creativity Machine Paradigm (encyclopedia / reference work entry)"
+    short_title: Springer CM paradigm entry
+    venue: "Springer reference (as listed on publisher pages)"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://link.springer.com/rwe/10.1007/978-1-4614-6616-1_396-2"
+    markers: [glory, reentrant, hot-button]
+    domains: [creativity, neural-networks, consciousness]
+    cosmogonic:
+      - bible.html
+
+  - slug: dabus-artificial-inventor-context
+    year: 2021
+    kind: secondary
+    status: seed
+    title: "DABUS / Artificial Inventor Project — public legal and technical context notes"
+    short_title: DABUS inventorship context
+    venue: "Secondary literature (Thaler v. Vidal lineage + Artificial Inventor Project)"
+    authors: ["Stephen L. Thaler", "secondary sources"]
+    urls:
+      - "https://imagination-engines.com/founder.html"
+      - "https://en.wikipedia.org/wiki/DABUS"
+    markers: [bootstrap, chaining, hot-button]
+    domains: [law-adjacent, artificial-invention, sentience-models]
+    cosmogonic:
+      - lab/sentience.html
+
+  - slug: patents-iei-index
+    year: 2024
+    kind: web
+    status: seed
+    title: "Imagination Engines patents index (public patents.html harvest spine)"
+    short_title: IEI patents index
+    venue: "imagination-engines.com/patents.html"
+    authors: ["Stephen L. Thaler", "Imagination Engines, Inc."]
+    urls:
+      - "https://imagination-engines.com/patents.html"
+    markers: [bootstrap, glory, reentrant]
+    domains: [patents, invention, neural-systems]
+    cosmogonic:
+      - docs/reports/
+
+  - slug: researchgate-profile-index
+    year: 2024
+    kind: web
+    status: seed
+    title: "ResearchGate Stephen Thaler profile — bibliography index spine (~90 items public list)"
+    short_title: ResearchGate bibliography index
+    venue: "researchgate.net/profile/Stephen_Thaler"
+    authors: ["Stephen L. Thaler"]
+    urls:
+      - "https://www.researchgate.net/profile/Stephen_Thaler"
+    markers: []
+    domains: [bibliography, meta]
+    cosmogonic:
+      - docs/reports/
+
+
+# Additional known / to-harvest titles (stubs on next scaffold pass)
+stubs:
+  - "Death of a Gedanken Creature (associator experiment lineage)"
+  - "The Fragmentation of the Universe and the Devolution of Consciousness (LOC TXU00775586)"
+  - "Creativity Machine Paradigm — Springer encyclopedia entry"
+  - "Materials discovery / alloys applications of CM (J Alloys Compd. 1998 citations)"
+  - "Artificial Inventor Project filings and national office opinions (secondary legal literature)"
+  - "Full ResearchGate bibliography harvest (~90 items) — pending"
+  - "Full patents.html harvest from imagination-engines.com — pending"

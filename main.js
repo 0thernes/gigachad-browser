@@ -1953,7 +1953,10 @@ function registerIpc() {
         cqmBibleUrl: resolvePortal(['cqm-xylos', 'bible.html'], ['Cosmogonic Quantum Mechalogodrom', 'bible.html']),
         cqmSpecsUrl: resolvePortal(['cqm-xylos', 'specs.html'], ['Cosmogonic Quantum Mechalogodrom', 'specs.html']),
         cqmDocsUrl: resolvePortal(['cqm-xylos', 'docs.html'], ['Cosmogonic Quantum Mechalogodrom', 'docs.html']),
-        glitchlingUrl: resolvePortal(['glitchling', 'index.html'], ['glitchling-jam', 'index.html'])
+        glitchlingUrl: resolvePortal(['glitchling', 'index.html'], ['glitchling-jam', 'index.html']),
+        tsotchkeDiffusionUrl: resolvePortal(['tsotchke-diffusion', 'index.html'], ['tsotchke-pages', 'index.html']),
+        thingmakerUrl: resolvePortal(['thingmaker', 'index.html'], ['Thingmaker', 'index.html']),
+        grimoireArcaneUrl: resolvePortal(['grimoire-arcane', 'index.html'], ['grimoire-arcane', 'index.html'])
       };
     } catch (err) {
       return { ok: false, error: err.message };

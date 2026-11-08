@@ -135,6 +135,8 @@
               Number.isFinite(snap.apexHydra.lyapunovLambda1) &&
               Number.isFinite(snap.xenomimic.wavepacketNorm) &&
               Math.abs(snap.xenomimic.wavepacketNorm - 1.0) < 1e-6 &&
+              Boolean(snap.tsotchkeDale && snap.tsotchkeDale.daleEiRatio > 0 && snap.tsotchkeDale.stpResource >= 0.05) &&
+              Boolean(snap.blackHolePage && snap.blackHolePage.sBH > 0 && snap.blackHolePage.lemireGlyphIdx >= 0 && snap.blackHolePage.lemireGlyphIdx < 518) &&
               pantheon.precisionArena.stochasticRoundUpdatesCount > 0;
           }
           if (inv1) iterPointsPassed++;

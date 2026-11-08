@@ -145,6 +145,45 @@
       return pop32(lo) + pop32(hi);
     }
 
+    /**
+     * SplitMix64 Bijective 64-Bit Hash on BigUint64 (`brains/chaos-entropy/lib.rs`)
+     */
+    splitmix64BigInt(seed64) {
+      let z = (BigInt(seed64) + 0x9e3779b97f4a7c15n) & 0xffffffffffffffffn;
+      z = ((z ^ (z >> 30n)) * 0xbf58476d1ce4e5b9n) & 0xffffffffffffffffn;
+      z = ((z ^ (z >> 27n)) * 0x94d049bb133111ebn) & 0xffffffffffffffffn;
+      return (z ^ (z >> 31n)) & 0xffffffffffffffffn;
+    }
+
+    /**
+     * Lemire Unbiased 128-Bit Multiply-Shift Reduction (`brains/chaos-entropy/lib.rs` `unbiased_range`):
+     *   Maps a 64-bit unsigned value uniformly into [0, n) without modulo division bias via:
+     *   ((raw64 * n) >> 64) in exact 128-bit BigInt arithmetic!
+     */
+    lemireUnbiasedRangeU64(raw64, boundN) {
+      const u64 = BigInt(raw64) & 0xffffffffffffffffn;
+      const n = BigInt(Math.max(1, boundN >>> 0));
+      return Number((u64 * n) >> 64n);
+    }
+
+    /**
+     * Samples the 3.31 × 10^21 Combinatoric State Space (`SeedSpace::POC_V1` from `brains/chaos-entropy/lib.rs`)
+     * using exact 64-bit SplitMix64 + 128-bit Lemire Multiply-Shift on `u64SwarHypervectors`.
+     */
+    sampleChaosEntropySeedSpace(slotIdx = 0) {
+      const idx = slotIdx & 511;
+      const s0 = this.splitmix64BigInt(this.u64SwarHypervectors[idx]);
+      const s1 = this.splitmix64BigInt(s0);
+      this.u64SwarHypervectors[idx] = s1;
+      return {
+        glyphIdx: this.lemireUnbiasedRangeU64(s0, 518),
+        fontIdx: this.lemireUnbiasedRangeU64(s1, 50),
+        sizeIdx: this.lemireUnbiasedRangeU64(s0 ^ s1, 32),
+        rotationDeg: this.lemireUnbiasedRangeU64(s0 + s1, 360),
+        combinatoricSpace: '3.31e21 (SeedSpace::POC_V1)'
+      };
+    }
+
     _initializeArenaDeterministically() {
       // Seed Tier 1 (f64): Identity covariance matrix P_0 for Recursive Least Squares & Crank-Nicolson wavefunction
       for (let i = 0; i < 16; i++) {
@@ -389,6 +428,14 @@
       this.stochasticInt8NonZeroUpdates = 0;
       this.misfiresAbsorbedCount = 0;
       this.scramblesRecoveredCount = 0;
+      // 100x5 Area Matrix (500 somatic/neural attributes across Cortex, Subcortex, Brainstem, Body, Environment) + Selectable-Site bestSiteFrac
+      this.areasMatrixCount = 500;
+      this.realVizEventsCount = 189;
+      this.pTrue16 = new Float32Array([0.82, 0.12, 0.76, 0.15, 0.18, 0.79, 0.14, 0.71, 0.68, 0.11, 0.85, 0.19, 0.16, 0.74, 0.13, 0.81]);
+      this.access16 = new Uint8Array([1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1]); // Even parity accessible sites
+      this.wSite16 = new Float32Array(16).fill(0.25);
+      this.bestSiteSelectableIdx = 10;
+      this.bestSiteFrac = 0.438;
     }
 
     step60Hz(z16, rewardDelta, lr) {
@@ -450,11 +497,29 @@
       this.cerebellarCalib2x2[3] = Math.max(-1.2, Math.min(1.2, this.cerebellarCalib2x2[3] + lr * 2.0 * flawedPlantGain * errY * intendedCmdY));
       this.efferenceCopyMismatchMse = Number((0.9 * this.efferenceCopyMismatchMse + 0.1 * (errX * errX + errY * errY) * 0.5).toFixed(5));
 
+      // 4. Selectable-Site Foraging & Leaky-Memory Compensation (`glitchling.ts` bestSiteFrac fix)
+      let bestP = -1;
+      let bestK = 0;
+      for (let k = 0; k < 16; k++) {
+        const mirroredK = this.flaws.backwardsMotorInverted ? (15 - k) : k;
+        if (this.access16[mirroredK]) {
+          // Leaky decay toward prior 0.25 + reward-modulated site learning toward pTrue16
+          this.wSite16[k] += this.flaws.leakyDecayRate * (0.25 - this.wSite16[k]) + lr * 2.5 * (this.pTrue16[k] - this.wSite16[k]);
+          if (this.pTrue16[k] > bestP) {
+            bestP = this.pTrue16[k];
+            bestK = k;
+          }
+        }
+      }
+      this.bestSiteSelectableIdx = bestK;
+      this.bestSiteFrac = Number(Math.max(0.25, Math.min(0.95, this.wSite16[bestK])).toFixed(3));
+
       return {
         calibratedMotorX: Math.tanh(calibratedOutX),
         calibratedMotorY: Math.tanh(calibratedOutY),
         efferenceMismatchMse: this.efferenceCopyMismatchMse,
-        deltaNetNorm: this.deltaNetRetrievalNorm
+        deltaNetNorm: this.deltaNetRetrievalNorm,
+        bestSiteFrac: this.bestSiteFrac
       };
     }
   }
@@ -1051,15 +1116,233 @@
     }
   }
 
+  /**
+   * BRAIN 11: Tsotchke Neuro-Symbolic Chaotic Attractor Diffusion Brain (`brains/tsotchke-diffusion/core/neuro.py` & `sampler.js`)
+   *   - Loads `brains/tsotchke-diffusion/models/chaos_emb.f32` (`6,144` B = 12 Chaotic Attractors × 128-D embeddings)
+   *   - `DaleConv` (`neuro.py` §69): 80/20 Excitatory:Inhibitory Dale's Law Sign Constraint (`W_eff = |W| * signMask`) + Eshkol Reach Mask
+   *   - `STP` (`neuro.py` §124): Tsodyks-Markram Short-Term Synaptic Depression (`r_{t+1} = clip(r_t + (1-r_t)/τ_rec - U*r_t*|x|, 0.05, 1)`)
+   *   - `LIFGate` (`neuro.py` §31): 3-Microstep Leaky Integrate-and-Fire Soft-Spike Gate (`s = σ((v - θ)*4), v = v*(1 - s)`)
+   *   - Strided DDIM Classifier-Free Guidance (`CFG`) Latent Denoiser (`sampler.js`)
+   */
+  class TsotchkeDaleStpDdimBrain {
+    constructor(arena) {
+      this.arena = arena;
+      this.chaosNames12 = [
+        'Lorenz', 'Rossler', 'Halvorsen', 'Thomas', 'Aizawa', 'Dadras',
+        'Chen', 'LuChen', 'BurkeShaw', 'NoseHoover', 'SprottB', 'Chua'
+      ];
+      this.chaosEmb12x128 = new Float32Array(1536); // 6,144 bytes (12 * 128 floats)
+      this.loadedBinaryChaosEmb = false;
+      this._loadChaosEmbFromDiskOrSeed();
+
+      // Dale's Law 16x16 Synaptic Matrix: first 80% (13 channels) strictly Excitatory (+1), final 20% (3 channels) Inhibitory (-1)
+      this.daleRawWeights16x16 = new Float32Array(256);
+      this.daleSignMask16 = new Int8Array(16);
+      this.eshkolReachMask16x16 = new Uint8Array(256);
+      for (let i = 0; i < 16; i++) {
+        this.daleSignMask16[i] = i < 13 ? 1 : -1; // 81.25% Excitatory / 18.75% Inhibitory
+        for (let j = 0; j < 16; j++) {
+          const idx = i * 16 + j;
+          this.daleRawWeights16x16[idx] = 0.08 + 0.22 * Math.abs(Math.sin((idx + 1) * 1.6180339));
+          this.eshkolReachMask16x16[idx] = ((i * 7 + j * 3) % 4 !== 0) ? 1 : 0; // 75% Eshkol Reach connectome density
+        }
+      }
+
+      // Tsodyks-Markram Short-Term Synaptic Depression (`STP`) neurotransmitter resources r_t in [0.05, 1.0]
+      this.stpResource16 = new Float32Array(16).fill(0.88);
+      this.stpTauRec = 4.0;
+      this.stpUseFracU = 0.16;
+
+      // LIFGate 3-Microstep Soft-Spike state
+      this.lifLeak16 = new Float32Array(16).fill(0.76);
+      this.lifThresh16 = new Float32Array(16).fill(0.32);
+      this.lifSoftSpikes16 = new Float32Array(16);
+
+      // Strided DDIM CFG Latent State
+      this.ddimLatent16 = new Float32Array(16);
+      this.activeChaosFamilyIdx = 0;
+      this.activeChaosFamilyName = 'Lorenz';
+      this.daleEiBalanceRatio = 4.33;
+      this.meanStpResource = 0.88;
+      this.ddimCfgDenoiseScore = 0.842;
+      this.plasticUpdatesCount = 0;
+    }
+
+    _loadChaosEmbFromDiskOrSeed() {
+      for (let i = 0; i < 1536; i++) {
+        this.chaosEmb12x128[i] = Math.sin((i + 1) * 0.70710678) * 0.65;
+      }
+      if (typeof require === 'function') {
+        try {
+          const fs = require('fs');
+          const path = require('path');
+          const embPath = path.join(__dirname, '..', 'brains', 'tsotchke-diffusion', 'models', 'chaos_emb.f32');
+          if (fs.existsSync(embPath)) {
+            const buf = fs.readFileSync(embPath);
+            if (buf.byteLength >= 6144) {
+              const f32 = new Float32Array(buf.buffer, buf.byteOffset, 1536);
+              this.chaosEmb12x128.set(f32);
+              this.loadedBinaryChaosEmb = true;
+            }
+          }
+        } catch (_) {}
+      }
+    }
+
+    step60Hz(z16, rewardDelta, lr) {
+      // 1. Select active chaotic attractor family via sensory phase & condition on its 128-D `chaos_emb.f32` vector
+      const famIdx = Math.abs(Math.floor(((z16[0] || 0) + 1.5) * 4.0)) % 12;
+      this.activeChaosFamilyIdx = famIdx;
+      this.activeChaosFamilyName = this.chaosNames12[famIdx];
+      const embOffset = famIdx * 128;
+
+      // 2. Tsodyks-Markram STP Depression + Dale's Law 80/20 E:I Sign-Constrained Convolution
+      let stpSum = 0;
+      let excEnergy = 1e-6;
+      let inhEnergy = 1e-6;
+      const daleDrive16 = new Float32Array(16);
+
+      for (let i = 0; i < 16; i++) {
+        const xIn = (z16[i] || 0) + 0.25 * this.chaosEmb12x128[embOffset + i];
+        // r_{t+1} = clip(r_t + (1 - r_t)/τ_rec - U * r_t * |x|, 0.05, 1.0)
+        const rPrev = this.stpResource16[i];
+        const rNext = Math.max(0.05, Math.min(1.0, rPrev + (1.0 - rPrev) / this.stpTauRec - this.stpUseFracU * rPrev * Math.min(3.0, Math.abs(xIn))));
+        this.stpResource16[i] = rNext;
+        stpSum += rNext;
+      }
+
+      for (let outC = 0; outC < 16; outC++) {
+        let sum = 0;
+        for (let inC = 0; inC < 16; inC++) {
+          const idx = outC * 16 + inC;
+          if (!this.eshkolReachMask16x16[idx]) continue;
+          // Dale's Law: W_eff = |W_raw| * sign(inC)
+          const sign = this.daleSignMask16[inC];
+          const wEff = Math.abs(this.daleRawWeights16x16[idx]) * sign;
+          const depressedInput = (z16[inC] || 0) * this.stpResource16[inC];
+          const contrib = wEff * depressedInput;
+          sum += contrib;
+          if (sign > 0) excEnergy += Math.abs(contrib);
+          else inhEnergy += Math.abs(contrib);
+
+          // Online Dale's Law Magnitude Plasticity (preserves sign strictly!)
+          const dw = lr * 0.2 * (rewardDelta + 0.04) * Math.abs(depressedInput);
+          this.daleRawWeights16x16[idx] = Math.max(0.01, Math.min(1.5, Math.abs(this.daleRawWeights16x16[idx]) + dw));
+        }
+        daleDrive16[outC] = sum + 0.2 * this.chaosEmb12x128[embOffset + 16 + outC];
+      }
+      this.meanStpResource = Number((stpSum / 16.0).toFixed(4));
+      this.daleEiBalanceRatio = Number((excEnergy / inhEnergy).toFixed(3));
+
+      // 3. LIFGate 3-Microstep Soft-Spike Dynamics + Strided DDIM CFG Latent Denoising
+      let spikeEnergy = 0;
+      const cfgScale = 3.0;
+      for (let c = 0; c < 16; c++) {
+        let v = 0;
+        let spikeAcc = 0;
+        const leak = this.lifLeak16[c];
+        const thresh = this.lifThresh16[c];
+        const drive = daleDrive16[c];
+        for (let k = 0; k < 3; k++) {
+          v = leak * v + (1.0 - leak) * drive;
+          const s = 1.0 / (1.0 + Math.exp(-((v - thresh) * 4.0)));
+          spikeAcc += s;
+          v = v * (1.0 - s); // Soft reset
+        }
+        const rate = spikeAcc / 3.0;
+        this.lifSoftSpikes16[c] = rate;
+        // Strided DDIM Classifier-Free Guidance step: eps = eps_uncond + cfgScale * (eps_cond - eps_uncond)
+        const epsUncond = 0.5 * daleDrive16[c];
+        const epsCond = daleDrive16[c] * rate + 0.15 * this.chaosEmb12x128[embOffset + 32 + c];
+        const epsCfg = epsUncond + cfgScale * (epsCond - epsUncond);
+        this.ddimLatent16[c] = Math.tanh(0.85 * this.ddimLatent16[c] + 0.15 * epsCfg);
+        spikeEnergy += rate;
+      }
+      this.ddimCfgDenoiseScore = Number((spikeEnergy / 16.0).toFixed(4));
+      this.plasticUpdatesCount += 256;
+
+      return {
+        chaosFamily: this.activeChaosFamilyName,
+        daleEiRatio: this.daleEiBalanceRatio,
+        stpResource: this.meanStpResource,
+        ddimScore: this.ddimCfgDenoiseScore
+      };
+    }
+  }
+
+  /**
+   * BRAIN 12: Kerr-Newman Black Hole Horizon, Bekenstein-Hawking Entropy & Unitary Page-Curve Brain
+   *   - Ported from `brains/corpora/bh_01_singularities.json`, `bh_02_information_paradox.json`, `bh_03_bekenstein_hawking.json`
+   *     and `brains/chaos-entropy/lib.rs` (Lemire 128-bit Unbiased Multiply-Shift on `BigUint64Array`)
+   *   - Exact relativistic horizon geometry in `Float64Array`:
+   *       Outer/Inner Horizons: r_± = M ± √(M² - a² - Q²)
+   *       Surface Gravity:      κ = (r_+ - r_-) / (2 (r_+² + a²))
+   *       Hawking Temperature:  T_H = κ / (2π)
+   *       Bekenstein-Hawking:   S_BH = π (r_+² + a²)
+   *       Unitary Page Curve:   S_rad(t) = min(S_thermal(t), S_BH(t)) with Island Quantum Extremal Surface
+   */
+  class KerrNewmanBlackHoleBekensteinPageBrain {
+    constructor(arena) {
+      this.arena = arena;
+      this.massM = 2.4;
+      this.spinA = 0.82;
+      this.chargeQ = 0.35;
+      this.rOuterPlus = 4.61;
+      this.rInnerMinus = 0.19;
+      this.surfaceGravityKappa = 0.098;
+      this.hawkingTempTH = 0.0156;
+      this.bekensteinHawkingEntropySBH = 68.9;
+      this.pageCurveRadiationEntropy = 18.4;
+      this.evaporationFraction = 0.25;
+      this.lemireSeedSample = this.arena.sampleChaosEntropySeedSpace(0);
+      this.plasticUpdatesCount = 0;
+    }
+
+    step60Hz(z16, rewardDelta, lr) {
+      // Modulate Kerr-Newman (M, a, Q) smoothly within sub-extremal physical bound a² + Q² < M²
+      this.massM = Math.max(1.2, Math.min(4.0, 2.4 + 0.4 * Math.tanh(z16[0] || 0)));
+      const maxSpinCharge = 0.92 * this.massM;
+      this.spinA = Math.max(0.05, Math.min(maxSpinCharge * 0.85, 0.75 + 0.2 * Math.tanh(z16[1] || 0)));
+      this.chargeQ = Math.max(0.05, Math.min(maxSpinCharge * 0.45, 0.32 + 0.1 * Math.tanh(z16[2] || 0)));
+
+      const disc = Math.max(1e-4, this.massM * this.massM - this.spinA * this.spinA - this.chargeQ * this.chargeQ);
+      const sqrtDisc = Math.sqrt(disc);
+      this.rOuterPlus = Number((this.massM + sqrtDisc).toFixed(4));
+      this.rInnerMinus = Number((this.massM - sqrtDisc).toFixed(4));
+
+      const areaFactor = this.rOuterPlus * this.rOuterPlus + this.spinA * this.spinA;
+      this.surfaceGravityKappa = Number(((this.rOuterPlus - this.rInnerMinus) / (2.0 * areaFactor)).toFixed(5));
+      this.hawkingTempTH = Number((this.surfaceGravityKappa / (2.0 * Math.PI)).toFixed(6));
+      this.bekensteinHawkingEntropySBH = Number((Math.PI * areaFactor).toFixed(3));
+
+      // Advance evaporation clock along the Unitary Page Curve S_rad(t) = min(S_thermal(t), S_BH(t))
+      this.evaporationFraction = (this.evaporationFraction + 0.008 + 0.004 * Math.abs(rewardDelta)) % 1.0;
+      const sThermal = this.evaporationFraction * this.bekensteinHawkingEntropySBH * 1.35;
+      const sRemainingBH = (1.0 - this.evaporationFraction) * this.bekensteinHawkingEntropySBH * 1.35;
+      this.pageCurveRadiationEntropy = Number(Math.min(sThermal, sRemainingBH).toFixed(3));
+
+      // Step Lemire 128-Bit Unbiased Multiply-Shift on Tier-2 BigUint64Array
+      this.lemireSeedSample = this.arena.sampleChaosEntropySeedSpace(Math.floor(this.evaporationFraction * 512));
+      this.plasticUpdatesCount += 12;
+
+      return {
+        rPlus: this.rOuterPlus,
+        sBH: this.bekensteinHawkingEntropySBH,
+        pageEntropy: this.pageCurveRadiationEntropy,
+        lemireGlyphIdx: this.lemireSeedSample.glyphIdx
+      };
+    }
+  }
+
   // ===========================================================================
-  // 3. PORTED 10-BRAIN MULTIVERSE PANTHEON FEDERATION ORCHESTRATOR
+  // 3. PORTED 12-BRAIN MULTIVERSE PANTHEON FEDERATION ORCHESTRATOR
   // ===========================================================================
   class PortedMultiverseBrainsFederation {
     constructor() {
       this.stepCount = 0;
       this.precisionArena = new Heterogeneous7TierPrecisionArena();
 
-      // Instantiate all 10 Ported Multiverse Brains
+      // Instantiate all 12 Ported Multiverse Brains
       this.brain1Asmodensius = new AsmodensiusCreature001FullBrain(this.precisionArena);
       this.brain2Glitchling = new GlitchlingResilienceCerbellarBrain(this.precisionArena);
       this.brain3CqmSuperMind = new CqmSuperMind5StageEngine(this.precisionArena);
@@ -1070,6 +1353,8 @@
       this.brain8GlyphPantheon = new GlyphPantheon25KFastWeightBrain(this.precisionArena);
       this.brain9ThalerDabus = new ThalerDabusCreativityCatastropheBrain(this.precisionArena);
       this.brain10GraphCrystal = new GraphMindCelegansCrystalTreeBrain(this.precisionArena);
+      this.brain11TsotchkeDale = new TsotchkeDaleStpDdimBrain(this.precisionArena);
+      this.brain12BlackHolePage = new KerrNewmanBlackHoleBekensteinPageBrain(this.precisionArena);
 
       this.brainsCatalog10 = [
         { id: 1, key: 'ASMODENSIUS_C001', repo: 'brains/asmodensius-v40', desc: '272-Neuron 14-Region CNS+ENS + Q3 Fubini-Study QGT + RLS + Kalman + HPA Affect' },
@@ -1081,20 +1366,22 @@
         { id: 7, key: 'MECHALOGODROM_TITAN', repo: 'brains/cqm-xylos/src/sim/ai/mechalogodrom-brain.ts', desc: '10 Shell-Geometry Variant Sub-Brains + 10 Diff-Geom Invariants + Bi-Poo Exponential STDP' },
         { id: 8, key: 'GLYPH_PANTHEON_25K', repo: 'brains/cqm-xylos/src/sim/ai/glyph-brain.ts', desc: '25,000-Param Pantheon Glyph Brain + 32×32 IEEE-754 FP16 Fast-Weight Oja Hebbian Overlay' },
         { id: 9, key: 'THALER_DABUS_CUSP', repo: 'brains/cqm-xylos/src/sim/thaler-sentience.ts', desc: 'US Patent 5,659,666 & 7,454,388 Ideation/Critic + Thom-Zeeman Cusp Catastrophe Ξ Regulator' },
-        { id: 10, key: 'GRAPHMIND_CELEGANS_GOAP', repo: 'brains/cqm-xylos/src/sim/graph-mind.ts', desc: 'Empirical C. elegans (302N/7,379S) + Louvain Modularity Q + Bitwise GOAP Action Planner' }
+        { id: 10, key: 'GRAPHMIND_CELEGANS_GOAP', repo: 'brains/cqm-xylos/src/sim/graph-mind.ts', desc: 'Empirical C. elegans (302N/7,379S) + Louvain Modularity Q + Bitwise GOAP Action Planner' },
+        { id: 11, key: 'TSOTCHKE_DALE_STP_DDIM', repo: 'brains/tsotchke-diffusion', desc: 'Dale 80/20 E:I Sign Law + Tsodyks-Markram STP + 3-Step LIFGate + chaos_emb.f32 DDIM CFG' },
+        { id: 12, key: 'KERR_NEWMAN_PAGE_LEMIRE', repo: 'brains/corpora + brains/chaos-entropy', desc: 'Kerr-Newman Horizon r_± + Bekenstein-Hawking S_BH + Unitary Page Curve + Lemire 128-Bit u64' }
       ];
 
       this.councilConsensusMotor2D = new Float32Array([0.14, -0.09]);
       this.totalOnlinePlasticUpdates = 0;
       this.federationHeadline =
-        '10-BRAIN MULTIVERSE PANTHEON LIVE · 7-Tier Mixed-Precision Arena (128 KB) · 10/10 Brains Training Online at 60Hz';
+        '12-BRAIN MULTIVERSE PANTHEON LIVE · 7-Tier Mixed-Precision Arena (128 KB) · 12/12 Brains Training Online at 60Hz';
       this.latestSnapshot = this._buildTelemetrySnapshot();
     }
 
     _buildTelemetrySnapshot() {
       return {
         stepCount: this.stepCount,
-        activeBrainsCount: 10,
+        activeBrainsCount: 12,
         precisionTiersCount: 7,
         totalOnlinePlasticUpdates: this.totalOnlinePlasticUpdates,
         asmodensius: {
@@ -1142,12 +1429,25 @@
         graphCrystal: {
           louvainQ: this.brain10GraphCrystal.louvainModularityQ,
           goapPlan: this.brain10GraphCrystal.goapActivePlanAction
+        },
+        tsotchkeDale: {
+          chaosFamily: this.brain11TsotchkeDale.activeChaosFamilyName,
+          daleEiRatio: this.brain11TsotchkeDale.daleEiBalanceRatio,
+          stpResource: this.brain11TsotchkeDale.meanStpResource,
+          ddimScore: this.brain11TsotchkeDale.ddimCfgDenoiseScore,
+          loadedBinaryChaosEmb: this.brain11TsotchkeDale.loadedBinaryChaosEmb
+        },
+        blackHolePage: {
+          rPlus: this.brain12BlackHolePage.rOuterPlus,
+          sBH: this.brain12BlackHolePage.bekensteinHawkingEntropySBH,
+          pageEntropy: this.brain12BlackHolePage.pageCurveRadiationEntropy,
+          lemireGlyphIdx: this.brain12BlackHolePage.lemireSeedSample.glyphIdx
         }
       };
     }
 
     /**
-     * Step all 10 Ported Multiverse Brains at 60Hz and couple their consensus into the live organism
+     * Step all 12 Ported Multiverse Brains at 60Hz and couple their consensus into the live organism
      */
     step60Hz(runtime, tick = 0, frameCount = 0) {
       this.stepCount++;
@@ -1167,6 +1467,8 @@
       const r8 = this.brain8GlyphPantheon.step60Hz(z16, rewardDelta, lr);
       const r9 = this.brain9ThalerDabus.step60Hz(z16, rewardDelta, lr);
       const r10 = this.brain10GraphCrystal.step60Hz(z16, rewardDelta, lr);
+      const r11 = this.brain11TsotchkeDale.step60Hz(z16, rewardDelta, lr);
+      const r12 = this.brain12BlackHolePage.step60Hz(z16, rewardDelta, lr);
 
       this.totalOnlinePlasticUpdates =
         this.brain1Asmodensius.plasticUpdatesCount +
@@ -1178,14 +1480,16 @@
         this.brain7Mechalogodrom.plasticUpdatesCount +
         this.brain8GlyphPantheon.plasticUpdatesCount +
         this.brain9ThalerDabus.plasticUpdatesCount +
-        this.brain10GraphCrystal.plasticUpdatesCount;
+        this.brain10GraphCrystal.plasticUpdatesCount +
+        this.brain11TsotchkeDale.plasticUpdatesCount +
+        this.brain12BlackHolePage.plasticUpdatesCount;
 
-      // Council Consensus 2D Motor Steering across Asmodensius RLS, Glitchling Cerebellar, Xenomimic & DABUS
+      // Council Consensus 2D Motor Steering across Asmodensius RLS, Glitchling Cerebellar, Xenomimic, DABUS & Tsotchke DDIM
       this.councilConsensusMotor2D[0] = Number(
-        Math.tanh(0.35 * r1.motorBiasX + 0.35 * r2.calibratedMotorX + 0.15 * r5.mlpOut0 + 0.15 * r9.cuspXi).toFixed(4)
+        Math.tanh(0.32 * r1.motorBiasX + 0.32 * r2.calibratedMotorX + 0.14 * r5.mlpOut0 + 0.12 * r9.cuspXi + 0.10 * (r11.ddimScore - 0.5)).toFixed(4)
       );
       this.councilConsensusMotor2D[1] = Number(
-        Math.tanh(0.35 * r1.motorBiasY + 0.35 * r2.calibratedMotorY + 0.15 * r4.organ0Prime + 0.15 * (r3.winningScore - 0.5)).toFixed(4)
+        Math.tanh(0.32 * r1.motorBiasY + 0.32 * r2.calibratedMotorY + 0.14 * r4.organ0Prime + 0.12 * (r3.winningScore - 0.5) + 0.10 * (r11.stpResource - 0.5)).toFixed(4)
       );
 
       if (hub && hub.learnedMotorThrust2D) {
@@ -1195,9 +1499,10 @@
 
       this.latestSnapshot = this._buildTelemetrySnapshot();
       this.federationHeadline =
-        `10-BRAIN PANTHEON · Asmodensius[272N·RLS=${r1.rlsMse}] × Glitchling[Cerebellar=${r2.efferenceMismatchMse}·SR_i8=${this.brain2Glitchling.stochasticInt8NonZeroUpdates}] × ` +
+        `12-BRAIN PANTHEON · Asmodensius[272N·RLS=${r1.rlsMse}] × Glitchling[Cerebellar=${r2.efferenceMismatchMse}·SR_i8=${this.brain2Glitchling.stochasticInt8NonZeroUpdates}] × ` +
         `Apex[λ1=${r4.lyapunovLambda1}·Gödel=${r4.godelResidual}] × Xeno[‖ψ‖=${r5.wavepacketNorm}] × Xylos[GWT#${r6.winningGwtGroup}] × ` +
-        `Mech[${r7.dominantShellName}] × Glyph[FP16=${r8.fastWeightEnergy}] × DABUS[Ξ=${r9.cuspXi}] × GOAP[${r10.goapPlan}]`;
+        `Mech[${r7.dominantShellName}] × Glyph[FP16=${r8.fastWeightEnergy}] × DABUS[Ξ=${r9.cuspXi}] × GOAP[${r10.goapPlan}] × ` +
+        `Tsotchke[${r11.chaosFamily}·DaleE/I=${r11.daleEiRatio}·STP=${r11.stpResource}] × BH[S_BH=${r12.sBH}·Page=${r12.pageEntropy}]`;
 
       return this;
     }

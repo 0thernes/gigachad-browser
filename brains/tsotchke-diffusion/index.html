@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,"><title>Tsotchke Diffusion: Chaos Mode (in your browser)</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#111;color:#ddd;margin:0;padding:16px;max-width:1100px;margin:auto}
+h1{margin:.2em 0}a{color:#8cf}.row{display:flex;gap:20px;flex-wrap:wrap}.ctl{flex:0 0 340px}.out{flex:1;min-width:300px}
+label{display:block;margin:8px 0 2px;font-size:14px}input[type=range]{width:100%}input[type=text]{width:100%;font-size:18px;background:#222;color:#fff;border:1px solid #444}
+button{font-size:16px;padding:8px 14px;margin:6px 4px 0 0;background:#335;color:#fff;border:1px solid #557;border-radius:6px;cursor:pointer}button:disabled{opacity:.5}
+#grid canvas{image-rendering:pixelated;margin:3px;border:1px solid #333}.small{font-size:13px;color:#999}select{width:100%;background:#222;color:#fff}
+details{background:#1a1a1a;padding:10px;border-radius:6px;margin-top:16px}code{background:#222;padding:1px 4px}
+</style></head><body>
+<h1>Tsotchke Diffusion &middot; Chaos Mode</h1>
+<div class="small">A tiny diffusion model running entirely in your browser (<span id="backend">loading...</span>). Nothing is uploaded anywhere.</div>
+<div class="row">
+<div class="ctl">
+ <label>Mode</label><select id="mode"><option value="chaos">Chaos Mode (character-conditioned)</option><option value="uncond">Unconditional (original model)</option></select>
+ <div id="chaosctl">
+ <label>Chaos string (characters the model knows: <span id="vocab"></span>)</label><input type="text" id="str">
+ <label>Random string length N: <b id="nv">4</b></label><input type="range" id="n" min="1" max="32" value="4">
+ <button id="rand">🎲 Random string (browser crypto RNG)</button>
+ <label>...or a precomputed Tsotchke QRNG preset</label><select id="preset"><option value="">(none: use browser crypto RNG)</option></select>
+ <label>CFG guidance: <b id="gv">3</b> <span class="small">(0 ignores chars, 1 plain, 5-15 overcooked)</span></label><input type="range" id="g" min="0" max="15" step="0.5" value="3">
+ <label>Blend</label><select id="blend"><option>mean</option><option>sum</option></select>
+ <label><input type="checkbox" id="qw"> random weight per character</label>
+ <label>Embedding noise: <b id="nzv">0</b></label><input type="range" id="nz" min="0" max="3" step="0.1" value="0">
+ <label>Extrapolate from null token: <b id="exv">1</b> <span class="small">(&gt;1 beyond training, &lt;0 anti-chars)</span></label><input type="range" id="ex" min="-2" max="5" step="0.1" value="1">
+ </div>
+ <label>Images: <b id="kv">4</b></label><input type="range" id="k" min="1" max="8" value="4">
+ <label>Denoising steps: <b id="sv">50</b> <span class="small">(400 = full schedule; fewer = strided DDIM, faster)</span></label><input type="range" id="steps" min="10" max="400" step="10" value="50">
+ <label>Stochasticity eta: <b id="etv">1</b></label><input type="range" id="eta" min="0" max="1" step="0.1" value="1">
+ <label>Display upscale: <b id="uv">4</b>x</label><input type="range" id="up" min="1" max="8" value="4">
+ <button id="go">Generate</button><button id="stop">Stop</button><button id="dl">Download PNG</button>
+ <div id="status" class="small"></div>
+</div>
+<div class="out"><div id="grid"></div><div id="used" class="small"></div></div>
+</div>
+<details open><summary><b>About (honest version)</b></summary>
+<p>This is a from-scratch <b>~1M-parameter DDPM</b> (a small UNet, 64&times;64 pixels, 400 noise steps) trained on a CPU.
+The unconditional model saw <b>6 images</b>; Chaos Mode was fine-tuned from it on <b>11 images</b>, each labelled with one random Unicode character
+and given its own learned 128-number embedding (plus a "null" one for classifier-free guidance). With so few images it mostly
+memorizes and remixes their colours and textures: expect texture soup and glitches, not objects. Cranking guidance, sum-blend, noise
+and extrapolation deliberately pushes it off the rails.</p>
+<p><b>Randomness:</b> in this page all randomness (the random chaos string, the per-character weights, the starting noise) comes from your
+browser's <code>crypto.getRandomValues</code> seeding a small PRNG. It is <b>not</b> Tsotchke QRNG. The presets in the dropdown were
+precomputed on Linux with the Tsotchke <code>quantum_rng</code> C library, which is a <b>classical, deterministic simulation</b> of
+quantum-measurement-style mixing, not real quantum randomness. Presets fix the string, weights and seed, but the pixels still differ from the Python app,
+because the browser uses its own Gaussian generator.</p>
+<p>Other Tsotchke pieces in the desktop app (neuro-inspired layers, a tensor-logic connectome, an Eshkol-computed schedule) are not used
+by the two models on this page; both are plain UNets. The model runs via onnxruntime-web (WebGPU if available, else WebAssembly).
+The browser sampler matches the PyTorch sampler to about 1e-4 (max abs) in a deterministic test.</p>
+</details>
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/ort.webgpu.min.js"></script>
+<script type="module" src="app.js"></script>
+</body></html>
