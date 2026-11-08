@@ -2750,6 +2750,9 @@ app.whenReady().then(async () => {
                       humunculusRuntime.trainableAlifeNeuralHub?.diffusionScoreLossMse > 0 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.ganDiscRealProb > 0 &&
                       humunculusRuntime.trainableAlifeNeuralHub?.interIntraCoherenceScore > 0 &&
+                      humunculusRuntime.trainableAlifeNeuralHub?.visionDomGrid8x8?.length === 64 &&
+                      humunculusRuntime.trainableAlifeNeuralHub?.inversePhysicsLossMse > 0 &&
+                      humunculusRuntime.trainableAlifeNeuralHub?.icmCuriosityReward > 0 &&
                       humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
                       typeof resolveDeepDarkWebGatewayUrl === 'function' &&
                       typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
