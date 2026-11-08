@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "GIGACHAD BROWSER: Sovereign Continuous-Time Spiking Liquid Time-Constant (sLTC) Artificial Life & 14-Brain Multiverse Pantheon Operating System"
+message: "If you reference GIGACHAD BROWSER in academic or technical literature, please cite this work. Commercial use, modification, derivative works, and authorship misattribution are strictly prohibited under LICENSE."
+type: software
+authors:
+  - family-names: "Alexa"
+    given-names: "Sovereign Architect"
+version: "4.0.0-OMEGA"
+date-released: "2026-11-08"
+license: "Proprietary"
+repository-code: "https://github.com/Alexasolver/gigachad-browser"
+keywords:
+  - artificial-life
+  - spiking-liquid-time-constant
+  - active-inference
+  - hyperdimensional-computing
+  - mixed-precision-neural-networks
+  - consciousness-architectures

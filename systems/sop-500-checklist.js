@@ -644,5 +644,6 @@ function summarizeSop500(query = '', aspectFilter = '') {
 module.exports = {
   SOP_DOMAINS,
   SOP_500_ITEMS,
-  summarizeSop500
+  summarizeSop500,
+  getSopSummary: summarizeSop500
 };

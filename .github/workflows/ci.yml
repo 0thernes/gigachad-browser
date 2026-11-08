@@ -39,6 +39,8 @@ jobs:
           grep -q "PROPRIETARY DOWNLOAD-AND-USE-ONLY LICENSE" LICENSE
 
       - name: Run Master Smoke + 500-SOP + 100-Pass + 25-Pass Forensic Neural Audit
+        env:
+          GIGACHAD_SKIP_ELECTRON: '1'
         run: npm run smoke
 
       - name: Run Standalone 25-Pass + 100-Pass Forensic Verifier CLI

@@ -97,7 +97,8 @@ const MICRO_ENDPOINTS = new Set([
   '/deception_radar', '/ast_analyze', '/predict_intent', '/intent', '/semantic_diff',
   '/extract_structured', '/summarize_extractive', '/page_outline', '/query_memory',
   '/seo_accessibility_audit', '/table_to_markdown', '/agent_plan',
-  '/tts', '/reflex/dom', '/reflex/route'
+  '/tts', '/reflex/dom', '/reflex/route',
+  '/decursive_dedup', '/metacognition_quantum', '/deep_dark_web_intel'
 ]);
 
 function userFile(name) {
@@ -1954,6 +1955,7 @@ function registerIpc() {
         cqmSpecsUrl: resolvePortal(['cqm-xylos', 'specs.html'], ['Cosmogonic Quantum Mechalogodrom', 'specs.html']),
         cqmDocsUrl: resolvePortal(['cqm-xylos', 'docs.html'], ['Cosmogonic Quantum Mechalogodrom', 'docs.html']),
         glitchlingUrl: resolvePortal(['glitchling', 'index.html'], ['glitchling-jam', 'index.html']),
+        glitchlingVizUrl: resolvePortal(['glitchling', 'brain-viz', 'index.html'], ['glitchling-jam', 'brain-viz', 'index.html']),
         tsotchkeDiffusionUrl: resolvePortal(['tsotchke-diffusion', 'index.html'], ['tsotchke-pages', 'index.html']),
         thingmakerUrl: resolvePortal(['thingmaker', 'index.html'], ['Thingmaker', 'index.html']),
         grimoireArcaneUrl: resolvePortal(['grimoire-arcane', 'index.html'], ['grimoire-arcane', 'index.html'])

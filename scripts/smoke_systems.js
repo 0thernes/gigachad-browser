@@ -38,6 +38,10 @@ assert.ok(ermReport.reductionPct >= 65, 'ERM controls must reduce inherent risk 
 assert.strictEqual(ermReport.byAspect.Backend.count, 4);
 assert.strictEqual(ermReport.byAspect.Frontend.count, 4);
 assert.strictEqual(ermReport.byAspect['Full-Stack'].count, 4);
+assert.ok(ermReport.risks.every((r) => typeof r.ownerModule === 'string' && r.ownerModule.length > 0), 'Every ERM risk must have a non-empty ownerModule');
+
+const ermDegraded = evaluateErmPosture({ piiScrubEnabled: false, sidecarHealthy: false, failedAiCalls: 2 });
+assert.ok(ermDegraded.avgResidualScore > ermReport.avgResidualScore, 'Disabling PII scrub or sidecar health must increase residual ERM risk score');
 
 // 3. ERP Enterprise Resource Planner Tests
 assert.ok(ERP_RESOURCE_QUOTAS.compute.vramMaxRecommendedMb === 7168);

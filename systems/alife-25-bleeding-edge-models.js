@@ -964,7 +964,7 @@
           for (let c = 0; c < 16; c++) {
             const pVal = this.totLatentArena21x16[pOff + c];
             const wBranch = this.W_tot_branch4x16x16[rowOff + c];
-            const wExp = wExperts ? wExperts[expRowOff + c] * 0.22 : 0;
+            const wExp = (wExperts && wExperts.length > 0) ? (wExperts[(expRowOff + c) % wExperts.length] || 0) * 0.22 : 0;
             sum += (wBranch + wExp) * pVal;
           }
           // Operator-specific inductive bias:
@@ -1205,9 +1205,9 @@
         if (wAct) {
           wAct[i] = Math.max(-2.0, Math.min(2.0, wAct[i] + lr * 0.45 * tdError * atomVal));
         }
-        if (wExperts) {
-          const expIdx = activeExpertOff + ((frameCount * 16 + i) & 65535);
-          wExperts[expIdx] = Math.max(-2.0, Math.min(2.0, wExperts[expIdx] * 0.9995 + lr * 0.3 * tdError * atomVal));
+        if (wExperts && wExperts.length > 0) {
+          const expIdx = (activeExpertOff + ((frameCount * 16 + i) & 65535)) % wExperts.length;
+          wExperts[expIdx] = Math.max(-2.0, Math.min(2.0, (wExperts[expIdx] || 0) * 0.9995 + lr * 0.3 * tdError * atomVal));
         }
         // Inject contracted AoT thought vector into live world-model latent state & motor thrust!
         wm.latentZ64[i] = Math.tanh(wm.latentZ64[i] * 0.84 + atomVal * 0.16);

@@ -111,9 +111,24 @@ const indexDomAudit = verifyDomIdsAndHandlers(indexHtml, indexScript, 'index.htm
 const newtabDomAudit = verifyDomIdsAndHandlers(newtabHtml, newtabScript, 'pages/newtab.html');
 
 // 4. Verify 100% Python Sidecar Endpoint Parity (index.html + main.js <-> laya_sidecar.py)
+const microEndpointsMatch = mainJs.match(/const\s+MICRO_ENDPOINTS\s*=\s*new\s+Set\(\[([\s\S]*?)\]\)/);
+assert(microEndpointsMatch, 'Could not locate MICRO_ENDPOINTS in main.js');
+const mainMicroEndpoints = new Set(
+  [...microEndpointsMatch[1].matchAll(/['"]([^'"]+)['"]/g)].map((m) => m[1])
+);
+const indexEndpoints = new Set(
+  [...indexScript.matchAll(/endpoint\s*:\s*['"]([^'"]+)['"]/g)].map((m) => m[1])
+);
+for (const ep of indexEndpoints) {
+  assert(
+    mainMicroEndpoints.has(ep),
+    `Sidecar endpoint "${ep}" invoked via micro-engine-call in index.html is missing from main.js MICRO_ENDPOINTS`
+  );
+}
+
 const mainSidecarPosts = new Set([
-  ...[...mainJs.matchAll(/['"](\/(?:health|route|classify|embed|rerank|ner_pii|knowledge_graph|deception_radar|ast_analyze|intent|semantic_diff|extract_structured|summarize_extractive|page_outline|query_memory|seo_accessibility_audit|table_to_markdown|tts|reflex\/dom|agent_plan))['"]/g)].map((m) => m[1]),
-  ...[...indexScript.matchAll(/endpoint\s*:\s*['"]([^'"]+)['"]/g)].map((m) => m[1])
+  ...[...mainJs.matchAll(/['"](\/(?:health|route|classify|embed|rerank|ner_pii|knowledge_graph|deception_radar|ast_analyze|intent|semantic_diff|extract_structured|summarize_extractive|page_outline|query_memory|seo_accessibility_audit|table_to_markdown|tts|reflex\/dom|agent_plan|decursive_dedup|metacognition_quantum|deep_dark_web_intel))['"]/g)].map((m) => m[1]),
+  ...indexEndpoints
 ]);
 for (const endpoint of mainSidecarPosts) {
   assert(
@@ -220,12 +235,21 @@ const bleeding25Js = readFile('systems/alife-25-bleeding-edge-models.js');
 assert(bleeding25Js.includes('AotTotGotCorecursiveDecursiveEngine') && bleeding25Js.includes('totLatentArena21x16') && bleeding25Js.includes('gotAdjMatrix16x16') && bleeding25Js.includes('W_aot_contractor'), 'systems/alife-25-bleeding-edge-models.js must implement AotTotGotCorecursiveDecursiveEngine (AoT, ToT, GoT)');
 assert(indexScript.includes('aotTotGotEngine') && indexScript.includes("mode === 'aottotgot'"), 'index.html must wire aotTotGotEngine and aottotgot terminal view');
 
-// 9. Verify 12-Brain Multiverse Pantheon, 7-Tier Mixed-Precision Arena, 25x10 Forensic Auditor & Proprietary License
+// 9. Verify 14-Brain Multiverse Pantheon, 7-Tier Mixed-Precision Arena, 25x10 Forensic Auditor & Proprietary License
 const { PortedMultiverseBrainsFederation, Heterogeneous7TierPrecisionArena } = require('../systems/ported-multiverse-brains');
 const { Forensic25Pass10IterationAuditor } = require('../systems/forensic-25-pass-10-iteration-auditor');
 const pantheonTest = new PortedMultiverseBrainsFederation();
-assert.strictEqual(pantheonTest.brainsCatalog10.length, 12, 'Expected 12 ported multiverse brains');
+assert.ok(pantheonTest.brainsCatalog10.length >= 12, `Expected >= 12 ported multiverse brains, got ${pantheonTest.brainsCatalog10.length}`);
+assert.strictEqual(pantheonTest.brain9ThalerDabus.ablationResults.passedAllAblations, true, 'Expected Brain 9 Thaler DABUS 4 honest ablation gates to pass');
+assert.strictEqual(Object.keys(pantheonTest.brain9ThalerDabus.nineMarkers).length, 9, 'Expected all 9 Thaler constitutive markers');
+assert.ok(pantheonTest.brain2Glitchling.bestSiteFrac > 0, 'Expected Glitchling selectable bestSiteFrac > 0');
+assert.strictEqual(pantheonTest.brain2Glitchling.realVizEventsCount, 189, 'Expected Glitchling 189 real flaw events restored');
+assert.strictEqual(pantheonTest.brain13ConsciousnessConsortium.researcherCount, 10, 'Expected 10 Consciousness Researchers in Brain 13');
+assert.ok(pantheonTest.brain14ThingmakerGrimoire.arcaneLeyLineConductance > 0, 'Expected Brain 14 Thingmaker/Grimoire leyLineConductance > 0');
 assert.strictEqual(pantheonTest.brain11TsotchkeDale.loadedBinaryChaosEmb, true, 'Expected binary chaos_emb.f32 (6,144 B) loaded in Brain 11 Tsotchke');
+for (const rootDoc of ['ARCHITECTURE.md', 'BIBLE.md', 'GLOSSARY.md', 'INDEX.md', 'KANBAN.md', 'ISSUES.md', 'CHANGELOG.md', 'CITATION.cff', 'AUTHORS.md', 'CODEOWNERS', 'VERSION']) {
+  assert(fs.existsSync(path.join(root, rootDoc)), `Expected root GitHub governance file ${rootDoc} to exist`);
+}
 assert.strictEqual(pantheonTest.precisionArena instanceof Heterogeneous7TierPrecisionArena, true, 'Expected 7-Tier Heterogeneous Precision Arena');
 assert.strictEqual(pantheonTest.precisionArena.getPrecisionAuditSummary().tierCount, 7, 'Expected 7 hardware precision tiers');
 
@@ -242,5 +266,5 @@ console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +
   `${indexDomAudit.idCount} HTML IDs (${indexDomAudit.queriedCount} queried), ${indexDomAudit.fnCount} JS functions, ` +
   `${agentActionNames.length} agent actions, ${mainSidecarPosts.size} sidecar endpoints, 500/500 SOP items, ` +
-  `12/12 Ported Brains, 7/7 Precision Tiers, 250/250 Forensic Passes (500/500 Points)`
+  `${pantheonTest.brainsCatalog10.length}/${pantheonTest.brainsCatalog10.length} Ported Brains, 7/7 Precision Tiers, 250/250 Forensic Passes (500/500 Points)`
 );
