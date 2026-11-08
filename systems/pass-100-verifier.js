@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * Gigachad Browser — 100-Pass Master Full-Stack Verification Engine
- * Maps 100 deterministic verification passes (PASS-001 .. PASS-100)
- * across 10 Engineering Domains (DOM-01 .. DOM-10) and all 500 SOP items (SOP-001 .. SOP-500).
+ * Gigachad Browser — 100 scoped source, metadata and fixture diagnostics
+ * Preserves historical diagnostic IDs (PASS-001 .. PASS-100)
+ * across 10 categories. No positional mapping to product requirements is implied.
  */
 
 const fs = require('fs');
@@ -290,7 +290,7 @@ function build100PassDefinitions(ctx) {
       domain: 'DOM-03',
       aspect: 'Backend',
       title: 'Memory Vault RAG Context Injection & Cloud PII Scrubbing',
-      check: () => mainJs.includes('await searchMemoryVault(prompt, sidecarUrl, 3)') && mainJs.includes("if (activeMode === 'ultra' && cfg.piiFirewall !== false)"),
+      check: () => mainJs.includes('await searchMemoryVault(prompt, sidecarUrl, 3)') && mainJs.includes('await prepareOutboundMessages({') && mainJs.includes('piiFirewall: cfg.piiFirewall'),
       detail: 'Injects top-3 relevant local Memory Vault notes into prompt and scrubs PII before OpenRouter calls'
     },
     {
@@ -946,9 +946,9 @@ function build100PassDefinitions(ctx) {
       pass: 100,
       domain: 'DOM-10',
       aspect: 'Full-Stack',
-      title: 'Complete 500-Point Grade-A Frontier SOTA Browser SOP Verification',
-      check: () => sopSummary.totalItems === 500 && sopSummary.verifiedCount === 500 && sopSummary.byAspect.Backend === 150 && sopSummary.byAspect.Frontend === 150 && sopSummary.byAspect['Full-Stack'] === 200,
-      detail: 'All 500 SOP requirements verified (150 Backend, 150 Frontend, 200 Full-Stack across 10 domains)'
+      title: 'SOP candidate register metadata and honest unverified state',
+      check: () => sopSummary.totalItems === 500 && sopSummary.metadataValidCount === 500 && sopSummary.verifiedCount === 0 && sopSummary.statusCounts.NOT_RUN === 500 && sopSummary.byAspect.Backend === 150 && sopSummary.byAspect.Frontend === 150 && sopSummary.byAspect['Full-Stack'] === 200,
+      detail: '500 candidate definitions have valid metadata; no requirement-specific behavioral evidence is recorded.'
     }
   ];
 }
@@ -1004,13 +1004,10 @@ function run100PassAudit() {
   const passes = defs.map((d, idx) => {
     const passNum = idx + 1;
     const passId = `PASS-${String(passNum).padStart(3, '0')}`;
-    const sopStart = (passNum - 1) * 5 + 1;
-    const sopEnd = passNum * 5;
-    const sopRange = `SOP-${String(sopStart).padStart(3, '0')}..SOP-${String(sopEnd).padStart(3, '0')}`;
-    const sopIds = [];
-    for (let s = sopStart; s <= sopEnd; s++) {
-      sopIds.push(`SOP-${String(s).padStart(3, '0')}`);
-    }
+    const unitChecks = new Set([21, 41, 45, 57, 62, 63]);
+    const fixtureChecks = new Set([82, 83, 84, 85, 86, 87]);
+    const evidenceKind = unitChecks.has(passNum) ? 'UNIT_TEST' : fixtureChecks.has(passNum) ? 'FIXTURE_CHECK' :
+      [81, 100].includes(passNum) ? 'METADATA_CHECK' : passNum === 93 ? 'SYNTAX_CHECK' : 'SOURCE_INSPECTION';
     let passed = false;
     let error = null;
     try {
@@ -1025,11 +1022,13 @@ function run100PassAudit() {
       id: passId,
       domain: d.domain,
       aspect: d.aspect,
-      sopRange,
-      sopIds,
-      sopCount: 5,
-      title: d.title,
-      detail: error ? `FAILED: ${error}` : d.detail,
+      sopRange: null,
+      sopIds: [],
+      sopCount: 0,
+      evidenceKind,
+      requirementStatus: 'NOT_RUN',
+      title: `${evidenceKind}: ${d.title}`,
+      detail: error ? `FAILED: ${error}` : `${evidenceKind} only; product acceptance remains NOT_RUN. ${d.detail}`,
       error: error || (passed ? null : 'Assertion returned false'),
       ok: passed,
       status: passed ? 'PASS' : 'FAIL'
@@ -1062,8 +1061,8 @@ function run100PassAudit() {
       passed: domPasses.filter((p) => p.status === 'PASS').length
     };
   }
-  const durationMs = Date.now() - started;
   const forensic25 = run25ForensicPassesAnd10Iterations();
+  const durationMs = Date.now() - started;
 
   return {
     ok: failedCount === 0 && passes.length === 100 && forensic25.ok,
@@ -1071,13 +1070,23 @@ function run100PassAudit() {
     passedCount,
     failedCount,
     failedPasses,
-    sopVerified: passedCount * 5,
+    failedFixtureChecks: forensic25.checks.filter((check) => !check.ok),
+    sopVerified: sopSummary.verifiedCount,
+    sopStatus: sopSummary.status,
+    releaseVerified: false,
+    releaseStatus: 'NOT_RUN',
+    verifiedControlCount: 0,
+    uniqueDiagnosticChecks: passes.length + forensic25.totalPasses,
+    diagnosticExecutionCount: passes.length + forensic25.totalPasses,
+    engineeringCyclesCompleted: 0,
+    scope: 'Source patterns, syntax, metadata and bounded unit/synthetic fixtures; no release certification.',
+    byEvidenceKind: Object.fromEntries([...new Set(passes.map((p) => p.evidenceKind))].map((kind) => [kind, { total: passes.filter((p) => p.evidenceKind === kind).length, passed: passes.filter((p) => p.evidenceKind === kind && p.ok).length }])),
     sopTotal: 500,
     forensic25Passed: forensic25.passedPasses,
     forensic25Total: forensic25.totalPasses,
     iterations10Completed: forensic25.iterationsCompleted,
     forensic25,
-    grade: failedCount === 0 && forensic25.ok ? 'A++ (OMEGA FORENSIC)' : 'F',
+    grade: failedCount === 0 && forensic25.ok ? 'DIAGNOSTICS_PASS' : 'DIAGNOSTICS_FAIL',
     elapsedMs: durationMs,
     durationMs,
     byAspect,
@@ -1117,9 +1126,11 @@ function run25ForensicPassesAnd10Iterations() {
       f64InterIntraCoupling16x16: new Float64Array(256).fill(0.11),
       int8QuantizedWeights256: new Int8Array(256).fill(12),
       deepCortex: {
+        totalParams: 1245184,
         W_actor: new Float32Array(64).fill(0.1),
         W_critic: new Float32Array(64).fill(0.1),
-        W_experts: new Float32Array(524288).fill(0.02)
+        W_experts: new Float32Array(524288).fill(0.02),
+        W_moe_experts: new Float32Array(524288).fill(0.02)
       },
       connectome: {
         synWeights262K: new Float32Array(262144).fill(0.05),
@@ -1128,11 +1139,12 @@ function run25ForensicPassesAnd10Iterations() {
       }
     },
     decursiveSelfDeduplicator: {
-      banSubspaceBasis8x64: new Float32Array(512).fill(0.04)
+      banSubspaceBasis8x64: new Float32Array(512).fill(0.04),
+      banishedBasis8x64: new Float32Array(512).fill(0.04)
     }
   };
 
-  // Execute 10 Full Meta-Iterations (60 frames simulated per iteration)
+  // Exercise 10 fixture iterations (6 steps each, 60 steps total); not engineering review cycles.
   const iterationLogs = [];
   for (let iter = 1; iter <= 10; iter++) {
     for (let step = 0; step < 6; step++) {
@@ -1179,6 +1191,8 @@ function run25ForensicPassesAnd10Iterations() {
     ? readRepoFile('.github/workflows/ci.yml')
     : '';
   const pacScript = buildChromiumDeepWebPacScript({ localTorActive: true, activeTorPort: 9050, i2pHttp4444: true });
+  const { Forensic25Pass10IterationAuditor } = require('./forensic-25-pass-10-iteration-auditor');
+  const forensic25x10Report = new Forensic25Pass10IterationAuditor().runFull10Iteration25PassAudit();
 
   const forensicChecks = [
     {
@@ -1316,13 +1330,32 @@ function run25ForensicPassesAnd10Iterations() {
     {
       id: 'FORENSIC-25',
       title: 'GitHub Actions CI/CD Workflow & 10-Iteration Continuous Adaptation Verified',
-      ok: ciTxt.includes('forensic-full-stack-audit') && iterationLogs.length === 10 && iterationLogs.every((x) => x.finiteState)
+      ok:
+        ciTxt.includes('forensic-full-stack-audit') &&
+        iterationLogs.length === 10 &&
+        iterationLogs.every((x) => x.finiteState) &&
+        forensic25x10Report.ok === true &&
+        forensic25x10Report.passedPassIterations === 250 &&
+        forensic25x10Report.totalAtomicAuditPointsPassed === 500
     }
   ];
 
+  for (const check of forensicChecks) {
+    check.declaredCapability = check.title;
+    check.evidenceKind = ['FORENSIC-01', 'FORENSIC-02', 'FORENSIC-23', 'FORENSIC-24', 'FORENSIC-25'].includes(check.id) ? 'SOURCE_INSPECTION' : 'FIXTURE_CHECK';
+    check.title = `${check.evidenceKind}: ${check.id}`;
+    check.requirementStatus = 'NOT_RUN';
+    check.status = check.ok ? 'PASS' : 'FAIL';
+  }
   const passedPasses = forensicChecks.filter((c) => c.ok).length;
   return {
     ok: passedPasses === forensicChecks.length && iterationLogs.length === 10,
+    releaseVerified: false,
+    releaseStatus: 'NOT_RUN',
+    engineeringCyclesCompleted: 0,
+    simulationSteps: 60,
+    uniqueDiagnosticChecks: forensicChecks.length,
+    diagnosticExecutionCount: forensicChecks.length,
     totalPasses: forensicChecks.length,
     passedPasses,
     iterationsCompleted: iterationLogs.length,
@@ -1336,11 +1369,16 @@ if (require.main === module) {
   console.log(JSON.stringify({
     ok: rep.ok,
     grade: rep.grade,
+    releaseVerified: rep.releaseVerified,
+    releaseStatus: rep.releaseStatus,
+    uniqueDiagnosticChecks: rep.uniqueDiagnosticChecks,
+    byEvidenceKind: rep.byEvidenceKind,
     passes100: `${rep.passedCount}/${rep.totalPasses}`,
     sop500: `${rep.sopVerified}/${rep.sopTotal}`,
     forensic25: `${rep.forensic25Passed}/${rep.forensic25Total}`,
     iterations10: rep.iterations10Completed,
-    failedPasses: rep.failedPasses
+    failedPasses: rep.failedPasses,
+    failedFixtureChecks: rep.forensic25.checks.filter((check) => !check.ok)
   }, null, 2));
   process.exit(rep.ok ? 0 : 1);
 }

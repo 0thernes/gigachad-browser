@@ -16,6 +16,8 @@ Prioritize: security and user-data integrity; core browser reliability; truthful
 
 Begin in `gigachad-browser`. Read the applicable `AGENTS.md` instructions and inspect the current branch, revision, working tree, dependency manifests, scripts, and project documentation. Record pre-existing changes before editing and preserve other work.
 
+Treat historical findings as hypotheses: reproduce them on the current revision, preserve verified repairs, and mark superseded findings before creating remediation tasks. A commit message or earlier audit report establishes neither current failure nor current correctness.
+
 This mandate authorizes local engineering work on GIGACHAD and the integration artifacts needed for it. Treat donor repositories as reference sources unless a scoped donor change is necessary and authorized. Recheck files before editing when concurrent work is present; do not overwrite, reset, stash, delete, or commit another contributor's changes. Retain the original prompt archive as historical reference, not a competing source of current requirements. Honor publication authorization already given; otherwise prepare reviewable local results before seeking any final publication decision.
 
 Review the primary application end to end: Electron main process, preload bridge, browser chrome, guest pages, agent actions, configuration, Python sidecar, persistence, artificial-life engines, imported brains, launch scripts, tests, CI, documentation, and distribution configuration.
@@ -34,6 +36,8 @@ Consult Cosmogonic Quantum Mechalogodrom / CQM only for a named browser dependen
 Discover paths from the workspace and configuration. Keep machine-specific paths in local records; do not hardcode a developer profile, hardware model, model identifier, or API key into application behavior. Follow the existing configuration examples and environment-variable conventions.
 
 Inventory every in-scope file, classifying owned source, tests, configuration, documentation, research data, third-party dependencies, binaries, generated output, and historical material. Read first-party and imported executable source within the runtime/build dependency closure, together with its contracts, in bounded batches. Track files reviewed, unresolved areas, and explicit exclusions. A search hit, filename count, or automatic parse is not a line-by-line review.
+
+Maintain a per-file coverage ledger with revision/hash, reviewed ranges or complete-file status, relevant callers/callees, findings, and remaining work. Review complete authored files and cross-file behavior; do not substitute isolated keyword searches for comprehension. Classify generated, vendored, binary, and research material with an appropriate review method, and keep unreviewed areas visible until resolved.
 
 Use parallel specialists for independent work with explicit file ownership and integration responsibilities. Resolve findings in one backlog. Keep routine reversible engineering moving; request clarification only when a material decision cannot be inferred from the user's instructions or existing evidence.
 
@@ -66,6 +70,8 @@ For every displayed metric, record its producer, computation, units, scope, time
 Maintain explicit boundaries between privileged Electron code, the preload API, browser chrome, untrusted guests, sidecar services, AI providers, numerical engines, persistence, and research/viewer assets. Use dependency direction and lifecycle ownership to prevent circular coupling and duplicate state.
 
 Decompose large files incrementally around tested responsibilities. Define IPC/request/response schemas, validation, cancellation, timeouts, error semantics, and compatibility versions. Give each component a clear initializer, readiness signal, scheduler owner, shutdown path, and bounded resource budget.
+
+For significant architecture, algorithm, and donor-integration decisions, compare the existing implementation, the original donor, and plausible alternatives. Assess behavioral fidelity, accuracy, complexity, latency, memory, dependency closure, security, rights, portability, and maintenance cost. Record the selected approach, rejected alternatives, measured evidence, and tradeoffs in a decision record. Use comparative analysis to choose an implementation, not to manufacture superiority claims.
 
 Build an end-to-end feature matrix covering at least navigation, tab lifecycle, bookmarks/history/session recovery, permissions, downloads/export, AI requests and cancellation, page analysis, optional model discovery, brain controls, diagnostics, and persistence. Include missing dependencies, offline operation, invalid input, backend failure, and restart recovery.
 

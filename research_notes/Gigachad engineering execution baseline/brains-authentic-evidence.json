@@ -1,0 +1,115 @@
+{
+  "node": "v25.8.2",
+  "sourceDigest": "d329ae1f35d4a88c8e519a8c21fbae3fe65c1da6c8627fa057b50fd4123aa0f8",
+  "originalFiles": [
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/affect.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\affect.ts",
+      "sha256": "8f519627759ac973ab422bff2ac0ca764ab37ceb3ffd4fc6cf08a67939df6028",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/develop.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\develop.ts",
+      "sha256": "b6c884f37a8d47303e7d57adc0018d5a13b9fd504c1b31ff3883427bc79f0810",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/aom.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\aom.ts",
+      "sha256": "ca49b1cf7e3680a368d5ca507b164cd227c5a4acf2c31145de9360f84d88f38d",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/cur.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\cur.ts",
+      "sha256": "5ec499b6e1eb5605af70c412c9a8060dff6aeb350e75d23fe316b211595a4c98",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/dmul.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\dmul.ts",
+      "sha256": "3ae43f234cfb7a76b8f19d9915ce8d1661a574eb03ed6cd895a6a001c1ef4483",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/efm.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\efm.ts",
+      "sha256": "2a51a6c66caef76660082e8e3163fa939582221daa13670642c9be5d4778e681",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/hot1.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\hot1.ts",
+      "sha256": "af508fac7da2514fb77762ab46be8a52dd6b85dc2f5a3f40a1352ed893e4fb98",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/l4.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\l4.ts",
+      "sha256": "7a18f928f73aa5193e9d317eafe576099781f05e06d0fd518c83df82dd06e04b",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/l5.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\l5.ts",
+      "sha256": "d660ec9e4cb7d824a17a68725cbe67dcff0eed671fd3af3068090e362554e66c",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/fp/tpc.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\fp\\tpc.ts",
+      "sha256": "80277d84f8a6a6dadac1b289e3bbbb7e2bc26d4e6e20f1065ef084974e7e11a1",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/organism.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\organism.ts",
+      "sha256": "3f2dd819b947e0cade0511043d49d00e7297c5f99edb163749fbe9fbb42eb2c9",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/substrate.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\substrate.ts",
+      "sha256": "b378f554d171fafcd4053f89cc0d6e970aa81d9926ab3535b4d07cabac8b386d",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/tsotchke.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\tsotchke.ts",
+      "sha256": "2383febe6a162f013634d09c12653e021d23a2e19a6f9124d1c1ffe5a5d5f72f",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/creatures/001/organism/v40mods.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\creatures\\001\\organism\\v40mods.ts",
+      "sha256": "845759a1bb125bd3e9b6943d9231ce65874eee082caf4da04a188947ba610890",
+      "matchesCurrentOriginal": true
+    },
+    {
+      "snapshot": "brains/asmodensius-v40/lab/src/adapters/c001.ts",
+      "original": "Z:\\[Vibe Coded (AI)]\\CLAUDECODE\\Asmodensius-v40\\lab\\src\\adapters\\c001.ts",
+      "sha256": "7d0a1c012b113b4220eac5c032099f7011bb670e3c902ed8147683194e5138b1",
+      "matchesCurrentOriginal": true
+    }
+  ],
+  "allOriginalFilesMatch": true,
+  "noticeMatchesOriginal": true,
+  "stepBenchmark": {
+    "profile": "original-v40-seeded-synthetic",
+    "seed": 104729,
+    "warmupTicks": 200,
+    "measuredTicks": 2000,
+    "simulatedMinutesPerTick": 1,
+    "p50ms": 0.6400999999998476,
+    "p95ms": 3.0412000000000035,
+    "p99ms": 4.008199999999988,
+    "maxMs": 11.090700000000197,
+    "note": "Focused Node CPU step duration including adapter readout. Not whole-Electron frame rate, held-out learning quality, or runtime release qualification."
+  },
+  "checkpointPayloadChars": 1062602,
+  "finalMotor": [
+    0,
+    0
+  ]
+}

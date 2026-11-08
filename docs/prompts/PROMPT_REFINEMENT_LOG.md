@@ -21,7 +21,7 @@ Three parallel source reviewers covered imported-brain/runtime evidence, Dimensi
 | 9 | Team accountability and measurable iteration | Added implementation/integration/verification ownership, issue evidence, audit evidence invalidation, a 250-entry cycle/lens ledger, and explicit process-deliverable completion gates. | `5F8FAB6B4B4D18469897DEF26092EBF21EA9A796C7644182ED52764D18DD4A96` |
 | 10 | Final consistency and scope fidelity | Standardized status labels, made the prompt self-contained, permitted documented defect corrections without corrupting pristine source, removed incentives for unused precision tiers, and clarified incomplete/blocker handoff. | `1CD472B47AC1CE3E6EA4A79FE694230FA6451890C827001D097D5991C33CB43F` |
 
-The final prompt contains 4,017 whitespace-delimited words in 239 lines. It preserves the requested 25 lenses, ten substantive engineering cycles, and a 500-control target while requiring evidence and disclosing shortfalls.
+The version-10 snapshot contains 4,017 whitespace-delimited words in 239 lines. It preserves the requested 25 lenses, ten substantive engineering cycles, and a 500-control target while requiring evidence and disclosing shortfalls.
 
 ## Final checks
 
@@ -35,3 +35,13 @@ The final prompt contains 4,017 whitespace-delimited words in 239 lines. It pres
 - Only the prompt package was authored by this task. No source implementation, donor repository, runtime configuration, original prompt archive, or license was edited by this task.
 
 The version hashes are checkpoints of actual sequential revisions. Intermediate full-text versions were not retained as ten duplicate repository documents; the final prompt and this change record are the maintained deliverables.
+
+## Follow-up refinement after the repeated request
+
+The repository had advanced to clean HEAD `a16f5838820014ba8a1fa76e9c184de154be850f` before this follow-up. A targeted source recheck confirmed changes in the numerical, checkpoint, portal, and verification code. Earlier defect reports must therefore be reproduced before becoming current remediation tasks; the recheck did not qualify those changes through full runtime testing.
+
+The maintained prompt received three additions: preservation/reverification of current repairs, explicit per-file review coverage, and comparative architecture/algorithm/integration decision criteria. The original ten-version history remains intact. This is a subsequent refinement, not a claim of ten additional codebase audits or completed engineering cycles.
+
+Current maintained prompt: 4,163 whitespace-delimited words, 245 lines. SHA-256: `5116AA947D19C63D77673EAE067DBBCBB13C6F3F3BD2C5CDCF1074A19227C96F`.
+
+`REVIEW_EVIDENCE.json` remains the original dated evidence snapshot, including the version-10 prompt hash; it is not a live attestation of the subsequently changed application or prompt.

@@ -1,0 +1,177 @@
+{
+  "createdUtc": "2026-11-08T09:57:58.517634+00:00",
+  "reviewer": "verification_execution_baseline",
+  "coverage": [
+    {
+      "path": "systems/sop-500-checklist.js",
+      "sha256": "2909260707bdb41335faeaabd54bcfce6518c8ce1743da53214b3e1c5d30707a",
+      "reviewedRanges": [
+        [
+          1,
+          688
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 688
+    },
+    {
+      "path": "systems/forensic-25-pass-10-iteration-auditor.js",
+      "sha256": "4f04dfbb7d22e4c36a25cbb0067a033d0f5fd1a2aa901e30a45b710f0f8d0214",
+      "reviewedRanges": [
+        [
+          1,
+          473
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 473
+    },
+    {
+      "path": "systems/pass-100-verifier.js",
+      "sha256": "8b95cb38938ddd095050c347a2e3eb08dc4f7a037d88cda713a4e4f557f0c572",
+      "reviewedRanges": [
+        [
+          1,
+          1351
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 1351
+    },
+    {
+      "path": "scripts/smoke.js",
+      "sha256": "1cd2b1a1d891d59e613f74eee80d6c08856ac560cba922805d188e9a686ea4f4",
+      "reviewedRanges": [
+        [
+          1,
+          92
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 92
+    },
+    {
+      "path": "scripts/smoke_systems.js",
+      "sha256": "edeb1471598b65bc86033d5b46ee0824130ca13322f4ac594d02de6a8609b50c",
+      "reviewedRanges": [
+        [
+          1,
+          109
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 109
+    },
+    {
+      "path": "scripts/smoke_master_audit.js",
+      "sha256": "ef94a4bad7339f54022c33810506d6063d32c9b370372b3c135e1de47c486615",
+      "reviewedRanges": [
+        [
+          1,
+          456
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 456
+    },
+    {
+      "path": "scripts/smoke_100_passes.js",
+      "sha256": "79ec8141336fccadd458ff07cf05edcaabce349d8ef2a0474158f4c8c97cf241",
+      "reviewedRanges": [
+        [
+          1,
+          32
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 32
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "f24e36f8010e17ad6d988735f178c079d26aeb0a0f692256489916f10b04da77",
+      "reviewedRanges": [
+        [
+          1,
+          54
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 54
+    },
+    {
+      "path": "package.json",
+      "sha256": "1ea258f7a98817c8135782d446a97fa49791d7d42967fc52d3b53b47d4d02bc3",
+      "reviewedRanges": [
+        [
+          1,
+          23
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 23
+    },
+    {
+      "path": "docs/CONTRAST_COMPARATIVE_AND_FORENSIC_AUDIT.md",
+      "sha256": "e5f3383db4e472ce8d6e18e0ddca9d0df532e63e0c31f73f7af5125eab744cbf",
+      "reviewedRanges": [
+        [
+          1,
+          53
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 53
+    },
+    {
+      "path": "docs/OWASP_DEVSECOPS_FORTUNE100.md",
+      "sha256": "3185e75c79cebaa97b1852873630796da8f5dee0db60b47e6b98ddd0547993a2",
+      "reviewedRanges": [
+        [
+          1,
+          70
+        ]
+      ],
+      "reviewType": "semantic source read",
+      "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+      "lineCount": 70
+    }
+  ],
+  "reproductions": [
+    {
+      "probe": "SOP baseline summarizeSop500",
+      "observed": {
+        "total": 500,
+        "verified": 500,
+        "grade": "A+"
+      }
+    },
+    {
+      "probe": "forensic VM without require",
+      "observed": {
+        "owaspOk": true,
+        "sandboxIpcOk": true,
+        "cspPrivacyOk": true,
+        "enterpriseDocsOk": true
+      }
+    },
+    {
+      "probe": "forensic VM require throws EACCES",
+      "observed": {
+        "owaspOk": true,
+        "sandboxIpcOk": true,
+        "cspPrivacyOk": true,
+        "enterpriseDocsOk": true
+      }
+    }
+  ]
+}

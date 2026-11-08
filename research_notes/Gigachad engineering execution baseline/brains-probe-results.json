@@ -1,0 +1,62 @@
+{
+  "revision": "a16f5838820014ba8a1fa76e9c184de154be850f",
+  "node": "v25.8.2",
+  "moduleSha256": "c360f9cffc4ab359fb73c1bd92c821b7176d739c324caa6f3dfb30b791db3bed",
+  "deterministicUninterrupted": true,
+  "snapshotImported": true,
+  "firstDifference": {
+    "tick": 101,
+    "uninterruptedMotor": [
+      0.054499998688697815,
+      0.03739999979734421
+    ],
+    "restoredMotor": [
+      0.054099999368190765,
+      0.048700001090765
+    ],
+    "uninterruptedPrng": 4010432747,
+    "restoredPrng": 423900907
+  },
+  "emptySnapshotAccepted": true,
+  "unknownVersionAccepted": true,
+  "zeroLrChangesXenomimicWeights": true,
+  "finiteFp16RoundtripFailures": 0,
+  "fp16Samples": [
+    {
+      "input": "0",
+      "bits": 0,
+      "decoded": 0
+    },
+    {
+      "input": "0",
+      "bits": 32768,
+      "decoded": 0
+    },
+    {
+      "input": "5.960464477539063e-8",
+      "bits": 1,
+      "decoded": 5.960464477539063e-8
+    },
+    {
+      "input": "0.00006103515625",
+      "bits": 1024,
+      "decoded": 0.00006103515625
+    },
+    {
+      "input": "0.00001",
+      "bits": 168,
+      "decoded": 0.000010013580322265625
+    },
+    {
+      "input": "1",
+      "bits": 15360,
+      "decoded": 1
+    },
+    {
+      "input": "65504",
+      "bits": 31743,
+      "decoded": 65504
+    }
+  ],
+  "xenomimicWaveNorm": 0.9999999999999998
+}

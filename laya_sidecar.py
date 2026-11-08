@@ -23,6 +23,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 HOST = os.environ.get("GIGACHAD_SIDECAR_HOST", "127.0.0.1")
 PORT = int(os.environ.get("GIGACHAD_SIDECAR_PORT", "8000"))
 MAX_BODY = 2_000_000
+TEST_MODE = os.environ.get("GIGACHAD_TEST_MODE") == "1"
 
 if HOST not in {"127.0.0.1", "localhost", "::1"}:
     raise SystemExit("The sidecar only binds to loopback.")
@@ -46,6 +47,8 @@ def _try_import(name: str) -> bool:
 
 def load_optional_models() -> None:
     global _embedder, _embed_dim, _embed_error, _ner_model, _ner_error
+    if TEST_MODE:
+        return
     embed_id = os.environ.get("GIGACHAD_EMBED_MODEL", "").strip()
     if embed_id:
         try:
@@ -115,6 +118,8 @@ def ner_status() -> dict:
 
 
 def tts_status() -> dict:
+    if TEST_MODE:
+        return {"live": False, "implementation": "none", "model": None, "neural": False, "note": "TTS disabled in isolated smoke mode."}
     kokoro_ok = _try_import("kokoro") and _try_import("soundfile")
     if kokoro_ok:
         return {
@@ -370,17 +375,28 @@ def evaluate_ner_pii(payload: dict) -> dict:
     if model_id and _ner_model is None:
         return {"error": _ner_error or f"Could not load NER model {model_id}", "implementation": "gliner", "model": model_id, "neural": False}
     text = payload.get("text") or ""
+    if not isinstance(text, str):
+        return {"error": "PII text must be a string", "implementation": "regex", "neural": False}
+    if len(text.encode("utf-8")) > MAX_BODY:
+        return {"error": "PII text exceeds the request limit", "implementation": "regex", "neural": False}
     redacted = text
     pii_found = []
+    pii_count = 0
+
+    def replacement(label, match):
+        nonlocal pii_count
+        value = match.group(0)
+        pii_count += 1
+        # Bound diagnostic output, never the number of values actually protected.
+        if len(pii_found) < 100:
+            pii_found.append({"type": label, "preview": (value[:4] + "…" + value[-2:]) if len(value) > 8 else "***"})
+        return f"[REDACTED_{label}]"
+
     for label, pattern in PII_RULES:
-        for match in list(dict.fromkeys(pattern.findall(redacted)))[:25]:
-            pii_found.append({"type": label, "preview": (match[:4] + "…" + match[-2:]) if len(match) > 8 else "***"})
-            redacted = redacted.replace(match, f"[REDACTED_{label}]")
-    for match in list(dict.fromkeys(re.findall(r"\b(?:\d[ -]*?){13,19}\b", text)))[:25]:
-        digits = re.sub(r"\D", "", match)
-        if luhn_ok(digits):
-            pii_found.append({"type": "CREDIT_CARD", "preview": digits[:4] + "…" + digits[-2:]})
-            redacted = redacted.replace(match, "[REDACTED_CREDIT_CARD]")
+        redacted = pattern.sub(lambda match: replacement(label, match), redacted)
+    redacted = re.sub(r"\b(?:\d[ -]*?){13,19}\b",
+                      lambda match: replacement("CREDIT_CARD", match) if luhn_ok(re.sub(r"\D", "", match.group(0))) else match.group(0),
+                      redacted)
     entities = {}
     if _ner_model is not None:
         try:
@@ -405,8 +421,10 @@ def evaluate_ner_pii(payload: dict) -> dict:
         "engine": implementation,
         "model": model,
         "neural": neural,
-        "pii_redacted_count": len(pii_found),
+        "pii_redacted_count": pii_count,
         "pii_items": pii_found,
+        "pii_items_truncated": pii_count > len(pii_found),
+        "coverage": "Pattern-based text redaction; it does not guarantee detection of every kind of personal information.",
         "redacted_text": redacted,
         "entities": entities,
         "latency_ms": round((time.perf_counter() - started) * 1000, 2),
@@ -691,6 +709,8 @@ def _wav_b64_from_sapi(text: str) -> dict | None:
 
 
 def evaluate_tts(text: str) -> dict:
+    if TEST_MODE:
+        return {"error": "TTS disabled in isolated smoke mode", "implementation": "none", "model": None, "neural": False}
     clean = re.sub(r"\s+", " ", (text or "").strip())[:600]
     if not clean:
         return {"error": "Empty text", "implementation": "none", "neural": False}
@@ -1487,8 +1507,10 @@ class SidecarHandler(BaseHTTPRequestHandler):
 
 
 def main() -> None:
+    global PORT
     load_optional_models()
     server = ThreadingHTTPServer((HOST, PORT), SidecarHandler)
+    PORT = server.server_port
     print(f"gigachad-sidecar listening on http://{HOST}:{PORT}/health", flush=True)
     try:
         server.serve_forever()

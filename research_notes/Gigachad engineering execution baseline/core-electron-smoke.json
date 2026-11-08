@@ -1,0 +1,6 @@
+{
+  "command": "node scripts/smoke_electron.js",
+  "exitCode": 0,
+  "stdout": "SMOKE_OK {\"bridge\":true,\"requireType\":\"undefined\",\"webviews\":1,\"tabSrc\":\"file:///Z:/%5BVibe%20Coded%20(AI)%5D/CLAUDECODE/gigachad-browser/pages/newtab.html\",\"guestUrl\":\"file:///Z:/%5BVibe%20Coded%20(AI)%5D/CLAUDECODE/gigachad-browser/pages/newtab.html\",\"webviewApi\":true,\"actionParser\":true,\"actionCount\":36,\"defaultBrainMode\":\"ultra\",\"defaultCloudModel\":\"nvidia/nemotron-3.5-super-vl:free\",\"visionChecked\":true,\"wishlistCount\":100,\"wishlistSelfTest100\":true,\"alifeOmega100Ok\":true,\"alifeDiagnostics\":{\"omOk\":true,\"dtOk\":true,\"wmOk\":true,\"feralOk\":true,\"dsdOk\":true,\"metaOk\":true,\"ddwNsOk\":true,\"coreOk\":true,\"multiverse14Ok\":true,\"forensic25x10Ok\":true,\"domOk\":true,\"guestOk\":true},\"featuresOperational\":true,\"healthOk\":true}\n",
+  "stderr": ""
+}

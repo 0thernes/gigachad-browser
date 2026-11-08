@@ -1,0 +1,108 @@
+{
+  "capturedAt": "2026-11-08T09:57:23.721308+00:00",
+  "head": "a16f5838820014ba8a1fa76e9c184de154be850f",
+  "coverage": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "a0193860bb57fc4a46d8c5dd97bd396cee5debefafb9283f7ba8ea302e94d529",
+      "lines": 9,
+      "readCoverage": "full"
+    },
+    {
+      "path": "package.json",
+      "sha256": "1ea258f7a98817c8135782d446a97fa49791d7d42967fc52d3b53b47d4d02bc3",
+      "lines": 23,
+      "readCoverage": "full"
+    },
+    {
+      "path": "preload.js",
+      "sha256": "22c69d4bf8da863c40dfc93cc3e5c7977249e7f45bf962cb3e9e63475f0004ea",
+      "lines": 91,
+      "readCoverage": "full"
+    },
+    {
+      "path": "config.js",
+      "sha256": "35a0a2de4c42bc6990a24d03a3f7f0a9587301dacb32d5ae4d867b89be03d373",
+      "lines": 343,
+      "readCoverage": "full"
+    },
+    {
+      "path": "config.example.json",
+      "sha256": "0ee5defc67f8131b1b29f8d18b2fa3512921bd0d8449b49bb3def427415c73ae",
+      "lines": 23,
+      "readCoverage": "full"
+    },
+    {
+      "path": ".env.example",
+      "sha256": "e274c006955ddd7264772ec86488fbaa6c54c861c23e7db1c13488de42f79b06",
+      "lines": 18,
+      "readCoverage": "full"
+    },
+    {
+      "path": "browser-data.js",
+      "sha256": "2160773a064c832a85e5137c2ffa8ce0a6ef74b425ad4747241192e77ff7385c",
+      "lines": 168,
+      "readCoverage": "full"
+    },
+    {
+      "path": "scripts/smoke.js",
+      "sha256": "1cd2b1a1d891d59e613f74eee80d6c08856ac560cba922805d188e9a686ea4f4",
+      "lines": 92,
+      "readCoverage": "full"
+    },
+    {
+      "path": "scripts/smoke_electron.js",
+      "sha256": "3afc1f26ae29cc7f0179dab686bb49b48ab2b7914451c4956ac3efb7bc339bd6",
+      "lines": 29,
+      "readCoverage": "full"
+    },
+    {
+      "path": "scripts/smoke_config.js",
+      "sha256": "bf3c5d945a793e3f415eac1fac15726d7e16b696c4451178cd61d168357ed02d",
+      "lines": 94,
+      "readCoverage": "full"
+    },
+    {
+      "path": "scripts/smoke_browser.js",
+      "sha256": "84f41ad5e60d09a27bf1fe99997ad1497f393be15bd664a1d307acb12f1eaa79",
+      "lines": 70,
+      "readCoverage": "full"
+    },
+    {
+      "path": "scripts/smoke_sidecar.py",
+      "sha256": "7bf849694eabe4a497f255b07fed4cd636e6d7d05174dfb67d4ec798fdd7cb5c",
+      "lines": 264,
+      "readCoverage": "full"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "f24e36f8010e17ad6d988735f178c079d26aeb0a0f692256489916f10b04da77",
+      "lines": 54,
+      "readCoverage": "full"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "8070be4dc3f0fbae0e4abdd18b14975528b4b6a9237724b61081177325adf228",
+      "lines": 2,
+      "readCoverage": "full"
+    },
+    {
+      "path": "main.js",
+      "sha256": "e5b346454630e041982c4412a4972880b9ed6c1b5aa8eac9d0d6b3695159ef24",
+      "lines": 3252,
+      "readCoverage": "1-235, 290-615, 720-940, 1020-1080, 1950-1968, 2632-2810, 2790-2835, 2826-2886, 2907-3000, 3240-3252; additional targeted search matches. Not full file."
+    },
+    {
+      "path": "laya_sidecar.py",
+      "sha256": "a3c8b86f6a7233e5c021880b2bbce5034e52a36fbc89ddf85a541c2e4d1987b7",
+      "lines": 1502,
+      "readCoverage": "1-150 and 1380-1502; network entry/exit and labeling; remaining analyzers not fully read."
+    },
+    {
+      "path": "index.html",
+      "sha256": "dd1c7d06bfd33690ae962884668a6516f3054f3113d19cc790ee36bb50424e7b",
+      "lines": 24934,
+      "readCoverage": "24843-24934 boot plus targeted searches; UI not fully read."
+    }
+  ]
+}

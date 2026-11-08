@@ -148,7 +148,9 @@ assert.strictEqual(SOP_DOMAINS.length, 10, 'Expected 10 SOP domains');
 assert.strictEqual(SOP_500_ITEMS.length, 500, 'Expected 500 SOP items');
 const sopSummary = summarizeSop500();
 assert.strictEqual(sopSummary.totalItems, 500, 'Expected 500 total SOP items');
-assert.strictEqual(sopSummary.verifiedCount, 500, 'Expected 500 verified SOP items');
+assert.strictEqual(sopSummary.metadataValidCount, 500, 'Expected 500 valid candidate definitions');
+assert.strictEqual(sopSummary.verifiedCount, 0, 'Metadata must not certify product requirements');
+assert.strictEqual(sopSummary.statusCounts.NOT_RUN, 500);
 assert.strictEqual(sopSummary.byAspect.Backend + sopSummary.byAspect.Frontend + sopSummary.byAspect['Full-Stack'], 500);
 
 assert.strictEqual(Object.keys(ERD_ENTITIES).length, 12, 'Expected 12 ERD entities');
@@ -264,7 +266,11 @@ assert.strictEqual(pantheonTest.precisionArena instanceof Heterogeneous7TierPrec
 assert.strictEqual(pantheonTest.precisionArena.getPrecisionAuditSummary().tierCount, 7, 'Expected 7 hardware precision tiers');
 
 const forensicReport = new Forensic25Pass10IterationAuditor().runFull10Iteration25PassAudit({ pantheon: pantheonTest });
-assert.strictEqual(forensicReport.ok, true, 'Expected 25-Pass x 10-Iteration Forensic Audit to pass 100%');
+assert.strictEqual(forensicReport.ok, true, 'Expected bounded diagnostic fixture to pass');
+assert.strictEqual(forensicReport.releaseVerified, false);
+assert.strictEqual(forensicReport.releaseStatus, 'NOT_RUN');
+assert.strictEqual(forensicReport.uniqueDiagnosticChecks, 50);
+assert.strictEqual(forensicReport.diagnosticExecutionCount, 500);
 assert.strictEqual(forensicReport.iterationsCompleted, 10, 'Expected 10 iterations completed');
 assert.strictEqual(forensicReport.totalPassExecutions, 250, 'Expected 250 pass executions (25 passes x 10 iterations)');
 assert.strictEqual(forensicReport.passedPassIterations, 250, 'Expected 250 passed pass iterations');
@@ -399,6 +405,8 @@ const licenseTxt = readFile('LICENSE');
 assert(licenseTxt.includes('DOWNLOAD AND PERSONAL EXECUTION ONLY') && licenseTxt.includes('NO COMMERCIAL USE') && licenseTxt.includes('NO MODIFICATION'), 'LICENSE must enforce Download-and-Use-Only restrictions');
 
 // 10. Adversarial NaN / Infinity Poisoning Immunity & Dynamic Ablation Verification
+assert(indexHtml.includes('http-equiv="Content-Security-Policy"'), 'index.html must include a Content-Security-Policy meta tag');
+assert(newtabHtml.includes('http-equiv="Content-Security-Policy"'), 'pages/newtab.html must include a Content-Security-Policy meta tag');
 const poisonedPantheon = new PortedMultiverseBrainsFederation();
 const poisonedZ16 = new Float32Array(16);
 for (let i = 0; i < 16; i++) {
@@ -429,6 +437,53 @@ assert.ok(
   'All 14 brains telemetry metrics must remain strictly finite under NaN/Infinity perturbation'
 );
 
+// Verify FP16 NaN/Infinity bit patterns (exponent 0x7c00) in importLearnedState are sanitized
+poisonedPantheon.importLearnedState({ glyphFp16FastSlots16: new Array(16).fill(0x7eff) });
+assert.ok(
+  Number.isFinite(poisonedPantheon.precisionArena.decodeFp16(poisonedPantheon.precisionArena.u16Fp16FastWeights[3])),
+  'importLearnedState must sanitize FP16 NaN/Infinity bit patterns (exponent 0x7c00)'
+);
+
+// Verify BleedEdge25AlifeEngine, AotTotGotCorecursiveDecursiveEngine, and SiblingBrainFusionEngine remain finite under NaN/Infinity poisoning
+const poisonedBe = new BleedEdge25AlifeEngine();
+const poisonedRuntime = {
+  continuousWorldModel: {
+    latentZ64: Float32Array.from({ length: 64 }, (_, i) => (i % 2 === 0 ? NaN : Infinity))
+  },
+  trainableAlifeNeuralHub: {
+    zPerc16: Float32Array.from({ length: 16 }, (_, i) => (i % 2 === 0 ? -Infinity : NaN)),
+    adaptivePlasticityLr: Infinity,
+    tdAdvantageDelta: NaN,
+    icmCuriosityReward: NaN,
+    learnedMotorThrust2D: new Float32Array([NaN, -Infinity])
+  },
+  deepCortex: {
+    totalParams: 1245184,
+    W_critic: new Float32Array(256).fill(0.1),
+    W_actor: new Float32Array(256).fill(0.1),
+    W_moe_experts: new Float32Array(65536).fill(0.05)
+  },
+  connectome512: {
+    synWeights262K: new Float32Array(262144).fill(0.05),
+    eligibilityTraces: new Float32Array(262144).fill(0.1)
+  },
+  decursiveSelfDeduplicator: {
+    banishedBasis8x64: Float32Array.from({ length: 512 }, () => NaN)
+  }
+};
+poisonedBe.step60Hz(poisonedRuntime, NaN, Infinity);
+poisonedBe.aotTotGot.step60Hz(poisonedRuntime, NaN, Infinity);
+assert.ok(
+  Number.isFinite(poisonedBe.jepaLossMse) &&
+  Number.isFinite(poisonedBe.mambaMeanDelta) &&
+  Number.isFinite(poisonedBe.cfmVectorFieldLoss) &&
+  Number.isFinite(poisonedBe.multiPrecisionSummary.f64OdeMeanTau) &&
+  Number.isFinite(poisonedBe.aotTotGot.gotApexValueQ) &&
+  Array.from(poisonedRuntime.continuousWorldModel.latentZ64.subarray(0, 16)).every(Number.isFinite) &&
+  Array.from(poisonedRuntime.trainableAlifeNeuralHub.learnedMotorThrust2D).every(Number.isFinite),
+  'BleedEdge25AlifeEngine, AotTotGotCorecursiveDecursiveEngine, and SiblingBrainFusionEngine must remain finite under NaN/Infinity poisoning'
+);
+
 // Verify Thaler DABUS runHonestAblations() dynamically reflects actual neural weights rather than static literals
 const abBefore = poisonedPantheon.brain9ThalerDabus.runHonestAblations().intactQuality;
 for (let i = 0; i < 64; i++) poisonedPantheon.brain9ThalerDabus.W_autoassoc8x8[i] *= 1.35;
@@ -451,6 +506,6 @@ for (const subPath of [
 console.log(
   `master lab audit ok: ${invokeInIndex.size} IPC invoke channels, ${onInIndex.size} IPC event channels, ` +
   `${indexDomAudit.idCount} HTML IDs (${indexDomAudit.queriedCount} queried), ${indexDomAudit.fnCount} JS functions, ` +
-  `${agentActionNames.length} agent actions, ${mainSidecarPosts.size} sidecar endpoints, 500/500 SOP items, ` +
-  `${pantheonTest.brainsCatalog10.length}/${pantheonTest.brainsCatalog10.length} Ported Brains, 7/7 Precision Tiers, 250/250 Forensic Passes (500/500 Points), 17/17 Standalone Portals`
+  `${agentActionNames.length} agent actions, ${mainSidecarPosts.size} sidecar endpoints, 500 SOP candidate definitions (0 verified), ` +
+  `${pantheonTest.brainsCatalog10.length}/${pantheonTest.brainsCatalog10.length} fixture brain entries, 7/7 precision array types, 50 unique diagnostic predicates / 500 executions; release NOT_RUN, 17/17 portal asset-reference scans`
 );

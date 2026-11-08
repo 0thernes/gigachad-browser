@@ -19,5 +19,6 @@
   "llamaGpuLayers": 99,
   "ytdlpPath": "",
   "piiFirewall": true,
+  "allowCloudImages": false,
   "stealthCloak": false
 }

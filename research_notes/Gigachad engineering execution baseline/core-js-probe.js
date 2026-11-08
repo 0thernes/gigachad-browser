@@ -1,0 +1,11 @@
+const fs=require('fs'), path=require('path'), vm=require('vm');
+const root=path.resolve(__dirname,'../..');
+const source=fs.readFileSync(path.join(root,'main.js'),'utf8');
+if(require('crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'main.js'))).digest('hex')!=='e5b346454630e041982c4412a4972880b9ed6c1b5aa8eac9d0d6b3695159ef24') throw new Error('Historical baseline probe: source changed. Use scripts/smoke_privacy.js for current behavior.');
+const guard=source.slice(source.indexOf('function fromChrome('),source.indexOf('function asGuest('));
+const chrome={};const ctx={mainWindow:{isDestroyed:()=>false,webContents:chrome}};vm.createContext(ctx);vm.runInContext(guard,ctx);
+const result={fromChromeRejectsDifferentWebContents:!ctx.fromChrome({sender:{}}),fromChromeAcceptsForeignSubframe:ctx.fromChrome({sender:chrome,senderFrame:{url:'https://fixture.example.test',parent:{}}})};
+const block=source.slice(source.indexOf('      let piiScrubbedCount = 0;'),source.indexOf('      const screenshot =',source.indexOf('      let piiScrubbedCount = 0;')));
+const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
+const run=new AsyncFunction('fetchJson','let userContent="fixture@example.test";const activeMode="ultra",cfg={piiFirewall:true},sidecarUrl="http://127.0.0.1:1";let piiBlockedTotal=0;'+block+'return userContent;');
+(async()=>{result.piiOnTimeout=await run(async()=>{throw new Error('fixture timeout')});result.piiOnHttpFailure=await run(async()=>({ok:false,data:{error:'unavailable'}}));console.log(JSON.stringify(result,null,2));})();

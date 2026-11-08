@@ -1,0 +1,17 @@
+{
+  "historicalMainSha256": "e5b346454630e041982c4412a4972880b9ed6c1b5aa8eac9d0d6b3695159ef24",
+  "js": {
+    "fromChromeRejectsDifferentWebContents": true,
+    "fromChromeAcceptsForeignSubframe": true,
+    "piiOnTimeout": "fixture@example.test",
+    "piiOnHttpFailure": "fixture@example.test"
+  },
+  "sidecar": {
+    "optional_models_loaded": false,
+    "cloud_calls": false,
+    "oversize_without_body_response": "timed out after 0.5 seconds without 413",
+    "elapsed_seconds": 0.515,
+    "cross_origin_text_plain_status": 200,
+    "pii_redacted_count": 1
+  }
+}

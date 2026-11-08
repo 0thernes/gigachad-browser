@@ -35,6 +35,21 @@
 (function (globalScope) {
   'use strict';
 
+  function finiteClamped(val, fallback = 0.0, minVal = -1e6, maxVal = 1e6) {
+    const n = Number(val);
+    if (!Number.isFinite(n)) return fallback;
+    if (n < minVal) return minVal;
+    if (n > maxVal) return maxVal;
+    return n;
+  }
+
+  function sanitizeVec16(rawVec, dst16, maxAbs = 10.0) {
+    for (let i = 0; i < 16; i++) {
+      dst16[i] = rawVec ? finiteClamped(rawVec[i], 0.0, -maxAbs, maxAbs) : 0.0;
+    }
+    return dst16;
+  }
+
   const BLEEDING_EDGE_25_CATALOG = [
     { id: 1, code: 'I_JEPA_WORLD', name: 'I-JEPA / V-JEPA Latent World Predictor (EMA Target)' },
     { id: 2, code: 'LIQUID_MAMBA_SSM', name: 'Liquid-Mamba Selective State-Space Model (Δ_t + sLTC)' },
@@ -87,6 +102,10 @@
       this.W_koopman16x16 = new Float32Array(256);   // Koopman linear operator
       this.kuramotoHopfieldPhase16 = new Float32Array(16);
       this.glialCalciumGate16 = new Float32Array(16);
+      this._scratchZ16 = new Float32Array(16);
+      this._scratchSCurr16 = new Float32Array(16);
+      this._scratchSPrev16 = new Float32Array(16);
+      this._scratchSPred16 = new Float32Array(16);
 
       // Initialize weights deterministically with orthogonal/Xavier scaling
       for (let i = 0; i < 256; i++) {
@@ -469,11 +488,18 @@
       const hub = runtime && runtime.trainableAlifeNeuralHub;
       if (!wm || !hub) return this;
 
-      const z = wm.latentZ64;
-      const sCurr = hub.zPerc16 || z;
-      const sPrev = hub.zPrev16 || z;
-      const sPred = hub.zPredNext16 || sCurr;
-      const lr = hub.adaptivePlasticityLr || 0.008;
+      const safeTick = finiteClamped(tick, 0.0, -1e9, 1e9);
+      const safeFrame = Math.max(0, finiteClamped(frameCount, 0, 0, 1e9) | 0);
+      const z = sanitizeVec16(wm.latentZ64, this._scratchZ16, 10.0);
+      if (wm.latentZ64) {
+        for (let i = 0; i < 16; i++) {
+          if (!Number.isFinite(wm.latentZ64[i])) wm.latentZ64[i] = z[i];
+        }
+      }
+      const sCurr = hub.zPerc16 ? sanitizeVec16(hub.zPerc16, this._scratchSCurr16, 10.0) : z;
+      const sPrev = hub.zPrev16 ? sanitizeVec16(hub.zPrev16, this._scratchSPrev16, 10.0) : z;
+      const sPred = hub.zPredNext16 ? sanitizeVec16(hub.zPredNext16, this._scratchSPred16, 10.0) : sCurr;
+      const lr = finiteClamped(hub.adaptivePlasticityLr, 0.008, 0.0001, 0.05);
 
       // 1. I-JEPA Latent World Predictor (Predict target EMA representation without pixel noise)
       let jepaErrSq = 0;
@@ -491,9 +517,9 @@
         jepaErrSq += err * err;
         const dPred = err * (1 - pred * pred);
         for (let j = 0; j < 16; j++) {
-          this.W_jepa_pred[row + j] -= lr * dPred * sCurr[j];
+          this.W_jepa_pred[row + j] = finiteClamped(this.W_jepa_pred[row + j] - lr * dPred * sCurr[j], 0.0, -2.5, 2.5);
           // EMA update of target encoder (momentum τ_ema = 0.995)
-          this.W_jepa_ema[row + j] = 0.995 * this.W_jepa_ema[row + j] + 0.005 * this.W_jepa_pred[row + j];
+          this.W_jepa_ema[row + j] = finiteClamped(0.995 * this.W_jepa_ema[row + j] + 0.005 * this.W_jepa_pred[row + j], 0.0, -2.5, 2.5);
         }
       }
       this.jepaLossMse = Number(Math.max(0.0005, jepaErrSq / 16).toFixed(5));
@@ -504,19 +530,20 @@
         const row = i * 16;
         let uProj = 0;
         for (let j = 0; j < 16; j++) uProj += this.W_mamba_delta[row + j] * z[j];
+        const clampedProj = finiteClamped(uProj, 0.0, -20.0, 20.0);
         // Softplus step size Δ_t ∈ [0.02, 0.45]
-        const deltaT = Math.min(0.45, Math.max(0.02, Math.log(1 + Math.exp(uProj))));
+        const deltaT = Math.min(0.45, Math.max(0.02, Math.log(1 + Math.exp(clampedProj))));
         deltaSum += deltaT;
         const A_bar = Math.exp(-deltaT * (1.1 + (i % 4) * 0.25));
-        this.mambaSelectiveState16[i] = A_bar * this.mambaSelectiveState16[i] + deltaT * z[i];
+        this.mambaSelectiveState16[i] = finiteClamped(A_bar * this.mambaSelectiveState16[i] + deltaT * z[i], 0.0, -10.0, 10.0);
       }
       this.mambaMeanDelta = Number((deltaSum / 16).toFixed(4));
 
       // 3. Optimal-Transport Conditional Flow Matching (OT-CFM straight-line vector field v_θ(x_t, t) ≈ x_1 - x_0)
-      const tFlow = (frameCount % 20) / 20;
+      const tFlow = (safeFrame % 20) / 20;
       let cfmErrSq = 0;
       for (let i = 0; i < 16; i++) {
-        const x0 = Math.sin(tick * 1.7 + i);
+        const x0 = Math.sin(safeTick * 1.7 + i);
         const x1 = z[i];
         const xt = (1 - tFlow) * x0 + tFlow * x1;
         const targetVel = x1 - x0;
@@ -526,7 +553,7 @@
         const vErr = predVel - targetVel;
         cfmErrSq += vErr * vErr;
         for (let j = 0; j < 16; j++) {
-          this.W_cfm_vel[row + j] -= (lr * 0.4) * vErr * xt;
+          this.W_cfm_vel[row + j] = finiteClamped(this.W_cfm_vel[row + j] - (lr * 0.4) * vErr * xt, 0.0, -2.5, 2.5);
         }
       }
       this.cfmVectorFieldLoss = Number(Math.max(0.0005, cfmErrSq / 16).toFixed(5));
@@ -534,7 +561,7 @@
       // 4. Hypernetwork Rank-1 LoRA Fast-Weight Generator (ΔW_fast = u ⊗ v^T)
       let hyperNormSq = 0;
       for (let i = 0; i < 16; i++) {
-        const cIn = this.cyberHatTelemetry.networkSensoryVector8[i % 8] || 0.1;
+        const cIn = finiteClamped(this.cyberHatTelemetry.networkSensoryVector8[i % 8], 0.1, -2.0, 2.0);
         this.W_hyper_u[i] = Math.tanh(this.W_hyper_u[i] * 0.96 + z[i] * 0.08 + cIn * 0.04);
         this.W_hyper_v[i] = Math.tanh(this.W_hyper_v[i] * 0.96 + this.mambaSelectiveState16[i] * 0.08);
         hyperNormSq += this.W_hyper_u[i] * this.W_hyper_u[i] + this.W_hyper_v[i] * this.W_hyper_v[i];
@@ -553,7 +580,7 @@
         const kvErr = kvPred - sCurr[i];
         tttErrSq += kvErr * kvErr;
         for (let j = 0; j < 16; j++) {
-          this.W_ttt_fast16x16[row + j] -= (lr * 0.6) * kvErr * sPrev[j];
+          this.W_ttt_fast16x16[row + j] = finiteClamped(this.W_ttt_fast16x16[row + j] - (lr * 0.6) * kvErr * sPrev[j], 0.0, -2.5, 2.5);
         }
       }
       this.tttReconstructionLoss = Number(Math.max(0.0004, tttErrSq / 16).toFixed(5));
@@ -573,10 +600,15 @@
         }
         goodPos += actPos * actPos;
         goodNeg += actNeg * actNeg;
-        const pPos = 1 / (1 + Math.exp(-(actPos * actPos - thetaFF)));
-        const pNeg = 1 / (1 + Math.exp(-(actNeg * actNeg - thetaFF)));
+        const pPos = 1 / (1 + Math.exp(-finiteClamped(actPos * actPos - thetaFF, 0.0, -20.0, 20.0)));
+        const pNeg = 1 / (1 + Math.exp(-finiteClamped(actNeg * actNeg - thetaFF, 0.0, -20.0, 20.0)));
         for (let j = 0; j < 16; j++) {
-          this.W_ff_layer[row + j] += (lr * 0.25) * ((1 - pPos) * actPos * sCurr[j] - pNeg * actNeg * (-sPrev[(j + 5) % 16]));
+          this.W_ff_layer[row + j] = finiteClamped(
+            this.W_ff_layer[row + j] + (lr * 0.25) * ((1 - pPos) * actPos * sCurr[j] - pNeg * actNeg * (-sPrev[(j + 5) % 16])),
+            0.0,
+            -2.5,
+            2.5
+          );
         }
       }
       this.ffGoodnessPos = Number(Math.max(0.5, goodPos).toFixed(3));
@@ -619,12 +651,13 @@
         const rErr = pOut - tOut;
         rndErrSq += rErr * rErr;
         for (let j = 0; j < 16; j++) {
-          this.W_rnd_pred[row + j] -= (lr * 0.5) * rErr * sCurr[j];
+          this.W_rnd_pred[row + j] = finiteClamped(this.W_rnd_pred[row + j] - (lr * 0.5) * rErr * sCurr[j], 0.0, -2.5, 2.5);
         }
       }
       this.rndNoveltyBonus = Number(Math.max(0.002, Math.min(1.5, rndErrSq / 16)).toFixed(4));
       // Add RND epistemic bonus directly into the creature's ICM curiosity reward!
-      hub.icmCuriosityReward = Number((hub.icmCuriosityReward + this.rndNoveltyBonus * 0.25).toFixed(4));
+      const prevIcm = finiteClamped(hub.icmCuriosityReward, 0.5, 0.0, 5.0);
+      hub.icmCuriosityReward = Number(finiteClamped(prevIcm + this.rndNoveltyBonus * 0.25, 0.5, 0.0, 5.0).toFixed(4));
 
       const nicheX = Math.min(3, Math.max(0, Math.floor(Math.abs(z[0]) * 4)));
       const nicheY = Math.min(3, Math.max(0, Math.floor(Math.min(0.99, this.rndNoveltyBonus * 2) * 4)));
@@ -642,7 +675,7 @@
         koopNorm += this.W_koopman16x16[i * 16 + i] * this.W_koopman16x16[i * 16 + i];
         this.kuramotoHopfieldPhase16[i] = (this.kuramotoHopfieldPhase16[i] + 0.08 + 0.03 * Math.sin(this.kuramotoHopfieldPhase16[(i + 1) % 16] - this.kuramotoHopfieldPhase16[i])) % (Math.PI * 2);
       }
-      this.cpcInfoNceLoss = Number(Math.max(0.05, Math.log(1 + Math.exp(-posDot))).toFixed(4));
+      this.cpcInfoNceLoss = Number(Math.max(0.05, Math.log(1 + Math.exp(-finiteClamped(posDot, 0.0, -20.0, 20.0)))).toFixed(4));
       this.koopmanSpectralRadius = Number(Math.min(1.05, Math.max(0.75, Math.sqrt(koopNorm / 16))).toFixed(4));
 
       // Port-Hamiltonian Energy-Conserving Motor Controller: u_pH = (J - R) ∇H
@@ -656,11 +689,11 @@
       this.portHamiltonianForce2D = [fx, fy];
 
       // Step 6-Tier Multi-Precision Hybrid Tensor Kernels (f64, i64 Z[ζ_8], fp16, INT8, BitNet b1.58, Binary HDC)
-      this._stepMultiPrecisionHybridKernels(z, tick);
+      this._stepMultiPrecisionHybridKernels(z, safeTick);
 
       // Step Fused 4-Brain Sibling Engine (CQM-Xylos Zig Wasm + Asmodensius-v40 Larkum/TRN/Allostasis + C. elegans 7,379-Synapse Connectome + Dimension-Omega Manifold)
       if (this.siblingBrainFusion) {
-        this.siblingBrainFusion.step60Hz(runtime, tick, frameCount);
+        this.siblingBrainFusion.step60Hz(runtime, safeTick, safeFrame);
       }
 
       // Dispatch off-main-thread WebWorker shard training every 30 frames (0.5s)
@@ -848,6 +881,8 @@
       this.gotApexValueQ = 0.842;
       this.gotTreeBackupTdError = 0.068;
       this.gotPlasticityUpdatesCount = 1;
+      this._scratchZCurr16 = new Float32Array(16);
+      this._scratchNextPr16 = new Float32Array(16);
       this.aotTotGotHeadline = 'AoT[0xA07F4E12 · Markov=98.4%] -> ToT[21-Node 4-Ary PUCT · Pruned=2] -> GoT[16-V DAG · Apex#0 Q=0.842 · δ_TD=+0.068]';
 
       // Deterministic Xavier/Orthogonal initialization of AoT, ToT, and GoT weight tensors
@@ -885,7 +920,7 @@
       let h = 0x811c9dc5 >>> 0;
       let signBits = 0 >>> 0;
       for (let i = 0; i < 16; i++) {
-        const v = vec16[offset + i] || 0;
+        const v = finiteClamped(vec16[offset + i], 0.0, -4.0, 4.0);
         if (v >= 0) signBits |= (1 << i);
         const q = Math.round((v + 2.0) * 64) & 255;
         h = Math.imul(h ^ q, 0x01000193) >>> 0;
@@ -900,7 +935,7 @@
      *                  score via Critic + Connectome + PUCT, and Decursively prune cyclic branches
      *   Phase 3 (GoT): Quotient equivalent ToT nodes via Union-Find, aggregate cross-branch insights
      *                  into a 16-vertex DAG, break cycles, and run Spectral PageRank to elect Apex
-     *   Phase 4 (Learn & Contract): Backpropagate Tree-Backup TD error δ_GoT into 1.24M Cortex + 262K
+     *   Phase 4 (Learn & Contract): Backpropagate Tree-Backup TD error δ_GoT into 1,245,184 Cortex + 262K
      *                  Connectome Synapses, and Decursively contract GoT Apex into next frame's AoT!
      */
     step60Hz(runtime, tick = 0, frameCount = 0) {
@@ -912,8 +947,8 @@
       const cn = (runtime && runtime.connectome512) || (hub && hub.connectome);
       if (!wm || !hub || !dc) return this;
 
-      const zCurr = hub.zPerc16 || wm.latentZ64;
-      const lr = hub.adaptivePlasticityLr || 0.008;
+      const zCurr = sanitizeVec16(hub.zPerc16 || wm.latentZ64, this._scratchZCurr16, 10.0);
+      const lr = finiteClamped(hub.adaptivePlasticityLr, 0.008, 0.0001, 0.05);
       const uBan = dsd && dsd.banishedBasis8x64 ? dsd.banishedBasis8x64 : null;
 
       // =======================================================================
@@ -923,11 +958,13 @@
       let rootNormSq = 0;
       for (let i = 0; i < 16; i++) {
         // Blend live sensory state with previously contracted Markovian AoT atom (zero history bloat)
-        let v = 0.65 * zCurr[i] + 0.35 * (this.aotContractedVector16[i] || zCurr[i]);
+        const prevContracted = finiteClamped(this.aotContractedVector16[i], zCurr[i], -4.0, 4.0);
+        let v = 0.65 * zCurr[i] + 0.35 * prevContracted;
         if (uBan) {
           // Deflate any component parallel to DSD banished basis row 0
-          v -= 0.22 * uBan[i] * v;
-          dotBan += Math.abs(uBan[i] * v);
+          const uVal = finiteClamped(uBan[i], 0.0, -2.0, 2.0);
+          v -= 0.22 * uVal * v;
+          dotBan += Math.abs(uVal * v);
         }
         this.aotRootState16[i] = Math.tanh(v);
         this.totLatentArena21x16[i] = this.aotRootState16[i];
@@ -1134,7 +1171,7 @@
 
       // 3C. 2-Step Power Iteration Spectral PageRank Centrality over GoT DAG
       const damping = 0.85;
-      const nextPr = new Float32Array(16);
+      const nextPr = this._scratchNextPr16;
       for (let iter = 0; iter < 2; iter++) {
         nextPr.fill((1 - damping) / 16);
         for (let u = 0; u < 16; u++) {
@@ -1218,17 +1255,17 @@
       for (let i = 0; i < 16; i++) {
         const atomVal = this.aotContractedVector16[i];
         if (wCrit) {
-          wCrit[i] = Math.max(-2.0, Math.min(2.0, wCrit[i] + lr * 0.45 * tdError * this.aotRootState16[i]));
+          wCrit[i] = Math.max(-2.0, Math.min(2.0, finiteClamped(wCrit[i], 0.0, -2.0, 2.0) + lr * 0.45 * tdError * this.aotRootState16[i]));
         }
         if (wAct) {
-          wAct[i] = Math.max(-2.0, Math.min(2.0, wAct[i] + lr * 0.45 * tdError * atomVal));
+          wAct[i] = Math.max(-2.0, Math.min(2.0, finiteClamped(wAct[i], 0.0, -2.0, 2.0) + lr * 0.45 * tdError * atomVal));
         }
         if (wExperts && wExperts.length > 0) {
           const expIdx = (activeExpertOff + ((frameCount * 16 + i) & 65535)) % wExperts.length;
-          wExperts[expIdx] = Math.max(-2.0, Math.min(2.0, (wExperts[expIdx] || 0) * 0.9995 + lr * 0.3 * tdError * atomVal));
+          wExperts[expIdx] = Math.max(-2.0, Math.min(2.0, finiteClamped(wExperts[expIdx], 0.0, -2.0, 2.0) * 0.9995 + lr * 0.3 * tdError * atomVal));
         }
         // Inject contracted AoT thought vector into live world-model latent state & motor thrust!
-        wm.latentZ64[i] = Math.tanh(wm.latentZ64[i] * 0.84 + atomVal * 0.16);
+        wm.latentZ64[i] = Math.tanh(finiteClamped(wm.latentZ64[i], 0.0, -5.0, 5.0) * 0.84 + atomVal * 0.16);
       }
 
       // Modulate 512-Node Connectome Synapses (262,144 conductances) via 3-factor DA-STDP gated by δ_GoT
@@ -1239,16 +1276,18 @@
         const daMod = Math.max(-0.5, Math.min(0.5, tdError * 0.8 + 0.12));
         for (let s = 0; s < 32; s++) {
           const idx = synSliceOffset + s;
-          const elig = (eligArr && eligArr[idx]) || 0.08;
-          synWeightsArr[idx] = Math.max(-1.5, Math.min(1.5, synWeightsArr[idx] + lr * daMod * elig));
+          const elig = finiteClamped(eligArr && eligArr[idx], 0.08, -1.0, 1.0);
+          synWeightsArr[idx] = Math.max(-1.5, Math.min(1.5, finiteClamped(synWeightsArr[idx], 0.0, -1.5, 1.5) + lr * daMod * elig));
         }
         if (cn) cn.stdpUpdatesCount = (cn.stdpUpdatesCount || 0) + 32;
       }
 
       // Steer physical 2D motor thrust toward the winning AoT/GoT decision vector
       if (hub.learnedMotorThrust2D) {
-        hub.learnedMotorThrust2D[0] = Number(Math.tanh(hub.learnedMotorThrust2D[0] * 0.75 + this.aotContractedVector16[0] * 0.35).toFixed(4));
-        hub.learnedMotorThrust2D[1] = Number(Math.tanh(hub.learnedMotorThrust2D[1] * 0.75 + this.aotContractedVector16[1] * 0.35).toFixed(4));
+        const m0 = finiteClamped(hub.learnedMotorThrust2D[0], 0.0, -5.0, 5.0);
+        const m1 = finiteClamped(hub.learnedMotorThrust2D[1], 0.0, -5.0, 5.0);
+        hub.learnedMotorThrust2D[0] = Number(Math.tanh(m0 * 0.75 + this.aotContractedVector16[0] * 0.35).toFixed(4));
+        hub.learnedMotorThrust2D[1] = Number(Math.tanh(m1 * 0.75 + this.aotContractedVector16[1] * 0.35).toFixed(4));
       }
 
       this.aotTotGotHeadline =
@@ -1399,6 +1438,8 @@
       }
       this.multiverse10Pantheon = PantheonCtor ? new PantheonCtor() : null;
       this.multiverse14Pantheon = this.multiverse10Pantheon;
+      this._scratchZ16 = new Float32Array(16);
+      this._scratchNextV64 = new Float64Array(64);
 
       this.fusionHeadline =
         '14-BRAIN MULTIVERSE FUSION LIVE · CQM-Xylos Zig Wasm (18 Kernels) × Asmodensius-v40 × Glitchling × C. elegans (302N/7,379S) × Dimension-Ω × DABUS × Tsotchke × Consortium';
@@ -1557,8 +1598,10 @@
       const hub = runtime && runtime.trainableAlifeNeuralHub;
       if (!wm || !hub) return this;
 
-      const z = wm.latentZ64;
-      const lr = hub.adaptivePlasticityLr || 0.008;
+      const safeTick = finiteClamped(tick, 0.0, -1e9, 1e9);
+      const safeFrame = Math.max(0, finiteClamped(frameCount, 0, 0, 1e9) | 0);
+      const z = sanitizeVec16(wm.latentZ64, this._scratchZ16, 10.0);
+      const lr = finiteClamped(hub.adaptivePlasticityLr, 0.008, 0.0001, 0.05);
 
       // =====================================================================
       // 1. CQM-XYLOS ZIG 0.17.0 WEBASSEMBLY KERNEL CO-PROCESSOR STEP
@@ -1602,17 +1645,17 @@
             0.05,
             baseByte + 24 * 8
           );
-          this.cqmMetrics.qgtBerryCurvature = Number((f64View[24 + 3] || 0).toFixed(4));
-          this.cqmMetrics.qgtTraceG = Number((f64View[24 + 5] || 0).toFixed(4));
-          this.cqmMetrics.qgtBogomolnyRatio = Number(Math.min(1.0, f64View[24 + 7] || 0.95).toFixed(4));
-          this.dimensionOmegaTelemetry.fubiniStudyDetG = Number((f64View[24 + 4] || 0.85).toFixed(4));
+          this.cqmMetrics.qgtBerryCurvature = Number(finiteClamped(f64View[24 + 3], 0, -100, 100).toFixed(4));
+          this.cqmMetrics.qgtTraceG = Number(finiteClamped(f64View[24 + 5], 0, -100, 100).toFixed(4));
+          this.cqmMetrics.qgtBogomolnyRatio = Number(Math.min(1.0, finiteClamped(f64View[24 + 7], 0.95, 0, 1)).toFixed(4));
+          this.dimensionOmegaTelemetry.fubiniStudyDetG = Number(finiteClamped(f64View[24 + 4], 0.85, 0, 100).toFixed(4));
         }
 
         // (b) cqm_sbnn_minsr_step: Sample-Space Minimum-Step Stochastic Reconfiguration (MinSR) Natural Gradient
         //     grads[32..48] (4 samples x 4 params), energies[48..52], out_delta[52..56], out_metrics[56..60]
         if (typeof ex.cqm_sbnn_minsr_step === 'function') {
           for (let s = 0; s < 4; s++) {
-            f64View[48 + s] = -1.5 - 0.4 * Math.cos(tick + s) - 0.2 * (z[s] || 0);
+            f64View[48 + s] = -1.5 - 0.4 * Math.cos(safeTick + s) - 0.2 * (z[s] || 0);
             for (let p = 0; p < 4; p++) {
               f64View[32 + s * 4 + p] = (z[(s * 4 + p) & 15] || 0.1) + 0.15 * Math.sin(s * 1.7 + p);
             }
@@ -1627,9 +1670,9 @@
             baseByte + 52 * 8,
             baseByte + 56 * 8
           );
-          this.cqmMetrics.minSrEnergyMean = Number((f64View[56] || -1.6).toFixed(4));
-          this.cqmMetrics.minSrEnergyVar = Number((f64View[57] || 0.12).toFixed(4));
-          this.cqmMetrics.minSrUpdateNorm = Number((updNorm || 0.03).toFixed(5));
+          this.cqmMetrics.minSrEnergyMean = Number(finiteClamped(f64View[56], -1.6, -100, 100).toFixed(4));
+          this.cqmMetrics.minSrEnergyVar = Number(finiteClamped(f64View[57], 0.12, 0, 100).toFixed(4));
+          this.cqmMetrics.minSrUpdateNorm = Number(finiteClamped(updNorm, 0.03, 0, 100).toFixed(5));
 
           // Feed MinSR natural-gradient step directly into deepCortex Actor weights!
           const dc = (runtime && runtime.deepCortex) || (hub && hub.deepCortex);
@@ -1638,7 +1681,7 @@
             for (let p = 0; p < 4; p++) {
               const natStep = f64View[52 + p] || 0;
               if (Number.isFinite(natStep)) {
-                wAct[p] = Math.max(-2.0, Math.min(2.0, wAct[p] + natStep));
+                wAct[p] = Math.max(-2.0, Math.min(2.0, finiteClamped(wAct[p], 0.0, -2.0, 2.0) + natStep));
               }
             }
           }
@@ -1668,20 +1711,20 @@
             baseByte + 84 * 8,
             2
           );
-          this.cqmMetrics.dbspCrossTermNorm = Number((crossNorm || 0).toFixed(5));
-          this.cqmMetrics.dbspExactnessResidual = Number((f64View[84 + 3] || 0).toFixed(12));
+          this.cqmMetrics.dbspCrossTermNorm = Number(finiteClamped(crossNorm, 0, 0, 100).toFixed(5));
+          this.cqmMetrics.dbspExactnessResidual = Number(finiteClamped(f64View[84 + 3], 0, 0, 100).toFixed(12));
         }
 
         // (d) Periodic Topological Invariants (every 15 frames): QWZ Chern Number + BdG Skyrmion MZM
-        if (frameCount % 15 === 0) {
+        if (safeFrame % 15 === 0) {
           if (typeof ex.cqm_moonlab_qwz_chern_fhs === 'function') {
             const chern = ex.cqm_moonlab_qwz_chern_fhs(1.0, 8, baseByte + 96 * 8);
-            this.cqmMetrics.qwzChernNumber = Number(chern.toFixed(4));
+            this.cqmMetrics.qwzChernNumber = Number(finiteClamped(chern, 1.0, -10, 10).toFixed(4));
           }
           if (typeof ex.cqm_libirrep_bdg_skyrmion_mzm === 'function') {
             const mzm = ex.cqm_libirrep_bdg_skyrmion_mzm(10, 1, -3.0, 4.0, 1.0, baseByte + 104 * 8);
             this.cqmMetrics.bdgSkyrmionMzmCount = mzm;
-            this.cqmMetrics.bdgTopologicalChargeQ = Number((f64View[104 + 1] || 1.0).toFixed(3));
+            this.cqmMetrics.bdgTopologicalChargeQ = Number(finiteClamped(f64View[104 + 1], 1.0, -10, 10).toFixed(3));
           }
         }
 
@@ -1690,7 +1733,7 @@
           const f32ByteBase = baseByte + 2048;
           for (let i = 0; i < 8; i++) f32View[64 + i] = z[i] || 0.1;
           const hebEnergy = ex.cqm_glyph_hebbian_step(f32ByteBase, f32ByteBase + 64 * 4, 8, lr, 0.01);
-          this.cqmMetrics.glyphHebbianEnergy = Number((hebEnergy || 0.25).toFixed(4));
+          this.cqmMetrics.glyphHebbianEnergy = Number(finiteClamped(hebEnergy, 0.25, 0, 100).toFixed(4));
         }
       }
 
@@ -1762,7 +1805,7 @@
       this.asmodensiusState.gwtBroadcastGain = this.asmodensiusState.gwtIgnitionActive ? 1.28 : 1.0;
 
       // Hypothalamic Opponent Drives (AgRP vs POMC) & Allostasis (Woods 1979; Sterling 2012; Borbély 1982)
-      const tdDelta = hub.tdAdvantageDelta || 0.05;
+      const tdDelta = finiteClamped(hub.tdAdvantageDelta, 0.05, -2.0, 2.0);
       this.asmodensiusState.glucose = Number(Math.max(0.2, Math.min(1.0, this.asmodensiusState.glucose * 0.998 + Math.max(0, tdDelta) * 0.04 + 0.0015)).toFixed(3));
       this.asmodensiusState.insulin = Number((0.6 * this.asmodensiusState.glucose + 0.2).toFixed(3));
       this.asmodensiusState.leptin = Number((0.75 * this.asmodensiusState.glucose + 0.1).toFixed(3));
@@ -1783,7 +1826,7 @@
       }
       let chemCurrentSum = 0;
       let gapCurrentSum = 0;
-      const nextV64 = new Float64Array(64);
+      const nextV64 = this._scratchNextV64;
       for (let n = 0; n < 64; n++) {
         nextV64[n] = this.celegansVoltage64[n] * 0.86; // Passive membrane leak
       }
@@ -1832,22 +1875,30 @@
       // =====================================================================
       // 5. PORTED 14-BRAIN MULTIVERSE PANTHEON & 7-TIER PRECISION ARENA STEP
       // =====================================================================
-      if (!this.multiverse10Pantheon && globalScope.PortedMultiverseBrainsFederation) {
+      if (runtime && runtime.portedMultiverseBrains) {
+        this.multiverse10Pantheon = runtime.portedMultiverseBrains;
+        this.multiverse14Pantheon = this.multiverse10Pantheon;
+      } else if (!this.multiverse10Pantheon && globalScope.PortedMultiverseBrainsFederation) {
         this.multiverse10Pantheon = new globalScope.PortedMultiverseBrainsFederation();
         this.multiverse14Pantheon = this.multiverse10Pantheon;
       }
       if (this.multiverse10Pantheon) {
-        this.multiverse10Pantheon.step60Hz(runtime, tick, frameCount);
+        if (runtime._auditAlreadySteppedPantheonFrame !== safeFrame) {
+          this.multiverse10Pantheon.step60Hz(runtime, safeTick, safeFrame);
+        }
         runtime.portedMultiverseBrains = this.multiverse10Pantheon;
       }
 
       // Couple fused 14-brain output directly into world-model latent state & 2D motor thrust
       for (let i = 0; i < 8; i++) {
-        wm.latentZ64[i] = Math.tanh(wm.latentZ64[i] * 0.88 + this.larkumBurstRate16[i] * 0.08 + this.celegansVoltage64[i] * 0.04);
+        const zCur = finiteClamped(wm.latentZ64[i], 0.0, -5.0, 5.0);
+        wm.latentZ64[i] = Math.tanh(zCur * 0.88 + this.larkumBurstRate16[i] * 0.08 + this.celegansVoltage64[i] * 0.04);
       }
       if (hub.learnedMotorThrust2D) {
-        hub.learnedMotorThrust2D[0] = Number(Math.tanh(hub.learnedMotorThrust2D[0] * 0.85 + avaAvbBalance * 0.15).toFixed(4));
-        hub.learnedMotorThrust2D[1] = Number(Math.tanh(hub.learnedMotorThrust2D[1] * 0.85 + dvWave * 0.15).toFixed(4));
+        const m0 = finiteClamped(hub.learnedMotorThrust2D[0], 0.0, -5.0, 5.0);
+        const m1 = finiteClamped(hub.learnedMotorThrust2D[1], 0.0, -5.0, 5.0);
+        hub.learnedMotorThrust2D[0] = Number(Math.tanh(m0 * 0.85 + avaAvbBalance * 0.15).toFixed(4));
+        hub.learnedMotorThrust2D[1] = Number(Math.tanh(m1 * 0.85 + dvWave * 0.15).toFixed(4));
       }
 
       this.fusionHeadline =

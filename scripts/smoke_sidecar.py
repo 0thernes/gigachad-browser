@@ -3,14 +3,17 @@
 
 import json
 import os
+import queue
+import re
 import subprocess
 import sys
+import threading
 import time
 import urllib.error
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PORT = int(os.environ.get("GIGACHAD_SMOKE_PORT", "8766"))
+PORT = int(os.environ.get("GIGACHAD_SMOKE_PORT", "0"))
 BASE = f"http://127.0.0.1:{PORT}"
 BANNED = (
     "EmbeddingGemma",
@@ -58,27 +61,42 @@ def assert_honest(payload, where):
 
 
 def main():
+    global PORT, BASE
     env = os.environ.copy()
+    env["GIGACHAD_TEST_MODE"] = "1"
     env["GIGACHAD_SIDECAR_PORT"] = str(PORT)
     env["GIGACHAD_SIDECAR_HOST"] = "127.0.0.1"
     env.pop("GIGACHAD_EMBED_MODEL", None)
     env.pop("GIGACHAD_NER_MODEL", None)
     proc = subprocess.Popen(
-        [sys.executable, os.path.join(ROOT, "laya_sidecar.py")],
+        [sys.executable, "-I", "-S", os.path.join(ROOT, "laya_sidecar.py")],
         cwd=ROOT,
         env=env,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,
     )
+    startup_lines = queue.Queue()
+    def collect_output():
+        for line in proc.stdout:
+            startup_lines.put(line.rstrip())
+    threading.Thread(target=collect_output, daemon=True).start()
     try:
         deadline = time.time() + 8
         health = None
+        listening = False
         while time.time() < deadline:
             if proc.poll() is not None:
-                log = proc.stdout.read() if proc.stdout else ""
-                raise SystemExit(f"sidecar exited early: {log}")
+                raise SystemExit(f"sidecar exited early with code {proc.returncode}")
             try:
+                if not listening:
+                    line = startup_lines.get(timeout=0.1)
+                    match = re.fullmatch(r"gigachad-sidecar listening on http://127\.0\.0\.1:(\d+)/health", line)
+                    if not match:
+                        continue
+                    PORT = int(match.group(1))
+                    BASE = f"http://127.0.0.1:{PORT}"
+                    listening = True
                 status, health = request("GET", "/health")
                 if status == 200:
                     break
@@ -122,6 +140,13 @@ def main():
         assert pii["pii_redacted_count"] >= 2
         assert "ada@example.com" not in pii["redacted_text"]
         assert "sk-abc1234567890xyzXYZ" not in pii["redacted_text"]
+
+        # Every recognized match is redacted, including values after the old 25-item cap.
+        many_emails = [f"fixture{index}@example.test" for index in range(150)]
+        status, many_pii = request("POST", "/ner_pii", {"text": " ".join(many_emails)})
+        assert status == 200 and many_pii["pii_redacted_count"] == 150, many_pii
+        assert all(value not in many_pii["redacted_text"] for value in many_emails)
+        assert len(many_pii["pii_items"]) <= 100 and many_pii["pii_items_truncated"] is True
 
         status, missing = request("POST", "/not-a-model", {})
         assert status == 404, missing

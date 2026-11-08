@@ -1,11 +1,12 @@
 const { spawnSync } = require('child_process');
 const path = require('path');
-const { loadConfig } = require('../config');
 
 const root = path.join(__dirname, '..');
+const smokeEnv = { ...process.env, GIGACHAD_TEST_MODE: '1' };
+for (const key of ['ELECTRON_RUN_AS_NODE', 'OPENROUTER_API_KEY', 'ELEVENLABS_API_KEY', 'GIGACHAD_LLM_API_KEY', 'GIGACHAD_EMBED_MODEL', 'GIGACHAD_NER_MODEL']) delete smokeEnv[key];
 
 function run(cmd, args) {
-  const result = spawnSync(cmd, args, { cwd: root, encoding: 'utf8', timeout: 60000 });
+  const result = spawnSync(cmd, args, { cwd: root, env: smokeEnv, windowsHide: true, encoding: 'utf8', timeout: 60000 });
   const output = `${result.stdout || ''}${result.stderr || ''}`;
   if (result.error) {
     console.error(output);
@@ -21,12 +22,15 @@ function run(cmd, args) {
 }
 
 function pythonCommand() {
-  const cfg = loadConfig({ root });
   const venvWin = path.join(root, '.venv', 'Scripts', 'python.exe');
   const venvPosix = path.join(root, '.venv', 'bin', 'python');
-  for (const cmd of [process.env.GIGACHAD_PYTHON, venvWin, venvPosix, cfg.pythonPath, 'python3', 'python', 'py']) {
+  const localAppData = smokeEnv.LOCALAPPDATA || (smokeEnv.USERPROFILE ? path.join(smokeEnv.USERPROFILE, 'AppData', 'Local') : '');
+  const winInstalls = process.platform === 'win32' && localAppData
+    ? ['Python313', 'Python312', 'Python311'].map((name) => path.join(localAppData, 'Programs', 'Python', name, 'python.exe'))
+    : [];
+  for (const cmd of [process.env.GIGACHAD_PYTHON, venvWin, venvPosix, 'python3', 'python', 'py', ...winInstalls]) {
     if (!cmd) continue;
-    const probe = spawnSync(cmd, ['-c', 'import sys; raise SystemExit(0 if sys.version_info >= (3, 11) else 1)'], { encoding: 'utf8' });
+    const probe = spawnSync(cmd, ['-I', '-S', '-c', 'import sys; raise SystemExit(0 if sys.version_info >= (3, 11) else 1)'], { env: smokeEnv, windowsHide: true, encoding: 'utf8', timeout: 8000 });
     if (probe.status === 0) return cmd;
   }
   console.error('Python 3.11+ is required for the sidecar smoke test.');
@@ -52,13 +56,14 @@ run(process.execPath, ['--check', 'systems/pass-100-verifier.js']);
 run(process.execPath, ['scripts/smoke_config.js']);
 run(process.execPath, ['scripts/smoke_actions.js']);
 run(process.execPath, ['scripts/smoke_browser.js']);
+run(process.execPath, ['scripts/smoke_privacy.js']);
 run(process.execPath, ['scripts/smoke_systems.js']);
 run(process.execPath, ['scripts/smoke_master_audit.js']);
 run(process.execPath, ['scripts/smoke_100_passes.js']);
 
 const python = pythonCommand();
-run(python, ['-m', 'py_compile', 'laya_sidecar.py', 'laya_router.py']);
-run(python, ['scripts/smoke_sidecar.py']);
+run(python, ['-I', '-S', '-c', 'from pathlib import Path; [compile(Path(name).read_text(encoding="utf-8-sig"), name, "exec") for name in ("laya_sidecar.py", "laya_router.py")]']);
+run(python, ['-I', '-S', 'scripts/smoke_sidecar.py']);
 
 if (process.env.GIGACHAD_SKIP_ELECTRON === '1') {
   console.log('electron smoke skipped');
@@ -81,7 +86,8 @@ const electron = spawnSync(electronPath, ['.', '--smoke'], {
   cwd: root,
   encoding: 'utf8',
   timeout: 45000,
-  env: { ...process.env, GIGACHAD_SMOKE: '1' }
+  env: { ...smokeEnv, GIGACHAD_SMOKE: '1' },
+  windowsHide: true
 });
 const electronOut = `${electron.stdout || ''}${electron.stderr || ''}`;
 process.stdout.write(electronOut);

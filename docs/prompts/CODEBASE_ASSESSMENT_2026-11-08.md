@@ -2,6 +2,8 @@
 
 Review date: 2026-11-08, America/Los_Angeles. Primary repository: GIGACHAD Browser. Baseline Git HEAD: `283311b62a7d228fc478cde45594251fb482738e`, with pre-existing and concurrently changing working-tree files.
 
+Follow-up revision note: the repository later advanced to `a16f5838820014ba8a1fa76e9c184de154be850f`. Targeted inspection found new FP16 handling, an implicit wavepacket solve, expanded checkpoint state, portal reporting changes, and revised audit checks. Findings below describe the earlier reviewed snapshots and must be reproduced on current source before remediation. The follow-up was not a full functional qualification of those changes. See the refinement log for the maintained prompt's update.
+
 This is the source-grounded assessment used to write [the master prompt](GIGACHAD_ENGINEERING_MASTER_PROMPT.md). It is not a completed remediation program, security qualification, scientific validation, or 500-control audit. The authoring work adds files only under `docs/prompts/`. Application, licensing, and documentation changes elsewhere during the review were not made by this prompt-authoring task.
 
 ## Review coverage and limits

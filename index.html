@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https: http: file:; media-src 'self' data: blob: https: http: file:; font-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:* ws://127.0.0.1:* https: http: data: blob:; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' https: http: file: data: about:; object-src 'none'; base-uri 'self';" />
   <title>Gigachad Browser</title>
   <style>
     :root {
@@ -2075,6 +2076,11 @@ practice   awaiting rollout        learn   frozen baseline</pre>
         <input id="cfg-python-path" placeholder="Python executable (blank keeps autodetect)" />
         <span class="badge">OpenRouter &amp; Optional ElevenLabs Keys</span>
         <input id="cfg-or-key" type="password" placeholder="OpenRouter API key" />
+        <label style="display:flex;gap:6px;align-items:center;font-size:12px;">
+          <input id="cfg-allow-cloud-images" type="checkbox" style="width:auto;" />
+          Allow unredacted images to remote AI providers
+        </label>
+        <div style="font-size:11px;color:var(--muted);">The PII firewall only checks text. Screenshots may contain private data.</div>
         <input id="cfg-eleven-key" type="password" placeholder="ElevenLabs API key (optional)" />
         <div class="row">
           <button type="button" onclick="testLlm()" style="flex:1;">Test Connection</button>
@@ -2082,6 +2088,7 @@ practice   awaiting rollout        learn   frozen baseline</pre>
         </div>
         <div id="llm-test-result"></div>
         <div id="discovered-tools"></div>
+        <div id="authentic-asmodensius-status" style="font-size:11px;">Original Asmodensius engine: initializing</div>
       </div>
 
       <div id="chat-log">
@@ -2168,6 +2175,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
   <script src="agent-actions.js"></script>
   <script src="alife_neural_cyber_engine.js"></script>
   <script src="systems/ported-multiverse-brains.js"></script>
+  <script src="systems/generated/authentic-asmodensius.js"></script>
+  <script src="systems/authentic-asmodensius-adapter.js"></script>
   <script src="systems/alife-25-bleeding-edge-models.js"></script>
   <script src="systems/forensic-25-pass-10-iteration-auditor.js"></script>
   <script>
@@ -7257,7 +7266,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         omniModel: document.getElementById('cfg-omni-model').value.trim(),
         sidecarPort,
         openRouterModel: document.getElementById('cfg-cloud-model').value.trim(),
-        pythonPath: document.getElementById('cfg-python-path').value.trim()
+        pythonPath: document.getElementById('cfg-python-path').value.trim(),
+        allowCloudImages: document.getElementById('cfg-allow-cloud-images').checked
       };
       const llmKey = document.getElementById('cfg-llm-key').value.trim();
       const orKey = document.getElementById('cfg-or-key').value.trim() || document.getElementById('quick-or-key-input')?.value.trim() || '';
@@ -12069,6 +12079,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         this.forensic25x10Auditor = typeof window !== 'undefined' && typeof window.Forensic25Pass10IterationAuditor === 'function'
           ? new window.Forensic25Pass10IterationAuditor()
           : null;
+        // Executes the byte-preserved original organism; independent of the older approximation federation.
+        this.authenticAsmodensius = typeof window.AuthenticAsmodensiusAdapter === 'function'
+          ? new window.AuthenticAsmodensiusAdapter({ seed: 1 }) : null;
 
         this.initWebGpuWorldModelShader();
         this.updateMorphologyVector();
@@ -16167,19 +16180,23 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (data.bodyRecipe && typeof data.bodyRecipe === 'object') {
             this.bodyRecipe = { ...this.bodyRecipe, ...data.bodyRecipe };
           }
-          if (Array.isArray(data.W_actor) && data.W_actor.length === this.W_actor.length) {
-            this.W_actor.set(data.W_actor);
-            this.W_actor_frozen.set(data.W_actor);
+          const copyFiniteF32 = (src, dst, maxAbs = 5.0) => {
+            if (!Array.isArray(src) || !dst || src.length !== dst.length) return false;
+            for (let i = 0; i < dst.length; i++) {
+              const v = Number(src[i]);
+              if (Number.isFinite(v)) {
+                dst[i] = v < -maxAbs ? -maxAbs : (v > maxAbs ? maxAbs : v);
+              }
+            }
+            return true;
+          };
+          if (copyFiniteF32(data.W_actor, this.W_actor, 5.0)) {
+            this.W_actor_frozen.set(this.W_actor);
           }
-          if (Array.isArray(data.W_metamorph) && data.W_metamorph.length === this.W_metamorph.length) {
-            this.W_metamorph.set(data.W_metamorph);
-          }
-          if (Array.isArray(data.W_critic) && data.W_critic.length === this.W_critic.length) {
-            this.W_critic.set(data.W_critic);
-          }
-          if (Array.isArray(data.W_world) && data.W_world.length === this.W_world.length) {
-            this.W_world.set(data.W_world);
-            this.W_world_frozen.set(data.W_world);
+          copyFiniteF32(data.W_metamorph, this.W_metamorph, 5.0);
+          copyFiniteF32(data.W_critic, this.W_critic, 5.0);
+          if (copyFiniteF32(data.W_world, this.W_world, 5.0)) {
+            this.W_world_frozen.set(this.W_world);
           }
           if (Array.isArray(data.offspringColony)) {
             this.offspringColony = data.offspringColony.slice(0, 4);
@@ -16240,17 +16257,17 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (data.trainableHub && this.trainableAlifeNeuralHub) {
             const th = data.trainableHub;
             const hub = this.trainableAlifeNeuralHub;
-            if (Array.isArray(th.W_perc_enc) && th.W_perc_enc.length === hub.W_perc_enc.length) hub.W_perc_enc.set(th.W_perc_enc);
-            if (Array.isArray(th.W_perc_dec) && th.W_perc_dec.length === hub.W_perc_dec.length) hub.W_perc_dec.set(th.W_perc_dec);
-            if (Array.isArray(th.W_dyn1) && th.W_dyn1.length === hub.W_dyn1.length) hub.W_dyn1.set(th.W_dyn1);
-            if (Array.isArray(th.W_dyn2) && th.W_dyn2.length === hub.W_dyn2.length) hub.W_dyn2.set(th.W_dyn2);
-            if (Array.isArray(th.W_diff1) && th.W_diff1.length === hub.W_diff1.length) hub.W_diff1.set(th.W_diff1);
-            if (Array.isArray(th.W_diff2) && th.W_diff2.length === hub.W_diff2.length) hub.W_diff2.set(th.W_diff2);
-            if (Array.isArray(th.W_gen1) && th.W_gen1.length === hub.W_gen1.length) hub.W_gen1.set(th.W_gen1);
-            if (Array.isArray(th.W_gen2) && th.W_gen2.length === hub.W_gen2.length) hub.W_gen2.set(th.W_gen2);
-            if (Array.isArray(th.W_disc1) && th.W_disc1.length === hub.W_disc1.length) hub.W_disc1.set(th.W_disc1);
-            if (Array.isArray(th.W_disc2) && th.W_disc2.length === hub.W_disc2.length) hub.W_disc2.set(th.W_disc2);
-            if (Array.isArray(th.W_aware16) && th.W_aware16.length === hub.W_aware16.length) hub.W_aware16.set(th.W_aware16);
+            copyFiniteF32(th.W_perc_enc, hub.W_perc_enc, 5.0);
+            copyFiniteF32(th.W_perc_dec, hub.W_perc_dec, 5.0);
+            copyFiniteF32(th.W_dyn1, hub.W_dyn1, 5.0);
+            copyFiniteF32(th.W_dyn2, hub.W_dyn2, 5.0);
+            copyFiniteF32(th.W_diff1, hub.W_diff1, 5.0);
+            copyFiniteF32(th.W_diff2, hub.W_diff2, 5.0);
+            copyFiniteF32(th.W_gen1, hub.W_gen1, 5.0);
+            copyFiniteF32(th.W_gen2, hub.W_gen2, 5.0);
+            copyFiniteF32(th.W_disc1, hub.W_disc1, 5.0);
+            copyFiniteF32(th.W_disc2, hub.W_disc2, 5.0);
+            copyFiniteF32(th.W_aware16, hub.W_aware16, 5.0);
             hub.totalBackpropStepsTrained = Number(th.totalBackpropStepsTrained) || hub.totalBackpropStepsTrained;
             hub.ideasSynthesizedCount = Number(th.ideasSynthesizedCount) || hub.ideasSynthesizedCount;
             hub.dreamConsolidationSteps = Number(th.dreamConsolidationSteps) || hub.dreamConsolidationSteps;
@@ -16258,25 +16275,22 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (data.sltcLearned && this.deepWebAndSltcConnectomeEngine) {
             const sl = data.sltcLearned;
             const eng = this.deepWebAndSltcConnectomeEngine;
-            if (Array.isArray(sl.sltcWeights64) && sl.sltcWeights64.length === 64) eng.sltcWeights64.set(sl.sltcWeights64);
-            if (Array.isArray(sl.sltcRecWeights64) && sl.sltcRecWeights64.length === 64) eng.sltcRecWeights64.set(sl.sltcRecWeights64);
-            if (Array.isArray(sl.sltcBias64) && sl.sltcBias64.length === 64) eng.sltcBias64.set(sl.sltcBias64);
+            copyFiniteF32(sl.sltcWeights64, eng.sltcWeights64, 5.0);
+            copyFiniteF32(sl.sltcRecWeights64, eng.sltcRecWeights64, 5.0);
+            copyFiniteF32(sl.sltcBias64, eng.sltcBias64, 5.0);
           }
           if (data.aotTotGotLearned && this.aotTotGotEngine) {
             const atgData = data.aotTotGotLearned;
             const atg = this.aotTotGotEngine;
-            if (Array.isArray(atgData.W_aot_contractor) && atg.W_aot_contractor && atgData.W_aot_contractor.length === atg.W_aot_contractor.length) {
-              atg.W_aot_contractor.set(atgData.W_aot_contractor);
-            }
-            if (Array.isArray(atgData.W_tot_branch4x16x16) && atg.W_tot_branch4x16x16 && atgData.W_tot_branch4x16x16.length === atg.W_tot_branch4x16x16.length) {
-              atg.W_tot_branch4x16x16.set(atgData.W_tot_branch4x16x16);
-            }
-            if (Array.isArray(atgData.W_got_attn) && atg.W_got_attn && atgData.W_got_attn.length === atg.W_got_attn.length) {
-              atg.W_got_attn.set(atgData.W_got_attn);
-            }
+            copyFiniteF32(atgData.W_aot_contractor, atg.W_aot_contractor, 5.0);
+            copyFiniteF32(atgData.W_tot_branch4x16x16, atg.W_tot_branch4x16x16, 5.0);
+            copyFiniteF32(atgData.W_got_attn, atg.W_got_attn, 5.0);
           }
           if (data.portedPantheonLearned && this.portedMultiverseBrains && typeof this.portedMultiverseBrains.importLearnedState === 'function') {
             this.portedMultiverseBrains.importLearnedState(data.portedPantheonLearned);
+          }
+          if (data.authenticAsmodensius && this.authenticAsmodensius && !this.authenticAsmodensius.importState(data.authenticAsmodensius)) {
+            console.warn('Original Asmodensius checkpoint rejected:', this.authenticAsmodensius.lastError);
           }
           this.updateMorphologyVector();
           return true;
@@ -16350,10 +16364,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             portedPantheonLearned: (this.portedMultiverseBrains && typeof this.portedMultiverseBrains.exportLearnedState === 'function')
               ? this.portedMultiverseBrains.exportLearnedState()
               : null,
+            authenticAsmodensius: this.authenticAsmodensius ? this.authenticAsmodensius.exportState() : null,
             savedAt: new Date().toISOString()
           };
           localStorage.setItem('humunculus_persistent_genome_v1', JSON.stringify(payload));
-        } catch (_) {}
+        } catch (error) {
+          if (this.authenticAsmodensius) this.authenticAsmodensius.lastError = `Checkpoint save failed: ${error.message}`;
+          console.warn('Persistent genome save failed; previous stored checkpoint retained:', error.message);
+        }
       }
 
       // TOKENLESS WEBAUDIO MATHEMATICAL BIO-ACOUSTIC NEURAL SONIFIER (FM Sonar Pings, Purkinje Clicks & Quantum Chords)
@@ -17989,6 +18007,11 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
 
     function setHumunculusTerminalView(mode = 'overview') {
       humunculusRuntime.terminalViewMode = mode;
+      if (mode === 'forensic25x10' && humunculusRuntime.forensic25x10Auditor && typeof humunculusRuntime.forensic25x10Auditor.runFull25PassBy10IterationAudit === 'function') {
+        try {
+          humunculusRuntime.forensic25x10Auditor.runFull25PassBy10IterationAudit(humunculusRuntime);
+        } catch (_) {}
+      }
       const container = document.getElementById('humunculus-term-tabs');
       if (container) {
         container.querySelectorAll('button[data-hview]').forEach((b) => {
@@ -23111,6 +23134,31 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const mg = h.morphogenesis;
         const isOD = Boolean(superintelligenceOverdrive);
 
+        // Real chrome geometry and crawler state drive the original 16-line sensory interface.
+        // One donor tick is one simulated minute, scheduled at most four times per active second.
+        const authenticNow = performance.now();
+        const authenticElapsed = st.authenticPreviousTime === undefined ? 0 : Math.max(0, authenticNow - st.authenticPreviousTime);
+        st.authenticPreviousTime = authenticNow;
+        if (h.authenticAsmodensius && !document.hidden) {
+          try {
+            const entity = (st.viewportSwarm && st.viewportSwarm[0]) || st;
+            const observation = window.AuthenticAsmodensiusAdapter.observeChrome({
+              width: window.innerWidth, height: window.innerHeight,
+              x: Number.isFinite(entity.x) ? entity.x : 0, y: Number.isFinite(entity.y) ? entity.y : 0,
+              vx: Number.isFinite(entity.vx) ? entity.vx : 0, vy: Number.isFinite(entity.vy) ? entity.vy : 0,
+              tabCount: tabs.length, focused: document.hasFocus(), loading: Boolean(getActiveTab()?.loading)
+            });
+            h.authenticAsmodensiusReadout = h.authenticAsmodensius.advance(authenticElapsed, observation);
+            const status = document.getElementById('authentic-asmodensius-status');
+            if (status) status.textContent = `Original Asmodensius: ${h.authenticAsmodensiusReadout.status}; ${h.authenticAsmodensiusReadout.simulatedMinutes} simulated minutes; 250 ms active-time tick; 272 original neurons`;
+          } catch (error) {
+            h.authenticAsmodensius.lastError = error.message;
+            h.authenticAsmodensius.setPaused(true);
+            const status = document.getElementById('authentic-asmodensius-status');
+            if (status) status.textContent = `Original Asmodensius paused after error: ${error.message}`;
+          }
+        }
+
         st.frameCount = (st.frameCount || 0) + 1;
         st.tick += isOD ? 0.095 : 0.055;
 
@@ -23726,6 +23774,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             if (rHub && rHub.learnedMotorThrust2D) {
               learnedVx = (rHub.learnedMotorThrust2D[0] || 0) * (ei === 0 ? 0.55 : 0.35);
               learnedVy = (rHub.learnedMotorThrust2D[1] || 0) * (ei === 0 ? 0.55 : 0.35);
+            }
+            // Bounded original MOT-region output affects actual local crawler motion.
+            // It grants no navigation, shell, IPC or remote-provider capability to the donor.
+            if (h.authenticAsmodensius && !h.authenticAsmodensius.paused) {
+              learnedVx += h.authenticAsmodensius.motor2D[0] * 0.15;
+              learnedVy += h.authenticAsmodensius.motor2D[1] * 0.15;
             }
             ent.vx = (ent.vx + (dx / dist) * 0.24 * eSpeed + sepX + learnedVx + Math.sin(st.tick * 1.9 + ei) * 0.18) * 0.91;
             ent.vy = (ent.vy + (dy / dist) * 0.24 * eSpeed + sepY + learnedVy + Math.cos(st.tick * 1.5 + ei) * 0.18) * 0.91;
@@ -24843,6 +24897,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (savedTheme) applyTheme(savedTheme, true);
         } catch (_) {}
         const cfg = await ipcRenderer.invoke('config-get');
+        document.getElementById('cfg-allow-cloud-images').checked = cfg.allowCloudImages === true;
         if (cfg.llmChatUrl) document.getElementById('cfg-local-url').value = cfg.llmChatUrl;
         if (cfg.sidecarUrl) document.getElementById('cfg-laya-url').value = cfg.sidecarUrl;
         if (cfg.localModel) fillModelSelect([cfg.localModel], cfg.localModel);
@@ -24879,12 +24934,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             'window.__ASMODENIUS_DEVTOOLS_FORENSICS__ = { status: "ARMED", castes: 5, feederBugs: 7, hz: 60 };'
           );
         }
-        setTimeout(() => {
+        if (!cfg.smokeMode) setTimeout(() => {
           if (!alienBrainCycleRunning) {
             performWeirdAlienDomExperiment().catch(() => {});
           }
         }, 600);
-        setTimeout(() => {
+        if (!cfg.smokeMode) setTimeout(() => {
           if (typeof startAutonomyWatchdogAndSelfHealer === 'function') {
             startAutonomyWatchdogAndSelfHealer();
           }

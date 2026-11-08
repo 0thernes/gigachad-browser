@@ -11,13 +11,19 @@
     "smoke": "node scripts/smoke.js",
     "ci": "node scripts/smoke.js",
     "forensic-25": "node systems/pass-100-verifier.js",
-    "audit-500": "node -e \"const r=require('./systems/sop-500-checklist').getSopSummary(); console.log(JSON.stringify(r, null, 2)); if(r.verifiedPoints!==r.totalPoints)process.exit(1);\"",
-    "audit:25x10": "node systems/forensic-25-pass-10-iteration-auditor.js"
+    "audit-500": "node -e \"const r=require('./systems/sop-500-checklist').getSopSummary(); console.log(JSON.stringify({ totalPoints: r.totalPoints, metadataValidCount: r.metadataValidCount, verifiedPoints: r.verifiedPoints, status: r.status, sourceAvailability: r.sourceAvailability.status }, null, 2)); if(r.metadataValidCount!==r.totalPoints||r.sourceAvailability.status!=='AVAILABLE')process.exit(1);\"",
+    "audit:25x10": "node systems/forensic-25-pass-10-iteration-auditor.js",
+    "test:audit": "node --test tests/audit-honesty.test.cjs",
+    "build:brains": "node scripts/build-authentic-asmodensius.js",
+    "test:brains": "node --test tests/authentic-asmodensius.test.cjs"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
     "electron": "42.11.18"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.1"
   }
 }

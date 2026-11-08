@@ -1,0 +1,128 @@
+{
+  "createdUtc": "2026-11-08T10:07:19.464991+00:00",
+  "reviewer": "verification_execution_baseline",
+  "scope": "First bounded verification integrity repair; not cycle1 completion",
+  "modifiedFiles": [
+    {
+      "path": "systems/sop-500-checklist.js",
+      "sha256": "5a147a44ea67bf7cb38d9a36765875346146061a1a7af208f56ad44f2bd6d510"
+    },
+    {
+      "path": "systems/forensic-25-pass-10-iteration-auditor.js",
+      "sha256": "c5e343b300927ffdf2d9e5ee37d4297734d8adf93adbbfff2eab26c4d21f195b"
+    },
+    {
+      "path": "systems/pass-100-verifier.js",
+      "sha256": "6164b8da50c01927e7969858d8167f08c28a4a1502acf6cf48e9b6f8befd090a"
+    },
+    {
+      "path": "scripts/smoke_master_audit.js",
+      "sha256": "a5345e25d00efeab30356d6a28c27259c2d766d07ac53bdbff26914df5bf00b7"
+    },
+    {
+      "path": "scripts/smoke_100_passes.js",
+      "sha256": "69b73100058bf2a415214b6c252e74f6951b5e74f87249822f979eb4c885a687"
+    },
+    {
+      "path": "scripts/smoke_systems.js",
+      "sha256": "268f9a65ccd861a01dd1ad992092159023ad15f2ea3e480a198ca914385904e2"
+    },
+    {
+      "path": "tests/audit-honesty.test.cjs",
+      "sha256": "2d6682b6a7d5500701028a94b6c30712f8775113216144fbf1ff8c50b6a623fd"
+    },
+    {
+      "path": "package.json",
+      "sha256": "b08be6a36312e61875ab86d7c0e8d6be5ef9e44e6f571dbbe3ce7f1327229f45"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "41f1f946bef46dff8b54caeb94906d5b239a7eecb3cb9079b8ebaa2bc19e4cae"
+    }
+  ],
+  "commands": [
+    {
+      "command": "npm run test:audit",
+      "exitCode": 0,
+      "result": "10 tests passed; includes browser/no require, EACCES, missing sources, cache refresh, null engines, thrown step, sensory restoration, unique counts, nonzero CLI, no SOP arithmetic mapping."
+    },
+    {
+      "command": "node scripts/smoke_systems.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/smoke_master_audit.js",
+      "exitCode": 0,
+      "scope": "Executed focused Node source/fixture suite; not full smoke/Electron. Final output wording subsequently narrowed only."
+    },
+    {
+      "command": "node scripts/smoke_100_passes.js",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "Only existing newline conversion warnings."
+    },
+    {
+      "command": "node inline audit-500 predicate (same as package script, concise JSON output)",
+      "exitCode": 1,
+      "result": "Expected release gate not satisfied:500candidates,0verified,NOT_RUN500,UNVERIFIED."
+    },
+    {
+      "command": "npm view esbuild@0.28.1 version dist.integrity dist.tarball engines --json",
+      "exitCode": 0,
+      "result": "Registry exact version0.28.1; Node>=18; integrity sha512-HrJrvZv5ayxBzPfwphOoNzkzOIIlifzk0KJrGK2c8R4+LKpMtpYLQeUdjnwjWv/LZlkH2laZk+4w78pi99D4Vw=="
+    },
+    {
+      "command": "npm install --save-dev --save-exact esbuild@0.28.1",
+      "exitCode": 1,
+      "result": "EBUSY rename node_modules/electron/dist/icudtl.dat from running application; no process killed."
+    },
+    {
+      "command": "npm install --package-lock-only --save-dev --save-exact esbuild@0.28.1",
+      "exitCode": 0
+    },
+    {
+      "command": "npm install --prefix isolated-temp-prefix --no-package-lock --save-exact esbuild@0.28.1; copy only esbuild/@esbuild into repository node_modules",
+      "exitCode": 0,
+      "result": "Declared,locked,installed all0.28.1. Local workaround only; clean npm ci unverified."
+    }
+  ],
+  "unverified": [
+    "clean npm ci",
+    "full Electron smoke (core owns)",
+    "complete500accepted distinct controls",
+    "250review dispositions",
+    "all donor original integrations",
+    "release acceptance"
+  ],
+  "consumerContract": {
+    "sop": {
+      "candidateControlCount": 500,
+      "acceptedDistinctControlCount": 0,
+      "verifiedCount": 0,
+      "status": "NOT_RUN",
+      "grade": "UNVERIFIED"
+    },
+    "forensicNode": {
+      "uniqueDiagnosticChecks": 50,
+      "diagnosticExecutionCount": 500,
+      "releaseVerified": false,
+      "engineeringCyclesCompleted": 0
+    },
+    "forensicBrowser": {
+      "ok": false,
+      "runtimeDiagnosticsOk": true,
+      "sourceInspectionStatus": "NOT_RUN",
+      "diagnosticExecutionCount": 450,
+      "diagnosticStatusCounts": {
+        "PASS": 450,
+        "FAIL": 0,
+        "BLOCKED": 0,
+        "NOT_RUN": 50
+      },
+      "releaseVerified": false
+    }
+  }
+}

@@ -10,6 +10,8 @@ const { pathToFileURL, fileURLToPath } = require('url');
 
 const { loadFilters, isTrackerUrl } = require('./blocklist');
 const { loadConfig, saveUserConfig, normalizeOpenAiBase } = require('./config');
+const { prepareOutboundMessages } = require('./systems/outbound-privacy-policy');
+const { isTrustedChromeSender } = require('./systems/ipc-authorization');
 const {
   addHistory,
   toggleBookmark,
@@ -31,6 +33,10 @@ const {
 } = require('./systems/cortex-neural-cyber-engine');
 
 const SMOKE = process.argv.includes('--smoke') || process.env.GIGACHAD_SMOKE === '1';
+// Main-process provider requests are forbidden during smoke, including renderer-triggered calls.
+const fetch = (...args) => SMOKE
+  ? Promise.reject(new Error('Network providers are disabled in isolated smoke mode.'))
+  : globalThis.fetch(...args);
 const ROOT = __dirname;
 const NEW_TAB_FILE = path.join(ROOT, 'pages', 'newtab.html');
 const CHROME_FILE = path.join(ROOT, 'index.html');
@@ -55,10 +61,12 @@ if (SMOKE) {
   app.commandLine.appendSwitch('js-flags', '--max-old-space-size=2048');
 }
 
-let cfg = loadConfig({ root: ROOT });
+let cfg = loadConfig({ root: ROOT, isolated: SMOKE });
 let mainWindow = null;
 let sidecarProcess = null;
 let llamaProcess = null;
+let _localBrainsHttpServer = null;
+let _localBrainsHttpPort = 0;
 let lastSidecarSpawn = 0;
 let blockedCount = 0;
 
@@ -164,11 +172,22 @@ function isInsideBrainsDir(targetPath) {
   return Boolean(rel && !rel.startsWith('..') && !path.isAbsolute(rel));
 }
 
+function isSafeExternalUrl(rawUrl) {
+  if (!rawUrl) return false;
+  try {
+    const parsed = new URL(rawUrl);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch (_) {
+    return false;
+  }
+}
+
 function isAllowedGuestUrl(rawUrl) {
   if (!rawUrl) return false;
+  if (isSafeExternalUrl(rawUrl)) return true;
   let parsed;
   try { parsed = new URL(rawUrl); } catch (_) { return false; }
-  if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'about:') return true;
+  if (parsed.protocol === 'about:') return true;
   if (parsed.protocol === 'file:') {
     try {
       const fPath = fileURLToPath(parsed);
@@ -180,15 +199,6 @@ function isAllowedGuestUrl(rawUrl) {
   return false;
 }
 
-function isSafeExternalUrl(rawUrl) {
-  if (!rawUrl) return false;
-  try {
-    const parsed = new URL(rawUrl);
-    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-  } catch (_) {
-    return false;
-  }
-}
 
 function isLoopbackHttp(rawUrl) {
   try {
@@ -200,7 +210,7 @@ function isLoopbackHttp(rawUrl) {
 }
 
 function fromChrome(event) {
-  return Boolean(mainWindow && !mainWindow.isDestroyed() && event.sender === mainWindow.webContents);
+  return isTrustedChromeSender(event, mainWindow, isOurChrome);
 }
 
 function asGuest(wcId) {
@@ -231,6 +241,8 @@ function publicConfig() {
     localModel: cfg.localModel || '',
     omniModel: cfg.omniModel || '',
     llmApiKeySet: Boolean(cfg.llmApiKey),
+    allowCloudImages: cfg.allowCloudImages === true,
+    smokeMode: SMOKE,
     openRouterModel: cfg.openRouterModel || '',
     openRouterBaseUrl: cfg.openRouterBaseUrl,
     hasOpenRouterKey: Boolean(cfg.openRouterKey),
@@ -484,7 +496,7 @@ function wireHost(win) {
   });
   win.webContents.on('did-attach-webview', (_event, guest) => {
     guest.setWindowOpenHandler(({ url }) => {
-      if (isAllowedGuestUrl(url) && isSafeExternalUrl(url)) {
+      if (isAllowedGuestUrl(url)) {
         win.webContents.send('open-url', url);
       }
       return { action: 'deny' };
@@ -529,7 +541,7 @@ function wireHost(win) {
           { type: 'separator' }
         );
       }
-      if (params.linkURL && /^https?:/i.test(params.linkURL)) {
+      if (params.linkURL && isAllowedGuestUrl(params.linkURL)) {
         items.push(
           { label: 'Open Link in New Tab', click: () => win.webContents.send('open-url', params.linkURL) },
           { label: 'Copy Link Address', click: () => clipboard.writeText(params.linkURL) },
@@ -711,6 +723,9 @@ function noteDownload(record) {
 
 function installSessionHooks() {
   const vaultSession = session.fromPartition('persist:gigachad_vault');
+  if (SMOKE) {
+    session.defaultSession.webRequest.onBeforeRequest({ urls: ['http://*/*', 'https://*/*', 'ws://*/*', 'wss://*/*'] }, (_details, callback) => callback({ cancel: true }));
+  }
   const quietAllow = new Set(['clipboard-sanitized-write', 'fullscreen', 'pointerLock']);
   const ask = new Set(['media', 'geolocation', 'notifications', 'display-capture', 'clipboard-read']);
   const permissionHandler = (wc, permission, callback, details) => {
@@ -760,6 +775,15 @@ function installSessionHooks() {
   });
 
   vaultSession.webRequest.onBeforeRequest({ urls: ['*://*/*'] }, (details, callback) => {
+    if (SMOKE) {
+      let ownedLocalAsset = false;
+      try {
+        const url = new URL(details.url);
+        ownedLocalAsset = url.protocol === 'http:' && url.hostname === '127.0.0.1' &&
+          _localBrainsHttpPort > 0 && Number(url.port) === _localBrainsHttpPort;
+      } catch (_) {}
+      if (!ownedLocalAsset) return callback({ cancel: true });
+    }
     const urlLower = details.url.toLowerCase();
     if (isTrackerUrl(urlLower, FILTERS.block, FILTERS.allow)) {
       blockedCount += 1;
@@ -786,6 +810,7 @@ function installSessionHooks() {
 }
 
 function downloadDirectFile(url, destPath, redirectsLeft = 3) {
+  if (SMOKE) return Promise.reject(new Error('Downloads are disabled in isolated smoke mode.'));
   return new Promise((resolve, reject) => {
     let parsed;
     try { parsed = new URL(url); } catch (err) { return reject(err); }
@@ -1052,8 +1077,8 @@ function registerIpc() {
         const port = Number(next.sidecarPort);
         if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Sidecar port must be between 1 and 65535');
       }
-      saveUserConfig(next, { root: ROOT });
-      cfg = loadConfig({ root: ROOT });
+      saveUserConfig(next, { root: ROOT, isolated: SMOKE });
+      cfg = loadConfig({ root: ROOT, isolated: SMOKE });
       return { ok: true, config: publicConfig() };
     } catch (err) {
       return { ok: false, error: err.message };
@@ -1836,8 +1861,8 @@ function registerIpc() {
         return { ok: false, error: result.data?.error?.message || `Invalid key (HTTP ${result.status})` };
       }
       if (payload?.key && String(payload.key).trim()) {
-        saveUserConfig({ openRouterKey: String(payload.key).trim() }, { root: ROOT });
-        cfg = loadConfig({ root: ROOT });
+        saveUserConfig({ openRouterKey: String(payload.key).trim() }, { root: ROOT, isolated: SMOKE });
+        cfg = loadConfig({ root: ROOT, isolated: SMOKE });
       }
       const keyInfo = result.data?.data || {};
       return {
@@ -1850,8 +1875,8 @@ function registerIpc() {
       };
     } catch (err) {
       if (/^sk-or-v1-[a-zA-Z0-9]{32,}$/.test(candidate)) {
-        saveUserConfig({ openRouterKey: candidate }, { root: ROOT });
-        cfg = loadConfig({ root: ROOT });
+        saveUserConfig({ openRouterKey: candidate }, { root: ROOT, isolated: SMOKE });
+        cfg = loadConfig({ root: ROOT, isolated: SMOKE });
         return { ok: true, saved: true, label: 'Saved OpenRouter Key', offlineSaved: true };
       }
       return { ok: false, error: err.message };
@@ -1879,8 +1904,8 @@ function registerIpc() {
       if (!result.ok || !apiKey) {
         return { ok: false, error: result.data?.error?.message || `OpenRouter key exchange failed (HTTP ${result.status})` };
       }
-      saveUserConfig({ openRouterKey: apiKey }, { root: ROOT });
-      cfg = loadConfig({ root: ROOT });
+      saveUserConfig({ openRouterKey: apiKey }, { root: ROOT, isolated: SMOKE });
+      cfg = loadConfig({ root: ROOT, isolated: SMOKE });
       let label = 'OpenRouter OAuth Key';
       try {
         const verifyRes = await fetchJson('https://openrouter.ai/api/v1/auth/key', {
@@ -1954,8 +1979,6 @@ function registerIpc() {
   });
 
   let _cachedPortedBrainsPayload = null;
-  let _localBrainsHttpServer = null;
-  let _localBrainsHttpPort = 0;
 
   function ensureLocalBrainsHttpServer() {
     if (_localBrainsHttpPort > 0 && _localBrainsHttpServer) {
@@ -2734,20 +2757,7 @@ function registerIpc() {
         : '';
       let userContent = `ACTIVE CONTEXT:\n${pageContext}${memoryBlock}\n\nUSER TASK: ${prompt}`;
       let piiScrubbedCount = 0;
-      if (activeMode === 'ultra' && cfg.piiFirewall !== false) {
-        try {
-          const pii = await fetchJson(`${sidecarUrl}/ner_pii`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: userContent })
-          }, 1500);
-          if (pii.ok && pii.data?.pii_redacted_count > 0 && pii.data.redacted_text) {
-            userContent = pii.data.redacted_text;
-            piiScrubbedCount = pii.data.pii_redacted_count;
-            piiBlockedTotal += piiScrubbedCount;
-          }
-        } catch (_) {}
-      }
+      let outboundPrivacy = null;
 
       const screenshot = typeof payload?.screenshotBase64 === 'string' && payload.screenshotBase64.startsWith('data:image/')
         ? payload.screenshotBase64.slice(0, 6_000_000)
@@ -2762,6 +2772,7 @@ function registerIpc() {
       }
 
       const sanitizedHist = sanitizeHistory(payload?.history);
+      const protectedPayloads = new Map();
       emitThinkingStep(
         'context',
         `Context & Grounding Assembled (${textOnlyUserContent.length.toLocaleString()} chars)`,
@@ -2788,13 +2799,39 @@ function registerIpc() {
         }, timeoutMs);
         activeAiAbort = controller;
         try {
+          const messages = [
+              { role: 'system', content: AGENT_SYSTEM_PROMPT },
+              ...sanitizedHist,
+              { role: 'user', content: contentPayload }
+          ];
+          const cacheKey = JSON.stringify(messages);
+          let protectedPayload = protectedPayloads.get(cacheKey);
+          if (!protectedPayload) {
+            protectedPayload = await prepareOutboundMessages({
+              endpoint,
+              messages,
+              piiFirewall: cfg.piiFirewall,
+              allowUnredactedImages: payload?.allowUnredactedImages === true || cfg.allowCloudImages === true,
+              redactText: async (text) => {
+                const pii = await fetchJson(`${sidecarUrl}/ner_pii`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ text }),
+                  redirect: 'error'
+                }, 1500);
+                if (!pii.ok) throw new Error('PII service unavailable');
+                return pii.data;
+              }
+            });
+            protectedPayloads.set(cacheKey, protectedPayload);
+            const newlyCounted = Math.max(0, protectedPayload.redactedCount - piiScrubbedCount);
+            piiScrubbedCount += newlyCounted;
+            piiBlockedTotal += newlyCounted;
+          }
+          outboundPrivacy = protectedPayload.privacy;
           const reqBody = {
             model: targetModel,
-            messages: [
-              { role: 'system', content: AGENT_SYSTEM_PROMPT },
-              ...sanitizeHistory(payload?.history),
-              { role: 'user', content: contentPayload }
-            ],
+            messages: protectedPayload.messages,
             temperature: 0.2,
             max_tokens: (isKeyFallback && activeMode === 'local') ? 640 : 1024
           };
@@ -2805,7 +2842,8 @@ function registerIpc() {
             method: 'POST',
             headers,
             body: JSON.stringify(reqBody),
-            signal: controller.signal
+            signal: controller.signal,
+            redirect: 'error'
           });
           const rawText = await res.text();
           return { res, rawText };
@@ -2826,7 +2864,7 @@ function registerIpc() {
       try {
         ({ res: response, rawText: raw } = await sendChatCompletion(model, userContent));
       } catch (firstErr) {
-        if (firstErr.message === 'Stopped.') throw firstErr;
+        if (firstErr.message === 'Stopped.' || firstErr.blocksOutboundRequest) throw firstErr;
         if (activeMode !== 'ultra' && model !== 'LFM2.5-1.2B-Instruct') {
           model = 'LFM2.5-1.2B-Instruct';
           ({ res: response, rawText: raw } = await sendChatCompletion(model, textOnlyUserContent, 20000));
@@ -2927,6 +2965,7 @@ function registerIpc() {
         memoriesUsed: memories.length,
         memoryTitles: memories.map((m) => m.title),
         piiScrubbedCount,
+        privacy: outboundPrivacy,
         thinkingTrace,
         telemetry: {
           latencyMs: totalLatencyMs,
@@ -2944,7 +2983,7 @@ function registerIpc() {
       };
     } catch (err) {
       sreTelemetry.failedAiCalls += 1;
-      return { success: false, error: err.message };
+      return { success: false, error: err.message, ...(err.code ? { errorCode: err.code } : {}) };
     }
   });
 }
@@ -2984,6 +3023,9 @@ app.whenReady().then(async () => {
               try { await runWishlistFeature(100); } catch (_) {}
               const wishlistSelfTest100 = (document.getElementById('wishlist-body')?.innerText || '').includes('100 / 100 OPERATIONAL PASS');
               let alifeOmega100Ok = false;
+              let alifeDiagnostics = { error: 'A-Life runtime is not initialized' };
+              let authenticDiagnostics = { error: 'Original Asmodensius runtime is not initialized' };
+              let forensicDiagnostics = null;
               try {
                 if (typeof humunculusRuntime === 'object' && humunculusRuntime) {
                   const readGuestHud = async (tObj) => {
@@ -3027,7 +3069,46 @@ app.whenReady().then(async () => {
                     setHybridMeshZoomTier(1);
                   }
                   if (drawerEl) drawerEl.style.display = prevDrawerDisp;
+                  const original = humunculusRuntime.authenticAsmodensius;
+                  const OriginalAdapter = window.AuthenticAsmodensiusAdapter;
+                  if (original && typeof OriginalAdapter === 'function') {
+                    const before = original.readout();
+                    const hidden = ${!mainWindow.isVisible()} || document.hidden;
+                    await new Promise((r) => setTimeout(r, 350));
+                    const scheduled = original.readout();
+                    if (hidden) {
+                      // Hidden smoke windows intentionally pause the live scheduler. Exercise
+                      // its bounded adapter clock with a measured-geometry fixture instead.
+                      const observed = OriginalAdapter.observeChrome({
+                        width: window.innerWidth, height: window.innerHeight,
+                        x: window.innerWidth / 2, y: window.innerHeight / 2,
+                        vx: 0, vy: 0, tabCount: webviews, focused: document.hasFocus(), loading: false
+                      });
+                      for (let i = 0; i < 3; i++) original.advance(100, observed);
+                    }
+                    const after = original.readout();
+                    const checkpoint = JSON.parse(JSON.stringify(original.exportState()));
+                    const restored = new OriginalAdapter({ seed: 999 });
+                    authenticDiagnostics = {
+                      backend: after.backend,
+                      sourceDigest: after.sourceDigest,
+                      sourceMatches: after.sourceDigest === window.GigachadAsmodensiusSource?.sourceDigest,
+                      neurons: after.neurons,
+                      clockMode: hidden ? 'controlled-hidden-window' : 'live-renderer-scheduler',
+                      hiddenSchedulerPaused: !hidden || scheduled.simulatedMinutes === before.simulatedMinutes,
+                      advancedTicks: after.simulatedMinutes - before.simulatedMinutes,
+                      finiteInputMotor: after.lastInput?.length === 16 && after.motor2D?.length === 2 && after.motor8?.length === 8 &&
+                        [...after.lastInput, ...after.motor2D, ...after.motor8].every(Number.isFinite),
+                      exactCheckpointReplay: restored.importState(checkpoint) && restored.exportState().payload === checkpoint.payload
+                    };
+                  }
                   const alifeChecks = {
+                    authenticOriginalOk: Boolean(
+                      authenticDiagnostics.backend === 'original-asmodensius-creature001' &&
+                      authenticDiagnostics.sourceMatches && authenticDiagnostics.neurons === 272 &&
+                      authenticDiagnostics.hiddenSchedulerPaused && authenticDiagnostics.advancedTicks > 0 &&
+                      authenticDiagnostics.finiteInputMotor && authenticDiagnostics.exactCheckpointReplay
+                    ),
                     omOk: Boolean(om && om.verifiedModulesCount === 100),
                     dtOk: Boolean(dt && dt.verifiedDeityPowersCount === 100),
                     wmOk: Boolean(
@@ -3134,11 +3215,28 @@ app.whenReady().then(async () => {
                       humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.consciousness10Score > 0 &&
                       humunculusRuntime.formatRetroTerminalText('brainfusion').includes('14-BRAIN MULTIVERSE PANTHEON')
                     ),
-                    forensic25x10Ok: Boolean(
-                      humunculusRuntime.forensic25x10Auditor?.runFull25PassBy10IterationAudit(humunculusRuntime)?.ok === true &&
-                      humunculusRuntime.formatRetroTerminalText('forensic25x10').includes('250/250 PASSES') &&
-                      humunculusRuntime.formatRetroTerminalText('forensic25x10').includes('500/500 POINTS')
-                    ),
+                    forensic25x10Ok: (() => {
+                      humunculusRuntime.savePersistentGenome();
+                      humunculusRuntime.loadPersistentGenome();
+                      const liveAudit = humunculusRuntime.forensic25x10Auditor?.runFull25PassBy10IterationAudit(humunculusRuntime);
+                      forensicDiagnostics = {
+                        runtimeDiagnosticsOk: liveAudit?.runtimeDiagnosticsOk,
+                        statusCounts: liveAudit?.diagnosticStatusCounts,
+                        failed: liveAudit?.checkExecutions?.filter((check) => check.status === 'FAIL' || check.status === 'BLOCKED').slice(0, 10),
+                        errors: liveAudit?.errors,
+                        releaseVerified: liveAudit?.releaseVerified,
+                        releaseStatus: liveAudit?.releaseStatus
+                      };
+                      return Boolean(
+                        liveAudit &&
+                        liveAudit.runtimeDiagnosticsOk === true &&
+                        liveAudit.uniqueDiagnosticChecks === 50 &&
+                        liveAudit.diagnosticStatusCounts?.FAIL === 0 &&
+                        liveAudit.diagnosticStatusCounts?.BLOCKED === 0 &&
+                        liveAudit.releaseVerified === false &&
+                        liveAudit.releaseStatus === 'NOT_RUN'
+                      );
+                    })(),
                     domOk: Boolean(
                       document.getElementById('host-alife-viewport-canvas') &&
                       document.getElementById('host-alife-hud-dock') &&
@@ -3164,9 +3262,11 @@ app.whenReady().then(async () => {
                     )
                   };
                   alifeOmega100Ok = Object.values(alifeChecks).every(Boolean);
+                  alifeDiagnostics = alifeChecks;
                 }
-              } catch (_) {
+              } catch (err) {
                 alifeOmega100Ok = false;
+                alifeDiagnostics = { error: String(err?.message || err), stack: String(err?.stack || '').slice(0, 1500) };
               }
               resolve({
                 bridge: typeof window.gigachad?.invoke === 'function',
@@ -3183,6 +3283,9 @@ app.whenReady().then(async () => {
                 wishlistCount: Array.isArray(window.WISHLIST_100_CATALOG) ? window.WISHLIST_100_CATALOG.length : 0,
                 wishlistSelfTest100,
                 alifeOmega100Ok,
+                alifeDiagnostics,
+                authenticDiagnostics,
+                forensicDiagnostics,
                 featuresOperational: (
                   typeof openMakeAppPrompt === 'function' &&
                   typeof openPlaybooksView === 'function' &&

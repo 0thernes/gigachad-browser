@@ -23,6 +23,7 @@ const DEFAULTS = {
   llamaGpuLayers: 99,
   ytdlpPath: '',
   piiFirewall: true,
+  allowCloudImages: false,
   stealthCloak: false
 };
 
@@ -213,6 +214,23 @@ function loopbackHost(value, fallback) {
 }
 
 function loadConfig(options = {}) {
+  // Desktop smoke must not read the user's disk config, dotenv, credentials or installed providers.
+  if (options.isolated === true) {
+    return {
+      ...DEFAULTS,
+      autoStartSidecar: false,
+      llamaAutoStart: false,
+      llmBaseUrl: 'http://127.0.0.1:1/v1',
+      sidecarPort: 1,
+      sidecarUrl: 'http://127.0.0.1:1',
+      openRouterModel: '',
+      pythonVersion: '',
+      pythonSource: '',
+      ollamaPath: '',
+      ytdlpViaPython: false,
+      llmBaseUrlExplicit: true
+    };
+  }
   const root = options.root || __dirname;
   const env = options.env || process.env;
   const platform = options.platform || process.platform;
@@ -234,6 +252,7 @@ function loadConfig(options = {}) {
   cfg.autoStartSidecar = asBool(cfg.autoStartSidecar, true);
   cfg.llamaAutoStart = asBool(cfg.llamaAutoStart, false);
   cfg.piiFirewall = asBool(cfg.piiFirewall, true);
+  cfg.allowCloudImages = asBool(cfg.allowCloudImages, false);
   cfg.stealthCloak = asBool(cfg.stealthCloak, false);
   cfg.llamaGpuLayers = Number.isFinite(Number(cfg.llamaGpuLayers)) ? Number(cfg.llamaGpuLayers) : 99;
 
@@ -253,6 +272,9 @@ function loadConfig(options = {}) {
   set('llamaServerPath', env.GIGACHAD_LLAMA_SERVER);
   set('llamaModelPath', env.GIGACHAD_LLAMA_MODEL);
   set('ytdlpPath', env.GIGACHAD_YTDLP);
+  if (env.GIGACHAD_ALLOW_CLOUD_IMAGES != null && env.GIGACHAD_ALLOW_CLOUD_IMAGES !== '') {
+    cfg.allowCloudImages = asBool(env.GIGACHAD_ALLOW_CLOUD_IMAGES, false);
+  }
   if (env.GIGACHAD_LLAMA_AUTOSTART != null && env.GIGACHAD_LLAMA_AUTOSTART !== '') {
     cfg.llamaAutoStart = asBool(env.GIGACHAD_LLAMA_AUTOSTART, cfg.llamaAutoStart);
   }
@@ -296,10 +318,11 @@ const EDITABLE_KEYS = [
   'llmBaseUrl', 'llmApiKey', 'localModel', 'omniModel',
   'openRouterBaseUrl', 'openRouterModel', 'openRouterKey', 'elevenLabsKey',
   'llamaAutoStart', 'llamaServerPath', 'llamaModelPath', 'llamaPort',
-  'llamaContext', 'llamaGpuLayers', 'ytdlpPath', 'piiFirewall', 'stealthCloak'
+  'llamaContext', 'llamaGpuLayers', 'ytdlpPath', 'piiFirewall', 'allowCloudImages', 'stealthCloak'
 ];
 
 function saveUserConfig(partial, options = {}) {
+  if (options.isolated === true) throw new Error('Configuration writes are disabled in isolated smoke mode.');
   const root = options.root || __dirname;
   const filePath = path.join(root, 'config.json');
   const current = readJson(filePath) || {};

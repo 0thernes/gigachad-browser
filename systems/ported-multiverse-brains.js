@@ -184,7 +184,10 @@
      * SplitMix64 Bijective 64-Bit Hash on BigUint64 (`brains/chaos-entropy/lib.rs`)
      */
     splitmix64BigInt(seed64) {
-      let z = (BigInt(seed64) + 0x9e3779b97f4a7c15n) & 0xffffffffffffffffn;
+      const safeSeed = typeof seed64 === 'bigint'
+        ? seed64
+        : BigInt(Number.isFinite(Number(seed64)) ? Math.trunc(Number(seed64)) : 0);
+      let z = (safeSeed + 0x9e3779b97f4a7c15n) & 0xffffffffffffffffn;
       z = ((z ^ (z >> 30n)) * 0xbf58476d1ce4e5b9n) & 0xffffffffffffffffn;
       z = ((z ^ (z >> 27n)) * 0x94d049bb133111ebn) & 0xffffffffffffffffn;
       return (z ^ (z >> 31n)) & 0xffffffffffffffffn;
@@ -196,7 +199,10 @@
      *   ((raw64 * n) >> 64) in exact 128-bit BigInt arithmetic!
      */
     lemireUnbiasedRangeU64(raw64, boundN) {
-      const u64 = BigInt(raw64) & 0xffffffffffffffffn;
+      const safeRaw = typeof raw64 === 'bigint'
+        ? raw64
+        : BigInt(Number.isFinite(Number(raw64)) ? Math.trunc(Number(raw64)) : 0);
+      const u64 = safeRaw & 0xffffffffffffffffn;
       const n = BigInt(Math.max(1, boundN >>> 0));
       return Number((u64 * n) >> 64n);
     }
@@ -2064,8 +2070,16 @@
         for (let r = 0; r < 16; r++) {
           const rawU16 = Number(state.glyphFp16FastSlots16[r]);
           if (Number.isFinite(rawU16)) {
+            const u16 = rawU16 & 0xffff;
             const idx = r * 32 + ((r + 3) & 31);
-            this.precisionArena.u16Fp16FastWeights[idx] = rawU16 & 0xffff;
+            if ((u16 & 0x7c00) === 0x7c00) {
+              this.precisionArena.u16Fp16FastWeights[idx] = this.precisionArena.encodeFp16(0.0);
+            } else {
+              const decoded = this.precisionArena.decodeFp16(u16);
+              this.precisionArena.u16Fp16FastWeights[idx] = Math.abs(decoded) > 1.8
+                ? this.precisionArena.encodeFp16(finiteClamped(decoded, 0.0, -1.8, 1.8))
+                : u16;
+            }
           }
         }
       }

@@ -71,7 +71,9 @@ assert.strictEqual(SOP_DOMAINS.length, 10, 'SOP must have 10 engineering domains
 assert.strictEqual(SOP_500_ITEMS.length, 500, `Expected exact 500 SOP items, got ${SOP_500_ITEMS.length}`);
 const sopSummary = summarizeSop500();
 assert.strictEqual(sopSummary.totalItems, 500);
-assert.strictEqual(sopSummary.verifiedCount, 500);
+assert.strictEqual(sopSummary.metadataValidCount, 500);
+assert.strictEqual(sopSummary.verifiedCount, 0);
+assert.strictEqual(sopSummary.statusCounts.NOT_RUN, 500);
 assert.strictEqual(sopSummary.byAspect.Backend, 150, 'Backend must have 150 SOP items (DOM-01..03)');
 assert.strictEqual(sopSummary.byAspect.Frontend, 150, 'Frontend must have 150 SOP items (DOM-04..06)');
 assert.strictEqual(sopSummary.byAspect['Full-Stack'], 200, 'Full-Stack must have 200 SOP items (DOM-07..10)');
@@ -106,4 +108,4 @@ const p95DegradedErp = evaluateErpPlan({ aiP50Ms: 400, aiP95Ms: 9000 });
 assert.strictEqual(p95DegradedErp.sla.p95Status, 'WARN', 'High p95 latency must trigger p95Status WARN');
 assert.strictEqual(p95DegradedErp.sla.slaStatus, 'DEGRADED', 'High p95 latency must degrade overall slaStatus even when p50 is low');
 
-console.log('smoke_systems ok (ERD=12 entities, ERM=Grade A, ERP=OPTIMAL, SOP=500/500 verified)');
+console.log('smoke_systems ok (ERD=12 entities, ERM=Grade A, ERP=OPTIMAL, SOP=500 candidate definitions; product requirements NOT_RUN)');

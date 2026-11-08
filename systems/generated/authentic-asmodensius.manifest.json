@@ -1,0 +1,109 @@
+{
+  "schema": "gigachad.authentic-asmodensius.build.v1",
+  "compiler": {
+    "name": "esbuild",
+    "version": "0.28.1"
+  },
+  "profile": "original-v40-seeded-synthetic",
+  "sourceDigest": "d329ae1f35d4a88c8e519a8c21fbae3fe65c1da6c8627fa057b50fd4123aa0f8",
+  "timeContract": "One original organism tick is one simulated minute; host scheduler advances at most one tick each 250 ms of active animation time.",
+  "transformations": [
+    "TypeScript compilation and bundling only; donor bytes unchanged.",
+    "process is undefined: donor environment overrides and Node live/file entropy modes are unavailable."
+  ],
+  "inputs": [
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/affect.ts",
+      "bytes": 12424,
+      "sha256": "8f519627759ac973ab422bff2ac0ca764ab37ceb3ffd4fc6cf08a67939df6028"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/develop.ts",
+      "bytes": 6104,
+      "sha256": "b6c884f37a8d47303e7d57adc0018d5a13b9fd504c1b31ff3883427bc79f0810"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/aom.ts",
+      "bytes": 1845,
+      "sha256": "ca49b1cf7e3680a368d5ca507b164cd227c5a4acf2c31145de9360f84d88f38d"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/cur.ts",
+      "bytes": 939,
+      "sha256": "5ec499b6e1eb5605af70c412c9a8060dff6aeb350e75d23fe316b211595a4c98"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/dmul.ts",
+      "bytes": 395,
+      "sha256": "3ae43f234cfb7a76b8f19d9915ce8d1661a574eb03ed6cd895a6a001c1ef4483"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/efm.ts",
+      "bytes": 5862,
+      "sha256": "2a51a6c66caef76660082e8e3163fa939582221daa13670642c9be5d4778e681"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/hot1.ts",
+      "bytes": 1666,
+      "sha256": "af508fac7da2514fb77762ab46be8a52dd6b85dc2f5a3f40a1352ed893e4fb98"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/l4.ts",
+      "bytes": 1279,
+      "sha256": "7a18f928f73aa5193e9d317eafe576099781f05e06d0fd518c83df82dd06e04b"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/l5.ts",
+      "bytes": 1979,
+      "sha256": "d660ec9e4cb7d824a17a68725cbe67dcff0eed671fd3af3068090e362554e66c"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/fp/tpc.ts",
+      "bytes": 3096,
+      "sha256": "80277d84f8a6a6dadac1b289e3bbbb7e2bc26d4e6e20f1065ef084974e7e11a1"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/organism.ts",
+      "bytes": 178805,
+      "sha256": "3f2dd819b947e0cade0511043d49d00e7297c5f99edb163749fbe9fbb42eb2c9"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/substrate.ts",
+      "bytes": 3336,
+      "sha256": "b378f554d171fafcd4053f89cc0d6e970aa81d9926ab3535b4d07cabac8b386d"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/tsotchke.ts",
+      "bytes": 1704,
+      "sha256": "2383febe6a162f013634d09c12653e021d23a2e19a6f9124d1c1ffe5a5d5f72f"
+    },
+    {
+      "path": "brains/asmodensius-v40/creatures/001/organism/v40mods.ts",
+      "bytes": 11840,
+      "sha256": "845759a1bb125bd3e9b6943d9231ce65874eee082caf4da04a188947ba610890"
+    },
+    {
+      "path": "brains/asmodensius-v40/lab/src/adapters/c001.ts",
+      "bytes": 9627,
+      "sha256": "7d0a1c012b113b4220eac5c032099f7011bb670e3c902ed8147683194e5138b1"
+    },
+    {
+      "path": "systems/authentic-asmodensius-entry.ts",
+      "bytes": 249,
+      "sha256": "cc167545d57c00b5258f477fc9f926d7e3eaeb798f798c08ebafb1241dec2e96"
+    }
+  ],
+  "notices": [
+    {
+      "path": "brains/asmodensius-v40/LICENSE",
+      "bytes": 1098,
+      "sha256": "6c2da4c16879983a3ff0dc83256b64a4d8b86fc7b364446d1ee359c0b6f2aadd",
+      "text": "MIT License\n\nCopyright (c) 2026 Alex Donahue and Asmodensius contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "output": {
+    "path": "systems/generated/authentic-asmodensius.js",
+    "bytes": 204597,
+    "sha256": "b2bdd297bb14c7e16c4ccfa3e692ff43b5cb9d6b162a4f033071c445b7fbc3cb"
+  }
+}

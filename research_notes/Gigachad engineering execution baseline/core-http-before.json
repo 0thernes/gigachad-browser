@@ -1,0 +1,8 @@
+{
+  "createdAt": "2026-11-08T10:17:16.511128+00:00",
+  "sourceSha256": "957a731dad68896b964bc79366dd87eca969cea2e4f33ec40da99111caad0b16",
+  "command": "py -3.12 -I -S research_notes/Gigachad engineering execution baseline/core-sidecar-probe.py",
+  "exitCode": 0,
+  "stdout": "{\n  \"port\": 2352,\n  \"optional_models_loaded\": false,\n  \"cloud_calls\": false,\n  \"oversize_without_body_response\": \"timed out after 0.5 seconds without 413\",\n  \"elapsed_seconds\": 0.516,\n  \"cross_origin_text_plain_status\": 200,\n  \"pii_redacted_count\": 1\n}\n",
+  "stderr": ""
+}
