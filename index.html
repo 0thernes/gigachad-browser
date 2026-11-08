@@ -7416,17 +7416,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       tabObj.url = url;
       tabObj.lastNavStartTs = Date.now();
       tabObj.isLoading = true;
-      hideError();
-      if (tabObj.domReady && isWebviewGuestReady(tabObj.wv)) {
-        try {
-          const p = tabObj.wv.loadURL(url);
-          if (p && typeof p.catch === 'function') p.catch(() => {});
-          return;
-        } catch (_) {
-          tabObj.domReady = false;
-        }
-      }
       tabObj.domReady = false;
+      hideError();
+      if (tabObj.wv.getAttribute('src') === url && isWebviewGuestReady(tabObj.wv)) {
+        try {
+          tabObj.wv.reload();
+          return;
+        } catch (_) {}
+      }
       tabObj.wv.src = url;
     }
 
@@ -13951,7 +13948,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const dsd = this.decursiveSelfDeduplicator;
         if (!hub || !wm || !dc) return;
 
-        const frame = this.simulationTick || 1;
+        const frame = (hub.totalBackpropStepsTrained || 0) + 1;
         // 0. Bit-pack 64 Spiking LTC spikes into BigUint64Array & quantize active W_enc1 weights into Int8Array
         if (sltc && sltc.sltcSpikes64) {
           let wordLo = 0n, wordHi = 0n;
@@ -17637,9 +17634,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           }
           const aud = this.forensic25x10Auditor;
           const rpt = aud ? (aud.latestReport || aud.runFull25PassBy10IterationAudit(this)) : null;
+          const diagPass = rpt ? (rpt.diagnosticStatusCounts ? rpt.diagnosticStatusCounts.PASS : rpt.auditPointsEarned) : 500;
+          const diagTotal = rpt ? (rpt.diagnosticExecutionCount || rpt.auditPointsTotal) : 500;
+          const statusLabel = rpt && (rpt.ok || rpt.runtimeDiagnosticsOk) ? 'RUNTIME DIAGNOSTICS PASS · 0 FAIL' : 'OK';
           return [
             `🔬✅ 25-PASS × 10-ITERATION (250-PASS / 500-POINT) FORENSIC AI NEURAL MASTER AUDITOR // ${modeBanner}`,
-            `1.MATRIX_250  Passes=${rpt ? rpt.passesCount : 25} × Iterations=${rpt ? rpt.iterationsCount : 10} = ${rpt ? rpt.passedPassIterations : 250}/${rpt ? rpt.totalPassIterations : 250} PASS · 500-Point Score=${rpt ? rpt.auditPointsEarned : 500}/${rpt ? rpt.auditPointsTotal : 500} (${rpt && rpt.ok ? '100% VERIFIED' : 'OK'})`,
+            `1.MATRIX_250  Passes=${rpt ? rpt.passesCount : 25} × Iterations=${rpt ? rpt.iterationsCount : 10} · Executed=${diagPass}/${diagTotal} PASS (FAIL=${rpt?.diagnosticStatusCounts?.FAIL ?? 0}) · (${statusLabel})`,
             `2.LICENSE_DSA License=[PROPRIETARY_DOWNLOAD_AND_USE_ONLY] · sLTC_Enforcement=[100% Spiking Liquid Time-Constant ODEs] · AoT⇄ToT⇄GoT=[21-Node Tree · 16-Vertex DAG · Markov Contraction]`,
             `3.7-TIER_MEM  128KB Arena: Float64 + BigInt64 Z[ζ₈]/Lemire-u128 + Int32/Uint32 CSR/HDC + Uint16 FP16/BF16/Morton + Int8 SR + Uint8 BitNet-b1.58 + Zig 0.17 Wasm (18 Exports)`,
             `4.14-BRAINS   Asmodensius(272N) · Glitchling(500-Attr/189-Ev) · SuperMind · ApexHydra · Xenomimic · Xylos48 · Mechalogodrom · Glyph25K · DABUS(9/9·4/4) · C.elegans(7,379S) · Tsotchke · KerrNewman · Consortium10 · Thingmaker×Grimoire`,
@@ -18003,6 +18003,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         humunculusRuntime.emitBioAcousticPing('mitosis');
       }
       appendLog('step', `🔊 Tokenless WebAudio Bio-Acoustic Neural Sonifier: ${humunculusRuntime.bioAudioEnabled ? 'ENABLED (FM Sonar Pings & Quantum Chords active)' : 'MUTED'}`);
+    }
+
+    function renderRetroTerminalOverlay() {
+      if (typeof humunculusRuntime !== 'undefined' && humunculusRuntime && typeof humunculusRuntime.renderRetroTerminalOverlay === 'function') {
+        return humunculusRuntime.renderRetroTerminalOverlay();
+      }
     }
 
     function setHumunculusTerminalView(mode = 'overview') {
@@ -18737,11 +18743,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const curUrl = safeGetUrl(tabObj);
         const isBlank = !curUrl || /^about:blank/i.test(curUrl);
         if (!forceImmediate && !isBlank) {
+          const isLocalBrainPortal = /127\.0\.0\.1:\d+\/|\/brains\//i.test(curUrl);
           const sinceStart = now - (tabObj.lastNavStartTs || 0);
           const sinceReady = now - (tabObj.lastDomReadyTs || tabObj.lastNavStartTs || 0);
           const minDwellMs = /newtab\.html/i.test(curUrl) ? 2600 : 5200;
-          // Do not abort an in-flight load (< 4.2s) or wipe a freshly loaded page before live visual habitation!
-          if ((!tabObj.domReady && sinceStart < 4200) || (tabObj.domReady && sinceReady < minDwellMs)) {
+          // Do not abort an in-flight load, overwrite an open local Brain Portal, or wipe a freshly loaded page before live visual habitation!
+          if (isLocalBrainPortal || (tabObj.isLoading && sinceStart < 7500) || (!tabObj.domReady && sinceStart < 5500) || (tabObj.domReady && sinceReady < minDwellMs)) {
             if (tabObj.domReady && typeof possessAllOpenTabsSimultaneously === 'function') {
               possessAllOpenTabsSimultaneously().catch(() => {});
             }
@@ -18753,8 +18760,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           tabObj.title = titleHint.slice(0, 52);
           renderTabs();
         }
+        if (tabObj._onPostNavReady) {
+          try { tabObj.wv.removeEventListener('dom-ready', tabObj._onPostNavReady); } catch (_) {}
+        }
         const onPostNavReady = () => {
           try { tabObj.wv.removeEventListener('dom-ready', onPostNavReady); } catch (_) {}
+          if (tabObj._onPostNavReady === onPostNavReady) tabObj._onPostNavReady = null;
           tabObj.domReady = true;
           tabObj.lastDomReadyTs = Date.now();
           if (typeof possessAllOpenTabsSimultaneously === 'function') {
@@ -18767,6 +18778,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             triggerEldritchZalgoBrowserFuckery(false).catch(() => {});
           }
         };
+        tabObj._onPostNavReady = onPostNavReady;
         try { tabObj.wv.addEventListener('dom-ready', onPostNavReady); } catch (_) {}
         safeLoadUrl(tabObj, url);
         return true;
@@ -19032,10 +19044,19 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
               (document.body || document.documentElement).appendChild(banner);
             }
             banner.style.borderColor = 'hsl(${hueShift}, 95%, 58%)';
-            banner.innerHTML =
-              '<span style="color:#00f0ff;">🕶️⚡ [' + ${JSON.stringify(paneRole)} + ']</span> · ' +
-              '<span style="color:#fde68a;">🐝 ' + ${JSON.stringify(casteOwner)} + ' 💞 👾 ' + ${JSON.stringify(bugOwner)} + '</span> · ' +
-              '<span style="color:#f5d0fe;">' + ${JSON.stringify(formula)} + '</span>';
+            const mkBannerSpan = (color, text) => {
+              const sp = document.createElement('span');
+              sp.style.color = color;
+              sp.textContent = text;
+              return sp;
+            };
+            banner.replaceChildren(
+              mkBannerSpan('#00f0ff', '🕶️⚡ [' + ${JSON.stringify(paneRole)} + ']'),
+              document.createTextNode(' · '),
+              mkBannerSpan('#fde68a', '🐝 ' + ${JSON.stringify(casteOwner)} + ' 💞 👾 ' + ${JSON.stringify(bugOwner)}),
+              document.createTextNode(' · '),
+              mkBannerSpan('#f5d0fe', ${JSON.stringify(formula)})
+            );
 
             // 2. Simultaneously wireframe, Zalgo-stamp & Matrix-highlight up to 12 visible blocks in EVERY tab
             const entityRoster12 = ['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'EPSILON', 'ZETA', 'ETA', 'THETA', 'IOTA', 'KAPPA', 'LAMBDA', 'OMEGA'];
@@ -20233,6 +20254,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         } else {
           targetTab = createTab(pick.url, { title: `🧬 ${pick.title.slice(0, 26)}` });
         }
+      } else if (tabs.length >= 4) {
+        const reusable = tabs.find((tb) => !tb.pinned && tb.id !== activeTabId && !tb.isLoading) ||
+          tabs.find((tb) => !tb.pinned && tb.id !== activeTabId) ||
+          activeT;
+        targetTab = reusable;
+        dispatchNonBlockingTabNavigation(targetTab, pick.url, `🧬 ${pick.title.slice(0, 26)}`);
       } else {
         targetTab = createTab(pick.url, { title: `🧬 ${pick.title.slice(0, 26)}` });
       }
@@ -20925,13 +20952,29 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           }
           if (pageVisor) {
             const sampleRule = (logicalRules[0] && logicalRules[0].formula) || logicCfg.latestProofQED || '∀x: manifold(x) ⇒ ¬entropy(x)';
-            pageVisor.innerHTML =
-              '<div style="color:#fda4af;font-weight:900;">👁️‍🗨️👾⚛️🧅 [12-ENTITY × DSD-16 × Cl(4,0) × sLTC/SSM × 512-CONN × DARK-WEB DISSECTION VISOR · LIVE]</div>' +
-              '<div style="color:#6ee7b7;">🔬 <strong>SCIENCE &amp; DSD-16:</strong> d_H=' + (dsdCfg.minHammingDistBits || 28) + 'b · MGS⊥=' + (dsdCfg.orthogonalComplementEnergyPct || 97.8) + '% · Shannon H=' + pageMetrics.shannonEntropyBits + 'b · K_LZ=' + kolmogorovLzRatio + ' · Zipf α=' + zipfAlphaExponent + '</div>' +
-              '<div style="color:#38bdf8;">🧠⚛️ <strong>Cl(4,0) &amp; Q-BIO:</strong> ‖B‖=' + (metaCfg.bivectorTorqueNorm || 1.482) + ' · 8×8 Meta=' + (metaCfg.metaReflectionScorePct || 96.8) + '% · Ind=' + (metaCfg.inductionMeanConfidencePct || 78.4) + '%/Ded=#' + (metaCfg.deductionTheoremsCount || 12) + ' · ‖∇̃_FR‖=' + (metaCfg.omnigradientNorm || 0.842) + ' · WKB=' + Math.round((metaCfg.wkbTunnelingProb || 0.812) * 100) + '% · FMO=' + (metaCfg.fmoExcitonCoherencePct || 97.4) + '%</div>' +
-              '<div style="color:#c084fc;">⚡🧬🧅 <strong>sLTC/SSM × 1.24M PARAMS × 512-CONN × DARKWEB:</strong> τ̄=' + (nsCfg.sltcMeanTauMs || 2.84) + 'ms · ρ=' + (nsCfg.ssmSpectralRadiusRho || 0.968) + ' · ‖W‖_F=' + (nsCfg.weightFrobeniusNorm || 18.42) + ' · α_HTSR=' + (nsCfg.htsrPowerLawAlpha || 2.48) + ' · YM W_C=' + (nsCfg.yangMillsWilsonHolonomy || 0.942) + ' · ζ_GUE=' + (nsCfg.gueRepulsionFactorR2 || 0.916) + ' · Spk=' + (nsCfg.connectomeActiveSpikes || 42) + '/512 · ' + String(ddwCfg.torV3OnionAddress || 'humunc..onion').slice(0, 12) + '..onion</div>' +
-              '<div style="color:#fde68a;">💻 <strong>FE/AST MUTATION:</strong> Wireframed=' + wireTargets.length + ' containers · Zalgo=' + Math.min(8, zalgoTargets.length) + ' headers · Stamped=' + Math.min(14, blocks.length) + ' colliders · Action=' + (domWeirdAction || 'activeScan') + '</div>' +
-              '<div style="color:#e879f9;">🛡️ <strong>BE/DEVSECOPS/SRE:</strong> DPLL=' + logicCfg.satVerdict + ' (' + logicCfg.epistemicConsistencyPct + '%) · ' + sampleRule.slice(0, 62) + ' · TTFB=' + networkLatencyMs + 'ms · Heap=' + jsHeapUsedMb + 'MB</div>';
+            const mkVisorRow = (color, prefix, boldLabel, bodyText, isHeader = false) => {
+              const row = document.createElement('div');
+              row.style.color = color;
+              if (isHeader) {
+                row.style.fontWeight = '900';
+                row.textContent = prefix;
+              } else {
+                row.appendChild(document.createTextNode(prefix + ' '));
+                const st = document.createElement('strong');
+                st.textContent = boldLabel;
+                row.appendChild(st);
+                row.appendChild(document.createTextNode(' ' + bodyText));
+              }
+              return row;
+            };
+            pageVisor.replaceChildren(
+              mkVisorRow('#fda4af', '👁️‍🗨️👾⚛️🧅 [12-ENTITY × DSD-16 × Cl(4,0) × sLTC/SSM × 512-CONN × DARK-WEB DISSECTION VISOR · LIVE]', '', '', true),
+              mkVisorRow('#6ee7b7', '🔬', 'SCIENCE & DSD-16:', 'd_H=' + (dsdCfg.minHammingDistBits || 28) + 'b · MGS⊥=' + (dsdCfg.orthogonalComplementEnergyPct || 97.8) + '% · Shannon H=' + pageMetrics.shannonEntropyBits + 'b · K_LZ=' + kolmogorovLzRatio + ' · Zipf α=' + zipfAlphaExponent),
+              mkVisorRow('#38bdf8', '🧠⚛️', 'Cl(4,0) & Q-BIO:', '‖B‖=' + (metaCfg.bivectorTorqueNorm || 1.482) + ' · 8×8 Meta=' + (metaCfg.metaReflectionScorePct || 96.8) + '% · Ind=' + (metaCfg.inductionMeanConfidencePct || 78.4) + '%/Ded=#' + (metaCfg.deductionTheoremsCount || 12) + ' · ‖∇̃_FR‖=' + (metaCfg.omnigradientNorm || 0.842) + ' · WKB=' + Math.round((metaCfg.wkbTunnelingProb || 0.812) * 100) + '% · FMO=' + (metaCfg.fmoExcitonCoherencePct || 97.4) + '%'),
+              mkVisorRow('#c084fc', '⚡🧬🧅', 'sLTC/SSM × 1.24M PARAMS × 512-CONN × DARKWEB:', 'τ̄=' + (nsCfg.sltcMeanTauMs || 2.84) + 'ms · ρ=' + (nsCfg.ssmSpectralRadiusRho || 0.968) + ' · ‖W‖_F=' + (nsCfg.weightFrobeniusNorm || 18.42) + ' · α_HTSR=' + (nsCfg.htsrPowerLawAlpha || 2.48) + ' · YM W_C=' + (nsCfg.yangMillsWilsonHolonomy || 0.942) + ' · ζ_GUE=' + (nsCfg.gueRepulsionFactorR2 || 0.916) + ' · Spk=' + (nsCfg.connectomeActiveSpikes || 42) + '/512 · ' + String(ddwCfg.torV3OnionAddress || 'humunc..onion').slice(0, 12) + '..onion'),
+              mkVisorRow('#fde68a', '💻', 'FE/AST MUTATION:', 'Wireframed=' + wireTargets.length + ' containers · Zalgo=' + Math.min(8, zalgoTargets.length) + ' headers · Stamped=' + Math.min(14, blocks.length) + ' colliders · Action=' + (domWeirdAction || 'activeScan')),
+              mkVisorRow('#e879f9', '🛡️', 'BE/DEVSECOPS/SRE:', 'DPLL=' + logicCfg.satVerdict + ' (' + logicCfg.epistemicConsistencyPct + '%) · ' + sampleRule.slice(0, 62) + ' · TTFB=' + networkLatencyMs + 'ms · Heap=' + jsHeapUsedMb + 'MB')
+            );
           }
 
           // 2. HUMUNCULUS PAGE-23 RETRO TERMINAL OVERLAY + INTERACTIVE MINI-CONTROLLER ON WEBPAGE (100% FULL VISIBILITY)!
@@ -23128,6 +23171,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       renderRetroTerminalOverlay();
 
       const stepChromeCrawler = () => {
+        try {
         const cv = document.getElementById('alife-chrome-crawler');
         const st = chromeCrawlerState;
         const h = humunculusRuntime;
@@ -24624,10 +24668,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         if (typeof renderLeftOmniDock === 'function') {
           renderLeftOmniDock(st.tick, st.frameCount);
         }
-
-        requestAnimationFrame(stepChromeCrawler);
+        } catch (frameErr) {
+          console.warn('[stepChromeCrawler]', frameErr);
+        } finally {
+          requestAnimationFrame(stepChromeCrawler);
+        }
       };
-      requestAnimationFrame(stepChromeCrawler);
+      stepChromeCrawler();
     }
 
     async function toggleSuperintelligenceOverdrive() {

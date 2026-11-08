@@ -735,8 +735,18 @@
         const packedFloat32 = new Float32Array(4608);
         packedFloat32.set(dc.W_enc1.subarray(0, 512), 0);
         packedFloat32.set(dc.W_rssm_rec.subarray(0, 512), 512);
-        packedFloat32.set(dc.W_actor.subarray(0, 512), 1024);
-        packedFloat32.set(dc.W_critic.subarray(0, 64), 1536);
+        if (dc.W_actor_out && dc.W_actor_out.length >= 512) {
+          packedFloat32.set(dc.W_actor_out.subarray(0, 512), 1024);
+        }
+        if (dc.W_actor && dc.W_actor.length > 0) {
+          packedFloat32.set(dc.W_actor.subarray(0, Math.min(512, dc.W_actor.length)), 1024);
+        }
+        if (dc.W_critic_out && dc.W_critic_out.length >= 64) {
+          packedFloat32.set(dc.W_critic_out.subarray(0, 64), 1536);
+        }
+        if (dc.W_critic && dc.W_critic.length > 0) {
+          packedFloat32.set(dc.W_critic.subarray(0, Math.min(64, dc.W_critic.length)), 1536);
+        }
         packedFloat32.set(dc.W_body_genome.subarray(0, 448), 1600);
         packedFloat32.set(hub.W_perc_enc.subarray(0, 256), 2048);
         packedFloat32.set(hub.W_dyn1.subarray(0, 256), 2304);
@@ -802,11 +812,21 @@
 
         const dc = runtime.deepCortex;
         const hub = runtime.trainableAlifeNeuralHub;
-        dc.W_enc1.set(f32.subarray(0, 512), 0);
-        dc.W_rssm_rec.set(f32.subarray(512, 1024), 0);
-        dc.W_actor.set(f32.subarray(1024, 1536), 0);
-        dc.W_critic.set(f32.subarray(1536, 1600), 0);
-        dc.W_body_genome.set(f32.subarray(1600, 2048), 0);
+        dc.W_enc1.set(f32.subarray(0, Math.min(512, dc.W_enc1.length)), 0);
+        dc.W_rssm_rec.set(f32.subarray(512, 512 + Math.min(512, dc.W_rssm_rec.length)), 0);
+        if (dc.W_actor && dc.W_actor.length > 0) {
+          dc.W_actor.set(f32.subarray(1024, 1024 + Math.min(512, dc.W_actor.length)), 0);
+        }
+        if (dc.W_actor_out && dc.W_actor_out !== dc.W_actor && dc.W_actor_out.length >= 512) {
+          dc.W_actor_out.set(f32.subarray(1024, 1536), 0);
+        }
+        if (dc.W_critic && dc.W_critic.length > 0) {
+          dc.W_critic.set(f32.subarray(1536, 1536 + Math.min(64, dc.W_critic.length)), 0);
+        }
+        if (dc.W_critic_out && dc.W_critic_out !== dc.W_critic && dc.W_critic_out.length >= 64) {
+          dc.W_critic_out.set(f32.subarray(1536, 1600), 0);
+        }
+        dc.W_body_genome.set(f32.subarray(1600, 1600 + Math.min(448, dc.W_body_genome.length)), 0);
         hub.W_perc_enc.set(f32.subarray(2048, 2304), 0);
         hub.W_dyn1.set(f32.subarray(2304, 2560), 0);
         hub.W_diff1.set(f32.subarray(2560, 2816), 0);

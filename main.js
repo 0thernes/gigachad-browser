@@ -479,6 +479,7 @@ function forwardGuestKeys(win, guest) {
 }
 
 function wireHost(win) {
+  try { win.webContents.setMaxListeners(50); } catch (_) {}
   win.webContents.on('will-navigate', (event, url) => {
     if (!isOurChrome(url)) event.preventDefault();
   });
@@ -495,6 +496,7 @@ function wireHost(win) {
     if (params.src && !isAllowedGuestUrl(params.src)) event.preventDefault();
   });
   win.webContents.on('did-attach-webview', (_event, guest) => {
+    try { guest.setMaxListeners(50); } catch (_) {}
     guest.setWindowOpenHandler(({ url }) => {
       if (isAllowedGuestUrl(url)) {
         win.webContents.send('open-url', url);
@@ -1156,10 +1158,21 @@ function registerIpc() {
     saveJson(userFile('session.json'), { tabs: clean, savedAt: new Date().toISOString() });
     return { ok: true, count: clean.length };
   });
-  ipcMain.handle('session-load', (event) => {
+  ipcMain.handle('session-load', async (event) => {
     if (!fromChrome(event)) return { tabs: [] };
     const saved = loadJson(userFile('session.json'), { tabs: [] });
-    return { tabs: sanitizeSession(saved.tabs) };
+    const clean = sanitizeSession(saved.tabs);
+    const localBrainPortalRe = /^http:\/\/127\.0\.0\.1:\d+\/((?:dimension-omega-singularity|asmodensius-v40|cqm-xylos|glitchling|tsotchke-diffusion|thingmaker|grimoire-arcane|quantum_neural_manifold_3d\.html)(?:\/.*)?)$/i;
+    if (clean.some((t) => t && localBrainPortalRe.test(String(t.url || '')))) {
+      const httpPort = await ensureLocalBrainsHttpServer().catch(() => 0);
+      if (httpPort > 0) {
+        for (const tab of clean) {
+          const m = String(tab?.url || '').match(localBrainPortalRe);
+          if (m) tab.url = `http://127.0.0.1:${httpPort}/${m[1]}`;
+        }
+      }
+    }
+    return { tabs: clean };
   });
   ipcMain.handle('downloads-list', (event) => (fromChrome(event) ? downloads : []));
 
@@ -3246,10 +3259,14 @@ app.whenReady().then(async () => {
                       document.getElementById('habitat-overdrive-btn') &&
                       document.getElementById('habitat-persona-select') &&
                       document.getElementById('habitat-autonav-chk') &&
+                      typeof renderRetroTerminalOverlay === 'function' &&
                       typeof syncCreaturePersonaMode === 'function' &&
                       typeof cycleCreatureSwarmFormation === 'function' &&
                       typeof cycleHostTerminalViewMode === 'function' &&
-                      typeof toggleHostAlifeHudPre === 'function'
+                      typeof toggleHostAlifeHudPre === 'function' &&
+                      chromeCrawlerState &&
+                      chromeCrawlerState.frameCount >= 1 &&
+                      !String(document.getElementById('backend-status')?.textContent || '').startsWith('Could not read config:')
                     ),
                     guestOk: Boolean(
                       guestHudCheck &&
