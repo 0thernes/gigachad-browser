@@ -1,0 +1,367 @@
+{
+  "passNumber": 91,
+  "passSlice": "91/100",
+  "phaseName": "Phase XVIII: Meta-Learning, DARTS Architecture Search, Hypernetworks & Continual Plasticity",
+  "moduleId": "alive-darts-bilevel-architecture-search",
+  "timestamp": "2026-11-09T23:26:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "candidateOps": [
+    "identity_skip",
+    "kan_chebyshev_spline",
+    "mamba2_ssd_scan",
+    "mla_latent_attention",
+    "gated_swiglu_mlp"
+  ],
+  "evaluations": [
+    {
+      "profileId": "single_level_joint_train_skip_collapse_baseline",
+      "label": "Single-Level Joint Training of (w, alpha) on Train Split (Overfits & Collapses to Identity Skip)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "valLossMean": 0.42,
+          "discGapMean": 0,
+          "skipDomMean": 1,
+          "compositeScore": 48.7
+        },
+        {
+          "seed": 29017,
+          "valLossMean": 0.42,
+          "discGapMean": 0,
+          "skipDomMean": 1,
+          "compositeScore": 48.7
+        },
+        {
+          "seed": 39023,
+          "valLossMean": 0.42,
+          "discGapMean": 0,
+          "skipDomMean": 1,
+          "compositeScore": 48.7
+        },
+        {
+          "seed": 49031,
+          "valLossMean": 0.42,
+          "discGapMean": 0,
+          "skipDomMean": 1,
+          "compositeScore": 48.7
+        },
+        {
+          "seed": 59053,
+          "valLossMean": 0.42,
+          "discGapMean": 0,
+          "skipDomMean": 1,
+          "compositeScore": 48.7
+        }
+      ],
+      "aggregate": {
+        "valLossStats": {
+          "mean": 0.42,
+          "stdDev": 0,
+          "ci95": [
+            0.42,
+            0.42
+          ]
+        },
+        "discGapStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "skipDomStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 48.7,
+          "stdDev": 0,
+          "ci95": [
+            48.7,
+            48.7
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "first_order_darts_no_skip_regularization_ablation",
+      "label": "First-Order DARTS (xi=0) Without Skip-Connection Regularization Bias b_arch",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00589605,
+          "skipDomMean": 0,
+          "compositeScore": 99.1384
+        },
+        {
+          "seed": 29017,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00589605,
+          "skipDomMean": 0,
+          "compositeScore": 99.1384
+        },
+        {
+          "seed": 39023,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00589605,
+          "skipDomMean": 0,
+          "compositeScore": 99.1384
+        },
+        {
+          "seed": 49031,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00589605,
+          "skipDomMean": 0,
+          "compositeScore": 99.1384
+        },
+        {
+          "seed": 59053,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00589605,
+          "skipDomMean": 0,
+          "compositeScore": 99.1384
+        }
+      ],
+      "aggregate": {
+        "valLossStats": {
+          "mean": 0.015,
+          "stdDev": 0,
+          "ci95": [
+            0.015,
+            0.015
+          ]
+        },
+        "discGapStats": {
+          "mean": 0.0059,
+          "stdDev": 0,
+          "ci95": [
+            0.0059,
+            0.0059
+          ]
+        },
+        "skipDomStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 99.1384,
+          "stdDev": 0,
+          "ci95": [
+            99.1384,
+            99.1384
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "high_temp_unannealed_discretization_gap_ablation",
+      "label": "Second-Order DARTS With Unannealed Softmax Temperature (tau=2.0 Discretization Gap)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "valLossMean": 0.015,
+          "discGapMean": 0.02930333,
+          "skipDomMean": 0.004322,
+          "compositeScore": 92.1748
+        },
+        {
+          "seed": 29017,
+          "valLossMean": 0.015,
+          "discGapMean": 0.02930333,
+          "skipDomMean": 0.004322,
+          "compositeScore": 92.1748
+        },
+        {
+          "seed": 39023,
+          "valLossMean": 0.015,
+          "discGapMean": 0.02930333,
+          "skipDomMean": 0.004322,
+          "compositeScore": 92.1748
+        },
+        {
+          "seed": 49031,
+          "valLossMean": 0.015,
+          "discGapMean": 0.02930333,
+          "skipDomMean": 0.004322,
+          "compositeScore": 92.1748
+        },
+        {
+          "seed": 59053,
+          "valLossMean": 0.015,
+          "discGapMean": 0.02930333,
+          "skipDomMean": 0.004322,
+          "compositeScore": 92.1748
+        }
+      ],
+      "aggregate": {
+        "valLossStats": {
+          "mean": 0.015,
+          "stdDev": 0,
+          "ci95": [
+            0.015,
+            0.015
+          ]
+        },
+        "discGapStats": {
+          "mean": 0.0293,
+          "stdDev": 0,
+          "ci95": [
+            0.0293,
+            0.0293
+          ]
+        },
+        "skipDomStats": {
+          "mean": 0.0043,
+          "stdDev": 0,
+          "ci95": [
+            0.0043,
+            0.0043
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 92.1748,
+          "stdDev": 0,
+          "ci95": [
+            92.1748,
+            92.1748
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "second_order_bilevel_darts_gumbel_annealed_arch_bias",
+      "label": "Second-Order Bilevel DARTS + Skip-Penalty Architecture Bias b_arch + Annealed Discretization (Pass 91 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00185651,
+          "skipDomMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00185651,
+          "skipDomMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00185651,
+          "skipDomMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00185651,
+          "skipDomMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "valLossMean": 0.015,
+          "discGapMean": 0.00185651,
+          "skipDomMean": 0,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "valLossStats": {
+          "mean": 0.015,
+          "stdDev": 0,
+          "ci95": [
+            0.015,
+            0.015
+          ]
+        },
+        "discGapStats": {
+          "mean": 0.0019,
+          "stdDev": 0,
+          "ci95": [
+            0.0019,
+            0.0019
+          ]
+        },
+        "skipDomStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "second_order_bilevel_darts_gumbel_annealed_arch_bias",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "valLossStats": {
+      "mean": 0.015,
+      "stdDev": 0,
+      "ci95": [
+        0.015,
+        0.015
+      ]
+    },
+    "discGapStats": {
+      "mean": 0.0019,
+      "stdDev": 0,
+      "ci95": [
+        0.0019,
+        0.0019
+      ]
+    },
+    "skipDomStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 51.3,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
