@@ -1,0 +1,300 @@
+{
+  "passNumber": 87,
+  "passSlice": "87/100",
+  "phaseName": "Phase XVII: Hardware-Sympathetic Tensor Systems Engineering",
+  "moduleId": "alive-flash-attention-online-softmax-tiler",
+  "timestamp": "2026-11-09T23:22:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "materialized_t2_attention_matrix_baseline",
+      "label": "Standard O(T^2) Materialized Attention Matrix P = softmax(QK^T + B) (Quadratic Memory Allocation)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0.08891891598869,
+          "memSavingsMean": 0,
+          "compositeScore": 44.2408
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0.08782384307078,
+          "memSavingsMean": 0,
+          "compositeScore": 44.3733
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0.09026575551673,
+          "memSavingsMean": 0,
+          "compositeScore": 44.0778
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0.08366036844003,
+          "memSavingsMean": 0,
+          "compositeScore": 44.8771
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0.08156989700763,
+          "memSavingsMean": 0,
+          "compositeScore": 45.13
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0.0864,
+          "stdDev": 0.0037,
+          "ci95": [
+            0.0819,
+            0.091
+          ]
+        },
+        "memSavingsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 44.5398,
+          "stdDev": 0.4452,
+          "ci95": [
+            43.9871,
+            45.0925
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "tiled_attention_without_running_max_overflow_ablation",
+      "label": "Tiled Attention Without Running Maximum Subtraction m_i (Exponential Overflow Risk)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0.85,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 45
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0.85,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 45
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0.85,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 45
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0.85,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 45
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0.85,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 45
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0.85,
+          "stdDev": 0,
+          "ci95": [
+            0.85,
+            0.85
+          ]
+        },
+        "memSavingsStats": {
+          "mean": 0.9922,
+          "stdDev": 0,
+          "ci95": [
+            0.9922,
+            0.9922
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 45,
+          "stdDev": 0,
+          "ci95": [
+            45,
+            45
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "flash_attention_unfused_positional_bias_ablation",
+      "label": "FlashAttention-2 Without In-Register Fused ALiBi Positional Bias",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0.08891891598869,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 89.2408
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0.08782384307078,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 89.3733
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0.09026575551673,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 89.0778
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0.08366036844003,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 89.8771
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0.08156989700763,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 90.13
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0.0864,
+          "stdDev": 0.0037,
+          "ci95": [
+            0.0819,
+            0.091
+          ]
+        },
+        "memSavingsStats": {
+          "mean": 0.9922,
+          "stdDev": 0,
+          "ci95": [
+            0.9922,
+            0.9922
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 89.5398,
+          "stdDev": 0.4452,
+          "ci95": [
+            88.9871,
+            90.0925
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "flash_attention2_online_softmax_fused_alibi_tiler",
+      "label": "FlashAttention-2 Online Log-Sum-Exp Tiler (m_i, l_i) + Fused ALiBi Bias (Pass 87 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0,
+          "memSavingsMean": 0.992188,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "memSavingsStats": {
+          "mean": 0.9922,
+          "stdDev": 0,
+          "ci95": [
+            0.9922,
+            0.9922
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "flash_attention2_online_softmax_fused_alibi_tiler",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "maxAbsDiffStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "memSavingsStats": {
+      "mean": 0.9922,
+      "stdDev": 0,
+      "ci95": [
+        0.9922,
+        0.9922
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 55.4602,
+    "tStat": 278.5794,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
