@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Ed25519 Signed Merkle-DAG citation & content-addressed archival ledger pass 24
+
+- Added the 5-seed Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger evaluator ([`systems/alive-onion-merkle-provenance-ledger.js`](systems/alive-onion-merkle-provenance-ledger.js), [`scripts/alive-onion-merkle-provenance-ledger.cjs`](scripts/alive-onion-merkle-provenance-ledger.cjs)) comparing `mutable-url-bookmark-only`, `unverified-snapshot-cache`, `hash-chain-no-equivocation-quorum`, and `signed-merkle-dag-bft-provenance-ledger` across 24 archival & provenance scenarios per seed.
+- Verified on `5/5` seeds that `signed-merkle-dag-bft-provenance-ledger` achieves `100.0` composite score (`+100.0` over `mutable-url-bookmark-only`, `+75.0` over `unverified-snapshot-cache`, `+16.67` over `hash-chain-no-equivocation-quorum`), `100.0%` offline `.onion` replay survival (`503 HS_DESC_NOT_FOUND`), `100.0%` post-hoc bit-flip tamper rejection, `100.0%` multi-circuit split-view equivocation fraud detection, and `0` corrupted citations accepted.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 30 (`#alive-fabric-onion-merkle`, `Run Merkle Ledger` button, and `runOnionMerkleLedger()`).
+- Added [Pass 24 report](docs/ALIVE_PASS_24_REPORT.md), [JSON report](docs/reports/alive-onion-merkle-provenance-ledger-2026-11-09.json), [SVG chart](docs/reports/alive-onion-merkle-provenance-ledger-2026-11-09.svg) and unit tests (`tests/alive-onion-merkle-provenance-ledger.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Website Fingerprinting (WF) defense & circuit padding machines pass 23
 
 - Added the 5-seed Website Fingerprinting (`WF`) Defense & Circuit Padding Machines evaluator ([`systems/alive-tor-padding-traffic-defense.js`](systems/alive-tor-padding-traffic-defense.js), [`scripts/alive-tor-padding-traffic-defense.cjs`](scripts/alive-tor-padding-traffic-defense.cjs)) comparing `unpadded-tor-cells`, `naive-random-chaff-10pct`, `constant-rate-tamaraw-heavy`, and `adaptive-wtfpad-regulator-hybrid` across 24 traces per seed (`8` monitored `.onion` and clearnet page archetypes).

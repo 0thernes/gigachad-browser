@@ -862,6 +862,31 @@ test('runTorWfPadding renders 5-seed Tor WF Defense & Circuit Padding Machines i
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runOnionMerkleLedger renders 5-seed Signed Merkle-DAG Citation & Archival Ledger in section 30', async () => {
+  const { window, dom } = load();
+  window.AliveOnionMerkleProvenanceLedger = {
+    run: async () => ({
+      summary: {
+        fullLedgerCompositeScoreMean: 100.0,
+        gainVsMutableUrlBookmark: 100.0,
+        gainVsSingleVantageChain: 16.7
+      },
+      aggregatedByProfile: {
+        'mutable-url-bookmark-only': { merkleLedgerCompositeScore: { mean: 0 }, offlineOnionReplaySurvivalPct: { mean: 0 }, tamperedContentRejectionPct: { mean: 0 }, equivocationFraudDetectionPct: { mean: 0 }, merkleProofVerificationPct: { mean: 0 } },
+        'unverified-snapshot-cache': { merkleLedgerCompositeScore: { mean: 25.0 }, offlineOnionReplaySurvivalPct: { mean: 100 }, tamperedContentRejectionPct: { mean: 0 }, equivocationFraudDetectionPct: { mean: 0 }, merkleProofVerificationPct: { mean: 0 } },
+        'hash-chain-no-equivocation-quorum': { merkleLedgerCompositeScore: { mean: 83.3 }, offlineOnionReplaySurvivalPct: { mean: 100 }, tamperedContentRejectionPct: { mean: 100 }, equivocationFraudDetectionPct: { mean: 33.3 }, merkleProofVerificationPct: { mean: 100 } },
+        'signed-merkle-dag-bft-provenance-ledger': { merkleLedgerCompositeScore: { mean: 100.0 }, offlineOnionReplaySurvivalPct: { mean: 100 }, tamperedContentRejectionPct: { mean: 100 }, equivocationFraudDetectionPct: { mean: 100 }, merkleProofVerificationPct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runOnionMerkleLedger();
+  assert.equal(report.summary.fullLedgerCompositeScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Signed Merkle-DAG score=100.0')), 'Onion Merkle Ledger summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('signed-merkle-dag-bft-')), 'Onion Merkle Ledger rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 

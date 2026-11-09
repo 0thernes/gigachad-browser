@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="340" viewBox="0 0 1140 340">
+  <rect width="1140" height="340" fill="#020617"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="16" font-weight="bold">ALIVE PASS 24 — Ed25519 Signed Merkle-DAG Citation &amp; Content-Addressed Archival Ledger (5 Seeds)</text>
+  <text x="24" y="58" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">Seeds: 19013, 29017, 39023, 49031, 59053 · Winner: signed-merkle-dag-bft-provenance-ledger (100.0/100) · Offline .onion Replay: 100% · Equivocation Fraud Detection: 100%</text>
+  
+      <text x="245" y="110" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">mutable-url-bookmark-only</text>
+      <rect x="255" y="92" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="94" width="2" height="22" rx="3" fill="#f43f5e"/>
+      <text x="605" y="110" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=0.00 | replay=0.0% | tamperRej=0.0% | equivDet=0.0% | merkle=0.0%</text>
+    
+      <text x="245" y="164" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">unverified-snapshot-cache</text>
+      <rect x="255" y="146" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="148" width="85" height="22" rx="3" fill="#f59e0b"/>
+      <text x="605" y="164" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=25.00 | replay=100.0% | tamperRej=0.0% | equivDet=0.0% | merkle=0.0%</text>
+    
+      <text x="245" y="218" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">hash-chain-no-equivocation-quorum</text>
+      <rect x="255" y="200" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="202" width="283" height="22" rx="3" fill="#38bdf8"/>
+      <text x="605" y="218" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=83.33 | replay=100.0% | tamperRej=100.0% | equivDet=33.3% | merkle=100.0%</text>
+    
+      <text x="245" y="272" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">signed-merkle-dag-bft-provenance-ledger</text>
+      <rect x="255" y="254" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="256" width="340" height="22" rx="3" fill="#34d399"/>
+      <text x="605" y="272" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=100.00 | replay=100.0% | tamperRej=100.0% | equivDet=100.0% | merkle=100.0%</text>
+    
+  <text x="24" y="322" fill="#64748b" font-family="Consolas, monospace" font-size="11">24 archival scenarios/seed (6 live .onion/clearnet, 6 offline 503 .onion replay, 6 post-hoc bit-flip tamper, 6 split-view equivocation)</text>
+</svg>
