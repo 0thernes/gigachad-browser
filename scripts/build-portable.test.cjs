@@ -38,7 +38,7 @@ function fixture(t) {
 
 test('portable builder packages only staged release files, renames executable/crash DLL and verifies every copy', t => {
   const f = fixture(t), result = builder.build({ root: f.root, output: f.output });
-  assert.equal(result.executable, path.join(f.output, 'GIGACHAD.exe'));
+  assert.equal(result.executable, path.join(fs.realpathSync.native(f.root), 'dist', 'fixture-win32-x64', 'GIGACHAD.exe'));
   assert.ok(fs.existsSync(path.join(f.output, 'GIGACHAD_wer.dll')));
   assert.equal(fs.existsSync(path.join(f.output, 'electron.exe')), false);
   const manifest = JSON.parse(fs.readFileSync(result.manifest, 'utf8'));
@@ -85,4 +85,28 @@ test('file exclusion rules retain runtime assets and reject secrets at any depth
   for (const file of ['main.js', 'systems/generated/runtime.js', 'assets/icon.ico', 'brains/source.ts', 'LICENSE', 'NOTICE.md', '.env.example']) assert.equal(builder.exclude(file), null, file);
   for (const file of ['nested/config.json', '.env.production', 'docs/private.key', 'secrets.json', 'tracker-allowlist.local.txt', 'profiles/state.json', 'models/model.onnx', 'docs/report.pdf']) assert.ok(builder.exclude(file), file);
   for (const file of ['a/../b.js', 'C:/private.js', '/file.js', 'a\\b.js', 'folder./x.js']) assert.throws(() => builder.safeRelative(file));
+});
+
+test('Windows directory spelling aliases admit the same Git root and canonical output', { skip: process.platform !== 'win32' }, t => {
+  const f = fixture(t), alias = path.join(path.dirname(f.root), path.basename(f.root).toUpperCase());
+  if (!fs.existsSync(alias)) { t.skip('Temporary directory is case-sensitive; a spelling alias does not exist'); return; }
+  assert.notEqual(fs.realpathSync(alias), fs.realpathSync(f.root), 'ordinary realpath retains the alias that triggered CI failure');
+  assert.equal(builder.sameDirectory(alias, f.root), true);
+  assert.equal(builder.indexFiles(alias).fingerprint, builder.indexFiles(f.root).fingerprint);
+  const result = builder.build({ root: alias, output: path.join(alias, 'dist', 'alias-win32-x64') });
+  assert.equal(result.output, path.join(fs.realpathSync.native(f.root), 'dist', 'alias-win32-x64'));
+  assert.ok(fs.existsSync(result.manifest));
+  assert.throws(() => builder.indexFiles(path.join(alias, 'docs')), /working-tree root/);
+});
+
+test('directory identity rejects other roots and distinct case-sensitive directories', t => {
+  const f = fixture(t), other = path.join(f.root, 'Other'), distinctCase = path.join(f.root, 'other');
+  fs.mkdirSync(other);
+  assert.equal(builder.sameDirectory(f.root, other), false);
+  assert.throws(() => builder.outputPath(f.root, path.join(other, 'dist', 'release')), /direct child/);
+  if (!fs.existsSync(distinctCase)) {
+    fs.mkdirSync(distinctCase);
+    assert.equal(builder.sameDirectory(other, distinctCase), false, 'case-folding must not identify different directories');
+  }
+  assert.throws(() => builder.sameDirectory(f.root, path.join(f.root, 'main.js')), /existing directory/);
 });

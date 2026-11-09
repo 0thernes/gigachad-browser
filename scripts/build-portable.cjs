@@ -15,6 +15,20 @@ const NAMES = new Set(['LICENSE', 'NOTICE', 'VERSION', 'CODEOWNERS', 'Dockerfile
 const MODELS = new Set(['chaos_emb.f32', 'chaos_meta.json', 'chaos_unet.onnx', 'parity.json', 'qrng_presets.json', 'uncond_unet.onnx'].map(n => 'brains/tsotchke-diffusion/models/' + n));
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const inside = (root, file) => { const rel = path.relative(root, file); return rel !== '..' && !rel.startsWith('..' + path.sep) && !path.isAbsolute(rel); };
+function directoryIdentity(directory) {
+  // Ordinary realpath preserves caller case/8.3 spelling on Windows. Native
+  // canonicalization and filesystem identity compare directories, not spellings.
+  const canonical = fs.realpathSync.native(directory), stat = fs.statSync(canonical, { bigint: true });
+  if (!stat.isDirectory()) throw new Error('Release directory must be an existing directory');
+  return { canonical, dev: stat.dev, ino: stat.ino };
+}
+function sameDirectory(first, second) {
+  const a = directoryIdentity(first), b = directoryIdentity(second);
+  if (a.ino !== 0n && b.ino !== 0n) return a.dev === b.dev && a.ino === b.ino;
+  // Some filesystems do not supply inode identities. Exact native canonical
+  // paths remain safe; never case-fold distinct case-sensitive directories.
+  return a.canonical === b.canonical;
+}
 function git(root, args) {
   const env = { ...process.env, GIT_OPTIONAL_LOCKS: '0' };
   // A caller's temporary worktree/index routing must not redirect release input.
@@ -58,8 +72,8 @@ function fingerprint(filename) {
   } finally { fs.closeSync(fd); }
 }
 function indexFiles(root) {
-  const top = fs.realpathSync(git(root, ['rev-parse', '--show-toplevel']).trim());
-  if (top !== fs.realpathSync(root)) throw new Error('Release root must be the Git working-tree root');
+  const top = git(root, ['rev-parse', '--show-toplevel']).trim();
+  if (!sameDirectory(top, root)) throw new Error('Release root must be the Git working-tree root');
   const raw = git(root, ['ls-files', '--stage', '-z']), rows = [], excluded = [], names = new Set();
   for (const entry of raw.split('\0').filter(Boolean)) {
     const match = /^(\d{6}) ([a-f0-9]{40,64}) (\d)\t([\s\S]+)$/.exec(entry);
@@ -76,10 +90,15 @@ function indexFiles(root) {
   return { rows, excluded, fingerprint: hash(Buffer.from(JSON.stringify(rows))) };
 }
 function outputPath(root, value) {
-  const output = path.resolve(value), dist = path.join(root, 'dist');
-  if (path.dirname(output) !== dist || !/^[a-z0-9][a-z0-9._+-]*$/i.test(path.basename(output))) throw new Error('Output must be a named direct child of this repository dist directory');
+  root = directoryIdentity(root).canonical;
+  const requested = path.resolve(value), requestedParent = path.dirname(requested), dist = path.join(root, 'dist');
+  if (path.basename(requestedParent) !== 'dist' || !/^[a-z0-9][a-z0-9._+-]*$/i.test(path.basename(requested)) ||
+      !sameDirectory(path.dirname(requestedParent), root)) throw new Error('Output must be a named direct child of this repository dist directory');
+  // Write through the canonical admitted root, including when --output used a
+  // Windows short-name or case alias. The dist component itself may not be a link.
+  const output = path.join(dist, path.basename(requested));
   if (fs.existsSync(output)) throw new Error('Portable output already exists; overwrite refused');
-  if (fs.existsSync(dist) && (fs.lstatSync(dist).isSymbolicLink() || fs.realpathSync(dist) !== dist)) throw new Error('Linked dist directory refused');
+  if (fs.existsSync(dist) && fs.lstatSync(dist).isSymbolicLink()) throw new Error('Linked dist directory refused');
   return output;
 }
 function runtimeFiles(root) {
@@ -120,7 +139,7 @@ function copyChecked(source, destination) {
   return before;
 }
 function build({ root = ROOT, output } = {}) {
-  root = fs.realpathSync(root);
+  root = directoryIdentity(root).canonical;
   const index = indexFiles(root), paths = new Set(index.rows.map(row => row.path));
   for (const required of ['package.json', 'main.js', 'preload.js', 'index.html', 'config.js', 'config.example.json', 'laya_sidecar.py', 'LICENSE', 'NOTICE.md', 'systems/generated/authentic-asmodensius.js', 'systems/generated/authentic-asmodensius.manifest.json', 'brains/cqm-xylos/cqm_kernels.wasm', 'brains/tsotchke-diffusion/models/chaos_emb.f32']) if (!paths.has(required)) throw new Error('Required runtime source is not staged: ' + required);
   const pkg = JSON.parse(fs.readFileSync(sourceFile(root, 'package.json'), 'utf8'));
@@ -168,5 +187,5 @@ function main(argv = process.argv.slice(2)) {
   if (argv.length > 1 || argv.length && !/^--output=.+$/.test(argv[0])) throw new Error('Expected optional --output=PATH (new direct child of repository dist)');
   const result = build({ output: argv.length ? argv[0].slice('--output='.length) : undefined }); console.log(JSON.stringify(result)); return result;
 }
-module.exports = { exclude, safeRelative, sourceFile, outputPath, indexFiles, validateRuntime, build, main };
+module.exports = { exclude, safeRelative, sourceFile, outputPath, indexFiles, validateRuntime, sameDirectory, build, main };
 if (require.main === module) try { main(); } catch (error) { console.error(error.message); process.exitCode = 1; }

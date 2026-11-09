@@ -525,5 +525,32 @@
       "biological FlyWire equivalence",
       "complete durable state for every model"
     ]
+  },
+  "packagingFollowUp": {
+    "date": "2026-11-09",
+    "initialCI": "https://github.com/0thernes/gigachad-browser/actions/runs/42610821487",
+    "initialOutcome": {
+      "ubuntu": "passed all suites and smoke",
+      "windows": "986 of989Node tests passed;3buildertests failed the same directory-spelling comparison"
+    },
+    "repair": "Use native canonical directory paths and filesystem identity for Git-root/output alias admission, preserving different-root, link, unstaged-source and overwrite rejection.",
+    "applicationRuntimeChanged": false,
+    "focusedBuilderTests": {
+      "tests": 7,
+      "passed": 7,
+      "skipped": 0
+    },
+    "fullNode": {
+      "runtime": "24.22.2",
+      "tests": 991,
+      "passed": 991,
+      "failed": 0,
+      "skipped": 0
+    },
+    "sourceSHA256": {
+      "scripts/build-portable.cjs": "f8f54780c9efc3d7c5de419c109ef301e37cc98e5e74b138f918ca9191aa6996",
+      "scripts/build-portable.test.cjs": "0806cc02cbe384fdc21e0737fd0a7524df56095130ca19528ddbf099b3613a3b"
+    },
+    "scope": "Packaging and test correction only; full application/runtime qualifications above still identify unchanged runtime sources. Final push CI and the regenerated portable manifest qualify the published follow-up commit separately."
   }
 }
