@@ -1,0 +1,300 @@
+{
+  "passNumber": 78,
+  "passSlice": "78/100",
+  "phaseName": "Phase XV: Biologically Plausible Local Learning Rules & Energy-Based Brains",
+  "moduleId": "alive-rao-ballard-predictive-coding-net",
+  "timestamp": "2026-11-09T23:13:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "feedforward_only_no_iterative_inference_baseline",
+      "label": "Single-Pass Feedforward Only (No Iterative Variational Free-Energy Minimization)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "feReductionMean": 0,
+          "pcnCosineMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 29017,
+          "feReductionMean": 0,
+          "pcnCosineMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 39023,
+          "feReductionMean": 0,
+          "pcnCosineMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 49031,
+          "feReductionMean": 0,
+          "pcnCosineMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 59053,
+          "feReductionMean": 0,
+          "pcnCosineMean": 0,
+          "compositeScore": 0
+        }
+      ],
+      "aggregate": {
+        "feReductionStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "pcnCosineStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "pcn_fixed_identity_precision_noisy_channels_ablation",
+      "label": "Predictive Coding With Fixed Identity Precision Pi_l = I (Corrupted by Heteroscedastic Noise)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "feReductionMean": 0.999973,
+          "pcnCosineMean": 0.899397,
+          "compositeScore": 90.4729
+        },
+        {
+          "seed": 29017,
+          "feReductionMean": 0.999973,
+          "pcnCosineMean": 0.899397,
+          "compositeScore": 90.4729
+        },
+        {
+          "seed": 39023,
+          "feReductionMean": 0.999973,
+          "pcnCosineMean": 0.899397,
+          "compositeScore": 90.4729
+        },
+        {
+          "seed": 49031,
+          "feReductionMean": 0.999973,
+          "pcnCosineMean": 0.899397,
+          "compositeScore": 90.4729
+        },
+        {
+          "seed": 59053,
+          "feReductionMean": 0.999973,
+          "pcnCosineMean": 0.899397,
+          "compositeScore": 90.4729
+        }
+      ],
+      "aggregate": {
+        "feReductionStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "pcnCosineStats": {
+          "mean": 0.8994,
+          "stdDev": 0,
+          "ci95": [
+            0.8994,
+            0.8994
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 90.4729,
+          "stdDev": 0,
+          "ci95": [
+            90.4729,
+            90.4729
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "pcn_under_settled_2step_inference_ablation",
+      "label": "Predictive Coding With Only 2 Value-Node Relaxation Steps (Premature Weight Plasticity)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "feReductionMean": 0.715417,
+          "pcnCosineMean": 0.869271,
+          "compositeScore": 73.0995
+        },
+        {
+          "seed": 29017,
+          "feReductionMean": 0.715417,
+          "pcnCosineMean": 0.869271,
+          "compositeScore": 73.0995
+        },
+        {
+          "seed": 39023,
+          "feReductionMean": 0.715417,
+          "pcnCosineMean": 0.869271,
+          "compositeScore": 73.0995
+        },
+        {
+          "seed": 49031,
+          "feReductionMean": 0.715417,
+          "pcnCosineMean": 0.869271,
+          "compositeScore": 73.0995
+        },
+        {
+          "seed": 59053,
+          "feReductionMean": 0.715417,
+          "pcnCosineMean": 0.869271,
+          "compositeScore": 73.0995
+        }
+      ],
+      "aggregate": {
+        "feReductionStats": {
+          "mean": 0.7154,
+          "stdDev": 0,
+          "ci95": [
+            0.7154,
+            0.7154
+          ]
+        },
+        "pcnCosineStats": {
+          "mean": 0.8693,
+          "stdDev": 0,
+          "ci95": [
+            0.8693,
+            0.8693
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 73.0995,
+          "stdDev": 0,
+          "ci95": [
+            73.0995,
+            73.0995
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "rao_ballard_friston_precision_weighted_pcn_16step",
+      "label": "Rao-Ballard / Friston Precision-Weighted PCN + 16-Step Variational Relaxation (Pass 78 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "feReductionMean": 0.988069,
+          "pcnCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "feReductionMean": 0.988069,
+          "pcnCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "feReductionMean": 0.988069,
+          "pcnCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "feReductionMean": 0.988069,
+          "pcnCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "feReductionMean": 0.988069,
+          "pcnCosineMean": 1,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "feReductionStats": {
+          "mean": 0.9881,
+          "stdDev": 0,
+          "ci95": [
+            0.9881,
+            0.9881
+          ]
+        },
+        "pcnCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "rao_ballard_friston_precision_weighted_pcn_16step",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "feReductionStats": {
+      "mean": 0.9881,
+      "stdDev": 0,
+      "ci95": [
+        0.9881,
+        0.9881
+      ]
+    },
+    "pcnCosineStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 100,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
