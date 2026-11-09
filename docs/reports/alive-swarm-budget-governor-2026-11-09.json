@@ -1,0 +1,720 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-17-swarm-budget-governor-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "stepsPerSeed": 40,
+    "maxPopulationEntities": 15,
+    "domainsCount": 6,
+    "governors": [
+      "ungoverned-locust-flood",
+      "global-cap-no-per-domain-bucket",
+      "per-domain-bucket-no-killswitch",
+      "full-token-bucket-swarm-governor"
+    ]
+  },
+  "summary": {
+    "fullBeatNoKillSeeds": 5,
+    "fullBeatGlobalOnlySeeds": 5,
+    "zeroDomainViolationSeeds": 5,
+    "zeroKillSwitchLeakSeeds": 5,
+    "pairedDeltas": {
+      "fullVsNoKillComplianceGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsGlobalOnlyComplianceGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsFloodComplianceGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byGovernor": {
+      "ungoverned-locust-flood": {
+        "governanceComplianceScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "domainConcurrencyViolations": {
+          "count": 5,
+          "mean": 75,
+          "sampleStandardDeviation": 1.8708286933869707,
+          "ci95": [
+            72.6770593646148,
+            77.3229406353852
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "tokenBucketOverruns": {
+          "count": 5,
+          "mean": 26.6,
+          "sampleStandardDeviation": 1.5165750888103102,
+          "ci95": [
+            24.71692331165156,
+            28.483076688348444
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "populationCapBreaches": {
+          "count": 5,
+          "mean": 8,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            8,
+            8
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "killSwitchLeakCount": {
+          "count": 5,
+          "mean": 60,
+          "sampleStandardDeviation": 2.9154759474226504,
+          "ci95": [
+            56.37995847845628,
+            63.62004152154372
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "peakPopulation": {
+          "count": 5,
+          "mean": 39,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            39,
+            39
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "acceptedRequests": {
+          "count": 5,
+          "mean": 246.2,
+          "sampleStandardDeviation": 3.7013511046643495,
+          "ci95": [
+            241.60416558862653,
+            250.79583441137345
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deferredRequests": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "global-cap-no-per-domain-bucket": {
+        "governanceComplianceScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "domainConcurrencyViolations": {
+          "count": 5,
+          "mean": 57.6,
+          "sampleStandardDeviation": 1.6733200530681511,
+          "ci95": [
+            55.52229873263286,
+            59.67770126736714
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "tokenBucketOverruns": {
+          "count": 5,
+          "mean": 21.2,
+          "sampleStandardDeviation": 0.8366600265340756,
+          "ci95": [
+            20.16114936631643,
+            22.23885063368357
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "populationCapBreaches": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "killSwitchLeakCount": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "peakPopulation": {
+          "count": 5,
+          "mean": 15,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            15,
+            15
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "acceptedRequests": {
+          "count": 5,
+          "mean": 186.2,
+          "sampleStandardDeviation": 2.8635642126552705,
+          "ci95": [
+            182.64441541060123,
+            189.75558458939875
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deferredRequests": {
+          "count": 5,
+          "mean": 60,
+          "sampleStandardDeviation": 2.9154759474226504,
+          "ci95": [
+            56.37995847845628,
+            63.62004152154372
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "per-domain-bucket-no-killswitch": {
+        "governanceComplianceScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "domainConcurrencyViolations": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "tokenBucketOverruns": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "populationCapBreaches": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "killSwitchLeakCount": {
+          "count": 5,
+          "mean": 60,
+          "sampleStandardDeviation": 2.9154759474226504,
+          "ci95": [
+            56.37995847845628,
+            63.62004152154372
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "peakPopulation": {
+          "count": 5,
+          "mean": 15,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            15,
+            15
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "acceptedRequests": {
+          "count": 5,
+          "mean": 171.2,
+          "sampleStandardDeviation": 3.03315017762062,
+          "ci95": [
+            167.4338466233031,
+            174.96615337669687
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deferredRequests": {
+          "count": 5,
+          "mean": 75,
+          "sampleStandardDeviation": 1.8708286933869707,
+          "ci95": [
+            72.6770593646148,
+            77.3229406353852
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "full-token-bucket-swarm-governor": {
+        "governanceComplianceScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "domainConcurrencyViolations": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "tokenBucketOverruns": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "populationCapBreaches": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "killSwitchLeakCount": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "peakPopulation": {
+          "count": 5,
+          "mean": 15,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            15,
+            15
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "acceptedRequests": {
+          "count": 5,
+          "mean": 128.6,
+          "sampleStandardDeviation": 1.9493588689617927,
+          "ci95": [
+            126.17955127283092,
+            131.02044872716905
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deferredRequests": {
+          "count": 5,
+          "mean": 117.6,
+          "sampleStandardDeviation": 2.5099800796022262,
+          "ci95": [
+            114.48344809894928,
+            120.7165519010507
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byGovernor": {
+        "ungoverned-locust-flood": {
+          "seed": 19013,
+          "mode": "ungoverned-locust-flood",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 77,
+            "tokenBucketOverruns": 29,
+            "populationCapBreaches": 8,
+            "killSwitchLeakCount": 63,
+            "peakPopulation": 39,
+            "acceptedRequests": 249,
+            "deferredRequests": 0,
+            "totalViolations": 177
+          }
+        },
+        "global-cap-no-per-domain-bucket": {
+          "seed": 19013,
+          "mode": "global-cap-no-per-domain-bucket",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 58,
+            "tokenBucketOverruns": 22,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 186,
+            "deferredRequests": 63,
+            "totalViolations": 80
+          }
+        },
+        "per-domain-bucket-no-killswitch": {
+          "seed": 19013,
+          "mode": "per-domain-bucket-no-killswitch",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 63,
+            "peakPopulation": 15,
+            "acceptedRequests": 172,
+            "deferredRequests": 77,
+            "totalViolations": 63
+          }
+        },
+        "full-token-bucket-swarm-governor": {
+          "seed": 19013,
+          "mode": "full-token-bucket-swarm-governor",
+          "metrics": {
+            "governanceComplianceScore": 100,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 128,
+            "deferredRequests": 121,
+            "totalViolations": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byGovernor": {
+        "ungoverned-locust-flood": {
+          "seed": 29017,
+          "mode": "ungoverned-locust-flood",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 74,
+            "tokenBucketOverruns": 27,
+            "populationCapBreaches": 8,
+            "killSwitchLeakCount": 62,
+            "peakPopulation": 39,
+            "acceptedRequests": 246,
+            "deferredRequests": 0,
+            "totalViolations": 171
+          }
+        },
+        "global-cap-no-per-domain-bucket": {
+          "seed": 29017,
+          "mode": "global-cap-no-per-domain-bucket",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 56,
+            "tokenBucketOverruns": 21,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 184,
+            "deferredRequests": 62,
+            "totalViolations": 77
+          }
+        },
+        "per-domain-bucket-no-killswitch": {
+          "seed": 29017,
+          "mode": "per-domain-bucket-no-killswitch",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 62,
+            "peakPopulation": 15,
+            "acceptedRequests": 172,
+            "deferredRequests": 74,
+            "totalViolations": 62
+          }
+        },
+        "full-token-bucket-swarm-governor": {
+          "seed": 29017,
+          "mode": "full-token-bucket-swarm-governor",
+          "metrics": {
+            "governanceComplianceScore": 100,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 128,
+            "deferredRequests": 118,
+            "totalViolations": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byGovernor": {
+        "ungoverned-locust-flood": {
+          "seed": 39023,
+          "mode": "ungoverned-locust-flood",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 73,
+            "tokenBucketOverruns": 26,
+            "populationCapBreaches": 8,
+            "killSwitchLeakCount": 61,
+            "peakPopulation": 39,
+            "acceptedRequests": 247,
+            "deferredRequests": 0,
+            "totalViolations": 168
+          }
+        },
+        "global-cap-no-per-domain-bucket": {
+          "seed": 39023,
+          "mode": "global-cap-no-per-domain-bucket",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 56,
+            "tokenBucketOverruns": 20,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 186,
+            "deferredRequests": 61,
+            "totalViolations": 76
+          }
+        },
+        "per-domain-bucket-no-killswitch": {
+          "seed": 39023,
+          "mode": "per-domain-bucket-no-killswitch",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 61,
+            "peakPopulation": 15,
+            "acceptedRequests": 174,
+            "deferredRequests": 73,
+            "totalViolations": 61
+          }
+        },
+        "full-token-bucket-swarm-governor": {
+          "seed": 39023,
+          "mode": "full-token-bucket-swarm-governor",
+          "metrics": {
+            "governanceComplianceScore": 100,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 130,
+            "deferredRequests": 117,
+            "totalViolations": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byGovernor": {
+        "ungoverned-locust-flood": {
+          "seed": 49031,
+          "mode": "ungoverned-locust-flood",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 74,
+            "tokenBucketOverruns": 26,
+            "populationCapBreaches": 8,
+            "killSwitchLeakCount": 56,
+            "peakPopulation": 39,
+            "acceptedRequests": 240,
+            "deferredRequests": 0,
+            "totalViolations": 164
+          }
+        },
+        "global-cap-no-per-domain-bucket": {
+          "seed": 49031,
+          "mode": "global-cap-no-per-domain-bucket",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 58,
+            "tokenBucketOverruns": 22,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 184,
+            "deferredRequests": 56,
+            "totalViolations": 80
+          }
+        },
+        "per-domain-bucket-no-killswitch": {
+          "seed": 49031,
+          "mode": "per-domain-bucket-no-killswitch",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 56,
+            "peakPopulation": 15,
+            "acceptedRequests": 166,
+            "deferredRequests": 74,
+            "totalViolations": 56
+          }
+        },
+        "full-token-bucket-swarm-governor": {
+          "seed": 49031,
+          "mode": "full-token-bucket-swarm-governor",
+          "metrics": {
+            "governanceComplianceScore": 100,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 126,
+            "deferredRequests": 114,
+            "totalViolations": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byGovernor": {
+        "ungoverned-locust-flood": {
+          "seed": 59053,
+          "mode": "ungoverned-locust-flood",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 77,
+            "tokenBucketOverruns": 25,
+            "populationCapBreaches": 8,
+            "killSwitchLeakCount": 58,
+            "peakPopulation": 39,
+            "acceptedRequests": 249,
+            "deferredRequests": 0,
+            "totalViolations": 168
+          }
+        },
+        "global-cap-no-per-domain-bucket": {
+          "seed": 59053,
+          "mode": "global-cap-no-per-domain-bucket",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 60,
+            "tokenBucketOverruns": 21,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 191,
+            "deferredRequests": 58,
+            "totalViolations": 81
+          }
+        },
+        "per-domain-bucket-no-killswitch": {
+          "seed": 59053,
+          "mode": "per-domain-bucket-no-killswitch",
+          "metrics": {
+            "governanceComplianceScore": 0,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 58,
+            "peakPopulation": 15,
+            "acceptedRequests": 172,
+            "deferredRequests": 77,
+            "totalViolations": 58
+          }
+        },
+        "full-token-bucket-swarm-governor": {
+          "seed": 59053,
+          "mode": "full-token-bucket-swarm-governor",
+          "metrics": {
+            "governanceComplianceScore": 100,
+            "domainConcurrencyViolations": 0,
+            "tokenBucketOverruns": 0,
+            "populationCapBreaches": 0,
+            "killSwitchLeakCount": 0,
+            "peakPopulation": 15,
+            "acceptedRequests": 131,
+            "deferredRequests": 118,
+            "totalViolations": 0
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 17 5-seed evaluation of the Public-Web & Onion Swarm Resource Governor (per-domain concurrency semaphores, token-bucket rate budgets, hard 15-entity population ceiling, and synchronous PAUSE / KILL_SWITCH enforcement)."
+}

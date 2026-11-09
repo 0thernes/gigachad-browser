@@ -664,5 +664,36 @@ test('runHyperSwarm renders 5-seed 15-entity Tri-Guild Exploration Swarm Coordin
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runSwarmGovernor renders 5-seed Public-Web & Onion Swarm Resource Governor metrics in section 23', async () => {
+  const { window, dom } = load();
+  window.AliveSwarmBudgetGovernor = {
+    run: async () => ({
+      summary: {
+        fullBeatNoKillSeeds: 5,
+        fullBeatGlobalOnlySeeds: 5,
+        zeroDomainViolationSeeds: 5,
+        zeroKillSwitchLeakSeeds: 5,
+        pairedDeltas: {
+          fullVsNoKillComplianceGain: { mean: 100.0 },
+          fullVsGlobalOnlyComplianceGain: { mean: 100.0 }
+        },
+        byGovernor: {
+          'ungoverned-locust-flood': { governanceComplianceScore: { mean: 0 }, domainConcurrencyViolations: { mean: 120 }, killSwitchLeakCount: { mean: 56 }, peakPopulation: { mean: 39 } },
+          'global-cap-no-per-domain-bucket': { governanceComplianceScore: { mean: 0 }, domainConcurrencyViolations: { mean: 120 }, killSwitchLeakCount: { mean: 0 }, peakPopulation: { mean: 15 } },
+          'per-domain-bucket-no-killswitch': { governanceComplianceScore: { mean: 0 }, domainConcurrencyViolations: { mean: 0 }, killSwitchLeakCount: { mean: 56 }, peakPopulation: { mean: 15 } },
+          'full-token-bucket-swarm-governor': { governanceComplianceScore: { mean: 100.0 }, domainConcurrencyViolations: { mean: 0 }, killSwitchLeakCount: { mean: 0 }, peakPopulation: { mean: 15 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runSwarmGovernor();
+  assert.equal(report.summary.fullBeatNoKillSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full vs no-kill +100.0 (5/5)')), 'Swarm governor summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-token-bucket-swar')), 'Swarm governor rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 

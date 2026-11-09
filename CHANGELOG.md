@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Public-web & .onion swarm resource governor pass 17
+
+- Added the 5-seed Public-Web & Onion Swarm Resource Governor ([`systems/alive-swarm-budget-governor.js`](systems/alive-swarm-budget-governor.js), [`scripts/alive-swarm-budget-governor.cjs`](scripts/alive-swarm-budget-governor.cjs)) comparing `ungoverned-locust-flood`, `global-cap-no-per-domain-bucket`, `per-domain-bucket-no-killswitch`, and `full-token-bucket-swarm-governor` across 6 target domains (`3` clearnet `maxConcurrent=2`, `3` `.onion` v3 `maxConcurrent=1`) over 40 burst exploration steps per seed.
+- Verified on `5/5` seeds that `full-token-bucket-swarm-governor` achieves `100.0` compliance score, `0` domain concurrency violations, `0` token-bucket overruns, `0` population ceiling breaches (`peakPopulation = 15`), and `0` kill-switch leaks during emergency `PAUSE` and `KILL_SWITCH` windows.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 23 (`#alive-fabric-swarm-governor`, `Run swarm governor` button, and `runSwarmGovernor()`).
+- Added [Pass 17 report](docs/ALIVE_PASS_17_REPORT.md), [JSON report](docs/reports/alive-swarm-budget-governor-2026-11-09.json), [SVG chart](docs/reports/alive-swarm-budget-governor-2026-11-09.svg) and unit tests (`tests/alive-swarm-budget-governor.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Multi-entity exploration swarm coordinator pass 16
 
 - Added the 5-seed 15-entity Tri-Guild Exploration Swarm Coordinator ([`systems/alive-hyper-swarm-coordinator.js`](systems/alive-hyper-swarm-coordinator.js), [`scripts/alive-hyper-swarm-coordinator.cjs`](scripts/alive-hyper-swarm-coordinator.cjs)) comparing `cloned-tab-flock`, `homogeneous-single-guild`, `uncoordinated-independent-swarm`, and `tri-guild-hybrid-synergy-swarm` (`5 Locust-Foragers`, `5 Raven-Cognition`, `5 Fish-School-Consensus`) across 30 multi-stage tasks per seed.
