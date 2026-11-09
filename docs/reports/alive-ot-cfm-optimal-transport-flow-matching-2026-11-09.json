@@ -1,0 +1,300 @@
+{
+  "passNumber": 82,
+  "passSlice": "82/100",
+  "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+  "moduleId": "alive-ot-cfm-optimal-transport-flow-matching",
+  "timestamp": "2026-11-09T23:17:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "curved_ddpm_2step_euler_discretization_error_baseline",
+      "label": "Curved Variance-Preserving DDPM Score SDE Evaluated With 2 Euler Steps (High Curvature Error)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "straightnessDefectMean": 0.1657911,
+          "twoStepTerminalMseMean": 0.11978407,
+          "compositeScore": 0
+        },
+        {
+          "seed": 29017,
+          "straightnessDefectMean": 0.15362821,
+          "twoStepTerminalMseMean": 0.11099638,
+          "compositeScore": 0.0516
+        },
+        {
+          "seed": 39023,
+          "straightnessDefectMean": 0.15950712,
+          "twoStepTerminalMseMean": 0.1152439,
+          "compositeScore": 0
+        },
+        {
+          "seed": 49031,
+          "straightnessDefectMean": 0.16055593,
+          "twoStepTerminalMseMean": 0.11600166,
+          "compositeScore": 0
+        },
+        {
+          "seed": 59053,
+          "straightnessDefectMean": 0.15400176,
+          "twoStepTerminalMseMean": 0.11126627,
+          "compositeScore": 0
+        }
+      ],
+      "aggregate": {
+        "straightnessDefectStats": {
+          "mean": 0.1587,
+          "stdDev": 0.0051,
+          "ci95": [
+            0.1524,
+            0.165
+          ]
+        },
+        "twoStepTerminalMseStats": {
+          "mean": 0.1147,
+          "stdDev": 0.0037,
+          "ci95": [
+            0.1101,
+            0.1192
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 0.0103,
+          "stdDev": 0.0231,
+          "ci95": [
+            -0.0183,
+            0.039
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "independent_random_coupling_crossing_paths_ablation",
+      "label": "Independent Random Coupling (z_0, z_1) Without Optimal-Transport Assignment (Path Crossing)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "straightnessDefectMean": 0.01842123,
+          "twoStepTerminalMseMean": 0.01330934,
+          "compositeScore": 85.7212
+        },
+        {
+          "seed": 29017,
+          "straightnessDefectMean": 0.0170698,
+          "twoStepTerminalMseMean": 0.01233293,
+          "compositeScore": 86.7688
+        },
+        {
+          "seed": 39023,
+          "straightnessDefectMean": 0.01772301,
+          "twoStepTerminalMseMean": 0.01280488,
+          "compositeScore": 86.2624
+        },
+        {
+          "seed": 49031,
+          "straightnessDefectMean": 0.01783955,
+          "twoStepTerminalMseMean": 0.01288907,
+          "compositeScore": 86.1721
+        },
+        {
+          "seed": 59053,
+          "straightnessDefectMean": 0.01711131,
+          "twoStepTerminalMseMean": 0.01236292,
+          "compositeScore": 86.7366
+        }
+      ],
+      "aggregate": {
+        "straightnessDefectStats": {
+          "mean": 0.0176,
+          "stdDev": 0.0006,
+          "ci95": [
+            0.0169,
+            0.0183
+          ]
+        },
+        "twoStepTerminalMseStats": {
+          "mean": 0.0127,
+          "stdDev": 0.0004,
+          "ci95": [
+            0.0122,
+            0.0132
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 86.3322,
+          "stdDev": 0.4353,
+          "ci95": [
+            85.7917,
+            86.8727
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "cfm_without_fourier_time_phase_bias_ablation",
+      "label": "OT-CFM Without Fourier Time-Embedding Phase Bias b_time",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "straightnessDefectMean": 0.01842123,
+          "twoStepTerminalMseMean": 0.01330934,
+          "compositeScore": 85.7212
+        },
+        {
+          "seed": 29017,
+          "straightnessDefectMean": 0.0170698,
+          "twoStepTerminalMseMean": 0.01233293,
+          "compositeScore": 86.7688
+        },
+        {
+          "seed": 39023,
+          "straightnessDefectMean": 0.01772301,
+          "twoStepTerminalMseMean": 0.01280488,
+          "compositeScore": 86.2624
+        },
+        {
+          "seed": 49031,
+          "straightnessDefectMean": 0.01783955,
+          "twoStepTerminalMseMean": 0.01288907,
+          "compositeScore": 86.1721
+        },
+        {
+          "seed": 59053,
+          "straightnessDefectMean": 0.01711131,
+          "twoStepTerminalMseMean": 0.01236292,
+          "compositeScore": 86.7366
+        }
+      ],
+      "aggregate": {
+        "straightnessDefectStats": {
+          "mean": 0.0176,
+          "stdDev": 0.0006,
+          "ci95": [
+            0.0169,
+            0.0183
+          ]
+        },
+        "twoStepTerminalMseStats": {
+          "mean": 0.0127,
+          "stdDev": 0.0004,
+          "ci95": [
+            0.0122,
+            0.0132
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 86.3322,
+          "stdDev": 0.4353,
+          "ci95": [
+            85.7917,
+            86.8727
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ot_cfm_rectified_straight_flow_2step_midpoint",
+      "label": "Optimal-Transport Conditional Flow Matching (OT-CFM) + Rectified Straight Velocity Field (Pass 82 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "straightnessDefectMean": 0,
+          "twoStepTerminalMseMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "straightnessDefectMean": 0,
+          "twoStepTerminalMseMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "straightnessDefectMean": 0,
+          "twoStepTerminalMseMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "straightnessDefectMean": 0,
+          "twoStepTerminalMseMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "straightnessDefectMean": 0,
+          "twoStepTerminalMseMean": 0,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "straightnessDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "twoStepTerminalMseStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "ot_cfm_rectified_straight_flow_2step_midpoint",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "straightnessDefectStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "twoStepTerminalMseStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 99.9897,
+    "tStat": 9688.9225,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
