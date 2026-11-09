@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Phase VI Neuro-Symbolic & Active Inference Acceptance Matrix (N1..N10) pass 35
+
+- Added the 5-seed Phase VI Neuro-Symbolic & Active Inference Acceptance Matrix ([`systems/alive-neurosymbolic-phase6-audit.js`](systems/alive-neurosymbolic-phase6-audit.js), [`scripts/alive-neurosymbolic-phase6-audit.cjs`](scripts/alive-neurosymbolic-phase6-audit.cjs)) auditing Passes 31–34 across `N1-ActiveInference-VFE-Monotonic-Descent` through `N10-MixedPrecision-Compression-Ratio-Compliance`.
+- Verified `10/10` acceptance rows (`100.0%` acceptance score) across `5/5` seeds, freezing the Phase VI SHA-256 manifest (`e609c918c4e601e9507e97e9b63606ae468b348984225c7b4ba775acdac058a6`) and qualifying entry into Phase VII (`Passes 36–40`: Adversarial Immunity, Long-Horizon Autonomous Missions & 40-Pass Grand Omega Qualification).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 41 (`#alive-fabric-phase6-audit`, `Run Phase VI Audit` button, and `runPhase6NeurosymbolicAudit()`).
+- Added [Pass 35 report](docs/ALIVE_PASS_35_REPORT.md), [JSON report](docs/reports/alive-neurosymbolic-phase6-audit-2026-11-09.json), [SVG chart](docs/reports/alive-neurosymbolic-phase6-audit-2026-11-09.svg) and unit tests (`tests/alive-neurosymbolic-phase6-audit.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Dynamic 7-Tier Mixed-Precision Tensor Quantization & Error-Feedback pass 34
 
 - Added the 5-seed Dynamic 7-Tier Mixed-Precision Tensor Quantization (`FP64`/`FP32`/`BF16`/`INT8`/`INT4`/`NF4`/`Binary`) & Spectral Error-Feedback Compensation evaluator ([`systems/alive-mixed-precision-tensor-quantizer.js`](systems/alive-mixed-precision-tensor-quantizer.js), [`scripts/alive-mixed-precision-tensor-quantizer.cjs`](scripts/alive-mixed-precision-tensor-quantizer.cjs)).

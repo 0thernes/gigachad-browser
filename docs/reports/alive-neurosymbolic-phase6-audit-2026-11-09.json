@@ -1,0 +1,774 @@
+{
+  "passId": "ALIVE-PASS-35-NEUROSYMBOLIC-PHASE6-ACCEPTANCE-MATRIX",
+  "phase": "Phase VI — Neuro-Symbolic Program Synthesis, Active Inference Free-Energy & Hyperbolic Knowledge Geometry",
+  "generatedAt": "2026-11-09T20:45:56.281Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "matrixRows": [
+    {
+      "rowId": "N1-ActiveInference-VFE-Monotonic-Descent",
+      "passRef": 31,
+      "description": "Variational Free-Energy F(Q,o) monotonic descent (100% episodes, mean drop >= 0.70 nats)",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 0.796
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 0.7919
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 0.7932
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 0.7935
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 0.7975
+        }
+      ]
+    },
+    {
+      "rowId": "N2-ActiveInference-EFE-Epistemic-Disambiguation",
+      "passRef": 31,
+      "description": "Expected Free Energy G(pi) epistemic probe disambiguation under high latent entropy (100%)",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "N3-ActiveInference-Pragmatic-Goal-Convergence",
+      "passRef": 31,
+      "description": "Active Inference pragmatic goal convergence (100%) and >= +60.0 gain vs greedy/curiosity",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "N4-Poincare-Arcosh-Geodesic-Low-Distortion",
+      "passRef": 32,
+      "description": "Hyperbolic Poincaré Ball B^8_c tree distortion <= 0.15 and 100% neighborhood MAP@k",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 0.1282
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 0.1292
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 0.1296
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 0.1264
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 0.1288
+        }
+      ]
+    },
+    {
+      "rowId": "N5-Poincare-Mobius-Gyrovector-And-Boundary-Safety",
+      "passRef": 32,
+      "description": "Poincaré Möbius gyrovector hierarchy depth monotonicity (100%) & c||x||^2 < 1 safety (100%)",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "N6-NeuroSymbolic-TypedDSL-SMT-Soundness",
+      "passRef": 33,
+      "description": "Neuro-Symbolic Typed Combinator DSL Hoare/SMT invariant soundness (100% across INV1..INV5)",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "N7-NeuroSymbolic-CEGIS-Adversarial-Holdout-And-Decoy-Guard",
+      "passRef": 33,
+      "description": "CEGIS counterexample refinement (<= 3.0 steps), 100% adversarial survival & 100% decoy guard",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "N8-MixedPrecision-7Tier-Hessian-Routing",
+      "passRef": 34,
+      "description": "Dynamic 7-tier (FP64..Binary) Hessian-trace sensitivity routing coverage (100%)",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "N9-MixedPrecision-NF4-ErrorFeedback-Fidelity",
+      "passRef": 34,
+      "description": "NF4 + Karimireddy e_t error-feedback Hessian-weighted cosine similarity >= 0.995 (100%)",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 0.9994
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 0.9994
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 0.9994
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 0.9994
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 0.9994
+        }
+      ]
+    },
+    {
+      "rowId": "N10-MixedPrecision-Compression-Ratio-Compliance",
+      "passRef": 34,
+      "description": "Mixed-precision memory compression >= 4.0x vs FP32 baseline (100% episodes)",
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 4.6758
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 4.6758
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 4.6758
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 4.6758
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 4.6758
+        }
+      ]
+    }
+  ],
+  "upstreamSummaries": {
+    "pass31": {
+      "winningProfile": "full-vfe-efe-active-inference-planner",
+      "allSeedsVerified": true,
+      "fullActiveInferenceScoreMean": 100,
+      "vfeMonotonicReductionPctMean": 100,
+      "epistemicDisambiguationPctMean": 100,
+      "pragmaticGoalConvergencePctMean": 100,
+      "meanVfeDropNats": 0.7944,
+      "gainVsGreedyPragmatic": 70,
+      "gainVsPureCuriosity": 70,
+      "gainVsDogmaticPrior": 100
+    },
+    "pass32": {
+      "winningProfile": "poincare-riemannian-gyrovector-b8",
+      "allSeedsVerified": true,
+      "poincareCompositeScoreMean": 100,
+      "poincareTreeDistortionMean": 0.1284,
+      "poincareMapAtKPctMean": 100,
+      "poincareDepthSpearmanPctMean": 100,
+      "poincareBoundarySafetyPctMean": 100,
+      "gainVsFlatR2": 50.9127,
+      "gainVsFlatR8": 35.6271,
+      "gainVsUnprojectedHyperbolic": 67.4522
+    },
+    "pass33": {
+      "winningProfile": "neurosymbolic-cegis-smt-synthesizer",
+      "allSeedsVerified": true,
+      "fullSynthesisScoreMean": 100,
+      "smtInvariantSoundnessPctMean": 100,
+      "mutationHoldoutSurvivalPctMean": 100,
+      "decoyRejectionPctMean": 100,
+      "meanCegisIterations": 2,
+      "gainVsRegexScraper": 100,
+      "gainVsNeuralSketchOnly": 81.6667,
+      "gainVsUntypedEnumerative": 59.4444
+    },
+    "pass34": {
+      "winningProfile": "hessian-nf4-error-feedback-ladder",
+      "allSeedsVerified": true,
+      "fullQuantizerScoreMean": 100,
+      "spectralFidelityPctMean": 100,
+      "compressionBudgetCompliancePctMean": 100,
+      "sevenTierCoveragePctMean": 100,
+      "meanCosineSimilarity": 0.9994,
+      "meanCompressionRatioVsFp32": 4.6758,
+      "gainVsUniformBinary": 65,
+      "gainVsUniformInt4NoEf": 20,
+      "gainVsStaticFp32": 55
+    }
+  },
+  "summary": {
+    "verifiedRowCount": 10,
+    "totalAcceptanceRows": 10,
+    "acceptanceScorePct": 100,
+    "phase6NeurosymbolicFrozenDigestSha256": "e609c918c4e601e9507e97e9b63606ae468b348984225c7b4ba775acdac058a6",
+    "phase7OmegaMissionReady": true,
+    "matrixRows": [
+      {
+        "rowId": "N1-ActiveInference-VFE-Monotonic-Descent",
+        "passRef": 31,
+        "description": "Variational Free-Energy F(Q,o) monotonic descent (100% episodes, mean drop >= 0.70 nats)",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 0.796
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 0.7919
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 0.7932
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 0.7935
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 0.7975
+          }
+        ]
+      },
+      {
+        "rowId": "N2-ActiveInference-EFE-Epistemic-Disambiguation",
+        "passRef": 31,
+        "description": "Expected Free Energy G(pi) epistemic probe disambiguation under high latent entropy (100%)",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "N3-ActiveInference-Pragmatic-Goal-Convergence",
+        "passRef": 31,
+        "description": "Active Inference pragmatic goal convergence (100%) and >= +60.0 gain vs greedy/curiosity",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "N4-Poincare-Arcosh-Geodesic-Low-Distortion",
+        "passRef": 32,
+        "description": "Hyperbolic Poincaré Ball B^8_c tree distortion <= 0.15 and 100% neighborhood MAP@k",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 0.1282
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 0.1292
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 0.1296
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 0.1264
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 0.1288
+          }
+        ]
+      },
+      {
+        "rowId": "N5-Poincare-Mobius-Gyrovector-And-Boundary-Safety",
+        "passRef": 32,
+        "description": "Poincaré Möbius gyrovector hierarchy depth monotonicity (100%) & c||x||^2 < 1 safety (100%)",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "N6-NeuroSymbolic-TypedDSL-SMT-Soundness",
+        "passRef": 33,
+        "description": "Neuro-Symbolic Typed Combinator DSL Hoare/SMT invariant soundness (100% across INV1..INV5)",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "N7-NeuroSymbolic-CEGIS-Adversarial-Holdout-And-Decoy-Guard",
+        "passRef": 33,
+        "description": "CEGIS counterexample refinement (<= 3.0 steps), 100% adversarial survival & 100% decoy guard",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "N8-MixedPrecision-7Tier-Hessian-Routing",
+        "passRef": 34,
+        "description": "Dynamic 7-tier (FP64..Binary) Hessian-trace sensitivity routing coverage (100%)",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "N9-MixedPrecision-NF4-ErrorFeedback-Fidelity",
+        "passRef": 34,
+        "description": "NF4 + Karimireddy e_t error-feedback Hessian-weighted cosine similarity >= 0.995 (100%)",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 0.9994
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 0.9994
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 0.9994
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 0.9994
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 0.9994
+          }
+        ]
+      },
+      {
+        "rowId": "N10-MixedPrecision-Compression-Ratio-Compliance",
+        "passRef": 34,
+        "description": "Mixed-precision memory compression >= 4.0x vs FP32 baseline (100% episodes)",
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 4.6758
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 4.6758
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 4.6758
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 4.6758
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 4.6758
+          }
+        ]
+      }
+    ]
+  }
+}

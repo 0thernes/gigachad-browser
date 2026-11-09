@@ -1157,6 +1157,39 @@ test('runMixedPrecisionQuantizer renders 5-seed Dynamic Mixed-Precision Tensor Q
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runPhase6NeurosymbolicAudit renders 10-row Phase VI Acceptance Matrix (N1..N10) in section 41', async () => {
+  const { window, dom } = load();
+  window.AliveNeurosymbolicPhase6Audit = {
+    run: async () => ({
+      summary: {
+        verifiedRowCount: 10,
+        totalAcceptanceRows: 10,
+        phase7OmegaMissionReady: true,
+        phase6NeurosymbolicFrozenDigestSha256: '1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
+        matrixRows: [
+          { rowId: 'N1-ActiveInference-VFE-Monotonic-Descent', passRef: 31, passedSeeds: 5, verified: true },
+          { rowId: 'N2-ActiveInference-EFE-Epistemic-Disambiguation', passRef: 31, passedSeeds: 5, verified: true },
+          { rowId: 'N3-ActiveInference-Pragmatic-Goal-Convergence', passRef: 31, passedSeeds: 5, verified: true },
+          { rowId: 'N4-Poincare-Arcosh-Geodesic-Low-Distortion', passRef: 32, passedSeeds: 5, verified: true },
+          { rowId: 'N5-Poincare-Mobius-Gyrovector-And-Boundary-Safety', passRef: 32, passedSeeds: 5, verified: true },
+          { rowId: 'N6-NeuroSymbolic-TypedDSL-SMT-Soundness', passRef: 33, passedSeeds: 5, verified: true },
+          { rowId: 'N7-NeuroSymbolic-CEGIS-Adversarial-Holdout-And-Decoy-Guard', passRef: 33, passedSeeds: 5, verified: true },
+          { rowId: 'N8-MixedPrecision-7Tier-Hessian-Routing', passRef: 34, passedSeeds: 5, verified: true },
+          { rowId: 'N9-MixedPrecision-NF4-ErrorFeedback-Fidelity', passRef: 34, passedSeeds: 5, verified: true },
+          { rowId: 'N10-MixedPrecision-Compression-Ratio-Compliance', passRef: 34, passedSeeds: 5, verified: true }
+        ]
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runPhase6NeurosymbolicAudit();
+  assert.equal(report.summary.verifiedRowCount, 10);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Phase VI Rows 10/10 PASS')), 'Phase VI Audit summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('N1-ActiveInference-VFE-Monot')), 'Phase VI Audit rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 
