@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Locust Solitaria-to-Gregaria phase polyphenism & adaptive trophic backoff pass 27
+
+- Added the 5-seed Locust Solitaria-to-Gregaria Phase Polyphenism, Density-Dependent Frontier Wavefront Expansion, and Adaptive Trophic Backoff evaluator ([`systems/alive-locust-phase-polyphenism.js`](systems/alive-locust-phase-polyphenism.js), [`scripts/alive-locust-phase-polyphenism.cjs`](scripts/alive-locust-phase-polyphenism.cjs)).
+- Verified on `5/5` seeds across 24 ecological epochs per seed that `serotonergic-hysteresis-polyphenism` ($\theta_{\text{up}}=0.55, \theta_{\text{down}}=0.25$) achieves `100.0` composite score (`+21.0` over `locked-solitaria-dispersed`, `+60.5` over `locked-gregaria-stampede`, `+16.67` over `memoryless-threshold-oscillator`), `100.0%` oasis wavefront harvest, `100.0%` trophic backoff survival, `100.0%` hysteresis stability (`0` chatter switches), and `100.0%` collision avoidance.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 33 (`#alive-fabric-locust-polyphenism`, `Run Locust` button, and `runLocustPolyphenism()`).
+- Added [Pass 27 report](docs/ALIVE_PASS_27_REPORT.md), [JSON report](docs/reports/alive-locust-phase-polyphenism-2026-11-09.json), [SVG chart](docs/reports/alive-locust-phase-polyphenism-2026-11-09.svg) and unit tests (`tests/alive-locust-phase-polyphenism.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Corvid (Crow + Raven) episodic tool-making & counterfactual do(X) causal epistemology pass 26
 
 - Added the 5-seed Corvid (`Crow` + `Raven`) Episodic Tool-Making, Multi-Hop Counterfactual Causal Graph Construction ($do(X)$), and Deceptive-Bait Rejection evaluator ([`systems/alive-crow-raven-corvid-epistemology.js`](systems/alive-crow-raven-corvid-epistemology.js), [`scripts/alive-crow-raven-corvid-epistemology.cjs`](scripts/alive-crow-raven-corvid-epistemology.cjs)).

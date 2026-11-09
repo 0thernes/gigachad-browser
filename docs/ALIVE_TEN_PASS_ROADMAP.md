@@ -80,7 +80,7 @@ validation conditions and remaining work.
 | Pass | Intended focus | Status |
 | --- | --- | --- |
 | 26 | Corvid (`Crow` + `Raven`) Episodic Tool-Making, Multi-Hop Counterfactual Causal Graph Construction ($do(X)$) & Deceptive-Bait Rejection | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_26_REPORT.md), [Corvid JSON](reports/alive-crow-raven-corvid-epistemology-2026-11-09.json), [Corvid SVG](reports/alive-crow-raven-corvid-epistemology-2026-11-09.svg) |
-| 27 | Locust Solitaria-to-Gregaria Phase Polyphenism, Density-Dependent Frontier Wavefront Expansion & Adaptive Trophic Backoff | Planned (Pass 27) |
+| 27 | Locust Solitaria-to-Gregaria Phase Polyphenism, Density-Dependent Frontier Wavefront Expansion & Adaptive Trophic Backoff | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_27_REPORT.md), [Locust JSON](reports/alive-locust-phase-polyphenism-2026-11-09.json), [Locust SVG](reports/alive-locust-phase-polyphenism-2026-11-09.svg) |
 | 28 | Fish-School Lateral-Line Hydrodynamic Coupling, Kuramoto Phase Synchronization & Sub-Tick Anomaly Evasion Wave | Planned (Pass 28) |
 | 29 | Symbiotic Cross-Guild Co-Evolution, Shapley Counterfactual Credit Assignment & Pareto Archive Speciation Across `Raven` + `Locust` + `Fish` Lineages | Planned (Pass 29) |
 | 30 | Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix (`E1`–`E10` Executed Audit & Cryptographic SHA-256 Freeze) | Planned (Pass 30) |

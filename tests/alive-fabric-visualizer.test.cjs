@@ -945,6 +945,31 @@ test('runCorvidEpistemology renders 5-seed Corvid (Crow + Raven) Episodic Tool-M
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runLocustPolyphenism renders 5-seed Locust Solitaria-to-Gregaria Phase Polyphenism in section 33', async () => {
+  const { window, dom } = load();
+  window.AliveLocustPhasePolyphenism = {
+    run: async () => ({
+      summary: {
+        fullPolyphenismScoreMean: 100.0,
+        gainVsLockedSolitaria: 21.0,
+        gainVsLockedGregaria: 60.5
+      },
+      aggregatedByProfile: {
+        'locked-solitaria-dispersed': { locustPolyphenismScore: { mean: 79.0 }, oasisWavefrontHarvestPct: { mean: 30.0 }, trophicBackoffSurvivalPct: { mean: 100 }, hysteresisStabilityPct: { mean: 100 }, collisionAvoidancePct: { mean: 100 } },
+        'locked-gregaria-stampede': { locustPolyphenismScore: { mean: 39.5 }, oasisWavefrontHarvestPct: { mean: 65.0 }, trophicBackoffSurvivalPct: { mean: 0 }, hysteresisStabilityPct: { mean: 100 }, collisionAvoidancePct: { mean: 0 } },
+        'memoryless-threshold-oscillator': { locustPolyphenismScore: { mean: 80.0 }, oasisWavefrontHarvestPct: { mean: 100 }, trophicBackoffSurvivalPct: { mean: 100 }, hysteresisStabilityPct: { mean: 0 }, collisionAvoidancePct: { mean: 100 } },
+        'serotonergic-hysteresis-polyphenism': { locustPolyphenismScore: { mean: 100.0 }, oasisWavefrontHarvestPct: { mean: 100 }, trophicBackoffSurvivalPct: { mean: 100 }, hysteresisStabilityPct: { mean: 100 }, collisionAvoidancePct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runLocustPolyphenism();
+  assert.equal(report.summary.fullPolyphenismScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Bistable 5-HT Polyphenism score=100.0')), 'Locust Polyphenism summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('serotonergic-hysteresi')), 'Locust Polyphenism rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 

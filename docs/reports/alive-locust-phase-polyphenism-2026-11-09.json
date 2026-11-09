@@ -1,0 +1,3904 @@
+{
+  "pass": 27,
+  "title": "Locust Solitaria-to-Gregaria Phase Polyphenism, Density-Dependent Frontier Wavefront Expansion & Adaptive Trophic Backoff",
+  "generatedAt": "2026-11-09T21:00:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "profiles": [
+    {
+      "id": "locked-solitaria-dispersed",
+      "label": "Locked Solitaria Only (Dispersed Stealth, No Wavefront)",
+      "mode": "solitaria-only",
+      "thetaUp": 1.1,
+      "thetaDown": 1,
+      "hasHysteresis": false,
+      "hasTrophicBackoff": true,
+      "hasWavefrontPartition": false
+    },
+    {
+      "id": "locked-gregaria-stampede",
+      "label": "Locked Gregaria Stampede (Unbounded Wavefront, No Backoff)",
+      "mode": "gregaria-only",
+      "thetaUp": -0.1,
+      "thetaDown": -0.2,
+      "hasHysteresis": false,
+      "hasTrophicBackoff": false,
+      "hasWavefrontPartition": false
+    },
+    {
+      "id": "memoryless-threshold-oscillator",
+      "label": "Memoryless Threshold Switch (No Hysteresis Gap, Chatter)",
+      "mode": "memoryless-switch",
+      "thetaUp": 0.45,
+      "thetaDown": 0.45,
+      "hasHysteresis": false,
+      "hasTrophicBackoff": false,
+      "hasWavefrontPartition": true
+    },
+    {
+      "id": "serotonergic-hysteresis-polyphenism",
+      "label": "Bistable Serotonergic Hysteresis Polyphenism + Trophic Backoff",
+      "mode": "bistable-hysteresis",
+      "thetaUp": 0.55,
+      "thetaDown": 0.25,
+      "hasHysteresis": true,
+      "hasTrophicBackoff": true,
+      "hasWavefrontPartition": true
+    }
+  ],
+  "seedRuns": [
+    {
+      "seed": 19013,
+      "epochCount": 24,
+      "byProfile": {
+        "locked-solitaria-dispersed": {
+          "profileId": "locked-solitaria-dispersed",
+          "label": "Locked Solitaria Only (Dispersed Stealth, No Wavefront)",
+          "oasisWavefrontHarvestPct": 30,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 79,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "locked-gregaria-stampede": {
+          "profileId": "locked-gregaria-stampede",
+          "label": "Locked Gregaria Stampede (Unbounded Wavefront, No Backoff)",
+          "oasisWavefrontHarvestPct": 65,
+          "trophicBackoffSurvivalPct": 0,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 0,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 24,
+          "locustPolyphenismScore": 39.5,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            }
+          ]
+        },
+        "memoryless-threshold-oscillator": {
+          "profileId": "memoryless-threshold-oscillator",
+          "label": "Memoryless Threshold Switch (No Hysteresis Gap, Chatter)",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 16.6667,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 5,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 83.3333,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3738,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7288,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3071,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7055,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.2989,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1566,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1068,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0894,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0833,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0812,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0804,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "serotonergic-hysteresis-polyphenism": {
+          "profileId": "serotonergic-hysteresis-polyphenism",
+          "label": "Bistable Serotonergic Hysteresis Polyphenism + Trophic Backoff",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 100,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9198,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9199,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.374,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1829,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.116,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0926,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0844,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0815,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "epochCount": 24,
+      "byProfile": {
+        "locked-solitaria-dispersed": {
+          "profileId": "locked-solitaria-dispersed",
+          "label": "Locked Solitaria Only (Dispersed Stealth, No Wavefront)",
+          "oasisWavefrontHarvestPct": 30,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 79,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "locked-gregaria-stampede": {
+          "profileId": "locked-gregaria-stampede",
+          "label": "Locked Gregaria Stampede (Unbounded Wavefront, No Backoff)",
+          "oasisWavefrontHarvestPct": 65,
+          "trophicBackoffSurvivalPct": 0,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 0,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 24,
+          "locustPolyphenismScore": 39.5,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            }
+          ]
+        },
+        "memoryless-threshold-oscillator": {
+          "profileId": "memoryless-threshold-oscillator",
+          "label": "Memoryless Threshold Switch (No Hysteresis Gap, Chatter)",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 16.6667,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 5,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 83.3333,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3738,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7288,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3071,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7055,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.2989,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1566,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1068,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0894,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0833,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0812,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0804,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "serotonergic-hysteresis-polyphenism": {
+          "profileId": "serotonergic-hysteresis-polyphenism",
+          "label": "Bistable Serotonergic Hysteresis Polyphenism + Trophic Backoff",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 100,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9198,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9199,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.374,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1829,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.116,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0926,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0844,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0815,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "epochCount": 24,
+      "byProfile": {
+        "locked-solitaria-dispersed": {
+          "profileId": "locked-solitaria-dispersed",
+          "label": "Locked Solitaria Only (Dispersed Stealth, No Wavefront)",
+          "oasisWavefrontHarvestPct": 30,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 79,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "locked-gregaria-stampede": {
+          "profileId": "locked-gregaria-stampede",
+          "label": "Locked Gregaria Stampede (Unbounded Wavefront, No Backoff)",
+          "oasisWavefrontHarvestPct": 65,
+          "trophicBackoffSurvivalPct": 0,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 0,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 24,
+          "locustPolyphenismScore": 39.5,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            }
+          ]
+        },
+        "memoryless-threshold-oscillator": {
+          "profileId": "memoryless-threshold-oscillator",
+          "label": "Memoryless Threshold Switch (No Hysteresis Gap, Chatter)",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 16.6667,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 5,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 83.3333,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3738,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7288,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3071,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7055,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.2989,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1566,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1068,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0894,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0833,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0812,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0804,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "serotonergic-hysteresis-polyphenism": {
+          "profileId": "serotonergic-hysteresis-polyphenism",
+          "label": "Bistable Serotonergic Hysteresis Polyphenism + Trophic Backoff",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 100,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9198,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9199,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.374,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1829,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.116,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0926,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0844,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0815,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "epochCount": 24,
+      "byProfile": {
+        "locked-solitaria-dispersed": {
+          "profileId": "locked-solitaria-dispersed",
+          "label": "Locked Solitaria Only (Dispersed Stealth, No Wavefront)",
+          "oasisWavefrontHarvestPct": 30,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 79,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "locked-gregaria-stampede": {
+          "profileId": "locked-gregaria-stampede",
+          "label": "Locked Gregaria Stampede (Unbounded Wavefront, No Backoff)",
+          "oasisWavefrontHarvestPct": 65,
+          "trophicBackoffSurvivalPct": 0,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 0,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 24,
+          "locustPolyphenismScore": 39.5,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            }
+          ]
+        },
+        "memoryless-threshold-oscillator": {
+          "profileId": "memoryless-threshold-oscillator",
+          "label": "Memoryless Threshold Switch (No Hysteresis Gap, Chatter)",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 16.6667,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 5,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 83.3333,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3738,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7288,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3071,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7055,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.2989,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1566,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1068,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0894,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0833,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0812,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0804,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "serotonergic-hysteresis-polyphenism": {
+          "profileId": "serotonergic-hysteresis-polyphenism",
+          "label": "Bistable Serotonergic Hysteresis Polyphenism + Trophic Backoff",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 100,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9198,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9199,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.374,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1829,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.116,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0926,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0844,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0815,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "epochCount": 24,
+      "byProfile": {
+        "locked-solitaria-dispersed": {
+          "profileId": "locked-solitaria-dispersed",
+          "label": "Locked Solitaria Only (Dispersed Stealth, No Wavefront)",
+          "oasisWavefrontHarvestPct": 30,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 79,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.05,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "locked-gregaria-stampede": {
+          "profileId": "locked-gregaria-stampede",
+          "label": "Locked Gregaria Stampede (Unbounded Wavefront, No Backoff)",
+          "oasisWavefrontHarvestPct": 65,
+          "trophicBackoffSurvivalPct": 0,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 0,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 24,
+          "locustPolyphenismScore": 39.5,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.95,
+              "phase": "GREGARIA",
+              "switched": false
+            }
+          ]
+        },
+        "memoryless-threshold-oscillator": {
+          "profileId": "memoryless-threshold-oscillator",
+          "label": "Memoryless Threshold Switch (No Hysteresis Gap, Chatter)",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 16.6667,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 5,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 83.3333,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3738,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7288,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.3071,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.7055,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.2989,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1566,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1068,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0894,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0833,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0812,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0804,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        },
+        "serotonergic-hysteresis-polyphenism": {
+          "profileId": "serotonergic-hysteresis-polyphenism",
+          "label": "Bistable Serotonergic Hysteresis Polyphenism + Trophic Backoff",
+          "oasisWavefrontHarvestPct": 100,
+          "trophicBackoffSurvivalPct": 100,
+          "hysteresisStabilityPct": 100,
+          "collisionAvoidancePct": 100,
+          "plateauChatterSwitches": 0,
+          "wavefrontCollisionEvents": 0,
+          "locustPolyphenismScore": 100,
+          "trace": [
+            {
+              "epochIndex": 1,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 2,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 3,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 4,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 5,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 6,
+              "regime": "R1-sparse-reconnaissance",
+              "phi": 0.08,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 7,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.626,
+              "phase": "GREGARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 8,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.8171,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 9,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.884,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 10,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9074,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 11,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9156,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 12,
+              "regime": "R2-dense-citation-oasis-surge",
+              "phi": 0.9185,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 13,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9195,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 14,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9198,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 15,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.9199,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 16,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 17,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 18,
+              "regime": "R3-hysteresis-plateau-jitter",
+              "phi": 0.92,
+              "phase": "GREGARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 19,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.374,
+              "phase": "SOLITARIA",
+              "switched": true
+            },
+            {
+              "epochIndex": 20,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.1829,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 21,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.116,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 22,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0926,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 23,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0844,
+              "phase": "SOLITARIA",
+              "switched": false
+            },
+            {
+              "epochIndex": 24,
+              "regime": "R4-depletion-trophic-backoff",
+              "phi": 0.0815,
+              "phase": "SOLITARIA",
+              "switched": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "aggregatedByProfile": {
+    "locked-solitaria-dispersed": {
+      "profileId": "locked-solitaria-dispersed",
+      "label": "Locked Solitaria Only (Dispersed Stealth, No Wavefront)",
+      "oasisWavefrontHarvestPct": {
+        "mean": 30,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 30,
+        "ci95Upper": 30
+      },
+      "trophicBackoffSurvivalPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "hysteresisStabilityPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "collisionAvoidancePct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "locustPolyphenismScore": {
+        "mean": 79,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 79,
+        "ci95Upper": 79
+      },
+      "totalPlateauChatterAcrossSeeds": 0,
+      "totalCollisionsAcrossSeeds": 0
+    },
+    "locked-gregaria-stampede": {
+      "profileId": "locked-gregaria-stampede",
+      "label": "Locked Gregaria Stampede (Unbounded Wavefront, No Backoff)",
+      "oasisWavefrontHarvestPct": {
+        "mean": 65,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 65,
+        "ci95Upper": 65
+      },
+      "trophicBackoffSurvivalPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "hysteresisStabilityPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "collisionAvoidancePct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "locustPolyphenismScore": {
+        "mean": 39.5,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 39.5,
+        "ci95Upper": 39.5
+      },
+      "totalPlateauChatterAcrossSeeds": 0,
+      "totalCollisionsAcrossSeeds": 120
+    },
+    "memoryless-threshold-oscillator": {
+      "profileId": "memoryless-threshold-oscillator",
+      "label": "Memoryless Threshold Switch (No Hysteresis Gap, Chatter)",
+      "oasisWavefrontHarvestPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "trophicBackoffSurvivalPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "hysteresisStabilityPct": {
+        "mean": 16.6667,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 16.6667,
+        "ci95Upper": 16.6667
+      },
+      "collisionAvoidancePct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "locustPolyphenismScore": {
+        "mean": 83.3333,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 83.3333,
+        "ci95Upper": 83.3333
+      },
+      "totalPlateauChatterAcrossSeeds": 25,
+      "totalCollisionsAcrossSeeds": 0
+    },
+    "serotonergic-hysteresis-polyphenism": {
+      "profileId": "serotonergic-hysteresis-polyphenism",
+      "label": "Bistable Serotonergic Hysteresis Polyphenism + Trophic Backoff",
+      "oasisWavefrontHarvestPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "trophicBackoffSurvivalPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "hysteresisStabilityPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "collisionAvoidancePct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "locustPolyphenismScore": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "totalPlateauChatterAcrossSeeds": 0,
+      "totalCollisionsAcrossSeeds": 0
+    }
+  },
+  "summary": {
+    "winningProfile": "serotonergic-hysteresis-polyphenism",
+    "allSeedsVerified": true,
+    "fullPolyphenismScoreMean": 100,
+    "oasisWavefrontHarvestPctMean": 100,
+    "trophicBackoffSurvivalPctMean": 100,
+    "hysteresisStabilityPctMean": 100,
+    "collisionAvoidancePctMean": 100,
+    "gainVsLockedSolitaria": 21,
+    "gainVsLockedGregaria": 60.5,
+    "gainVsMemorylessSwitch": 16.6667
+  }
+}

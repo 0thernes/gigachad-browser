@@ -325,6 +325,7 @@
   let latestOnionMerkle = null, onionMerkleBusy = false;
   let latestPhase4Audit = null, phase4AuditBusy = false;
   let latestCorvid = null, corvidBusy = false;
+  let latestLocust = null, locustBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -646,6 +647,19 @@
       return latestCorvid;
     } finally {
       corvidBusy = false;
+    }
+  }
+  async function runLocustPolyphenism() {
+    const runner = root.AliveLocustPhasePolyphenism;
+    if (locustBusy || typeof runner?.run !== 'function') return latestLocust;
+    locustBusy = true;
+    try {
+      latestLocust = await runner.run();
+      root.__aliveLatestLocust = latestLocust;
+      draw();
+      return latestLocust;
+    } finally {
+      locustBusy = false;
     }
   }
 
@@ -1811,6 +1825,48 @@
     ctx.fillText('24 challenges/seed (6 depth-3 meta-tool synthesis, 6 Pearl do(X) backdoor graphs, 6 ToM cache guard, 6 Simpson paradox bait)', 8, height - 6);
   }
 
+  // ---------- 33. Pass 27 Locust Solitaria-to-Gregaria Polyphenism ----------
+  function drawLocustPolyphenism(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestLocust || root.__aliveLatestLocust;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(locustBusy ? 'Running 5-seed Locust Solitaria-to-Gregaria Polyphenism suite…' : 'Click "Run Locust" above to evaluate Bistable 5-HT Hysteresis Polyphenism & Trophic Backoff across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · Bistable 5-HT Polyphenism score=${(s.fullPolyphenismScoreMean || 0).toFixed(1)} · vs Solitaria +${(s.gainVsLockedSolitaria || 0).toFixed(1)} · vs Gregaria +${(s.gainVsLockedGregaria || 0).toFixed(1)} · 0 chatter/collisions`, 8, 12);
+    const modes = ['locked-solitaria-dispersed', 'locked-gregaria-stampede', 'memoryless-threshold-oscillator', 'serotonergic-hysteresis-polyphenism'];
+    const colors = {
+      'locked-solitaria-dispersed': '#f59e0b',
+      'locked-gregaria-stampede': '#f43f5e',
+      'memoryless-threshold-oscillator': '#38bdf8',
+      'serotonergic-hysteresis-polyphenism': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.locustPolyphenismScore?.mean || 0;
+      const oas = entry.oasisWavefrontHarvestPct?.mean || 0;
+      const bck = entry.trophicBackoffSurvivalPct?.mean || 0;
+      const hys = entry.hysteresisStabilityPct?.mean || 0;
+      const col = entry.collisionAvoidancePct?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} oasis=${oas.toFixed(0)}% backoff=${bck.toFixed(0)}% hyst=${hys.toFixed(0)}% noColl=${col.toFixed(0)}%`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('24 ecological epochs/seed (6 sparse stealth, 6 dense oasis surge, 6 hysteresis plateau jitter, 6 depletion trophic backoff)', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1908,13 +1964,16 @@
     const corvidBtn = doc.createElement('button'); corvidBtn.type = 'button'; corvidBtn.textContent = 'Run Corvid';
     corvidBtn.title = 'Run 5-seed Corvid (Crow + Raven) Episodic Tool-Making & Counterfactual do(X) Causal Graph evaluation';
     corvidBtn.addEventListener('click', () => { runCorvidEpistemology(); });
+    const locustBtn = doc.createElement('button'); locustBtn.type = 'button'; locustBtn.textContent = 'Run Locust';
+    locustBtn.title = 'Run 5-seed Locust Solitaria-to-Gregaria Phase Polyphenism & Adaptive Trophic Backoff evaluation';
+    locustBtn.addEventListener('click', () => { runLocustPolyphenism(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1931,7 +1990,7 @@
       omegaAuditCanvas = canvas('alive-fabric-omega-audit', 190), torPtCanvas = canvas('alive-fabric-tor-pt', 190),
       onionPowCanvas = canvas('alive-fabric-onion-pow', 190), torWfPadCanvas = canvas('alive-fabric-tor-wf-padding', 190),
       onionMerkleCanvas = canvas('alive-fabric-onion-merkle', 190), phase4AuditCanvas = canvas('alive-fabric-phase4-audit', 190),
-      corvidCanvas = canvas('alive-fabric-corvid-epistemology', 190);
+      corvidCanvas = canvas('alive-fabric-corvid-epistemology', 190), locustCanvas = canvas('alive-fabric-locust-polyphenism', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1966,7 +2025,8 @@
       section('29 · Website Fingerprinting (WF) Defense & Circuit Padding Machines — WTF-PAD + RegulaTor (5 seeds)', torWfPadCanvas),
       section('30 · Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger (5 seeds)', onionMerkleCanvas),
       section('31 · Phase IV Deep-Web Acceptance Matrix (D1..D10) & Cryptographic SHA-256 Freeze (5 seeds)', phase4AuditCanvas),
-      section('32 · Corvid (Crow + Raven) Episodic Tool-Making & Counterfactual do(X) Causal Graphs (5 seeds)', corvidCanvas));
+      section('32 · Corvid (Crow + Raven) Episodic Tool-Making & Counterfactual do(X) Causal Graphs (5 seeds)', corvidCanvas),
+      section('33 · Locust Solitaria-to-Gregaria Phase Polyphenism & Adaptive Trophic Backoff (5 seeds)', locustCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1997,7 +2057,8 @@
       () => drawTorWfPadding(torWfPadCanvas),
       () => drawOnionMerkleLedger(onionMerkleCanvas),
       () => drawPhase4DeepWebAudit(phase4AuditCanvas),
-      () => drawCorvidEpistemology(corvidCanvas));
+      () => drawCorvidEpistemology(corvidCanvas),
+      () => drawLocustPolyphenism(locustCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -2040,6 +2101,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);
