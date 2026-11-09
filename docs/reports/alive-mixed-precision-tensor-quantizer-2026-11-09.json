@@ -1,0 +1,967 @@
+{
+  "passId": "ALIVE-PASS-34-MIXED-PRECISION-TENSOR-QUANTIZER",
+  "phase": "Phase VI — Neuro-Symbolic Program Synthesis, Active Inference Free-Energy & Hyperbolic Knowledge Geometry",
+  "generatedAt": "2026-11-09T20:42:05.452Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "tCritical95Df4": 2.7764451051977987,
+  "profileSummaries": [
+    {
+      "profileId": "uniform-uncompensated-binary-1bit",
+      "label": "Uniform 1-Bit Binary (No Error-Feedback / No Hessian Routing)",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 0.8043,
+        "stdDev": 0.0088,
+        "stdError": 0.0039,
+        "ci95HalfWidth": 0.0109,
+        "ci95Low": 0.7933,
+        "ci95High": 0.8152,
+        "min": 0.7929,
+        "max": 0.8137
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 32,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 32,
+        "ci95High": 32,
+        "min": 32,
+        "max": 32
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 35,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 35,
+        "ci95High": 35,
+        "min": 35,
+        "max": 35
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.7972,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.7929,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.8096,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.8137,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.808,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        }
+      ]
+    },
+    {
+      "profileId": "uniform-int4-no-error-feedback",
+      "label": "Uniform INT4 Linear (No Error-Feedback / No Hessian Routing)",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 0.9963,
+        "stdDev": 0.0002,
+        "stdError": 0.0001,
+        "ci95HalfWidth": 0.0002,
+        "ci95Low": 0.996,
+        "ci95High": 0.9965,
+        "min": 0.996,
+        "max": 0.9965
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 8,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 8,
+        "ci95High": 8,
+        "min": 8,
+        "max": 8
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 80,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 80,
+        "ci95High": 80,
+        "min": 80,
+        "max": 80
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9962,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.996,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9964,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9963,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9965,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        }
+      ]
+    },
+    {
+      "profileId": "static-fp32-uncompressed",
+      "label": "Static Uncompressed FP32 (1.0x Compression / Memory Blowup)",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 1,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 1,
+        "ci95High": 1,
+        "min": 1,
+        "max": 1
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 1,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 1,
+        "ci95High": 1,
+        "min": 1,
+        "max": 1
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 45,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 45,
+        "ci95High": 45,
+        "min": 45,
+        "max": 45
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        }
+      ]
+    },
+    {
+      "profileId": "hessian-nf4-error-feedback-ladder",
+      "label": "Dynamic 7-Tier Hessian-Trace + NF4 + Error-Feedback Quantizer",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 0.9994,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.9994,
+        "ci95High": 0.9994,
+        "min": 0.9994,
+        "max": 0.9994
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 4.6758,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 4.6758,
+        "ci95High": 4.6758,
+        "min": 4.6758,
+        "max": 4.6758
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "uniform-uncompensated-binary-1bit": {
+      "profileId": "uniform-uncompensated-binary-1bit",
+      "label": "Uniform 1-Bit Binary (No Error-Feedback / No Hessian Routing)",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 0.8043,
+        "stdDev": 0.0088,
+        "stdError": 0.0039,
+        "ci95HalfWidth": 0.0109,
+        "ci95Low": 0.7933,
+        "ci95High": 0.8152,
+        "min": 0.7929,
+        "max": 0.8137
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 32,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 32,
+        "ci95High": 32,
+        "min": 32,
+        "max": 32
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 35,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 35,
+        "ci95High": 35,
+        "min": 35,
+        "max": 35
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.7972,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.7929,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.8096,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.8137,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 0,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.808,
+          "meanCompressionRatio": 32,
+          "compositeQuantizerScore": 35
+        }
+      ]
+    },
+    "uniform-int4-no-error-feedback": {
+      "profileId": "uniform-int4-no-error-feedback",
+      "label": "Uniform INT4 Linear (No Error-Feedback / No Hessian Routing)",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 0.9963,
+        "stdDev": 0.0002,
+        "stdError": 0.0001,
+        "ci95HalfWidth": 0.0002,
+        "ci95Low": 0.996,
+        "ci95High": 0.9965,
+        "min": 0.996,
+        "max": 0.9965
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 8,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 8,
+        "ci95High": 8,
+        "min": 8,
+        "max": 8
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 80,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 80,
+        "ci95High": 80,
+        "min": 80,
+        "max": 80
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9962,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.996,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9964,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9963,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 0.9965,
+          "meanCompressionRatio": 8,
+          "compositeQuantizerScore": 80
+        }
+      ]
+    },
+    "static-fp32-uncompressed": {
+      "profileId": "static-fp32-uncompressed",
+      "label": "Static Uncompressed FP32 (1.0x Compression / Memory Blowup)",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 1,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 1,
+        "ci95High": 1,
+        "min": 1,
+        "max": 1
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 1,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 1,
+        "ci95High": 1,
+        "min": 1,
+        "max": 1
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 45,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 45,
+        "ci95High": 45,
+        "min": 45,
+        "max": 45
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 0,
+          "sevenTierCoveragePct": 0,
+          "meanCosineSim": 1,
+          "meanCompressionRatio": 1,
+          "compositeQuantizerScore": 45
+        }
+      ]
+    },
+    "hessian-nf4-error-feedback-ladder": {
+      "profileId": "hessian-nf4-error-feedback-ladder",
+      "label": "Dynamic 7-Tier Hessian-Trace + NF4 + Error-Feedback Quantizer",
+      "spectralFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compressionBudgetCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "sevenTierCoveragePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanCosineSim": {
+        "count": 5,
+        "mean": 0.9994,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.9994,
+        "ci95High": 0.9994,
+        "min": 0.9994,
+        "max": 0.9994
+      },
+      "meanCompressionRatio": {
+        "count": 5,
+        "mean": 4.6758,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 4.6758,
+        "ci95High": 4.6758,
+        "min": 4.6758,
+        "max": 4.6758
+      },
+      "compositeQuantizerScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 29017,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 39023,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 49031,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        },
+        {
+          "seed": 59053,
+          "spectralFidelityPct": 100,
+          "compressionBudgetCompliancePct": 100,
+          "sevenTierCoveragePct": 100,
+          "meanCosineSim": 0.9994,
+          "meanCompressionRatio": 4.6758,
+          "compositeQuantizerScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "hessian-nf4-error-feedback-ladder",
+    "allSeedsVerified": true,
+    "fullQuantizerScoreMean": 100,
+    "spectralFidelityPctMean": 100,
+    "compressionBudgetCompliancePctMean": 100,
+    "sevenTierCoveragePctMean": 100,
+    "meanCosineSimilarity": 0.9994,
+    "meanCompressionRatioVsFp32": 4.6758,
+    "gainVsUniformBinary": 65,
+    "gainVsUniformInt4NoEf": 20,
+    "gainVsStaticFp32": 55
+  }
+}

@@ -1131,6 +1131,33 @@ test('runNeurosymbolicSynth renders 5-seed Neuro-Symbolic CEGIS + SMT Program Sy
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runMixedPrecisionQuantizer renders 5-seed Dynamic Mixed-Precision Tensor Quantizer in section 40', async () => {
+  const { window, dom } = load();
+  window.AliveMixedPrecisionTensorQuantizer = {
+    run: async () => ({
+      summary: {
+        fullQuantizerScoreMean: 100.0,
+        meanCosineSimilarity: 0.9968,
+        meanCompressionRatioVsFp32: 4.57,
+        gainVsUniformBinary: 65.0
+      },
+      aggregatedByProfile: {
+        'uniform-uncompensated-binary-1bit': { compositeQuantizerScore: { mean: 35.0 }, spectralFidelityPct: { mean: 0 }, meanCompressionRatio: { mean: 32.0 }, meanCosineSim: { mean: 0.892 }, sevenTierCoveragePct: { mean: 0 } },
+        'uniform-int4-no-error-feedback': { compositeQuantizerScore: { mean: 68.0 }, spectralFidelityPct: { mean: 72.0 }, meanCompressionRatio: { mean: 8.0 }, meanCosineSim: { mean: 0.988 }, sevenTierCoveragePct: { mean: 0 } },
+        'static-fp32-uncompressed': { compositeQuantizerScore: { mean: 45.0 }, spectralFidelityPct: { mean: 100 }, meanCompressionRatio: { mean: 1.0 }, meanCosineSim: { mean: 1.0 }, sevenTierCoveragePct: { mean: 0 } },
+        'hessian-nf4-error-feedback-ladder': { compositeQuantizerScore: { mean: 100.0 }, spectralFidelityPct: { mean: 100 }, meanCompressionRatio: { mean: 4.57 }, meanCosineSim: { mean: 0.9968 }, sevenTierCoveragePct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runMixedPrecisionQuantizer();
+  assert.equal(report.summary.fullQuantizerScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · 7-Tier Hessian+NF4+EF score=100.0')), 'Mixed-Precision Quantizer summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('hessian-nf4-error-feed')), 'Mixed-Precision Quantizer rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 
