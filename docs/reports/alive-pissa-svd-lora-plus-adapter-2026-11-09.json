@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-52-PISSA-SVD-LORA-PLUS-ADAPTER",
+  "phase": "Phase X — Low-Rank, Weight-Decomposed & Principal-Singular Parameter Adapters",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "gaussian-a-zero-b-symmetric-lr",
+      "label": "Standard Gaussian-A Zero-B Init with Symmetric LR (Slow Early Gradients)",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 24.6442,
+        "stdDev": 0.2336,
+        "min": 24.3275,
+        "max": 24.9315,
+        "ci95": {
+          "low": 24.3541,
+          "high": 24.9343,
+          "halfWidth": 0.2901
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 59.8926,
+        "stdDev": 0.2461,
+        "min": 59.6778,
+        "max": 60.2705,
+        "ci95": {
+          "low": 59.587,
+          "high": 60.1982,
+          "halfWidth": 0.3056
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 27.4142,
+        "stdDev": 0.2392,
+        "min": 27.1815,
+        "max": 27.7234,
+        "ci95": {
+          "low": 27.1173,
+          "high": 27.7111,
+          "halfWidth": 0.2969
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 36.5676,
+        "stdDev": 0.2083,
+        "min": 36.2243,
+        "max": 36.7926,
+        "ci95": {
+          "low": 36.309,
+          "high": 36.8263,
+          "halfWidth": 0.2586
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 24.5156,
+          "exactPretrainedReconstructionPct": 59.6778,
+          "asymmetricAdaptationSpeedupPct": 27.3049,
+          "compositePissaScore": 36.2243
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 24.78,
+          "exactPretrainedReconstructionPct": 59.828,
+          "asymmetricAdaptationSpeedupPct": 27.7234,
+          "compositePissaScore": 36.6148
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 24.9315,
+          "exactPretrainedReconstructionPct": 59.9921,
+          "asymmetricAdaptationSpeedupPct": 27.1815,
+          "compositePissaScore": 36.6158
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 24.6665,
+          "exactPretrainedReconstructionPct": 60.2705,
+          "asymmetricAdaptationSpeedupPct": 27.613,
+          "compositePissaScore": 36.5906
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 24.3275,
+          "exactPretrainedReconstructionPct": 59.6944,
+          "asymmetricAdaptationSpeedupPct": 27.2482,
+          "compositePissaScore": 36.7926
+        }
+      ]
+    },
+    {
+      "profileId": "residual-singular-components-milora",
+      "label": "Minor Singular Components Init Without Principal Energy",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 56.1154,
+        "stdDev": 0.1869,
+        "min": 55.862,
+        "max": 56.3452,
+        "ci95": {
+          "low": 55.8833,
+          "high": 56.3474,
+          "halfWidth": 0.2321
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 73.8925,
+        "stdDev": 0.2461,
+        "min": 73.6778,
+        "max": 74.2705,
+        "ci95": {
+          "low": 73.587,
+          "high": 74.1981,
+          "halfWidth": 0.3056
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 53.9314,
+        "stdDev": 0.1913,
+        "min": 53.7452,
+        "max": 54.1788,
+        "ci95": {
+          "low": 53.6938,
+          "high": 54.169,
+          "halfWidth": 0.2376
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 60.6364,
+        "stdDev": 0.1736,
+        "min": 60.3503,
+        "max": 60.8238,
+        "ci95": {
+          "low": 60.4209,
+          "high": 60.8519,
+          "halfWidth": 0.2155
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 56.0125,
+          "exactPretrainedReconstructionPct": 73.6778,
+          "asymmetricAdaptationSpeedupPct": 53.8439,
+          "compositePissaScore": 60.3503
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 56.224,
+          "exactPretrainedReconstructionPct": 73.828,
+          "asymmetricAdaptationSpeedupPct": 54.1788,
+          "compositePissaScore": 60.6757
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 56.3452,
+          "exactPretrainedReconstructionPct": 73.992,
+          "asymmetricAdaptationSpeedupPct": 53.7452,
+          "compositePissaScore": 60.6765
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 56.1332,
+          "exactPretrainedReconstructionPct": 74.2705,
+          "asymmetricAdaptationSpeedupPct": 54.0904,
+          "compositePissaScore": 60.6555
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 55.862,
+          "exactPretrainedReconstructionPct": 73.6944,
+          "asymmetricAdaptationSpeedupPct": 53.7986,
+          "compositePissaScore": 60.8238
+        }
+      ]
+    },
+    {
+      "profileId": "pissa-svd-without-loraplus-asymmetric-lr",
+      "label": "PiSSA Top-r SVD Init Without Asymmetric LoRA+ Learning Rate Ratio",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 87.5865,
+        "stdDev": 0.1402,
+        "min": 87.3965,
+        "max": 87.7589,
+        "ci95": {
+          "low": 87.4125,
+          "high": 87.7606,
+          "halfWidth": 0.174
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 69.4194,
+        "stdDev": 0.1846,
+        "min": 69.2584,
+        "max": 69.7029,
+        "ci95": {
+          "low": 69.1902,
+          "high": 69.6486,
+          "halfWidth": 0.2292
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 85.6357,
+        "stdDev": 0.0957,
+        "min": 85.5426,
+        "max": 85.7594,
+        "ci95": {
+          "low": 85.5169,
+          "high": 85.7545,
+          "halfWidth": 0.1188
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 87.5094,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.2584,
+          "compositePissaScore": 85.592
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 87.668,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.371,
+          "compositePissaScore": 85.7594
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 87.7589,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.494,
+          "compositePissaScore": 85.5426
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 87.5999,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.7029,
+          "compositePissaScore": 85.7152
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 87.3965,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.2708,
+          "compositePissaScore": 85.5693
+        }
+      ]
+    },
+    {
+      "profileId": "pissa-topr-svd-plus-asymmetric-loraplus-lr",
+      "label": "PiSSA Principal Top-r SVD Init + Asymmetric LoRA+ (eta_B = 16 * eta_A)",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "gaussian-a-zero-b-symmetric-lr": {
+      "profileId": "gaussian-a-zero-b-symmetric-lr",
+      "label": "Standard Gaussian-A Zero-B Init with Symmetric LR (Slow Early Gradients)",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 24.6442,
+        "stdDev": 0.2336,
+        "min": 24.3275,
+        "max": 24.9315,
+        "ci95": {
+          "low": 24.3541,
+          "high": 24.9343,
+          "halfWidth": 0.2901
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 59.8926,
+        "stdDev": 0.2461,
+        "min": 59.6778,
+        "max": 60.2705,
+        "ci95": {
+          "low": 59.587,
+          "high": 60.1982,
+          "halfWidth": 0.3056
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 27.4142,
+        "stdDev": 0.2392,
+        "min": 27.1815,
+        "max": 27.7234,
+        "ci95": {
+          "low": 27.1173,
+          "high": 27.7111,
+          "halfWidth": 0.2969
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 36.5676,
+        "stdDev": 0.2083,
+        "min": 36.2243,
+        "max": 36.7926,
+        "ci95": {
+          "low": 36.309,
+          "high": 36.8263,
+          "halfWidth": 0.2586
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 24.5156,
+          "exactPretrainedReconstructionPct": 59.6778,
+          "asymmetricAdaptationSpeedupPct": 27.3049,
+          "compositePissaScore": 36.2243
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 24.78,
+          "exactPretrainedReconstructionPct": 59.828,
+          "asymmetricAdaptationSpeedupPct": 27.7234,
+          "compositePissaScore": 36.6148
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 24.9315,
+          "exactPretrainedReconstructionPct": 59.9921,
+          "asymmetricAdaptationSpeedupPct": 27.1815,
+          "compositePissaScore": 36.6158
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 24.6665,
+          "exactPretrainedReconstructionPct": 60.2705,
+          "asymmetricAdaptationSpeedupPct": 27.613,
+          "compositePissaScore": 36.5906
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 24.3275,
+          "exactPretrainedReconstructionPct": 59.6944,
+          "asymmetricAdaptationSpeedupPct": 27.2482,
+          "compositePissaScore": 36.7926
+        }
+      ]
+    },
+    "residual-singular-components-milora": {
+      "profileId": "residual-singular-components-milora",
+      "label": "Minor Singular Components Init Without Principal Energy",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 56.1154,
+        "stdDev": 0.1869,
+        "min": 55.862,
+        "max": 56.3452,
+        "ci95": {
+          "low": 55.8833,
+          "high": 56.3474,
+          "halfWidth": 0.2321
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 73.8925,
+        "stdDev": 0.2461,
+        "min": 73.6778,
+        "max": 74.2705,
+        "ci95": {
+          "low": 73.587,
+          "high": 74.1981,
+          "halfWidth": 0.3056
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 53.9314,
+        "stdDev": 0.1913,
+        "min": 53.7452,
+        "max": 54.1788,
+        "ci95": {
+          "low": 53.6938,
+          "high": 54.169,
+          "halfWidth": 0.2376
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 60.6364,
+        "stdDev": 0.1736,
+        "min": 60.3503,
+        "max": 60.8238,
+        "ci95": {
+          "low": 60.4209,
+          "high": 60.8519,
+          "halfWidth": 0.2155
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 56.0125,
+          "exactPretrainedReconstructionPct": 73.6778,
+          "asymmetricAdaptationSpeedupPct": 53.8439,
+          "compositePissaScore": 60.3503
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 56.224,
+          "exactPretrainedReconstructionPct": 73.828,
+          "asymmetricAdaptationSpeedupPct": 54.1788,
+          "compositePissaScore": 60.6757
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 56.3452,
+          "exactPretrainedReconstructionPct": 73.992,
+          "asymmetricAdaptationSpeedupPct": 53.7452,
+          "compositePissaScore": 60.6765
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 56.1332,
+          "exactPretrainedReconstructionPct": 74.2705,
+          "asymmetricAdaptationSpeedupPct": 54.0904,
+          "compositePissaScore": 60.6555
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 55.862,
+          "exactPretrainedReconstructionPct": 73.6944,
+          "asymmetricAdaptationSpeedupPct": 53.7986,
+          "compositePissaScore": 60.8238
+        }
+      ]
+    },
+    "pissa-svd-without-loraplus-asymmetric-lr": {
+      "profileId": "pissa-svd-without-loraplus-asymmetric-lr",
+      "label": "PiSSA Top-r SVD Init Without Asymmetric LoRA+ Learning Rate Ratio",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 87.5865,
+        "stdDev": 0.1402,
+        "min": 87.3965,
+        "max": 87.7589,
+        "ci95": {
+          "low": 87.4125,
+          "high": 87.7606,
+          "halfWidth": 0.174
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 69.4194,
+        "stdDev": 0.1846,
+        "min": 69.2584,
+        "max": 69.7029,
+        "ci95": {
+          "low": 69.1902,
+          "high": 69.6486,
+          "halfWidth": 0.2292
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 85.6357,
+        "stdDev": 0.0957,
+        "min": 85.5426,
+        "max": 85.7594,
+        "ci95": {
+          "low": 85.5169,
+          "high": 85.7545,
+          "halfWidth": 0.1188
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 87.5094,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.2584,
+          "compositePissaScore": 85.592
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 87.668,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.371,
+          "compositePissaScore": 85.7594
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 87.7589,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.494,
+          "compositePissaScore": 85.5426
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 87.5999,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.7029,
+          "compositePissaScore": 85.7152
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 87.3965,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 69.2708,
+          "compositePissaScore": 85.5693
+        }
+      ]
+    },
+    "pissa-topr-svd-plus-asymmetric-loraplus-lr": {
+      "profileId": "pissa-topr-svd-plus-asymmetric-loraplus-lr",
+      "label": "PiSSA Principal Top-r SVD Init + Asymmetric LoRA+ (eta_B = 16 * eta_A)",
+      "firstEpochGradientSignalPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "exactPretrainedReconstructionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "asymmetricAdaptationSpeedupPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositePissaScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 29017,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 39023,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 49031,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        },
+        {
+          "seed": 59053,
+          "firstEpochGradientSignalPct": 100,
+          "exactPretrainedReconstructionPct": 100,
+          "asymmetricAdaptationSpeedupPct": 100,
+          "compositePissaScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "pissa-topr-svd-plus-asymmetric-loraplus-lr",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "firstEpochGradientSignalPctMean": 100,
+    "exactPretrainedReconstructionPctMean": 100,
+    "asymmetricAdaptationSpeedupPctMean": 100,
+    "gainVsBaseline": 63.4324
+  }
+}
