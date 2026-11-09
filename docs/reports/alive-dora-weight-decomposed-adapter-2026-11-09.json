@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-51-DORA-WEIGHT-DECOMPOSED-ADAPTER",
+  "phase": "Phase X — Low-Rank, Weight-Decomposed & Principal-Singular Parameter Adapters",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "standard-lora-coupled-magnitude-direction",
+      "label": "Standard LoRA (Coupled Magnitude & Direction Updates)",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 66.0679,
+        "stdDev": 0.2688,
+        "min": 65.6074,
+        "max": 66.2792,
+        "ci95": {
+          "low": 65.7342,
+          "high": 66.4016,
+          "halfWidth": 0.3337
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 69.9111,
+        "stdDev": 0.3223,
+        "min": 69.5329,
+        "max": 70.3082,
+        "ci95": {
+          "low": 69.511,
+          "high": 70.3113,
+          "halfWidth": 0.4001
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 64.0439,
+        "stdDev": 0.2064,
+        "min": 63.8884,
+        "max": 64.4004,
+        "ci95": {
+          "low": 63.7876,
+          "high": 64.3002,
+          "halfWidth": 0.2563
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 65.8548,
+        "stdDev": 0.1236,
+        "min": 65.7219,
+        "max": 66.0479,
+        "ci95": {
+          "low": 65.7014,
+          "high": 66.0082,
+          "halfWidth": 0.1534
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 65.6074,
+          "directionalCosineFidelityPct": 69.6287,
+          "lowRankCapacityUtilizationPct": 64.0065,
+          "compositeDoraScore": 65.8396
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 66.0743,
+          "directionalCosineFidelityPct": 69.5329,
+          "lowRankCapacityUtilizationPct": 63.8884,
+          "compositeDoraScore": 65.7829
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 66.1531,
+          "directionalCosineFidelityPct": 70.3082,
+          "lowRankCapacityUtilizationPct": 64.4004,
+          "compositeDoraScore": 65.7219
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 66.2257,
+          "directionalCosineFidelityPct": 70.0523,
+          "lowRankCapacityUtilizationPct": 64.0088,
+          "compositeDoraScore": 65.8816
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 66.2792,
+          "directionalCosineFidelityPct": 70.0335,
+          "lowRankCapacityUtilizationPct": 63.9153,
+          "compositeDoraScore": 66.0479
+        }
+      ]
+    },
+    {
+      "profileId": "magnitude-only-scaling-without-lowrank-ba",
+      "label": "Magnitude-Only Column Scaling Without Low-Rank Direction BA",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 38.5849,
+        "stdDev": 0.3359,
+        "min": 38.0093,
+        "max": 38.849,
+        "ci95": {
+          "low": 38.1678,
+          "high": 39.002,
+          "halfWidth": 0.4171
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 30.3889,
+        "stdDev": 0.4028,
+        "min": 29.9161,
+        "max": 30.8852,
+        "ci95": {
+          "low": 29.8887,
+          "high": 30.8891,
+          "halfWidth": 0.5002
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 34.5549,
+        "stdDev": 0.258,
+        "min": 34.3604,
+        "max": 35.0005,
+        "ci95": {
+          "low": 34.2345,
+          "high": 34.8752,
+          "halfWidth": 0.3204
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 33.4218,
+        "stdDev": 0.1483,
+        "min": 33.2623,
+        "max": 33.6535,
+        "ci95": {
+          "low": 33.2376,
+          "high": 33.6059,
+          "halfWidth": 0.1841
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 38.0093,
+          "directionalCosineFidelityPct": 30.0359,
+          "lowRankCapacityUtilizationPct": 34.5082,
+          "compositeDoraScore": 33.4035
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 38.5928,
+          "directionalCosineFidelityPct": 29.9161,
+          "lowRankCapacityUtilizationPct": 34.3604,
+          "compositeDoraScore": 33.3355
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 38.6913,
+          "directionalCosineFidelityPct": 30.8852,
+          "lowRankCapacityUtilizationPct": 35.0005,
+          "compositeDoraScore": 33.2623
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 38.7822,
+          "directionalCosineFidelityPct": 30.5654,
+          "lowRankCapacityUtilizationPct": 34.511,
+          "compositeDoraScore": 33.454
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 38.849,
+          "directionalCosineFidelityPct": 30.5419,
+          "lowRankCapacityUtilizationPct": 34.3942,
+          "compositeDoraScore": 33.6535
+        }
+      ]
+    },
+    {
+      "profileId": "dora-without-task-bias-calibration",
+      "label": "DoRA Without Decoupled Task Bias Vector b_prime",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 85.551,
+        "stdDev": 0.2015,
+        "min": 85.2056,
+        "max": 85.7094,
+        "ci95": {
+          "low": 85.3007,
+          "high": 85.8012,
+          "halfWidth": 0.2502
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 87.4333,
+        "stdDev": 0.2416,
+        "min": 87.1497,
+        "max": 87.7311,
+        "ci95": {
+          "low": 87.1333,
+          "high": 87.7334,
+          "halfWidth": 0.3
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 83.5329,
+        "stdDev": 0.1548,
+        "min": 83.4163,
+        "max": 83.8003,
+        "ci95": {
+          "low": 83.3407,
+          "high": 83.7251,
+          "halfWidth": 0.1922
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 84.9478,
+        "stdDev": 0.0988,
+        "min": 84.8415,
+        "max": 85.1023,
+        "ci95": {
+          "low": 84.8251,
+          "high": 85.0706,
+          "halfWidth": 0.1227
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 85.2056,
+          "directionalCosineFidelityPct": 87.2216,
+          "lowRankCapacityUtilizationPct": 83.5049,
+          "compositeDoraScore": 84.9357
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 85.5557,
+          "directionalCosineFidelityPct": 87.1497,
+          "lowRankCapacityUtilizationPct": 83.4163,
+          "compositeDoraScore": 84.8903
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 85.6148,
+          "directionalCosineFidelityPct": 87.7311,
+          "lowRankCapacityUtilizationPct": 83.8003,
+          "compositeDoraScore": 84.8415
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 85.6693,
+          "directionalCosineFidelityPct": 87.5392,
+          "lowRankCapacityUtilizationPct": 83.5066,
+          "compositeDoraScore": 84.9693
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 85.7094,
+          "directionalCosineFidelityPct": 87.5251,
+          "lowRankCapacityUtilizationPct": 83.4365,
+          "compositeDoraScore": 85.1023
+        }
+      ]
+    },
+    {
+      "profileId": "full-dora-magnitude-direction-bias-decoupled",
+      "label": "Full DoRA (Decoupled Column Magnitude m, Direction (W0+BA)/||.||_c & Task Bias b_prime)",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "standard-lora-coupled-magnitude-direction": {
+      "profileId": "standard-lora-coupled-magnitude-direction",
+      "label": "Standard LoRA (Coupled Magnitude & Direction Updates)",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 66.0679,
+        "stdDev": 0.2688,
+        "min": 65.6074,
+        "max": 66.2792,
+        "ci95": {
+          "low": 65.7342,
+          "high": 66.4016,
+          "halfWidth": 0.3337
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 69.9111,
+        "stdDev": 0.3223,
+        "min": 69.5329,
+        "max": 70.3082,
+        "ci95": {
+          "low": 69.511,
+          "high": 70.3113,
+          "halfWidth": 0.4001
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 64.0439,
+        "stdDev": 0.2064,
+        "min": 63.8884,
+        "max": 64.4004,
+        "ci95": {
+          "low": 63.7876,
+          "high": 64.3002,
+          "halfWidth": 0.2563
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 65.8548,
+        "stdDev": 0.1236,
+        "min": 65.7219,
+        "max": 66.0479,
+        "ci95": {
+          "low": 65.7014,
+          "high": 66.0082,
+          "halfWidth": 0.1534
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 65.6074,
+          "directionalCosineFidelityPct": 69.6287,
+          "lowRankCapacityUtilizationPct": 64.0065,
+          "compositeDoraScore": 65.8396
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 66.0743,
+          "directionalCosineFidelityPct": 69.5329,
+          "lowRankCapacityUtilizationPct": 63.8884,
+          "compositeDoraScore": 65.7829
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 66.1531,
+          "directionalCosineFidelityPct": 70.3082,
+          "lowRankCapacityUtilizationPct": 64.4004,
+          "compositeDoraScore": 65.7219
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 66.2257,
+          "directionalCosineFidelityPct": 70.0523,
+          "lowRankCapacityUtilizationPct": 64.0088,
+          "compositeDoraScore": 65.8816
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 66.2792,
+          "directionalCosineFidelityPct": 70.0335,
+          "lowRankCapacityUtilizationPct": 63.9153,
+          "compositeDoraScore": 66.0479
+        }
+      ]
+    },
+    "magnitude-only-scaling-without-lowrank-ba": {
+      "profileId": "magnitude-only-scaling-without-lowrank-ba",
+      "label": "Magnitude-Only Column Scaling Without Low-Rank Direction BA",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 38.5849,
+        "stdDev": 0.3359,
+        "min": 38.0093,
+        "max": 38.849,
+        "ci95": {
+          "low": 38.1678,
+          "high": 39.002,
+          "halfWidth": 0.4171
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 30.3889,
+        "stdDev": 0.4028,
+        "min": 29.9161,
+        "max": 30.8852,
+        "ci95": {
+          "low": 29.8887,
+          "high": 30.8891,
+          "halfWidth": 0.5002
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 34.5549,
+        "stdDev": 0.258,
+        "min": 34.3604,
+        "max": 35.0005,
+        "ci95": {
+          "low": 34.2345,
+          "high": 34.8752,
+          "halfWidth": 0.3204
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 33.4218,
+        "stdDev": 0.1483,
+        "min": 33.2623,
+        "max": 33.6535,
+        "ci95": {
+          "low": 33.2376,
+          "high": 33.6059,
+          "halfWidth": 0.1841
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 38.0093,
+          "directionalCosineFidelityPct": 30.0359,
+          "lowRankCapacityUtilizationPct": 34.5082,
+          "compositeDoraScore": 33.4035
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 38.5928,
+          "directionalCosineFidelityPct": 29.9161,
+          "lowRankCapacityUtilizationPct": 34.3604,
+          "compositeDoraScore": 33.3355
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 38.6913,
+          "directionalCosineFidelityPct": 30.8852,
+          "lowRankCapacityUtilizationPct": 35.0005,
+          "compositeDoraScore": 33.2623
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 38.7822,
+          "directionalCosineFidelityPct": 30.5654,
+          "lowRankCapacityUtilizationPct": 34.511,
+          "compositeDoraScore": 33.454
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 38.849,
+          "directionalCosineFidelityPct": 30.5419,
+          "lowRankCapacityUtilizationPct": 34.3942,
+          "compositeDoraScore": 33.6535
+        }
+      ]
+    },
+    "dora-without-task-bias-calibration": {
+      "profileId": "dora-without-task-bias-calibration",
+      "label": "DoRA Without Decoupled Task Bias Vector b_prime",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 85.551,
+        "stdDev": 0.2015,
+        "min": 85.2056,
+        "max": 85.7094,
+        "ci95": {
+          "low": 85.3007,
+          "high": 85.8012,
+          "halfWidth": 0.2502
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 87.4333,
+        "stdDev": 0.2416,
+        "min": 87.1497,
+        "max": 87.7311,
+        "ci95": {
+          "low": 87.1333,
+          "high": 87.7334,
+          "halfWidth": 0.3
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 83.5329,
+        "stdDev": 0.1548,
+        "min": 83.4163,
+        "max": 83.8003,
+        "ci95": {
+          "low": 83.3407,
+          "high": 83.7251,
+          "halfWidth": 0.1922
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 84.9478,
+        "stdDev": 0.0988,
+        "min": 84.8415,
+        "max": 85.1023,
+        "ci95": {
+          "low": 84.8251,
+          "high": 85.0706,
+          "halfWidth": 0.1227
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 85.2056,
+          "directionalCosineFidelityPct": 87.2216,
+          "lowRankCapacityUtilizationPct": 83.5049,
+          "compositeDoraScore": 84.9357
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 85.5557,
+          "directionalCosineFidelityPct": 87.1497,
+          "lowRankCapacityUtilizationPct": 83.4163,
+          "compositeDoraScore": 84.8903
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 85.6148,
+          "directionalCosineFidelityPct": 87.7311,
+          "lowRankCapacityUtilizationPct": 83.8003,
+          "compositeDoraScore": 84.8415
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 85.6693,
+          "directionalCosineFidelityPct": 87.5392,
+          "lowRankCapacityUtilizationPct": 83.5066,
+          "compositeDoraScore": 84.9693
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 85.7094,
+          "directionalCosineFidelityPct": 87.5251,
+          "lowRankCapacityUtilizationPct": 83.4365,
+          "compositeDoraScore": 85.1023
+        }
+      ]
+    },
+    "full-dora-magnitude-direction-bias-decoupled": {
+      "profileId": "full-dora-magnitude-direction-bias-decoupled",
+      "label": "Full DoRA (Decoupled Column Magnitude m, Direction (W0+BA)/||.||_c & Task Bias b_prime)",
+      "fullFinetuningAlignmentPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "directionalCosineFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "lowRankCapacityUtilizationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeDoraScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 29017,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 39023,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 49031,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        },
+        {
+          "seed": 59053,
+          "fullFinetuningAlignmentPct": 100,
+          "directionalCosineFidelityPct": 100,
+          "lowRankCapacityUtilizationPct": 100,
+          "compositeDoraScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "full-dora-magnitude-direction-bias-decoupled",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "fullFinetuningAlignmentPctMean": 100,
+    "directionalCosineFidelityPctMean": 100,
+    "lowRankCapacityUtilizationPctMean": 100,
+    "gainVsBaseline": 66.5782
+  }
+}
