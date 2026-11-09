@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="300" viewBox="0 0 920 300">
+  <rect width="920" height="300" fill="#071018"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="15" font-weight="bold">Pass 44 · Pre-RMSNorm + QK-Norm + ReZero Residual Gate & Affine Gain/Bias Conditioning</text>
+  <text x="24" y="56" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12">Winner: pre-rmsnorm-qknorm-rezero-affine-conditioned · Score=100.00 · Gain=+77.49</text>
+  <text x="24" y="100" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">post-ln-unscaled-residual-branch</text>
+  <rect x="310" y="86" width="420" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="310" y="88" width="95" height="18" fill="#f43f5e" rx="2"/>
+  <text x="742" y="101" fill="#34d399" font-family="Consolas, monospace" font-size="12">22.51 ± 0.25</text>
+  <text x="24" y="148" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">pre-ln-without-qk-norm-or-rezero</text>
+  <rect x="310" y="134" width="420" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="310" y="136" width="277" height="18" fill="#f59e0b" rx="2"/>
+  <text x="742" y="149" fill="#34d399" font-family="Consolas, monospace" font-size="12">65.93 ± 0.21</text>
+  <text x="24" y="196" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">rezero-only-without-affine-rmsnorm</text>
+  <rect x="310" y="182" width="420" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="310" y="184" width="332" height="18" fill="#38bdf8" rx="2"/>
+  <text x="742" y="197" fill="#34d399" font-family="Consolas, monospace" font-size="12">79.01 ± 0.17</text>
+  <text x="24" y="244" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">pre-rmsnorm-qknorm-rezero-affine-condi</text>
+  <rect x="310" y="230" width="420" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="310" y="232" width="420" height="18" fill="#34d399" rx="2"/>
+  <text x="742" y="245" fill="#34d399" font-family="Consolas, monospace" font-size="12">100.00 ± 0.00</text>
+</svg>

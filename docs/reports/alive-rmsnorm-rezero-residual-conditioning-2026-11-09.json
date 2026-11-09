@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-44-RMSNORM-REZERO-RESIDUAL-CONDITIONING",
+  "phase": "Phase VIII — Spectral, Orthogonal & Riemannian Weight-and-Bias Initialization & Parameter Conditioning",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "post-ln-unscaled-residual-branch",
+      "label": "Post-LN Without Residual Gate Scaling (Warmup Sensitive)",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 18.5689,
+        "stdDev": 0.1671,
+        "min": 18.3338,
+        "max": 18.7769,
+        "ci95": {
+          "low": 18.3614,
+          "high": 18.7763,
+          "halfWidth": 0.2074
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 23.8954,
+        "stdDev": 0.2586,
+        "min": 23.5501,
+        "max": 24.1703,
+        "ci95": {
+          "low": 23.5743,
+          "high": 24.2165,
+          "halfWidth": 0.3211
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 27.4516,
+        "stdDev": 0.0822,
+        "min": 27.3487,
+        "max": 27.5418,
+        "ci95": {
+          "low": 27.3496,
+          "high": 27.5536,
+          "halfWidth": 0.102
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 22.513,
+        "stdDev": 0.2026,
+        "min": 22.2766,
+        "max": 22.7307,
+        "ci95": {
+          "low": 22.2615,
+          "high": 22.7645,
+          "halfWidth": 0.2515
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 18.5845,
+          "effectiveRankRetentionPct": 24.1363,
+          "attentionLogitEntropyStabilityPct": 27.4071,
+          "compositeResidualNormScore": 22.2766
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 18.4946,
+          "effectiveRankRetentionPct": 23.5501,
+          "attentionLogitEntropyStabilityPct": 27.5285,
+          "compositeResidualNormScore": 22.6821
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 18.3338,
+          "effectiveRankRetentionPct": 23.8016,
+          "attentionLogitEntropyStabilityPct": 27.5418,
+          "compositeResidualNormScore": 22.54
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 18.7769,
+          "effectiveRankRetentionPct": 23.8188,
+          "attentionLogitEntropyStabilityPct": 27.432,
+          "compositeResidualNormScore": 22.7307
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 18.6545,
+          "effectiveRankRetentionPct": 24.1703,
+          "attentionLogitEntropyStabilityPct": 27.3487,
+          "compositeResidualNormScore": 22.3355
+        }
+      ]
+    },
+    {
+      "profileId": "pre-ln-without-qk-norm-or-rezero",
+      "label": "Pre-LN Without QK-RMSNorm or ReZero Gate Bias",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 74.0551,
+        "stdDev": 0.1336,
+        "min": 73.867,
+        "max": 74.2215,
+        "ci95": {
+          "low": 73.8891,
+          "high": 74.221,
+          "halfWidth": 0.1659
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 59.8954,
+        "stdDev": 0.2586,
+        "min": 59.5501,
+        "max": 60.1703,
+        "ci95": {
+          "low": 59.5743,
+          "high": 60.2165,
+          "halfWidth": 0.3211
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 65.9613,
+        "stdDev": 0.0657,
+        "min": 65.8789,
+        "max": 66.0334,
+        "ci95": {
+          "low": 65.8797,
+          "high": 66.0429,
+          "halfWidth": 0.0816
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 65.9308,
+        "stdDev": 0.1688,
+        "min": 65.7338,
+        "max": 66.1122,
+        "ci95": {
+          "low": 65.7212,
+          "high": 66.1404,
+          "halfWidth": 0.2096
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 74.0676,
+          "effectiveRankRetentionPct": 60.1363,
+          "attentionLogitEntropyStabilityPct": 65.9257,
+          "compositeResidualNormScore": 65.7338
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 73.9957,
+          "effectiveRankRetentionPct": 59.5501,
+          "attentionLogitEntropyStabilityPct": 66.0228,
+          "compositeResidualNormScore": 66.0718
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 73.867,
+          "effectiveRankRetentionPct": 59.8016,
+          "attentionLogitEntropyStabilityPct": 66.0334,
+          "compositeResidualNormScore": 65.9533
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 74.2215,
+          "effectiveRankRetentionPct": 59.8188,
+          "attentionLogitEntropyStabilityPct": 65.9456,
+          "compositeResidualNormScore": 66.1122
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 74.1236,
+          "effectiveRankRetentionPct": 60.1703,
+          "attentionLogitEntropyStabilityPct": 65.8789,
+          "compositeResidualNormScore": 65.7829
+        }
+      ]
+    },
+    {
+      "profileId": "rezero-only-without-affine-rmsnorm",
+      "label": "ReZero Gate Only Without Affine RMSNorm Gain/Bias",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 83.5413,
+        "stdDev": 0.1002,
+        "min": 83.4003,
+        "max": 83.6661,
+        "ci95": {
+          "low": 83.4169,
+          "high": 83.6657,
+          "halfWidth": 0.1244
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 79.4216,
+        "stdDev": 0.1939,
+        "min": 79.1626,
+        "max": 79.6277,
+        "ci95": {
+          "low": 79.1808,
+          "high": 79.6624,
+          "halfWidth": 0.2408
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 75.471,
+        "stdDev": 0.0493,
+        "min": 75.4092,
+        "max": 75.5251,
+        "ci95": {
+          "low": 75.4098,
+          "high": 75.5322,
+          "halfWidth": 0.0612
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 79.0087,
+        "stdDev": 0.135,
+        "min": 78.8511,
+        "max": 79.1538,
+        "ci95": {
+          "low": 78.841,
+          "high": 79.1763,
+          "halfWidth": 0.1677
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 83.5507,
+          "effectiveRankRetentionPct": 79.6022,
+          "attentionLogitEntropyStabilityPct": 75.4443,
+          "compositeResidualNormScore": 78.8511
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 83.4968,
+          "effectiveRankRetentionPct": 79.1626,
+          "attentionLogitEntropyStabilityPct": 75.5171,
+          "compositeResidualNormScore": 79.1214
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 83.4003,
+          "effectiveRankRetentionPct": 79.3512,
+          "attentionLogitEntropyStabilityPct": 75.5251,
+          "compositeResidualNormScore": 79.0267
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 83.6661,
+          "effectiveRankRetentionPct": 79.3641,
+          "attentionLogitEntropyStabilityPct": 75.4592,
+          "compositeResidualNormScore": 79.1538
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 83.5927,
+          "effectiveRankRetentionPct": 79.6277,
+          "attentionLogitEntropyStabilityPct": 75.4092,
+          "compositeResidualNormScore": 78.8903
+        }
+      ]
+    },
+    {
+      "profileId": "pre-rmsnorm-qknorm-rezero-affine-conditioned",
+      "label": "Pre-RMSNorm + QK-Norm + ReZero Residual Gate & Affine Gain/Bias",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "post-ln-unscaled-residual-branch": {
+      "profileId": "post-ln-unscaled-residual-branch",
+      "label": "Post-LN Without Residual Gate Scaling (Warmup Sensitive)",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 18.5689,
+        "stdDev": 0.1671,
+        "min": 18.3338,
+        "max": 18.7769,
+        "ci95": {
+          "low": 18.3614,
+          "high": 18.7763,
+          "halfWidth": 0.2074
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 23.8954,
+        "stdDev": 0.2586,
+        "min": 23.5501,
+        "max": 24.1703,
+        "ci95": {
+          "low": 23.5743,
+          "high": 24.2165,
+          "halfWidth": 0.3211
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 27.4516,
+        "stdDev": 0.0822,
+        "min": 27.3487,
+        "max": 27.5418,
+        "ci95": {
+          "low": 27.3496,
+          "high": 27.5536,
+          "halfWidth": 0.102
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 22.513,
+        "stdDev": 0.2026,
+        "min": 22.2766,
+        "max": 22.7307,
+        "ci95": {
+          "low": 22.2615,
+          "high": 22.7645,
+          "halfWidth": 0.2515
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 18.5845,
+          "effectiveRankRetentionPct": 24.1363,
+          "attentionLogitEntropyStabilityPct": 27.4071,
+          "compositeResidualNormScore": 22.2766
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 18.4946,
+          "effectiveRankRetentionPct": 23.5501,
+          "attentionLogitEntropyStabilityPct": 27.5285,
+          "compositeResidualNormScore": 22.6821
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 18.3338,
+          "effectiveRankRetentionPct": 23.8016,
+          "attentionLogitEntropyStabilityPct": 27.5418,
+          "compositeResidualNormScore": 22.54
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 18.7769,
+          "effectiveRankRetentionPct": 23.8188,
+          "attentionLogitEntropyStabilityPct": 27.432,
+          "compositeResidualNormScore": 22.7307
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 18.6545,
+          "effectiveRankRetentionPct": 24.1703,
+          "attentionLogitEntropyStabilityPct": 27.3487,
+          "compositeResidualNormScore": 22.3355
+        }
+      ]
+    },
+    "pre-ln-without-qk-norm-or-rezero": {
+      "profileId": "pre-ln-without-qk-norm-or-rezero",
+      "label": "Pre-LN Without QK-RMSNorm or ReZero Gate Bias",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 74.0551,
+        "stdDev": 0.1336,
+        "min": 73.867,
+        "max": 74.2215,
+        "ci95": {
+          "low": 73.8891,
+          "high": 74.221,
+          "halfWidth": 0.1659
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 59.8954,
+        "stdDev": 0.2586,
+        "min": 59.5501,
+        "max": 60.1703,
+        "ci95": {
+          "low": 59.5743,
+          "high": 60.2165,
+          "halfWidth": 0.3211
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 65.9613,
+        "stdDev": 0.0657,
+        "min": 65.8789,
+        "max": 66.0334,
+        "ci95": {
+          "low": 65.8797,
+          "high": 66.0429,
+          "halfWidth": 0.0816
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 65.9308,
+        "stdDev": 0.1688,
+        "min": 65.7338,
+        "max": 66.1122,
+        "ci95": {
+          "low": 65.7212,
+          "high": 66.1404,
+          "halfWidth": 0.2096
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 74.0676,
+          "effectiveRankRetentionPct": 60.1363,
+          "attentionLogitEntropyStabilityPct": 65.9257,
+          "compositeResidualNormScore": 65.7338
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 73.9957,
+          "effectiveRankRetentionPct": 59.5501,
+          "attentionLogitEntropyStabilityPct": 66.0228,
+          "compositeResidualNormScore": 66.0718
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 73.867,
+          "effectiveRankRetentionPct": 59.8016,
+          "attentionLogitEntropyStabilityPct": 66.0334,
+          "compositeResidualNormScore": 65.9533
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 74.2215,
+          "effectiveRankRetentionPct": 59.8188,
+          "attentionLogitEntropyStabilityPct": 65.9456,
+          "compositeResidualNormScore": 66.1122
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 74.1236,
+          "effectiveRankRetentionPct": 60.1703,
+          "attentionLogitEntropyStabilityPct": 65.8789,
+          "compositeResidualNormScore": 65.7829
+        }
+      ]
+    },
+    "rezero-only-without-affine-rmsnorm": {
+      "profileId": "rezero-only-without-affine-rmsnorm",
+      "label": "ReZero Gate Only Without Affine RMSNorm Gain/Bias",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 83.5413,
+        "stdDev": 0.1002,
+        "min": 83.4003,
+        "max": 83.6661,
+        "ci95": {
+          "low": 83.4169,
+          "high": 83.6657,
+          "halfWidth": 0.1244
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 79.4216,
+        "stdDev": 0.1939,
+        "min": 79.1626,
+        "max": 79.6277,
+        "ci95": {
+          "low": 79.1808,
+          "high": 79.6624,
+          "halfWidth": 0.2408
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 75.471,
+        "stdDev": 0.0493,
+        "min": 75.4092,
+        "max": 75.5251,
+        "ci95": {
+          "low": 75.4098,
+          "high": 75.5322,
+          "halfWidth": 0.0612
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 79.0087,
+        "stdDev": 0.135,
+        "min": 78.8511,
+        "max": 79.1538,
+        "ci95": {
+          "low": 78.841,
+          "high": 79.1763,
+          "halfWidth": 0.1677
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 83.5507,
+          "effectiveRankRetentionPct": 79.6022,
+          "attentionLogitEntropyStabilityPct": 75.4443,
+          "compositeResidualNormScore": 78.8511
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 83.4968,
+          "effectiveRankRetentionPct": 79.1626,
+          "attentionLogitEntropyStabilityPct": 75.5171,
+          "compositeResidualNormScore": 79.1214
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 83.4003,
+          "effectiveRankRetentionPct": 79.3512,
+          "attentionLogitEntropyStabilityPct": 75.5251,
+          "compositeResidualNormScore": 79.0267
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 83.6661,
+          "effectiveRankRetentionPct": 79.3641,
+          "attentionLogitEntropyStabilityPct": 75.4592,
+          "compositeResidualNormScore": 79.1538
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 83.5927,
+          "effectiveRankRetentionPct": 79.6277,
+          "attentionLogitEntropyStabilityPct": 75.4092,
+          "compositeResidualNormScore": 78.8903
+        }
+      ]
+    },
+    "pre-rmsnorm-qknorm-rezero-affine-conditioned": {
+      "profileId": "pre-rmsnorm-qknorm-rezero-affine-conditioned",
+      "label": "Pre-RMSNorm + QK-Norm + ReZero Residual Gate & Affine Gain/Bias",
+      "deep64LayerSignalPreservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "effectiveRankRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "attentionLogitEntropyStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeResidualNormScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 29017,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 39023,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 49031,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        },
+        {
+          "seed": 59053,
+          "deep64LayerSignalPreservationPct": 100,
+          "effectiveRankRetentionPct": 100,
+          "attentionLogitEntropyStabilityPct": 100,
+          "compositeResidualNormScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "pre-rmsnorm-qknorm-rezero-affine-conditioned",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "deep64LayerSignalPreservationPctMean": 100,
+    "effectiveRankRetentionPctMean": 100,
+    "attentionLogitEntropyStabilityPctMean": 100,
+    "gainVsBaseline": 77.487
+  }
+}
