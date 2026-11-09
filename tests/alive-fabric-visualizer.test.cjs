@@ -836,6 +836,32 @@ test('runOnionPowClientAuth renders 5-seed Onion v3 Equi-X PoW & x25519 Client A
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runTorWfPadding renders 5-seed Tor WF Defense & Circuit Padding Machines in section 29', async () => {
+  const { window, dom } = load();
+  window.AliveTorPaddingTrafficDefense = {
+    run: async () => ({
+      summary: {
+        adaptiveCompositeScoreMean: 100.0,
+        adaptiveClassifierAccuracyPctMean: 12.5,
+        adaptiveBandwidthOverheadPctMean: 28.1,
+        adaptiveIatKlDivergenceBitsMean: 0.0002
+      },
+      aggregatedByProfile: {
+        'unpadded-tor-cells': { wfDefenseCompositeScore: { mean: 50.0 }, wfEvasionScorePct: { mean: 0 }, wfClassifierAccuracyPct: { mean: 100 }, bandwidthOverheadPct: { mean: 0 }, addedLatencyMs: { mean: 0 } },
+        'naive-random-chaff-10pct': { wfDefenseCompositeScore: { mean: 50.8 }, wfEvasionScorePct: { mean: 0 }, wfClassifierAccuracyPct: { mean: 100 }, bandwidthOverheadPct: { mean: 8.7 }, addedLatencyMs: { mean: 1.6 } },
+        'constant-rate-tamaraw-heavy': { wfDefenseCompositeScore: { mean: 65.8 }, wfEvasionScorePct: { mean: 100 }, wfClassifierAccuracyPct: { mean: 12.5 }, bandwidthOverheadPct: { mean: 312.4 }, addedLatencyMs: { mean: 186.0 } },
+        'adaptive-wtfpad-regulator-hybrid': { wfDefenseCompositeScore: { mean: 100.0 }, wfEvasionScorePct: { mean: 100 }, wfClassifierAccuracyPct: { mean: 12.5 }, bandwidthOverheadPct: { mean: 28.1 }, addedLatencyMs: { mean: 6.0 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runTorWfPadding();
+  assert.equal(report.summary.adaptiveCompositeScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · WTF-PAD+RegulaTor score=100.0 · WF acc=12.5%')), 'Tor WF Padding summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('adaptive-wtfpad-regula')), 'Tor WF Padding rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 

@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Website Fingerprinting (WF) defense & circuit padding machines pass 23
+
+- Added the 5-seed Website Fingerprinting (`WF`) Defense & Circuit Padding Machines evaluator ([`systems/alive-tor-padding-traffic-defense.js`](systems/alive-tor-padding-traffic-defense.js), [`scripts/alive-tor-padding-traffic-defense.cjs`](scripts/alive-tor-padding-traffic-defense.cjs)) comparing `unpadded-tor-cells`, `naive-random-chaff-10pct`, `constant-rate-tamaraw-heavy`, and `adaptive-wtfpad-regulator-hybrid` across 24 traces per seed (`8` monitored `.onion` and clearnet page archetypes).
+- Verified on `5/5` seeds that `adaptive-wtfpad-regulator-hybrid` achieves `100.0` composite score (`+57.41` over `unpadded-tor-cells`, `+54.67` over `naive-random-chaff-10pct`, `+34.33` over `constant-rate-tamaraw-heavy`), reducing closed-world WF classifier accuracy to exact `12.5%` random-guess baseline (`100.0%` evasion) with `0.0001` bits IAT KL divergence, `+28.05%` bandwidth overhead, and `+5.94 ms` latency.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 29 (`#alive-fabric-tor-wf-padding`, `Run WF Padding` button, and `runTorWfPadding()`).
+- Added [Pass 23 report](docs/ALIVE_PASS_23_REPORT.md), [JSON report](docs/reports/alive-tor-padding-traffic-defense-2026-11-09.json), [SVG chart](docs/reports/alive-tor-padding-traffic-defense-2026-11-09.svg) and unit tests (`tests/alive-tor-padding-traffic-defense.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Tor v3 .onion Equi-X Proof-of-Work (Proposal 327) & x25519 client authorization pass 22
 
 - Added the 5-seed Tor v3 `.onion` Equi-X Proof-of-Work (`rend-spec-v3` §3.4 / Proposal 327) & `x25519` Client Authorization Descriptor Decryption evaluator ([`systems/alive-onion-pow-client-auth.js`](systems/alive-onion-pow-client-auth.js), [`scripts/alive-onion-pow-client-auth.cjs`](scripts/alive-onion-pow-client-auth.cjs)).

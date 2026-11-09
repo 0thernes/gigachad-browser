@@ -321,6 +321,7 @@
   let latestOmegaAudit = null, omegaAuditBusy = false;
   let latestTorPt = null, torPtBusy = false;
   let latestOnionPow = null, onionPowBusy = false;
+  let latestTorWfPad = null, torWfPadBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -590,6 +591,19 @@
       return latestOnionPow;
     } finally {
       onionPowBusy = false;
+    }
+  }
+  async function runTorWfPadding() {
+    const runner = root.AliveTorPaddingTrafficDefense;
+    if (torWfPadBusy || typeof runner?.run !== 'function') return latestTorWfPad;
+    torWfPadBusy = true;
+    try {
+      latestTorWfPad = await runner.run();
+      root.__aliveLatestTorWfPad = latestTorWfPad;
+      draw();
+      return latestTorWfPad;
+    } finally {
+      torWfPadBusy = false;
     }
   }
 
@@ -1601,6 +1615,48 @@
     ctx.fillText('20 .onion v3 scenarios/seed (5 public, 5 public DDoS flood, 5 private x25519 DDoS flood, 5 tampered D_MAC/expired seed)', 8, height - 6);
   }
 
+  // ---------- 29. Pass 23 Tor WF Defense & Circuit Padding Machines ---------
+  function drawTorWfPadding(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestTorWfPad || root.__aliveLatestTorWfPad;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(torWfPadBusy ? 'Running 5-seed Tor WF Defense & Circuit Padding suite…' : 'Click "Run WF Padding" above to evaluate Adaptive WTF-PAD & RegulaTor burst shaping across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · WTF-PAD+RegulaTor score=${(s.adaptiveCompositeScoreMean || 0).toFixed(1)} · WF acc=${(s.adaptiveClassifierAccuracyPctMean || 0).toFixed(1)}% · BW=+${(s.adaptiveBandwidthOverheadPctMean || 0).toFixed(1)}% · KL=${(s.adaptiveIatKlDivergenceBitsMean || 0).toFixed(4)}b`, 8, 12);
+    const modes = ['unpadded-tor-cells', 'naive-random-chaff-10pct', 'constant-rate-tamaraw-heavy', 'adaptive-wtfpad-regulator-hybrid'];
+    const colors = {
+      'unpadded-tor-cells': '#f43f5e',
+      'naive-random-chaff-10pct': '#f59e0b',
+      'constant-rate-tamaraw-heavy': '#38bdf8',
+      'adaptive-wtfpad-regulator-hybrid': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.wfDefenseCompositeScore?.mean || 0;
+      const eva = entry.wfEvasionScorePct?.mean || 0;
+      const acc = entry.wfClassifierAccuracyPct?.mean || 0;
+      const bwo = entry.bandwidthOverheadPct?.mean || 0;
+      const lat = entry.addedLatencyMs?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} evade=${eva.toFixed(0)}% wfAcc=${acc.toFixed(1)}% bw=+${bwo.toFixed(1)}% lat=+${lat.toFixed(1)}ms`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('24 traces/seed across 8 monitored .onion & clearnet page classes (random-guess baseline = 12.5% classifier accuracy)', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1686,13 +1742,16 @@
     const onionPowBtn = doc.createElement('button'); onionPowBtn.type = 'button'; onionPowBtn.textContent = 'Run Onion PoW';
     onionPowBtn.title = 'Run 5-seed Tor v3 .onion Equi-X Proof-of-Work & x25519 Client Authorization Descriptor Decryption evaluation';
     onionPowBtn.addEventListener('click', () => { runOnionPowClientAuth(); });
+    const torWfPadBtn = doc.createElement('button'); torWfPadBtn.type = 'button'; torWfPadBtn.textContent = 'Run WF Padding';
+    torWfPadBtn.title = 'Run 5-seed Website Fingerprinting (WF) Defense & Circuit Padding Machines (WTF-PAD + RegulaTor) evaluation';
+    torWfPadBtn.addEventListener('click', () => { runTorWfPadding(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1707,7 +1766,7 @@
       hyperSwarmCanvas = canvas('alive-fabric-hyper-swarm', 190), swarmGovernorCanvas = canvas('alive-fabric-swarm-governor', 190),
       stigmergicMeshCanvas = canvas('alive-fabric-stigmergic-mesh', 190), swarmForagingCanvas = canvas('alive-fabric-swarm-foraging', 190),
       omegaAuditCanvas = canvas('alive-fabric-omega-audit', 190), torPtCanvas = canvas('alive-fabric-tor-pt', 190),
-      onionPowCanvas = canvas('alive-fabric-onion-pow', 190);
+      onionPowCanvas = canvas('alive-fabric-onion-pow', 190), torWfPadCanvas = canvas('alive-fabric-tor-wf-padding', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1738,7 +1797,8 @@
       section('25 · Wild clearnet + .onion multi-guild foraging benchmark (5 seeds)', swarmForagingCanvas),
       section('26 · 20-Pass Grand Omega Synthesis — Phase I + Phase II Tor + Phase III Swarms SHA-256', omegaAuditCanvas),
       section('27 · Tor Pluggable Transports — obfs4 Elligator2, iat-mode=2 & Snowflake fallback (5 seeds)', torPtCanvas),
-      section('28 · Onion v3 Equi-X PoW & x25519 Client Authorization Descriptor Decryption (5 seeds)', onionPowCanvas));
+      section('28 · Onion v3 Equi-X PoW & x25519 Client Authorization Descriptor Decryption (5 seeds)', onionPowCanvas),
+      section('29 · Website Fingerprinting (WF) Defense & Circuit Padding Machines — WTF-PAD + RegulaTor (5 seeds)', torWfPadCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1765,7 +1825,8 @@
       () => drawSwarmForaging(swarmForagingCanvas),
       () => drawOmegaAudit(omegaAuditCanvas),
       () => drawTorPluggableTransports(torPtCanvas),
-      () => drawOnionPowClientAuth(onionPowCanvas));
+      () => drawOnionPowClientAuth(onionPowCanvas),
+      () => drawTorWfPadding(torWfPadCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1808,6 +1869,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);
