@@ -1,0 +1,360 @@
+{
+  "passNumber": 88,
+  "passSlice": "88/100",
+  "phaseName": "Phase XVII: Hardware-Sympathetic Tensor Systems Engineering",
+  "moduleId": "alive-zero-alloc-reverse-autograd-tape",
+  "timestamp": "2026-11-09T23:23:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "heap_alloc_per_op_no_checkpointing_baseline",
+      "label": "Per-Op Heap Allocation + Store All L=16 Layer Activations (High GC Pressure & O(L) Memory)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxGradRelErrMean": 0.0910798454,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 48,
+          "compositeScore": 63.7331
+        },
+        {
+          "seed": 29017,
+          "maxGradRelErrMean": 0.0891075031,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 48,
+          "compositeScore": 63.9284
+        },
+        {
+          "seed": 39023,
+          "maxGradRelErrMean": 0.0932224069,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 48,
+          "compositeScore": 63.521
+        },
+        {
+          "seed": 49031,
+          "maxGradRelErrMean": 0.092965592,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 48,
+          "compositeScore": 63.5464
+        },
+        {
+          "seed": 59053,
+          "maxGradRelErrMean": 0.0810613986,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 48,
+          "compositeScore": 64.7249
+        }
+      ],
+      "aggregate": {
+        "maxGradRelErrStats": {
+          "mean": 0.0895,
+          "stdDev": 0.005,
+          "ci95": [
+            0.0833,
+            0.0957
+          ]
+        },
+        "ckptSlotsStats": {
+          "mean": 16,
+          "stdDev": 0,
+          "ci95": [
+            16,
+            16
+          ]
+        },
+        "heapAllocsStats": {
+          "mean": 48,
+          "stdDev": 0,
+          "ci95": [
+            48,
+            48
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 63.8908,
+          "stdDev": 0.4943,
+          "ci95": [
+            63.277,
+            64.5045
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "arena_tape_no_sqrt_l_checkpointing_ablation",
+      "label": "Static Arena Tape Without O(sqrt(L)) Selective Activation Checkpointing",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxGradRelErrMean": 2.37e-8,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 0,
+          "compositeScore": 86.5
+        },
+        {
+          "seed": 29017,
+          "maxGradRelErrMean": 1.96e-8,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 0,
+          "compositeScore": 86.5
+        },
+        {
+          "seed": 39023,
+          "maxGradRelErrMean": 3.22e-8,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 0,
+          "compositeScore": 86.5
+        },
+        {
+          "seed": 49031,
+          "maxGradRelErrMean": 1.64e-8,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 0,
+          "compositeScore": 86.5
+        },
+        {
+          "seed": 59053,
+          "maxGradRelErrMean": 1.88e-8,
+          "ckptSlotsMean": 16,
+          "heapAllocsMean": 0,
+          "compositeScore": 86.5
+        }
+      ],
+      "aggregate": {
+        "maxGradRelErrStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "ckptSlotsStats": {
+          "mean": 16,
+          "stdDev": 0,
+          "ci95": [
+            16,
+            16
+          ]
+        },
+        "heapAllocsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 86.5,
+          "stdDev": 0,
+          "ci95": [
+            86.5,
+            86.5
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "truncated_bptt_approximate_gradient_ablation",
+      "label": "Truncated Gradient Approximation Without Full Reverse-Mode Chain Rule",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxGradRelErrMean": 0.0910798454,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 90.9831
+        },
+        {
+          "seed": 29017,
+          "maxGradRelErrMean": 0.0891075031,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 91.1784
+        },
+        {
+          "seed": 39023,
+          "maxGradRelErrMean": 0.0932224069,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 90.771
+        },
+        {
+          "seed": 49031,
+          "maxGradRelErrMean": 0.092965592,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 90.7964
+        },
+        {
+          "seed": 59053,
+          "maxGradRelErrMean": 0.0810613986,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 91.9749
+        }
+      ],
+      "aggregate": {
+        "maxGradRelErrStats": {
+          "mean": 0.0895,
+          "stdDev": 0.005,
+          "ci95": [
+            0.0833,
+            0.0957
+          ]
+        },
+        "ckptSlotsStats": {
+          "mean": 4,
+          "stdDev": 0,
+          "ci95": [
+            4,
+            4
+          ]
+        },
+        "heapAllocsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 91.1408,
+          "stdDev": 0.4943,
+          "ci95": [
+            90.527,
+            91.7545
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "zero_alloc_arena_autograd_sqrt_l_checkpointing",
+      "label": "Zero-Alloc Static Arena Reverse-Mode Autograd Tape + O(sqrt(L)) Checkpointing (Pass 88 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxGradRelErrMean": 2.37e-8,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "maxGradRelErrMean": 1.96e-8,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "maxGradRelErrMean": 3.22e-8,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "maxGradRelErrMean": 1.64e-8,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "maxGradRelErrMean": 1.88e-8,
+          "ckptSlotsMean": 4,
+          "heapAllocsMean": 0,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "maxGradRelErrStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "ckptSlotsStats": {
+          "mean": 4,
+          "stdDev": 0,
+          "ci95": [
+            4,
+            4
+          ]
+        },
+        "heapAllocsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "zero_alloc_arena_autograd_sqrt_l_checkpointing",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "maxGradRelErrStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "ckptSlotsStats": {
+      "mean": 4,
+      "stdDev": 0,
+      "ci95": [
+        4,
+        4
+      ]
+    },
+    "heapAllocsStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 36.1092,
+    "tStat": 163.3443,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
