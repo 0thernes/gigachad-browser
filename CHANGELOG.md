@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Synaptic Fabric
+
+### Added
+- **Synaptic Fabric (`systems/alive-synaptic-fabric.js`)**: a plastic coupling graph between every ALIVE faculty, including brain observers, body actions, ghost faculties and diagnostics. When a faculty produces new evidence, the faculties it feeds become due earlier (excitation), within refractory limits. Hebbian credit strengthens an edge when the excited faculty's next outcome is new and weakens it when that outcome blocks or fails. A per-faculty utility moving average scales cadence between 0.5× and 2×. Navigation, storage, language-model and diagnostic faculties keep their own pacing. Weights persist to `localStorage` with readback verification. The fabric observes the runtime event stream; it never invokes adapters or bypasses readiness, lanes, Pause, backoff or manual-only status. See [`docs/ALIVE_SYNAPTIC_FABRIC.md`](docs/ALIVE_SYNAPTIC_FABRIC.md).
+- **Synaptic Fabric visualizer (`systems/alive-fabric-visualizer.js`)**: a live analytics panel that draws only data, opened from the **Fabric** button in the ALIVE bar. It shows the coupling graph, a 60 s concurrency raster, a 24-stream brain/precision gate heatmap, a utility/cadence table, runtime/learning/plasticity time series, neural-substrate sparklines and a ghost-faculty/creature/fabric log.
+- Tests: `tests/alive-synaptic-fabric.test.cjs` (10) and `tests/alive-fabric-visualizer.test.cjs` (4).
+
 ## [4.0.0-OMEGA] — 2026-11-08
 
 ### Added

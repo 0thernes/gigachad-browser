@@ -22,7 +22,9 @@
     'systems/alive-authority.js',
     'systems/alive-research-policy.js',
     'systems/alive-overdrive-adapters.js',
-    'systems/alive-workspace-ui.js'
+    'systems/alive-workspace-ui.js',
+    'systems/alive-synaptic-fabric.js',
+    'systems/alive-fabric-visualizer.js'
   ]);
   const message = error => String(error?.message || error || 'Startup failed').slice(0, 300);
 
