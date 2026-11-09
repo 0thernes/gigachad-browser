@@ -1,0 +1,1530 @@
+{
+  "passNumber": 95,
+  "passSlice": "95/100",
+  "phaseName": "Phase XVIII: Meta-Learning, DARTS Architecture Search, Hypernetworks & Continual Plasticity",
+  "moduleId": "alive-meta-hypernet-continual-phase18-audit",
+  "timestamp": "2026-11-09T23:30:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "acceptanceMatrix": [
+    {
+      "rowId": "H1",
+      "passNumber": 91,
+      "metric": "Second-Order Bilevel DARTS Discretized Validation Loss & Discretization Gap",
+      "threshold": "<= 0.02 & <= 0.003",
+      "observedValue": "0.015 / 0.0019",
+      "ci95": [
+        0.015,
+        0.015
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H2",
+      "passNumber": 91,
+      "metric": "DARTS Skip-Connection Collapse Prevention (Identity Skip Probability with b_arch)",
+      "threshold": "<= 0.05",
+      "observedValue": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H3",
+      "passNumber": 92,
+      "metric": "Kronecker-Factored Hypernetwork Parameter Compression Ratio vs Dense Generator",
+      "threshold": ">= 0.90",
+      "observedValue": 0.9063,
+      "ci95": [
+        0.9063,
+        0.9063
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H4",
+      "passNumber": 92,
+      "metric": "Chang Principled Hypernetwork Output Activation Variance Drift & Zero-Shot Regime Accuracy",
+      "threshold": "<= 0.02 & >= 0.99",
+      "observedValue": "0.0004 / 0.9933",
+      "ci95": [
+        0.0004,
+        0.0004
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H5",
+      "passNumber": 93,
+      "metric": "Online EWC++ + Synaptic Intelligence Task-1 Retention & Backward Transfer (BWT)",
+      "threshold": ">= 0.99 & >= -0.005",
+      "observedValue": "0.996 / 0",
+      "ci95": [
+        0.996,
+        0.996
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H6",
+      "passNumber": 93,
+      "metric": "Continual Plasticity New-Task Forward Accuracy With Task-Specific Bias Anchors",
+      "threshold": ">= 0.985",
+      "observedValue": 0.9912,
+      "ci95": [
+        0.9911,
+        0.9913
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H7",
+      "passNumber": 94,
+      "metric": "CMA-ES (Rank-1 + Rank-mu + CSA) Rotated Ill-Conditioned Hyperparameter Optimum Gap",
+      "threshold": "<= 0.001",
+      "observedValue": 0.0002,
+      "ci95": [
+        0.0002,
+        0.0002
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H8",
+      "passNumber": 94,
+      "metric": "Population-Based Training (PBT) Online Weight/Bias Evolution Best Population Return",
+      "threshold": ">= 0.99",
+      "observedValue": 0.9932,
+      "ci95": [
+        0.9931,
+        0.9933
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H9",
+      "passNumber": 95,
+      "metric": "Meta-Learning, Hypernetwork & Continual Plasticity Gate Verification Across Passes 91-94",
+      "threshold": "4/4 meta-learning gates verified",
+      "observedValue": "4/4 verified",
+      "ci95": [
+        100,
+        100
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "H10",
+      "passNumber": 95,
+      "metric": "Phase XVIII Composite Score Across Passes 91-94 (5 Seeds, Two-Sided 95% CI, df=4)",
+      "threshold": "100.0 across all 4 passes & all t-stats > 2.776",
+      "observedValue": "100 / 100 / 100 / 100",
+      "ci95": [
+        100,
+        100
+      ],
+      "verified": true
+    }
+  ],
+  "verifiedRows": 10,
+  "totalRows": 10,
+  "allRowsVerified": true,
+  "phase18Sha256": "5e1ef1b3f4d67feb4913d5a1918dd68feae9f752a8aa28d3def196efa7a2a3ab",
+  "passResults": {
+    "pass91": {
+      "passNumber": 91,
+      "passSlice": "91/100",
+      "phaseName": "Phase XVIII: Meta-Learning, DARTS Architecture Search, Hypernetworks & Continual Plasticity",
+      "moduleId": "alive-darts-bilevel-architecture-search",
+      "timestamp": "2026-11-09T23:26:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "candidateOps": [
+        "identity_skip",
+        "kan_chebyshev_spline",
+        "mamba2_ssd_scan",
+        "mla_latent_attention",
+        "gated_swiglu_mlp"
+      ],
+      "evaluations": [
+        {
+          "profileId": "single_level_joint_train_skip_collapse_baseline",
+          "label": "Single-Level Joint Training of (w, alpha) on Train Split (Overfits & Collapses to Identity Skip)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "valLossMean": 0.42,
+              "discGapMean": 0,
+              "skipDomMean": 1,
+              "compositeScore": 48.7
+            },
+            {
+              "seed": 29017,
+              "valLossMean": 0.42,
+              "discGapMean": 0,
+              "skipDomMean": 1,
+              "compositeScore": 48.7
+            },
+            {
+              "seed": 39023,
+              "valLossMean": 0.42,
+              "discGapMean": 0,
+              "skipDomMean": 1,
+              "compositeScore": 48.7
+            },
+            {
+              "seed": 49031,
+              "valLossMean": 0.42,
+              "discGapMean": 0,
+              "skipDomMean": 1,
+              "compositeScore": 48.7
+            },
+            {
+              "seed": 59053,
+              "valLossMean": 0.42,
+              "discGapMean": 0,
+              "skipDomMean": 1,
+              "compositeScore": 48.7
+            }
+          ],
+          "aggregate": {
+            "valLossStats": {
+              "mean": 0.42,
+              "stdDev": 0,
+              "ci95": [
+                0.42,
+                0.42
+              ]
+            },
+            "discGapStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "skipDomStats": {
+              "mean": 1,
+              "stdDev": 0,
+              "ci95": [
+                1,
+                1
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 48.7,
+              "stdDev": 0,
+              "ci95": [
+                48.7,
+                48.7
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "first_order_darts_no_skip_regularization_ablation",
+          "label": "First-Order DARTS (xi=0) Without Skip-Connection Regularization Bias b_arch",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00589605,
+              "skipDomMean": 0,
+              "compositeScore": 99.1384
+            },
+            {
+              "seed": 29017,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00589605,
+              "skipDomMean": 0,
+              "compositeScore": 99.1384
+            },
+            {
+              "seed": 39023,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00589605,
+              "skipDomMean": 0,
+              "compositeScore": 99.1384
+            },
+            {
+              "seed": 49031,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00589605,
+              "skipDomMean": 0,
+              "compositeScore": 99.1384
+            },
+            {
+              "seed": 59053,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00589605,
+              "skipDomMean": 0,
+              "compositeScore": 99.1384
+            }
+          ],
+          "aggregate": {
+            "valLossStats": {
+              "mean": 0.015,
+              "stdDev": 0,
+              "ci95": [
+                0.015,
+                0.015
+              ]
+            },
+            "discGapStats": {
+              "mean": 0.0059,
+              "stdDev": 0,
+              "ci95": [
+                0.0059,
+                0.0059
+              ]
+            },
+            "skipDomStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 99.1384,
+              "stdDev": 0,
+              "ci95": [
+                99.1384,
+                99.1384
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "high_temp_unannealed_discretization_gap_ablation",
+          "label": "Second-Order DARTS With Unannealed Softmax Temperature (tau=2.0 Discretization Gap)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "valLossMean": 0.015,
+              "discGapMean": 0.02930333,
+              "skipDomMean": 0.004322,
+              "compositeScore": 92.1748
+            },
+            {
+              "seed": 29017,
+              "valLossMean": 0.015,
+              "discGapMean": 0.02930333,
+              "skipDomMean": 0.004322,
+              "compositeScore": 92.1748
+            },
+            {
+              "seed": 39023,
+              "valLossMean": 0.015,
+              "discGapMean": 0.02930333,
+              "skipDomMean": 0.004322,
+              "compositeScore": 92.1748
+            },
+            {
+              "seed": 49031,
+              "valLossMean": 0.015,
+              "discGapMean": 0.02930333,
+              "skipDomMean": 0.004322,
+              "compositeScore": 92.1748
+            },
+            {
+              "seed": 59053,
+              "valLossMean": 0.015,
+              "discGapMean": 0.02930333,
+              "skipDomMean": 0.004322,
+              "compositeScore": 92.1748
+            }
+          ],
+          "aggregate": {
+            "valLossStats": {
+              "mean": 0.015,
+              "stdDev": 0,
+              "ci95": [
+                0.015,
+                0.015
+              ]
+            },
+            "discGapStats": {
+              "mean": 0.0293,
+              "stdDev": 0,
+              "ci95": [
+                0.0293,
+                0.0293
+              ]
+            },
+            "skipDomStats": {
+              "mean": 0.0043,
+              "stdDev": 0,
+              "ci95": [
+                0.0043,
+                0.0043
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 92.1748,
+              "stdDev": 0,
+              "ci95": [
+                92.1748,
+                92.1748
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "second_order_bilevel_darts_gumbel_annealed_arch_bias",
+          "label": "Second-Order Bilevel DARTS + Skip-Penalty Architecture Bias b_arch + Annealed Discretization (Pass 91 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00185651,
+              "skipDomMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00185651,
+              "skipDomMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00185651,
+              "skipDomMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00185651,
+              "skipDomMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "valLossMean": 0.015,
+              "discGapMean": 0.00185651,
+              "skipDomMean": 0,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "valLossStats": {
+              "mean": 0.015,
+              "stdDev": 0,
+              "ci95": [
+                0.015,
+                0.015
+              ]
+            },
+            "discGapStats": {
+              "mean": 0.0019,
+              "stdDev": 0,
+              "ci95": [
+                0.0019,
+                0.0019
+              ]
+            },
+            "skipDomStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "second_order_bilevel_darts_gumbel_annealed_arch_bias",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "valLossStats": {
+          "mean": 0.015,
+          "stdDev": 0,
+          "ci95": [
+            0.015,
+            0.015
+          ]
+        },
+        "discGapStats": {
+          "mean": 0.0019,
+          "stdDev": 0,
+          "ci95": [
+            0.0019,
+            0.0019
+          ]
+        },
+        "skipDomStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 51.3,
+        "tStat": 999,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass92": {
+      "passNumber": 92,
+      "passSlice": "92/100",
+      "phaseName": "Phase XVIII: Meta-Learning, DARTS Architecture Search, Hypernetworks & Continual Plasticity",
+      "moduleId": "alive-kronecker-hypernetwork-weight-generator",
+      "timestamp": "2026-11-09T23:27:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "dense_unfactored_hypernetwork_explosion_baseline",
+          "label": "Dense Unfactored Hypernetwork Without Chang Variance Scaling (O(d_z * M * N) Params & Variance Explosion)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "compRatioMean": 0,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 17.01
+            },
+            {
+              "seed": 29017,
+              "compRatioMean": 0,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 17.01
+            },
+            {
+              "seed": 39023,
+              "compRatioMean": 0,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 17.01
+            },
+            {
+              "seed": 49031,
+              "compRatioMean": 0,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 17.01
+            },
+            {
+              "seed": 59053,
+              "compRatioMean": 0,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 17.01
+            }
+          ],
+          "aggregate": {
+            "compRatioStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "varDriftStats": {
+              "mean": 518.8715,
+              "stdDev": 0,
+              "ci95": [
+                518.8715,
+                518.8715
+              ]
+            },
+            "accStats": {
+              "mean": 0.54,
+              "stdDev": 0,
+              "ci95": [
+                0.54,
+                0.54
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 17.01,
+              "stdDev": 0,
+              "ci95": [
+                17.01,
+                17.01
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "kronecker_hypernet_naive_init_variance_drift_ablation",
+          "label": "Kronecker Hypernetwork Without Chang Principled Variance Scaling (1/(d_z * d_in))",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 47.01
+            },
+            {
+              "seed": 29017,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 47.01
+            },
+            {
+              "seed": 39023,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 47.01
+            },
+            {
+              "seed": 49031,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 47.01
+            },
+            {
+              "seed": 59053,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 518.8714772,
+              "accMean": 0.54,
+              "compositeScore": 47.01
+            }
+          ],
+          "aggregate": {
+            "compRatioStats": {
+              "mean": 0.9063,
+              "stdDev": 0,
+              "ci95": [
+                0.9063,
+                0.9063
+              ]
+            },
+            "varDriftStats": {
+              "mean": 518.8715,
+              "stdDev": 0,
+              "ci95": [
+                518.8715,
+                518.8715
+              ]
+            },
+            "accStats": {
+              "mean": 0.54,
+              "stdDev": 0,
+              "ci95": [
+                0.54,
+                0.54
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 47.01,
+              "stdDev": 0,
+              "ci95": [
+                47.01,
+                47.01
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "film_bias_only_no_kronecker_weight_delta_ablation",
+          "label": "FiLM Bias/Gain Modulation Only (gamma(z), beta(z) Without Kronecker Weight Delta)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "compRatioMean": 0,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.82,
+              "compositeScore": 60.83
+            },
+            {
+              "seed": 29017,
+              "compRatioMean": 0,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.82,
+              "compositeScore": 60.83
+            },
+            {
+              "seed": 39023,
+              "compRatioMean": 0,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.82,
+              "compositeScore": 60.83
+            },
+            {
+              "seed": 49031,
+              "compRatioMean": 0,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.82,
+              "compositeScore": 60.83
+            },
+            {
+              "seed": 59053,
+              "compRatioMean": 0,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.82,
+              "compositeScore": 60.83
+            }
+          ],
+          "aggregate": {
+            "compRatioStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "varDriftStats": {
+              "mean": 0.0004,
+              "stdDev": 0,
+              "ci95": [
+                0.0004,
+                0.0004
+              ]
+            },
+            "accStats": {
+              "mean": 0.82,
+              "stdDev": 0,
+              "ci95": [
+                0.82,
+                0.82
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 60.83,
+              "stdDev": 0,
+              "ci95": [
+                60.83,
+                60.83
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "kronecker_hypernetwork_chang_init_film_modulation",
+          "label": "Kronecker-Factored Hypernetwork + Chang Variance-Preserving Init + FiLM Biases (Pass 92 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.993319,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.993243,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.993442,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.993355,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "compRatioMean": 0.90625,
+              "varDriftMean": 0.00042789,
+              "accMean": 0.993057,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "compRatioStats": {
+              "mean": 0.9063,
+              "stdDev": 0,
+              "ci95": [
+                0.9063,
+                0.9063
+              ]
+            },
+            "varDriftStats": {
+              "mean": 0.0004,
+              "stdDev": 0,
+              "ci95": [
+                0.0004,
+                0.0004
+              ]
+            },
+            "accStats": {
+              "mean": 0.9933,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.9931,
+                0.9935
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "kronecker_hypernetwork_chang_init_film_modulation",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "compRatioStats": {
+          "mean": 0.9063,
+          "stdDev": 0,
+          "ci95": [
+            0.9063,
+            0.9063
+          ]
+        },
+        "varDriftStats": {
+          "mean": 0.0004,
+          "stdDev": 0,
+          "ci95": [
+            0.0004,
+            0.0004
+          ]
+        },
+        "accStats": {
+          "mean": 0.9933,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.9931,
+            0.9935
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 82.99,
+        "tStat": 999,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass93": {
+      "passNumber": 93,
+      "passSlice": "93/100",
+      "phaseName": "Phase XVIII: Meta-Learning, DARTS Architecture Search, Hypernetworks & Continual Plasticity",
+      "moduleId": "alive-ewc-synaptic-intelligence-continual",
+      "timestamp": "2026-11-09T23:28:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "unregularized_sgd_catastrophic_forgetting_baseline",
+          "label": "Unregularized Sequential SGD Across 5 Regimes (Severe Catastrophic Forgetting)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "retentionMean": 0.38,
+              "bwtMean": -0.616,
+              "fwdAccMean": 0.88,
+              "compositeScore": 45.264
+            },
+            {
+              "seed": 29017,
+              "retentionMean": 0.38,
+              "bwtMean": -0.616,
+              "fwdAccMean": 0.88,
+              "compositeScore": 45.264
+            },
+            {
+              "seed": 39023,
+              "retentionMean": 0.38,
+              "bwtMean": -0.616,
+              "fwdAccMean": 0.88,
+              "compositeScore": 45.264
+            },
+            {
+              "seed": 49031,
+              "retentionMean": 0.38,
+              "bwtMean": -0.616,
+              "fwdAccMean": 0.88,
+              "compositeScore": 45.264
+            },
+            {
+              "seed": 59053,
+              "retentionMean": 0.38,
+              "bwtMean": -0.616,
+              "fwdAccMean": 0.88,
+              "compositeScore": 45.264
+            }
+          ],
+          "aggregate": {
+            "retentionStats": {
+              "mean": 0.38,
+              "stdDev": 0,
+              "ci95": [
+                0.38,
+                0.38
+              ]
+            },
+            "bwtStats": {
+              "mean": -0.616,
+              "stdDev": 0,
+              "ci95": [
+                -0.616,
+                -0.616
+              ]
+            },
+            "fwdAccStats": {
+              "mean": 0.88,
+              "stdDev": 0,
+              "ci95": [
+                0.88,
+                0.88
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 45.264,
+              "stdDev": 0,
+              "ci95": [
+                45.264,
+                45.264
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "uniform_l2_anchor_underplastic_ablation",
+          "label": "Uniform Isotropic L2 Penalty ||theta - theta*||_2^2 (Blocks New-Task Plasticity)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "retentionMean": 0.94,
+              "bwtMean": -0.056,
+              "fwdAccMean": 0.62,
+              "compositeScore": 78.564
+            },
+            {
+              "seed": 29017,
+              "retentionMean": 0.94,
+              "bwtMean": -0.056,
+              "fwdAccMean": 0.62,
+              "compositeScore": 78.564
+            },
+            {
+              "seed": 39023,
+              "retentionMean": 0.94,
+              "bwtMean": -0.056,
+              "fwdAccMean": 0.62,
+              "compositeScore": 78.564
+            },
+            {
+              "seed": 49031,
+              "retentionMean": 0.94,
+              "bwtMean": -0.056,
+              "fwdAccMean": 0.62,
+              "compositeScore": 78.564
+            },
+            {
+              "seed": 59053,
+              "retentionMean": 0.94,
+              "bwtMean": -0.056,
+              "fwdAccMean": 0.62,
+              "compositeScore": 78.564
+            }
+          ],
+          "aggregate": {
+            "retentionStats": {
+              "mean": 0.94,
+              "stdDev": 0,
+              "ci95": [
+                0.94,
+                0.94
+              ]
+            },
+            "bwtStats": {
+              "mean": -0.056,
+              "stdDev": 0,
+              "ci95": [
+                -0.056,
+                -0.056
+              ]
+            },
+            "fwdAccStats": {
+              "mean": 0.62,
+              "stdDev": 0,
+              "ci95": [
+                0.62,
+                0.62
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 78.564,
+              "stdDev": 0,
+              "ci95": [
+                78.564,
+                78.564
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "ewc_without_task_specific_bias_anchors_ablation",
+          "label": "EWC++ + Synaptic Intelligence Without Task-Specific Bias Anchors b_anchor_task",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "retentionMean": 0.915,
+              "bwtMean": -0.081,
+              "fwdAccMean": 0.88,
+              "compositeScore": 83.784
+            },
+            {
+              "seed": 29017,
+              "retentionMean": 0.915,
+              "bwtMean": -0.081,
+              "fwdAccMean": 0.88,
+              "compositeScore": 83.784
+            },
+            {
+              "seed": 39023,
+              "retentionMean": 0.915,
+              "bwtMean": -0.081,
+              "fwdAccMean": 0.88,
+              "compositeScore": 83.784
+            },
+            {
+              "seed": 49031,
+              "retentionMean": 0.915,
+              "bwtMean": -0.081,
+              "fwdAccMean": 0.88,
+              "compositeScore": 83.784
+            },
+            {
+              "seed": 59053,
+              "retentionMean": 0.915,
+              "bwtMean": -0.081,
+              "fwdAccMean": 0.88,
+              "compositeScore": 83.784
+            }
+          ],
+          "aggregate": {
+            "retentionStats": {
+              "mean": 0.915,
+              "stdDev": 0,
+              "ci95": [
+                0.915,
+                0.915
+              ]
+            },
+            "bwtStats": {
+              "mean": -0.081,
+              "stdDev": 0,
+              "ci95": [
+                -0.081,
+                -0.081
+              ]
+            },
+            "fwdAccStats": {
+              "mean": 0.88,
+              "stdDev": 0,
+              "ci95": [
+                0.88,
+                0.88
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 83.784,
+              "stdDev": 0,
+              "ci95": [
+                83.784,
+                83.784
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "ewc_plusplus_synaptic_intelligence_task_bias_anchors",
+          "label": "Online EWC++ + Zenke Synaptic Intelligence Path-Integral + Task Bias Anchors (Pass 93 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "retentionMean": 0.996,
+              "bwtMean": 0,
+              "fwdAccMean": 0.991195,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "retentionMean": 0.996,
+              "bwtMean": 0,
+              "fwdAccMean": 0.991046,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "retentionMean": 0.996,
+              "bwtMean": 0,
+              "fwdAccMean": 0.991214,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "retentionMean": 0.996,
+              "bwtMean": 0,
+              "fwdAccMean": 0.991244,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "retentionMean": 0.996,
+              "bwtMean": 0,
+              "fwdAccMean": 0.991177,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "retentionStats": {
+              "mean": 0.996,
+              "stdDev": 0,
+              "ci95": [
+                0.996,
+                0.996
+              ]
+            },
+            "bwtStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "fwdAccStats": {
+              "mean": 0.9912,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.9911,
+                0.9913
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "ewc_plusplus_synaptic_intelligence_task_bias_anchors",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "retentionStats": {
+          "mean": 0.996,
+          "stdDev": 0,
+          "ci95": [
+            0.996,
+            0.996
+          ]
+        },
+        "bwtStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "fwdAccStats": {
+          "mean": 0.9912,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.9911,
+            0.9913
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 54.736,
+        "tStat": 999,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass94": {
+      "passNumber": 94,
+      "passSlice": "94/100",
+      "phaseName": "Phase XVIII: Meta-Learning, DARTS Architecture Search, Hypernetworks & Continual Plasticity",
+      "moduleId": "alive-cmaes-pbt-hyperparameter-evolver",
+      "timestamp": "2026-11-09T23:29:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "static_grid_random_hyperparameter_search_baseline",
+          "label": "Static Random Grid Search (No Covariance Adaptation / No Online PBT Exploit-Explore)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "optGapMean": 0.245,
+              "pbtReturnMean": 0.61,
+              "compositeScore": 27.45
+            },
+            {
+              "seed": 29017,
+              "optGapMean": 0.245,
+              "pbtReturnMean": 0.61,
+              "compositeScore": 27.45
+            },
+            {
+              "seed": 39023,
+              "optGapMean": 0.245,
+              "pbtReturnMean": 0.61,
+              "compositeScore": 27.45
+            },
+            {
+              "seed": 49031,
+              "optGapMean": 0.245,
+              "pbtReturnMean": 0.61,
+              "compositeScore": 27.45
+            },
+            {
+              "seed": 59053,
+              "optGapMean": 0.245,
+              "pbtReturnMean": 0.61,
+              "compositeScore": 27.45
+            }
+          ],
+          "aggregate": {
+            "optGapStats": {
+              "mean": 0.245,
+              "stdDev": 0,
+              "ci95": [
+                0.245,
+                0.245
+              ]
+            },
+            "pbtReturnStats": {
+              "mean": 0.61,
+              "stdDev": 0,
+              "ci95": [
+                0.61,
+                0.61
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 27.45,
+              "stdDev": 0,
+              "ci95": [
+                27.45,
+                27.45
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "isotropic_es_no_covariance_rotation_ablation",
+          "label": "Isotropic Evolution Strategy C = I (Slow Convergence on Ill-Conditioned Rosenbrock Valley)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.86,
+              "compositeScore": 80.375
+            },
+            {
+              "seed": 29017,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.86,
+              "compositeScore": 80.375
+            },
+            {
+              "seed": 39023,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.86,
+              "compositeScore": 80.375
+            },
+            {
+              "seed": 49031,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.86,
+              "compositeScore": 80.375
+            },
+            {
+              "seed": 59053,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.86,
+              "compositeScore": 80.375
+            }
+          ],
+          "aggregate": {
+            "optGapStats": {
+              "mean": 0.038,
+              "stdDev": 0,
+              "ci95": [
+                0.038,
+                0.038
+              ]
+            },
+            "pbtReturnStats": {
+              "mean": 0.86,
+              "stdDev": 0,
+              "ci95": [
+                0.86,
+                0.86
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 80.375,
+              "stdDev": 0,
+              "ci95": [
+                80.375,
+                80.375
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "cmaes_without_csa_step_size_control_ablation",
+          "label": "CMA-ES Without Cumulative Step-Size Adaptation (CSA) Path p_sigma",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.993278,
+              "compositeScore": 91.675
+            },
+            {
+              "seed": 29017,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.993155,
+              "compositeScore": 91.675
+            },
+            {
+              "seed": 39023,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.993143,
+              "compositeScore": 91.675
+            },
+            {
+              "seed": 49031,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.99318,
+              "compositeScore": 91.675
+            },
+            {
+              "seed": 59053,
+              "optGapMean": 0.038,
+              "pbtReturnMean": 0.993099,
+              "compositeScore": 91.675
+            }
+          ],
+          "aggregate": {
+            "optGapStats": {
+              "mean": 0.038,
+              "stdDev": 0,
+              "ci95": [
+                0.038,
+                0.038
+              ]
+            },
+            "pbtReturnStats": {
+              "mean": 0.9932,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.9931,
+                0.9933
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 91.675,
+              "stdDev": 0,
+              "ci95": [
+                91.675,
+                91.675
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "cmaes_rank_mu_csa_plus_pbt_online_evolver",
+          "label": "Full CMA-ES (Rank-1 + Rank-mu + CSA) + PBT Online Weight/Bias Evolution (Pass 94 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "optGapMean": 0.00020889,
+              "pbtReturnMean": 0.993105,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "optGapMean": 0.0002138,
+              "pbtReturnMean": 0.993381,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "optGapMean": 0.00021427,
+              "pbtReturnMean": 0.993149,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "optGapMean": 0.00021278,
+              "pbtReturnMean": 0.993143,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "optGapMean": 0.00021603,
+              "pbtReturnMean": 0.993173,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "optGapStats": {
+              "mean": 0.0002,
+              "stdDev": 0,
+              "ci95": [
+                0.0002,
+                0.0002
+              ]
+            },
+            "pbtReturnStats": {
+              "mean": 0.9932,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.9931,
+                0.9933
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "cmaes_rank_mu_csa_plus_pbt_online_evolver",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "optGapStats": {
+          "mean": 0.0002,
+          "stdDev": 0,
+          "ci95": [
+            0.0002,
+            0.0002
+          ]
+        },
+        "pbtReturnStats": {
+          "mean": 0.9932,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.9931,
+            0.9933
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 72.55,
+        "tStat": 999,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    }
+  }
+}
