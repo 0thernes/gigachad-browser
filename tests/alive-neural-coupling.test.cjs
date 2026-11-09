@@ -73,17 +73,27 @@ test('actual model instances expose 14 brains, seven precision streams, Ising, a
   assert(differs(h.trainableAlifeNeuralHub.learnedMotorThrust2D, new Float32Array(2)));
 });
 
-const orphanPerturbations = [
+const brainPerturbations = [
+  ['Asmodensius', h => { h.portedMultiverseBrains.brain1Asmodensius.rates272[216] += 0.8; }],
+  ['Glitchling', h => { h.portedMultiverseBrains.brain2Glitchling.deltaNetFastS8x8[0] += 0.8; }],
+  ['CQM SuperMind', h => { h.portedMultiverseBrains.brain3CqmSuperMind.imagitronThoughts5x8[0] += 0.8; }],
+  ['Apex Hydra', h => { h.portedMultiverseBrains.brain4ApexHydra.organActivations11[0] += 0.8; }],
+  ['Xenomimic', h => { h.portedMultiverseBrains.brain5Xenomimic.psiRe16[0] += 0.8; }],
   ['Xylos', h => { h.portedMultiverseBrains.brain6XylosManifold.fociAct48[0] += 0.8; }],
   ['Mechalogodrom', h => { h.portedMultiverseBrains.brain7Mechalogodrom.invariants10[0] += 0.8; }],
   ['Glyph', h => { h.portedMultiverseBrains.precisionArena.u16Fp16FastWeights[0] = 0x3c00; }],
+  ['Thaler DABUS', h => { h.portedMultiverseBrains.brain9ThalerDabus.W_autoassoc8x8[0] += 0.8; }],
   ['GraphMind', h => { h.portedMultiverseBrains.brain10GraphCrystal.W_tree6x6[0] += 0.8; }],
-  ['BlackHole', h => { h.portedMultiverseBrains.brain12BlackHolePage.rOuterPlus += 2; }]
+  ['Tsotchke Dale', h => { h.portedMultiverseBrains.brain11TsotchkeDale.ddimLatent16[0] += 0.8; }],
+  ['BlackHole', h => { h.portedMultiverseBrains.brain12BlackHolePage.rOuterPlus += 2; }],
+  ['Consciousness Consortium', h => { h.portedMultiverseBrains.brain13ConsciousnessConsortium.W_consortium10x8[0] += 0.8; }],
+  ['Thingmaker Grimoire', h => { h.portedMultiverseBrains.brain14ThingmakerGrimoire.W_morphArcane8x8[0] += 0.8; }]
 ];
-for (const [name, change] of orphanPerturbations) test(`${name} model perturbation changes shared sensory input and latent state`, () => {
+for (const [name, change] of brainPerturbations) test(`${name} model perturbation changes shared sensory input, latent state and motor`, () => {
   const baseline = run(fixture()), changed = fixture(); change(changed); run(changed);
   assert(differs(changed.hubInputSeen, baseline.hubInputSeen));
   assert(differs(changed.continuousWorldModel.latentZ64, baseline.continuousWorldModel.latentZ64));
+  assert(differs(changed.trainableAlifeNeuralHub.learnedMotorThrust2D, baseline.trainableAlifeNeuralHub.learnedMotorThrust2D));
 });
 
 const precisionPerturbations = [
@@ -98,6 +108,8 @@ const precisionPerturbations = [
 for (const [name, change] of precisionPerturbations) test(`${name} computed state affects the shared hub`, () => {
   const baseline = run(fixture()), changed = fixture(); change(changed.bleedingEdge25Engine); run(changed);
   assert(differs(changed.hubInputSeen, baseline.hubInputSeen));
+  assert(differs(changed.continuousWorldModel.latentZ64, baseline.continuousWorldModel.latentZ64));
+  assert(differs(changed.trainableAlifeNeuralHub.learnedMotorThrust2D, baseline.trainableAlifeNeuralHub.learnedMotorThrust2D));
 });
 
 test('all 56 Ising spins can affect the shared model rather than only its display', () => {

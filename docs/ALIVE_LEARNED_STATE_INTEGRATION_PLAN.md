@@ -8,6 +8,10 @@ planning evidence, not qualification of complete application restore.
 
 Paths under `research_notes/` identify local-only evidence excluded from published source; they are not public download links. See [the release summary](RELEASE_2026-11-09.md) for current release scope.
 See [the primary startup contract](ALIVE_PRIMARY_STATE_STARTUP.md) for current integration.
+The [committed trainer component](ALIVE_TRAINER_STATE.md) subsequently adds one
+exact 64-byte weight view, private epoch and timeout to paired canonical startup
+and saving. Its isolated two-process qualification is recorded separately; it
+does not complete the broader catalog or change the historical counts below.
 
 ## Evidence and the remaining coverage boundary
 

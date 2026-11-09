@@ -62,8 +62,12 @@
   // Worker authority and clocks are private host state, never restored from
   // editable telemetry. The semantic committed epoch needs future catalog wiring.
   const workerTrainers = new WeakMap();
+  const committedTrainerRestores = new WeakMap();
+  const trainerF32 = Float32Array, trainerU8 = Uint8Array;
   const trainerViewPrototype = Object.getPrototypeOf(Float32Array.prototype);
   const trainerIntrinsics = Object.freeze({
+    descriptor: Object.getOwnPropertyDescriptor,
+    define: Reflect.defineProperty,
     type: Object.getOwnPropertyDescriptor(trainerViewPrototype, Symbol.toStringTag).get,
     length: Object.getOwnPropertyDescriptor(trainerViewPrototype, 'length').get,
     buffer: Object.getOwnPropertyDescriptor(trainerViewPrototype, 'buffer').get,
@@ -80,7 +84,7 @@
       state = { generation: 0, nextJobId: 0, committedEpoch: 0, phase: 'idle', admitted: false,
         worker: null, url: null, pending: null, timeoutMs: 5000, submitted: 0, applied: 0,
         discarded: 0, rejectedReplies: 0, rejectedInputs: 0, busySkips: 0, faults: 0,
-        timeouts: 0, workersCreated: 0, lastReplayGradNorm: null, lastError: '', lastRejectedReason: '' };
+        timeouts: 0, workersCreated: 0, lastReplayGradNorm: null, lastError: '', lastRejectedReason: '', committedStateRestored: false };
       workerTrainers.set(target, state);
     }
     return state;
@@ -95,6 +99,7 @@
       rejectedReplies: state.rejectedReplies, rejectedInputs: state.rejectedInputs,
       busySkips: state.busySkips, faults: state.faults, timeouts: state.timeouts,
       workersCreated: state.workersCreated, lastError: state.lastError, lastRejectedReason: state.lastRejectedReason,
+      committedStateRestored: state.committedStateRestored,
       semanticClockPersisted: false, scope: 'Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog' });
   }
   function publishTrainer(target, state) {
@@ -161,6 +166,53 @@
     return result;
   }
 
+  function committedTrainerView(view) {
+    if (trainerIntrinsics.type.call(view) !== 'Float32Array' || trainerIntrinsics.length.call(view) !== 16) throw new TypeError('Committed trainer weights require 16 Float32 values');
+    const buffer = trainerIntrinsics.buffer.call(view);
+    if (trainerIntrinsics.offset.call(view) !== 0 || trainerIntrinsics.bytes.call(view) !== 64 ||
+        trainerIntrinsics.bufferBytes.call(buffer) !== 64 || trainerIntrinsics.resizable?.call(buffer)) {
+      throw new TypeError('Committed trainer weights require a standalone fixed 64-byte backing');
+    }
+    for (let i = 0; i < 16; i++) if (!Number.isFinite(view[i])) throw new TypeError('Committed trainer weights must be finite');
+    return { view, buffer };
+  }
+  function trainerDataSlot(target, name) {
+    const slot = trainerIntrinsics.descriptor(target, name);
+    if (!slot || !Object.prototype.hasOwnProperty.call(slot, 'value') || !slot.writable) throw new TypeError(`Trainer ${name} must be a writable own data field`);
+    return slot;
+  }
+  function sameTrainerSlot(left, right) {
+    return Boolean(left && right && Object.prototype.hasOwnProperty.call(right, 'value') &&
+      left.value === right.value && left.writable === right.writable && left.enumerable === right.enumerable && left.configurable === right.configurable);
+  }
+  function copyTrainerBytes(buffer) {
+    const copy = new trainerU8(64);
+    trainerIntrinsics.set.call(copy, new trainerU8(buffer));
+    return copy;
+  }
+  function sameTrainerBytes(buffer, expected) {
+    const bytes = new trainerU8(buffer);
+    if (bytes.length !== expected.length) return false;
+    for (let i = 0; i < bytes.length; i++) if (bytes[i] !== expected[i]) return false;
+    return true;
+  }
+  function trainerRestoreReady(state) {
+    return !state.admitted && !state.worker && !state.pending && !state.url && state.phase !== 'disposed' &&
+      state.generation < Number.MAX_SAFE_INTEGER;
+  }
+  function currentCommittedTrainerRestore(target, record) {
+    if (!record || record.used || record.target !== target || workerTrainers.get(target) !== record.state) return false;
+    const state = record.state;
+    if (!trainerRestoreReady(state) || state.generation !== record.generation || state.phase !== record.phase ||
+        state.committedEpoch !== record.originalEpoch || state.timeoutMs !== record.originalTimeout) return false;
+    try {
+      if (!sameTrainerSlot(record.weightSlot, trainerIntrinsics.descriptor(target, 'W_hyper_u')) ||
+          !sameTrainerSlot(record.statusSlot, trainerIntrinsics.descriptor(target, 'workerTrainerStatus'))) return false;
+      const current = committedTrainerView(record.weightSlot.value);
+      return current.buffer === record.buffer && sameTrainerBytes(current.buffer, record.originalBytes);
+    } catch (_) { return false; }
+  }
+
   function finiteClamped(val, fallback = 0.0, minVal = -1e6, maxVal = 1e6) {
     const n = Number(val);
     if (!Number.isFinite(n)) return fallback;
@@ -205,7 +257,7 @@
   ];
 
   class BleedEdge25AlifeEngine {
-    constructor() {
+    constructor({ deferWorkerActivation = false } = {}) {
       this.catalog = BLEEDING_EDGE_25_CATALOG;
       this.activeModelsCount = 25;
       this.stepCount = 0;
@@ -342,7 +394,8 @@
       this.aotTotGot = new AotTotGotCorecursiveDecursiveEngine();
       this.siblingBrainFusion = new SiblingBrainFusionEngine();
 
-      this._initOffThreadWorkerTrainer();
+      if (deferWorkerActivation) this.suspendWorkerTrainer('startup-deferred');
+      else this._initOffThreadWorkerTrainer();
       this._probeWebGpuHardware();
     }
 
@@ -556,6 +609,82 @@
     }
 
     workerTrainerSnapshot() { return trainerSnapshot(trainerState(this)); }
+
+    captureCommittedTrainerState() {
+      const slot = trainerDataSlot(this, 'W_hyper_u'), target = committedTrainerView(slot.value), state = trainerState(this);
+      const weights = new trainerF32(16);
+      trainerIntrinsics.set.call(new trainerU8(weights.buffer), new trainerU8(target.buffer));
+      // No await or callback separates the bytes from the authoritative clock.
+      // A pending job is uncommitted work and is deliberately not serialized.
+      return { schemaVersion: 1, kernelId: 'bleeding-hyper-worker-v1', weights,
+        committedEpoch: state.committedEpoch, timeoutMs: state.timeoutMs };
+    }
+
+    prepareCommittedTrainerRestore(data, options) {
+      const fields = trainerMessage(data), context = trainerMessage(options), state = trainerState(this);
+      if (Object.keys(fields).length !== 5 || Object.keys(fields).some(key => !['schemaVersion', 'kernelId', 'weights', 'committedEpoch', 'timeoutMs'].includes(key)) ||
+          fields.schemaVersion !== 1 || fields.kernelId !== 'bleeding-hyper-worker-v1' || !trainerInteger(fields.committedEpoch) ||
+          !Number.isInteger(fields.timeoutMs) || fields.timeoutMs < 50 || fields.timeoutMs > 30000) throw new TypeError('Invalid committed trainer state');
+      if (Object.keys(context).length !== 1 || !trainerInteger(context.expectedGeneration) || context.expectedGeneration !== state.generation ||
+          !trainerRestoreReady(state)) throw new Error('Trainer restore requires its current inactive generation');
+      const input = committedTrainerView(fields.weights);
+      const weightSlot = trainerDataSlot(this, 'W_hyper_u'), target = committedTrainerView(weightSlot.value);
+      const statusSlot = trainerDataSlot(this, 'workerTrainerStatus');
+      const handle = Object.freeze(Object.create(null));
+      committedTrainerRestores.set(handle, { target: this, state, generation: state.generation, phase: state.phase,
+        originalEpoch: state.committedEpoch, originalTimeout: state.timeoutMs, weightSlot, statusSlot,
+        buffer: target.buffer, originalBytes: copyTrainerBytes(target.buffer), candidateBytes: copyTrainerBytes(input.buffer),
+        committedEpoch: fields.committedEpoch, timeoutMs: fields.timeoutMs, used: false });
+      return handle;
+    }
+
+    recheckCommittedTrainerRestore(handle) {
+      return currentCommittedTrainerRestore(this, committedTrainerRestores.get(handle));
+    }
+
+    commitCommittedTrainerRestore(handle) {
+      const record = committedTrainerRestores.get(handle);
+      if (!currentCommittedTrainerRestore(this, record)) {
+        if (record && record.target === this) record.used = true;
+        throw new Error('Committed trainer restore handle is stale or unavailable');
+      }
+      record.used = true;
+      const state = record.state, generation = state.generation + 1;
+      const snapshot = trainerSnapshot({ ...state, generation, phase: 'suspended',
+        committedEpoch: record.committedEpoch, timeoutMs: record.timeoutMs, committedStateRestored: true });
+      const receipt = Object.freeze({ status: 'restored', schemaVersion: 1, kernelId: 'bleeding-hyper-worker-v1',
+        generation, committedEpoch: record.committedEpoch, timeoutMs: record.timeoutMs, weightsBytes: 64,
+        active: false, scope: 'Committed worker weights and clock only; pending work discarded, external inputs not restored' });
+      // Publish through the validated own data slot, never a setter. Ordinary
+      // engine objects cannot execute user callbacks between these writes.
+      if (!trainerIntrinsics.define(this, 'workerTrainerStatus', { value: snapshot })) throw new Error('Trainer diagnostic publication failed before restore');
+      try {
+        trainerIntrinsics.set.call(new trainerU8(record.buffer), record.candidateBytes);
+      } catch (error) {
+        // This should be unreachable for the checked fixed backing. Keep the
+        // original diagnostic and bytes if an unexpected host failure occurs.
+        let rolledBack = false;
+        try {
+          trainerIntrinsics.set.call(new trainerU8(record.buffer), record.originalBytes);
+          rolledBack = trainerIntrinsics.define(this, 'workerTrainerStatus', record.statusSlot) &&
+            sameTrainerSlot(record.statusSlot, trainerIntrinsics.descriptor(this, 'workerTrainerStatus')) && sameTrainerBytes(record.buffer, record.originalBytes);
+        } catch (_) {}
+        throw new Error(`Trainer restore failed; rollback ${rolledBack ? 'verified' : 'unverified'}: ${String(error.message || error)}`);
+      }
+      state.committedEpoch = record.committedEpoch;
+      state.timeoutMs = record.timeoutMs;
+      state.generation = generation;
+      state.phase = 'suspended';
+      state.committedStateRestored = true;
+      return receipt;
+    }
+
+    discardCommittedTrainerRestore(handle) {
+      const record = committedTrainerRestores.get(handle);
+      if (!record || record.target !== this || record.used) return false;
+      record.used = true;
+      return true;
+    }
 
     suspendWorkerTrainer(reason = 'paused') {
       const state = trainerState(this);
@@ -1004,18 +1133,26 @@
 
     async runCyberHatDomainRecon(targetUrl = 'https://en.wikipedia.org') {
       try {
+        const state = trainerState(this), generation = state.generation;
+        const telemetrySlot = trainerIntrinsics.descriptor(this, 'cyberHatTelemetry');
+        if (!telemetrySlot || !Object.prototype.hasOwnProperty.call(telemetrySlot, 'value') || !telemetrySlot.value ||
+            state.phase === 'disposed' || globalScope.__alivePersistenceClosing || globalScope.__aliveCheckpointRestore) return null;
+        const telemetry = telemetrySlot.value;
         const bridge = globalScope.gigachad || globalScope.gigachadBridge;
         if (!bridge || typeof bridge.invoke !== 'function') return null;
         const res = await bridge.invoke('cyber-hat-inspect', { url: targetUrl });
+        if (state.generation !== generation || state.phase === 'disposed' ||
+            globalScope.__alivePersistenceClosing || globalScope.__aliveCheckpointRestore ||
+            !sameTrainerSlot(telemetrySlot, trainerIntrinsics.descriptor(this, 'cyberHatTelemetry'))) return null;
         if (res && res.ok) {
-          this.cyberHatTelemetry.hostname = res.hostname || 'unknown';
-          this.cyberHatTelemetry.tlsProtocol = res.tlsInfo?.protocol || 'TLSv1.3';
-          this.cyberHatTelemetry.tlsCipher = res.tlsInfo?.cipher || 'TLS_AES_256_GCM_SHA384';
-          this.cyberHatTelemetry.tlsFingerprint = String(res.tlsInfo?.fingerprint256 || 'SHA256:LOCAL').slice(0, 23);
-          this.cyberHatTelemetry.localTorSocksActive = Boolean(res.deepWebDaemons?.localTorActive);
-          this.cyberHatTelemetry.routingMode = res.proxyConfig?.routingSummary || 'HYBRID_HTTPS_ONION_IPFS_GATEWAY';
+          telemetry.hostname = res.hostname || 'unknown';
+          telemetry.tlsProtocol = res.tlsInfo?.protocol || 'TLSv1.3';
+          telemetry.tlsCipher = res.tlsInfo?.cipher || 'TLS_AES_256_GCM_SHA384';
+          telemetry.tlsFingerprint = String(res.tlsInfo?.fingerprint256 || 'SHA256:LOCAL').slice(0, 23);
+          telemetry.localTorSocksActive = Boolean(res.deepWebDaemons?.localTorActive);
+          telemetry.routingMode = res.proxyConfig?.routingSummary || 'HYBRID_HTTPS_ONION_IPFS_GATEWAY';
           if (Array.isArray(res.networkSensoryVector8)) {
-            this.cyberHatTelemetry.networkSensoryVector8 = res.networkSensoryVector8;
+            telemetry.networkSensoryVector8 = res.networkSensoryVector8;
           }
         }
         return res;

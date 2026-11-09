@@ -420,3 +420,195 @@ test('combined primary plus legacy JSON respects the UTF-8 32 MiB durable record
   const payload = { text: '\u00e9'.repeat(16 * 1024 * 1024), primaryPolicyState: codec.primaryState(await primaryCapture()) };
   await assert.rejects(codec.encodeAsync(payload, { learnedCodec, crypto: webcrypto }), /32 MiB payload bound/);
 });
+
+async function pairedCapture() {
+  const primary = await primaryCapture();
+  const trainerAdapter = await require('../systems/alive-trainer-state.js').create({
+    registry: require('../systems/alive-learned-state-registry.js'), codec: learnedCodec, crypto: webcrypto
+  });
+  // The real component adapter validates a detached committed-record fixture.
+  // Engine scheduling/restore semantics are qualified in the trainer suites.
+  const weights = Float32Array.from({ length: 16 }, (_, i) => (i - 8) / 7);
+  new DataView(weights.buffer).setUint32(0, 0x80000000, true);
+  new DataView(weights.buffer).setUint32(4, 1, true);
+  new DataView(weights.buffer).setUint32(8, 0x7f7fffff, true);
+  const record = { schemaVersion: 1, kernelId: 'bleeding-hyper-worker-v1', weights,
+    committedEpoch: Number.MAX_SAFE_INTEGER - 1, timeoutMs: 750 };
+  const unused = () => { throw Error('Encoding must not prepare or apply a trainer restore'); };
+  const trainer = trainerAdapter.capture({ captureCommittedTrainerState: () => record,
+    prepareCommittedTrainerRestore: unused, recheckCommittedTrainerRestore: unused,
+    commitCommittedTrainerRestore: unused, discardCommittedTrainerRestore: unused }, primary.snapshot);
+  return { primary, trainer, trainerAdapter, payload: {
+    simulationTick: primary.snapshot.logicalTick, policyCid: primary.snapshot.policyId,
+    checkpointCid: primary.snapshot.checkpointId, agentId: primary.snapshot.creatureId,
+    primaryPolicyState: codec.primaryState(primary), trainerCommittedState: codec.trainerState(trainer)
+  } };
+}
+function pairedDigestBarrier() {
+  const pending = [];
+  let calls = 0;
+  return { pending, crypto: { subtle: { digest(algorithm, bytes) {
+    if (++calls > 2) return webcrypto.subtle.digest(algorithm, bytes);
+    let release, reject;
+    const promise = new Promise((resolve, fail) => { release = () => resolve(webcrypto.subtle.digest(algorithm, bytes)); reject = fail; });
+    pending.push({ release, reject });
+    return promise;
+  } } } };
+}
+
+test('paired encoding owns both captures before either digest yields and retains exact trainer bytes and private-clock tags', async () => {
+  const f = await pairedCapture(), barrier = pairedDigestBarrier();
+  const expected = [f.primary, f.trainer].map(captured => new Map(captured.tensors.map(row => [row.id, Buffer.from(row.bytes).toString('hex')])));
+  f.payload.nested = { sequence: [1, 2] };
+  const before = structuredClone(f.payload);
+  const pending = codec.encodeAsync(f.payload, { learnedCodec, crypto: barrier.crypto });
+  assert.equal(barrier.pending.length, 2, 'both captures are owned before encodeAsync returns');
+  f.payload.simulationTick = 999; f.payload.nested.sequence.push(3);
+  for (const captured of [f.primary, f.trainer]) {
+    captured.snapshot.modelEpoch = 555;
+    for (const row of captured.tensors) {
+      new Uint8Array(row.bytes).fill(255);
+      structuredClone(row.bytes, { transfer: [row.bytes] });
+      assert.equal(row.bytes.byteLength, 0, 'detaching the caller buffer after capture cannot alter owned bytes');
+    }
+  }
+  barrier.pending[1].release(); barrier.pending[0].release();
+  const json = await pending, parsed = JSON.parse(json);
+  assert.equal(parsed.simulationTick, before.simulationTick);
+  assert.deepEqual(parsed.nested, { sequence: [1, 2] });
+  assert.deepEqual(parsed.primaryPolicyState.snapshot, parsed.trainerCommittedState.snapshot);
+  for (const [index, field] of ['primaryPolicyState', 'trainerCommittedState'].entries()) {
+    const decoded = await learnedCodec.decode(parsed[field], { crypto: webcrypto });
+    for (const row of decoded.tensors) assert.equal(Buffer.from(row.bytes).toString('hex'), expected[index].get(row.id), field + '/' + row.id);
+  }
+  const trainer = await learnedCodec.decode(parsed.trainerCommittedState, { crypto: webcrypto });
+  assert.equal(trainer.tensors.length, 1); assert.equal(trainer.tensors[0].bytes.byteLength, 64);
+  assert.deepEqual(parsed.trainerCommittedState.stateValues.committedEpoch, { $type: 'i53', value: Number.MAX_SAFE_INTEGER - 1 });
+  assert.deepEqual(parsed.trainerCommittedState.stateValues.timeoutMs, { $type: 'i53', value: 750 });
+  assert.equal(f.trainerAdapter.validate(trainer).committedEpoch, Number.MAX_SAFE_INTEGER - 1);
+  assert.doesNotMatch(json, /__alive_genome_(primary|trainer)_state_v1__/);
+});
+
+test('paired encoding waits for a delayed sibling after either seal fails, including synchronous provider failures', async () => {
+  for (const failed of [0, 1]) {
+    const f = await pairedCapture(), barrier = pairedDigestBarrier();
+    let settled = false;
+    const pending = codec.encodeAsync(f.payload, { learnedCodec, crypto: barrier.crypto });
+    const rejected = assert.rejects(pending, /selected hash failure/).then(() => { settled = true; });
+    barrier.pending[failed].reject(Error('selected hash failure'));
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(settled, false, 'failed component cannot hide a physically pending sibling');
+    barrier.pending[1 - failed].release(); await rejected;
+  }
+  const f = await pairedCapture();
+  let release, calls = 0, settled = false;
+  const held = new Promise(resolve => { release = resolve; });
+  const learned = { seal() { if (++calls === 1) throw Error('synchronous seal failure'); return held; } };
+  const rejected = assert.rejects(codec.encodeAsync(f.payload, { learnedCodec: learned }), /synchronous seal failure/).then(() => { settled = true; });
+  assert.equal(calls, 2);
+  await new Promise(resolve => setImmediate(resolve)); assert.equal(settled, false);
+  release({}); await rejected;
+});
+
+test('paired aborts and detached or shared inputs reject without a partial wire or premature encoding settlement', async () => {
+  for (const failedField of ['primary', 'trainer']) {
+    const f = await pairedCapture(), bytes = f[failedField].tensors[0].bytes;
+    structuredClone(bytes, { transfer: [bytes] });
+    await assert.rejects(codec.encodeAsync(f.payload, { learnedCodec, crypto: webcrypto }), /detached/);
+  }
+  const shared = await pairedCapture();
+  shared.trainer.tensors[0].bytes = new SharedArrayBuffer(64);
+  await assert.rejects(codec.encodeAsync(shared.payload, { learnedCodec, crypto: webcrypto }), /ArrayBuffer/);
+  const before = await pairedCapture(), stopped = new AbortController(); stopped.abort();
+  let hashes = 0;
+  await assert.rejects(codec.encodeAsync(before.payload, { signal: stopped.signal,
+    learnedCodec: { seal() { hashes++; throw Error('must not start'); } } }), /cancel/i);
+  assert.equal(hashes, 0);
+  for (const firstReleased of [0, 1]) {
+    const f = await pairedCapture(), barrier = pairedDigestBarrier(), control = new AbortController();
+    let settled = false;
+    const pending = codec.encodeAsync(f.payload, { learnedCodec, crypto: barrier.crypto, signal: control.signal });
+    const rejected = assert.rejects(pending, /cancel/i).then(() => { settled = true; });
+    control.abort(); barrier.pending[firstReleased].release();
+    await new Promise(resolve => setImmediate(resolve)); assert.equal(settled, false);
+    barrier.pending[1 - firstReleased].release(); await rejected;
+  }
+});
+
+test('reserved trainer fields and pending nested markers cannot silently enter legacy JSON or invoke getters', async () => {
+  const f = await pairedCapture();
+  assert.equal(codec.hasAsyncState(f.payload), true); assert.equal(codec.hasPrimaryState(f.payload), true);
+  for (const value of [null, undefined, false, {}, { __alive_genome_trainer_state_v1__: false, captured: f.trainer },
+    { ...codec.trainerState(f.trainer), extra: true }, { schema: 'gigachad.learned-state.v1' }]) {
+    const payload = { ...f.payload, trainerCommittedState: value };
+    assert.equal(codec.hasAsyncState(payload), true);
+    assert.throws(() => codec.encode(payload), /asynchronous/);
+    await assert.rejects(codec.encodeAsync(payload, { learnedCodec, crypto: webcrypto }), /Invalid trainer/);
+  }
+  for (const primary of [undefined, null, {}, { schema: 'gigachad.learned-state.v1' }]) {
+    await assert.rejects(codec.encodeAsync({ trainerCommittedState: codec.trainerState(f.trainer),
+      ...(primary === undefined ? {} : { primaryPolicyState: primary }) }, { learnedCodec, crypto: webcrypto }), /[Pp]rimary/);
+  }
+  let getters = 0;
+  const hidden = { ...f.payload }; Object.defineProperty(hidden, 'trainerCommittedState', { enumerable: false });
+  await assert.rejects(codec.encodeAsync(hidden, { learnedCodec, crypto: webcrypto }), /enumerable data/);
+  const accessor = { ...f.payload }; Object.defineProperty(accessor, 'trainerCommittedState', { get() { getters++; return f.payload.trainerCommittedState; } });
+  assert.throws(() => codec.hasAsyncState(accessor), /own data/);
+  await assert.rejects(codec.encodeAsync(accessor), /own data/);
+  for (const key of ['captured', '__alive_genome_trainer_state_v1__']) {
+    const wrapper = codec.trainerState(f.trainer); Object.defineProperty(wrapper, key, { get() { getters++; return true; } });
+    await assert.rejects(codec.encodeAsync({ ...f.payload, trainerCommittedState: wrapper }), /Invalid trainer/);
+  }
+  assert.equal(getters, 0);
+  assert.throws(() => codec.encode({ nested: codec.trainerState(f.trainer) }), /asynchronous/);
+  await assert.rejects(codec.encodeAsync({ ...f.payload, toJSON() { throw Error('root getter must not run'); } }), /replace its root/);
+});
+
+test('paired sealed snapshot identity and owned outer tick/policy/checkpoint are checked without conflating trainer epochs', async () => {
+  const original = await pairedCapture();
+  const modifications = { creatureId: 'other-creature', policyId: 'other-policy', checkpointId: 'other-checkpoint',
+    logicalTick: 10, modelEpoch: 3, capturedAt: '2026-11-09T00:00:01.000Z', resumeBoundary: 'not-a-resume-boundary' };
+  for (const [key, value] of Object.entries(modifications)) {
+    const payload = structuredClone(original.payload); payload.trainerCommittedState.captured.snapshot[key] = value;
+    await assert.rejects(codec.encodeAsync(payload, { learnedCodec, crypto: webcrypto }), /metadata disagree|snapshot boundary/);
+  }
+  for (const [key, value] of Object.entries({ simulationTick: 10, policyCid: 'wrong', checkpointCid: 'wrong', agentId: 'wrong' })) {
+    await assert.rejects(codec.encodeAsync({ ...original.payload, [key]: value }, { learnedCodec, crypto: webcrypto }), /conflicts with outer/);
+  }
+  for (const key of ['simulationTick', 'policyCid', 'checkpointCid']) {
+    const payload = { ...original.payload }; delete payload[key];
+    await assert.rejects(codec.encodeAsync(payload, { learnedCodec, crypto: webcrypto }), /conflicts with outer/);
+  }
+  const json = await codec.encodeAsync(original.payload, { learnedCodec, crypto: webcrypto });
+  const pair = JSON.parse(json);
+  assert.notEqual(pair.primaryPolicyState.architecture.fingerprint, pair.trainerCommittedState.architecture.fingerprint);
+  assert.notEqual(pair.trainerCommittedState.stateValues.committedEpoch.value, pair.primaryPolicyState.snapshot.modelEpoch);
+  assert.notEqual(pair.trainerCommittedState.stateValues.committedEpoch.value, pair.primaryPolicyState.snapshot.logicalTick);
+});
+
+test('real serializer worker imports once and encodes paired state while rejecting trainer-only requests', async t => {
+  const f = await pairedCapture(), expected = Buffer.from(f.trainer.tensors[0].bytes).toString('hex');
+  const { exchange } = serializerWorker(t);
+  const pending = exchange({ id: 81, payload: f.payload });
+  new Uint8Array(f.trainer.tensors[0].bytes).fill(0); f.trainer.snapshot.logicalTick = 44;
+  const reply = await pending;
+  assert.equal(reply.error, undefined); assert.equal(reply.id, 81);
+  const parsed = JSON.parse(reply.json), decoded = await learnedCodec.decode(parsed.trainerCommittedState, { crypto: webcrypto });
+  assert.equal(Buffer.from(decoded.tensors[0].bytes).toString('hex'), expected);
+  assert.equal(decoded.snapshot.logicalTick, 9);
+  const rejected = await exchange({ id: 82, payload: { trainerCommittedState: {} } });
+  assert.match(rejected.error, /[Pp]rimary/); assert.equal(rejected.json, undefined);
+  const legacy = await exchange({ id: 83, payload: { after: 'paired' } });
+  assert.equal(legacy.json, '{"after":"paired"}');
+});
+
+test('aggregate paired UTF-8 limit rejects a payload which still fits as primary-only', async () => {
+  const f = await pairedCapture(); f.payload.text = '';
+  const base = await codec.encodeAsync(f.payload, { learnedCodec, crypto: webcrypto });
+  const limit = 32 * 1024 * 1024;
+  f.payload.text = '\u00e9'.repeat(Math.floor((limit - Buffer.byteLength(base)) / 2) + 1);
+  const primaryOnly = { ...f.payload }; delete primaryOnly.trainerCommittedState;
+  const fitting = await codec.encodeAsync(primaryOnly, { learnedCodec, crypto: webcrypto });
+  assert.ok(Buffer.byteLength(fitting) < limit);
+  await assert.rejects(codec.encodeAsync(f.payload, { learnedCodec, crypto: webcrypto }), /32 MiB payload bound/);
+});

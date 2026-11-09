@@ -93,6 +93,7 @@
   let returnFocus = null;
   let restoringCheckpoint = false;
   let checkpointResult = null;
+  const externalPanels = new Map();
   const sources = [
     '#alien-brain-drawer .drawer-header button[onclick]',
     '#alife-habitat-strip button[onclick]',
@@ -136,6 +137,8 @@
     'DSD-24 × Cl(4,0) × Millennium'
   ];
   const capabilityIds = {
+    promptGhostSwarm: 'ghost-swarm', runInlineGhostwriter: 'ghost-write',
+    toggleWebpageDomRealityWarp: 'warp-dom', runOneAlienBrainCycle: 'dom-body',
     checkpointOrRollbackHumunculus: 'checkpoint', trigger9dParasiteSoulSurge: 'soul-surge',
     triggerHybridBornGroverCollapse: 'grover-collapse', spawnAlienRabbitHoleTab: 'portal-jump',
     triggerEmergentConceptDive: 'portal-jump',
@@ -148,7 +151,7 @@
     triggerHumunculusEpochHandoff: 'epoch-handoff', runHumunculusAcceptanceSuite: 'acceptance-gates',
     triggerDeepDarkWebExpedition: 'deep-dark-dive'
   };
-  const terminalIds = { brainfusion: 'brains-precision', aottotgot: 'reasoning', omniscience100: 'omega', deepdark: 'onion' };
+  const terminalIds = { brainfusion: 'brains-precision', aottotgot: 'reasoning', omniscience100: 'omega', deepdark: 'onion', memory: 'memory', metacognition: 'metacognition', learning: 'learning-five-seed' };
   const tierIds = ['macro', 'meso', 'micro', 'body-curriculum', 'connectome', 'millennium'];
   const skip = /^(?:toggleSuperintelligenceOverdrive|toggleAlienBrainAutonomy|toggleHostAlifeHudPre|cycleHostTerminalViewMode|toggleLeftOmniDock)\(/;
   const el = (tag, attrs, text) => {
@@ -175,8 +178,26 @@
     const panel = doc.getElementById('alive-controls-panel');
     if (panel) panel.hidden = true;
     closeInspectors();
+    for (const entry of externalPanels.values()) entry.close();
     updatePanelButtons();
     if (focus && returnFocus?.isConnected) returnFocus.focus();
+  }
+  function registerPanel(id, node, close) {
+    const workspace = doc.getElementById('workspace');
+    if (!workspace || typeof id !== 'string' || !node || typeof close !== 'function') return false;
+    node.classList.add('alive-external-panel');
+    workspace.append(node);
+    externalPanels.set(id, { node, close });
+    return true;
+  }
+  function prepareExternalPanel(id) {
+    if (!externalPanels.has(id)) return false;
+    const controls = doc.getElementById('alive-controls-panel');
+    if (controls) controls.hidden = true;
+    closeInspectors();
+    for (const [key, entry] of externalPanels) if (key !== id) entry.close();
+    updatePanelButtons();
+    return true;
   }
   function updatePanelButtons() {
     const controls = doc.getElementById('alive-controls-panel');
@@ -518,6 +539,8 @@
     doc.addEventListener('alive-overdrive-status', event => updateStatus(event.detail));
   }
   root.aliveWorkspace = Object.freeze({
+    registerPanel, prepareExternalPanel,
+    unregisterPanel: id => externalPanels.delete(id),
     showCanvasAnalytics: () => analytics,
     updateStatus,
     openPanel,

@@ -1,0 +1,787 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "independent-five-seed-simulated-steering-v1",
+  "status": "completed",
+  "releaseQualified": false,
+  "gateG4Passed": false,
+  "livePolicyModified": false,
+  "protocol": {
+    "independentTrainingSeeds": [
+      17011,
+      27011,
+      37013,
+      47017,
+      57037
+    ],
+    "holdoutSeeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "retentionSeeds": [
+      607,
+      709,
+      811,
+      919,
+      1021
+    ],
+    "dimensions": {
+      "actions": 5,
+      "observations": 16
+    },
+    "morphology": [
+      0.67,
+      0.75,
+      0.575,
+      0.58,
+      0.88,
+      1
+    ],
+    "trainingTrajectoriesPerSeed": 3,
+    "stepsPerTrajectory": 20,
+    "optimizerUpdatesPerSeed": 60,
+    "initialState": "Fresh independently seeded Float32 actor and morphology weights; production initialization ranges",
+    "randomSource": "LCG32: state = 1664525 * state + 1013904223 mod 2^32; reproducibility source, not cryptographic entropy",
+    "productionMethods": [
+      "AlifeLearningEvidence.policyTrial",
+      "AlifeLearningEvidence.evaluatePolicy"
+    ],
+    "fixedBudget": true,
+    "evaluationControls": "Each candidate and frozen same-initial-state baseline use identical fixed holdout and retention trajectories",
+    "curveUse": "Reported after a fixed schedule; no early stopping or model selection using intermediate evaluations",
+    "changedConditionSuite": false,
+    "retentionScope": "Disjoint trajectories of the same steering task, not distinct previously learned tasks",
+    "fingerprint": "SHA-256 over versioned shape header and explicit little-endian Float32 actor then morphology weights"
+  },
+  "summary": {
+    "requestedRuns": 5,
+    "completedRuns": 5,
+    "failedRuns": 0,
+    "positiveHoldoutRuns": 5,
+    "productionRulePassRuns": 5,
+    "holdoutDelta": {
+      "count": 5,
+      "mean": 0.2484573226718611,
+      "sampleStandardDeviation": 0.11260382294438456,
+      "ci95": [
+        0.10864120966170757,
+        0.38827343568201467
+      ],
+      "method": "Two-sided Student t interval across five independent training runs; df=4, approximate normality assumption, descriptive only"
+    },
+    "heldOutDeltaPct": {
+      "count": 5,
+      "mean": 63.109955604888626,
+      "sampleStandardDeviation": 28.96516834455526,
+      "ci95": [
+        27.144948869542972,
+        99.07496234023428
+      ],
+      "method": "Two-sided Student t interval across five independent training runs; df=4, approximate normality assumption, descriptive only"
+    },
+    "retentionPct": {
+      "count": 5,
+      "mean": 152.87333602008124,
+      "sampleStandardDeviation": 41.374549502924175,
+      "ci95": [
+        101.50004746040074,
+        204.24662457976174
+      ],
+      "method": "Two-sided Student t interval across five independent training runs; df=4, approximate normality assumption, descriptive only"
+    }
+  },
+  "runs": [
+    {
+      "trainingSeed": 17011,
+      "trajectorySeeds": [
+        499742881,
+        3446880652,
+        853714811
+      ],
+      "status": "completed",
+      "error": null,
+      "optimizerUpdates": 60,
+      "learningCurve": [
+        {
+          "trajectory": 0,
+          "optimizerUpdates": 0,
+          "holdoutMean": 0.38611147338913676,
+          "retentionMean": 0.552429305709482
+        },
+        {
+          "trajectory": 1,
+          "optimizerUpdates": 20,
+          "trainingReturn": 0.37455493122003497,
+          "holdoutMean": 0.3302031680346832,
+          "retentionMean": 0.36518516613348223
+        },
+        {
+          "trajectory": 2,
+          "optimizerUpdates": 40,
+          "trainingReturn": 0.41091282471357243,
+          "holdoutMean": 0.6562773253084069,
+          "retentionMean": 0.6210585440652981
+        },
+        {
+          "trajectory": 3,
+          "optimizerUpdates": 60,
+          "trainingReturn": 0.6222682146957047,
+          "holdoutMean": 0.6681459567966463,
+          "retentionMean": 0.6039221846758013
+        }
+      ],
+      "initialStateSha256": "73d7a9dd453683ef4b3694582a31ea14910115a857f6eef71ca7c71929b93b7d",
+      "candidateStateSha256": "6b9f10991d5f9a1daa6ebf8918044b0cc5010c007dfdd5c0bdaf2013ecb8e1c8",
+      "frozenStateSha256": "73d7a9dd453683ef4b3694582a31ea14910115a857f6eef71ca7c71929b93b7d",
+      "frozen": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.516933,
+            0.428517,
+            0.356295,
+            0.307803,
+            0.32101
+          ],
+          "meanReturn": 0.38611147338913676
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.454755,
+            0.813684,
+            0.428021,
+            0.624017,
+            0.441669
+          ],
+          "meanReturn": 0.552429305709482
+        }
+      },
+      "candidate": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.756119,
+            0.735492,
+            0.63114,
+            0.531445,
+            0.686534
+          ],
+          "meanReturn": 0.6681459567966463
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.757532,
+            0.673627,
+            0.519489,
+            0.597229,
+            0.471735
+          ],
+          "meanReturn": 0.6039221846758013
+        }
+      },
+      "parameterDelta": {
+        "actor": {
+          "count": 80,
+          "changed": 30,
+          "l1": 2.5046673852484673,
+          "l2": 0.8108623393008244,
+          "maxAbs": 0.47978630661964417
+        },
+        "morphologyConditioning": {
+          "count": 30,
+          "changed": 30,
+          "l1": 0.26183172687888145,
+          "l2": 0.05963310373168537,
+          "maxAbs": 0.026588842272758484
+        }
+      },
+      "holdoutDelta": 0.2820344834075096,
+      "heldOutDeltaPct": 73.04483364141456,
+      "retentionPct": 109.32117076956793,
+      "wouldPromoteUnderProductionRule": true
+    },
+    {
+      "trainingSeed": 27011,
+      "trajectorySeeds": [
+        3411796561,
+        1177466748,
+        1426435243
+      ],
+      "status": "completed",
+      "error": null,
+      "optimizerUpdates": 60,
+      "learningCurve": [
+        {
+          "trajectory": 0,
+          "optimizerUpdates": 0,
+          "holdoutMean": 0.3747504191856034,
+          "retentionMean": 0.5090375292248057
+        },
+        {
+          "trajectory": 1,
+          "optimizerUpdates": 20,
+          "trainingReturn": 0.37291335616116716,
+          "holdoutMean": 0.46266212527067346,
+          "retentionMean": 0.5348365014418539
+        },
+        {
+          "trajectory": 2,
+          "optimizerUpdates": 40,
+          "trainingReturn": 0.590964737106923,
+          "holdoutMean": 0.5935246848048708,
+          "retentionMean": 0.5342022714458412
+        },
+        {
+          "trajectory": 3,
+          "optimizerUpdates": 60,
+          "trainingReturn": 0.5834632933609537,
+          "holdoutMean": 0.5385643462034295,
+          "retentionMean": 0.6233729316044089
+        }
+      ],
+      "initialStateSha256": "c4816968a0be9bbf43e833090d2f1e80399a90b8d01fdbf9c1f9c90950c899ee",
+      "candidateStateSha256": "30c6e61ec94808dc1b69c0250f8e3db5ccb54c5b351f9ae91540a29485f5b98a",
+      "frozenStateSha256": "c4816968a0be9bbf43e833090d2f1e80399a90b8d01fdbf9c1f9c90950c899ee",
+      "frozen": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.346308,
+            0.405689,
+            0.433218,
+            0.418661,
+            0.269876
+          ],
+          "meanReturn": 0.3747504191856034
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.348224,
+            0.524122,
+            0.549453,
+            0.535869,
+            0.58752
+          ],
+          "meanReturn": 0.5090375292248057
+        }
+      },
+      "candidate": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.549891,
+            0.556783,
+            0.534106,
+            0.494843,
+            0.557198
+          ],
+          "meanReturn": 0.5385643462034295
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.65263,
+            0.678137,
+            0.561716,
+            0.673427,
+            0.550955
+          ],
+          "meanReturn": 0.6233729316044089
+        }
+      },
+      "parameterDelta": {
+        "actor": {
+          "count": 80,
+          "changed": 30,
+          "l1": 1.964048134163022,
+          "l2": 0.6002712171890637,
+          "maxAbs": 0.40077216923236847
+        },
+        "morphologyConditioning": {
+          "count": 30,
+          "changed": 30,
+          "l1": 0.46613406063988805,
+          "l2": 0.09916950906499956,
+          "maxAbs": 0.03824020829051733
+        }
+      },
+      "holdoutDelta": 0.1638139270178261,
+      "heldOutDeltaPct": 43.71280687926159,
+      "retentionPct": 122.46109487324448,
+      "wouldPromoteUnderProductionRule": true
+    },
+    {
+      "trainingSeed": 37013,
+      "trajectorySeeds": [
+        1366905499,
+        3349473086,
+        2835309957
+      ],
+      "status": "completed",
+      "error": null,
+      "optimizerUpdates": 60,
+      "learningCurve": [
+        {
+          "trajectory": 0,
+          "optimizerUpdates": 0,
+          "holdoutMean": 0.4399540959382378,
+          "retentionMean": 0.41466364099866804
+        },
+        {
+          "trajectory": 1,
+          "optimizerUpdates": 20,
+          "trainingReturn": 0.4082377060492126,
+          "holdoutMean": 0.46371728510827087,
+          "retentionMean": 0.5229457772044475
+        },
+        {
+          "trajectory": 2,
+          "optimizerUpdates": 40,
+          "trainingReturn": 0.6980594562049555,
+          "holdoutMean": 0.5521637922767992,
+          "retentionMean": 0.5535972450589564
+        },
+        {
+          "trajectory": 3,
+          "optimizerUpdates": 60,
+          "trainingReturn": 0.654757389836357,
+          "holdoutMean": 0.5420355608971842,
+          "retentionMean": 0.6397153118428932
+        }
+      ],
+      "initialStateSha256": "69d14f624c7ded9a7a291af5d92507bb715b54c5e207503198d813c915a3947b",
+      "candidateStateSha256": "6fef47400057181e2d3931c5d4f86bd1e6d8f529e33781a121a0063fe0286814",
+      "frozenStateSha256": "69d14f624c7ded9a7a291af5d92507bb715b54c5e207503198d813c915a3947b",
+      "frozen": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.402847,
+            0.52851,
+            0.546326,
+            0.45151,
+            0.270579
+          ],
+          "meanReturn": 0.4399540959382378
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.350015,
+            0.482671,
+            0.426113,
+            0.433291,
+            0.381228
+          ],
+          "meanReturn": 0.41466364099866804
+        }
+      },
+      "candidate": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.483928,
+            0.577537,
+            0.642578,
+            0.651708,
+            0.354426
+          ],
+          "meanReturn": 0.5420355608971842
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.483391,
+            0.685478,
+            0.679043,
+            0.690637,
+            0.660028
+          ],
+          "meanReturn": 0.6397153118428932
+        }
+      },
+      "parameterDelta": {
+        "actor": {
+          "count": 80,
+          "changed": 30,
+          "l1": 1.519751574844122,
+          "l2": 0.46183377102846834,
+          "maxAbs": 0.2610490843653679
+        },
+        "morphologyConditioning": {
+          "count": 30,
+          "changed": 30,
+          "l1": 0.251060139387846,
+          "l2": 0.058725937222385824,
+          "maxAbs": 0.026448965072631836
+        }
+      },
+      "holdoutDelta": 0.10208146495894638,
+      "heldOutDeltaPct": 23.202753628477847,
+      "retentionPct": 154.27330698737293,
+      "wouldPromoteUnderProductionRule": true
+    },
+    {
+      "trainingSeed": 47017,
+      "trajectorySeeds": [
+        2700003887,
+        1270149570,
+        3370419769
+      ],
+      "status": "completed",
+      "error": null,
+      "optimizerUpdates": 60,
+      "learningCurve": [
+        {
+          "trajectory": 0,
+          "optimizerUpdates": 0,
+          "holdoutMean": 0.39041145862335014,
+          "retentionMean": 0.3733903783132496
+        },
+        {
+          "trajectory": 1,
+          "optimizerUpdates": 20,
+          "trainingReturn": 0.3534450884980152,
+          "holdoutMean": 0.47487311009578415,
+          "retentionMean": 0.5522243592571019
+        },
+        {
+          "trajectory": 2,
+          "optimizerUpdates": 40,
+          "trainingReturn": 0.5228347913275211,
+          "holdoutMean": 0.6113416405157078,
+          "retentionMean": 0.6877950040293792
+        },
+        {
+          "trajectory": 3,
+          "optimizerUpdates": 60,
+          "trainingReturn": 0.8261942282420666,
+          "holdoutMean": 0.7101219197605817,
+          "retentionMean": 0.8047589551851392
+        }
+      ],
+      "initialStateSha256": "4802f80c84169dd6f7883a0ea89e25ae1629689dab98e3ad81de8fb964fd866b",
+      "candidateStateSha256": "54363243a81817717a46a2d789abad13b006cb9caaac72f815379870850ef310",
+      "frozenStateSha256": "4802f80c84169dd6f7883a0ea89e25ae1629689dab98e3ad81de8fb964fd866b",
+      "frozen": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.511472,
+            0.388652,
+            0.311141,
+            0.265024,
+            0.475768
+          ],
+          "meanReturn": 0.39041145862335014
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.602633,
+            0.391018,
+            0.275338,
+            0.341375,
+            0.256588
+          ],
+          "meanReturn": 0.3733903783132496
+        }
+      },
+      "candidate": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.799001,
+            0.781396,
+            0.713759,
+            0.61993,
+            0.636524
+          ],
+          "meanReturn": 0.7101219197605817
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.8136,
+            0.909079,
+            0.730448,
+            0.861995,
+            0.708672
+          ],
+          "meanReturn": 0.8047589551851392
+        }
+      },
+      "parameterDelta": {
+        "actor": {
+          "count": 80,
+          "changed": 30,
+          "l1": 2.0391405071131885,
+          "l2": 0.6203672149675088,
+          "maxAbs": 0.4220055043697357
+        },
+        "morphologyConditioning": {
+          "count": 30,
+          "changed": 30,
+          "l1": 0.34464017406571656,
+          "l2": 0.0775058119694207,
+          "maxAbs": 0.027543269097805023
+        }
+      },
+      "holdoutDelta": 0.31971046113723156,
+      "heldOutDeltaPct": 81.8906448761978,
+      "retentionPct": 215.52750202631094,
+      "wouldPromoteUnderProductionRule": true
+    },
+    {
+      "trainingSeed": 57037,
+      "trajectorySeeds": [
+        3427707971,
+        3348849862,
+        550499693
+      ],
+      "status": "completed",
+      "error": null,
+      "optimizerUpdates": 60,
+      "learningCurve": [
+        {
+          "trajectory": 0,
+          "optimizerUpdates": 0,
+          "holdoutMean": 0.39984132213500245,
+          "retentionMean": 0.5012275051235278
+        },
+        {
+          "trajectory": 1,
+          "optimizerUpdates": 20,
+          "trainingReturn": 0.4139550096832532,
+          "holdoutMean": 0.6358984238630625,
+          "retentionMean": 0.7240509948447296
+        },
+        {
+          "trajectory": 2,
+          "optimizerUpdates": 40,
+          "trainingReturn": 0.6282862853260397,
+          "holdoutMean": 0.7482240866236556,
+          "retentionMean": 0.7728741629837925
+        },
+        {
+          "trajectory": 3,
+          "optimizerUpdates": 60,
+          "trainingReturn": 0.6899864925246904,
+          "holdoutMean": 0.7744875989727945,
+          "retentionMean": 0.8159162043166368
+        }
+      ],
+      "initialStateSha256": "172101161051bb5649c2ae7045be01046766cf5cffd3efee544593ea67314d51",
+      "candidateStateSha256": "49aa2ace0f7b97d049a850a973ee639ac050ef78fed11da34ad0bcacfb38a7ca",
+      "frozenStateSha256": "172101161051bb5649c2ae7045be01046766cf5cffd3efee544593ea67314d51",
+      "frozen": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.385131,
+            0.422923,
+            0.434562,
+            0.423189,
+            0.3334
+          ],
+          "meanReturn": 0.39984132213500245
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.42174,
+            0.526501,
+            0.496065,
+            0.551716,
+            0.510114
+          ],
+          "meanReturn": 0.5012275051235278
+        }
+      },
+      "candidate": {
+        "holdout": {
+          "seeds": [
+            101,
+            202,
+            303,
+            404,
+            505
+          ],
+          "returns": [
+            0.811958,
+            0.849386,
+            0.793922,
+            0.713251,
+            0.703921
+          ],
+          "meanReturn": 0.7744875989727945
+        },
+        "retention": {
+          "seeds": [
+            607,
+            709,
+            811,
+            919,
+            1021
+          ],
+          "returns": [
+            0.84701,
+            0.915349,
+            0.749591,
+            0.851916,
+            0.715715
+          ],
+          "meanReturn": 0.8159162043166368
+        }
+      },
+      "parameterDelta": {
+        "actor": {
+          "count": 80,
+          "changed": 30,
+          "l1": 1.7848192735109478,
+          "l2": 0.47350396543871665,
+          "maxAbs": 0.24096859991550446
+        },
+        "morphologyConditioning": {
+          "count": 30,
+          "changed": 30,
+          "l1": 0.39668707037344575,
+          "l2": 0.07915546124781306,
+          "maxAbs": 0.029771827161312103
+        }
+      },
+      "holdoutDelta": 0.37464627683779206,
+      "heldOutDeltaPct": 93.69873899909136,
+      "retentionPct": 162.78360544390992,
+      "wouldPromoteUnderProductionRule": true
+    }
+  ],
+  "scope": "Independent initialization and training randomness for a compact simulated steering learner. No browser navigation, changed-condition adaptation, distinct-task retention, consciousness, full-body transfer or PDF G4 qualification is established.",
+  "provenance": {
+    "generatedAtUtc": "2026-11-09T12:14:53.933Z",
+    "node": "v25.8.2",
+    "platform": "win32",
+    "architecture": "x64",
+    "cpu": "Intel(R) Core(TM) Ultra 9 275HX",
+    "sourceFiles": {
+      "systems/alife-learning-evidence.js": "54b4f934421f9d5d82d0f3714b1af74913b3b226e902e9b5cabd11ffeaedd5d8",
+      "systems/alive-learning-five-seed.js": "11ca4f907fa63bf380f32a6603d125d4a8eb090bab975f08de0b714a5419fd20",
+      "scripts/alive-learning-five-seed.cjs": "eeba112415d4b520b6baa4d572c5f32e4c93ee53073ca8bd24a6f74a006d4e1d"
+    },
+    "baseGitCommit": "b291cdecccfb8ab8ffa6939d6597b833fc0995de",
+    "sourceState": "Source hashes identify the measured working files; baseGitCommit is context, not a claim that these edits were already committed"
+  }
+}

@@ -1,4 +1,4 @@
-/* Ordered renderer startup. Persisted primary state is prepared before the
+/* Ordered renderer startup. Persisted exact components are prepared before the
  * trusted inert main source becomes a real classic script in global scope. */
 (function (root, factory) {
   const api = factory();
@@ -15,6 +15,7 @@
   const STORAGE_KEY = 'humunculus_persistent_genome_v1';
   const POST_MODULES = Object.freeze([
     'systems/alife-learning-evidence.js',
+    'systems/alive-learning-five-seed.js',
     'systems/alive-neural-coupling.js',
     'systems/alive-specialist-fusion.js',
     'systems/alive-autosave.js',
@@ -22,7 +23,10 @@
     'systems/alive-authority.js',
     'systems/alive-research-policy.js',
     'systems/alive-overdrive-adapters.js',
+    'systems/alive-cognitive-faculties.js',
+    'systems/alive-tensor-evidence.js',
     'systems/alive-workspace-ui.js',
+    'systems/alive-faculty-visuals.js',
     'systems/alive-synaptic-fabric.js',
     'systems/alive-fabric-visualizer.js'
   ]);
@@ -202,11 +206,13 @@
         if (state.status === 'error' || state.applicationFailed || state.writeAllowed !== true) throw new Error('Canonical genome is unavailable or blocked');
         const preparePrimary = prepare || win.AlivePrimaryPolicyBootstrap?.prepare;
         if (typeof preparePrimary !== 'function') throw new Error('Primary policy bootstrap is unavailable');
+        if (typeof win.AliveTrainerState?.create !== 'function') throw new Error('Committed trainer adapter is unavailable');
         phase = 'preparing';
         const primary = await preparePrimary({ json, primary: win.AlivePrimaryPolicyState,
+          trainer: win.AliveTrainerState,
           registry: win.AliveLearnedStateRegistry, codec: win.AliveLearnedStateCodec, crypto: win.crypto });
         if (!current(token)) { cancel(); return; }
-        if (!primary || ['preflight', 'apply', 'capture', 'snapshot'].some(key => typeof primary[key] !== 'function')) throw new Error('Primary policy bootstrap returned an invalid preparation');
+        if (!primary || ['preflight', 'apply', 'capture', 'captureComponents', 'snapshot'].some(key => typeof primary[key] !== 'function')) throw new Error('Exact component bootstrap returned an invalid preparation');
         win.alivePrimaryPolicyBootstrap = primary; prepared = true;
         if (Object.prototype.hasOwnProperty.call(win, '__aliveStartupRegister')) throw new Error('Main startup registration already exists');
         Object.defineProperty(win, '__aliveStartupRegister', { value: register, configurable: false, writable: false });

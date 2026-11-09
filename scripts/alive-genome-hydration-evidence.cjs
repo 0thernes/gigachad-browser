@@ -1,10 +1,62 @@
 'use strict';
 
+// Serializable verification observer. Raw model bytes are owned before either
+// engine read API runs. The private semantic clock necessarily uses the explicit
+// engine API; the returned weight projection is never the independent byte oracle.
+function captureTrainerHydration(runtime) {
+  const own = (object, key) => {
+    const descriptor = Object.getOwnPropertyDescriptor(object, key);
+    if (!descriptor || !Object.prototype.hasOwnProperty.call(descriptor, 'value')) throw new Error('Trainer observation requires own data: ' + key);
+    return descriptor.value;
+  };
+  const method = (object, key) => {
+    for (let node = object, depth = 0; node && depth < 8; node = Object.getPrototypeOf(node), depth++) {
+      const descriptor = Object.getOwnPropertyDescriptor(node, key);
+      if (!descriptor) continue;
+      if (!Object.prototype.hasOwnProperty.call(descriptor, 'value') || typeof descriptor.value !== 'function') throw new Error('Trainer observation requires a data method: ' + key);
+      return descriptor.value;
+    }
+    throw new Error('Trainer observation method missing: ' + key);
+  };
+  const proto = Object.getPrototypeOf(Float32Array.prototype);
+  const read = (view, key) => Object.getOwnPropertyDescriptor(proto, key).get.call(view);
+  const bytesOf = view => {
+    if (Object.getOwnPropertyDescriptor(proto, Symbol.toStringTag).get.call(view) !== 'Float32Array' ||
+        read(view, 'length') !== 16 || read(view, 'byteLength') !== 64 || read(view, 'byteOffset') !== 0) throw new Error('Trainer observation requires standalone Float32[16]');
+    const buffer = read(view, 'buffer');
+    if (Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'byteLength').get.call(buffer) !== 64 ||
+        Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'resizable')?.get.call(buffer)) throw new Error('Trainer observation requires fixed nonshared backing');
+    for (let i = 0; i < 16; i++) if (!Number.isFinite(view[i])) throw new Error('Trainer observation contains nonfinite weights');
+    return new Uint8Array(buffer).slice();
+  };
+  const equal = (a, b) => a.length === b.length && a.every((value, index) => value === b[index]);
+  const integer = value => Number.isSafeInteger(value) && !Object.is(value, -0) && value >= 0;
+  const engine = own(runtime, 'bleedingEdge25Engine'), view = own(engine, 'W_hyper_u');
+  const bytes = bytesOf(view); // MUST precede production capture/read callbacks.
+  const captured = method(engine, 'captureCommittedTrainerState').call(engine);
+  if (own(captured, 'schemaVersion') !== 1 || own(captured, 'kernelId') !== 'bleeding-hyper-worker-v1' ||
+      !equal(bytes, bytesOf(own(captured, 'weights')))) throw new Error('Private trainer capture disagrees with pre-callback direct bytes');
+  const committedEpoch = own(captured, 'committedEpoch'), timeoutMs = own(captured, 'timeoutMs');
+  const state = method(engine, 'workerTrainerSnapshot').call(engine);
+  const active = own(state, 'active'), generation = own(state, 'generation');
+  const pendingJobId = own(state, 'pendingJobId'), pendingTargetEpoch = own(state, 'pendingTargetEpoch');
+  if (!integer(committedEpoch) || !Number.isInteger(timeoutMs) || timeoutMs < 50 || timeoutMs > 30000 ||
+      typeof active !== 'boolean' || !integer(generation) || own(state, 'committedEpoch') !== committedEpoch || own(state, 'timeoutMs') !== timeoutMs ||
+      (pendingJobId !== null && !integer(pendingJobId)) || (pendingTargetEpoch !== null && !integer(pendingTargetEpoch))) throw new Error('Invalid or inconsistent private trainer metadata');
+  if (own(runtime, 'bleedingEdge25Engine') !== engine || own(engine, 'W_hyper_u') !== view || !equal(bytes, bytesOf(view))) throw new Error('Trainer changed during its read API observation');
+  let binary = ''; for (const value of bytes) binary += String.fromCharCode(value);
+  return { schema: 'gigachad.trainer-hydration-evidence.v1', byteOrder: new Uint8Array(new Uint16Array([1]).buffer)[0] === 1 ? 'LE' : 'BE',
+    weightsBase64: btoa(binary), byteLength: 64, committedEpoch, timeoutMs, active, generation, pendingJobId, pendingTargetEpoch,
+    applied: own(state, 'applied'), submitted: own(state, 'submitted'), privateProjectionMatchesDirectBytes: true,
+    scope: 'Direct W_hyper_u bytes owned before production reads; private clock/configuration and admission observed through explicit engine APIs, not independently accessible private memory' };
+}
+
 // Verification only. The capture function has no module-scope dependencies:
 // inject its .toString() immediately AFTER the real constructor load call.
 // Never replace loadPersistentGenome/importState with this evidence helper.
 function captureGenomeHydration(runtime) {
   const capturePrimaryPolicy = null; // Embedded independent observer below.
+  const captureTrainer = null; // Embedded direct trainer observer below.
   const get = path => path.split('.').reduce((value, key) => value?.[key], runtime);
   const groups = [
     ['', ['W_actor', 'W_metamorph', 'W_critic', 'W_world', 'W_actor_frozen', 'W_world_frozen']],
@@ -20,6 +72,11 @@ function captureGenomeHydration(runtime) {
   let primaryPolicyEvidence = null, primaryPolicyCaptureError = null;
   try { primaryPolicyEvidence = capturePrimaryPolicy(runtime); }
   catch (error) { primaryPolicyCaptureError = String(error.message || error); }
+  // Observe trainer bytes before even diagnostic metadata serialization, which
+  // can invoke a user-defined toJSON callback on an otherwise ordinary record.
+  let trainerEvidence = null, trainerCaptureError = null;
+  try { trainerEvidence = captureTrainer(runtime); }
+  catch (error) { trainerCaptureError = String(error.message || error); }
   for (const [prefix, names] of groups) for (const name of names) {
     const path = prefix + name, values = get(path);
     if (!ArrayBuffer.isView(values) || values instanceof DataView) { arrays[path] = null; continue; }
@@ -48,38 +105,49 @@ function captureGenomeHydration(runtime) {
   const capturedFields = JSON.parse(JSON.stringify(fields));
   const agentIdObserved = runtime.agentId, allowedFormations = Array.from(runtime.SWARM_FORMATIONS || []);
   const byteOrder = new Uint8Array(new Uint16Array([1]).buffer)[0] === 1 ? 'LE' : 'BE';
-  let encodedJSON = null, primaryDiagnosticOmitted = false;
+  let encodedJSON = null, primaryDiagnosticOmitted = false, trainerDiagnosticOmitted = false;
   try {
     const codec = globalThis.AliveGenomeCodec || globalThis.window?.AliveGenomeCodec;
     if (!codec || typeof runtime.capturePersistentGenomePayload !== 'function') throw new Error('Legacy capture/codec unavailable');
     const payload = runtime.capturePersistentGenomePayload();
-    const primary = Object.getOwnPropertyDescriptor(payload, 'primaryPolicyState');
     let diagnostic = payload;
-    if (primary) {
-      if (!Object.prototype.hasOwnProperty.call(primary, 'value') || !primary.enumerable) throw new Error('Primary payload must be an enumerable own data field');
-      if (primaryPolicyCaptureError !== null) throw new Error('Initial primary capture failed: ' + primaryPolicyCaptureError);
-      const wrapper = primary.value;
-      const marker = wrapper && typeof wrapper === 'object' && Object.getOwnPropertyDescriptor(wrapper, '__alive_genome_primary_state_v1__');
+    const omitted = new Set();
+    for (const [field, markerName, label, captureError] of [
+      ['primaryPolicyState', '__alive_genome_primary_state_v1__', 'primary', primaryPolicyCaptureError],
+      ['trainerCommittedState', '__alive_genome_trainer_state_v1__', 'trainer', trainerCaptureError]
+    ]) {
+      const member = Object.getOwnPropertyDescriptor(payload, field);
+      if (!member) continue;
+      if (!Object.prototype.hasOwnProperty.call(member, 'value') || !member.enumerable) throw new Error(label + ' payload must be an enumerable own data field');
+      if (captureError !== null) throw new Error('Initial ' + label + ' capture failed: ' + captureError);
+      const wrapper = member.value;
+      const marker = wrapper && typeof wrapper === 'object' && Object.getOwnPropertyDescriptor(wrapper, markerName);
       if (marker) {
         const captured = Object.getOwnPropertyDescriptor(wrapper, 'captured');
         if (!Object.prototype.hasOwnProperty.call(marker, 'value') || marker.value !== true || !marker.enumerable ||
             !captured || !Object.prototype.hasOwnProperty.call(captured, 'value') || !captured.enumerable ||
-            Reflect.ownKeys(wrapper).length !== 2) throw new Error('Invalid pending primary marker');
+            !captured.value || typeof captured.value !== 'object' || Array.isArray(captured.value) ||
+            Reflect.ownKeys(wrapper).length !== 2) throw new Error('Invalid pending ' + label + ' marker');
         // Remove only the recognized pending marker from a shallow copy for
         // the legacy export diagnostic. Never edit the actual capture payload.
-        diagnostic = {};
-        for (const key of Reflect.ownKeys(payload)) if (key !== 'primaryPolicyState') {
-          Object.defineProperty(diagnostic, key, Object.getOwnPropertyDescriptor(payload, key));
-        }
-        primaryDiagnosticOmitted = true;
+        omitted.add(field);
+      } else {
+        const schema = wrapper && typeof wrapper === 'object' && Object.getOwnPropertyDescriptor(wrapper, 'schema');
+        if (!schema || !Object.prototype.hasOwnProperty.call(schema, 'value') || schema.value !== 'gigachad.learned-state.v1') throw new Error('Unrecognized ' + label + ' exact-state wrapper');
       }
     }
+    if (omitted.size) {
+      diagnostic = {};
+      for (const key of Reflect.ownKeys(payload)) if (!omitted.has(key)) Object.defineProperty(diagnostic, key, Object.getOwnPropertyDescriptor(payload, key));
+    }
+    primaryDiagnosticOmitted = omitted.has('primaryPolicyState'); trainerDiagnosticOmitted = omitted.has('trainerCommittedState');
     encodedJSON = codec.encode(diagnostic);
   } catch (error) { errors.push(String(error.message || error)); }
   return { schema: 'gigachad.genome-hydration-evidence.v1',
-    byteOrder, encodedJSON, arrays, primaryPolicyEvidence, primaryPolicyCaptureError, primaryDiagnosticOmitted, fields: capturedFields,
+    byteOrder, encodedJSON, arrays, primaryPolicyEvidence, primaryPolicyCaptureError, primaryDiagnosticOmitted,
+    trainerEvidence, trainerCaptureError, trainerDiagnosticOmitted, fields: capturedFields,
     agentIdObserved, allowedFormations, errors,
-    scope: 'Immediate post-load observation before subsequent model steps; legacy fields plus independent exact primary subset when present, not the entire runtime' };
+    scope: 'Immediate post-load observation before subsequent model steps; legacy fields plus exact primary and committed trainer subsets when present, not the entire runtime' };
 }
 
 // Preserve the existing self-contained .toString()(runtime) injection contract.
@@ -87,7 +155,9 @@ function captureGenomeHydration(runtime) {
 const primaryEvidence = require('./alive-primary-policy-evidence.cjs');
 captureGenomeHydration = new Function('return (' + captureGenomeHydration.toString().replace(
   'const capturePrimaryPolicy = null; // Embedded independent observer below.',
-  'const capturePrimaryPolicy = (' + primaryEvidence.capturePrimaryPolicyEvidence.toString() + ');') + ');')();
+  'const capturePrimaryPolicy = (' + primaryEvidence.capturePrimaryPolicyEvidence.toString() + ');').replace(
+  'const captureTrainer = null; // Embedded direct trainer observer below.',
+  'const captureTrainer = (' + captureTrainerHydration.toString() + ');') + ');')();
 
 // The legacy loader retains the destination's counter when Number(saved) is
 // falsy. Observe that destination before load rather than guessing its seed.
@@ -102,7 +172,21 @@ function captureGenomeInitialState(runtime) {
 
 const crypto = require('node:crypto');
 const { isDeepStrictEqual } = require('node:util');
+const trainerOracle = require('./alive-trainer-state-evidence.cjs');
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
+function assessTrainerHydration(sealedWire, evidence, { requireInactive = false } = {}) {
+  try {
+    if (evidence?.schema !== 'gigachad.trainer-hydration-evidence.v1' || evidence.byteOrder !== 'LE' ||
+        evidence.byteLength !== 64 || evidence.privateProjectionMatchesDirectBytes !== true ||
+        typeof evidence.weightsBase64 !== 'string' || evidence.weightsBase64.length !== 88 || typeof evidence.active !== 'boolean') throw new Error('Invalid direct trainer observation');
+    const bytes = Buffer.from(evidence.weightsBase64, 'base64');
+    if (bytes.length !== 64 || bytes.toString('base64') !== evidence.weightsBase64) throw new Error('Invalid trainer byte encoding');
+    const result = trainerOracle.assessTrainerStateEvidence(JSON.stringify(sealedWire), { weights: bytes, committedEpoch: evidence.committedEpoch, timeoutMs: evidence.timeoutMs });
+    const inactive = evidence.active === false && evidence.pendingJobId === null && evidence.pendingTargetEpoch === null;
+    if (requireInactive && !inactive) return { ...result, ok: false, status: 'trainer-admission-open', differences: [...(result.differences || []), { id: 'trainerAdmission', kind: 'active-or-pending-at-hydration' }] };
+    return { ...result, inactive, clockEvidence: 'Explicit private-state engine read API; independent direct tensor bytes crosschecked before and after callback' };
+  } catch (error) { return { ok: false, status: 'invalid-trainer-observation', reason: String(error.message), differences: [{ id: 'trainerCommittedState', kind: 'invalid-observation' }] }; }
+}
 const HUB = ['W_perc_enc', 'W_perc_dec', 'W_dyn1', 'W_dyn2', 'W_diff1', 'W_diff2', 'W_gen1', 'W_gen2', 'W_disc1', 'W_disc2', 'W_aware16'];
 const SLTC = ['sltcWeights64', 'sltcRecWeights64', 'sltcBias64'];
 const AOT = ['W_aot_contractor', 'W_tot_branch4x16x16', 'W_got_attn'];
@@ -147,6 +231,7 @@ function assessGenomeHydration(expectedRawJSON, snapshot, { initialState } = {})
     encoded = JSON.parse(snapshot.encodedJSON);
   } catch (error) { return { ok: false, status: 'invalid-evidence', reason: error.message }; }
   const hasPrimary = Object.prototype.hasOwnProperty.call(expected, 'primaryPolicyState');
+  const hasTrainer = Object.prototype.hasOwnProperty.call(expected, 'trainerCommittedState');
   const fields = snapshot.fields || {}, plans = [
     ...(!hasPrimary ? [...['W_actor', 'W_metamorph', 'W_critic', 'W_world'].map(key => [key, key]),
       ['W_actor_frozen', 'W_actor'], ['W_world_frozen', 'W_world']] : []),
@@ -164,6 +249,20 @@ function assessGenomeHydration(expectedRawJSON, snapshot, { initialState } = {})
     elementsChecked += primaryPolicy.elementsChecked;
     elementsDifferent += primaryPolicy.elementsDifferent;
     omit('legacy W_actor/W_metamorph/W_critic/W_world compatibility copies', 'Exact primaryPolicyState is authoritative; frozen baselines use their own saved bytes');
+  }
+  let trainer = null;
+  if (hasTrainer) {
+    trainer = assessTrainerHydration(expected.trainerCommittedState, snapshot.trainerEvidence, { requireInactive: true });
+    if (snapshot.trainerCaptureError) differences.push({ path: 'trainerCommittedState', kind: 'initial-capture-failed' });
+    comparisons.push({ path: 'trainerCommittedState', ok: trainer.ok, rule: 'Independent64-byte wire comparison plus API-observed private epoch/configuration and suspended admission',
+      expectedBytesSHA256: trainer.actual?.weightsSHA256 || null, actualBytesSHA256: trainer.expectedWeightsSHA256 || null });
+    if (!trainer.ok) differences.push(...(trainer.differences || [{ id: 'trainerCommittedState', kind: trainer.status }]).map(item => ({ ...item, path: 'trainer.' + (item.id || 'state') })));
+    if (trainer.comparedBytes === 64) { arraysChecked++; elementsChecked += 16; elementsDifferent += trainer.differingFloat32Values || 0; }
+    record('paired-exact-snapshot', expected.primaryPolicyState?.snapshot, expected.trainerCommittedState?.snapshot, 'Both exact components must belong to the identical snapshot');
+    if (!hasPrimary) differences.push({ path: 'primaryPolicyState', kind: 'trainer-requires-primary' });
+    for (const [outer, inner] of [['simulationTick', 'logicalTick'], ['policyCid', 'policyId'], ['checkpointCid', 'checkpointId']]) {
+      record('trainer.snapshot.' + inner, expected[outer], expected.trainerCommittedState?.snapshot?.[inner], 'Exact component metadata binds to the outer persisted snapshot');
+    }
   }
   const get = (object, path) => path.split('.').reduce((value, key) => value?.[key], object);
   for (const [runtimePath, storedPath] of plans) {
@@ -284,10 +383,10 @@ function assessGenomeHydration(expectedRawJSON, snapshot, { initialState } = {})
   return { ok, status: differences.length ? 'mismatch' : inconclusive.length ? 'incomplete-evidence' : 'passed-covered-contract',
     expectedJSONSHA256: hash(expectedRawJSON), capturedJSONSHA256: hash(snapshot.encodedJSON), arraysChecked, elementsChecked, elementsDifferent,
     comparisonCount: comparisons.length, differenceCount: differences.length, differences: differences.slice(0, 24),
-    inconclusive, comparisons, excluded, primaryPolicy,
-    scope: hasPrimary
+    inconclusive, comparisons, excluded, primaryPolicy, trainer,
+    scope: hasTrainer ? 'Immediate exact primary plus committed trainer hydration (734 Float32 values and private clock/configuration) plus declared legacy checks; clock uses explicit engine API; not full runtime continuation' : hasPrimary
       ? 'Immediate hydration: authoritative exact six primary tensors/declared aliases plus17 legacy Float32 destinations when present and declared persisted fields; not full runtime continuation'
       : 'Immediate legacy hydration, exact23 Float32 destinations when present plus declared persisted fields and exported engine state; not arbitrary runtime replay' };
 }
 
-module.exports = { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration };
+module.exports = { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration, captureTrainerHydration, assessTrainerHydration };

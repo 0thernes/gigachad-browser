@@ -2,6 +2,14 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Continuous cognition pass 1
+
+- Added six coordinated capabilities for a total of 36, shared source-grounded Ghost research/writing, explicit memory/metacognition evidence, idempotent acknowledged DOM Warp, and independent five-training-seed diagnostics.
+- Repaired permanently omitted expert, connectome, projection, attention, memory-readout and gradient lanes using bounded rotating sparse computation. Added actual coverage counters and all-fourteen-brain/seven-precision causal wiring checks.
+- Added docked Brain evidence with source receipts, actual task timelines, notebook text, tensor statistics and numeric histories. Corrected Fabric event identity, simultaneous-concurrency measurement, elapsed-time rates and hidden-panel sampling.
+- Integrated exact committed trainer bytes/private epoch/timeout with primary-policy startup persistence and independent two-process verification. This is a bounded component contract, not full-model continuity.
+- Added the [pass report](docs/ALIVE_PASS_01_REPORT.md), [research review](docs/ALIVE_CONTINUOUS_RESEARCH_2026-11-09.md), [learning measurements](docs/ALIVE_LEARNING_FIVE_SEED.md) and [ten-pass roadmap](docs/ALIVE_TEN_PASS_ROADMAP.md).
+
 ## [Unreleased] — 2026-11-09 · Synaptic Fabric
 
 ### Added

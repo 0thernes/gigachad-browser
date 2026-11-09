@@ -7,6 +7,14 @@
 
 An Electron 45.2.3 browser for Windows 11 with a visible creature in both split panes, local numerical controllers, measured learning updates, adaptive page exploration, optional configured language-model research, and managed Tor transport. Tabs use sandboxed `<webview>` guests; a Python sidecar serves optional page tools. Rendering, model updates, research, training and persistence have separate bounded schedules.
 
+The [continuous cognition pass 1 report](docs/ALIVE_PASS_01_REPORT.md) covers the
+36-capability coordinator, shared Ghost research/writing, fair sparse tensor and
+synapse participation, paired trainer startup state, and live Brain evidence and
+Fabric analytics. Open those panels from the ALIVE toolbar to inspect actual
+outcomes, sources, learning measurements and tensor statistics. The
+[ten-pass roadmap](docs/ALIVE_TEN_PASS_ROADMAP.md) records the requested follow-up
+sequence and later Tor Browser integration phase.
+
 The runtime connects fourteen compact brain adapters, the original Asmodensius organism, a local cortex/connectome, simulated organs and mixed-precision numerical state. Historical names such as “superintelligence,” “soul,” “omniscience” and “Deity” label controls or simulations; they are not demonstrated consciousness, general intelligence, physical quantum computation or biological equivalence. Allocated parameter counts, running counters and checklist totals are not independent quality benchmarks. The configured language model supplies proposals; browsing does not fine-tune its weights.
 
 See the [November 9 release record](docs/RELEASE_2026-11-09.md), [complete capability trace](docs/ALIVE_ENGINEERING_PLAN_2026-11-09.md), [runtime contract](docs/ALIVE_OVERDRIVE.md), and [exact primary-state startup](docs/ALIVE_PRIMARY_STATE_STARTUP.md) for implemented behavior, validation and remaining scope. Full-model persistence and the eight proposed Humunculus research gates remain unqualified.

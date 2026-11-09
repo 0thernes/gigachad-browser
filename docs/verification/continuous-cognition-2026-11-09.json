@@ -1,0 +1,552 @@
+{
+  "schema": "gigachad.continuous-cognition-validation.v1",
+  "date": "2026-11-09",
+  "pass": 1,
+  "status": "implemented-and-locally-verified",
+  "releaseReference": "Containing release commit; no self-referential commit hash is embedded.",
+  "scope": "Combined local Windows correctness and integration evidence. This record does not promote any scientific gate, establish general intelligence or establish improved user tasks on the open web.",
+  "provenance": {
+    "sanitization": "Allowlisted counts, check identifiers, source hashes and scoped outcomes only. Temporary absolute paths, fixture URLs, page excerpts, profiles, process IDs, session IDs, document nonces and notebook text are excluded.",
+    "rawArtifacts": {
+      "node": {
+        "path": "research_notes/continuous-pass1-node-final.log",
+        "sha256": "30d1662691f4e42e6d726d3716b2907e8708e89f98faf32a700635faf9c19276"
+      },
+      "smoke": {
+        "path": "research_notes/continuous-pass1-smoke-final.log",
+        "sha256": "f3fc7e387bc00a486842915a35c7bb6a4a9f78b51b9e5c5f2a35cae55ae8767a"
+      },
+      "cognition": {
+        "path": "research_notes/continuous-cognition-final/report.json",
+        "sha256": "bc073c1ded021f38a137fab083858247eb6fbe7be626ca1df8c1b2f1303ade89"
+      },
+      "restart": {
+        "path": "research_notes/continuous-pass1-restart/report.json",
+        "sha256": "d0051463bbd1f6be2cf84a25bf114ec0d0b07ac4d0e5c0421d9df6993810fea7"
+      },
+      "learning": {
+        "path": "docs/reports/alive-learning-five-seed-2026-11-09.json",
+        "sha256": "092e61b0f6ae0e4623e8a6e01d48889187958ad3b20536d3cab5ef70434652dc"
+      }
+    },
+    "rawArtifactAvailability": "Research-note inputs and screenshots are retained locally and ignored by Git; the five-seed artifact is committed under docs/reports."
+  },
+  "candidate": {
+    "sourceHashCount": 13,
+    "sourceSHA256": {
+      "index.html": "de0fd0625dc79cdf477b2875a6de13a74c55f576759a4b576f92e75c821b29b1",
+      "main.js": "15eb04e9310c36b3f28bb7ce8747b69cc9e13011e38551fdc027060234b9a2f6",
+      "systems/alive-startup-loader.js": "ff90b7daf47447356a05d8ceda88e7da7f3e5ecde06b6f4d0c479f8d7f38184c",
+      "systems/alive-overdrive-runtime.js": "a55ec2cde8f3ec8332dd4483f6f07c8a951e983ff48561dee6644f0f150a1c76",
+      "systems/alive-overdrive-adapters.js": "7636c8383280ac1f56a29b8df594e82eb0a1f0d46bfe28331e0cd054acdaeb86",
+      "systems/alive-cognitive-faculties.js": "e610e72dc3704996c6fd32d8cece53ba5548b8655b997182665e8daca0c5fcb1",
+      "systems/alive-faculty-visuals.js": "e4eed1ac719baea4955ff2d4ec1d72974e4ccd64b39a7f601bb6ffe4269d1e1f",
+      "systems/alive-tensor-evidence.js": "2b80eb688e3d720227341e173dedcd9530616f109d5322a244a524bf460e8b1d",
+      "systems/alive-synaptic-fabric.js": "3e3618042192081bb2af4a286c96a00f06ecf752c562fab89c6e79e52c6b5508",
+      "systems/alive-fabric-visualizer.js": "7863791d61b2c93f965f3087463c98ce95a35ef57a2294a376e8410f7bec6018",
+      "systems/alive-workspace-ui.js": "1928c536c3ec389e588efddccd43d9324eba2c0171255e6c72fb1e96b0ae849c",
+      "assets/alive-workspace.css": "b4249b3996d12d6848a833f68b3db7fafb35358d99b8bf5c9976aee6ffa2326f",
+      "scripts/alive-continuous-cognition-probe.cjs": "0d2ee409222e30dd1ccb77badf4fd4a1d53bde9ac78d3fd889c6f4bdfc131e17"
+    },
+    "cognitionSourcesUnchangedDuringRun": true,
+    "currentFilesMatchRecordedCognitionSources": true,
+    "restartSourcesChecked": 34,
+    "restartSourcesUnchangedDuringRun": true,
+    "currentFilesMatchRecordedRestartSources": true,
+    "scope": "These file hashes identify the measured source subsets; this is not a complete repository or whole-application state catalog.",
+    "hashing": "sourceSHA256 hashes the exact tested local file bytes. Git .gitattributes uses text=auto eol=lf for these source paths; sourceLFNormalizedSHA256 hashes the same tested text after CRLF-to-LF normalization for comparison with committed blobs.",
+    "sourceLFNormalizedSHA256": {
+      "index.html": "de0fd0625dc79cdf477b2875a6de13a74c55f576759a4b576f92e75c821b29b1",
+      "main.js": "f4f5395ff530551fcaacdcfbfdd0f19e11cc13d6de6e9e9c7a67a96399452fe9",
+      "systems/alive-startup-loader.js": "ff90b7daf47447356a05d8ceda88e7da7f3e5ecde06b6f4d0c479f8d7f38184c",
+      "systems/alive-overdrive-runtime.js": "a55ec2cde8f3ec8332dd4483f6f07c8a951e983ff48561dee6644f0f150a1c76",
+      "systems/alive-overdrive-adapters.js": "eb2452e3f1519a52bad1259cee9b8767778034bbeda8a7af343e96e6552802e0",
+      "systems/alive-cognitive-faculties.js": "e610e72dc3704996c6fd32d8cece53ba5548b8655b997182665e8daca0c5fcb1",
+      "systems/alive-faculty-visuals.js": "e4eed1ac719baea4955ff2d4ec1d72974e4ccd64b39a7f601bb6ffe4269d1e1f",
+      "systems/alive-tensor-evidence.js": "2b80eb688e3d720227341e173dedcd9530616f109d5322a244a524bf460e8b1d",
+      "systems/alive-synaptic-fabric.js": "3e3618042192081bb2af4a286c96a00f06ecf752c562fab89c6e79e52c6b5508",
+      "systems/alive-fabric-visualizer.js": "7863791d61b2c93f965f3087463c98ce95a35ef57a2294a376e8410f7bec6018",
+      "systems/alive-workspace-ui.js": "1928c536c3ec389e588efddccd43d9324eba2c0171255e6c72fb1e96b0ae849c",
+      "assets/alive-workspace.css": "b4249b3996d12d6848a833f68b3db7fafb35358d99b8bf5c9976aee6ffa2326f",
+      "scripts/alive-continuous-cognition-probe.cjs": "0d2ee409222e30dd1ccb77badf4fd4a1d53bde9ac78d3fd889c6f4bdfc131e17"
+    },
+    "lineEndingNormalizedFiles": [
+      "main.js",
+      "systems/alive-overdrive-adapters.js"
+    ]
+  },
+  "runtime": {
+    "electron": "45.2.3",
+    "chrome": "156.0.8078.80",
+    "node": "24.22.2",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "nodeSuite": {
+    "passed": 1174,
+    "total": 1174,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 31038.6792,
+    "scope": "Final combined Node suite; fixtures and production-method correctness checks do not establish open-web task benefit."
+  },
+  "fullSmoke": {
+    "passed": true,
+    "completionMarker": "smoke passed",
+    "pythonTests": 6,
+    "pythonPassed": true,
+    "electronMarker": "SMOKE_OK",
+    "electron": {
+      "bridge": true,
+      "guestRequireType": "undefined",
+      "webviews": 1,
+      "webviewApi": true,
+      "actionParser": true,
+      "actionCount": 36,
+      "featuresOperational": true,
+      "healthOk": true,
+      "manualGuestProbe": {
+        "hasCanvas": true,
+        "hasHud": true,
+        "hudHidden": true,
+        "animRunning": false,
+        "persistentResources": false,
+        "authorityInstalled": true,
+        "observationReturned": true,
+        "permitKind": "manual",
+        "paused": true,
+        "manualPermits": 0
+      },
+      "authentic": {
+        "sourceMatches": true,
+        "neurons": 272,
+        "finiteInputMotor": true,
+        "exactCheckpointReplay": true
+      }
+    },
+    "sha3": {
+      "marker": "SHA3_ELECTRON_OK",
+      "nativeSha3": false,
+      "fixedVectors": 3,
+      "validOnionAccepted": true,
+      "corruptOnionRejected": true,
+      "networkRequests": 0,
+      "scope": "Runtime compatibility and synthetic checksum checks only; no browser navigation or live Tor proof"
+    },
+    "diagnostics": {
+      "statusCounts": {
+        "PASS": 450,
+        "FAIL": 0,
+        "BLOCKED": 0,
+        "NOT_RUN": 50
+      },
+      "failed": [],
+      "errors": [],
+      "releaseVerified": false,
+      "releaseStatus": "NOT_RUN",
+      "sopCandidates": 500,
+      "sopRequirementsVerified": 0
+    },
+    "scope": "Full local smoke pipeline, Python checks and actual isolated Electron application startup. Providers were mocked or disabled; fixture diagnostics and checksum checks do not establish live Tor or scientific qualification."
+  },
+  "cognition": {
+    "passed": 18,
+    "total": 18,
+    "startedAt": "2026-11-09T12:45:26.612Z",
+    "completedAt": "2026-11-09T12:45:33.871Z",
+    "checks": [
+      {
+        "id": "startup-ready",
+        "passed": true
+      },
+      {
+        "id": "36-capabilities-and-faculty-modules",
+        "passed": true
+      },
+      {
+        "id": "current-fixture-authority",
+        "passed": true
+      },
+      {
+        "id": "acknowledged-dom-observation-enters-faculties",
+        "passed": true
+      },
+      {
+        "id": "architecture-readouts-populate-live-inspector",
+        "passed": true
+      },
+      {
+        "id": "ghost-roles-and-query-enqueue",
+        "passed": true
+      },
+      {
+        "id": "source-notebook-persisted-without-field-write",
+        "passed": true
+      },
+      {
+        "id": "dom-warp-idempotent-and-acknowledged",
+        "passed": true
+      },
+      {
+        "id": "warp-restores-important-transform-and-duration-only",
+        "passed": true
+      },
+      {
+        "id": "warp-restores-mixed-transition-priorities",
+        "passed": true
+      },
+      {
+        "id": "warp-preserves-page-authored-values-and-priorities",
+        "passed": true
+      },
+      {
+        "id": "fabric-rejects-foreign-same-id-terminal-events",
+        "passed": true
+      },
+      {
+        "id": "fabric-accepts-owned-real-memory-outcome",
+        "passed": true
+      },
+      {
+        "id": "evidence-panels-docked-exclusive-and-adjacent",
+        "passed": true
+      },
+      {
+        "id": "live-evidence-panel-and-tensors",
+        "passed": true
+      },
+      {
+        "id": "pause-settles-coordinator-and-guests",
+        "passed": true
+      },
+      {
+        "id": "evidence-screenshot-captured",
+        "passed": true
+      },
+      {
+        "id": "sources-unchanged-during-probe",
+        "passed": true
+      }
+    ],
+    "capabilities": 36,
+    "architectureReadouts": 10,
+    "ghost": {
+      "roles": 3,
+      "linksQueued": 6,
+      "frontierBefore": 90,
+      "frontierAfter": 96,
+      "inferenceStatus": "unavailable",
+      "implementation": "Bounded lexical role analysis over acknowledged fixture observations; model inference disabled in smoke mode."
+    },
+    "notebook": {
+      "characters": 1439,
+      "persistenceReadback": true,
+      "fixtureInputUnchanged": true
+    },
+    "tensorInspection": {
+      "arrays": 726,
+      "numericValues": 1406015,
+      "copiedBytes": 5494212,
+      "fullyFiniteArrays": 726,
+      "traversalOmissions": 53,
+      "rowsPerVisiblePage": 256,
+      "totalRowsReachableByPagination": 726,
+      "scope": "Owned nonshared typed arrays within depth/size/property limits; full copied-array scans. Ordinary-object key enumeration is host work. Byte changes are not proof of learning or causal influence. Non-array/private state is outside this inspection.",
+      "caveat": "The 53 traversal omissions are reported traversal exclusions, not a count of missing tensors. This is a bounded catalog of discovered owned arrays, not every application parameter; byte change is not proof of learning or causal participation."
+    },
+    "layout": {
+      "exclusiveInspectors": true,
+      "guestOverlap": false,
+      "panelWidthCssPx": 690,
+      "guestWidthCssPx": 750
+    },
+    "cleanup": {
+      "settled": true,
+      "coordinatorRunning": false,
+      "authorityPaused": true,
+      "pendingGuestOperations": 0
+    },
+    "screenshots": [
+      "brain-evidence.png",
+      "tensor-evidence.png",
+      "fabric-evidence.png"
+    ],
+    "visualInspection": "All three captures inspected. Brain and tensor data are readable; some Fabric circle labels are crowded at the top and bottom, with equivalent capability details available in Brain evidence rows.",
+    "isolation": {
+      "smokeProfile": true,
+      "providersDisabled": true,
+      "downloadsDisabled": true,
+      "publicRequestsBlocked": true,
+      "userInputExcluded": true
+    },
+    "scope": "Actual application with one owned loopback fixture and manual scheduler requests through production adapters. No public-web navigation benchmark or real model inference quality is measured."
+  },
+  "restart": {
+    "passed": 24,
+    "total": 24,
+    "startedAt": "2026-11-09T12:45:54.709Z",
+    "completedAt": "2026-11-09T12:46:10.063Z",
+    "checks": [
+      {
+        "id": "writer-child-report-present",
+        "passed": true
+      },
+      {
+        "id": "writer-process",
+        "passed": true
+      },
+      {
+        "id": "writer-source-stability",
+        "passed": true
+      },
+      {
+        "id": "writer-all-commits-settled",
+        "passed": true
+      },
+      {
+        "id": "writer-latest-acknowledged-revision",
+        "passed": true
+      },
+      {
+        "id": "writer-verified-normal-close",
+        "passed": true
+      },
+      {
+        "id": "writer-committed-sentinels",
+        "passed": true
+      },
+      {
+        "id": "explicit-worker-flush",
+        "passed": true
+      },
+      {
+        "id": "exact-trainer-component-flushed",
+        "passed": true
+      },
+      {
+        "id": "exact-trainer-component-retained-at-close",
+        "passed": true
+      },
+      {
+        "id": "natural-trainer-commit",
+        "passed": true
+      },
+      {
+        "id": "no-recurring-legacy-write",
+        "passed": true
+      },
+      {
+        "id": "reader-child-report-present",
+        "passed": true
+      },
+      {
+        "id": "reader-process",
+        "passed": true
+      },
+      {
+        "id": "reader-source-stability",
+        "passed": true
+      },
+      {
+        "id": "reader-all-commits-settled",
+        "passed": true
+      },
+      {
+        "id": "reader-latest-acknowledged-revision",
+        "passed": true
+      },
+      {
+        "id": "reader-verified-normal-close",
+        "passed": true
+      },
+      {
+        "id": "reader-committed-sentinels",
+        "passed": true
+      },
+      {
+        "id": "distinct-processes",
+        "passed": true
+      },
+      {
+        "id": "canonical-bootstrap",
+        "passed": true
+      },
+      {
+        "id": "actual-constructor-hydration",
+        "passed": true
+      },
+      {
+        "id": "immediate-exact-trainer-hydration",
+        "passed": true
+      },
+      {
+        "id": "monotonic-durable-revision",
+        "passed": true
+      }
+    ],
+    "processes": [
+      {
+        "phase": "writer",
+        "exitCode": 0
+      },
+      {
+        "phase": "reader",
+        "exitCode": 0
+      }
+    ],
+    "requestedPhases": [
+      "normal-worker-commit",
+      "normal-close",
+      "two-process-restart",
+      "constructor-hydration",
+      "no-recurring-legacy-write"
+    ],
+    "notRun": [
+      "legacy-migration",
+      "corrupt-bootstrap",
+      "delayed-bootstrap",
+      "in-flight-checkpoint-fence",
+      "write-failure",
+      "late-acknowledgement"
+    ],
+    "primary": {
+      "arrays": 6,
+      "float32Values": 718,
+      "changedValues": 0,
+      "comparedBytes": 2872,
+      "scope": "Six declared primary tensors and eight paths only; full runtime continuity not established"
+    },
+    "trainer": {
+      "float32Values": 16,
+      "comparedBytes": 64,
+      "privateStates": 2,
+      "differingFloat32Values": 0,
+      "restoredEpoch": 7,
+      "restoredTimeoutMs": 5000,
+      "scope": "Exact declared committed trainer weights plus private epoch and timeout; pending work and authority are not restored."
+    },
+    "naturalTrainerCommit": {
+      "committedEpochDelta": 7,
+      "appliedDelta": 7,
+      "durationMs": 11009.29999999702,
+      "beforeEpoch": 0,
+      "afterEpoch": 7
+    },
+    "durableRevision": {
+      "before": 7,
+      "after": 8
+    },
+    "adaptation": "Owned host fixture adds early Storage observation and an immediate snapshot after actual constructor loading. Importer and model operations are unchanged.",
+    "scope": "Actual isolated application process restart and observed constructor restoration; not power-loss or full-model persistence proof"
+  },
+  "learning": {
+    "artifact": "../reports/alive-learning-five-seed-2026-11-09.json",
+    "status": "completed",
+    "trainingSeeds": [
+      17011,
+      27011,
+      37013,
+      47017,
+      57037
+    ],
+    "optimizerUpdatesPerSeed": 60,
+    "summary": {
+      "requestedRuns": 5,
+      "completedRuns": 5,
+      "failedRuns": 0,
+      "positiveHoldoutRuns": 5,
+      "productionRulePassRuns": 5,
+      "holdoutDelta": {
+        "count": 5,
+        "mean": 0.2484573226718611,
+        "sampleStandardDeviation": 0.11260382294438456,
+        "ci95": [
+          0.10864120966170757,
+          0.38827343568201467
+        ],
+        "method": "Two-sided Student t interval across five independent training runs; df=4, approximate normality assumption, descriptive only"
+      },
+      "heldOutDeltaPct": {
+        "count": 5,
+        "mean": 63.109955604888626,
+        "sampleStandardDeviation": 28.96516834455526,
+        "ci95": [
+          27.144948869542972,
+          99.07496234023428
+        ],
+        "method": "Two-sided Student t interval across five independent training runs; df=4, approximate normality assumption, descriptive only"
+      },
+      "retentionPct": {
+        "count": 5,
+        "mean": 152.87333602008124,
+        "sampleStandardDeviation": 41.374549502924175,
+        "ci95": [
+          101.50004746040074,
+          204.24662457976174
+        ],
+        "method": "Two-sided Student t interval across five independent training runs; df=4, approximate normality assumption, descriptive only"
+      }
+    },
+    "sourceSHA256": {
+      "systems/alife-learning-evidence.js": "54b4f934421f9d5d82d0f3714b1af74913b3b226e902e9b5cabd11ffeaedd5d8",
+      "systems/alive-learning-five-seed.js": "11ca4f907fa63bf380f32a6603d125d4a8eb090bab975f08de0b714a5419fd20",
+      "scripts/alive-learning-five-seed.cjs": "eeba112415d4b520b6baa4d572c5f32e4c93ee53073ca8bd24a6f74a006d4e1d"
+    },
+    "currentFilesMatchRecordedSources": true,
+    "livePolicyModified": false,
+    "gateG4Passed": false,
+    "releaseQualified": false,
+    "scope": "Independent initialization and training randomness for a compact simulated steering learner. No browser navigation, changed-condition adaptation, distinct-task retention, consciousness, full-body transfer or PDF G4 qualification is established.",
+    "retentionScope": "Disjoint trajectories of the same steering task, not distinct previously learned tasks",
+    "intervalCaveat": "Two-sided Student t interval across five independent training runs; df=4, approximate normality assumption, descriptive only",
+    "visualizations": {
+      "png": "../reports/alive-learning-five-seed-2026-11-09.png",
+      "svg": "../reports/alive-learning-five-seed-2026-11-09.svg",
+      "scope": "Actual paired held-out returns from the referenced five-seed JSON artifact; descriptive Student t interval, compact steering task only."
+    }
+  },
+  "sparseComputation": {
+    "implementation": "Rotating sparse participation with bounded work per call and downstream perturbation tests.",
+    "denseEquivalenceEstablished": false,
+    "taskBenefitMeasured": false,
+    "scope": "Coverage of declared lanes over multiple calls and causal wiring in instrumented production-method fixtures. This is not a dense forward pass or dense gradient at every step; inactive neurons are not given activity credit."
+  },
+  "nonfatalDiagnostics": [
+    {
+      "source": "cognition renderer console",
+      "message": "No available adapters.",
+      "occurrences": 2
+    },
+    {
+      "source": "full smoke stderr",
+      "message": "Mojo blink.mojom.Widget message rejection."
+    },
+    {
+      "source": "restart stderr",
+      "message": "Deprecated Electron console-message argument signature.",
+      "phases": [
+        "writer",
+        "reader"
+      ]
+    },
+    {
+      "source": "restart writer stderr",
+      "message": "GUEST_VIEW_MANAGER_CALL: render frame disposed before request completion."
+    }
+  ],
+  "diagnosticsInterpretation": "These messages were retained despite successful assertions and zero-exit completion of the relevant runs. They are not claimed to be absent or universally harmless.",
+  "qualification": {
+    "scientificGatesPromoted": [],
+    "scientificGateStatus": "No promotion; independent gate experiments remain required.",
+    "sopRequirementsVerified": 0,
+    "openWebBenchmarkRun": false,
+    "userTaskBenefitMeasured": false,
+    "fullModelContinuityEstablished": false,
+    "powerLossDurabilityEstablished": false,
+    "physicalQuantumExecutionEstablished": false,
+    "biologicalFlyWireEquivalenceEstablished": false
+  },
+  "nextExperiment": "Versioned unseen browser research/navigation tasks with matched-budget frozen, heuristic and learning controls, plus distinct-task retention and architecture ablations."
+}

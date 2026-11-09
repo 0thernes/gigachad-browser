@@ -171,8 +171,15 @@
       if (signal.aborted || tab !== getActiveTab() || !readyPage(tab) || tab.wv !== captured.webview || committedUrl(tab) !== captured.url ||
           tab.lastNavStartTs !== captured.navStarted || (authority && !authority.isCurrent(exp.authority))) return blocked('Primary page or authority changed during split-pane observation');
     }
+    // Only acknowledged current-document observations enter shared cognition.
+    // Never seed its memory from a stale result or a synthetic internal step.
+    let cognition = null;
+    if (window.aliveCognitiveFaculties?.observe) {
+      try { cognition = window.aliveCognitiveFaculties.observe({ ...exp, observedAt: Date.now(), authority: exp.authority }); }
+      catch (error) { cognition = { status: 'error', reason: String(error.message || error).slice(0, 160) }; }
+    }
     return { status: 'completed', evidence: { ...baseEvidence(), authority: exp.authority, url: exp.url, colliders: exp.specimens?.length || 0, doors: exp.doors?.length || 0, action: exp.domWeirdAction, predictionError: h.worldPredError, secondary,
-      research: discovery && { status: discovery.status, added: discovery.added, learned: discovery.learned, learning: discovery.learning } }, reward: progress };
+      research: discovery && { status: discovery.status, added: discovery.added, learned: discovery.learned, learning: discovery.learning }, cognition }, reward: progress };
   }
   function observeArchitecture(object, extra = {}) {
     if (!object) return { status: 'unavailable', reason: 'Model instance unavailable', evidence: { ...extra, available: false } };
@@ -406,6 +413,24 @@
     saveResearch();
     return completed({ model: result.model, backend: result.backend, durationMs: result.durationMs, goal: result.proposal.goal, hypothesis: result.proposal.hypothesis, queries: result.proposal.queries, candidatesAdded: added, scope: result.scope });
   }
+  async function runStructuredFaculty(name, label, args, { pageEffect = false } = {}) {
+    if (args.signal?.aborted) return blocked(`${label} cancelled`);
+    const hook = window[name];
+    if (typeof hook !== 'function') return { status: 'unavailable', reason: `${label} runtime is not installed` };
+    const result = await hook(args);
+    if (args.signal?.aborted) return blocked(`${label} cancelled`);
+    if (!result || typeof result !== 'object' || !['completed', 'observed', 'blocked', 'cancelled', 'unavailable', 'error', 'timeout'].includes(result.status)) {
+      return { status: 'error', reason: `${label} did not return a structured execution receipt` };
+    }
+    if (result.status === 'cancelled') return { ...result, status: 'blocked' };
+    if (['completed', 'observed'].includes(result.status)) {
+      if (!result.evidence || typeof result.evidence !== 'object' || Array.isArray(result.evidence)) {
+        return { status: 'error', reason: `${label} returned success without execution evidence` };
+      }
+      if (pageEffect && result.evidence.pageApplied !== true) return { ...result, status: 'blocked', reason: `${label} has no acknowledged page effect` };
+    }
+    return result;
+  }
   const adapters = {
     'brains-precision': () => {
       const federation = h.portedMultiverseBrains, arena = federation?.precisionArena;
@@ -432,9 +457,36 @@
     meso: () => observed({ regions: m.mesoElig.length, columns: m.mesoElig.reduce((sum, row) => sum + row.length, 0), apicalSample: Array.from(m.mesoApical?.[0] || []).slice(0, 8), eligibilitySample: Array.from(m.mesoElig[0]).slice(0, 8), tick: h.simulationTick }),
     micro: () => observed({ qgtTrace: finite(m.qgtTrace), berry: finite(m.berry01), qrng: hybridQrng.lastHex, implementation: 'local numerical micro-models; hardware quantum and external Eshkol execution are not established by this readout', flywireHeading: finite(h.flywireConnectome.headingAngleRad) }),
     'body-curriculum': () => observed({ ...baseEvidence(), currentStage: HUMUNCULUS_STAGES[h.stageIdx].code, stageCount: HUMUNCULUS_STAGES.length, curriculum: 'sequential stages with shared online learning', limbs: h.bodyRecipe.limbCount, viscera: modelEvidence(m.viscera), episodes: h.episodicMemory.length }),
-    connectome: () => observeArchitecture(h.connectome512, { neurons: h.connectome512?.v512?.length || 0, synapses: h.connectome512?.synWeights262K?.length || 0, stdpUpdates: h.connectome512?.stdpUpdatesCount, backprop: h.trainableAlifeNeuralHub?.totalBackpropStepsTrained }),
+    connectome: () => observeArchitecture(h.connectome512, { neurons: h.connectome512?.v512?.length || 0, synapses: h.connectome512?.synWeights262K?.length || 0, stdpUpdates: h.connectome512?.stdpUpdatesCount, backprop: h.trainableAlifeNeuralHub?.totalBackpropStepsTrained,
+      synapseCoverage: { processedPresynapticSpikes: h.connectome512?.processedPresynapticSpikes ?? null,
+        activeSynapsesTraversed: h.connectome512?.activeSynapsesTraversed ?? null, synapseVisits: h.connectome512?.synapseVisits ?? null,
+        uniqueSynapsesTraversed: h.connectome512?.uniqueSynapsesTraversed ?? null, synapseCoveragePct: h.connectome512?.synapseCoveragePct ?? null,
+        scope: h.connectome512?.synapseCoverageScope || 'No traversal receipt available' },
+      cortexCoverage: { moeParameterVisitsThisStep: h.deepCortex?.moeParameterVisitsThisStep ?? null,
+        moeUniqueParametersVisited: h.deepCortex?.moeUniqueParametersVisited ?? null, moeParameterCoveragePct: h.deepCortex?.moeParameterCoveragePct ?? null,
+        attentionParameterCoveragePct: h.deepCortex?.attentionParameterCoveragePct ?? null,
+        cortexPairedReadMask: h.deepCortex?.cortexPairedReadMask ?? null, cortexGradientMask: h.deepCortex?.cortexGradientMask ?? null,
+        scope: 'Executed parameter reads and gradients; traversal coverage alone does not establish task quality or full-model inference' } }),
     millennium: () => observeArchitecture(h.multivectorMetacognitionEngine, { model: 'numerical Cl(4,0) and Millennium-inspired features', dsd: h.decursiveSelfDeduplicator.totalSelfDeduplicationsCount }),
     reasoning: () => observeArchitecture(h.aotTotGotEngine, { backprop: h.trainableAlifeNeuralHub.totalBackpropStepsTrained }),
+    memory: () => {
+      const working = h.workingState, episodic = h.episodicMemory, semantic = h.semanticMemory, procedural = h.proceduralMemory;
+      const available = [working && typeof working === 'object', Array.isArray(episodic), semantic && typeof semantic === 'object', procedural && typeof procedural === 'object'].map(Boolean);
+      if (!available.some(Boolean)) return { status: 'unavailable', reason: 'Four-tier memory stores are unavailable' };
+      return observed({ ...baseEvidence(), tiersAvailable: available.filter(Boolean).length,
+        working: { available: available[0], stage: working?.activeStage || null, goal: working?.activeGoal || null,
+          planSteps: Array.isArray(working?.shortHorizonPlan) ? working.shortHorizonPlan.length : 0, lastUpdatedTick: finite(working?.lastUpdatedTick) },
+        episodic: { available: available[1], events: Array.isArray(episodic) ? episodic.length : 0, latestEventId: episodic?.at?.(-1)?.eventId || null },
+        semantic: { available: available[2], domains: Object.keys(semantic?.domainFacts || {}).length, lineageFacts: semantic?.lineageFacts?.length || 0 },
+        procedural: { available: available[3], registeredStages: Object.keys(procedural || {}).length },
+        observedTransitions: h.learningEvidence?.recordedTransitions ?? null,
+        scope: 'Live memory inventory; seeded entries and registered skills are not measured learning or task-quality results' });
+    },
+    metacognition: () => observeArchitecture(h.multivectorMetacognitionEngine, {
+      cliffordBlades: h.multivectorMetacognitionEngine?.cliffordMultivector16?.length || 0,
+      rotorComponents: h.multivectorMetacognitionEngine?.cliffordRotor16?.length || 0,
+      continuousStepOwner: 'stepContinuousWorldModelAndFeralMorph60Hz',
+      scope: 'Reads shared numerical Cl(4,0) state; does not duplicate the continuous model step or establish a formal cognitive theory' }),
     // Each observation issues at most one ~viewport-sized measured scroll stride;
     // 900 ms (vs the 1.4 s default) still exceeds the 650 ms smooth-scroll settle.
     'dom-body': { intervalMs: 900, ready: pageReady, run: observePage },
@@ -456,6 +508,9 @@
     procreate: { ready: () => h.offspringColony.length < 4 || 'Four offspring already inhabit the shared habitat', run: () => { const result = h.spawnMitosisOffspring(); return completed({ colony: result.colonySize, offspring: result.offspring?.offspringId, body: result.offspring?.bodyCid }); } },
     zalgo: { ready: pageReady, run: async ({ signal }) => { const result = await triggerEldritchZalgoBrowserFuckery(false, { signal }); if (signal.aborted) return blocked('Zalgo action cancelled'); const failure = guestFailure(result, 'Zalgo authority unavailable'); if (failure) return failure; if (!result || result.ok === false) return blocked(result?.reason || 'Zalgo action unavailable'); return { status: result.localMutation ? 'completed' : 'observed', reason: result.reason || '', evidence: { ...baseEvidence(), localMutation: result.localMutation === true, pageApplied: result.pageApplied === true, effect: result.pageApplied ? 'confirmed page glyph and wireframe mutation' : 'local morphology changed; page effect unconfirmed' } }; } },
     neo: { ready: pageReady, run: async ({ signal }) => { const result = await stepNeoMatrixBrowserPuppeteer(false, { coordinated: true, signal }); if (signal.aborted) return blocked('Neo action cancelled'); const failure = guestFailure(result, 'Neo authority unavailable'); if (failure) return failure; if (!result || result.ok === false) return blocked(result?.reason || 'Neo action unavailable'); const unconfirmed = Array.isArray(result.queued) || result.pageEffectsAttempted > result.pageEffectsConfirmed; return { status: unconfirmed ? 'observed' : 'completed', evidence: { ...result, tabs: tabs.length, effect: Array.isArray(result.queued) ? 'requested delegated capabilities; each reports its own outcome' : 'coordinated browser actions; guest confirmations counted separately' } }; } },
+    'warp-dom': { ready: pageReady, run: ({ signal }) => runStructuredFaculty('applyAliveDomWarp', 'Warp DOM', { signal, enabled: true }, { pageEffect: true }) },
+    'ghost-swarm': { group: 'cognition', timeoutMs: 20000, run: ({ signal }) => runStructuredFaculty('runAliveGhostSwarm', 'Ghost Swarm', { signal }) },
+    'ghost-write': { group: 'cognition', timeoutMs: 20000, run: ({ signal }) => runStructuredFaculty('runAliveGhostWrite', 'Ghost Write', { signal }) },
     'portal-jump': { intervalMs: 1000, initialDelayMs: 2000, ready: navigationReady, run: portalJump },
     'research-plan': { group: 'planner', timeoutMs: 16000, ready: () => Boolean(freshObservation()) || 'Waiting for observed page context', run: planResearch },
     'epoch-handoff': { ready: () => navigationReady() === true && tabs.length > 1 || 'Requires Auto-Hop, a settled page, and a second existing tab', run: async ({ signal }) => {
@@ -470,10 +525,19 @@
     onion: () => state.lastBackendProbe ? observed({ ...state.lastBackendProbe, ageMs: Date.now() - state.lastBackendProbe.checkedAt }) : { status: 'unavailable', reason: 'Local Tor backend has not been probed in this session' },
     'deep-dark-dive': { group: 'backend', intervalMs: 15000, initialDelayMs: 1800, run: deepDarkProbe },
     flywire: { manualOnly: false, run: () => completed(h.runFlyWireAblationTest()) },
+    'learning-five-seed': { manualOnly: false, group: 'diagnostic', timeoutMs: 20000, run: async ({ signal }) => {
+      if (signal.aborted) return blocked('Independent learning benchmark cancelled');
+      if (typeof window.AliveLearningFiveSeed?.run !== 'function') return { status: 'unavailable', reason: 'Independent five-seed benchmark is not installed' };
+      const report = await window.AliveLearningFiveSeed.run();
+      if (signal.aborted) return blocked('Independent learning benchmark cancelled');
+      h.lastIndependentLearningReport = report;
+      return report?.status === 'completed' ? completed(report) : { status: 'error', reason: 'Independent five-seed benchmark did not complete every run', evidence: report };
+    } },
     'acceptance-gates': { manualOnly: false, run: () => observed(h.evaluateAcceptanceGates()) }
   };
   const controller = window.aliveOverdrive = new window.AliveOverdriveRuntime.Controller({
-    adapters, intervalMs: 50, budgetMs: 5, maxInFlight: 2,
+    adapters, intervalMs: 50, budgetMs: 5, maxInFlight: 4, reservedLocalSlots: 1,
+    backgroundGroups: ['backend', 'planner', 'cognition', 'diagnostic'],
     getContext: () => ({ paused: document.hidden || Boolean(window.__aliveCheckpointRestore), tick: h.simulationTick, predictionError: h.worldPredError, observationAgeMs: performance.now() - state.observationAt }),
     onOutcome(id, result) {
       if (id !== 'dom-body' || !Number.isFinite(result.reward) || (authority && !authority.isCurrent(result.evidence?.authority))) return;

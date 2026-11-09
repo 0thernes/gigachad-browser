@@ -1412,8 +1412,8 @@
       <button onclick="toggleDrawer('maxsmart-drawer')" title="Passage Reranker, Knowledge Graph, NER/PII, Scraper &amp; Diff">Page Tools</button>
       <button onclick="toggleDrawer('vibe-drawer')" title="Live Site CSS/JS Styler &amp; Presets">Vibe CSS</button>
       <button onclick="toggleDrawer('council-drawer')" title="ChatGPT, Claude, Gemini &amp; Grok Council">AI Council</button>
-      <button onclick="promptGhostSwarm()" title="Parallel 3-Tab Deep Research Swarm">Ghost Swarm</button>
-      <button onclick="runInlineGhostwriter()" title="Inline Ghostwriter (Alt+G)">Ghostwrite</button>
+      <button onclick="promptGhostSwarm()" title="Inspect and request the shared creature research faculty">Ghost Swarm</button>
+      <button onclick="runInlineGhostwriter()" title="Inspect the creature's source-linked research notebook (Alt+G)">Ghostwrite</button>
       <button onclick="unlockPageState()" title="Strip overlays &amp; extract embedded JSON">Unlocker</button>
       <button onclick="toggleDrawer('kanban-drawer')" title="Tasks &amp; CI/CD Gates">Tasks</button>
       <button onclick="toggleDrawer('devsecops-drawer')" title="OWASP Headers, Cookies &amp; Secret Scanner">Security</button>
@@ -2184,6 +2184,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
   <script src="systems/alive-learned-state-codec.js"></script>
   <script src="systems/alive-learned-state-registry.js"></script>
   <script src="systems/alive-primary-policy-state.js"></script>
+  <script src="systems/alive-trainer-state.js"></script>
   <script src="systems/alive-primary-policy-bootstrap.js"></script>
   <script src="alife_neural_cyber_engine.js"></script>
   <script src="systems/alive-asset-hydration.js"></script>
@@ -3065,104 +3066,24 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     }
 
     async function runGhostSwarm(topic) {
-      let cleanTopic = String(topic || '').trim();
-      if (!cleanTopic || /current page topic/i.test(cleanTopic)) {
-        const activeT = getActiveTab();
-        const activeTitle = (activeT && activeT.title && !/^(New Tab|Start Page)$/i.test(activeT.title)) ? activeT.title : '';
-        cleanTopic = activeTitle || 'AI browser agents local LLM CUDA breakthroughs';
-      }
-      const sb = document.getElementById('ai-sidebar');
-      if (sb && sb.classList.contains('collapsed')) sb.classList.remove('collapsed');
-      appendLog('user', `Visual 3-Tab Swarm Research: "${cleanTopic}"`);
-      const pool = document.getElementById('ghost-pool');
-      if (pool) pool.setAttribute('data-last-swarm', cleanTopic);
-
-      createLiveThinkingCard(`Visual 3-Tab Swarm Research: "${cleanTopic}"`, [
-        `Decomposed topic "${cleanTopic}" into 3 live visible research tabs (Architecture & Benchmarks, Code & Implementation, Latest News & Analysis).`,
-        `Mode: 100% Visual On-Screen Execution — opening real browser tabs, switching to each tab visibly, highlighting live DOM results, and scrolling on screen.`
-      ]);
-
-      const swarmAngles = [
-        { label: `🔬 Architecture & Benchmarks`, query: `${cleanTopic} technical architecture benchmarks`, url: `https://www.google.com/search?q=${encodeURIComponent(cleanTopic + ' technical architecture benchmarks')}` },
-        { label: `💻 Code & Implementation`, query: `${cleanTopic} github code implementation`, url: `https://www.google.com/search?q=${encodeURIComponent(cleanTopic + ' github code implementation')}` },
-        { label: `📰 Latest News & Analysis`, query: `${cleanTopic} latest news breakthroughs`, url: `https://www.google.com/search?q=${encodeURIComponent(cleanTopic + ' latest news breakthroughs')}` }
-      ];
-
-      const openedSwarmTabs = [];
-      for (let i = 0; i < swarmAngles.length; i++) {
-        const ang = swarmAngles[i];
-        appendLiveThinkingStep('visual-tab', `Opening Visible Tab #${i + 1}/3: ${ang.label}`, `URL: ${ang.url}`);
-        const newT = createTab(ang.url, { title: `${ang.label} · ${cleanTopic.slice(0, 24)}` });
-        openedSwarmTabs.push({ tab: newT, angle: ang });
-      }
-
-      const results = [];
-      for (let i = 0; i < openedSwarmTabs.length; i++) {
-        const { tab, angle } = openedSwarmTabs[i];
-        if (!tab || !tab.wv) continue;
-        switchTab(tab.id);
-        updateCometMissionHud(
-          true,
-          `👁️ VISUAL 3-TAB SWARM LIVE`,
-          `Scanning Tab ${i + 1}/3`,
-          `${angle.label}: "${angle.query}"`,
-          openedSwarmTabs.slice(0, i + 1).map((x, idx) => `Tab #${idx + 1}: ${x.angle.label}`)
-        );
-        await waitForLoad(tab.wv, 6500, 'about:blank');
-        await new Promise((r) => setTimeout(r, 320));
-        const extracted = await visuallyScanAndExtractFromTab(tab, `${angle.label}: ${angle.query}`, i + 1, openedSwarmTabs.length);
-        results.push(`=== VISIBLE SWARM TAB #${i + 1} [${angle.label}] (${angle.url}) ===\n${extracted}`);
-      }
-
-      const combined = results.filter(Boolean).join('\n\n');
-      await ipcRenderer.invoke('memory-save', {
-        url: `ghost-swarm://${encodeURIComponent(cleanTopic)}`,
-        title: `Visual Swarm: ${cleanTopic}`,
-        content: combined,
-        layaUrl: document.getElementById('cfg-laya-url').value
-      });
-      appendLiveThinkingStep('vault', `Indexed 3-Tab Visual Swarm into Local Memory Vault`, `Collected ${combined.length.toLocaleString()} chars across 3 live visible tabs`);
-      await runSingleTurn(`Synthesize a concise, high-signal technical brief on "${cleanTopic}" from these 3 visible research tabs (cite each tab's findings clearly):`, combined, null);
-      updateCometMissionHud(false);
+      const cleanTopic = String(topic || '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, 120);
+      const queued = window.aliveOverdrive?.request('ghost-swarm') === true;
+      if (queued && cleanTopic && !/current page topic/i.test(cleanTopic)) window.aliveRequestedResearchTopic = cleanTopic;
+      if (typeof window.aliveFacultyVisuals?.open === 'function') window.aliveFacultyVisuals.open();
+      else window.aliveWorkspace?.openPanel('inspect');
+      appendLog('step', queued ? 'Queued Ghost Swarm: shared source analysis and research proposals.' : 'Ghost Swarm is unavailable or already settling.');
+      return queued;
     }
 
     // =========================================================================
     // UPGRADE 3: ALT+G UNIVERSAL INLINE GHOSTWRITER
     // =========================================================================
     async function runInlineGhostwriter() {
-      const wv = getActiveWebview(); if (!wv) return;
-      const focusedInfo = await wv.executeJavaScript(`
-        (() => {
-          const el = document.activeElement;
-          const isInput = el && (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT' || el.isContentEditable);
-          const draft = isInput ? (el.value || el.innerText || '') : '';
-          return {
-            hasFocus: Boolean(isInput),
-            draft: draft.slice(0, 2000),
-            pageTitle: document.title,
-            surroundingText: document.body.innerText.slice(0, 4000)
-          };
-        })();
-      `);
-
-      const instruction = document.getElementById('prompt-input').value.trim() ||
-        (focusedInfo.draft ? `Rewrite, sharpen, or complete this draft: "${focusedInfo.draft}"` : 'Write a concise, high-signal response relevant to this page');
-
-      appendLog('step', `[Alt+G Ghostwriter] Generating inline text...`);
-      const reply = await runSingleTurn(
-        `Output ONLY the final text to be typed directly into the webpage input field (no markdown fences, no commentary). Task: ${instruction}`,
-        `PAGE: ${focusedInfo.pageTitle}\nCONTEXT:\n${focusedInfo.surroundingText}`,
-        null
-      );
-
-      if (reply) {
-        const cleanText = reply.replace(/^["']|["']$/g, '').trim();
-        await ipcRenderer.invoke('cdp-execute', {
-          wcId: wv.getWebContentsId(),
-          cmd: { action: 'insert_only', text: cleanText }
-        });
-        appendLog('step', `Inserted ${cleanText.length} chars into active webpage input.`);
-      }
+      const queued = window.aliveOverdrive?.request('ghost-write') === true;
+      if (typeof window.aliveFacultyVisuals?.open === 'function') window.aliveFacultyVisuals.open();
+      else window.aliveWorkspace?.openPanel('inspect');
+      appendLog('step', queued ? 'Queued Ghost Write: compile the shared source-linked research notebook.' : 'Ghost Write is unavailable or already settling.');
+      return queued;
     }
 
     // =========================================================================
@@ -9142,8 +9063,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         }
         if (cmd.action === 'swarm_research') {
           const topic = cmd.query || 'current page topic';
-          await runGhostSwarm(topic);
-          return { executed: true, summary: `Completed 3-tab Ghost Swarm on "${topic}"` };
+          const queued = await runGhostSwarm(topic);
+          return { executed: queued === true, summary: queued ? `Queued shared Ghost Swarm research on "${topic}"` : 'Ghost Swarm is unavailable or already settling' };
         }
         if (cmd.action === 'watch_page') {
           const ok = await startPageWatcher(cmd.url || safeGetUrl(getActiveTab()), cmd.intervalSec || 60, cmd.goal || 'Monitor page changes');
@@ -12273,7 +12194,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           ? new window.GigachadAlifeNeuralCyberEngine()
           : null;
         this.bleedingEdge25Engine = typeof window !== 'undefined' && typeof window.BleedEdge25AlifeEngine === 'function'
-          ? new window.BleedEdge25AlifeEngine()
+          ? new window.BleedEdge25AlifeEngine({ deferWorkerActivation: true })
           : null;
         this.aotTotGotEngine = (this.bleedingEdge25Engine && this.bleedingEdge25Engine.aotTotGot)
           ? this.bleedingEdge25Engine.aotTotGot
@@ -16283,7 +16204,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       // PERSISTENT CROSS-RESTART GENOME & CHECKPOINT CONTINUITY (Humunculus Page 7 & 16)
       loadPersistentGenome(jsonOverride) {
         const persistence = window.aliveGenomePersistence;
-        let raw = null, hasPrimary = false;
+        let raw = null, hasExact = false;
         try {
           raw = arguments.length ? jsonOverride : persistence
             ? persistence.initialJSON(localStorage, 'humunculus_persistent_genome_v1')
@@ -16293,9 +16214,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (!data || typeof data !== 'object' || Array.isArray(data)) {
             persistence?.markApplied(false, { hadJSON: true }); return false;
           }
-          hasPrimary = Object.prototype.hasOwnProperty.call(data, 'primaryPolicyState');
-          if (hasPrimary && !window.alivePrimaryPolicyBootstrap) throw new Error('Exact primary policy bootstrap is unavailable');
-          window.alivePrimaryPolicyBootstrap?.preflight(this, raw);
+          hasExact = Object.prototype.hasOwnProperty.call(data, 'primaryPolicyState') ||
+            Object.prototype.hasOwnProperty.call(data, 'trainerCommittedState');
+          if (hasExact && !window.alivePrimaryPolicyBootstrap) throw new Error('Exact component bootstrap is unavailable');
+          // Paired restore belongs only to the unpublished constructor during
+          // ordered startup. A live reload has no cross-component rollback yet.
+          const exactOptions = { startup: !arguments.length && window.aliveStartup?.snapshot?.().phase === 'main' };
+          window.alivePrimaryPolicyBootstrap?.preflight(this, raw, exactOptions);
           // Validate native state before changing legacy tensors or host authority.
           // Null is the explicit no-native-state sentinel in older genome payloads.
           if (data.authenticAsmodensius !== null && data.authenticAsmodensius !== undefined) {
@@ -16312,7 +16237,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
                 simulationTick: this.simulationTick,
                 error: 'Original Asmodensius checkpoint rejected: ' + String(nativeError).slice(0, 300) };
               persistence?.markApplied(false, { hadJSON: true });
-              if (hasPrimary) throw new Error(this.persistentGenomeRestore.error);
+              if (hasExact) throw new Error(this.persistentGenomeRestore.error);
               return false;
             }
           }
@@ -16444,7 +16369,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           // Exact primary tensors are authoritative over their rounded legacy
           // compatibility copies, including distinct frozen baselines. This
           // rechecks and applies synchronously before constructor finalization.
-          const primaryRestore = window.alivePrimaryPolicyBootstrap?.apply(this, raw);
+          const primaryRestore = window.alivePrimaryPolicyBootstrap?.apply(this, raw, exactOptions);
           this.persistentGenomeRestore = { applied: true, restoredTensorCount,
             generation: (this.persistentGenomeRestore?.generation || 0) + 1,
             source: arguments.length ? 'explicit' : persistence?.snapshot().source || 'legacy',
@@ -16453,7 +16378,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           return true;
         } catch (error) {
           persistence?.markApplied(false, { hadJSON: typeof raw === 'string' && raw.length > 0 });
-          if (hasPrimary) throw error; // Stop startup rather than operate/publish a rejected exact state.
+          if (hasExact) throw error; // Stop startup rather than operate/publish a rejected exact state.
           return false;
         }
       }
@@ -16532,7 +16457,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             savedAt: new Date().toISOString()
           };
           if (window.alivePrimaryPolicyBootstrap) {
-            payload.primaryPolicyState = window.AliveGenomeCodec.primaryState(window.alivePrimaryPolicyBootstrap.capture(this));
+            const exact = window.alivePrimaryPolicyBootstrap.captureComponents(this);
+            payload.primaryPolicyState = window.AliveGenomeCodec.primaryState(exact.primary);
+            if (exact.trainer) payload.trainerCommittedState = window.AliveGenomeCodec.trainerState(exact.trainer);
           }
           return payload;
       }
@@ -16759,6 +16686,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const dc = this.deepCortex;
         const m = this.mesh;
         const x = dc.x64;
+        const cortexCoverageStep = Number.isSafeInteger(dc.cortexCoverageStep) && dc.cortexCoverageStep >= 0 ? dc.cortexCoverageStep : 0;
+        const pairedColumnPhase = (cortexCoverageStep & 1) * 2;
+        const gradientColumnPhase = cortexCoverageStep & 7;
 
         // 1. Assemble 64-D Multimodal Input Tensor x64:
         //    [0..15]: 16 Proprioceptive/Visceral/Neuromodulatory channels
@@ -16809,7 +16739,9 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           h256[r] = z / (1.0 + Math.exp(-Math.max(-10, Math.min(10, z)))); // SiLU / Swish
         }
 
-        // 2B. Top-2 Gated Sparse Mixture-of-Experts (W_moe_experts: 8 x 256 x 256 = 524,288 FP32 parameters)
+        // BEGIN BOUNDED MOE COVERAGE: strongest expert plus a fair exploration slot.
+        // Two 128x64 slices preserve the previous 16,384 MAC budget while eight
+        // phases per expert cover every row/column instead of fixed blind lanes.
         const moeLabels = [
           'EXP0:DOM_TOPOLOGY',
           'EXP1:FLYWIRE_RING',
@@ -16820,30 +16752,60 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           'EXP6:VERLET_LOCOMOTION',
           'EXP7:SOVEREIGN_MASTER'
         ];
-        let bestE1 = 0, bestE2 = 1;
+        if (!dc.moeCoveragePhases8 || !dc.moeCoverageMasks8 || !dc.moeInput256 || !dc.moeResidual256) {
+          dc.moeCoveragePhases8 = new Uint8Array(8);
+          dc.moeCoverageMasks8 = new Uint8Array(8);
+          dc.moeInput256 = new Float32Array(256);
+          dc.moeResidual256 = new Float32Array(256);
+          dc.moeExplorationCursor = 0;
+          dc.moeParameterVisits = 0;
+          dc.moeUniqueParametersVisited = 0;
+        }
+        let bestE1 = 0;
         for (let e = 0; e < 8; e++) {
-          if (dc.attnWeights8[e] > dc.attnWeights8[bestE1]) {
-            bestE2 = bestE1;
-            bestE1 = e;
-          } else if (e !== bestE1 && dc.attnWeights8[e] > dc.attnWeights8[bestE2]) {
-            bestE2 = e;
-          }
+          if (dc.attnWeights8[e] > dc.attnWeights8[bestE1]) bestE1 = e;
         }
+        let bestE2 = (dc.moeExplorationCursor || 0) & 7;
+        if (bestE2 === bestE1) bestE2 = (bestE2 + 1) & 7;
+        dc.moeExplorationCursor = (bestE2 + 1) & 7;
         dc.topMoEExperts = [moeLabels[bestE1], moeLabels[bestE2]];
+        dc.moeActiveExpertIndices = [bestE1, bestE2];
         const Wmoe = dc.W_moe_experts;
-        const gate1 = dc.attnWeights8[bestE1] / Math.max(1e-5, dc.attnWeights8[bestE1] + dc.attnWeights8[bestE2]);
-        const gate2 = 1.0 - gate1;
-        const e1Base = bestE1 * 65536;
-        const e2Base = bestE2 * 65536;
-        for (let r = 0; r < 256; r += 2) {
-          const rOff = r * 256;
-          let s1 = 0, s2 = 0;
-          for (let c = 0; c < 256; c += 8) {
-            s1 += Wmoe[e1Base + rOff + c] * h256[c] + Wmoe[e1Base + rOff + c + 4] * h256[c + 4];
-            s2 += Wmoe[e2Base + rOff + c] * h256[c] + Wmoe[e2Base + rOff + c + 4] * h256[c + 4];
+        const secondaryScore = Math.max(0, dc.attnWeights8[bestE2] || 0);
+        const primaryScore = Math.max(0, dc.attnWeights8[bestE1] || 0);
+        // A small nonzero exploration gate prevents executing a permanently
+        // muted expert from being mistaken for a functional readout path.
+        const gate2 = Math.max(0.05, Math.min(0.5, secondaryScore / Math.max(1e-5, primaryScore + secondaryScore)));
+        const gate1 = 1.0 - gate2;
+        dc.moeActiveGates = [gate1, gate2];
+        dc.moeInput256.set(h256);
+        dc.moeResidual256.fill(0);
+        let rowParityMask = 0, moeMacs = 0;
+        for (let slot = 0; slot < 2; slot++) {
+          const expert = slot === 0 ? bestE1 : bestE2, gate = slot === 0 ? gate1 : gate2;
+          const phase = dc.moeCoveragePhases8[expert] & 7;
+          const rowParity = phase & 1, columnPhase = phase >>> 1;
+          rowParityMask |= 1 << rowParity;
+          for (let r = rowParity; r < 256; r += 2) {
+            const rowOff = expert * 65536 + r * 256;
+            let sum = 0;
+            for (let c = columnPhase; c < 256; c += 4) {
+              sum += Wmoe[rowOff + c] * dc.moeInput256[c];
+              moeMacs++;
+            }
+            dc.moeResidual256[r] += gate * sum;
           }
-          h256[r] = Math.tanh(h256[r] + 0.28 * (gate1 * s1 + gate2 * s2));
+          if (!(dc.moeCoverageMasks8[expert] & (1 << phase))) dc.moeUniqueParametersVisited += 8192;
+          dc.moeCoverageMasks8[expert] |= 1 << phase;
+          dc.moeCoveragePhases8[expert] = (phase + 1) & 7;
         }
+        for (let r = 0; r < 256; r++) if (rowParityMask & (1 << (r & 1)))
+          h256[r] = Math.tanh(dc.moeInput256[r] + 0.28 * dc.moeResidual256[r]);
+        dc.moeParameterVisitsThisStep = moeMacs;
+        dc.moeParameterVisits += moeMacs;
+        dc.moeParameterCoveragePct = 100 * dc.moeUniqueParametersVisited / 524288;
+        dc.moeCoverageScope = 'Observed inference reads since coverage initialization; strongest-plus-round-robin expert selection, eight lane phases per expert';
+        // END BOUNDED MOE COVERAGE
 
         // 3. Layer 2 Deep Bottleneck: R^256 -> R^128 with LayerNorm & SiLU
         const W2 = dc.W_enc2, b2 = dc.b_enc2, g2 = dc.ln2_g, h128 = dc.h128;
@@ -16866,6 +16828,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           h128[r] = z / (1.0 + Math.exp(-Math.max(-10, Math.min(10, z)))); // SiLU
         }
 
+        // BEGIN BOUNDED CONNECTOME COVERAGE
         // 3B. 512-Node 6-Neuropil Biological Connectome (W_connectome_synapses: 512x512 = 262,144 FP32 params)
         //     + 3-Factor Dopamine-Modulated STDP Eligibility Matrix (W_stdp_elig: 512x512 = 262,144 FP32 params)
         const cn = this.connectome512;
@@ -16874,6 +16837,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         const v512 = cn.v512, spk512 = cn.spikes512, tr512 = cn.trace512;
         const activePreIndices = [];
         const daMod = (m.nm.DA - 0.35) * 0.008;
+        if (!cn.axonCoveragePhases512 || !cn.axonCoverageMasks512) {
+          cn.axonCoveragePhases512 = new Uint8Array(512);
+          cn.axonCoverageMasks512 = new Uint8Array(512);
+          cn.axonalPresynapticCursor = 0;
+          cn.synapseVisits = 0;
+          cn.uniqueSynapsesTraversed = 0;
+        }
+        let actualSpikeCount = 0;
 
         for (let n = 0; n < 512; n++) {
           const drive = h256[n & 255] * 0.45 + x[n & 63] * 0.35 + ((n < 86) ? (this.flywireConnectome.epgCompass[n & 15] * 0.30) : 0);
@@ -16882,12 +16853,20 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             spk512[n] = 1;
             v512[n] = -0.15; // Refractory reset
             tr512[n] = Math.min(1.5, tr512[n] * 0.82 + 0.55);
-            if (activePreIndices.length < 44) activePreIndices.push(n);
+            actualSpikeCount++;
           } else {
             spk512[n] = 0;
             tr512[n] *= 0.88;
           }
         }
+        // Every spiking neuron is eligible; a rotating cursor prevents the
+        // lowest 44 indices from permanently starving higher-index neurons.
+        const preStart = (cn.axonalPresynapticCursor || 0) & 511;
+        for (let offset = 0; offset < 512 && activePreIndices.length < 44; offset++) {
+          const pre = (preStart + offset) & 511;
+          if (spk512[pre]) activePreIndices.push(pre);
+        }
+        if (activePreIndices.length) cn.axonalPresynapticCursor = (activePreIndices[activePreIndices.length - 1] + 1) & 511;
 
         // Sparse Event-Driven Axonal Traversal & 3-Factor Dopamine-Modulated STDP across active pre-synaptic spikes
         let synWeightAbsSum = 0;
@@ -16896,7 +16875,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           const pre = activePreIndices[ai];
           const rowOff = pre * 512;
           const preTr = tr512[pre];
-          for (let post = (pre & 7); post < 512; post += 8) {
+          const phase = cn.axonCoveragePhases512[pre] & 7;
+          for (let post = ((pre + phase) & 7); post < 512; post += 8) {
             const idx = rowOff + post;
             const w = Wsyn[idx];
             v512[post] += w * 0.14;
@@ -16909,13 +16889,21 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             synWeightAbsSum += Math.abs(nextW);
             stdpCount++;
           }
+          if (!(cn.axonCoverageMasks512[pre] & (1 << phase))) cn.uniqueSynapsesTraversed += 64;
+          cn.axonCoverageMasks512[pre] |= 1 << phase;
+          cn.axonCoveragePhases512[pre] = (phase + 1) & 7;
         }
-        cn.activeSpikesCount = activePreIndices.length;
-        cn.activeSynapsesTraversed = activePreIndices.length * 512;
+        cn.activeSpikesCount = actualSpikeCount;
+        cn.processedPresynapticSpikes = activePreIndices.length;
+        cn.activeSynapsesTraversed = stdpCount;
+        cn.synapseVisits += stdpCount;
+        cn.synapseCoveragePct = 100 * cn.uniqueSynapsesTraversed / 262144;
+        cn.synapseCoverageScope = 'Observed spike-driven traversals since coverage initialization; 44 presynaptic by 64 postsynaptic maximum per step; silent neurons do not claim coverage';
         cn.stdpUpdatesCount += stdpCount;
         if (stdpCount > 0) {
           cn.meanSynapticWeight = Number((synWeightAbsSum / stdpCount).toFixed(4));
         }
+        // END BOUNDED CONNECTOME COVERAGE
         // Compute 6-Neuropil Population Firing Rates & feed back into h128
         for (let np = 0; np < 6; np++) {
           const startIdx = np * 85;
@@ -16943,11 +16931,12 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         }
         rH.set(nextRH);
 
+        // BEGIN ROTATING RSSM PROJECTION
         let klSum = 0;
         for (let r = 0; r < 128; r++) {
           let sp = 0, sq = 0;
           const off = r * 128;
-          for (let c = 0; c < 128; c += 4) {
+          for (let c = pairedColumnPhase; c < 128; c += 4) {
             sp += Wpri[off + c] * rH[c] + Wpri[off + c + 1] * rH[c + 1];
             sq += Wpost[off + c] * (rH[c] + h128[c]) + Wpost[off + c + 1] * (rH[c + 1] + h128[c + 1]);
           }
@@ -16957,6 +16946,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           klSum += diff * diff;
         }
         dc.rssmKlDivergence = Number((0.5 * klSum / 128.0).toFixed(4));
+        // END ROTATING RSSM PROJECTION
 
         // Reconstruct 64-D sensory input from latent posterior z_post
         let recSqErr = 0;
@@ -16982,47 +16972,85 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         }
         dc.imaginedHorizon5Return = Number(imaginedReturn.toFixed(3));
 
-        // 6. 4-Head Multi-Head Self-Attention Router over 8 Specialist Tokens + 128x128 Hopfield Associative Recall
+        // BEGIN BOUNDED ATTENTION COVERAGE
+        // Sparse rotating Q/K/V and output projections: 16 + 8 coefficient
+        // reads per call, as before. This is not a full dense attention forward.
         const Wqkv = dc.W_attn_qkv, Wao = dc.W_attn_out;
+        if (!dc.attentionQkvCoverage768 || !dc.attentionOutputCoverage1024) {
+          dc.attentionQkvCoverage768 = new Uint8Array(768);
+          dc.attentionOutputCoverage1024 = new Uint8Array(1024);
+          dc.attentionQkvPhase = 0;
+          dc.attentionOutputPhase = 0;
+          dc.attentionQkvUniqueParameters = 0;
+          dc.attentionOutputUniqueParameters = 0;
+          dc.attentionParameterVisits = 0;
+        }
+        const qkvPhase = dc.attentionQkvPhase % 768, outputPhase = dc.attentionOutputPhase % 1024;
+        const qkvBase = qkvPhase * 16, outputBase = outputPhase * 8;
         let attnScoreSum = 0;
         for (let sp = 0; sp < 8; sp++) {
-          const qVal = h128[sp * 8] + Wqkv[sp * 64 + sp];
-          const kVal = zPost[sp * 8] + Wqkv[(64 + sp) * 64 + sp];
-          const rawScore = Math.exp(Math.max(-4, Math.min(4, (qVal * kVal) / 4.0 + (Wao[sp * 8] * 0.1))));
+          const qIndex = qkvBase + sp * 2, kIndex = qIndex + 1, outIndex = outputBase + sp;
+          // The three 64x64 blocks use encoder, posterior and recurrent state
+          // respectively; every declared Q/K/V coefficient gets a readout path.
+          const qSource = qIndex < 4096 ? h128 : qIndex < 8192 ? zPost : rH;
+          const kSource = kIndex < 4096 ? h128 : kIndex < 8192 ? zPost : rH;
+          const qVal = h128[sp * 8] + Wqkv[qIndex] * qSource[qIndex & 63];
+          const kVal = zPost[sp * 8] + Wqkv[kIndex] * kSource[kIndex & 63];
+          const outputContribution = Wao[outIndex] * zPost[outIndex & 127] * 0.1;
+          const rawScore = Math.exp(Math.max(-4, Math.min(4, (qVal * kVal) / 4.0 + outputContribution)));
           dc.attnWeights8[sp] = rawScore;
           attnScoreSum += rawScore;
         }
         for (let sp = 0; sp < 8; sp++) dc.attnWeights8[sp] /= Math.max(1e-6, attnScoreSum);
+        if (!dc.attentionQkvCoverage768[qkvPhase]) dc.attentionQkvUniqueParameters += 16;
+        if (!dc.attentionOutputCoverage1024[outputPhase]) dc.attentionOutputUniqueParameters += 8;
+        dc.attentionQkvCoverage768[qkvPhase] = dc.attentionOutputCoverage1024[outputPhase] = 1;
+        dc.attentionQkvPhase = (qkvPhase + 1) % 768;
+        dc.attentionOutputPhase = (outputPhase + 1) % 1024;
+        dc.attentionParameterVisits += 24;
+        dc.attentionParameterVisitsThisStep = 24;
+        dc.attentionParameterCoveragePct = 100 * (dc.attentionQkvUniqueParameters + dc.attentionOutputUniqueParameters) / 20480;
+        dc.attentionCoverageScope = 'Rotating sparse coefficient projections; all Q/K/V and output lanes can influence expert gates over time; not dense attention equivalence';
+        // END BOUNDED ATTENTION COVERAGE
 
         // Episodic Hopfield Memory Bank (128 slots x 128 dims): write & associative recall
+        // BEGIN BOUNDED HOPFIELD READOUT
         const hopSlot = dc.hopfieldWritePtr & 127;
         const hopOff = hopSlot * 128;
         for (let c = 0; c < 128; c++) {
-          dc.M_hopfield[hopOff + c] = 0.92 * dc.M_hopfield[hopOff + c] + 0.08 * zPost[c];
+          const recalled = dc.M_hopfield[hopOff + c];
+          dc.M_hopfield[hopOff + c] = 0.92 * recalled + 0.08 * zPost[c];
+          zPost[c] = Math.max(-1, Math.min(1, zPost[c] + 0.04 * Math.tanh(recalled)));
         }
         dc.hopfieldWritePtr = (dc.hopfieldWritePtr + 1) & 127;
+        dc.hopfieldReadoutScope = 'Bounded sequential episodic-slot recall into the posterior before actor/master readout; not dense associative retrieval';
+        // END BOUNDED HOPFIELD READOUT
 
         // 6B. Sovereign Browser Master Efference Projection (W_browser_master: 64 x 128 = 8,192 FP32 params)
+        // BEGIN ROTATING MASTER PROJECTION
         const Wbm = dc.W_browser_master;
         for (let r = 0; r < 64; r++) {
           let s = 0;
           const off = r * 128;
-          for (let c = 0; c < 128; c += 4) s += Wbm[off + c] * zPost[c] + Wbm[off + c + 1] * zPost[c + 1];
+          for (let c = pairedColumnPhase; c < 128; c += 4) s += Wbm[off + c] * zPost[c] + Wbm[off + c + 1] * zPost[c + 1];
           dc.masterCmd64[r] = Math.tanh(s);
         }
+        // END ROTATING MASTER PROJECTION
 
         // 7. Deep Hierarchical Actor (128 -> 128 -> 32 Joint Torques & Actuators) & Critic (128 -> 64 -> 1) — Pre-allocated zero-GC buffer!
         const Wah = dc.W_actor_h, Wao32 = dc.W_actor_out;
         const Wch = dc.W_critic_h, Wco = dc.W_critic_out;
+        // BEGIN ROTATING ACTOR PROJECTION
         const actH = dc.actH;
         for (let r = 0; r < 128; r++) {
           let s = 0;
           const off = r * 128;
-          for (let c = 0; c < 128; c += 4) {
+          for (let c = pairedColumnPhase; c < 128; c += 4) {
             s += Wah[off + c] * (zPost[c] + rH[c]) + Wah[off + c + 1] * (zPost[c + 1] + rH[c + 1]);
           }
           actH[r] = Math.tanh(s);
         }
+        // END ROTATING ACTOR PROJECTION
         let torqueAbsSum = 0;
         for (let a = 0; a < 32; a++) {
           let s = 0;
@@ -17044,24 +17072,27 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         this.verletPhysics.meanJointTorqueNm = Number((torqueAbsSum / 24.0).toFixed(3));
 
         // Critic Value V(z_t)
+        // BEGIN ROTATING CRITIC PROJECTION
         let vVal = 0;
         for (let r = 0; r < 64; r++) {
           let s = 0;
           const off = r * 128;
-          for (let c = 0; c < 128; c += 4) s += Wch[off + c] * zPost[c] + Wch[off + c + 1] * zPost[c + 1];
+          for (let c = pairedColumnPhase; c < 128; c += 4) s += Wch[off + c] * zPost[c] + Wch[off + c + 1] * zPost[c + 1];
           vVal += Wco[r] * Math.tanh(s);
         }
         const prevV = dc.criticValue;
         dc.criticValue = Number(Math.tanh(vVal).toFixed(4));
+        // END ROTATING CRITIC PROJECTION
 
         // 8. Online TD(λ), Sparse MoE & Dreamer Reconstruction Gradient Plasticity across the 1.24M Cortex
         const intrinsicReward = (1.0 - Math.sqrt(recSqErr / 64.0)) * 0.5 + m.viscera.glc * 0.25 + (m.entanglementBits / 5.0) * 0.25;
         const tdErr = intrinsicReward + 0.95 * dc.criticValue - prevV;
         const lr = 0.004 * (0.5 + 0.5 * m.nm.DA);
+        // BEGIN ROTATING CORTEX GRADIENTS
         let gradNormSq = 0;
         for (let a = 0; a < 32; a++) {
           const off = a * 128;
-          for (let c = 0; c < 128; c += 8) {
+          for (let c = gradientColumnPhase; c < 128; c += 8) {
             const g = tdErr * actH[c] * (1.0 - dc.act32[a] * dc.act32[a]);
             Wao32[off + c] = Math.max(-2.0, Math.min(2.0, Wao32[off + c] + lr * g));
             gradNormSq += g * g;
@@ -17070,11 +17101,18 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         for (let r = 0; r < 64; r++) {
           const recErr = x[r] - dc.decX64[r];
           const off = r * 128;
-          for (let c = 0; c < 128; c += 8) {
+          for (let c = gradientColumnPhase; c < 128; c += 8) {
             Wdec[off + c] += lr * 0.5 * recErr * zPost[c];
           }
         }
         dc.gradNormL2 = Number(Math.sqrt(gradNormSq).toFixed(4));
+        // END ROTATING CORTEX GRADIENTS
+        dc.cortexCoverageStep = cortexCoverageStep + 1;
+        dc.cortexPairedReadMask = (dc.cortexPairedReadMask || 0) | (1 << (pairedColumnPhase >>> 1));
+        dc.cortexGradientMask = (dc.cortexGradientMask || 0) | (1 << gradientColumnPhase);
+        dc.cortexPairedWeightVisitsThisStep = 32768;
+        dc.cortexGradientUpdatesThisStep = 1536;
+        dc.cortexCoverageScope = 'Two alternating column-pair phases for prior/posterior/master/actor/critic; eight gradient phases for actor output and decoder; sparse approximation, not a dense forward or full-gradient step';
         return dc;
       }
 
@@ -18682,39 +18720,110 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
     }
 
     async function toggleWebpageDomRealityWarp(options = {}) {
-      if (!options.authorityCurrent) return runAliveGuestOperation(options, scoped => toggleWebpageDomRealityWarp(scoped));
-      if (!options.authorityCurrent()) return null;
-      const t = getActiveTab();
-      let warped = false;
-      if (t && t.wv && isWebviewGuestReady(t.wv)) {
-        warped = await runAliveGuestScript(t, `(() => {
-          window.__humunculusDomRealityWarp = !window.__humunculusDomRealityWarp;
-          const rootTarget = document.querySelector('main, article, #content, #bodyContent') || document.body;
-          if (rootTarget && rootTarget !== document.body) {
-            rootTarget.style.transition = 'transform 0.45s cubic-bezier(0.22,1,0.36,1), filter 0.35s ease';
-            rootTarget.style.transform = window.__humunculusDomRealityWarp
-              ? 'perspective(1200px) rotateX(1.35deg) translateZ(4px)'
-              : '';
-          }
-          (window.__humunculusColliders || []).forEach((col, ci) => {
-            const elMatch = document.elementsFromPoint && document.elementsFromPoint(col.cx, col.cy)[0];
-            if (elMatch && elMatch.style) {
-              elMatch.style.boxShadow = window.__humunculusDomRealityWarp
-                ? (ci % 2 === 0 ? '0 0 18px rgba(0,240,255,0.42)' : '0 0 18px rgba(244,63,94,0.42)')
-                : '';
-            }
-          });
-          return Boolean(window.__humunculusDomRealityWarp);
-        })();`, { tag: 'warp-dom', timeoutMs: 750, signal: options.signal, authorityToken: options.authorityToken }).catch(() => false);
-      }
-      if (!options.authorityCurrent()) return null;
-      if (humunculusRuntime.deity100Engine) {
-        humunculusRuntime.deity100Engine.browserPossessionStats.domLensingWarpsCount += 1;
-      }
-      humunculusRuntime.emitBioAcousticPing('morph');
-      pulseBrowserButtonVisual(null, warped ? '🌀 3D DOM Reality Lensing WARPED ●' : '🌀 3D DOM Reality Lensing Restored');
-      return warped;
+      if (window.aliveOverdrive && !options.signal && !options.authorityCurrent && options.enabled === undefined) return window.aliveOverdrive.request('warp-dom');
+      return applyAliveDomWarp(options);
     }
+
+    async function applyAliveDomWarp(options = {}) {
+      if (!options.authorityCurrent) return runAliveGuestOperation(options, scoped => applyAliveDomWarp(scoped));
+      const blocked = reason => ({ status: 'blocked', reason, evidence: { pageApplied: false } });
+      if (!options.authorityCurrent()) return blocked('Warp document lease is no longer current');
+      const t = getActiveTab();
+      if (!t?.domReady || t.isLoading || !t.wv || !isWebviewGuestReady(t.wv)) return blocked('Warp requires a ready current document');
+      const captured = { url: t.committedUrl, start: t.lastNavStartTs }, enabled = options.enabled !== false;
+      let result;
+      try {
+        result = await runAliveGuestScript(t, `(() => {
+          const auth = window.__aliveAuthority, token = auth.executingToken;
+          const declaration = (el, key) => ({ value: el.style.getPropertyValue(key), priority: el.style.getPropertyPriority(key) });
+          const same = (a, b) => a && b && a.value === b.value && a.priority === b.priority;
+          let state = window.__aliveDomWarpState;
+          if (!state || !auth.current(state.token)) {
+            state?.restore?.();
+            state = { originals: new WeakMap(), touched: new Set(), colliderTargets: null, enabled: false, token };
+            state.restore = () => {
+              let changed = 0;
+              for (const el of state.touched) {
+                const properties = state.originals.get(el);
+                for (const [key, saved] of Object.entries(properties || {})) {
+                  if (same(declaration(el, key), saved.applied)) {
+                    if (saved.original.value) el.style.setProperty(key, saved.original.value, saved.original.priority);
+                    else el.style.removeProperty(key);
+                    if (!same(saved.applied, declaration(el, key))) changed++;
+                  }
+                }
+              }
+              state.touched.clear(); state.originals = new WeakMap(); state.colliderTargets = null; state.enabled = false;
+              window.__humunculusDomRealityWarp = false;
+              return changed;
+            };
+            auth.onRevoke(token, state.restore);
+            window.__aliveDomWarpState = state;
+          }
+          const desired = ${enabled};
+          if (!desired) {
+            const changed = state.restore() > 0;
+            return { pageApplied: true, enabled: false, changed, elements: 0, url: location.href };
+          }
+          // Enroll unique elements before our transform changes hit testing.
+          // Keep each decoration stable until disable/revocation; overlapping
+          // collider centers must not alternate colors on the same element.
+          if (!state.colliderTargets) {
+            const seen = new Set(); state.colliderTargets = [];
+            for (const col of (window.__humunculusColliders || []).slice(0, 24)) {
+              const el = document.elementsFromPoint?.(col.cx, col.cy)?.[0];
+              if (!el || seen.has(el) || el.closest?.('[id^="__humunculus"], [id^="__gigachad"], input, textarea, [contenteditable]:not([contenteditable="false"])')) continue;
+              seen.add(el);
+              state.colliderTargets.push({ el, shadow: state.colliderTargets.length % 2 === 0 ? '0 0 18px rgba(0,240,255,0.42)' : '0 0 18px rgba(244,63,94,0.42)' });
+            }
+          }
+          let changes = 0;
+          const set = (el, key, value) => {
+            if (!el?.style || !state.touched.has(el) && state.touched.size >= 64) return;
+            let properties = state.originals.get(el);
+            if (!properties) { properties = {}; state.originals.set(el, properties); state.touched.add(el); }
+            if (!properties[key]) properties[key] = { original: declaration(el, key), applied: null, requested: null };
+            const saved = properties[key];
+            const before = declaration(el, key);
+            // A page may change only priority while retaining the value. Leave
+            // that authored declaration alone; the strict restore check below
+            // will also preserve it rather than reverting its priority.
+            if (saved.requested === value && before.value === saved.applied?.value) return;
+            if (saved.applied !== null && !same(before, saved.applied)) saved.original = before;
+            el.style.setProperty(key, value, saved.original.priority);
+            saved.applied = declaration(el, key); saved.requested = value;
+            if (!same(before, saved.applied)) changes++;
+          };
+          const rootTarget = document.querySelector('main, article, #content, #bodyContent');
+          if (rootTarget && rootTarget !== document.body) {
+            const savedTransform = state.originals.get(rootTarget)?.transform;
+            const currentTransform = declaration(rootTarget, 'transform');
+            const original = savedTransform && currentTransform.value === savedTransform.applied?.value ? savedTransform.original.value : currentTransform.value;
+            // Write and restore individual declarations. A shorthand can erase
+            // partial longhands and cannot represent mixed !important priority.
+            set(rootTarget, 'transition-property', 'transform, filter');
+            set(rootTarget, 'transition-duration', '0.45s, 0.35s');
+            set(rootTarget, 'transition-timing-function', 'cubic-bezier(0.22,1,0.36,1), ease');
+            set(rootTarget, 'transition-delay', '0s, 0s');
+            set(rootTarget, 'transform', (original && original !== 'none' ? original + ' ' : '') + 'perspective(1200px) rotateX(1.35deg) translateZ(4px)');
+          }
+          for (const { el, shadow } of state.colliderTargets) if (el.isConnected !== false) set(el, 'box-shadow', shadow);
+          state.enabled = state.touched.size > 0; window.__humunculusDomRealityWarp = state.enabled;
+          if (!state.enabled) state.colliderTargets = null;
+          return { pageApplied: state.enabled, enabled: state.enabled, changed: changes > 0, elements: state.touched.size, url: location.href };
+        })();`, { tag: 'warp-dom', timeoutMs: 750, signal: options.signal, authorityToken: options.authorityToken });
+      } catch (error) { return blocked('Warp execution failed: ' + String(error.message || error).slice(0, 160)); }
+      if (!options.authorityCurrent() || t !== getActiveTab() || t.committedUrl !== captured.url || t.lastNavStartTs !== captured.start) return blocked('Warp document changed before acknowledgement');
+      if (result?.pageApplied !== true || result.enabled !== enabled || result.url !== captured.url) return blocked('Warp did not acknowledge an effect on the current page');
+      if (result.changed === true) {
+        const stats = humunculusRuntime.deity100Engine?.browserPossessionStats;
+        if (stats) stats.domLensingWarpsCount = (Number(stats.domLensingWarpsCount) || 0) + 1;
+        humunculusRuntime.emitBioAcousticPing('morph');
+      }
+      pulseBrowserButtonVisual(null, enabled ? 'DOM lensing active on the current page' : 'Original page styles restored');
+      return { status: 'completed', evidence: { pageApplied: true, changed: result.changed === true, enabled, url: result.url, elements: result.elements } };
+    }
+    window.applyAliveDomWarp = applyAliveDomWarp;
 
     async function triggerEldritchZalgoBrowserFuckery(manualPulse = false, options = {}) {
       if (window.aliveOverdrive && !options.signal) return window.aliveOverdrive.request('zalgo');
@@ -19075,8 +19184,14 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
       }
       const retained = (window.__hostLastDomColliders || []).filter(c => c.pane !== 'right');
       window.__hostLastDomColliders = retained.concat(mapAlivePaneColliders(secondary, result, true));
+      let cognition = null;
+      try {
+        cognition = window.aliveCognitiveFaculties?.observe({ url: result.url, title: secondary.title,
+          researchExcerpt: result.colliders.map(c => c.text).join(' ').slice(0, 4000), doors: [], observedAt: Date.now(),
+          authority: result.authority, pane: 'secondary' }) || null;
+      } catch (error) { cognition = { status: 'error', reason: String(error.message || error).slice(0, 160) }; }
       return { status: 'observed', tabId: secondary.id, url: result.url, colliders: result.colliders.length,
-        authority: result.authority, exploration: result.exploration, scope: 'Separate visible-pane perception and motion; no primary learning credit' };
+        authority: result.authority, exploration: result.exploration, cognition, scope: 'Separate visible-pane perception and motion; no primary learning credit' };
     }
     window.observeAliveSecondaryPane = observeAliveSecondaryPane;
 
@@ -23162,7 +23277,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           if (!authority.validateCommand(command, t.id)) continue;
           const cmd = command.action;
           if (window.aliveOverdrive) {
-            const ids = { mitosis: 'procreate', formation: 'formation', morph: 'morph', dream: 'dream', decursive: 'decursive', deepdark: 'deep-dark-dive', deity100: 'deity', feed: 'feed' };
+            const ids = { mitosis: 'procreate', formation: 'formation', morph: 'morph', dream: 'dream', decursive: 'decursive', deepdark: 'deep-dark-dive', deity100: 'deity', feed: 'feed', warpdom: 'warp-dom' };
             if (ids[cmd]) window.aliveOverdrive.request(ids[cmd]);
             else if (cmd === 'overdrive') { if (alienBrainActive) stopAlienBrainAutonomy(); else window.startAliveOverdrive(); }
             else if (cmd === 'view') window.aliveWorkspace?.openPanel('inspect');

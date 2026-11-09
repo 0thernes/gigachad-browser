@@ -4,19 +4,25 @@
  */
 (function (scope) {
   'use strict';
+  // The shared browser event channel also carries guest-authority receipts.
+  // Object ownership plus operation IDs distinguish scheduler settlements from
+  // same-named external events and from replayed prior executions.
+  const emittedEvents = new WeakMap();
 
   const capability = (id, label, mode, intervalMs, initialDelayMs, aliases = []) =>
     Object.freeze({ id, label, mode, intervalMs, initialDelayMs, aliases: Object.freeze(aliases), manualOnly: mode === 'diagnostic' });
   const CAPABILITIES = Object.freeze([
-    capability('brains-precision', '14 Brain × 7 Precision', 'observe', 1200, 0),
-    capability('dom-body', 'Spawn DOM Body', 'action', 1400, 100),
-    capability('macro', 'Macro · 14 regions / RIM router', 'observe', 1200, 150),
-    capability('meso', 'Meso · 112 sLTC × SSM / apical NMDA', 'observe', 1200, 200),
-    capability('micro', 'Micro · Moonlab Q3 / QGTL / QRNG / Eshkol / FlyWire Ising', 'observe', 1800, 250),
-    capability('body-curriculum', 'Body + Curriculum · stages A–F / viscera', 'observe', 1500, 300),
-    capability('connectome', '512-CONN × 262K-SYN × sLTC / SSM × .Onion', 'observe', 1800, 350),
-    capability('millennium', 'DSD-24 × Cl(4,0) × Millennium', 'observe', 1800, 400),
-    capability('reasoning', 'AoT · ToT · GoT', 'observe', 1500, 450),
+    capability('brains-precision', '14 Brain × 7 Precision', 'observe', 1200, 0, ['14 Brain x 7 Precision']),
+    capability('dom-body', 'Spawn DOM Body / Step Episode', 'action', 1400, 100, ['Spawn DOM Body', 'Step Episode']),
+    capability('macro', 'Macro · 14 regions / RIM router', 'observe', 1200, 150, ['Macro 14 Regions / RIM Router']),
+    capability('meso', 'Meso · 112 sLTC × SSM / apical NMDA', 'observe', 1200, 200, ['Meso 112 sLTC x SSM / Apical NMDA']),
+    capability('micro', 'Micro · Moonlab Q3 / QGTL / QRNG / Eshkol / FlyWire Ising', 'observe', 1800, 250, ['Micro Moonlab Q3 / QGTL / QRNG / Eshkol / FlyWire Ising']),
+    capability('body-curriculum', 'Body + Curriculum · stages A–F / viscera', 'observe', 1500, 300, ['Body + Curriculum Stages A-F / Viscera']),
+    capability('connectome', '512-CONN × 262K-SYN × sLTC / SSM × .Onion', 'observe', 1800, 350, ['512-CONN x 262K-SYN x sLTC / SSM x Onion']),
+    capability('millennium', 'DSD-24 × Cl(4,0) × Millennium', 'observe', 1800, 400, ['DSD-24 x CI(4,0) x Millenium']),
+    capability('reasoning', 'AoT · ToT · GoT', 'observe', 1500, 450, ['AoT ToT GoT']),
+    capability('memory', 'Memory 4 Tier', 'observe', 1800, 500, ['Four-tier memory']),
+    capability('metacognition', 'Cl(4,0) Metacognition', 'observe', 1800, 550, ['CI (4,0) Metacognition', 'CI(4,0) Metacognition']),
     capability('train-policy', 'Train Policy', 'action', 10000, 1800),
     capability('grover-collapse', 'Grover Collapse', 'action', 6500, 2300),
     capability('decursive', 'Decursive DSD-24', 'action', 12000, 3000),
@@ -26,18 +32,22 @@
     capability('deity', 'Deity 100', 'action', 10000, 6000, ['Diety 100']),
     capability('research-plan', 'Research planner · configured language model', 'action', 45000, 6000),
     capability('omega', 'Omega 100', 'action', 10000, 6600),
-    capability('morph', 'Eldritch Morph / Mutate Body', 'action', 24000, 7500, ['Eldritch Morph', 'Mutate Body']),
+    capability('morph', 'Eldritch Morph / Mutate Body', 'action', 24000, 7500, ['Eldritch Morph', 'Mutate Body', 'Body Metamorph']),
     capability('dream', 'Dream SWS / Dream Replay', 'action', 28000, 8500, ['Dream SWS', 'Dream Replay', 'Dream Reply']),
-    capability('procreate', 'Procreate / Mitosis Split', 'action', 35000, 10000, ['Procreate', 'Mitosis Split']),
+    capability('ghost-swarm', 'Ghost Swarm', 'action', 45000, 9000),
+    capability('procreate', 'Procreate / Mitosis Split', 'action', 35000, 10000, ['Procreate', 'Mitosis Split', 'Procreate / Mitosis']),
     capability('zalgo', 'Zalgo Fuckery', 'action', 22000, 12000),
+    capability('ghost-write', 'Ghost Write', 'action', 60000, 12000, ['Ghostwriter']),
     capability('neo', 'Neo Matrix', 'action', 24000, 14000),
-    capability('portal-jump', 'Portal Jump', 'action', 30000, 18000),
-    capability('epoch-handoff', 'Epoch Handoff', 'action', 45000, 22000),
+    capability('warp-dom', 'Warp DOM', 'action', 30000, 16000),
+    capability('portal-jump', 'Portal Jump / Concept Drive', 'action', 30000, 18000, ['Portal Jump', 'Concept Drive', 'Concept Dive']),
+    capability('epoch-handoff', 'Epoch Handoff', 'action', 45000, 22000, ['Handoff m6']),
     capability('checkpoint', 'Checkpoint CID', 'action', 60000, 25000),
     capability('onion', 'Onion', 'observe', 5000, 700),
-    capability('deep-dark-dive', 'Deep Dark Dive', 'action', 45000, 28000),
-    capability('flywire', 'FlyWire A/B', 'diagnostic', 120000, 35000),
-    capability('acceptance-gates', '8 PDF Gates', 'diagnostic', 180000, 45000)
+    capability('deep-dark-dive', 'Deep Dark Dive / Drive', 'action', 45000, 28000, ['Deep Dark Dive', 'Deep Dark Drive', 'Onion / Deep Dark Drive']),
+    capability('flywire', 'FlyWire A/B', 'diagnostic', 120000, 35000, ['Flywire M8']),
+    capability('learning-five-seed', 'Learning 5-Seed', 'diagnostic', 300000, 40000, ['Learning five independent seeds']),
+    capability('acceptance-gates', '8 PDF Gates', 'diagnostic', 180000, 45000, ['8 Gates P.22'])
   ]);
 
   const clamp = (value, fallback, low, high) => Number.isFinite(Number(value))
@@ -67,6 +77,8 @@
       this.intervalMs = clamp(options.intervalMs, 50, 16, 1000);
       this.budgetMs = clamp(options.budgetMs, 5, 1, 25);
       this.maxInFlight = Math.floor(clamp(options.maxInFlight, 1, 1, 4));
+      this.reservedLocalSlots = Math.floor(clamp(options.reservedLocalSlots, 0, 0, this.maxInFlight - 1));
+      this.backgroundGroups = new Set(Array.isArray(options.backgroundGroups) ? options.backgroundGroups : []);
       this.maxStartsPerTick = Math.floor(clamp(options.maxStartsPerTick, 2, 1, 8));
       this.eventLimit = Math.floor(clamp(options.eventLimit, 160, 20, 500));
       this.getContext = options.getContext || (() => ({}));
@@ -76,6 +88,8 @@
       this.suspended = false;
       this.automatic = true;
       this.generation = 0;
+      this.operationSequence = 0;
+      emittedEvents.set(this, new WeakSet());
       this.cycleCount = 0;
       this.timer = null;
       this.requests = new Set();
@@ -83,6 +97,7 @@
       this.events = [];
       this.metrics = { ticks: 0, overBudgetTicks: 0, syncDurationMs: 0, maxSyncDurationMs: 0 };
       this.jobs = new Map();
+      this.aliases = new Map();
       for (const definition of options.capabilities || CAPABILITIES) {
         if (!definition.id || this.jobs.has(definition.id)) throw new Error('Capability IDs must be present and unique');
         const supplied = (options.adapters || {})[definition.id];
@@ -101,17 +116,28 @@
           lastError: typeof adapter.run === 'function' ? '' : 'No runtime adapter registered'
         };
         this.jobs.set(job.id, job);
+        for (const name of [job.id, job.label, ...(job.aliases || [])]) {
+          if (typeof name !== 'string' || !name.trim()) continue;
+          const alias = name.trim().toLowerCase();
+          if (this.aliases.has(alias) && this.aliases.get(alias) !== job.id) throw new Error(`Ambiguous overdrive capability alias: ${name}`);
+          this.aliases.set(alias, job.id);
+        }
       }
     }
 
-    _emit(type, id, detail = {}) {
-      const event = { at: this.clock(), type, id, ...summarize(detail) };
+    _emit(type, id, detail = {}, operation = null) {
+      const event = Object.freeze({ ...summarize(detail), at: this.clock(), type, id,
+        source: 'alive-overdrive', generation: operation?.generation ?? this.generation, runId: operation?.runId ?? null });
+      emittedEvents.get(this).add(event);
       this.events.push(event);
       if (this.events.length > this.eventLimit) this.events.splice(0, this.events.length - this.eventLimit);
       if (typeof this.onEvent === 'function') {
         try { this.onEvent(event); } catch (_) { /* UI/log delivery must not kill scheduling. */ }
       }
+      return event;
     }
+
+    ownsEvent(event) { return Boolean(event && typeof event === 'object' && emittedEvents.get(this)?.has(event)); }
 
     start({ automatic = true } = {}) {
       if (this.running) return this.snapshot();
@@ -147,6 +173,7 @@
     }
 
     request(id) {
+      id = this.aliases.get(String(id).trim().toLowerCase()) || id;
       const job = this.jobs.get(id);
       if (!job) throw new Error(`Unknown overdrive capability: ${id}`);
       if (typeof job.adapter.run !== 'function') {
@@ -185,7 +212,7 @@
           job.lastError = `Exceeded ${job.timeoutMs} ms; awaiting settlement before retry`;
           job.errorCount++;
           job.consecutiveErrors++;
-          this._emit('timeout', id, { reason: job.lastError });
+          this._emit('timeout', id, { reason: job.lastError }, token);
         }
       }
       if (!this.running && this.requests.size === 0) return { started: 0, inFlight: this.inFlight.size };
@@ -211,6 +238,9 @@
       for (const job of candidates) {
         if (this.inFlight.size >= this.maxInFlight || started >= this.maxStartsPerTick || this.clock() - tickStart >= this.budgetMs) break;
         if (Array.from(this.inFlight.values()).some(token => token.group === job.group)) continue;
+        // Slow provider work may retain locks after a deadline. Keep capacity
+        // for perception/local actions without discarding unresolved operations.
+        if (this.backgroundGroups.has(job.group) && Array.from(this.inFlight.values()).filter(token => this.backgroundGroups.has(token.group)).length >= this.maxInFlight - this.reservedLocalSlots) continue;
         let ready = true;
         try { if (typeof job.adapter.ready === 'function') ready = job.adapter.ready(context); }
         catch (error) { ready = String(error && error.message || error); }
@@ -237,14 +267,14 @@
 
     _launch(job, context) {
       const startedAt = this.clock();
-      const token = { generation: this.generation, startedAt, group: job.group, abort: new AbortController(), cancelled: false, timedOut: false };
+      const token = { generation: this.generation, runId: ++this.operationSequence, startedAt, group: job.group, abort: new AbortController(), cancelled: false, timedOut: false };
       this.requests.delete(job.id);
       this.inFlight.set(job.id, token);
       job.status = 'running';
       job.runCount++;
       job.lastStartedAt = startedAt;
       job.lastError = '';
-      this._emit('running', job.id);
+      this._emit('running', job.id, {}, token);
       let operation;
       try { operation = job.adapter.run({ signal: token.abort.signal, now: startedAt, context, id: job.id }); }
       catch (error) { operation = Promise.reject(error); }
@@ -272,7 +302,7 @@
           job.consecutiveErrors++;
           job.status = 'error';
           job.lastError = String(error && error.message || error).slice(0, 480);
-          this._emit('error', job.id, { reason: job.lastError });
+          this._emit('error', job.id, { reason: job.lastError }, token);
         }
         job.nextDueAt = now + Math.min(120000, job.intervalMs * Math.pow(2, Math.min(4, job.consecutiveErrors)));
       } else {
@@ -298,10 +328,10 @@
         job.nextDueAt = now + (failed
           ? Math.min(120000, job.intervalMs * Math.max(slowFactor, errorFactor))
           : job.intervalMs * slowFactor);
-        this._emit(job.status, job.id, { evidence: job.evidence, reason: job.lastError, durationMs: job.lastDurationMs, syncDurationMs: job.syncDurationMs });
+        this._emit(job.status, job.id, { evidence: job.evidence, reason: job.lastError, durationMs: job.lastDurationMs, syncDurationMs: job.syncDurationMs }, token);
         if (typeof this.onOutcome === 'function' && (job.status === 'completed' || job.status === 'observed')) {
           try { this.onOutcome(job.id, { status: job.status, evidence: job.evidence, reward: Number.isFinite(outcome.reward) ? outcome.reward : null }, context); }
-          catch (feedbackError) { this._emit('feedback-error', job.id, { reason: String(feedbackError && feedbackError.message || feedbackError) }); }
+          catch (feedbackError) { this._emit('feedback-error', job.id, { reason: String(feedbackError && feedbackError.message || feedbackError) }, token); }
         }
       }
       this._schedule();
@@ -310,14 +340,16 @@
     snapshot(includeEvents = true) {
       const now = this.clock();
       const executions = Array.from(this.inFlight, ([id, token]) => ({
-        id, group: token.group, startedAt: token.startedAt, elapsedMs: Math.max(0, now - token.startedAt),
+        id, runId: token.runId, generation: token.generation, group: token.group, startedAt: token.startedAt, elapsedMs: Math.max(0, now - token.startedAt),
         cancelled: token.cancelled, timedOut: token.timedOut
       }));
       const due = job => this.requests.has(job.id) || (this.running && !this.suspended && !job.manualOnly && job.nextDueAt <= now);
       const waitingFor = job => {
         if (this.inFlight.has(job.id) || !due(job) || typeof job.adapter.run !== 'function') return [];
         const sameLane = executions.filter(execution => execution.group === job.group);
-        return (sameLane.length ? sameLane : this.inFlight.size >= this.maxInFlight ? executions : []).map(execution => execution.id);
+        const background = executions.filter(execution => this.backgroundGroups.has(execution.group));
+        const reservationBlocked = this.backgroundGroups.has(job.group) && background.length >= this.maxInFlight - this.reservedLocalSlots;
+        return (sameLane.length ? sameLane : this.inFlight.size >= this.maxInFlight ? executions : reservationBlocked ? background : []).map(execution => execution.id);
       };
       const waiting = Array.from(this.jobs.values()).filter(job => waitingFor(job).length > 0);
       const timedOut = executions.filter(execution => execution.timedOut).length;
@@ -326,6 +358,7 @@
         running: this.running, suspended: this.suspended, generation: this.generation, cycleCount: this.cycleCount,
         inFlight: this.inFlight.size, queued: this.requests.size,
         budgetMs: this.budgetMs, intervalMs: this.intervalMs,
+        maxInFlight: this.maxInFlight, reservedLocalSlots: this.reservedLocalSlots, backgroundGroups: Array.from(this.backgroundGroups),
         sampledAt: now, executions,
         health: {
           state: !this.running ? 'paused' : this.suspended ? 'suspended' : timedOut ? 'stalled' : issues ? 'degraded' : 'running',

@@ -15,12 +15,68 @@ function harness(adapters, options = {}) {
 const job = (controller, id) => controller.snapshot().jobs.find(item => item.id === id);
 
 test('the roster consolidates equivalent controls while retaining every requested architecture and action', () => {
-  assert.equal(CAPABILITIES.length, 30);
+  assert.equal(CAPABILITIES.length, 36);
   assert.equal(new Set(CAPABILITIES.map(item => item.id)).size, CAPABILITIES.length);
-  for (const id of ['brains-precision', 'checkpoint', 'soul-surge', 'grover-collapse', 'portal-jump', 'dom-body', 'reasoning', 'decursive', 'feed', 'formation', 'procreate', 'morph', 'dream', 'deity', 'zalgo', 'neo', 'train-policy', 'flywire', 'epoch-handoff', 'acceptance-gates', 'onion', 'omega', 'deep-dark-dive', 'macro', 'meso', 'micro', 'body-curriculum', 'connectome', 'millennium']) {
+  for (const id of ['brains-precision', 'checkpoint', 'soul-surge', 'grover-collapse', 'portal-jump', 'dom-body', 'reasoning', 'decursive', 'feed', 'formation', 'procreate', 'morph', 'dream', 'deity', 'zalgo', 'neo', 'train-policy', 'flywire', 'epoch-handoff', 'acceptance-gates', 'onion', 'omega', 'deep-dark-dive', 'macro', 'meso', 'micro', 'body-curriculum', 'connectome', 'millennium', 'memory', 'metacognition', 'warp-dom', 'ghost-swarm', 'ghost-write', 'learning-five-seed']) {
     assert.ok(CAPABILITIES.some(item => item.id === id), id);
   }
   for (const label of ['Mitosis Split', 'Mutate Body', 'Dream Replay']) assert.ok(CAPABILITIES.some(item => item.aliases.includes(label)));
+});
+
+test('named controls resolve to canonical jobs and equivalent requests coalesce', async () => {
+  let observations = 0;
+  const controller = new Controller({ automatic: false, adapters: { 'dom-body': () => { observations++; } } });
+  controller.automatic = false;
+  assert.equal(controller.request('Step Episode'), true);
+  assert.equal(controller.request('spawn dom body'), true);
+  assert.deepEqual([...controller.requests], ['dom-body']);
+  controller.tick();
+  await flush();
+  assert.equal(observations, 1);
+  assert.equal(job(controller, 'dom-body').completedCount, 1);
+  assert.throws(() => controller.request('unknown capability'), /Unknown/);
+});
+
+test('ambiguous aliases are rejected instead of dispatching the wrong operation', () => {
+  assert.throws(() => new Controller({ capabilities: [definition('a', { aliases: ['Shared control'] }), definition('b', { aliases: ['shared control'] })] }), /Ambiguous/);
+});
+
+test('the requested architecture and control names dispatch to their shared jobs', () => {
+  const controller = new Controller({ adapters: Object.fromEntries(CAPABILITIES.map(item => [item.id, () => {}])) });
+  controller.automatic = false;
+  for (const [name, id] of [
+    ['14 Brain x 7 Precision', 'brains-precision'], ['AoT ToT GoT', 'reasoning'],
+    ['CI (4,0) Metacognition', 'metacognition'], ['Body Metamorph', 'morph'],
+    ['Memory 4 Tier', 'memory'], ['Learning 5-Seed', 'learning-five-seed'],
+    ['Procreate / Mitosis', 'procreate'], ['Concept Drive', 'portal-jump'],
+    ['Flywire M8', 'flywire'], ['Handoff m6', 'epoch-handoff'], ['8 Gates P.22', 'acceptance-gates'],
+    ['DSD-24 x CI(4,0) x Millenium', 'millennium'], ['Onion / Deep Dark Drive', 'deep-dark-dive'],
+    ['GHOST SWARM', 'ghost-swarm'], ['GHOST WRITE', 'ghost-write']
+  ]) {
+    assert.equal(controller.request(name), true, name);
+    assert.deepEqual([...controller.requests], [id], name);
+    controller.requests.clear();
+  }
+});
+
+test('stalled background providers retain their locks without starving local perception', async () => {
+  const releases = [], calls = [];
+  const slow = group => ({ group, timeoutMs: 100, run: () => new Promise(resolve => { releases.push(resolve); }) });
+  const { controller, advance } = harness({
+    planner: slow('planner'), cognition: slow('cognition'), backend: slow('backend'),
+    diagnostic: slow('diagnostic'), 'dom-body': { group: 'mutation', run: () => { calls.push('observed'); return { status: 'completed' }; } }
+  }, { maxInFlight: 4, maxStartsPerTick: 8, reservedLocalSlots: 1, backgroundGroups: ['planner', 'cognition', 'backend', 'diagnostic'] });
+  controller.tick(); await flush();
+  assert.equal(calls.length, 1);
+  assert.equal(controller.inFlight.size, 3);
+  assert.equal(releases.length, 3, 'fourth background work cannot consume the local reservation');
+  assert.deepEqual(job(controller, 'diagnostic').waitingFor, ['planner', 'cognition', 'backend']);
+  advance(200); controller.tick(); await flush();
+  assert.equal(calls.length, 2, 'current page perception keeps progressing after provider deadlines');
+  assert.equal(controller.inFlight.size, 3, 'timed-out background operations keep their locks');
+  assert.equal(controller.snapshot().health.awaitingSettlement, 3);
+  for (const release of releases) release({ status: 'completed' });
+  await flush();
 });
 
 test('absent adapters are unavailable and cannot produce execution evidence', () => {

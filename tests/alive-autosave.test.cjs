@@ -807,3 +807,126 @@ test('a primary worker failure makes exactly one async fallback and fences all o
   f.encoded(); await microtasks(); f.persisted(); await next;
   assert.equal(f.api.snapshot().fallbackCount, 1);
 });
+
+// Control both physical seal completions while running the production paired
+// encoder. Real hash/byte/wire validity is covered by alive-genome-codec.test.
+function pairedDurableFixture({ worker = false, ...settings } = {}) {
+  const encodings = [];
+  const asyncCodec = { ...codec, encodeAsync(payload, options) {
+    return codec.encodeAsync(payload, { ...options, learnedCodec: { seal(captured, { signal }) {
+      const operation = { captured: structuredClone(captured), signal, ...deferred() };
+      encodings.push(operation);
+      return operation.promise;
+    } } });
+  } };
+  const f = durableFixture({ ...settings, worker, extra: { ...settings.extra, codec: asyncCodec,
+    capture() {
+      const snapshot = { creatureId: 'autosave-fixture', policyId: 'paired-policy', checkpointId: 'checkpoint',
+        logicalTick: this.value, modelEpoch: 2, capturedAt: '2026-11-09T00:00:00.000Z', resumeBoundary: 'fresh-browser-authority' };
+      return { value: this.value, simulationTick: this.value, policyCid: snapshot.policyId,
+        checkpointCid: snapshot.checkpointId, agentId: snapshot.creatureId,
+        nested: this.nested, primaryPolicyState: codec.primaryState({ snapshot, component: 'primary', fixtureStamp: this.value }),
+        trainerCommittedState: codec.trainerState({ snapshot, component: 'trainer', fixtureStamp: this.value }) };
+    }
+  } });
+  return { ...f, encodings, encoded(index) {
+    const item = encodings[index]; item.resolve({ schema: 'controlled-paired-encoding-fixture', ...item.captured });
+  } };
+}
+
+test('paired durable fallback waits for both seals and coalesces a later coherent snapshot', async () => {
+  const f = pairedDurableFixture(), first = f.api.flush();
+  assert.equal(f.encodings.length, 2); assert.equal(f.commits.length, 0);
+  assert.equal(f.api.snapshot().workerMode, 'async');
+  f.runtime.value = 22; f.runtime.nested.sequence.push(3);
+  const latest = f.api.flush();
+  f.encoded(1); await microtasks();
+  assert.equal(f.encodings.length, 2); assert.equal(f.commits.length, 0);
+  assert.equal(f.api.snapshot().flushing, true);
+  f.encoded(0); await microtasks();
+  assert.equal(f.commits.length, 1);
+  const prior = JSON.parse(f.commits[0].json);
+  assert.equal(prior.simulationTick, 1); assert.deepEqual(prior.nested.sequence, [1, 2]);
+  assert.equal(prior.primaryPolicyState.fixtureStamp, 1); assert.equal(prior.trainerCommittedState.fixtureStamp, 1);
+  assert.deepEqual(prior.primaryPolicyState.snapshot, prior.trainerCommittedState.snapshot);
+  f.persisted(0); assert.equal((await first).persistenceVerified, true); await microtasks();
+  assert.equal(f.encodings.length, 4);
+  assert.equal(f.encodings[2].captured.fixtureStamp, 22); assert.equal(f.encodings[3].captured.fixtureStamp, 22);
+  f.encoded(2); f.encoded(3); await microtasks();
+  assert.equal(JSON.parse(f.commits[1].json).simulationTick, 22);
+  f.persisted(1); assert.equal((await latest).persistenceVerified, true);
+});
+
+test('paired seal failure cannot finish close before its delayed sibling and storage fence settle', async () => {
+  for (const failedIndex of [0, 1]) {
+    const f = pairedDurableFixture();
+    let canonical = '{"prior":"verified-canonical"}', completed = false;
+    const before = canonical, closing = f.api.dispose();
+    closing.then(() => { completed = true; });
+    assert.equal(f.encodings.length, 2);
+    f.encodings[failedIndex].reject(Error('selected component hash failed'));
+    await microtasks();
+    assert.equal(completed, false); assert.equal(f.fences.length, 0); assert.equal(f.commits.length, 0);
+    assert.equal(f.api.snapshot().flushing, true); assert.equal(f.api.snapshot().disposed, false);
+    assert.equal(f.api.snapshot().persistenceVerified, false);
+    f.encoded(1 - failedIndex); await microtasks();
+    assert.equal(completed, false); assert.equal(f.fences.length, 1); assert.equal(f.commits.length, 0);
+    if (f.commits.length) canonical = f.commits.at(-1).json;
+    assert.equal(canonical, before, 'neither a partial pair nor legacy fallback reaches the canonical sink');
+    f.fenced();
+    const outcome = await closing;
+    assert.equal(outcome.status, 'failed'); assert.equal(outcome.persistenceVerified, false);
+    assert.match(outcome.error, /selected component hash failed/);
+    assert.equal(f.api.snapshot().disposed, true); assert.equal(f.writes.length, 0);
+  }
+});
+
+test('paired cancellation drains both aborted seals and prevents any old encoding from committing after resume', async () => {
+  const f = pairedDurableFixture(), first = f.api.flush(), drain = f.api.cancelAndDrain('restore');
+  let drained = false; drain.then(() => { drained = true; });
+  assert.equal(f.encodings.length, 2);
+  assert.ok(f.encodings.every(item => item.signal.aborted));
+  f.fenced(); f.encoded(1); await microtasks();
+  assert.equal(drained, false); assert.equal(f.api.resume(), false); assert.equal(f.api.request(), false);
+  assert.equal(f.commits.length, 0);
+  f.encoded(0);
+  assert.equal((await drain).settled, true); assert.equal((await first).status, 'cancelled');
+  assert.equal(f.commits.length, 0); assert.equal(f.api.snapshot().verifiedWrites, 0);
+  assert.equal(f.api.resume(), true);
+  f.runtime.value = 88;
+  const current = f.api.flush(); f.encoded(2); f.encoded(3); await microtasks();
+  assert.equal(f.commits.length, 1); assert.equal(f.commits[0].epoch, 1);
+  assert.equal(JSON.parse(f.commits[0].json).trainerCommittedState.fixtureStamp, 88);
+  f.persisted(); assert.equal((await current).persistenceVerified, true);
+  assert.equal(f.api.snapshot().verifiedWrites, 1);
+});
+
+test('paired worker failure performs one owned async recapture and ignores the retired worker completion', async () => {
+  const f = pairedDurableFixture({ worker: true }), save = f.api.flush(), worker = f.workers[0];
+  const staleHandler = worker.onmessage, staleId = worker.messages[0].received.id;
+  f.runtime.value = 31; worker.fail();
+  assert.equal(worker.terminated, true); assert.equal(f.encodings.length, 2);
+  assert.equal(f.api.snapshot().workerMode, 'failed-async'); assert.equal(f.api.snapshot().fallbackCount, 1);
+  assert.ok(f.encodings.every(item => item.captured.fixtureStamp === 31));
+  staleHandler({ data: { id: staleId, json: '{"stale":true}', serializationMs: 1 } });
+  f.encoded(0); await microtasks(); assert.equal(f.commits.length, 0);
+  f.encoded(1); await microtasks();
+  assert.equal(f.commits.length, 1); assert.equal(JSON.parse(f.commits[0].json).simulationTick, 31);
+  f.persisted(); assert.equal((await save).persistenceVerified, true);
+  assert.equal(f.writes.length, 0);
+});
+
+test('malformed trainer-only captures fail closed in durable fallback without selecting the legacy encoder', async () => {
+  for (const value of [null, {}, false, codec.trainerState({})]) {
+    let legacyCalls = 0, asyncCalls = 0;
+    const f = durableFixture({ worker: false, extra: {
+      codec: { ...codec, encode() { legacyCalls++; return '{"unsafe":"legacy-fallback"}'; },
+        encodeAsync(payload, options) { asyncCalls++; return codec.encodeAsync(payload, options); } },
+      capture() { return { trainerCommittedState: value }; }
+    } });
+    const result = await f.api.flush();
+    assert.equal(result.status, 'failed'); assert.equal(result.persistenceVerified, false);
+    assert.equal(legacyCalls, 0); assert.equal(asyncCalls, 1);
+    assert.equal(f.commits.length, 0); assert.equal(f.stored.size, 0); assert.equal(f.writes.length, 0);
+  }
+});

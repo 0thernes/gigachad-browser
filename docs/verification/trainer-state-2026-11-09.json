@@ -1,0 +1,267 @@
+{
+  "schema": "gigachad.trainer-component-qualification.v1",
+  "qualifiedAt": "2026-11-09T12:34:43.529Z",
+  "scope": "Isolated b291cde plus committed-trainer integration; excludes subsequent Synaptic Fabric, cognition, cortex and UI changes in the shared checkout",
+  "baseCommit": "b291cdecccfb8ab8ffa6939d6597b833fc0995de",
+  "qualifiedGitTree": "9a8685eb6ff8cb4f27933ccf548a1bf3fde559dc",
+  "wholeApplicationCatalog": false,
+  "tests": {
+    "node": {
+      "version": "25.8.2",
+      "passed": 1068,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "smoke": {
+      "nodeTests": 834,
+      "pythonTests": 6,
+      "electron": "45.2.3",
+      "embeddedNode": "24.22.2",
+      "smokeOk": true,
+      "exitCode": 0,
+      "pairedApplication": "Validated saved pair without live reload; separate restart probe establishes hydration"
+    }
+  },
+  "restart": {
+    "completed": true,
+    "checks": [
+      {
+        "id": "writer-child-report-present",
+        "passed": true
+      },
+      {
+        "id": "writer-process",
+        "passed": true
+      },
+      {
+        "id": "writer-source-stability",
+        "passed": true
+      },
+      {
+        "id": "writer-all-commits-settled",
+        "passed": true
+      },
+      {
+        "id": "writer-latest-acknowledged-revision",
+        "passed": true
+      },
+      {
+        "id": "writer-verified-normal-close",
+        "passed": true
+      },
+      {
+        "id": "writer-committed-sentinels",
+        "passed": true
+      },
+      {
+        "id": "explicit-worker-flush",
+        "passed": true
+      },
+      {
+        "id": "exact-trainer-component-flushed",
+        "passed": true
+      },
+      {
+        "id": "exact-trainer-component-retained-at-close",
+        "passed": true
+      },
+      {
+        "id": "natural-trainer-commit",
+        "passed": true
+      },
+      {
+        "id": "no-recurring-legacy-write",
+        "passed": true
+      },
+      {
+        "id": "reader-child-report-present",
+        "passed": true
+      },
+      {
+        "id": "reader-process",
+        "passed": true
+      },
+      {
+        "id": "reader-source-stability",
+        "passed": true
+      },
+      {
+        "id": "reader-all-commits-settled",
+        "passed": true
+      },
+      {
+        "id": "reader-latest-acknowledged-revision",
+        "passed": true
+      },
+      {
+        "id": "reader-verified-normal-close",
+        "passed": true
+      },
+      {
+        "id": "reader-committed-sentinels",
+        "passed": true
+      },
+      {
+        "id": "distinct-processes",
+        "passed": true
+      },
+      {
+        "id": "canonical-bootstrap",
+        "passed": true
+      },
+      {
+        "id": "actual-constructor-hydration",
+        "passed": true
+      },
+      {
+        "id": "immediate-exact-trainer-hydration",
+        "passed": true
+      },
+      {
+        "id": "monotonic-durable-revision",
+        "passed": true
+      }
+    ],
+    "processes": [
+      {
+        "phase": "writer",
+        "pid": 18728,
+        "exitCode": 0,
+        "elapsedMs": 12421
+      },
+      {
+        "phase": "reader",
+        "pid": 54680,
+        "exitCode": 0,
+        "elapsedMs": 2296
+      }
+    ],
+    "naturalTraining": {
+      "committedEpochDelta": 8,
+      "appliedDelta": 8,
+      "durationMs": 11222.39999999851,
+      "beforeEpoch": 0,
+      "afterEpoch": 8
+    },
+    "hydration": {
+      "comparedBytes": 64,
+      "comparedStates": 2,
+      "differingFloat32Values": 0,
+      "expectedWeightsSHA256": "b68dfe78a6c189f345cee191a99bf9067194d1626a12ed4755671ecea750d222",
+      "actualWeightsSHA256": "b68dfe78a6c189f345cee191a99bf9067194d1626a12ed4755671ecea750d222",
+      "committedEpoch": 8,
+      "timeoutMs": 5000,
+      "inactive": true,
+      "clockEvidence": "Explicit private-state engine read API; independent direct tensor bytes crosschecked before and after callback"
+    },
+    "diagnostics": [
+      "Writer stderr contained a guest-frame-disposed message during close; both processes exited 0 and every restart check passed.",
+      "Electron console-message callback API emitted a deprecation notice."
+    ]
+  },
+  "portableCandidate": {
+    "files": 2092,
+    "bytes": 468030926,
+    "executableSmoke": {
+      "exitCode": 0,
+      "smokeOk": true,
+      "elapsedMs": 1818
+    },
+    "postSmokeFilesChanged": [],
+    "scope": "Unsigned candidate built from qualified tree; not the later combined release"
+  },
+  "sourceHashes": {
+    "index.html": "eb2b4357bcf29f60701f36b8d87a74e6bd73712307579bbe09d05d78b6f4a163",
+    "main.js": "f4f5395ff530551fcaacdcfbfdd0f19e11cc13d6de6e9e9c7a67a96399452fe9",
+    "preload.js": "0321f2fccb2ac35c7c01e9d5a256821871debb34f72f4e7b0418ab3ddbfe39db",
+    "config.js": "9488045b40aea332e40c6fe95124ea78f8488b07c3b2c366ee6cf4bbf72b4043",
+    "alife_neural_cyber_engine.js": "dca1184a06bcc8616e382e841ceed3c5182004e34c11109a811601f5d7976855",
+    "systems/alive-autosave.js": "7b8fa84d81673fa04decc9b11c81b33a5f32b09cc26119eec2721744ac8d0544",
+    "systems/alive-genome-codec.js": "21727dc7bb56fa5eef4186c86b303afce8bf6701271cce20c42f016cea1f6a6f",
+    "systems/alive-genome-store.cjs": "1238c8c26527112f58598e8383c4291b3f075a0173fba00ce2ce7fd0f79767f0",
+    "systems/alive-genome-ipc.cjs": "556df4187960206dd0176ea82599292c2b3a739fd92bc1290880e24bc158c618",
+    "systems/alive-overdrive-adapters.js": "84100eced5fb26eea486548698428a2ed4fa10bb72104352e9cd4fcb2d160e6f",
+    "systems/alive-checkpoints.js": "fe6f74c7f464c168b2bda5d652294ebc497df5136cab3306ccf11ab4b9e8f4e5",
+    "systems/alive-authority.js": "c6cf55146fa267e4da75d04814deee7bd6c77283b57ae1f1c6cfe5e24f8cf9c4",
+    "systems/alive-neural-coupling.js": "7f859b453e9e6168559497ccfc82edd71e6127b65d537f4f18643f33ac754571",
+    "systems/alive-specialist-fusion.js": "eacbe9f6031012e38e33681aa5db95e4513b91c5ab178949c5c250f1f4ec175b",
+    "systems/authentic-asmodensius-adapter.js": "5453dc6f66c636f57d22399c6c7dbaed02ef8a10495b3e9dbd84087ea1f45c9d",
+    "systems/generated/authentic-asmodensius.js": "b2bdd297bb14c7e16c4ccfa3e692ff43b5cb9d6b162a4f033071c445b7fbc3cb",
+    "systems/ported-multiverse-brains.js": "688fa48a897107d9cea733315c4bb3d21e6140b381c601fd076750901136ab55",
+    "systems/alife-25-bleeding-edge-models.js": "cb3765c1d6cf7f3db055dffb0e4f9c4394689d40a5b1888c2d4fb3ba5bb6a679",
+    "systems/alive-asset-hydration.js": "73905956dc1456dcbd91c515e71b20c1f137689a3c3e17680233213130f6cb48",
+    "systems/alive-startup-loader.js": "0101528c102e5e271735cbfa38f1b927234da011c168d6f4fc9ab0367a16b52c",
+    "systems/alive-primary-policy-state.js": "e8992af9eac270bcb61cc80480d352ec741b2d67dc9342b0c6597e5368938c03",
+    "systems/alive-primary-policy-bootstrap.js": "bb10b8875c29bc30b048756472e7f94b089850697ee5e0fb39a320796afa7a2f",
+    "systems/alive-trainer-state.js": "e4704c31bcafeb8c987755c17733f87562ff8454ff5ea8796de5d75a66423108",
+    "scripts/alive-trainer-state-evidence.cjs": "4f53c39a9e6249b7bceed57b6d3e986a428acde47156aa45b8f896fd3b45bb59",
+    "systems/alive-learned-state-codec.js": "9624e00cd6ea9083e742c5ba26a80a0864093d77fa51541fbf31e75bda004a67",
+    "systems/alive-learned-state-registry.js": "75d260ba2095b13ff5564df843bef602374ba48a3a650dc25d4da70333ff2899",
+    "scripts/alive-primary-policy-evidence.cjs": "47e3af76cd85ec55219a2efacc8e21c81609be04808b57e7b21d152ff23b491f",
+    "scripts/alive-learned-state-wire-evidence.cjs": "f12651191bf48e983596c8a72601f36595c944ae5b30106e7f51c7ec0cd5f9c6",
+    "scripts/alive-model-state-evidence.cjs": "6123e9176d738db2e2b1defed23025c220e28b7d9daa06355b5c9d09bf7fc8ab",
+    "scripts/alive-persistence-restart-probe.cjs": "0ca02f2c1ed94258b28bd84c35ff7b7fdbb5f1094bb00d14d9aa1257a5774a64",
+    "scripts/alive-genome-durable-evidence.cjs": "b7ae6b1db722db105c9454ffd80cfeb725fce69824fff50ea2494a0d27f7fba1",
+    "scripts/alive-genome-hydration-evidence.cjs": "16dee0f560563fe2b671c47923b774734ed1bdc1c22af72a457052d22d778978",
+    "scripts/alive-public-navigation-probe.cjs": "5c7334fd8f8c3f1828a69d944235b0808bc7837f5995e8f8d5c1e612b9dfc01b",
+    "systems/alive-genome-persistence.js": "42799a2e323a84d7628050d932131719b8d44df1d4040c7138f941fd3f67180e"
+  },
+  "localEvidence": {
+    "published": false,
+    "description": "These raw files are local gitignored verification artifacts, not downloadable public evidence.",
+    "artifacts": [
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/node-tests.txt",
+        "sha256": "29b5c43801a27af48bddcdd10838a94a4448ab60f2b4af6d745b58a5b3bc717f",
+        "bytes": 110962
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/full-smoke.txt",
+        "sha256": "bf1117ed770c2ad34e45dd8817930ec7ca925c6bae7a6bda763fef9b9c2549a4",
+        "bytes": 91240
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/smoke-without-electron.txt",
+        "sha256": "5f3b2ede96e2aac435fe783f9246ae3a90d475e3ff4d043e72f495e7e6b032b7",
+        "bytes": 88994
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/paired-restart-v1/report.json",
+        "sha256": "a06a3d2f32a5923d59f8e140185813f03018da0d5163ba94983a54c7fe3d3a40",
+        "bytes": 97589
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/paired-restart-v1/writer/report.json",
+        "sha256": "e0f2e593822c7dbc4877e13bc264512d1d91bee313b1c434fad8aa7959d64a8a",
+        "bytes": 27319
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/paired-restart-v1/reader/report.json",
+        "sha256": "ecec82dab202c155b15f06c2afb94beeab0d91bac83ffcf5b8c042ea31af0ab7",
+        "bytes": 12274
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/packaged-smoke.txt",
+        "sha256": "8594a9002834b579f5322154514bdb82a58bddf3dd9b1251fcbc63c955aa9eb8",
+        "bytes": 1911
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/packaged-smoke-report.json",
+        "sha256": "4aa263115b29647a5d29cb11930d2b0fb362c4a1e1fe5f029f892210b4a51d6d",
+        "bytes": 270
+      },
+      {
+        "path": "research_notes/trainer-state-qualification-20261109/package-after-smoke.json",
+        "sha256": "41472260936e1e081568ccccb5d9de83d2d1d658f308cb60eb7efead1850004d",
+        "bytes": 76
+      }
+    ]
+  },
+  "limitations": [
+    "Six primary tensors plus one trainer view/private epoch/timeout; not full-model state.",
+    "Exact next worker update requires equal external input and intervening update order.",
+    "Paired application is startup-only; live paired restore rejects before writes.",
+    "Generic Checkpoint CID tensor restore does not retain this private trainer epoch.",
+    "No new frame-rate, learning-quality, sentience or universal capability claim."
+  ]
+}

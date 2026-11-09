@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const { create, POST_MODULES, SOURCE_ID, SOURCE_TYPE } = require('../systems/alive-startup-loader.js');
 const deferred = () => { let resolve, reject; const promise = new Promise((a,b) => { resolve=a; reject=b; }); return {promise,resolve,reject}; };
 const tick = () => new Promise(resolve => setImmediate(resolve));
-const primary = () => Object.freeze({ preflight() {}, apply() {}, capture() {}, snapshot() {} });
+const primary = () => Object.freeze({ preflight() {}, apply() {}, capture() {}, captureComponents() {}, snapshot() {} });
 const main = `const startupLexical = 41; window.mainRuns = (window.mainRuns || 0) + 1;
   function boot() { window.events.push('boot'); window.bootValue = startupLexical + postLexical; }
   window.__aliveStartupRegister(boot);`;
@@ -61,10 +61,11 @@ function fixture(options = {}) {
     aliveGenomePersistence:{initialJSON(storage,key){events.push('read');assert.equal(key,'humunculus_persistent_genome_v1');return options.json??'{"simulationTick":9}';},
       snapshot(){return {...state};},markApplied(success,details){events.push('blocked');assert.equal(success,false);assert.equal(details.hadJSON,true);state.applicationFailed=true;state.writeAllowed=false;},
       async fence({epoch}){events.push('fence');fenced++;state.epoch=epoch;return options.fence || {settled:true,ownerId:state.ownerId,epoch};}},
-    AlivePrimaryPolicyState:{},AliveLearnedStateRegistry:{},AliveLearnedStateCodec:{}};
+    AlivePrimaryPolicyState:{},AliveTrainerState:{create(){}},AliveLearnedStateRegistry:{},AliveLearnedStateCodec:{}};
   win.window=win;context=vm.createContext(win);
   const prepare=options.prepare || (async args=>{events.push('prepare');assert.equal(args.json,options.json??'{"simulationTick":9}');return primary();});
-  const loader=create({window:win,document:doc,prepare});win.aliveStartup=loader;
+  win.AlivePrimaryPolicyBootstrap={prepare};
+  const loader=create({window:win,document:doc,prepare:options.useGlobalPrepare?undefined:prepare});win.aliveStartup=loader;
   return {win,doc,loader,source,events,pending,state,receipts,closeListeners,
     fenceCount:()=>fenced,close(requestId='close-1'){for(const listener of [...closeListeners])listener({requestId});},
     async loadAll(){await tick();for(let i=0;i<POST_MODULES.length;i++){assert.ok(pending[i],`module ${i} was scheduled`);pending[i].load();await tick();}}};
@@ -87,6 +88,49 @@ test('digest delay holds all main execution and uses captured trusted source aft
   f.source.textContent='throw new Error("mutated source must not run")';await tick();
   assert.equal(f.win.mainRuns,undefined);assert.equal(f.pending.length,0);assert.equal(f.doc.body.inert,true);
   wait.resolve(primary());await f.loadAll();assert.equal((await f.loader.ready).phase,'ready');assert.equal(f.win.bootValue,42);
+});
+
+test('forwards the exact trainer, primary, registry, codec, crypto and canonical JSON to preparation',async()=>{
+  for(const useGlobalPrepare of [false,true]){
+    let received;
+    const prepared=primary(),f=fixture({useGlobalPrepare,json:'{"simulationTick":17}',prepare:async args=>{received=args;return prepared;}});
+    f.loader.start();await tick();
+    assert.deepEqual(Object.keys(received).sort(),['codec','crypto','json','primary','registry','trainer']);
+    assert.equal(received.json,'{"simulationTick":17}');
+    assert.equal(received.primary,f.win.AlivePrimaryPolicyState);
+    assert.equal(received.trainer,f.win.AliveTrainerState);
+    assert.equal(received.registry,f.win.AliveLearnedStateRegistry);
+    assert.equal(received.codec,f.win.AliveLearnedStateCodec);
+    assert.equal(received.crypto,f.win.crypto);
+    assert.equal(f.win.alivePrimaryPolicyBootstrap,prepared);
+    assert.equal(typeof f.win.alivePrimaryPolicyBootstrap.captureComponents,'function');
+    await f.loadAll();assert.equal((await f.loader.ready).phase,'ready');assert.equal(f.win.bootValue,42);
+  }
+});
+
+test('missing or non-callable trainer dependency blocks before prepare, main and postmodules',async()=>{
+  for(const trainer of [undefined,null,{}, {create:false}]){
+    let prepareCalls=0;
+    const f=fixture({prepare:async()=>{prepareCalls++;return primary();}});
+    f.win.AliveTrainerState=trainer;
+    const result=await f.loader.start();
+    assert.equal(result.phase,'failed');assert.equal(prepareCalls,0);
+    assert.equal(f.win.mainRuns,undefined);assert.equal(f.pending.length,0);
+    assert.equal(f.win.alivePrimaryPolicyBootstrap,undefined);
+    assert.equal(f.state.applicationFailed,true);assert.equal(f.state.writeAllowed,false);
+    assert.equal(f.doc.body.inert,true);assert.equal(f.loader.ownsClose(),true);
+  }
+});
+
+test('preparation without callable captureComponents cannot construct or activate the main model',async()=>{
+  for(const captureComponents of [undefined,null,false]){
+    const f=fixture({prepare:async()=>({...primary(),captureComponents})});
+    const result=await f.loader.start();
+    assert.equal(result.phase,'failed');assert.match(result.error,/invalid preparation/);
+    assert.equal(f.win.mainRuns,undefined);assert.equal(f.pending.length,0);
+    assert.equal(f.win.alivePrimaryPolicyBootstrap,undefined);assert.equal(f.state.writeAllowed,false);
+    assert.equal(f.doc.body.inert,true);
+  }
 });
 
 test('corrupt preparation and blocked canonical state fail without constructing a default model',async()=>{

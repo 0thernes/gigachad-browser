@@ -60,6 +60,7 @@ async function planResearch({ cfg = {}, payload = {}, fetchImpl = fetch, signal,
       excerpt: clean(observation.excerpt, 3600), concepts: (Array.isArray(observation.concepts) ? observation.concepts : []).slice(0, 12).map(c => clean(c, 60)) },
     recent: (Array.isArray(payload.recent) ? payload.recent : []).slice(-12).map(x => ({ url: clean(x.url, 2048), title: clean(x.title, 120) })),
     candidates,
+    researchRoles: payload.focus === 'swarm' ? ['architecture and mechanisms', 'code and implementation', 'evidence, limitations and counterexamples'] : [],
     intent: 'Explore unusual art, obscure archives, forgotten computing, strange natural phenomena, experimental science and independently hosted web projects. Vary topics and domains; use observed evidence to choose useful next questions.'
   };
   // Bound the complete serialized payload, including escaped strings and URLs.

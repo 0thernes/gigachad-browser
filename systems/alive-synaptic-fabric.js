@@ -135,6 +135,7 @@
       this.events = [];
       this.totals = { events: 0, excitations: 0, suppressed: 0, potentiations: 0, depressions: 0, cadenceAdjustments: 0, novel: 0, repeated: 0, foreign: 0, scalings: 0 };
       this.rates = [];
+      this.receivedEvents = new WeakSet();
     }
 
     node(id) {
@@ -158,10 +159,10 @@
       if (this.events.length > this.options.eventLimit) this.events.splice(0, this.events.length - this.options.eventLimit);
     }
 
-    _closeSpan(id, at, status) {
+    _closeSpan(id, runId, generation, at, status) {
       for (let i = this.spans.length - 1; i >= 0; i--) {
         const span = this.spans[i];
-        if (span.id === id && span.end === null) { span.end = at; span.status = status; return true; }
+        if (span.id === id && span.runId === runId && span.generation === generation && span.end === null) { span.end = at; span.status = status; return true; }
       }
       return false;
     }
@@ -173,6 +174,13 @@
 
     handleEvent(event) {
       if (!event || typeof event !== 'object') return;
+      // Marker fields aid diagnostics but are not ownership proof: even a clone
+      // carrying the exact source/run/generation cannot settle this controller.
+      if (event.source !== 'alive-overdrive' || this.controller.ownsEvent?.(event) !== true ||
+          event.generation !== this.controller.generation || this.receivedEvents.has(event)) {
+        this.totals.foreign++; return;
+      }
+      this.receivedEvents.add(event);
       const type = event.type, id = event.id;
       const at = finite(event.at) ? event.at : this.clock();
       this.totals.events++;
@@ -184,16 +192,23 @@
       if (!id || !this.controller.jobs.has(id)) return;
       const job = this.controller.jobs.get(id);
       if (type === 'running') {
-        this._pushSpan({ id, group: job.group || null, start: at, end: null, status: 'running' });
+        if (!Number.isSafeInteger(event.runId) || event.runId < 1) { this.totals.foreign++; return; }
+        this._pushSpan({ id, runId: event.runId, generation: event.generation, group: job.group || null, start: at, end: null, status: 'running' });
         return;
       }
       if (!TERMINAL.includes(type)) return;
       const success = type === 'completed' || type === 'observed';
-      if (!this._closeSpan(id, at, type)) {
-        // Success must settle an execution this fabric saw start. Other
-        // producers share the event channel (authority, research receipts).
-        if (success) { this.totals.foreign = (this.totals.foreign || 0) + 1; return; }
-        this._pushSpan({ id, group: job.group || null, start: at, end: at, status: type });
+      if (event.runId !== null) {
+        if (!Number.isSafeInteger(event.runId) || event.runId < 1 || !this._closeSpan(id, event.runId, event.generation, at, type)) {
+          this.totals.foreign++; return;
+        }
+      } else {
+        // Readiness/admission failures are scheduler receipts without an
+        // execution. They never consume an already running operation's span.
+        if (!['blocked', 'unavailable'].includes(type) || this.spans.some(span => span.id === id && span.end === null)) {
+          this.totals.foreign++; return;
+        }
+        this._pushSpan({ id, runId: null, generation: event.generation, group: job.group || null, start: at, end: at, status: type });
       }
       const node = this.node(id);
       let novel = false;
@@ -377,7 +392,7 @@
         const detail = event && event.detail;
         if (!detail) return;
         try { fabric.handleEvent(detail); } catch (_) { /* scheduling continues without fabric feedback */ }
-        if (detail.type === 'stopped') save();
+        if (detail.type === 'stopped' && controller.ownsEvent?.(detail) === true && detail.generation === controller.generation) save();
       });
       saveTimer = setInterval(save, 30000);
       return true;

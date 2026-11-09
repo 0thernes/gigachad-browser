@@ -4,7 +4,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
-const { adaptMain, observeHost, replaceOnce, isProbeEntry, waitForRendererStartup } = require('./alive-persistence-restart-probe.cjs');
+const { adaptMain, observeHost, replaceOnce, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit } = require('./alive-persistence-restart-probe.cjs');
 
 test('startup observation waits for the real barrier without invoking activation', async () => {
   let resolve, starts = 0;
@@ -29,6 +29,28 @@ test('startup observation rejects failure, cancellation, missing required barrie
   await assert.rejects(make({})({ required: true }), /promise is missing/);
   await assert.rejects(make({ ready: new Promise(() => {}) })({ required: true, timeoutMs: 5 }), /deadline/);
   assert.equal((await make(null)()).phase, 'legacy-no-barrier');
+});
+
+function naturalFixture(capture) {
+  let clock = 0, calls = 0;
+  const runtime = { dispatchWorkerTrainer() { throw Error('Verifier must never dispatch'); } };
+  const observe = vm.runInNewContext('(' + waitForNaturalTrainerCommit.toString() + ')', {
+    performance: { now: () => clock }, humunculusRuntime: runtime,
+    setTimeout(resolve, delay) { clock += delay; Promise.resolve().then(resolve); }
+  });
+  return options => observe({ capture: target => { assert.equal(target, runtime); calls++; return capture(clock, calls); },
+    before: { committedEpoch: 0, applied: 0 }, timeoutMs: 500, minDurationMs: 200, intervalMs: 50, ...options });
+}
+test('natural trainer wait requires a real epoch and applied increment plus observation dwell, with no dispatch', async () => {
+  const result = await naturalFixture(time => ({ committedEpoch: time >= 50 ? 1 : 0, applied: time >= 50 ? 1 : 0 }))();
+  assert.equal(result.durationMs, 200); assert.equal(result.committedEpochDelta, 1); assert.equal(result.appliedDelta, 1);
+});
+test('natural trainer wait times out on idle or invented epoch-only progress and rejects regression', async () => {
+  for (const state of [{ committedEpoch: 0, applied: 0 }, { committedEpoch: 1, applied: 0 }]) {
+    await assert.rejects(naturalFixture(() => state)(), /No natural trainer commit/);
+  }
+  await assert.rejects(naturalFixture(() => ({ committedEpoch: 0, applied: 0 }))({ before: { committedEpoch: 1, applied: 1 } }), /regressed/);
+  await assert.rejects(naturalFixture(() => ({ committedEpoch: 1, applied: 1 }))({ timeoutMs: 45001 }), /Invalid/);
 });
 
 test('Electron entry uses explicit owned contract and exact path even when require.main is absent', () => {

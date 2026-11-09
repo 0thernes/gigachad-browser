@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const codec = require('../systems/alive-genome-codec.js');
-const { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration } = require('./alive-genome-hydration-evidence.cjs');
+const { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration, captureTrainerHydration, assessTrainerHydration } = require('./alive-genome-hydration-evidence.cjs');
 const index = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 const HUB = ['W_perc_enc', 'W_perc_dec', 'W_dyn1', 'W_dyn2', 'W_diff1', 'W_diff2', 'W_gen1', 'W_gen2', 'W_disc1', 'W_disc2', 'W_aware16'];
 const SLTC = ['sltcWeights64', 'sltcRecWeights64', 'sltcBias64'];
@@ -166,7 +166,7 @@ function exactPrimaryHydration() {
   f.runtime.deepCortex = { W_actor: f.runtime.W_actor, W_critic: f.runtime.W_critic };
   f.saved.primaryPolicyState = JSON.parse(fs.readFileSync(path.join(fixture, 'payload.json'), 'utf8'));
   f.raw = JSON.stringify(f.saved);
-  f.context.window.alivePrimaryPolicyBootstrap = { capture() { return { fixtureOnly: true }; } };
+  f.context.window.alivePrimaryPolicyBootstrap = { capture() { return { fixtureOnly: true }; }, captureComponents() { return { primary: { fixtureOnly: true } }; } };
   f.recapture = () => JSON.parse(JSON.stringify(vm.runInContext(`(${captureGenomeHydration.toString()})(runtime)`, f.context)));
   f.snapshot = f.recapture();
   return f;
@@ -285,4 +285,126 @@ test('sealed primary diagnostic is retained and malformed pending marker is not 
     __alive_genome_primary_state_v1__: true, captured: {}, unexpected: true } });
   snapshot = f.recapture(); assert.match(snapshot.errors.join(';'), /Invalid pending primary marker/);
   assert.equal(assessGenomeHydration(f.raw, snapshot, { initialState: f.initialState }).ok, false);
+});
+
+// Manual wire around the independent catalog: these tests qualify the observer,
+// never use a production adapter/decoder to manufacture expected restored bytes.
+function exactTrainerHydration() {
+  const f = exactPrimaryHydration(), { createHash } = require('node:crypto');
+  const catalog = require('./alive-trainer-state-evidence.cjs').createExpectedTrainerCatalog();
+  const weights = Float32Array.from({ length: 16 }, (_, i) => (i - 7) / 16);
+  new Uint32Array(weights.buffer).set([0x80000000, 1, 0x80000001, 0]);
+  const raw = Buffer.from(weights.buffer), hash = createHash('sha256').update(raw).digest('hex');
+  const state = { active: false, generation: 3, committedEpoch: 7, timeoutMs: 1500,
+    pendingJobId: null, pendingTargetEpoch: null, applied: 0, submitted: 0 };
+  const engine = { W_hyper_u: weights, workerTrainerStatus: { committedEpoch: 999 },
+    captureCommittedTrainerState() { return { schemaVersion: 1, kernelId: 'bleeding-hyper-worker-v1', weights: new Float32Array(this.W_hyper_u),
+      committedEpoch: state.committedEpoch, timeoutMs: state.timeoutMs }; },
+    workerTrainerSnapshot() { return { ...state }; } };
+  f.runtime.bleedingEdge25Engine = engine; f.engine = engine; f.trainerState = state;
+  Object.assign(f.saved.primaryPolicyState.snapshot, { policyId: f.saved.policyCid, checkpointId: f.saved.checkpointCid, logicalTick: f.saved.simulationTick });
+  f.saved.trainerCommittedState = { schema: 'gigachad.learned-state.v1', architecture: catalog.architecture,
+    snapshot: { ...f.saved.primaryPolicyState.snapshot },
+    tensorManifest: [{ ...catalog.tensors[0], blobOffset: 0, sha256: hash }],
+    tensorBlob: { encoding: 'base64', byteLength: 64, sha256: hash, data: raw.toString('base64') },
+    stateManifest: catalog.states, stateValues: { committedEpoch: { $type: 'i53', value: 7 }, timeoutMs: { $type: 'i53', value: 1500 } },
+    resumeRules: catalog.resumeRules };
+  f.context.window.alivePrimaryPolicyBootstrap.captureComponents = () => ({ primary: { fixtureOnly: true }, trainer: { fixtureOnly: true } });
+  f.raw = JSON.stringify(f.saved); f.snapshot = f.recapture();
+  return f;
+}
+
+test('both pending markers are omitted only from diagnostic copy; exact trainer bytes/private clock compare independently', () => {
+  const f = exactTrainerHydration(), result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
+  assert.equal(result.ok, true, JSON.stringify(result));
+  assert.equal(result.arraysChecked, 24); assert.equal(result.elementsChecked, 819);
+  assert.equal(result.trainer.comparedBytes, 64); assert.equal(result.trainer.comparedStates, 2); assert.equal(result.trainer.inactive, true);
+  assert.equal(f.snapshot.trainerEvidence.committedEpoch, 7, 'editable telemetry is ignored');
+  assert.equal(f.snapshot.primaryDiagnosticOmitted, true); assert.equal(f.snapshot.trainerDiagnosticOmitted, true);
+  assert.equal(Object.hasOwn(JSON.parse(f.snapshot.encodedJSON), 'trainerCommittedState'), false);
+  assert.equal(f.runtime.capturePersistentGenomePayload().trainerCommittedState.__alive_genome_trainer_state_v1__, true);
+  assert.equal(JSON.stringify(result).includes('weightsBase64'), false, 'assessor output contains metadata only');
+});
+
+test('trainer exporter healing cannot replace direct pre-export bit evidence', () => {
+  const f = exactTrainerHydration(), expected = new Uint8Array(f.engine.W_hyper_u.buffer).slice();
+  new Uint8Array(f.engine.W_hyper_u.buffer)[17] ^= 1;
+  const wrong = Buffer.from(new Uint8Array(f.engine.W_hyper_u.buffer)), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime);
+  f.runtime.capturePersistentGenomePayload = () => { new Uint8Array(f.engine.W_hyper_u.buffer).set(expected); return exporter(); };
+  const observed = f.recapture();
+  assert.deepEqual(Buffer.from(observed.trainerEvidence.weightsBase64, 'base64'), wrong);
+  assert.deepEqual(new Uint8Array(f.engine.W_hyper_u.buffer), expected);
+  const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+  assert.equal(result.ok, false); assert.equal(result.elementsDifferent, 1);
+  assert.ok(result.differences.some(row => row.path === 'trainer.W_hyper_u'));
+});
+
+test('private capture projection must agree with bytes already observed, even if the API repairs live weights', () => {
+  const f = exactTrainerHydration(), expected = new Uint8Array(f.engine.W_hyper_u.buffer).slice(), capture = f.engine.captureCommittedTrainerState;
+  new Uint8Array(f.engine.W_hyper_u.buffer)[17] ^= 1;
+  f.engine.captureCommittedTrainerState = function () { new Uint8Array(this.W_hyper_u.buffer).set(expected); return capture.call(this); };
+  const observed = f.recapture();
+  assert.match(observed.trainerCaptureError, /pre-callback direct bytes/);
+  assert.match(observed.errors.join(';'), /Initial trainer capture failed/);
+  assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+});
+
+test('metadata toJSON healing cannot precede the direct trainer observation', () => {
+  const f = exactTrainerHydration(), expected = new Uint8Array(f.engine.W_hyper_u.buffer).slice();
+  new Uint8Array(f.engine.W_hyper_u.buffer)[17] ^= 1;
+  const wrong = Buffer.from(new Uint8Array(f.engine.W_hyper_u.buffer)), original = f.runtime.bodyRecipe;
+  let calls = 0;
+  f.runtime.bodyRecipe = { toJSON() { calls++; new Uint8Array(f.engine.W_hyper_u.buffer).set(expected); return original; } };
+  const observed = f.recapture();
+  assert.ok(calls > 0, 'metadata serialization really executes the healing callback');
+  assert.deepEqual(new Uint8Array(f.engine.W_hyper_u.buffer), expected);
+  assert.deepEqual(Buffer.from(observed.trainerEvidence.weightsBase64, 'base64'), wrong);
+  const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+  assert.equal(result.ok, false); assert.equal(result.elementsDifferent, 1);
+  assert.ok(result.differences.some(row => row.path === 'trainer.W_hyper_u'));
+});
+
+test('trainer admission, private epoch/configuration and paired snapshot mismatch cannot pass hydration', () => {
+  for (const mutate of [
+    f => { f.trainerState.active = true; },
+    f => { f.trainerState.pendingJobId = 1; f.trainerState.pendingTargetEpoch = 8; },
+    f => { f.trainerState.committedEpoch = 8; },
+    f => { f.trainerState.timeoutMs = 1600; },
+    f => { f.saved.trainerCommittedState.snapshot.modelEpoch++; },
+    f => { f.saved.trainerCommittedState.snapshot.logicalTick++; },
+    f => { delete f.saved.primaryPolicyState; }
+  ]) {
+    const f = exactTrainerHydration(); mutate(f);
+    const result = assessGenomeHydration(JSON.stringify(f.saved), f.recapture(), { initialState: f.initialState });
+    assert.equal(result.ok, false, mutate.toString());
+  }
+});
+
+test('malformed trainer wrappers reject without invoking accessor fields and sealed diagnostics remain available', () => {
+  const f = exactTrainerHydration(), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime);
+  f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), trainerCommittedState: f.saved.trainerCommittedState });
+  assert.equal(f.recapture().trainerDiagnosticOmitted, false);
+  let getterCalls = 0;
+  for (const wrapper of [
+    { __alive_genome_trainer_state_v1__: true, captured: {}, extra: true },
+    { __alive_genome_trainer_state_v1__: false, captured: {} },
+    { captured: {} },
+    { __alive_genome_trainer_state_v1__: true, captured: null },
+    Object.defineProperty({ captured: {} }, '__alive_genome_trainer_state_v1__', { enumerable: true, get() { getterCalls++; throw Error('must not read'); } })
+  ]) {
+    f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), trainerCommittedState: wrapper });
+    const observed = f.recapture(); assert.ok(observed.errors.length); assert.equal(assessGenomeHydration(f.raw, observed).ok, false);
+  }
+  assert.equal(getterCalls, 0);
+});
+
+test('standalone trainer observer rejects target getters, shared backing, absent proof and noncanonical byte encodings', () => {
+  const f = exactTrainerHydration(); let reads = 0;
+  const bad = Object.defineProperty({}, 'bleedingEdge25Engine', { get() { reads++; } });
+  assert.throws(() => captureTrainerHydration(bad), /own data/); assert.equal(reads, 0);
+  f.engine.W_hyper_u = new Float32Array(new SharedArrayBuffer(64));
+  assert.throws(() => captureTrainerHydration(f.runtime));
+  assert.equal(assessTrainerHydration(f.saved.trainerCommittedState, null).ok, false);
+  const observed = { ...f.snapshot.trainerEvidence, weightsBase64: f.snapshot.trainerEvidence.weightsBase64 + '\n' };
+  assert.equal(assessTrainerHydration(f.saved.trainerCommittedState, observed).ok, false);
 });

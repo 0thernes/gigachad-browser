@@ -20,7 +20,7 @@ It turns the coordinator's independent timers into one adaptive schedule.
 | Paced targets | `portal-jump`, `epoch-handoff`, `research-plan`, `deep-dark-dive`, `checkpoint`, `flywire`, `acceptance-gates` and `learning-five-seed` can excite others but are never pulled earlier or sped up. Their pacing belongs to dwell, storage, model or diagnostic policies |
 | Hebbian credit | When an excited target settles within `2 × effectiveInterval`, each edge that excited it changes by `Δw = 0.05 · signal · room`. Weights are bounded to [0.02, 0.95] |
 | Synaptic scaling | After a potentiation, a source's total outgoing weight is held at or below 1.5 × its declared total by proportional scaling, so sibling synapses compete. This prevents runaway saturation |
-| Foreign events | A success event without a matching `running` span is rejected and counted as `foreign`. This blocks authority and research receipts that share the event channel |
+| Foreign events | The controller privately authenticates its frozen event objects. Execution spans match capability, operation ID and generation. Copies, stale receipts and authority events sharing a capability name cannot earn scheduling credit |
 | Persistence | `gigachad_alive_fabric_v1` in `localStorage`, saved on Pause and every 30 s with readback. Import validates everything before applying anything and never creates undeclared edges |
 
 The fabric only changes schedule times. Readiness checks, execution lanes,
@@ -31,19 +31,23 @@ between the scientific models named by the capabilities.
 
 ## Visualizer
 
-Open it with **Fabric** in the ALIVE bar or `toggleAliveFabricPanel()`. Every chart draws data:
+Open it with **Fabric** in the ALIVE bar or `toggleAliveFabricPanel()`. It docks
+beside the webpage and shares exclusivity with Brain evidence, Inspect, Logs and
+Controls. Every chart draws data:
 
 1. **Coupling graph**: node size is utility, node color is last status, edge width is the learned weight, green/red marks potentiated/depressed edges, and cyan marks excitation within the last 1.5 s.
-2. **Concurrency raster**: execution spans for every faculty over the last 60 s, with a peak-concurrency histogram.
+2. **Concurrency raster**: execution spans for every faculty over the last 60 s, with true simultaneous peak concurrency computed by interval sweep. Sequential spans in one bucket do not count as concurrent; no executions reports zero.
 3. **Brain gates**: availability and learned gate value of the 24 coupling streams (14 brains, 7 precision kernels, Ising, Omega Lorenz/Izhikevich), plus a 120 s gate heatmap.
 4. **Utility and cadence**: utility EWMA, cadence factor, effective interval, novel/repeated/failed counts and excitation count.
-5. **Time series (1 Hz, 240 samples)**: completions/s, in-flight, excitations/s, potentiations/s, mean weight and utility, coupling updates and reward, hub backprop/s, STDP/s, world prediction error, research ranker loss.
+5. **Time series (at most 1 Hz, 240 samples)**: completions/s, in-flight, excitations/s, potentiations/s, mean weight and utility, coupling updates and reward, hub backprop/s, STDP/s, world prediction error, research ranker loss. Rates use actual elapsed monotonic seconds; first observations, missing sources and reset counters remain unmeasured.
 6. **Neural substrate**: sparklines for the numeric fields of `neuralSubstrateTelemetry`.
 7. **Tables**: ghost-swarm, ghost-write, memory, metacognition and five-seed job evidence, the creature colony, and the fabric event log.
 
 Missing sources are drawn as missing (`—`, "not installed"). They are never
-replaced with zero or placeholder values. Sampling costs one snapshot per
-second; drawing runs at 4 Hz only while the panel is open.
+replaced with zero or placeholder values. Sampling and drawing run at most once
+per second while the panel is open and visible. Closing or hiding the panel
+stops its timers. Disposal removes owned listeners and timers. Chart timestamps
+reflect sample time rather than assuming uniform browser timer intervals.
 
 ## Verification
 

@@ -74,7 +74,7 @@ function harness(h, { legacy = false, failStorage = false } = {}) {
   const compile = (source, name) => vm.runInContext(`({${source}}).${name}`, context);
   if (!legacy) h.capturePersistentGenomePayload = compile(currentMethod('capturePersistentGenomePayload'), 'capturePersistentGenomePayload');
   h.savePersistentGenome = compile(legacy ? legacySource : currentMethod('savePersistentGenome'), 'savePersistentGenome');
-  return { h, stored, warnings, save() { h.savePersistentGenome(); return stored.get(KEY); } };
+  return { h, stored, warnings, context, save() { h.savePersistentGenome(); return stored.get(KEY); } };
 }
 function comparePair(prepare = () => {}) {
   const oldState = runtime(), newState = runtime(); prepare(oldState); prepare(newState);
@@ -187,4 +187,52 @@ for (const [name, prepare, errorText, failStorage] of [
     assert.match(h.authenticAsmodensius.lastError, /^Checkpoint save failed: /);
     assert.match(h.authenticAsmodensius.lastError, new RegExp(errorText, 'i'));
   }
+});
+
+test('actual payload capture owns paired primary and committed trainer state with one snapshot identity', async () => {
+  const { webcrypto } = require('node:crypto');
+  const learned = require('../systems/alive-learned-state-codec.js');
+  const registry = require('../systems/alive-learned-state-registry.js');
+  const primary = require('../systems/alive-primary-policy-state.js');
+  const trainer = require('../systems/alive-trainer-state.js');
+  const bootstrap = require('../systems/alive-primary-policy-bootstrap.js');
+  const { BleedEdge25AlifeEngine: Engine } = require('../systems/alife-25-bleeding-edge-models.js');
+  const h = runtime();
+  Object.assign(h, { D_OBS: 16, D_ACT: 5, D_MORPH: 6, agentId: 'payload-creature' });
+  for (const [key, size] of [['W_actor',80], ['W_metamorph',30], ['W_critic',16], ['W_world',256], ['W_actor_frozen',80], ['W_world_frozen',256]]) {
+    h[key] = Float32Array.from({ length: size }, (_, i) => (i - 7) / 256);
+  }
+  h.W_actor[0] = -0;
+  h.deepCortex = { W_actor: h.W_actor, W_critic: h.W_critic };
+  const engine = h.bleedingEdge25Engine = Object.create(Engine.prototype);
+  engine.W_hyper_u = Float32Array.from({ length: 16 }, (_, i) => (i - 5) / 32);
+  new Uint32Array(engine.W_hyper_u.buffer).set([0x80000000, 1]);
+  engine.workerTrainerStatus = {};
+  engine.suspendWorkerTrainer('payload-fixture');
+  const committed = engine.captureCommittedTrainerState();
+  committed.committedEpoch = 37; committed.timeoutMs = 1500;
+  engine.commitCommittedTrainerRestore(engine.prepareCommittedTrainerRestore(committed, { expectedGeneration: engine.workerTrainerSnapshot().generation }));
+  const originalBytes = Buffer.from(engine.W_hyper_u.buffer).toString('hex');
+  const originalTrainer = engine.workerTrainerSnapshot();
+  const controller = await bootstrap.prepare({ primary, trainer, registry, codec: learned, crypto: webcrypto, json: null });
+  const f = harness(h);
+  f.context.window.alivePrimaryPolicyBootstrap = controller;
+  const payload = h.capturePersistentGenomePayload();
+  assert.equal(codec.hasAsyncState(payload), true);
+  assert.deepEqual(engine.workerTrainerSnapshot(), originalTrainer, 'ordinary capture must not suspend, dispatch or discard trainer work');
+  // The exact component captures already own bytes before any encoder is called.
+  h.W_actor.fill(3); engine.W_hyper_u.fill(4);
+  // Match autosave's structured-clone boundary from the VM-owned payload.
+  const json = await codec.encodeAsync(structuredClone(payload), { learnedCodec: learned, crypto: webcrypto });
+  const parsed = JSON.parse(json);
+  const p = learned.verifiedCopy(await learned.decode(JSON.stringify(parsed.primaryPolicyState), { crypto: webcrypto }));
+  const t = learned.verifiedCopy(await learned.decode(JSON.stringify(parsed.trainerCommittedState), { crypto: webcrypto }));
+  assert.deepEqual(p.snapshot, t.snapshot);
+  assert.equal(p.snapshot.logicalTick, 654);
+  assert.equal(t.snapshot.creatureId, 'payload-creature');
+  assert.equal(Buffer.from(t.tensors[0].bytes).toString('hex'), originalBytes);
+  const adapter = await trainer.create({ registry, codec: learned, crypto: webcrypto });
+  const receipt = adapter.validate(await learned.decode(JSON.stringify(parsed.trainerCommittedState), { crypto: webcrypto }));
+  assert.equal(receipt.committedEpoch, 37); assert.equal(receipt.timeoutMs, 1500);
+  assert.equal(new Uint32Array(p.tensors.find(row => row.id === 'W_actor').bytes)[0], 0x80000000);
 });

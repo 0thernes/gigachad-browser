@@ -253,5 +253,7 @@
     h.evaluateAcceptanceGates();
     return evidence;
   }
-  return { install, evaluatePolicy, worldMse, trainWorld, flywireBenchmark, actorOutput };
+  return { install, evaluatePolicy, worldMse, trainWorld, flywireBenchmark, actorOutput, policyTrial,
+    policySeeds: Object.freeze({ training: Object.freeze(TRAIN_SEEDS.slice()),
+      holdout: Object.freeze(TEST_SEEDS.slice()), retention: Object.freeze(RETENTION_SEEDS.slice()) }) };
 });

@@ -3351,17 +3351,33 @@ app.whenReady().then(async () => {
                       // Authenticate that exact JSON before changing its controller.
                       const reloadedPrimary = await window.AlivePrimaryPolicyBootstrap.prepare({
                         json: durableRead.json, primary: window.AlivePrimaryPolicyState,
+                        trainer: window.AliveTrainerState,
                         registry: window.AliveLearnedStateRegistry, codec: window.AliveLearnedStateCodec,
                         crypto: window.crypto
                       });
-                      reloadedPrimary.preflight(humunculusRuntime, durableRead.json);
-                      window.alivePrimaryPolicyBootstrap = reloadedPrimary;
-                      if (humunculusRuntime.loadPersistentGenome(durableRead.json) !== true) {
-                        throw new Error('Durable genome reload was not applied');
+                      let durableGenomeValidation;
+                      if (Object.prototype.hasOwnProperty.call(JSON.parse(durableRead.json), 'trainerCommittedState')) {
+                        // Paired hydration is an unpublished-startup boundary,
+                        // not an atomic live reload. Preparation validates both
+                        // detached components; a two-process probe tests restore.
+                        if (reloadedPrimary.snapshot(humunculusRuntime).trainerPrepared !== true) {
+                          throw new Error('Durable trainer component was not prepared');
+                        }
+                        durableGenomeValidation = { prepared: true, trainerPrepared: true,
+                          application: 'startup-only-not-reloaded',
+                          scope: 'Both saved components validated before activation; this smoke run did not restore them into the live model' };
+                      } else {
+                        reloadedPrimary.preflight(humunculusRuntime, durableRead.json);
+                        window.alivePrimaryPolicyBootstrap = reloadedPrimary;
+                        if (humunculusRuntime.loadPersistentGenome(durableRead.json) !== true) {
+                          throw new Error('Durable genome reload was not applied');
+                        }
+                        durableGenomeValidation = { prepared: true, trainerPrepared: false, application: 'primary-only-reloaded' };
                       }
                       // End of the explicit smoke reload boundary.
                       const liveAudit = humunculusRuntime.forensic25x10Auditor?.runFull25PassBy10IterationAudit(humunculusRuntime);
                       forensicDiagnostics = {
+                        durableGenomeValidation,
                         runtimeDiagnosticsOk: liveAudit?.runtimeDiagnosticsOk,
                         statusCounts: liveAudit?.diagnosticStatusCounts,
                         failed: liveAudit?.checkExecutions?.filter((check) => check.status === 'FAIL' || check.status === 'BLOCKED').slice(0, 10),

@@ -48,6 +48,134 @@ function fixture(configure) {
   return { context, h, tabs, run, created: () => created, advance: ms => { now += ms; } };
 }
 
+test('memory and metacognition expose the shared live stores without advancing or qualifying models', async () => {
+  const f = fixture(context => {
+    Object.assign(context.humunculusRuntime, {
+      workingState: { activeStage: 'B', activeGoal: 'observed goal', shortHorizonPlan: ['sense', 'act'], lastUpdatedTick: 19 },
+      episodicMemory: [{ eventId: 'observed-1' }],
+      semanticMemory: { domainFacts: { seed: {}, observed: {} }, lineageFacts: [{}] },
+      proceduralMemory: { A: { heldOutScorePct: 99 }, B: {} },
+      learningEvidence: { recordedTransitions: 8 },
+      multivectorMetacognitionEngine: { cliffordMultivector16: new Float32Array(16), cliffordRotor16: new Float32Array(16), bivectorTorqueNorm: .4 },
+      stepMultivectorMetacognition60Hz() { throw new Error('observer duplicated a model step'); }
+    });
+  });
+  const before = JSON.stringify(f.h.workingState);
+  const memory = await f.run('memory'), meta = await f.run('metacognition');
+  assert.equal(memory.status, 'observed');
+  assert.equal(memory.evidence.tiersAvailable, 4);
+  assert.equal(memory.evidence.working.lastUpdatedTick, 19);
+  assert.equal(memory.evidence.episodic.events, 1);
+  assert.equal(memory.evidence.semantic.domains, 2);
+  assert.equal(memory.evidence.procedural.registeredStages, 2);
+  assert.equal(memory.evidence.observedTransitions, 8);
+  assert.match(memory.evidence.scope, /seeded entries.*not measured/);
+  assert.equal(JSON.stringify(f.h.workingState), before);
+  assert.equal(meta.status, 'observed');
+  assert.equal(meta.evidence.cliffordBlades, 16);
+  assert.equal(meta.evidence.bivectorTorqueNorm, .4);
+});
+
+test('missing memory and metacognition do not invent initialized or computed evidence', async () => {
+  const f = fixture();
+  assert.equal((await f.run('memory')).status, 'unavailable');
+  assert.equal((await f.run('metacognition')).status, 'unavailable');
+});
+
+for (const [id, hook] of [['warp-dom', 'applyAliveDomWarp'], ['ghost-swarm', 'runAliveGhostSwarm'], ['ghost-write', 'runAliveGhostWrite']]) {
+  test(id + ' retains execution receipts and rejects missing or malformed success', async () => {
+    let args;
+    const receipt = { status: 'completed', evidence: { pageApplied: true, enabled: true, observations: 3 } };
+    const f = fixture(context => { context[hook] = async value => { args = value; return receipt; }; });
+    assert.equal(await f.run(id), receipt);
+    assert.ok(args.signal instanceof AbortSignal);
+    if (id === 'warp-dom') assert.equal(args.enabled, true, 'recurring warp enables idempotently instead of toggling');
+    f.context[hook] = async () => true;
+    assert.equal((await f.run(id)).status, 'error');
+    f.context[hook] = async () => ({ status: 'completed' });
+    assert.equal((await f.run(id)).status, 'error');
+    delete f.context[hook];
+    assert.equal((await f.run(id)).status, 'unavailable');
+  });
+}
+
+test('warp requires a confirmed page effect and cancelled faculties cannot publish success', async () => {
+  let resolve;
+  const f = fixture(context => {
+    context.applyAliveDomWarp = async () => ({ status: 'completed', evidence: { pageApplied: false } });
+    context.runAliveGhostSwarm = () => new Promise(done => { resolve = done; });
+  });
+  assert.equal((await f.run('warp-dom')).status, 'blocked');
+  const abort = new AbortController();
+  const pending = f.context.aliveOverdrive.jobs.get('ghost-swarm').adapter.run({ signal: abort.signal });
+  abort.abort(); resolve({ status: 'completed', evidence: { observations: 2 } });
+  assert.equal((await pending).status, 'blocked');
+  for (const id of ['ghost-swarm', 'ghost-write']) {
+    const task = f.context.aliveOverdrive.jobs.get(id);
+    assert.equal(task.group, 'cognition');
+    assert.equal(task.manualOnly, false);
+    assert.equal(task.timeoutMs, 20000);
+  }
+});
+
+test('only a fully validated primary observation feeds shared cognitive faculties', async () => {
+  const observed = [];
+  const f = fixture(context => { context.aliveCognitiveFaculties = { observe: value => observed.push(value) }; });
+  assert.equal((await f.run('dom-body')).status, 'completed');
+  assert.equal(observed.length, 1);
+  assert.equal(observed[0].url, f.tabs[0].url);
+  assert.ok(Number.isFinite(observed[0].observedAt));
+  f.context.observeAliveSecondaryPane = async () => { f.tabs[0].committedUrl = 'https://fixture.invalid/replaced'; return { status: 'observed' }; };
+  assert.equal((await f.run('dom-body')).status, 'blocked');
+  assert.equal(observed.length, 1, 'late primary replacement excludes the stale result');
+});
+
+test('independent five-seed benchmark is separately scheduled without changing live policy', async () => {
+  const report = { status: 'completed', scope: 'independent simulated benchmark', seedCount: 5, gateStatus: 'NOT_RUN' };
+  const f = fixture(context => { context.AliveLearningFiveSeed = { run: async () => report }; });
+  const job = f.context.aliveOverdrive.jobs.get('learning-five-seed');
+  assert.equal(job.manualOnly, false);
+  assert.equal(job.group, 'diagnostic');
+  assert.equal(job.intervalMs, 300000);
+  assert.equal((await f.run('learning-five-seed')).evidence, report);
+  assert.equal(f.h.lastIndependentLearningReport, report);
+  assert.equal(f.h.policyCid, 'p1');
+  f.context.AliveLearningFiveSeed.run = async () => ({ status: 'incomplete', runs: [{ status: 'error', error: 'hash failed' }] });
+  const failed = await f.run('learning-five-seed');
+  assert.equal(failed.status, 'error');
+  assert.equal(failed.evidence.runs[0].error, 'hash failed');
+  delete f.context.AliveLearningFiveSeed;
+  assert.equal((await f.run('learning-five-seed')).status, 'unavailable');
+});
+
+test('a cognition intake failure remains visible without discarding the measured page observation', async () => {
+  const f = fixture(context => { context.aliveCognitiveFaculties = { observe() { throw new Error('memory rejected the observation'); } }; });
+  const result = await f.run('dom-body');
+  assert.equal(result.status, 'completed');
+  assert.equal(result.evidence.cognition.status, 'error');
+  assert.match(result.evidence.cognition.reason, /memory rejected/);
+  assert.equal(result.evidence.url, f.tabs[0].url);
+});
+
+test('connectome receipts preserve executed tensor coverage through the bounded scheduler serializer', async () => {
+  const f = fixture(context => {
+    context.humunculusRuntime.connectome512 = { v512: new Float32Array(512), synWeights262K: new Float32Array(262144),
+      processedPresynapticSpikes: 12, activeSynapsesTraversed: 6144, synapseVisits: 10000, uniqueSynapsesTraversed: 8192,
+      synapseCoveragePct: 3.125, synapseCoverageScope: 'actual source rows traversed' };
+    context.humunculusRuntime.deepCortex = { moeParameterVisitsThisStep: 1000, moeUniqueParametersVisited: 2000,
+      moeParameterCoveragePct: 12.5, attentionParameterCoveragePct: 25, cortexPairedReadMask: 63, cortexGradientMask: 31 };
+  });
+  const result = await f.run('connectome');
+  f.context.aliveOverdrive.jobs.get('connectome').evidence = result.evidence;
+  const evidence = f.context.aliveOverdrive.snapshot(false).jobs.find(row => row.id === 'connectome').evidence;
+  assert.equal(evidence.synapseCoverage.activeSynapsesTraversed, 6144);
+  assert.equal(evidence.synapseCoverage.synapseCoveragePct, 3.125);
+  assert.equal(evidence.cortexCoverage.moeUniqueParametersVisited, 2000);
+  assert.equal(evidence.cortexCoverage.cortexPairedReadMask, 63);
+  assert.equal(evidence.cortexCoverage.cortexGradientMask, 31);
+  assert.match(evidence.cortexCoverage.scope, /alone does not establish task quality/);
+});
+
 function authorityFixture() {
   const AliveAuthority = require('../systems/alive-authority');
   const { createExecutor } = require('../systems/alive-guest-execution');

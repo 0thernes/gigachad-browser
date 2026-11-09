@@ -7,9 +7,11 @@ const path = require('node:path');
 const os = require('node:os');
 const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
+const { isDeepStrictEqual } = require('node:util');
 const root = path.resolve(__dirname, '..');
 const { readRecord } = require('./alive-genome-durable-evidence.cjs');
 const { capturePauseDiagnostics, assessPauseEvidence } = require('./alive-public-navigation-probe.cjs');
+const { captureTrainerHydration, assessTrainerHydration } = require('./alive-genome-hydration-evidence.cjs');
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_neural_cyber_engine.js',
@@ -20,6 +22,7 @@ const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_
   'systems/ported-multiverse-brains.js', 'systems/alife-25-bleeding-edge-models.js',
   'systems/alive-asset-hydration.js', 'systems/alive-startup-loader.js',
   'systems/alive-primary-policy-state.js', 'systems/alive-primary-policy-bootstrap.js',
+  'systems/alive-trainer-state.js', 'scripts/alive-trainer-state-evidence.cjs',
   'systems/alive-learned-state-codec.js', 'systems/alive-learned-state-registry.js',
   'scripts/alive-primary-policy-evidence.cjs', 'scripts/alive-learned-state-wire-evidence.cjs',
   'scripts/alive-model-state-evidence.cjs', 'scripts/alive-persistence-restart-probe.cjs',
@@ -52,6 +55,24 @@ async function waitForRendererStartup({ timeoutMs = 20000, required = false } = 
     if (!result || result.phase !== 'ready') throw new Error('Renderer startup did not reach ready: ' + String(result?.phase || 'unknown'));
     return result;
   } finally { clearTimeout(timer); }
+}
+// Only observe natural scheduled training; never dispatch a job or set its clock.
+async function waitForNaturalTrainerCommit({ capture, before, timeoutMs = 35000, minDurationMs = 11000, intervalMs = 250 } = {}) {
+  const integer = value => Number.isSafeInteger(value) && value >= 0 && !Object.is(value, -0);
+  if (typeof capture !== 'function' || !integer(before?.committedEpoch) || !integer(before?.applied) ||
+      !integer(timeoutMs) || timeoutMs < 1 || timeoutMs > 45000 || !integer(minDurationMs) || minDurationMs > timeoutMs ||
+      !integer(intervalMs) || intervalMs < 1 || intervalMs > 1000) throw new Error('Invalid natural trainer observation contract');
+  const started = performance.now();
+  while (true) {
+    const after = capture(humunculusRuntime), durationMs = performance.now() - started;
+    if (!integer(after?.committedEpoch) || !integer(after?.applied) || after.committedEpoch < before.committedEpoch || after.applied < before.applied) throw new Error('Trainer clock or commit counter regressed during natural observation');
+    if (durationMs >= minDurationMs && after.committedEpoch > before.committedEpoch && after.applied > before.applied) {
+      return { before, after, durationMs, committedEpochDelta: after.committedEpoch - before.committedEpoch, appliedDelta: after.applied - before.applied,
+        scope: 'Observed natural scheduler commits through private-state read APIs; no direct dispatch or clock mutation' };
+    }
+    if (durationMs >= timeoutMs) throw new Error('No natural trainer commit within bounded observation');
+    await new Promise(resolve => setTimeout(resolve, Math.min(intervalMs, timeoutMs - durationMs)));
+  }
 }
 function adaptMain(source) {
   source = replaceOnce(source,
@@ -173,6 +194,15 @@ async function runParent() {
         const explicitPayload = explicit ? JSON.parse(fs.readFileSync(path.join(phaseOutput, explicit.payloadFile), 'utf8')) : null;
         record('explicit-worker-flush', Boolean(explicit) && markersMatch(explicitPayload) && childReport.workerAfterFlush?.workerMode === 'worker' && childReport.workerAfterFlush?.fallbackCount === 0 && childReport.workerAfterFlush?.storageMode === 'async-main',
           { revision: childReport.flush?.revision, observedCommit: Boolean(explicit), worker: childReport.workerAfterFlush });
+        const trainerFlush = assessTrainerHydration(explicitPayload?.trainerCommittedState, childReport.trainerBeforeFlush, { requireInactive: true });
+        record('exact-trainer-component-flushed', trainerFlush.ok && Boolean(explicitPayload?.primaryPolicyState) &&
+          isDeepStrictEqual(explicitPayload.primaryPolicyState.snapshot, explicitPayload.trainerCommittedState?.snapshot), trainerFlush);
+        const trainerFinal = assessTrainerHydration(final.payload.trainerCommittedState, childReport.trainerBeforeFlush, { requireInactive: true });
+        record('exact-trainer-component-retained-at-close', trainerFinal.ok, trainerFinal);
+        const naturalTrainer = childReport.naturalTrainer;
+        record('natural-trainer-commit', naturalTrainer?.committedEpochDelta >= 1 && naturalTrainer?.appliedDelta >= 1 && naturalTrainer?.durationMs >= 11000,
+          naturalTrainer ? { committedEpochDelta: naturalTrainer.committedEpochDelta, appliedDelta: naturalTrainer.appliedDelta,
+            durationMs: naturalTrainer.durationMs, beforeEpoch: naturalTrainer.before?.committedEpoch, afterEpoch: naturalTrainer.after?.committedEpoch } : null);
         const natural = childReport.natural;
         record('no-recurring-legacy-write', natural?.durationMs >= 10000 && natural?.legacyWrites?.length === 0 && natural?.verifiedCommitDelta >= 2, natural);
       } else {
@@ -183,6 +213,8 @@ async function runParent() {
         const hydration = assessGenomeHydration(priorPayload, boot.snapshot, { initialState: boot.initialState });
         writeJSON(path.join(phaseOutput, 'hydration-assessment.json'), hydration);
         record('actual-constructor-hydration', hydration.ok, hydration);
+        record('immediate-exact-trainer-hydration', hydration.trainer?.ok === true && hydration.trainer?.inactive === true &&
+          hydration.trainer?.comparedBytes === 64 && hydration.trainer?.comparedStates === 2, hydration.trainer);
         record('monotonic-durable-revision', final.header.revision > priorRecord.revision, { before: priorRecord.revision, after: final.header.revision });
       }
     }
@@ -262,10 +294,11 @@ async function runChild() {
         writeJSON(path.join(contract.output, 'boot-observation.json'), boot);
         if (contract.phase === 'writer') {
           win.showInactive();
+          const trainerBefore = await evaluate('(' + captureTrainerHydration.toString() + ')(humunculusRuntime)');
           await evaluate('window.alienAutoNavigateLinks=false; window.startAliveOverdrive(); true');
           const at = performance.now(), start = report.commits.filter(item => item.result?.persistenceVerified).length;
           const beginEvents = await evaluate('window.__alivePersistenceStorageEvents.length');
-          await sleep(11000);
+          report.naturalTrainer = await evaluate('(' + waitForNaturalTrainerCommit.toString() + ')({capture:(' + captureTrainerHydration.toString() + '),before:' + JSON.stringify(trainerBefore) + '})');
           const legacyWrites = await evaluate(`window.__alivePersistenceStorageEvents.slice(${beginEvents})`);
           report.natural = { durationMs: performance.now() - at, legacyWrites,
             verifiedCommitDelta: report.commits.filter(item => item.result?.persistenceVerified).length - start };
@@ -273,6 +306,7 @@ async function runChild() {
           report.pauseAssessment = assessPauseEvidence(report.pause);
           if (!report.pauseAssessment.ok) throw new Error('Guest authority did not settle before sentinel snapshot: ' + report.pauseAssessment.reasons.join('; '));
           await evaluate(`(()=>{const h=humunculusRuntime;h.W_actor[0]=0.314159;h.W_world[h.W_world.length-1]=-0.271828;h.trainableAlifeNeuralHub.W_perc_enc[0]=0.4375;h.pelletsEatenCount=98765;return true;})()`);
+          report.trainerBeforeFlush = await evaluate('(' + captureTrainerHydration.toString() + ')(humunculusRuntime)');
           report.flush = await evaluate("Promise.resolve(window.aliveAutosave.flush('independent-durability-proof'))");
           if (report.flush?.persistenceVerified !== true) throw new Error('Explicit production flush was not verified');
           report.workerAfterFlush = await evaluate('window.aliveAutosave.snapshot()');
@@ -295,7 +329,7 @@ async function runChild() {
   compiled._compile(adapted, filename);
 }
 
-module.exports = { adaptMain, observeHost, replaceOnce, assertOwned, isProbeEntry, waitForRendererStartup };
+module.exports = { adaptMain, observeHost, replaceOnce, assertOwned, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit };
 if (isProbeEntry({ electron: process.versions.electron, childContract: process.env.GIGACHAD_PERSISTENCE_PROBE_CHILD,
   entryPath: process.argv[1], isMain: require.main === module }, __filename)) {
   (process.versions.electron ? runChild() : runParent()).catch(error => { console.error(error.stack || error); process.exitCode = 1; });

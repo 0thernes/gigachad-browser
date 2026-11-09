@@ -92,6 +92,23 @@ body.alive-workspace #ai-sidebar { order: 4; }
 #alive-control-feedback { min-height: 16px; color: var(--text-secondary); font-size: 11px; }
 
 /* All inspectors are in the flex layout, never on top of a guest webpage. */
+body.alive-workspace #workspace > .alive-external-panel {
+  position: relative !important;
+  inset: auto !important;
+  z-index: auto !important;
+  order: 2;
+  flex: 0 0 min(690px, 50vw);
+  width: min(690px, 50vw) !important;
+  max-width: 50vw;
+  min-width: 0;
+  height: 100% !important;
+  box-sizing: border-box;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  overflow: auto;
+  box-shadow: none !important;
+}
+body.alive-workspace #workspace > .alive-external-panel[hidden] { display: none !important; }
 body.alive-workspace #workspace > .overlay-drawer {
   position: relative;
   inset: auto;

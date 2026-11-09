@@ -4,6 +4,12 @@ The application now connects the exact learned-state codec and registry to the
 six primary policy arrays. This is a bounded persistence improvement, not a full
 model-state checkpoint or a claim of consciousness or general intelligence.
 
+New canonical saves also pair this subset with the committed trainer's exact
+weight bytes, private epoch and timeout. See [the trainer contract and measured
+restart qualification](ALIVE_TRAINER_STATE.md). Paired restoration is restricted
+to unpublished startup construction; primary-only historical records remain
+supported. The scope below describes the six primary arrays specifically.
+
 ## Application path
 
 `index.html` loads the primary adapter and bootstrap before its main classic
@@ -11,7 +17,7 @@ script. The main source is inert until `alive-startup-loader.js` has validated
 the canonical JSON and asynchronously authenticated any exact primary state.
 The loader inserts that trusted source as a real classic script, retaining the
 global lexical bindings required by the existing browser controls and adapters.
-It then loads the nine dependent modules in their original order, waits for the
+It then loads dependent modules in their declared order, waits for the
 startup autosave fence, transfers close ownership, and invokes the real `boot()`.
 
 The constructor preflights the exact primary state before legacy writes and
@@ -92,10 +98,13 @@ admission, discard pending work and terminate the owned worker. Resume creates a
 new generation without resetting the committed clock. Worker errors and the
 bounded stall timeout remain visible and require deliberate resume for recovery.
 
-The existing target equation is unchanged. The clock is host-owned but is not
-yet part of a complete durable model-state catalog; status explicitly reports
-`semanticClockPersisted: false`. Restoring only weight arrays therefore does not
-claim exact continuation of this trainer.
+The existing target equation is unchanged. The new paired canonical component
+retains the host-owned committed clock with the weight bytes. The low-level
+worker status still reports `semanticClockPersisted: false`: that owner does not
+certify storage, and durable persistence is established by the canonical save
+and startup receipts described in the trainer contract. A successful engine
+restore exposes `committedStateRestored`. Restoring only weight arrays through
+the separate generic checkpoint path does not establish trainer continuation.
 
 The 8,192-byte hub arena and 131,072-byte federation arena now use fixed
 `ArrayBuffer` backing. Their offsets, lengths, aliases and numerical kernels are

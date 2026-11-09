@@ -19,6 +19,20 @@ function rig(adapters, edges, { capabilities, options = {}, controllerOptions = 
   return { controller, fabric, job, advance: ms => { now += ms; }, now: () => now };
 }
 
+// Unit exercises of plasticity still use receipts emitted by the owning
+// scheduler. Arbitrary objects on the browser event channel are not receipts.
+function fixtureExecution(fabric, id, type, evidence, beforeFinish) {
+  const controller = fabric.controller;
+  const token = { generation: controller.generation, runId: ++controller.operationSequence };
+  const emit = (kind, detail) => {
+    const event = controller._emit(kind, id, detail, token);
+    if (!fabric.receivedEvents.has(event)) fabric.handleEvent(event);
+  };
+  emit('running', {});
+  beforeFinish?.(controller.clock());
+  emit(type, { evidence });
+}
+
 test('every declared capability is wired into the fabric with input and output synapses', () => {
   const ids = CAPABILITIES.map(item => item.id);
   const report = connectivity(ids);
@@ -75,9 +89,9 @@ test('Hebbian credit potentiates on the excited target\u2019s novel outcome and 
   advance(2000); controller.tick(); await flush(); // src again -> excite dst (dst errors in same tick? due ordering)
   advance(2000); controller.tick(); await flush();
   assert.ok(edge().depressions >= 0);
-  for (let i = 0; i < 200; i++) { fabric.handleEvent({ type: 'running', id: 'dst', at: 0 }); fabric.node('dst').pending.set('src', 0); fabric.handleEvent({ type: 'error', id: 'dst', at: 1 }); }
+  for (let i = 0; i < 200; i++) fixtureExecution(fabric, 'dst', 'error', null, at => fabric.node('dst').pending.set('src', at));
   assert.ok(edge().weight >= fabric.options.minWeight && edge().weight < potentiated);
-  for (let i = 0; i < 400; i++) { fabric.handleEvent({ type: 'running', id: 'dst', at: 0 }); fabric.node('dst').pending.set('src', 0); fabric.handleEvent({ type: 'completed', id: 'dst', at: 1, evidence: { i } }); }
+  for (let i = 0; i < 400; i++) fixtureExecution(fabric, 'dst', 'completed', { i }, at => fabric.node('dst').pending.set('src', at));
   assert.ok(edge().weight <= fabric.options.maxWeight);
 });
 
@@ -101,8 +115,7 @@ test('paused, manual-only, in-flight, erroring and paced targets are never pulle
   controller.stop();
   const before = job('portal-jump').nextDueAt;
   const fabric = new SynapticFabric({ controller, edges: [['src', 'portal-jump', 0.9]] });
-  fabric.handleEvent({ type: 'running', id: 'src', at: 5 });
-  fabric.handleEvent({ type: 'completed', id: 'src', at: 6, evidence: { fresh: 1 } });
+  fixtureExecution(fabric, 'src', 'completed', { fresh: 1 });
   assert.equal(job('portal-jump').nextDueAt, before, 'stopped controller is not excited');
   assert.ok(PACED.includes('portal-jump'));
 });
@@ -132,9 +145,7 @@ test('synaptic scaling bounds each source\u2019s outgoing weight so potentiation
   const fabric = new SynapticFabric({ controller, edges: [['s', 'a', 0.3], ['s', 'b', 0.3], ['s', 'c', 0.3]] });
   const budget = 0.9 * fabric.options.outgoingBudget;
   for (let i = 0; i < 500; i++) {
-    fabric.handleEvent({ type: 'running', id: 'a', at: i });
-    fabric.node('a').pending.set('s', i);
-    fabric.handleEvent({ type: 'completed', id: 'a', at: i, evidence: { i } });
+    fixtureExecution(fabric, 'a', 'completed', { i }, at => fabric.node('a').pending.set('s', at));
   }
   const total = fabric.edges.reduce((sum, edge) => sum + edge.weight, 0);
   assert.ok(total <= budget + 1e-9, `outgoing total ${total} within budget ${budget}`);
@@ -173,7 +184,72 @@ test('spans and events stay bounded and record true concurrency', async () => {
   const open = fabric.snapshot().spans.filter(span => span.end === null);
   assert.equal(open.length, 2, 'two lanes executing at the same time');
   releases.forEach(r => r({ evidence: 1 })); await flush();
-  for (let i = 0; i < 100; i++) { fabric.handleEvent({ type: 'running', id: 'a', at: i }); fabric.handleEvent({ type: 'blocked', id: 'a', at: i }); }
+  for (let i = 0; i < 100; i++) fixtureExecution(fabric, 'a', 'blocked');
   assert.ok(fabric.snapshot().spans.length <= 20);
   assert.ok(fabric.events.length <= fabric.options.eventLimit);
+});
+
+test('same-id authority completion cannot consume a live scheduler handoff span or its learning credit', async () => {
+  let finish;
+  const { controller, fabric, job } = rig({ 'epoch-handoff': () => new Promise(resolve => { finish = resolve; }),
+    memory: () => ({ evidence: 'memory' }) }, [['epoch-handoff', 'memory', .5]], {
+    capabilities: [def('epoch-handoff'), def('memory', { initialDelayMs: 5000 })]
+  });
+  controller.tick();
+  const start = controller.events.find(event => event.id === 'epoch-handoff' && event.type === 'running');
+  assert.equal(start.source, 'alive-overdrive');
+  assert.equal(controller.ownsEvent(start), true);
+  assert(Number.isSafeInteger(start.runId) && start.runId > 0);
+  const beforeDue = job('memory').nextDueAt, beforeEvents = fabric.totals.events;
+  // This is the actual authority-channel shape that previously closed the span.
+  fabric.handleEvent({ at: 1, type: 'completed', id: 'epoch-handoff', toTabId: 'guest-b', newEpoch: 2 });
+  fabric.handleEvent({ ...start, type: 'completed', evidence: { forged: true } });
+  assert.equal(fabric.spans.filter(span => span.id === 'epoch-handoff' && span.end === null).length, 1);
+  assert.equal(fabric.totals.novel, 0); assert.equal(fabric.totals.events, beforeEvents);
+  assert.equal(fabric.totals.foreign, 2); assert.equal(job('memory').nextDueAt, beforeDue);
+  finish({ status: 'completed', evidence: { destinationAcknowledged: true, authorityEpoch: 2 } });
+  await flush();
+  const completed = controller.events.find(event => event.id === 'epoch-handoff' && event.type === 'completed');
+  assert.equal(completed.runId, start.runId); assert.equal(completed.generation, start.generation);
+  assert.equal(fabric.spans.find(span => span.runId === start.runId).status, 'completed');
+  assert.equal(fabric.node('epoch-handoff').digest, evidenceDigest(completed.evidence));
+  assert.equal(fabric.totals.novel, 1); assert.equal(fabric.totals.excitations, 1);
+  const digest = fabric.node('epoch-handoff').digest;
+  fabric.handleEvent(completed);
+  assert.equal(fabric.totals.novel, 1, 'replaying the authentic receipt cannot credit the run twice');
+  assert.equal(fabric.node('epoch-handoff').digest, digest);
+});
+
+test('terminal receipts match generation and operation, and another controller cannot impersonate the owner', async () => {
+  let finish;
+  const { controller, fabric, job, advance } = rig({ a: () => new Promise(resolve => { finish = resolve; }) }, []);
+  controller.tick(); const first = controller.events.find(event => event.type === 'running');
+  finish({ evidence: { n: 1 } }); await flush();
+  advance(2000); controller.tick();
+  const second = controller.events.filter(event => event.type === 'running').at(-1);
+  assert.notEqual(second.runId, first.runId);
+  const foreign = new Controller({ capabilities: [def('a')], adapters: { a: () => 1 } });
+  foreign.start({ automatic: false });
+  const attempted = foreign._emit('completed', 'a', { evidence: { wrongOwner: true } }, { generation: second.generation, runId: second.runId });
+  fabric.handleEvent(attempted);
+  // Even a genuine but unmatched receipt from this scheduler cannot close the
+  // current run by capability ID alone (e.g. a delayed older operation).
+  controller._emit('completed', 'a', { evidence: { oldRun: true } }, { generation: first.generation, runId: first.runId });
+  controller._emit('completed', 'a', { evidence: { oldGeneration: true } }, { generation: second.generation - 1, runId: second.runId });
+  assert.equal(fabric.spans.find(span => span.runId === second.runId).end, null);
+  assert.equal(fabric.totals.novel, 1);
+  finish({ evidence: { n: 2 } }); await flush();
+  assert.equal(fabric.totals.novel, 2); assert.equal(job('a').completedCount, 2);
+});
+
+test('authentic timeout credits once, retains the execution lock, and late settlement cannot credit again', async () => {
+  let finish;
+  const { controller, fabric, advance } = rig({ a: { timeoutMs: 100, run: () => new Promise(resolve => { finish = resolve; }) } }, []);
+  controller.tick(); advance(100); controller.tick();
+  const start = controller.events.find(event => event.type === 'running'), timedOut = controller.events.find(event => event.type === 'timeout');
+  assert.equal(timedOut.runId, start.runId); assert.equal(controller.ownsEvent(timedOut), true);
+  assert.equal(fabric.node('a').failures, 1); assert.equal(controller.inFlight.size, 1);
+  finish({ evidence: 'too late' }); await flush();
+  assert.equal(fabric.node('a').failures, 1); assert.equal(fabric.totals.novel, 0);
+  assert.equal(controller.inFlight.size, 0);
 });

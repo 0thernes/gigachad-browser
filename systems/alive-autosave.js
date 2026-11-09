@@ -199,8 +199,8 @@
       try {
         if (payloadMode) {
           const payload = capture(job);
-          if (durable && codec.hasPrimaryState?.(payload)) {
-            if (typeof codec.encodeAsync !== 'function') throw new TypeError('Primary policy state requires an asynchronous codec');
+          if (durable && (codec.hasAsyncState ? codec.hasAsyncState(payload) : codec.hasPrimaryState?.(payload))) {
+            if (typeof codec.encodeAsync !== 'function') throw new TypeError('Exact learned state requires an asynchronous codec');
             stats.workerMode = workerFailed ? 'failed-async' : 'async';
             const started = now();
             job.encodingAbort = new AbortController();
@@ -256,7 +256,7 @@
       if (job.timer !== null) { clearTimer(job.timer); job.timer = null; }
       job.roundTripMs = Math.max(0, now() - job.startedAt);
       // Failure may arrive after the model changed. Capture current state again
-      // for the single fallback; primary exact-state encoding remains async.
+      // for the single fallback; paired exact-state encoding remains async.
       saveSynchronously(job);
     }
     function getWorker() {

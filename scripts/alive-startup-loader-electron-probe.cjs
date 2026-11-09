@@ -82,9 +82,14 @@ function browserSetup(nonce, phase) {
     markApplied(value, details) { if (value !== false || details.hadJSON !== true) throw Error('Unexpected fixture persistence transition'); state.blocked = true; },
     async fence(request) { state.fenceCalls++; epoch = request.epoch; state.events.push('fence'); return { settled: true, ownerId: 'isolated-startup-fixture', epoch }; }
   };
-  window.AlivePrimaryPolicyState = {}; window.AliveLearnedStateRegistry = {}; window.AliveLearnedStateCodec = {};
-  window.AlivePrimaryPolicyBootstrap = { async prepare() {
-    state.events.push('prepare'); return Object.freeze({ preflight() {}, apply() {}, capture() {}, snapshot() {} });
+  window.AlivePrimaryPolicyState = {}; window.AliveTrainerState = { create() {} };
+  window.AliveLearnedStateRegistry = {}; window.AliveLearnedStateCodec = {};
+  window.AlivePrimaryPolicyBootstrap = { async prepare(args) {
+    state.preparationDependenciesForwarded = args?.json === null && args.primary === window.AlivePrimaryPolicyState &&
+      args.trainer === window.AliveTrainerState && typeof args.trainer.create === 'function' &&
+      args.registry === window.AliveLearnedStateRegistry && args.codec === window.AliveLearnedStateCodec && args.crypto === window.crypto;
+    if (!state.preparationDependenciesForwarded) throw Error('Startup dependency forwarding mismatch');
+    state.events.push('prepare'); return Object.freeze({ preflight() {}, apply() {}, capture() {}, captureComponents() {}, snapshot() {} });
   } };
   window.__startupProbeEmit = emit;
   window.startupProbe.onCommand(command => {
@@ -248,6 +253,7 @@ async function child() {
         check(phase + '-only-allowlisted-fixture-files', caseReport.deniedRequests === 0 && caseReport.networkRequestsBlocked === 0, { requested: caseReport.requests.length });
         if (phase === 'ready-order') {
           check('production-loader-ready', observed.startup?.phase === 'ready' && observed.startup.loadedModules === 9 && observed.startup.closeOwned === false && observed.inert === false);
+          check('trainer-and-primary-dependencies-forwarded', observed.state.preparationDependenciesForwarded === true);
           check('exact-postmodule-order', JSON.stringify(observed.state.moduleOrder) === JSON.stringify(MODULES.map((_, index) => index)));
           check('classic-global-lexical-scope-and-single-boot', observed.state.mainRuns === 1 && observed.state.bootCalls === 1 && observed.state.bootValue === 50 && observed.state.globalLexicalIsWindowProperty === false);
           check('autosave-resumed-and-requested-after-modules', observed.state.events.slice(-3).join('|') === 'resume|request:startup-ready|boot');
