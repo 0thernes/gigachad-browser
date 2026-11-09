@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Symbiotic cross-guild co-evolution, Shapley credit & 3D Pareto speciation pass 29
+
+- Added the 5-seed Symbiotic Cross-Guild Co-Evolution, Shapley Counterfactual Credit Assignment, and 3D Pareto Archive Speciation evaluator ([`systems/alive-symbiotic-cross-guild-coevolution.js`](systems/alive-symbiotic-cross-guild-coevolution.js), [`scripts/alive-symbiotic-cross-guild-coevolution.cjs`](scripts/alive-symbiotic-cross-guild-coevolution.cjs)).
+- Verified on `5/5` seeds across 20 co-evolutionary generations per seed that `shapley-pareto-symbiotic-coevolution` achieves `100.0` composite score (`+66.79` over `last-touch-greedy-credit`, `+40.88` over `uniform-equal-split-free-rider`, `+31.17` over `single-objective-scalar-collapse`), `100.0%` Shapley credit accuracy, `100.0%` null-player free-rider rejection, `100.0%` 3-guild lineage survival (`Locust` + `Corvid` + `Fish`), and `100.0%` 3D Pareto hypervolume.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 35 (`#alive-fabric-symbiotic-coevolution`, `Run Symbiotic` button, and `runSymbioticCoevolution()`).
+- Added [Pass 29 report](docs/ALIVE_PASS_29_REPORT.md), [JSON report](docs/reports/alive-symbiotic-cross-guild-coevolution-2026-11-09.json), [SVG chart](docs/reports/alive-symbiotic-cross-guild-coevolution-2026-11-09.svg) and unit tests (`tests/alive-symbiotic-cross-guild-coevolution.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Fish-school lateral-line hydrodynamic coupling & Kuramoto phase synchronization pass 28
 
 - Added the 5-seed Fish-School Lateral-Line Hydrodynamic Coupling, Kuramoto Phase Synchronization, and Sub-Tick Anomaly Evasion Wave evaluator ([`systems/alive-fish-lateral-line-hydrodynamics.js`](systems/alive-fish-lateral-line-hydrodynamics.js), [`scripts/alive-fish-lateral-line-hydrodynamics.cjs`](scripts/alive-fish-lateral-line-hydrodynamics.cjs)).

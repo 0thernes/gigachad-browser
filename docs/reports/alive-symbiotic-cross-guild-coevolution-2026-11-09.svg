@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="340" viewBox="0 0 1180 340">
+  <rect width="1180" height="340" fill="#020617"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="16" font-weight="bold">ALIVE PASS 29 — Symbiotic Cross-Guild Co-Evolution, Shapley Credit &amp; 3D Pareto Speciation (5 Seeds)</text>
+  <text x="24" y="58" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">Seeds: 19013, 29017, 39023, 49031, 59053 · Winner: shapley-pareto-symbiotic-coevolution (100.0/100) · Shapley Efficiency: 100% · 3-Guild Survival: 100%</text>
+  
+      <text x="245" y="110" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">last-touch-greedy-credit</text>
+      <rect x="255" y="92" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="94" width="113" height="22" rx="3" fill="#f43f5e"/>
+      <text x="605" y="110" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=33.21 | shapley=18.0% | noFreeRider=50.0% | guilds=33.3% | HV=31.5%</text>
+    
+      <text x="245" y="164" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">uniform-equal-split-free-rider</text>
+      <rect x="255" y="146" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="148" width="201" height="22" rx="3" fill="#f59e0b"/>
+      <text x="605" y="164" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=59.13 | shapley=62.5% | noFreeRider=0.0% | guilds=100.0% | HV=74.0%</text>
+    
+      <text x="245" y="218" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">single-objective-scalar-collapse</text>
+      <rect x="255" y="200" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="202" width="234" height="22" rx="3" fill="#38bdf8"/>
+      <text x="605" y="218" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=68.83 | shapley=100.0% | noFreeRider=100.0% | guilds=33.3% | HV=42.0%</text>
+    
+      <text x="245" y="272" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">shapley-pareto-symbiotic-coevolution</text>
+      <rect x="255" y="254" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="256" width="340" height="22" rx="3" fill="#34d399"/>
+      <text x="605" y="272" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=100.00 | shapley=100.0% | noFreeRider=100.0% | guilds=100.0% | HV=100.0%</text>
+    
+  <text x="24" y="322" fill="#64748b" font-family="Consolas, monospace" font-size="11">20 co-evolutionary generations/seed across Corvid + Locust + Fish guilds (exact Shapley counterfactual credit + 3D niche-protected Pareto archive)</text>
+</svg>

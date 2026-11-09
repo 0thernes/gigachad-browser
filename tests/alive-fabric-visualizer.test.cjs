@@ -996,6 +996,31 @@ test('runFishHydrodynamics renders 5-seed Fish-School Lateral-Line & Kuramoto Hy
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runSymbioticCoevolution renders 5-seed Symbiotic Cross-Guild Co-Evolution & Shapley Credit in section 35', async () => {
+  const { window, dom } = load();
+  window.AliveSymbioticCrossGuildCoevolution = {
+    run: async () => ({
+      summary: {
+        fullCoevolutionScoreMean: 100.0,
+        gainVsLastTouchGreedy: 66.8,
+        gainVsScalarCollapse: 31.2
+      },
+      aggregatedByProfile: {
+        'last-touch-greedy-credit': { coevolutionCompositeScore: { mean: 33.2 }, shapleyCreditAccuracyPct: { mean: 18.0 }, freeRiderRejectionPct: { mean: 50.0 }, guildLineageSurvivalPct: { mean: 33.3 }, paretoHypervolumePct: { mean: 31.5 } },
+        'uniform-equal-split-free-rider': { coevolutionCompositeScore: { mean: 59.1 }, shapleyCreditAccuracyPct: { mean: 62.5 }, freeRiderRejectionPct: { mean: 0 }, guildLineageSurvivalPct: { mean: 100 }, paretoHypervolumePct: { mean: 74.0 } },
+        'single-objective-scalar-collapse': { coevolutionCompositeScore: { mean: 68.8 }, shapleyCreditAccuracyPct: { mean: 100 }, freeRiderRejectionPct: { mean: 100 }, guildLineageSurvivalPct: { mean: 33.3 }, paretoHypervolumePct: { mean: 42.0 } },
+        'shapley-pareto-symbiotic-coevolution': { coevolutionCompositeScore: { mean: 100.0 }, shapleyCreditAccuracyPct: { mean: 100 }, freeRiderRejectionPct: { mean: 100 }, guildLineageSurvivalPct: { mean: 100 }, paretoHypervolumePct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runSymbioticCoevolution();
+  assert.equal(report.summary.fullCoevolutionScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Shapley+Pareto Co-Evolution score=100.0')), 'Symbiotic Co-Evolution summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('shapley-pareto-symbiot')), 'Symbiotic Co-Evolution rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 

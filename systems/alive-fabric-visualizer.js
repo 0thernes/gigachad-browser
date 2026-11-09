@@ -327,6 +327,7 @@
   let latestCorvid = null, corvidBusy = false;
   let latestLocust = null, locustBusy = false;
   let latestFishHydro = null, fishHydroBusy = false;
+  let latestSymbiotic = null, symbioticBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -674,6 +675,19 @@
       return latestFishHydro;
     } finally {
       fishHydroBusy = false;
+    }
+  }
+  async function runSymbioticCoevolution() {
+    const runner = root.AliveSymbioticCrossGuildCoevolution;
+    if (symbioticBusy || typeof runner?.run !== 'function') return latestSymbiotic;
+    symbioticBusy = true;
+    try {
+      latestSymbiotic = await runner.run();
+      root.__aliveLatestSymbiotic = latestSymbiotic;
+      draw();
+      return latestSymbiotic;
+    } finally {
+      symbioticBusy = false;
     }
   }
 
@@ -1923,6 +1937,48 @@
     ctx.fillText('24 hydrodynamic scenarios/seed (6 Kuramoto stream sync, 6 predator C-start evasion, 6 Byzantine neuromast glitch, 6 vortex shear)', 8, height - 6);
   }
 
+  // ---------- 35. Pass 29 Symbiotic Cross-Guild Co-Evolution ----------------
+  function drawSymbioticCoevolution(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestSymbiotic || root.__aliveLatestSymbiotic;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(symbioticBusy ? 'Running 5-seed Symbiotic Cross-Guild Co-Evolution suite…' : 'Click "Run Symbiotic" above to evaluate Shapley Counterfactual Credit & 3D Pareto Speciation across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · Shapley+Pareto Co-Evolution score=${(s.fullCoevolutionScoreMean || 0).toFixed(1)} · vs last-touch +${(s.gainVsLastTouchGreedy || 0).toFixed(1)} · vs scalar +${(s.gainVsScalarCollapse || 0).toFixed(1)} · 3/3 guilds alive`, 8, 12);
+    const modes = ['last-touch-greedy-credit', 'uniform-equal-split-free-rider', 'single-objective-scalar-collapse', 'shapley-pareto-symbiotic-coevolution'];
+    const colors = {
+      'last-touch-greedy-credit': '#f43f5e',
+      'uniform-equal-split-free-rider': '#f59e0b',
+      'single-objective-scalar-collapse': '#38bdf8',
+      'shapley-pareto-symbiotic-coevolution': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.coevolutionCompositeScore?.mean || 0;
+      const shp = entry.shapleyCreditAccuracyPct?.mean || 0;
+      const frr = entry.freeRiderRejectionPct?.mean || 0;
+      const srv = entry.guildLineageSurvivalPct?.mean || 0;
+      const phv = entry.paretoHypervolumePct?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} shapley=${shp.toFixed(0)}% noFreeRide=${frr.toFixed(0)}% guilds=${srv.toFixed(0)}% HV=${phv.toFixed(0)}%`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('20 co-evolutionary generations/seed across Corvid + Locust + Fish guilds (Shapley efficiency v(LCF)=100 & 3D Pareto archive)', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -2026,13 +2082,16 @@
     const fishHydroBtn = doc.createElement('button'); fishHydroBtn.type = 'button'; fishHydroBtn.textContent = 'Run Fish Hydro';
     fishHydroBtn.title = 'Run 5-seed Fish-School Lateral-Line Hydrodynamic Coupling & Kuramoto Synchronization evaluation';
     fishHydroBtn.addEventListener('click', () => { runFishHydrodynamics(); });
+    const symbioticBtn = doc.createElement('button'); symbioticBtn.type = 'button'; symbioticBtn.textContent = 'Run Symbiotic';
+    symbioticBtn.title = 'Run 5-seed Symbiotic Cross-Guild Co-Evolution & Shapley Counterfactual Credit Assignment evaluation';
+    symbioticBtn.addEventListener('click', () => { runSymbioticCoevolution(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -2050,7 +2109,7 @@
       onionPowCanvas = canvas('alive-fabric-onion-pow', 190), torWfPadCanvas = canvas('alive-fabric-tor-wf-padding', 190),
       onionMerkleCanvas = canvas('alive-fabric-onion-merkle', 190), phase4AuditCanvas = canvas('alive-fabric-phase4-audit', 190),
       corvidCanvas = canvas('alive-fabric-corvid-epistemology', 190), locustCanvas = canvas('alive-fabric-locust-polyphenism', 190),
-      fishHydroCanvas = canvas('alive-fabric-fish-hydrodynamics', 190);
+      fishHydroCanvas = canvas('alive-fabric-fish-hydrodynamics', 190), symbioticCanvas = canvas('alive-fabric-symbiotic-coevolution', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -2087,7 +2146,8 @@
       section('31 · Phase IV Deep-Web Acceptance Matrix (D1..D10) & Cryptographic SHA-256 Freeze (5 seeds)', phase4AuditCanvas),
       section('32 · Corvid (Crow + Raven) Episodic Tool-Making & Counterfactual do(X) Causal Graphs (5 seeds)', corvidCanvas),
       section('33 · Locust Solitaria-to-Gregaria Phase Polyphenism & Adaptive Trophic Backoff (5 seeds)', locustCanvas),
-      section('34 · Fish-School Lateral-Line Hydrodynamic Coupling & Kuramoto Phase Synchronization (5 seeds)', fishHydroCanvas));
+      section('34 · Fish-School Lateral-Line Hydrodynamic Coupling & Kuramoto Phase Synchronization (5 seeds)', fishHydroCanvas),
+      section('35 · Symbiotic Cross-Guild Co-Evolution, Shapley Credit & 3D Pareto Speciation (5 seeds)', symbioticCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -2120,7 +2180,8 @@
       () => drawPhase4DeepWebAudit(phase4AuditCanvas),
       () => drawCorvidEpistemology(corvidCanvas),
       () => drawLocustPolyphenism(locustCanvas),
-      () => drawFishHydrodynamics(fishHydroCanvas));
+      () => drawFishHydrodynamics(fishHydroCanvas),
+      () => drawSymbioticCoevolution(symbioticCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -2163,6 +2224,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

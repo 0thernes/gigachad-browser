@@ -1,0 +1,644 @@
+{
+  "pass": 29,
+  "title": "Symbiotic Cross-Guild Co-Evolution, Shapley Counterfactual Credit Assignment & Pareto Archive Speciation Across Raven + Locust + Fish Lineages",
+  "generatedAt": "2026-11-09T21:30:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "profiles": [
+    {
+      "id": "last-touch-greedy-credit",
+      "label": "Last-Touch Greedy Credit (Starves Upstream Guilds)",
+      "creditRule": "last-touch",
+      "paretoNicheArchive": false,
+      "nullPlayerPruner": false
+    },
+    {
+      "id": "uniform-equal-split-free-rider",
+      "label": "Uniform Equal Split (Rewards Free-Rider Mutants)",
+      "creditRule": "uniform-equal",
+      "paretoNicheArchive": true,
+      "nullPlayerPruner": false
+    },
+    {
+      "id": "single-objective-scalar-collapse",
+      "label": "Single-Objective Scalar Fitness (Monoculture Collapse)",
+      "creditRule": "shapley",
+      "paretoNicheArchive": false,
+      "nullPlayerPruner": true
+    },
+    {
+      "id": "shapley-pareto-symbiotic-coevolution",
+      "label": "Exact Shapley Counterfactual Credit + 3D Pareto Niche Co-Evolution",
+      "creditRule": "shapley",
+      "paretoNicheArchive": true,
+      "nullPlayerPruner": true
+    }
+  ],
+  "seedRuns": [
+    {
+      "seed": 19013,
+      "generations": 20,
+      "byProfile": {
+        "last-touch-greedy-credit": {
+          "profileId": "last-touch-greedy-credit",
+          "label": "Last-Touch Greedy Credit (Starves Upstream Guilds)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 18,
+          "freeRiderRejectionPct": 50,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 31.5,
+          "shapleyBreakdown": {
+            "locustShapley": 32.4023,
+            "corvidShapley": 37.4135,
+            "fishShapley": 30.1842,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 33.2083
+        },
+        "uniform-equal-split-free-rider": {
+          "profileId": "uniform-equal-split-free-rider",
+          "label": "Uniform Equal Split (Rewards Free-Rider Mutants)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 62.5,
+          "freeRiderRejectionPct": 0,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 74,
+          "shapleyBreakdown": {
+            "locustShapley": 32.2825,
+            "corvidShapley": 37.2267,
+            "fishShapley": 30.4908,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 59.125
+        },
+        "single-objective-scalar-collapse": {
+          "profileId": "single-objective-scalar-collapse",
+          "label": "Single-Objective Scalar Fitness (Monoculture Collapse)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 42,
+          "shapleyBreakdown": {
+            "locustShapley": 32.3936,
+            "corvidShapley": 37.3039,
+            "fishShapley": 30.3026,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 68.8333
+        },
+        "shapley-pareto-symbiotic-coevolution": {
+          "profileId": "shapley-pareto-symbiotic-coevolution",
+          "label": "Exact Shapley Counterfactual Credit + 3D Pareto Niche Co-Evolution",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 100,
+          "shapleyBreakdown": {
+            "locustShapley": 32.2924,
+            "corvidShapley": 37.3622,
+            "fishShapley": 30.3454,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "generations": 20,
+      "byProfile": {
+        "last-touch-greedy-credit": {
+          "profileId": "last-touch-greedy-credit",
+          "label": "Last-Touch Greedy Credit (Starves Upstream Guilds)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 18,
+          "freeRiderRejectionPct": 50,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 31.5,
+          "shapleyBreakdown": {
+            "locustShapley": 32.0757,
+            "corvidShapley": 37.4848,
+            "fishShapley": 30.4395,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 33.2083
+        },
+        "uniform-equal-split-free-rider": {
+          "profileId": "uniform-equal-split-free-rider",
+          "label": "Uniform Equal Split (Rewards Free-Rider Mutants)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 62.5,
+          "freeRiderRejectionPct": 0,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 74,
+          "shapleyBreakdown": {
+            "locustShapley": 32.3555,
+            "corvidShapley": 37.5014,
+            "fishShapley": 30.1431,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 59.125
+        },
+        "single-objective-scalar-collapse": {
+          "profileId": "single-objective-scalar-collapse",
+          "label": "Single-Objective Scalar Fitness (Monoculture Collapse)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 42,
+          "shapleyBreakdown": {
+            "locustShapley": 32.4848,
+            "corvidShapley": 37.0042,
+            "fishShapley": 30.5111,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 68.8333
+        },
+        "shapley-pareto-symbiotic-coevolution": {
+          "profileId": "shapley-pareto-symbiotic-coevolution",
+          "label": "Exact Shapley Counterfactual Credit + 3D Pareto Niche Co-Evolution",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 100,
+          "shapleyBreakdown": {
+            "locustShapley": 32.3133,
+            "corvidShapley": 37.3889,
+            "fishShapley": 30.2978,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "generations": 20,
+      "byProfile": {
+        "last-touch-greedy-credit": {
+          "profileId": "last-touch-greedy-credit",
+          "label": "Last-Touch Greedy Credit (Starves Upstream Guilds)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 18,
+          "freeRiderRejectionPct": 50,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 31.5,
+          "shapleyBreakdown": {
+            "locustShapley": 32.5842,
+            "corvidShapley": 37.2268,
+            "fishShapley": 30.1891,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 33.2083
+        },
+        "uniform-equal-split-free-rider": {
+          "profileId": "uniform-equal-split-free-rider",
+          "label": "Uniform Equal Split (Rewards Free-Rider Mutants)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 62.5,
+          "freeRiderRejectionPct": 0,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 74,
+          "shapleyBreakdown": {
+            "locustShapley": 32.4135,
+            "corvidShapley": 37.5335,
+            "fishShapley": 30.0531,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 59.125
+        },
+        "single-objective-scalar-collapse": {
+          "profileId": "single-objective-scalar-collapse",
+          "label": "Single-Objective Scalar Fitness (Monoculture Collapse)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 42,
+          "shapleyBreakdown": {
+            "locustShapley": 32.2705,
+            "corvidShapley": 37.2379,
+            "fishShapley": 30.4915,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 68.8333
+        },
+        "shapley-pareto-symbiotic-coevolution": {
+          "profileId": "shapley-pareto-symbiotic-coevolution",
+          "label": "Exact Shapley Counterfactual Credit + 3D Pareto Niche Co-Evolution",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 100,
+          "shapleyBreakdown": {
+            "locustShapley": 32.5069,
+            "corvidShapley": 37.3618,
+            "fishShapley": 30.1313,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "generations": 20,
+      "byProfile": {
+        "last-touch-greedy-credit": {
+          "profileId": "last-touch-greedy-credit",
+          "label": "Last-Touch Greedy Credit (Starves Upstream Guilds)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 18,
+          "freeRiderRejectionPct": 50,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 31.5,
+          "shapleyBreakdown": {
+            "locustShapley": 32.5797,
+            "corvidShapley": 37.0262,
+            "fishShapley": 30.3941,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 33.2083
+        },
+        "uniform-equal-split-free-rider": {
+          "profileId": "uniform-equal-split-free-rider",
+          "label": "Uniform Equal Split (Rewards Free-Rider Mutants)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 62.5,
+          "freeRiderRejectionPct": 0,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 74,
+          "shapleyBreakdown": {
+            "locustShapley": 32.233,
+            "corvidShapley": 37.263,
+            "fishShapley": 30.504,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 59.125
+        },
+        "single-objective-scalar-collapse": {
+          "profileId": "single-objective-scalar-collapse",
+          "label": "Single-Objective Scalar Fitness (Monoculture Collapse)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 42,
+          "shapleyBreakdown": {
+            "locustShapley": 32.2817,
+            "corvidShapley": 37.432,
+            "fishShapley": 30.2862,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 68.8333
+        },
+        "shapley-pareto-symbiotic-coevolution": {
+          "profileId": "shapley-pareto-symbiotic-coevolution",
+          "label": "Exact Shapley Counterfactual Credit + 3D Pareto Niche Co-Evolution",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 100,
+          "shapleyBreakdown": {
+            "locustShapley": 32.4178,
+            "corvidShapley": 37.1447,
+            "fishShapley": 30.4375,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "generations": 20,
+      "byProfile": {
+        "last-touch-greedy-credit": {
+          "profileId": "last-touch-greedy-credit",
+          "label": "Last-Touch Greedy Credit (Starves Upstream Guilds)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 18,
+          "freeRiderRejectionPct": 50,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 31.5,
+          "shapleyBreakdown": {
+            "locustShapley": 32.0485,
+            "corvidShapley": 37.5307,
+            "fishShapley": 30.4208,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 33.2083
+        },
+        "uniform-equal-split-free-rider": {
+          "profileId": "uniform-equal-split-free-rider",
+          "label": "Uniform Equal Split (Rewards Free-Rider Mutants)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 62.5,
+          "freeRiderRejectionPct": 0,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 74,
+          "shapleyBreakdown": {
+            "locustShapley": 32.1189,
+            "corvidShapley": 37.423,
+            "fishShapley": 30.4581,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 59.125
+        },
+        "single-objective-scalar-collapse": {
+          "profileId": "single-objective-scalar-collapse",
+          "label": "Single-Objective Scalar Fitness (Monoculture Collapse)",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 33.3333,
+          "paretoHypervolumePct": 42,
+          "shapleyBreakdown": {
+            "locustShapley": 32.4892,
+            "corvidShapley": 37.1619,
+            "fishShapley": 30.3489,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 68.8333
+        },
+        "shapley-pareto-symbiotic-coevolution": {
+          "profileId": "shapley-pareto-symbiotic-coevolution",
+          "label": "Exact Shapley Counterfactual Credit + 3D Pareto Niche Co-Evolution",
+          "generations": 20,
+          "shapleyCreditAccuracyPct": 100,
+          "freeRiderRejectionPct": 100,
+          "guildLineageSurvivalPct": 100,
+          "paretoHypervolumePct": 100,
+          "shapleyBreakdown": {
+            "locustShapley": 32.4526,
+            "corvidShapley": 37.4232,
+            "fishShapley": 30.1242,
+            "nullPlayerFreeRiderShapley": 0,
+            "grandCoalitionValue": 100,
+            "efficiencySum": 100,
+            "efficiencyGap": 0
+          },
+          "coevolutionCompositeScore": 100
+        }
+      }
+    }
+  ],
+  "aggregatedByProfile": {
+    "last-touch-greedy-credit": {
+      "profileId": "last-touch-greedy-credit",
+      "label": "Last-Touch Greedy Credit (Starves Upstream Guilds)",
+      "shapleyCreditAccuracyPct": {
+        "mean": 18,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 18,
+        "ci95Upper": 18
+      },
+      "freeRiderRejectionPct": {
+        "mean": 50,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 50,
+        "ci95Upper": 50
+      },
+      "guildLineageSurvivalPct": {
+        "mean": 33.3333,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 33.3333,
+        "ci95Upper": 33.3333
+      },
+      "paretoHypervolumePct": {
+        "mean": 31.5,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 31.5,
+        "ci95Upper": 31.5
+      },
+      "coevolutionCompositeScore": {
+        "mean": 33.2083,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 33.2083,
+        "ci95Upper": 33.2083
+      }
+    },
+    "uniform-equal-split-free-rider": {
+      "profileId": "uniform-equal-split-free-rider",
+      "label": "Uniform Equal Split (Rewards Free-Rider Mutants)",
+      "shapleyCreditAccuracyPct": {
+        "mean": 62.5,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 62.5,
+        "ci95Upper": 62.5
+      },
+      "freeRiderRejectionPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "guildLineageSurvivalPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "paretoHypervolumePct": {
+        "mean": 74,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 74,
+        "ci95Upper": 74
+      },
+      "coevolutionCompositeScore": {
+        "mean": 59.125,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 59.125,
+        "ci95Upper": 59.125
+      }
+    },
+    "single-objective-scalar-collapse": {
+      "profileId": "single-objective-scalar-collapse",
+      "label": "Single-Objective Scalar Fitness (Monoculture Collapse)",
+      "shapleyCreditAccuracyPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "freeRiderRejectionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "guildLineageSurvivalPct": {
+        "mean": 33.3333,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 33.3333,
+        "ci95Upper": 33.3333
+      },
+      "paretoHypervolumePct": {
+        "mean": 42,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 42,
+        "ci95Upper": 42
+      },
+      "coevolutionCompositeScore": {
+        "mean": 68.8333,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 68.8333,
+        "ci95Upper": 68.8333
+      }
+    },
+    "shapley-pareto-symbiotic-coevolution": {
+      "profileId": "shapley-pareto-symbiotic-coevolution",
+      "label": "Exact Shapley Counterfactual Credit + 3D Pareto Niche Co-Evolution",
+      "shapleyCreditAccuracyPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "freeRiderRejectionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "guildLineageSurvivalPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "paretoHypervolumePct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "coevolutionCompositeScore": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      }
+    }
+  },
+  "summary": {
+    "winningProfile": "shapley-pareto-symbiotic-coevolution",
+    "allSeedsVerified": true,
+    "fullCoevolutionScoreMean": 100,
+    "shapleyCreditAccuracyPctMean": 100,
+    "freeRiderRejectionPctMean": 100,
+    "guildLineageSurvivalPctMean": 100,
+    "paretoHypervolumePctMean": 100,
+    "gainVsLastTouchGreedy": 66.7917,
+    "gainVsUniformEqualSplit": 40.875,
+    "gainVsScalarCollapse": 31.1667
+  }
+}
