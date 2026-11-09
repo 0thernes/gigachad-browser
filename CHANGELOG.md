@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Tor anti-fingerprinting & anonymity hardening matrix pass 14
+
+- Added the 5-seed Tor Browser-grade anti-fingerprinting and cross-origin unlinkability shield ([`systems/alive-tor-fingerprint-shield.js`](systems/alive-tor-fingerprint-shield.js), [`scripts/alive-tor-fingerprint-shield.cjs`](scripts/alive-tor-fingerprint-shield.cjs)) comparing `unprotected-native-chromium`, `ua-header-spoof-only`, `static-global-noise-injection`, and `full-tor-letterbox-fpd-shield` across 24 probes per seed (`6` hardware machines $\times$ `4` First-Party Domains).
+- Verified on `5/5` seeds that `full-tor-letterbox-fpd-shield` (`1000×800@1.0x` letterboxing, `100ms` timer coarsening, uniform Navigator/WebGL/Header profile, and FPD-keyed Canvas/Audio perturbation) achieves `0.00` bits of static surface entropy (`1/6` uniform surface), `100.0%` cross-origin unlinkability (`0.0%` tracker linkability), and `100.0` anonymity score.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 20 (`#alive-fabric-tor-shield`, `Run Tor shield` button, and `runTorShield()`).
+- Added [Pass 14 report](docs/ALIVE_PASS_14_REPORT.md), [JSON report](docs/reports/alive-tor-fingerprint-shield-2026-11-09.json), [SVG chart](docs/reports/alive-tor-fingerprint-shield-2026-11-09.svg) and unit tests (`tests/alive-tor-fingerprint-shield.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · RFC 7686 & Tor Rendezvous v3 (.onion) cryptographic verifier pass 13
 
 - Added the 5-seed RFC 7686 and Tor Rendezvous Spec v3 (`rend-spec-v3.txt` §6) `.onion` cryptographic codec and verifier ([`systems/alive-onion-v3-verifier.js`](systems/alive-onion-v3-verifier.js), [`scripts/alive-onion-v3-verifier.cjs`](scripts/alive-onion-v3-verifier.cjs)) comparing `clearnet-dns-passthrough`, `regex-length-56-only`, `checksum-without-descriptor-sig`, and `full-rfc7686-v3-onion-verifier` across 20 `.onion` candidates per seed.

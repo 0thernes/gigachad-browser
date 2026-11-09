@@ -571,6 +571,37 @@ test('runOnionV3Verifier renders 5-seed RFC 7686 and Tor v3 .onion cryptographic
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runTorShield renders 5-seed Tor anti-fingerprinting and cross-origin unlinkability in section 20', async () => {
+  const { window, dom } = load();
+  window.AliveTorFingerprintShield = {
+    run: async () => ({
+      summary: {
+        fullBeatGlobalNoiseSeeds: 5,
+        fullBeatNativeSeeds: 5,
+        zeroCrossOriginLinkSeeds: 5,
+        zeroStaticEntropySeeds: 5,
+        pairedDeltas: {
+          fullVsGlobalNoiseAnonymityGain: { mean: 100.0 },
+          fullVsNativeAnonymityGain: { mean: 100.0 }
+        },
+        byShield: {
+          'unprotected-native-chromium': { anonymityScore: { mean: 0 }, crossOriginUnlinkabilityPct: { mean: 0 }, anonymitySetUniformityPct: { mean: 0 }, staticSurfaceEntropyBits: { mean: 2.58 } },
+          'ua-header-spoof-only': { anonymityScore: { mean: 0 }, crossOriginUnlinkabilityPct: { mean: 0 }, anonymitySetUniformityPct: { mean: 0 }, staticSurfaceEntropyBits: { mean: 2.58 } },
+          'static-global-noise-injection': { anonymityScore: { mean: 0 }, crossOriginUnlinkabilityPct: { mean: 0 }, anonymitySetUniformityPct: { mean: 0 }, staticSurfaceEntropyBits: { mean: 2.58 } },
+          'full-tor-letterbox-fpd-shield': { anonymityScore: { mean: 100.0 }, crossOriginUnlinkabilityPct: { mean: 100 }, anonymitySetUniformityPct: { mean: 100 }, staticSurfaceEntropyBits: { mean: 0.0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runTorShield();
+  assert.equal(report.summary.fullBeatGlobalNoiseSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full vs global-noise +100.0 (5/5)')), 'Tor fingerprint shield summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-tor-letterbox-fpd')), 'Tor fingerprint shield rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

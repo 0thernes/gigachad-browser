@@ -1,0 +1,614 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-14-tor-anti-fingerprinting-shield-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "shields": [
+      "unprotected-native-chromium",
+      "ua-header-spoof-only",
+      "static-global-noise-injection",
+      "full-tor-letterbox-fpd-shield"
+    ],
+    "hardwareProfilesPerSeed": 6,
+    "firstPartyDomainsPerSeed": 4,
+    "probesPerSeed": 24
+  },
+  "summary": {
+    "fullBeatGlobalNoiseSeeds": 5,
+    "fullBeatNativeSeeds": 5,
+    "zeroCrossOriginLinkSeeds": 5,
+    "zeroStaticEntropySeeds": 5,
+    "pairedDeltas": {
+      "fullVsGlobalNoiseAnonymityGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsNativeAnonymityGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byShield": {
+      "unprotected-native-chromium": {
+        "shield": "unprotected-native-chromium",
+        "anonymityScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginUnlinkabilityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginLinkabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "anonymitySetUniformityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "staticSurfaceEntropyBits": {
+          "count": 5,
+          "mean": 2.584962500721156,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            2.584962500721156,
+            2.584962500721156
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctStaticSurfaces": {
+          "count": 5,
+          "mean": 6,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            6,
+            6
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "ua-header-spoof-only": {
+        "shield": "ua-header-spoof-only",
+        "anonymityScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginUnlinkabilityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginLinkabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "anonymitySetUniformityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "staticSurfaceEntropyBits": {
+          "count": 5,
+          "mean": 2.584962500721156,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            2.584962500721156,
+            2.584962500721156
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctStaticSurfaces": {
+          "count": 5,
+          "mean": 6,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            6,
+            6
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "static-global-noise-injection": {
+        "shield": "static-global-noise-injection",
+        "anonymityScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginUnlinkabilityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginLinkabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "anonymitySetUniformityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "staticSurfaceEntropyBits": {
+          "count": 5,
+          "mean": 2.584962500721156,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            2.584962500721156,
+            2.584962500721156
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctStaticSurfaces": {
+          "count": 5,
+          "mean": 6,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            6,
+            6
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "full-tor-letterbox-fpd-shield": {
+        "shield": "full-tor-letterbox-fpd-shield",
+        "anonymityScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginUnlinkabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginLinkabilityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "anonymitySetUniformityPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "staticSurfaceEntropyBits": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctStaticSurfaces": {
+          "count": 5,
+          "mean": 1,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1,
+            1
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byShield": {
+        "unprotected-native-chromium": {
+          "seed": 19013,
+          "shield": "unprotected-native-chromium",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "ua-header-spoof-only": {
+          "seed": 19013,
+          "shield": "ua-header-spoof-only",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "static-global-noise-injection": {
+          "seed": 19013,
+          "shield": "static-global-noise-injection",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "full-tor-letterbox-fpd-shield": {
+          "seed": 19013,
+          "shield": "full-tor-letterbox-fpd-shield",
+          "metrics": {
+            "anonymityScore": 100,
+            "crossOriginUnlinkabilityPct": 100,
+            "crossOriginLinkabilityPct": 0,
+            "anonymitySetUniformityPct": 100,
+            "staticSurfaceEntropyBits": 0,
+            "distinctStaticSurfaces": 1,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byShield": {
+        "unprotected-native-chromium": {
+          "seed": 29017,
+          "shield": "unprotected-native-chromium",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "ua-header-spoof-only": {
+          "seed": 29017,
+          "shield": "ua-header-spoof-only",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "static-global-noise-injection": {
+          "seed": 29017,
+          "shield": "static-global-noise-injection",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "full-tor-letterbox-fpd-shield": {
+          "seed": 29017,
+          "shield": "full-tor-letterbox-fpd-shield",
+          "metrics": {
+            "anonymityScore": 100,
+            "crossOriginUnlinkabilityPct": 100,
+            "crossOriginLinkabilityPct": 0,
+            "anonymitySetUniformityPct": 100,
+            "staticSurfaceEntropyBits": 0,
+            "distinctStaticSurfaces": 1,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byShield": {
+        "unprotected-native-chromium": {
+          "seed": 39023,
+          "shield": "unprotected-native-chromium",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "ua-header-spoof-only": {
+          "seed": 39023,
+          "shield": "ua-header-spoof-only",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "static-global-noise-injection": {
+          "seed": 39023,
+          "shield": "static-global-noise-injection",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "full-tor-letterbox-fpd-shield": {
+          "seed": 39023,
+          "shield": "full-tor-letterbox-fpd-shield",
+          "metrics": {
+            "anonymityScore": 100,
+            "crossOriginUnlinkabilityPct": 100,
+            "crossOriginLinkabilityPct": 0,
+            "anonymitySetUniformityPct": 100,
+            "staticSurfaceEntropyBits": 0,
+            "distinctStaticSurfaces": 1,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byShield": {
+        "unprotected-native-chromium": {
+          "seed": 49031,
+          "shield": "unprotected-native-chromium",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "ua-header-spoof-only": {
+          "seed": 49031,
+          "shield": "ua-header-spoof-only",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "static-global-noise-injection": {
+          "seed": 49031,
+          "shield": "static-global-noise-injection",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "full-tor-letterbox-fpd-shield": {
+          "seed": 49031,
+          "shield": "full-tor-letterbox-fpd-shield",
+          "metrics": {
+            "anonymityScore": 100,
+            "crossOriginUnlinkabilityPct": 100,
+            "crossOriginLinkabilityPct": 0,
+            "anonymitySetUniformityPct": 100,
+            "staticSurfaceEntropyBits": 0,
+            "distinctStaticSurfaces": 1,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byShield": {
+        "unprotected-native-chromium": {
+          "seed": 59053,
+          "shield": "unprotected-native-chromium",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "ua-header-spoof-only": {
+          "seed": 59053,
+          "shield": "ua-header-spoof-only",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "static-global-noise-injection": {
+          "seed": 59053,
+          "shield": "static-global-noise-injection",
+          "metrics": {
+            "anonymityScore": 0,
+            "crossOriginUnlinkabilityPct": 0,
+            "crossOriginLinkabilityPct": 100,
+            "anonymitySetUniformityPct": 0,
+            "staticSurfaceEntropyBits": 2.584962500721156,
+            "distinctStaticSurfaces": 6,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        },
+        "full-tor-letterbox-fpd-shield": {
+          "seed": 59053,
+          "shield": "full-tor-letterbox-fpd-shield",
+          "metrics": {
+            "anonymityScore": 100,
+            "crossOriginUnlinkabilityPct": 100,
+            "crossOriginLinkabilityPct": 0,
+            "anonymitySetUniformityPct": 100,
+            "staticSurfaceEntropyBits": 0,
+            "distinctStaticSurfaces": 1,
+            "totalHardwareProfiles": 6,
+            "totalFpds": 4
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 14 Tor Browser-grade anti-fingerprinting & anonymity hardening matrix (letterboxing viewport quantization, 100ms timer coarsening, uniform Navigator/WebGL/Header profile, and FPD-keyed Canvas/Audio perturbation) across 5 seeds."
+}
