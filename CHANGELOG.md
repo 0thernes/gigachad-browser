@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix (E1..E10) pass 30
+
+- Added the 5-seed Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix ([`systems/alive-hyper-swarm-phase5-audit.js`](systems/alive-hyper-swarm-phase5-audit.js), [`scripts/alive-hyper-swarm-phase5-audit.cjs`](scripts/alive-hyper-swarm-phase5-audit.cjs)) auditing Passes 26–29 across `E1-Corvid-Depth3-Meta-Tool-Synthesis` through `E10-Symbiotic-3D-Pareto-Speciation-Survival`.
+- Verified `10/10` acceptance rows (`100.0%` acceptance score) across `5/5` seeds, freezing the Phase V SHA-256 manifest (`adfecf175d59b89591698758d99254cf27802d40a910f4c35c30329c1e1b6f2e`) and qualifying entry into Phase VI (`Passes 31–35`: Neuro-Symbolic Program Synthesis, Active Inference Free-Energy & Hyperbolic Knowledge Geometry).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 36 (`#alive-fabric-phase5-audit`, `Run Phase V Audit` button, and `runPhase5SwarmAudit()`).
+- Added [Pass 30 report](docs/ALIVE_PASS_30_REPORT.md), [JSON report](docs/reports/alive-hyper-swarm-phase5-audit-2026-11-09.json), [SVG chart](docs/reports/alive-hyper-swarm-phase5-audit-2026-11-09.svg) and unit tests (`tests/alive-hyper-swarm-phase5-audit.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Symbiotic cross-guild co-evolution, Shapley credit & 3D Pareto speciation pass 29
 
 - Added the 5-seed Symbiotic Cross-Guild Co-Evolution, Shapley Counterfactual Credit Assignment, and 3D Pareto Archive Speciation evaluator ([`systems/alive-symbiotic-cross-guild-coevolution.js`](systems/alive-symbiotic-cross-guild-coevolution.js), [`scripts/alive-symbiotic-cross-guild-coevolution.cjs`](scripts/alive-symbiotic-cross-guild-coevolution.cjs)).

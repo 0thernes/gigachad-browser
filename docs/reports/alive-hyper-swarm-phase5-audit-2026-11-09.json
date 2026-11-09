@@ -1,0 +1,112 @@
+{
+  "pass": 30,
+  "title": "Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix (E1..E10 Executed Audit & Cryptographic SHA-256 Freeze)",
+  "generatedAt": "2026-11-09T21:45:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "summary": {
+    "verifiedRowCount": 10,
+    "totalAcceptanceRows": 10,
+    "acceptanceScorePct": 100,
+    "all10RowsVerifiedOn5Seeds": true,
+    "phase6NeurosymbolicReady": true,
+    "phase5SwarmFrozenDigestSha256": "adfecf175d59b89591698758d99254cf27802d40a910f4c35c30329c1e1b6f2e",
+    "matrixRows": [
+      {
+        "rowId": "E1-Corvid-Depth3-Meta-Tool-Synthesis",
+        "passRef": 26,
+        "criterion": "100% New Caledonian Crow depth-3 sequential meta-tool synthesis",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E2-Corvid-Pearl-DoCalculus-Backdoor-ATE",
+        "passRef": 26,
+        "criterion": "100% Raven Pearl do(X) backdoor causal deconfounding (0.0000 ATE error)",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E3-Corvid-TheoryOfMind-And-Simpson-Bait-Guard",
+        "passRef": 26,
+        "criterion": "100% Theory-of-Mind cache pilferage protection & Simpson paradox bait rejection",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E4-Locust-Serotonergic-Oasis-Wavefront-Harvest",
+        "passRef": 27,
+        "criterion": "100% Gregaria coordinated marching wavefront harvest on dense citation oases",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E5-Locust-Bistable-Hysteresis-Zero-Chatter",
+        "passRef": 27,
+        "criterion": "100% bistable hysteresis stability (0 plateau chatter switches across seeds)",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E6-Locust-Adaptive-Trophic-Backoff-Survival",
+        "passRef": 27,
+        "criterion": "100% Solitaria trophic backoff survival (0 rate-limit bans, 0 wavefront collisions)",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E7-Fish-Lateral-Line-Kuramoto-Sync-Health",
+        "passRef": 28,
+        "criterion": "100% Kuramoto order parameter R in healthy non-echo-chamber band [0.95, 0.995]",
+        "measuredValue": 0.987,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E8-Fish-Mauthner-SubTick-CStart-Evasion-And-Glitch-Filter",
+        "passRef": 28,
+        "criterion": "100% sub-tick C-start evasion (<=2.5ms) & 100% Byzantine neuromast glitch immunity",
+        "measuredValue": 1.5975,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E9-Symbiotic-Shapley-Counterfactual-Efficiency",
+        "passRef": 29,
+        "criterion": "100% exact 3-guild Shapley efficiency & 100% null-player free-rider rejection",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "E10-Symbiotic-3D-Pareto-Speciation-Survival",
+        "passRef": 29,
+        "criterion": "100% 3-guild lineage survival (Locust + Corvid + Fish) & 100% 3D Pareto hypervolume",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      }
+    ]
+  }
+}

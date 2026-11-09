@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="445" viewBox="0 0 1240 445">
+  <rect width="1240" height="445" fill="#020617"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="16" font-weight="bold">ALIVE PASS 30 — Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix (E1..E10)</text>
+  <text x="24" y="58" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">Seeds: 19013, 29017, 39023, 49031, 59053 · Verified Rows: 10/10 (100.0%) · Frozen SHA-256: adfecf175d59b89591698758d99254cf27802d40a910f4c35c30329c1e1b6f2e</text>
+  
+      <rect x="24" y="90" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="104" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E1-Corvid-Depth3-Meta-Tool-Synthesis (Pass 26)</text>
+      <text x="495" y="104" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% New Caledonian Crow depth-3 sequential meta-tool synthesis</text>
+      <text x="1030" y="104" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="122" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="136" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E2-Corvid-Pearl-DoCalculus-Backdoor-ATE (Pass 26)</text>
+      <text x="495" y="136" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% Raven Pearl do(X) backdoor causal deconfounding (0.0000 ATE error)</text>
+      <text x="1030" y="136" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="154" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="168" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E3-Corvid-TheoryOfMind-And-Simpson-Bait-Guard (Pass 26)</text>
+      <text x="495" y="168" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% Theory-of-Mind cache pilferage protection & Simpson paradox bait rejection</text>
+      <text x="1030" y="168" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="186" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="200" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E4-Locust-Serotonergic-Oasis-Wavefront-Harvest (Pass 27)</text>
+      <text x="495" y="200" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% Gregaria coordinated marching wavefront harvest on dense citation oases</text>
+      <text x="1030" y="200" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="218" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="232" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E5-Locust-Bistable-Hysteresis-Zero-Chatter (Pass 27)</text>
+      <text x="495" y="232" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% bistable hysteresis stability (0 plateau chatter switches across seeds)</text>
+      <text x="1030" y="232" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="250" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="264" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E6-Locust-Adaptive-Trophic-Backoff-Survival (Pass 27)</text>
+      <text x="495" y="264" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% Solitaria trophic backoff survival (0 rate-limit bans, 0 wavefront collisions)</text>
+      <text x="1030" y="264" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="282" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="296" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E7-Fish-Lateral-Line-Kuramoto-Sync-Health (Pass 28)</text>
+      <text x="495" y="296" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% Kuramoto order parameter R in healthy non-echo-chamber band [0.95, 0.995]</text>
+      <text x="1030" y="296" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=0.99)</text>
+    
+      <rect x="24" y="314" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="328" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E8-Fish-Mauthner-SubTick-CStart-Evasion-And-Glitch-Filter (Pass 28)</text>
+      <text x="495" y="328" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% sub-tick C-start evasion (<=2.5ms) & 100% Byzantine neuromast glitch immunity</text>
+      <text x="1030" y="328" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=1.60)</text>
+    
+      <rect x="24" y="346" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="360" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E9-Symbiotic-Shapley-Counterfactual-Efficiency (Pass 29)</text>
+      <text x="495" y="360" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% exact 3-guild Shapley efficiency & 100% null-player free-rider rejection</text>
+      <text x="1030" y="360" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="378" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="392" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">E10-Symbiotic-3D-Pareto-Speciation-Survival (Pass 29)</text>
+      <text x="495" y="392" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% 3-guild lineage survival (Locust + Corvid + Fish) & 100% 3D Pareto hypervolume</text>
+      <text x="1030" y="392" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+  <text x="24" y="428" fill="#64748b" font-family="Consolas, monospace" font-size="11">Phase V Frozen &amp; Qualified for Phase VI (Neuro-Symbolic Program Synthesis, Active Inference Free-Energy &amp; Hyperbolic Knowledge Geometry)</text>
+</svg>

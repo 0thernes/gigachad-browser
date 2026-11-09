@@ -1021,6 +1021,38 @@ test('runSymbioticCoevolution renders 5-seed Symbiotic Cross-Guild Co-Evolution 
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runPhase5SwarmAudit renders 10-row Phase V Hyper-Swarm Acceptance Matrix (E1..E10) in section 36', async () => {
+  const { window, dom } = load();
+  window.AliveHyperSwarmPhase5Audit = {
+    run: async () => ({
+      summary: {
+        verifiedRowCount: 10,
+        totalAcceptanceRows: 10,
+        phase6NeurosymbolicReady: true,
+        phase5SwarmFrozenDigestSha256: 'abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
+        matrixRows: [
+          { rowId: 'E1-Corvid-Depth3-Meta-Tool-Synthesis', passRef: 26, passedSeeds: 5, verified: true },
+          { rowId: 'E2-Corvid-Pearl-DoCalculus-Backdoor-ATE', passRef: 26, passedSeeds: 5, verified: true },
+          { rowId: 'E3-Corvid-TheoryOfMind-And-Simpson-Bait-Guard', passRef: 26, passedSeeds: 5, verified: true },
+          { rowId: 'E4-Locust-Serotonergic-Oasis-Wavefront-Harvest', passRef: 27, passedSeeds: 5, verified: true },
+          { rowId: 'E5-Locust-Bistable-Hysteresis-Zero-Chatter', passRef: 27, passedSeeds: 5, verified: true },
+          { rowId: 'E6-Locust-Adaptive-Trophic-Backoff-Survival', passRef: 27, passedSeeds: 5, verified: true },
+          { rowId: 'E7-Fish-Lateral-Line-Kuramoto-Sync-Health', passRef: 28, passedSeeds: 5, verified: true },
+          { rowId: 'E8-Fish-Mauthner-SubTick-CStart-Evasion-And-Glitch-Filter', passRef: 28, passedSeeds: 5, verified: true },
+          { rowId: 'E9-Symbiotic-Shapley-Counterfactual-Efficiency', passRef: 29, passedSeeds: 5, verified: true },
+          { rowId: 'E10-Symbiotic-3D-Pareto-Speciation-Survival', passRef: 29, passedSeeds: 5, verified: true }
+        ]
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runPhase5SwarmAudit();
+  assert.equal(report.summary.verifiedRowCount, 10);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Phase V Rows 10/10 PASS')), 'Phase V Audit summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('E1-Corvid-Depth3-Meta-Tool-S')), 'Phase V Audit rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 
