@@ -1,0 +1,842 @@
+{
+  "passId": "ALIVE-PASS-65-CONTINUOUS-SPLINE-BRAINS-PHASE12-AUDIT",
+  "phase": "Phase XII — Kolmogorov-Arnold Networks (KAN), Liquid Time-Constant (sLTC) & Continuous-Depth Neural ODEs",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "matrixRows": [
+    {
+      "rowId": "C1-KAN-Chebyshev-BSpline-Symbolic-Fidelity",
+      "passRef": 61,
+      "thresholdDesc": "Symbolic Approximation == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C2-KAN-Continual-Grid-Refinement-Retention",
+      "passRef": 61,
+      "thresholdDesc": "Grid Refinement Retention == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C3-CfC-sLTC-Irregular-Timestamp-Invariance",
+      "passRef": 62,
+      "thresholdDesc": "Timestamp Invariance == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C4-CfC-sLTC-Stiff-Ratio-Attractor-Stability",
+      "passRef": 62,
+      "thresholdDesc": "Stiff Stability == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C5-PortHamiltonian-Passivity-Energy-Conservation",
+      "passRef": 63,
+      "thresholdDesc": "Energy Passivity == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C6-Symplectic-Verlet-Liouville-Volume-Invariance",
+      "passRef": 63,
+      "thresholdDesc": "Phase Volume == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C7-DEQ-Anderson-Fixed-Point-Convergence",
+      "passRef": 64,
+      "thresholdDesc": "Fixed-Point Convergence == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C8-DEQ-O1-Memory-Savings-Vs-Unrolled",
+      "passRef": 64,
+      "thresholdDesc": "Memory Savings >= 95%",
+      "mean": 96.875,
+      "ci95": {
+        "low": 96.875,
+        "high": 96.875,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 96.875
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 96.875
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 96.875
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 96.875
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 96.875
+        }
+      ]
+    },
+    {
+      "rowId": "C9-DEQ-Exact-Implicit-Function-Theorem-Jacobian",
+      "passRef": 64,
+      "thresholdDesc": "IFT Gradient Fidelity == 100%",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "C10-Phase12-All-Continuous-Spline-Suites-Verified",
+      "passRef": 65,
+      "thresholdDesc": "All 4 Continuous Suites == 100.0",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "verifiedRowCount": 10,
+    "totalAcceptanceRows": 10,
+    "acceptanceScorePct": 100,
+    "phase13MoeRoutingReady": true,
+    "phase12ContinuousSplineFrozenDigestSha256": "a432663a1f3055644a9e91310531345fb005782136e4ff9754551e2a94e6bacf",
+    "matrixRows": [
+      {
+        "rowId": "C1-KAN-Chebyshev-BSpline-Symbolic-Fidelity",
+        "passRef": 61,
+        "thresholdDesc": "Symbolic Approximation == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C2-KAN-Continual-Grid-Refinement-Retention",
+        "passRef": 61,
+        "thresholdDesc": "Grid Refinement Retention == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C3-CfC-sLTC-Irregular-Timestamp-Invariance",
+        "passRef": 62,
+        "thresholdDesc": "Timestamp Invariance == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C4-CfC-sLTC-Stiff-Ratio-Attractor-Stability",
+        "passRef": 62,
+        "thresholdDesc": "Stiff Stability == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C5-PortHamiltonian-Passivity-Energy-Conservation",
+        "passRef": 63,
+        "thresholdDesc": "Energy Passivity == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C6-Symplectic-Verlet-Liouville-Volume-Invariance",
+        "passRef": 63,
+        "thresholdDesc": "Phase Volume == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C7-DEQ-Anderson-Fixed-Point-Convergence",
+        "passRef": 64,
+        "thresholdDesc": "Fixed-Point Convergence == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C8-DEQ-O1-Memory-Savings-Vs-Unrolled",
+        "passRef": 64,
+        "thresholdDesc": "Memory Savings >= 95%",
+        "mean": 96.875,
+        "ci95": {
+          "low": 96.875,
+          "high": 96.875,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 96.875
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 96.875
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 96.875
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 96.875
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 96.875
+          }
+        ]
+      },
+      {
+        "rowId": "C9-DEQ-Exact-Implicit-Function-Theorem-Jacobian",
+        "passRef": 64,
+        "thresholdDesc": "IFT Gradient Fidelity == 100%",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "C10-Phase12-All-Continuous-Spline-Suites-Verified",
+        "passRef": 65,
+        "thresholdDesc": "All 4 Continuous Suites == 100.0",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      }
+    ]
+  }
+}
