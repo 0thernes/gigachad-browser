@@ -417,6 +417,38 @@ test('runFaultRecovery renders 5-seed browser navigation and fault recovery in s
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runSustainedPerf renders 5-seed 60Hz latency, memory bounds and hidden overhead in section 15', async () => {
+  const { window, dom } = load();
+  window.AliveSustainedPerformanceQualifier = {
+    run: async () => ({
+      summary: {
+        boundedBeatEagerSeeds: 5,
+        boundedBeatNoTimeoutSeeds: 5,
+        sub16msP99Seeds: 5,
+        zeroPostWarmupGrowthSeeds: 5,
+        zeroHiddenOverheadSeeds: 5,
+        pairedDeltas: {
+          boundedVsEagerQualificationGain: { mean: 75.0 },
+          boundedVsNoTimeoutQualificationGain: { mean: 63.3 }
+        },
+        byRegime: {
+          'unbounded-eager-all-lanes': { qualificationScore: { mean: 25.0 }, p99Ms: { mean: 31.8 }, postWarmupMemoryGrowthEntries: { mean: 240 }, hiddenPanelDrawCalls: { mean: 2 }, adapterRecoveryPct: { mean: 100 } },
+          'unbounded-history-no-eviction': { qualificationScore: { mean: 42.0 }, p99Ms: { mean: 8.4 }, postWarmupMemoryGrowthEntries: { mean: 240 }, hiddenPanelDrawCalls: { mean: 2 }, adapterRecoveryPct: { mean: 100 } },
+          'no-adapter-timeout-guard': { qualificationScore: { mean: 36.7 }, p99Ms: { mean: 23.5 }, postWarmupMemoryGrowthEntries: { mean: 0 }, hiddenPanelDrawCalls: { mean: 0 }, adapterRecoveryPct: { mean: 0 } },
+          'bounded-phase-ordered-60hz': { qualificationScore: { mean: 100.0 }, p99Ms: { mean: 5.42 }, postWarmupMemoryGrowthEntries: { mean: 0 }, hiddenPanelDrawCalls: { mean: 0 }, adapterRecoveryPct: { mean: 100 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runSustainedPerf();
+  assert.equal(report.summary.boundedBeatEagerSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · bounded vs eager +75.0 (5/5)')), 'sustained perf summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('bounded-phase-ordered-')), 'sustained perf regime rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

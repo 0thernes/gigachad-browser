@@ -1,0 +1,914 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-09-sustained-performance-qualification-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "regimes": [
+      "unbounded-eager-all-lanes",
+      "unbounded-history-no-eviction",
+      "no-adapter-timeout-guard",
+      "bounded-phase-ordered-60hz"
+    ],
+    "ticksPerSeed": 240,
+    "frameBudget60HzMs": 16.6667
+  },
+  "summary": {
+    "boundedBeatEagerSeeds": 5,
+    "boundedBeatNoTimeoutSeeds": 5,
+    "sub16msP99Seeds": 5,
+    "zeroPostWarmupGrowthSeeds": 5,
+    "zeroHiddenOverheadSeeds": 5,
+    "pairedDeltas": {
+      "boundedVsEagerQualificationGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "boundedVsNoTimeoutQualificationGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byRegime": {
+      "unbounded-eager-all-lanes": {
+        "regime": "unbounded-eager-all-lanes",
+        "qualificationScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p50Ms": {
+          "count": 5,
+          "mean": 27.01828192438227,
+          "sampleStandardDeviation": 0.015943374582972635,
+          "ci95": [
+            26.998485610152713,
+            27.038078238611824
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p95Ms": {
+          "count": 5,
+          "mean": 29.03859963590519,
+          "sampleStandardDeviation": 0.05104077137791109,
+          "ci95": [
+            28.97522414764469,
+            29.10197512416569
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p99Ms": {
+          "count": 5,
+          "mean": 29.361680588328575,
+          "sampleStandardDeviation": 0.07715352778038043,
+          "ci95": [
+            29.26588183054926,
+            29.45747934610789
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "budgetCompliancePct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "postWarmupMemoryGrowthEntries": {
+          "count": 5,
+          "mean": 240,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            240,
+            240
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelDrawCalls": {
+          "count": 5,
+          "mean": 2,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            2,
+            2
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "openPanelOverheadMs": {
+          "count": 5,
+          "mean": 2.9648024793798102,
+          "sampleStandardDeviation": 0.06174241501917783,
+          "ci95": [
+            2.8881391454883416,
+            3.041465813271279
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelOverheadMs": {
+          "count": 5,
+          "mean": 3.0784220963511615,
+          "sampleStandardDeviation": 0.05999640637878636,
+          "ci95": [
+            3.0039267185290197,
+            3.1529174741733033
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adapterRecoveryPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "stalledTicksFromHungAdapter": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "unbounded-history-no-eviction": {
+        "regime": "unbounded-history-no-eviction",
+        "qualificationScore": {
+          "count": 5,
+          "mean": 16,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            16,
+            16
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p50Ms": {
+          "count": 5,
+          "mean": 6.1882486132681835,
+          "sampleStandardDeviation": 0.00652416072573854,
+          "ci95": [
+            6.180147797776539,
+            6.196349428759828
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p95Ms": {
+          "count": 5,
+          "mean": 8.096283372696842,
+          "sampleStandardDeviation": 0.010786678719693337,
+          "ci95": [
+            8.082889942070407,
+            8.109676803323277
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p99Ms": {
+          "count": 5,
+          "mean": 8.329209390767016,
+          "sampleStandardDeviation": 0.04217301570757023,
+          "ci95": [
+            8.276844675467244,
+            8.381574106066788
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "budgetCompliancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "postWarmupMemoryGrowthEntries": {
+          "count": 5,
+          "mean": 240,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            240,
+            240
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelDrawCalls": {
+          "count": 5,
+          "mean": 2,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            2,
+            2
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "openPanelOverheadMs": {
+          "count": 5,
+          "mean": 2.9648024793798102,
+          "sampleStandardDeviation": 0.06174241501917783,
+          "ci95": [
+            2.8881391454883416,
+            3.041465813271279
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelOverheadMs": {
+          "count": 5,
+          "mean": 3.0784220963511615,
+          "sampleStandardDeviation": 0.05999640637878636,
+          "ci95": [
+            3.0039267185290197,
+            3.1529174741733033
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adapterRecoveryPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "stalledTicksFromHungAdapter": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "no-adapter-timeout-guard": {
+        "regime": "no-adapter-timeout-guard",
+        "qualificationScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p50Ms": {
+          "count": 5,
+          "mean": 17.88895074687316,
+          "sampleStandardDeviation": 0.008357619702596672,
+          "ci95": [
+            17.878573391377767,
+            17.899328102368553
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p95Ms": {
+          "count": 5,
+          "mean": 18.016506148620856,
+          "sampleStandardDeviation": 0.002648858568115084,
+          "ci95": [
+            18.013217156300495,
+            18.019795140941216
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p99Ms": {
+          "count": 5,
+          "mean": 37.44486566332921,
+          "sampleStandardDeviation": 0.034514897339051505,
+          "ci95": [
+            37.40200975790161,
+            37.48772156875681
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "budgetCompliancePct": {
+          "count": 5,
+          "mean": 37.5,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            37.5,
+            37.5
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "postWarmupMemoryGrowthEntries": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelDrawCalls": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "openPanelOverheadMs": {
+          "count": 5,
+          "mean": 2.9648024793798102,
+          "sampleStandardDeviation": 0.06174241501917783,
+          "ci95": [
+            2.8881391454883416,
+            3.041465813271279
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelOverheadMs": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adapterRecoveryPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "stalledTicksFromHungAdapter": {
+          "count": 5,
+          "mean": 150,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            150,
+            150
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "bounded-phase-ordered-60hz": {
+        "regime": "bounded-phase-ordered-60hz",
+        "qualificationScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p50Ms": {
+          "count": 5,
+          "mean": 3.9420593823737002,
+          "sampleStandardDeviation": 0.0028474403104505664,
+          "ci95": [
+            3.9385238182531794,
+            3.945594946494221
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p95Ms": {
+          "count": 5,
+          "mean": 4.021666815969743,
+          "sampleStandardDeviation": 0.0009903347198324042,
+          "ci95": [
+            4.020437153001956,
+            4.02289647893753
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "p99Ms": {
+          "count": 5,
+          "mean": 5.239700101011456,
+          "sampleStandardDeviation": 0.02864082252879478,
+          "ci95": [
+            5.204137822798509,
+            5.2752623792244036
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "budgetCompliancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "postWarmupMemoryGrowthEntries": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelDrawCalls": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "openPanelOverheadMs": {
+          "count": 5,
+          "mean": 2.9648024793798102,
+          "sampleStandardDeviation": 0.06174241501917783,
+          "ci95": [
+            2.8881391454883416,
+            3.041465813271279
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hiddenPanelOverheadMs": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adapterRecoveryPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "stalledTicksFromHungAdapter": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byRegime": {
+        "unbounded-eager-all-lanes": {
+          "seed": 19013,
+          "regime": "unbounded-eager-all-lanes",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 27.00370926156652,
+            "p95Ms": 29.016221708449898,
+            "p99Ms": 29.35827537534878,
+            "budgetCompliancePct": 0,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.929698698869906,
+            "hiddenPanelOverheadMs": 3.0342366463737562,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "unbounded-history-no-eviction": {
+          "seed": 19013,
+          "regime": "unbounded-history-no-eviction",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 16,
+            "p50Ms": 6.178307152739261,
+            "p95Ms": 8.084319719662144,
+            "p99Ms": 8.284521323770196,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.929698698869906,
+            "hiddenPanelOverheadMs": 3.0342366463737562,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "no-adapter-timeout-guard": {
+          "seed": 19013,
+          "regime": "no-adapter-timeout-guard",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 17.88677193733747,
+            "p95Ms": 18.014714320320635,
+            "p99Ms": 37.40845270358666,
+            "budgetCompliancePct": 37.5,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.929698698869906,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 0,
+            "stalledTicksFromHungAdapter": 150
+          }
+        },
+        "bounded-phase-ordered-60hz": {
+          "seed": 19013,
+          "regime": "bounded-phase-ordered-60hz",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 100,
+            "p50Ms": 3.9391886888653973,
+            "p95Ms": 4.020864534021238,
+            "p99Ms": 5.193258441089186,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.929698698869906,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byRegime": {
+        "unbounded-eager-all-lanes": {
+          "seed": 29017,
+          "regime": "unbounded-eager-all-lanes",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 27.008294343134505,
+            "p95Ms": 28.982333514495696,
+            "p99Ms": 29.362364938750623,
+            "budgetCompliancePct": 0,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.8897401651879773,
+            "hiddenPanelOverheadMs": 3.155936405700631,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "unbounded-history-no-eviction": {
+          "seed": 29017,
+          "regime": "unbounded-history-no-eviction",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 16,
+            "p50Ms": 6.185306088954908,
+            "p95Ms": 8.09782694378011,
+            "p99Ms": 8.384646753877506,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.8897401651879773,
+            "hiddenPanelOverheadMs": 3.155936405700631,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "no-adapter-timeout-guard": {
+          "seed": 29017,
+          "regime": "no-adapter-timeout-guard",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 17.885705716966186,
+            "p95Ms": 18.02067021229712,
+            "p99Ms": 37.47314223824593,
+            "budgetCompliancePct": 37.5,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.8897401651879773,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 0,
+            "stalledTicksFromHungAdapter": 150
+          }
+        },
+        "bounded-phase-ordered-60hz": {
+          "seed": 29017,
+          "regime": "bounded-phase-ordered-60hz",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 100,
+            "p50Ms": 3.94269394921721,
+            "p95Ms": 4.02331368162646,
+            "p99Ms": 5.2448377177621,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.8897401651879773,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byRegime": {
+        "unbounded-eager-all-lanes": {
+          "seed": 39023,
+          "regime": "unbounded-eager-all-lanes",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 27.012857074950126,
+            "p95Ms": 29.012039931425406,
+            "p99Ms": 29.375304646583295,
+            "budgetCompliancePct": 0,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.9981372376671063,
+            "hiddenPanelOverheadMs": 3.00835544962436,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "unbounded-history-no-eviction": {
+          "seed": 39023,
+          "regime": "unbounded-history-no-eviction",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 16,
+            "p50Ms": 6.191736744760069,
+            "p95Ms": 8.1002446904368,
+            "p99Ms": 8.317100325183933,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.9981372376671063,
+            "hiddenPanelOverheadMs": 3.00835544962436,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "no-adapter-timeout-guard": {
+          "seed": 39023,
+          "regime": "no-adapter-timeout-guard",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 17.899637830886057,
+            "p95Ms": 18.017307998755715,
+            "p99Ms": 37.43699725617352,
+            "budgetCompliancePct": 37.5,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.9981372376671063,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 0,
+            "stalledTicksFromHungAdapter": 150
+          }
+        },
+        "bounded-phase-ordered-60hz": {
+          "seed": 39023,
+          "regime": "bounded-phase-ordered-60hz",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 100,
+            "p50Ms": 3.946621796267573,
+            "p95Ms": 4.021847752046888,
+            "p99Ms": 5.257726483306848,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.9981372376671063,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byRegime": {
+        "unbounded-eager-all-lanes": {
+          "seed": 49031,
+          "regime": "unbounded-eager-all-lanes",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 27.022652122418165,
+            "p95Ms": 29.07515999527386,
+            "p99Ms": 29.247708142751733,
+            "budgetCompliancePct": 0,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.9567469543917104,
+            "hiddenPanelOverheadMs": 3.117446321984753,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "unbounded-history-no-eviction": {
+          "seed": 49031,
+          "regime": "unbounded-history-no-eviction",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 16,
+            "p50Ms": 6.191149387400597,
+            "p95Ms": 8.111415449660829,
+            "p99Ms": 8.360681924779808,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 2.9567469543917104,
+            "hiddenPanelOverheadMs": 3.117446321984753,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "no-adapter-timeout-guard": {
+          "seed": 49031,
+          "regime": "no-adapter-timeout-guard",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 17.878071180544794,
+            "p95Ms": 18.0158770617214,
+            "p99Ms": 37.48786560003867,
+            "budgetCompliancePct": 37.5,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.9567469543917104,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 0,
+            "stalledTicksFromHungAdapter": 150
+          }
+        },
+        "bounded-phase-ordered-60hz": {
+          "seed": 49031,
+          "regime": "bounded-phase-ordered-60hz",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 100,
+            "p50Ms": 3.941261397843482,
+            "p95Ms": 4.021219803069252,
+            "p99Ms": 5.267183311710367,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 2.9567469543917104,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byRegime": {
+        "unbounded-eager-all-lanes": {
+          "seed": 59053,
+          "regime": "unbounded-eager-all-lanes",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 27.043896819842047,
+            "p95Ms": 29.10724302988106,
+            "p99Ms": 29.464749838208448,
+            "budgetCompliancePct": 0,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 3.0496893407823515,
+            "hiddenPanelOverheadMs": 3.0761356580723076,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "unbounded-history-no-eviction": {
+          "seed": 59053,
+          "regime": "unbounded-history-no-eviction",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 16,
+            "p50Ms": 6.194743692486081,
+            "p95Ms": 8.08761005994433,
+            "p99Ms": 8.299096626223628,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 240,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 2,
+            "openPanelOverheadMs": 3.0496893407823515,
+            "hiddenPanelOverheadMs": 3.0761356580723076,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        },
+        "no-adapter-timeout-guard": {
+          "seed": 59053,
+          "regime": "no-adapter-timeout-guard",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 0,
+            "p50Ms": 17.894567068631297,
+            "p95Ms": 18.01396115000942,
+            "p99Ms": 37.41787051860126,
+            "budgetCompliancePct": 37.5,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 3.0496893407823515,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 0,
+            "stalledTicksFromHungAdapter": 150
+          }
+        },
+        "bounded-phase-ordered-60hz": {
+          "seed": 59053,
+          "regime": "bounded-phase-ordered-60hz",
+          "totalTicks": 240,
+          "metrics": {
+            "qualificationScore": 100,
+            "p50Ms": 3.9405310796748383,
+            "p95Ms": 4.02108830908488,
+            "p99Ms": 5.235494551188778,
+            "budgetCompliancePct": 100,
+            "postWarmupMemoryGrowthEntries": 0,
+            "openPanelDrawCalls": 2,
+            "hiddenPanelDrawCalls": 0,
+            "openPanelOverheadMs": 3.0496893407823515,
+            "hiddenPanelOverheadMs": 0,
+            "adapterRecoveryPct": 100,
+            "stalledTicksFromHungAdapter": 0
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 9 sustained 60Hz tick latency (p50/p95/p99), bounded ring-buffer memory eviction, open-vs-hidden visualizer overhead, adapter timeout recovery, and package qualification across 5 seeds."
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="390" viewBox="0 0 980 390">
+<rect width="100%" height="100%" fill="#05090f"/>
+<text x="20" y="28" fill="#67e8f9" font-family="Consolas, monospace" font-size="14" font-weight="bold">ALIVE Pass 9 — Sustained 60Hz Performance, Memory Bounds &amp; Package Qualification (5 Seeds)</text>
+<text x="20" y="48" fill="#cbd5e1" font-family="Consolas, monospace" font-size="11">bounded vs eager +100.00 (5/5) · p99&lt;=16.67ms (5/5) · 0 post-warmup mem growth (5/5) · 0 hidden draw overhead (5/5)</text>
+<text x="230" y="92" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">unbounded-eager-all-lanes</text>
+<rect x="240" y="76" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="240" y="79" width="2.0" height="18" fill="#f43f5e"/>
+<text x="588" y="91" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">qual=0.00 [0.00, 0.00] · p50=27.02ms · p95=29.04ms · p99=29.36ms</text>
+<text x="240" y="116" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">60HzCompliance=0.0% · postWarmupMemGrowth=240 · hiddenDraws=2 · adapterRecovery=100.0%</text>
+<text x="230" y="158" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">unbounded-history-no-eviction</text>
+<rect x="240" y="142" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="240" y="145" width="54.4" height="18" fill="#f59e0b"/>
+<text x="588" y="157" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">qual=16.00 [16.00, 16.00] · p50=6.19ms · p95=8.10ms · p99=8.33ms</text>
+<text x="240" y="182" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">60HzCompliance=100.0% · postWarmupMemGrowth=240 · hiddenDraws=2 · adapterRecovery=100.0%</text>
+<text x="230" y="224" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">no-adapter-timeout-guard</text>
+<rect x="240" y="208" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="240" y="211" width="2.0" height="18" fill="#38bdf8"/>
+<text x="588" y="223" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">qual=0.00 [0.00, 0.00] · p50=17.89ms · p95=18.02ms · p99=37.44ms</text>
+<text x="240" y="248" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">60HzCompliance=37.5% · postWarmupMemGrowth=0 · hiddenDraws=0 · adapterRecovery=0.0%</text>
+<text x="230" y="290" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">bounded-phase-ordered-60hz</text>
+<rect x="240" y="274" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="240" y="277" width="340.0" height="18" fill="#34d399"/>
+<text x="588" y="289" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">qual=100.00 [100.00, 100.00] · p50=3.94ms · p95=4.02ms · p99=5.24ms</text>
+<text x="240" y="314" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">60HzCompliance=100.0% · postWarmupMemGrowth=0 · hiddenDraws=0 · adapterRecovery=100.0%</text>
+<text x="20" y="374" fill="#64748b" font-family="Consolas, monospace" font-size="10">Seeds: 19013, 29017, 39023, 49031, 59053 · 240 sustained ticks/seed (120 open panel, 120 hidden panel, 6 injected adapter timeout faults)</text>
+</svg>

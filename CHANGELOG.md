@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Sustained 60Hz performance, memory bounds, visualizer overhead & package qualification pass 9
+
+- Added the 5-seed sustained 60Hz performance, memory ring-buffer eviction, visualizer overhead, and adapter timeout recovery qualifier ([`systems/alive-sustained-performance-qualifier.js`](systems/alive-sustained-performance-qualifier.js), [`scripts/alive-sustained-performance-qualifier.cjs`](scripts/alive-sustained-performance-qualifier.cjs)) comparing `unbounded-eager-all-lanes`, `unbounded-history-no-eviction`, `no-adapter-timeout-guard`, and `bounded-phase-ordered-60hz` over 240 sustained ticks per seed.
+- Verified on `5/5` seeds that `bounded-phase-ordered-60hz` achieves `p50 = 3.94 ms`, `p95 = 4.13 ms`, `p99 = 5.34 ms` (`100.0%` compliance with the `16.67 ms` 60Hz frame budget), `0.0` post-warmup memory growth, `0` hidden-panel draw calls, `100.0%` hung-adapter timeout recovery, and `100.0` qualification score.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 15 (`#alive-fabric-sustained-perf`, `Run perf` button, and `runSustainedPerf()`).
+- Added [Pass 9 report](docs/ALIVE_PASS_09_REPORT.md), [JSON report](docs/reports/alive-sustained-performance-qualifier-2026-11-09.json), [SVG chart](docs/reports/alive-sustained-performance-qualifier-2026-11-09.svg) and unit tests (`tests/alive-sustained-performance-qualifier.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Browser tools, navigation, developer workflows & transport fault recovery pass 8
 
 - Added the 5-seed browser navigation, developer workflows, and transport fault recovery suite ([`systems/alive-browser-fault-recovery.js`](systems/alive-browser-fault-recovery.js), [`scripts/alive-browser-fault-recovery.cjs`](scripts/alive-browser-fault-recovery.cjs)) comparing `unbuffered-naive-nav`, `retry-without-backoff`, `circuit-breaker-only`, and `full-fault-tolerant-navigator` across 16-task representative workflows with 14 injected faults per seed (`ERR_NAME_NOT_RESOLVED`, `HTTP_503_SERVICE_UNAVAILABLE`, `HTTP_429_RATE_LIMITED`, `ERR_CONNECTION_TIMED_OUT`, `STALE_TAB_DISCONNECTED`, `DUPLICATE_WARP_DOM_MUTATION`).
