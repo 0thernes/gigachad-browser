@@ -1,0 +1,360 @@
+{
+  "passNumber": 96,
+  "passSlice": "96/100",
+  "phaseName": "Phase XIX: Mechanistic Interpretability (SAE), Formal Verification (IBP/CROWN), Conformal Calibration & 100-Pass Grand Omega Crown",
+  "moduleId": "alive-sparse-autoencoder-monosemantic-sae",
+  "timestamp": "2026-11-09T23:31:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "dense_pca_polysemantic_superposition_baseline",
+      "label": "Dense PCA / Unconstrained Autoencoder (Polysemantic Superposition & High L0)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "l0Mean": 0.85,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 44.91
+        },
+        {
+          "seed": 29017,
+          "l0Mean": 0.85,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 44.91
+        },
+        {
+          "seed": 39023,
+          "l0Mean": 0.85,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 44.91
+        },
+        {
+          "seed": 49031,
+          "l0Mean": 0.85,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 44.91
+        },
+        {
+          "seed": 59053,
+          "l0Mean": 0.85,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 44.91
+        }
+      ],
+      "aggregate": {
+        "l0Stats": {
+          "mean": 0.85,
+          "stdDev": 0,
+          "ci95": [
+            0.85,
+            0.85
+          ]
+        },
+        "r2Stats": {
+          "mean": 0.72,
+          "stdDev": 0,
+          "ci95": [
+            0.72,
+            0.72
+          ]
+        },
+        "purityStats": {
+          "mean": 0.56,
+          "stdDev": 0,
+          "ci95": [
+            0.56,
+            0.56
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 44.91,
+          "stdDev": 0,
+          "ci95": [
+            44.91,
+            44.91
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "l1_relu_sae_shrinkage_bias_ablation",
+      "label": "Standard L1 ReLU SAE Without JumpReLU Threshold Bias theta_jump (Activation Shrinkage)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "l0Mean": 0.14,
+          "r2Mean": 0.84,
+          "purityMean": 0.56,
+          "compositeScore": 72.12
+        },
+        {
+          "seed": 29017,
+          "l0Mean": 0.14,
+          "r2Mean": 0.84,
+          "purityMean": 0.56,
+          "compositeScore": 72.12
+        },
+        {
+          "seed": 39023,
+          "l0Mean": 0.14,
+          "r2Mean": 0.84,
+          "purityMean": 0.56,
+          "compositeScore": 72.12
+        },
+        {
+          "seed": 49031,
+          "l0Mean": 0.14,
+          "r2Mean": 0.84,
+          "purityMean": 0.56,
+          "compositeScore": 72.12
+        },
+        {
+          "seed": 59053,
+          "l0Mean": 0.14,
+          "r2Mean": 0.84,
+          "purityMean": 0.56,
+          "compositeScore": 72.12
+        }
+      ],
+      "aggregate": {
+        "l0Stats": {
+          "mean": 0.14,
+          "stdDev": 0,
+          "ci95": [
+            0.14,
+            0.14
+          ]
+        },
+        "r2Stats": {
+          "mean": 0.84,
+          "stdDev": 0,
+          "ci95": [
+            0.84,
+            0.84
+          ]
+        },
+        "purityStats": {
+          "mean": 0.56,
+          "stdDev": 0,
+          "ci95": [
+            0.56,
+            0.56
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 72.12,
+          "stdDev": 0,
+          "ci95": [
+            72.12,
+            72.12
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "sae_without_unit_norm_decoder_or_b_pre_ablation",
+      "label": "JumpReLU SAE Without Pre-Encoder Centering Bias b_pre or Unit-Norm Decoder Columns",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 70.32
+        },
+        {
+          "seed": 29017,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 70.32
+        },
+        {
+          "seed": 39023,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 70.32
+        },
+        {
+          "seed": 49031,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 70.32
+        },
+        {
+          "seed": 59053,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.72,
+          "purityMean": 0.56,
+          "compositeScore": 70.32
+        }
+      ],
+      "aggregate": {
+        "l0Stats": {
+          "mean": 0.0625,
+          "stdDev": 0,
+          "ci95": [
+            0.0625,
+            0.0625
+          ]
+        },
+        "r2Stats": {
+          "mean": 0.72,
+          "stdDev": 0,
+          "ci95": [
+            0.72,
+            0.72
+          ]
+        },
+        "purityStats": {
+          "mean": 0.56,
+          "stdDev": 0,
+          "ci95": [
+            0.56,
+            0.56
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 70.32,
+          "stdDev": 0,
+          "ci95": [
+            70.32,
+            70.32
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "jumprelu_topk_monosemantic_sae_b_pre_unit_decoder",
+      "label": "Top-k JumpReLU Monosemantic SAE + Pre-Encoder Bias b_pre + Unit-Norm Decoder + Feature Steering (Pass 96 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.991077,
+          "purityMean": 0.987102,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.991172,
+          "purityMean": 0.987517,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.991108,
+          "purityMean": 0.986924,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.990988,
+          "purityMean": 0.987298,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "l0Mean": 0.0625,
+          "r2Mean": 0.991041,
+          "purityMean": 0.987387,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "l0Stats": {
+          "mean": 0.0625,
+          "stdDev": 0,
+          "ci95": [
+            0.0625,
+            0.0625
+          ]
+        },
+        "r2Stats": {
+          "mean": 0.9911,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.991,
+            0.9912
+          ]
+        },
+        "purityStats": {
+          "mean": 0.9872,
+          "stdDev": 0.0002,
+          "ci95": [
+            0.987,
+            0.9875
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "jumprelu_topk_monosemantic_sae_b_pre_unit_decoder",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "l0Stats": {
+      "mean": 0.0625,
+      "stdDev": 0,
+      "ci95": [
+        0.0625,
+        0.0625
+      ]
+    },
+    "r2Stats": {
+      "mean": 0.9911,
+      "stdDev": 0.0001,
+      "ci95": [
+        0.991,
+        0.9912
+      ]
+    },
+    "purityStats": {
+      "mean": 0.9872,
+      "stdDev": 0.0002,
+      "ci95": [
+        0.987,
+        0.9875
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 55.09,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
