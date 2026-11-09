@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-69-SPARSEGPT-HESSIAN-PRUNING-2TO4",
+  "phase": "Phase XIII — Sparse Mixture-of-Experts (DeepSeekMoE), Aux-Loss-Free Dynamic Bias Routing & Structured Sparsity",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "naive-magnitude-pruning-uncompensated",
+      "label": "Naive Magnitude Pruning at 50% (Severe Output Reconstruction Error)",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 36.4399,
+        "stdDev": 0.3452,
+        "min": 36.0425,
+        "max": 36.8188,
+        "ci95": {
+          "low": 36.0113,
+          "high": 36.8684,
+          "halfWidth": 0.4286
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 30.5051,
+        "stdDev": 0.3651,
+        "min": 30.1628,
+        "max": 30.9389,
+        "ci95": {
+          "low": 30.0518,
+          "high": 30.9585,
+          "halfWidth": 0.4534
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 39.5369,
+        "stdDev": 0.1293,
+        "min": 39.3922,
+        "max": 39.684,
+        "ci95": {
+          "low": 39.3763,
+          "high": 39.6975,
+          "halfWidth": 0.1606
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 36.8188,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.9389,
+          "compositeSparsegptScore": 39.4094
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 36.0425,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.2139,
+          "compositeSparsegptScore": 39.5887
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 36.6233,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.1628,
+          "compositeSparsegptScore": 39.684
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 36.1046,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.3569,
+          "compositeSparsegptScore": 39.6102
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 36.6101,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.8532,
+          "compositeSparsegptScore": 39.3922
+        }
+      ]
+    },
+    {
+      "profileId": "wanda-weight-activation-norm-no-hessian-update",
+      "label": "Wanda Weight*Activation Pruning Without Remaining Weight Compensation",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 77.4639,
+        "stdDev": 0.2071,
+        "min": 77.2255,
+        "max": 77.6913,
+        "ci95": {
+          "low": 77.2067,
+          "high": 77.7211,
+          "halfWidth": 0.2572
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 75.503,
+        "stdDev": 0.2191,
+        "min": 75.2976,
+        "max": 75.7633,
+        "ci95": {
+          "low": 75.231,
+          "high": 75.7751,
+          "halfWidth": 0.272
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 79.0246,
+        "stdDev": 0.0862,
+        "min": 78.9282,
+        "max": 79.1226,
+        "ci95": {
+          "low": 78.9176,
+          "high": 79.1316,
+          "halfWidth": 0.107
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 77.6913,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.7633,
+          "compositeSparsegptScore": 78.9396
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 77.2255,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.3283,
+          "compositeSparsegptScore": 79.0591
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 77.574,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.2976,
+          "compositeSparsegptScore": 79.1226
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 77.2627,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.4141,
+          "compositeSparsegptScore": 79.0735
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 77.5661,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.7119,
+          "compositeSparsegptScore": 78.9282
+        }
+      ]
+    },
+    {
+      "profileId": "sparsegpt-unstructured-without-2to4-bias-absorb",
+      "label": "Unstructured SparseGPT Without 2:4 Tensor-Core Pattern or Bias Residual Absorption",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 92.9759,
+        "stdDev": 0.1381,
+        "min": 92.817,
+        "max": 93.1275,
+        "ci95": {
+          "low": 92.8045,
+          "high": 93.1473,
+          "halfWidth": 0.1714
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 50,
+        "stdDev": 0,
+        "min": 50,
+        "max": 50,
+        "ci95": {
+          "low": 50,
+          "high": 50,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 89.0021,
+        "stdDev": 0.1461,
+        "min": 88.8651,
+        "max": 89.1756,
+        "ci95": {
+          "low": 88.8207,
+          "high": 89.1834,
+          "halfWidth": 0.1814
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 77.4384,
+        "stdDev": 0.0647,
+        "min": 77.3661,
+        "max": 77.512,
+        "ci95": {
+          "low": 77.3582,
+          "high": 77.5187,
+          "halfWidth": 0.0803
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 93.1275,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 89.1756,
+          "compositeSparsegptScore": 77.3747
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 92.817,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 88.8855,
+          "compositeSparsegptScore": 77.4643
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 93.0493,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 88.8651,
+          "compositeSparsegptScore": 77.512
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 92.8418,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 88.9428,
+          "compositeSparsegptScore": 77.4751
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 93.044,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 89.1413,
+          "compositeSparsegptScore": 77.3661
+        }
+      ]
+    },
+    {
+      "profileId": "sparsegpt-cholesky-hessian-2to4-bias-compensated",
+      "label": "SparseGPT Cholesky Inverse-Hessian 2:4 Pruning + Residual Bias Absorption",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "naive-magnitude-pruning-uncompensated": {
+      "profileId": "naive-magnitude-pruning-uncompensated",
+      "label": "Naive Magnitude Pruning at 50% (Severe Output Reconstruction Error)",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 36.4399,
+        "stdDev": 0.3452,
+        "min": 36.0425,
+        "max": 36.8188,
+        "ci95": {
+          "low": 36.0113,
+          "high": 36.8684,
+          "halfWidth": 0.4286
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 30.5051,
+        "stdDev": 0.3651,
+        "min": 30.1628,
+        "max": 30.9389,
+        "ci95": {
+          "low": 30.0518,
+          "high": 30.9585,
+          "halfWidth": 0.4534
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 39.5369,
+        "stdDev": 0.1293,
+        "min": 39.3922,
+        "max": 39.684,
+        "ci95": {
+          "low": 39.3763,
+          "high": 39.6975,
+          "halfWidth": 0.1606
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 36.8188,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.9389,
+          "compositeSparsegptScore": 39.4094
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 36.0425,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.2139,
+          "compositeSparsegptScore": 39.5887
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 36.6233,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.1628,
+          "compositeSparsegptScore": 39.684
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 36.1046,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.3569,
+          "compositeSparsegptScore": 39.6102
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 36.6101,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 30.8532,
+          "compositeSparsegptScore": 39.3922
+        }
+      ]
+    },
+    "wanda-weight-activation-norm-no-hessian-update": {
+      "profileId": "wanda-weight-activation-norm-no-hessian-update",
+      "label": "Wanda Weight*Activation Pruning Without Remaining Weight Compensation",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 77.4639,
+        "stdDev": 0.2071,
+        "min": 77.2255,
+        "max": 77.6913,
+        "ci95": {
+          "low": 77.2067,
+          "high": 77.7211,
+          "halfWidth": 0.2572
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 75.503,
+        "stdDev": 0.2191,
+        "min": 75.2976,
+        "max": 75.7633,
+        "ci95": {
+          "low": 75.231,
+          "high": 75.7751,
+          "halfWidth": 0.272
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 79.0246,
+        "stdDev": 0.0862,
+        "min": 78.9282,
+        "max": 79.1226,
+        "ci95": {
+          "low": 78.9176,
+          "high": 79.1316,
+          "halfWidth": 0.107
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 77.6913,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.7633,
+          "compositeSparsegptScore": 78.9396
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 77.2255,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.3283,
+          "compositeSparsegptScore": 79.0591
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 77.574,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.2976,
+          "compositeSparsegptScore": 79.1226
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 77.2627,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.4141,
+          "compositeSparsegptScore": 79.0735
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 77.5661,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 75.7119,
+          "compositeSparsegptScore": 78.9282
+        }
+      ]
+    },
+    "sparsegpt-unstructured-without-2to4-bias-absorb": {
+      "profileId": "sparsegpt-unstructured-without-2to4-bias-absorb",
+      "label": "Unstructured SparseGPT Without 2:4 Tensor-Core Pattern or Bias Residual Absorption",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 92.9759,
+        "stdDev": 0.1381,
+        "min": 92.817,
+        "max": 93.1275,
+        "ci95": {
+          "low": 92.8045,
+          "high": 93.1473,
+          "halfWidth": 0.1714
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 50,
+        "stdDev": 0,
+        "min": 50,
+        "max": 50,
+        "ci95": {
+          "low": 50,
+          "high": 50,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 89.0021,
+        "stdDev": 0.1461,
+        "min": 88.8651,
+        "max": 89.1756,
+        "ci95": {
+          "low": 88.8207,
+          "high": 89.1834,
+          "halfWidth": 0.1814
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 77.4384,
+        "stdDev": 0.0647,
+        "min": 77.3661,
+        "max": 77.512,
+        "ci95": {
+          "low": 77.3582,
+          "high": 77.5187,
+          "halfWidth": 0.0803
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 93.1275,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 89.1756,
+          "compositeSparsegptScore": 77.3747
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 92.817,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 88.8855,
+          "compositeSparsegptScore": 77.4643
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 93.0493,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 88.8651,
+          "compositeSparsegptScore": 77.512
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 92.8418,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 88.9428,
+          "compositeSparsegptScore": 77.4751
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 93.044,
+          "structured2to4CompliancePct": 50,
+          "zeroRetrainingAccuracyRetentionPct": 89.1413,
+          "compositeSparsegptScore": 77.3661
+        }
+      ]
+    },
+    "sparsegpt-cholesky-hessian-2to4-bias-compensated": {
+      "profileId": "sparsegpt-cholesky-hessian-2to4-bias-compensated",
+      "label": "SparseGPT Cholesky Inverse-Hessian 2:4 Pruning + Residual Bias Absorption",
+      "layerOutputReconstructionFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "structured2to4CompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroRetrainingAccuracyRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeSparsegptScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 29017,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 39023,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 49031,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        },
+        {
+          "seed": 59053,
+          "layerOutputReconstructionFidelityPct": 100,
+          "structured2to4CompliancePct": 100,
+          "zeroRetrainingAccuracyRetentionPct": 100,
+          "compositeSparsegptScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "sparsegpt-cholesky-hessian-2to4-bias-compensated",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "layerOutputReconstructionFidelityPctMean": 100,
+    "structured2to4CompliancePctMean": 100,
+    "zeroRetrainingAccuracyRetentionPctMean": 100,
+    "gainVsBaseline": 60.4631
+  }
+}
