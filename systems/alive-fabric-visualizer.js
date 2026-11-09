@@ -310,6 +310,7 @@
   let latestSustainedPerf = null, sustainedPerfBusy = false;
   let latestReleaseAudit = null, releaseAuditBusy = false;
   let latestTorHybridMesh = null, torHybridMeshBusy = false;
+  let latestTorCircuits = null, torCircuitsBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -436,6 +437,19 @@
       return latestTorHybridMesh;
     } finally {
       torHybridMeshBusy = false;
+    }
+  }
+  async function runTorCircuits() {
+    const runner = root.AliveTorCircuitController;
+    if (torCircuitsBusy || typeof runner?.run !== 'function') return latestTorCircuits;
+    torCircuitsBusy = true;
+    try {
+      latestTorCircuits = await runner.run();
+      root.__aliveLatestTorCircuits = latestTorCircuits;
+      draw();
+      return latestTorCircuits;
+    } finally {
+      torCircuitsBusy = false;
     }
   }
 
@@ -987,6 +1001,50 @@
     ctx.fillText('20 probes/seed across 5 First-Party Domains (.onion + clearnet) · MAP * ~NOTFOUND · disable_non_proxied_udp', 8, height - 6);
   }
 
+  // ---------- 18. Pass 12 Tor ControlPort circuit observability & NEWNYM ----
+  function drawTorCircuits(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestTorCircuits || root.__aliveLatestTorCircuits;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byController) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(torCircuitsBusy ? 'Running 5-seed Tor ControlPort circuit observability & NEWNYM suite…' : 'Click "Run Tor circuits" above to evaluate 650 CIRC/STREAM attribution, NEWNYM rotation & 3-hop path diversity across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const gNew = s.pairedDeltas?.fullVsNewnymOnlyObservabilityGain?.mean || 0;
+    const gPas = s.pairedDeltas?.fullVsPassiveObservabilityGain?.mean || 0;
+    ctx.fillText(`5 seeds · full vs newnym-only +${gNew.toFixed(1)} (${s.fullBeatNewnymOnlySeeds}/5) · vs passive +${gPas.toFixed(1)} (${s.fullBeatPassiveSeeds}/5) · 0 sybil paths (${s.zeroSybilPathSeeds}/5) · 0 dirty reuse (${s.zeroDirtyReuseSeeds}/5)`, 8, 12);
+
+    const modes = ['unmonitored-blind-socks', 'passive-controlport-observer', 'newnym-without-path-diversity', 'full-controlport-circuit-governor'];
+    const colors = {
+      'unmonitored-blind-socks': '#f43f5e',
+      'passive-controlport-observer': '#f59e0b',
+      'newnym-without-path-diversity': '#38bdf8',
+      'full-controlport-circuit-governor': '#34d399'
+    };
+    const barW = Math.max(80, width - 470);
+    modes.forEach((mode, idx) => {
+      const entry = s.byController[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const obs = entry.observabilityScore?.mean || 0;
+      const att = entry.streamAttributionPct?.mean || 0;
+      const syb = entry.sybilRejectionPct?.mean || 0;
+      const drt = entry.dirtyCircuitReusesAfterNewnym?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, obs / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`score=${obs.toFixed(1)} attr=${att.toFixed(0)}% sybRej=${syb.toFixed(0)}% dirtyReuse=${drt.toFixed(0)}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('18 streams/seed · 650 CIRC/STREAM ControlPort framing · /16 & ASN 3-hop Guard/Middle/Exit verification · SIGNAL NEWNYM', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1039,13 +1097,16 @@
     const torMeshBtn = doc.createElement('button'); torMeshBtn.type = 'button'; torMeshBtn.textContent = 'Run Tor mesh';
     torMeshBtn.title = 'Run 5-seed Tor Hybrid Synergy Mesh session partition, IsolateSOCKSAuth and zero-leak evaluation';
     torMeshBtn.addEventListener('click', () => { runTorHybridMesh(); });
+    const torCircBtn = doc.createElement('button'); torCircBtn.type = 'button'; torCircBtn.textContent = 'Run Tor circuits';
+    torCircBtn.title = 'Run 5-seed Tor ControlPort stream attribution, NEWNYM rotation and 3-hop path diversity evaluation';
+    torCircBtn.addEventListener('click', () => { runTorCircuits(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1054,7 +1115,8 @@
       restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200),
       colonyCanvas = canvas('alive-fabric-colony-fitness', 190), provenanceCanvas = canvas('alive-fabric-provenance', 190),
       faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190), sustainedPerfCanvas = canvas('alive-fabric-sustained-perf', 190),
-      releaseAuditCanvas = canvas('alive-fabric-release-audit', 190), torMeshCanvas = canvas('alive-fabric-tor-mesh', 190);
+      releaseAuditCanvas = canvas('alive-fabric-release-audit', 190), torMeshCanvas = canvas('alive-fabric-tor-mesh', 190),
+      torCircuitsCanvas = canvas('alive-fabric-tor-circuits', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1074,7 +1136,8 @@
       section('14 · Browser tools, navigation, developer workflows & fault recovery (5 seeds)', faultRecoveryCanvas),
       section('15 · Sustained 60Hz performance, memory bounds, visualizer overhead & qualification (5 seeds)', sustainedPerfCanvas),
       section('16 · Integrated Phase I release audit — Passes 1–9 & 8 PDF Gates frozen SHA-256 manifest', releaseAuditCanvas),
-      section('17 · Tor Hybrid Synergy Mesh — IsolateSOCKSAuth, FPD partitions & zero-leak policy (5 seeds)', torMeshCanvas));
+      section('17 · Tor Hybrid Synergy Mesh — IsolateSOCKSAuth, FPD partitions & zero-leak policy (5 seeds)', torMeshCanvas),
+      section('18 · Tor ControlPort — stream attribution, NEWNYM rotation & 3-hop path diversity (5 seeds)', torCircuitsCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1090,7 +1153,8 @@
       () => drawFaultRecovery(faultRecoveryCanvas),
       () => drawSustainedPerf(sustainedPerfCanvas),
       () => drawReleaseAudit(releaseAuditCanvas),
-      () => drawTorHybridMesh(torMeshCanvas));
+      () => drawTorHybridMesh(torMeshCanvas),
+      () => drawTorCircuits(torCircuitsCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1133,6 +1197,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

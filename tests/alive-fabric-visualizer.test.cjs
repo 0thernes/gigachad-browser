@@ -510,6 +510,38 @@ test('runTorHybridMesh renders 5-seed Tor Hybrid Synergy Mesh session isolation 
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runTorCircuits renders 5-seed Tor ControlPort stream attribution and NEWNYM path diversity in section 18', async () => {
+  const { window, dom } = load();
+  window.AliveTorCircuitController = {
+    run: async () => ({
+      summary: {
+        fullBeatNewnymOnlySeeds: 5,
+        fullBeatPassiveSeeds: 5,
+        exact100AttributionSeeds: 5,
+        zeroSybilPathSeeds: 5,
+        zeroDirtyReuseSeeds: 5,
+        pairedDeltas: {
+          fullVsNewnymOnlyObservabilityGain: { mean: 59.0 },
+          fullVsPassiveObservabilityGain: { mean: 92.0 }
+        },
+        byController: {
+          'unmonitored-blind-socks': { observabilityScore: { mean: 0 }, streamAttributionPct: { mean: 0 }, sybilRejectionPct: { mean: 0 }, dirtyCircuitReusesAfterNewnym: { mean: 12 } },
+          'passive-controlport-observer': { observabilityScore: { mean: 8.0 }, streamAttributionPct: { mean: 100 }, sybilRejectionPct: { mean: 0 }, dirtyCircuitReusesAfterNewnym: { mean: 12 } },
+          'newnym-without-path-diversity': { observabilityScore: { mean: 41.0 }, streamAttributionPct: { mean: 100 }, sybilRejectionPct: { mean: 0 }, dirtyCircuitReusesAfterNewnym: { mean: 0 } },
+          'full-controlport-circuit-governor': { observabilityScore: { mean: 100.0 }, streamAttributionPct: { mean: 100 }, sybilRejectionPct: { mean: 100 }, dirtyCircuitReusesAfterNewnym: { mean: 0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runTorCircuits();
+  assert.equal(report.summary.fullBeatNewnymOnlySeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full vs newnym-only +59.0 (5/5)')), 'Tor circuit controller summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-controlport-circu')), 'Tor circuit controller rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Tor ControlPort protocol, stream attribution, NEWNYM & path diversity pass 12
+
+- Added the 5-seed Tor ControlPort protocol parser, stream-to-circuit attribution, `SIGNAL NEWNYM` clean-slate rotation, and 3-hop Guard/Middle/Exit `/16` subnet + ASN path diversity governor ([`systems/alive-tor-circuit-controller.js`](systems/alive-tor-circuit-controller.js), [`scripts/alive-tor-circuit-controller.cjs`](scripts/alive-tor-circuit-controller.cjs)) comparing `unmonitored-blind-socks`, `passive-controlport-observer`, `newnym-without-path-diversity`, and `full-controlport-circuit-governor`.
+- Verified on `5/5` seeds that `full-controlport-circuit-governor` achieves `100.0%` stream attribution, `100.0%` sybil `/16` & ASN path rejection (`0` sybil paths used), `100.0%` `NEWNYM` cleanliness (`0` dirty circuit reuses), and `100.0` observability score.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 18 (`#alive-fabric-tor-circuits`, `Run Tor circuits` button, and `runTorCircuits()`).
+- Added [Pass 12 report](docs/ALIVE_PASS_12_REPORT.md), [JSON report](docs/reports/alive-tor-circuit-controller-2026-11-09.json), [SVG chart](docs/reports/alive-tor-circuit-controller-2026-11-09.svg) and unit tests (`tests/alive-tor-circuit-controller.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Tor Hybrid Synergy Mesh process & session partition architecture pass 11
 
 - Added the 5-seed Chromium / Electron / Tor Browser Hybrid Synergy Mesh session partitioner and `IsolateSOCKSAuth` credential router ([`systems/alive-tor-hybrid-mesh.js`](systems/alive-tor-hybrid-mesh.js), [`scripts/alive-tor-hybrid-mesh.cjs`](scripts/alive-tor-hybrid-mesh.cjs)) comparing `shared-session-direct`, `naive-socks-proxy-only`, `partitioned-storage-no-socks-auth`, and `full-tor-hybrid-synergy-mesh` across 20 security probes per seed.

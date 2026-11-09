@@ -29,7 +29,7 @@ benefit remains to be measured in the next pass.
 | Pass | Intended focus | Status |
 | --- | --- | --- |
 | 11 | Tor Browser / Chromium / Electron Hybrid Process & Session Partition Architecture (`IsolateSOCKSAuth`, `IsolateFirstPartyDomain`, Ephemeral Partitioned Storage, Zero-Leak DNS/WebRTC/Proxy Policy) | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_11_REPORT.md), [Tor mesh JSON](reports/alive-tor-hybrid-mesh-2026-11-09.json), [Tor mesh SVG](reports/alive-tor-hybrid-mesh-2026-11-09.svg) |
-| 12 | Tor ControlPort Protocol, Stream-to-Circuit Observability, `NEWNYM` Identity Rotation & Guard/Middle/Exit Path Verification | Proposed |
+| 12 | Tor ControlPort Protocol, Stream-to-Circuit Observability, `NEWNYM` Identity Rotation & Guard/Middle/Exit Path Verification | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_12_REPORT.md), [Tor circuits JSON](reports/alive-tor-circuit-controller-2026-11-09.json), [Tor circuits SVG](reports/alive-tor-circuit-controller-2026-11-09.svg) |
 | 13 | RFC 7686 / Tor Rendezvous Spec v3 `.onion` Address Cryptographic Verification (56-char Base32 Ed25519 Pubkey, `.onion checksum` SHA3-256 validation, Descriptor Auth & Reachability State Machine) | Proposed |
 | 14 | Anti-Fingerprinting & Anonymity Hardening Matrix (Letterboxing Viewport Quantization, Canvas/WebGL/AudioContext Entropy Bounding, Header/Timer/Font Uniformity & Cross-Origin Unlinkability) | Proposed |
 | 15 | Executed Tor Hybrid Synergy Mesh Acceptance Matrix (Fail-Closed Proxy Kill-Switch, Circuit Recovery Under Relay Failure, Partition Isolation Proof & End-to-End Routing Audit) | Proposed |

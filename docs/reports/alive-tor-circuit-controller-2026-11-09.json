@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-12-tor-controlport-circuit-observability-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "controllers": [
+      "unmonitored-blind-socks",
+      "passive-controlport-observer",
+      "newnym-without-path-diversity",
+      "full-controlport-circuit-governor"
+    ],
+    "streamsPerSeed": 18,
+    "sybilInjectionsPerSeed": 3,
+    "newnymRotationsPerSeed": 2
+  },
+  "summary": {
+    "fullBeatNewnymOnlySeeds": 5,
+    "fullBeatPassiveSeeds": 5,
+    "exact100AttributionSeeds": 5,
+    "zeroSybilPathSeeds": 5,
+    "zeroDirtyReuseSeeds": 5,
+    "pairedDeltas": {
+      "fullVsNewnymOnlyObservabilityGain": {
+        "count": 5,
+        "mean": 59,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          59,
+          59
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsPassiveObservabilityGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byController": {
+      "unmonitored-blind-socks": {
+        "controller": "unmonitored-blind-socks",
+        "observabilityScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "streamAttributionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilRejectionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "newnymCleanlinessPct": {
+          "count": 5,
+          "mean": 33.33333333333333,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            33.33333333333333,
+            33.33333333333333
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilPathsUsed": {
+          "count": 5,
+          "mean": 3,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            3,
+            3
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dirtyCircuitReusesAfterNewnym": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            12,
+            12
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "passive-controlport-observer": {
+        "controller": "passive-controlport-observer",
+        "observabilityScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "streamAttributionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilRejectionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "newnymCleanlinessPct": {
+          "count": 5,
+          "mean": 33.33333333333333,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            33.33333333333333,
+            33.33333333333333
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilPathsUsed": {
+          "count": 5,
+          "mean": 3,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            3,
+            3
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dirtyCircuitReusesAfterNewnym": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            12,
+            12
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "newnym-without-path-diversity": {
+        "controller": "newnym-without-path-diversity",
+        "observabilityScore": {
+          "count": 5,
+          "mean": 41,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            41,
+            41
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "streamAttributionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilRejectionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "newnymCleanlinessPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilPathsUsed": {
+          "count": 5,
+          "mean": 3,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            3,
+            3
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dirtyCircuitReusesAfterNewnym": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "full-controlport-circuit-governor": {
+        "controller": "full-controlport-circuit-governor",
+        "observabilityScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "streamAttributionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilRejectionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "newnymCleanlinessPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "sybilPathsUsed": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dirtyCircuitReusesAfterNewnym": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byController": {
+        "unmonitored-blind-socks": {
+          "seed": 19013,
+          "controller": "unmonitored-blind-socks",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 0,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "passive-controlport-observer": {
+          "seed": 19013,
+          "controller": "passive-controlport-observer",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "newnym-without-path-diversity": {
+          "seed": 19013,
+          "controller": "newnym-without-path-diversity",
+          "metrics": {
+            "observabilityScore": 41,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "full-controlport-circuit-governor": {
+          "seed": 19013,
+          "controller": "full-controlport-circuit-governor",
+          "metrics": {
+            "observabilityScore": 100,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 100,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 0,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byController": {
+        "unmonitored-blind-socks": {
+          "seed": 29017,
+          "controller": "unmonitored-blind-socks",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 0,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "passive-controlport-observer": {
+          "seed": 29017,
+          "controller": "passive-controlport-observer",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "newnym-without-path-diversity": {
+          "seed": 29017,
+          "controller": "newnym-without-path-diversity",
+          "metrics": {
+            "observabilityScore": 41,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "full-controlport-circuit-governor": {
+          "seed": 29017,
+          "controller": "full-controlport-circuit-governor",
+          "metrics": {
+            "observabilityScore": 100,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 100,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 0,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byController": {
+        "unmonitored-blind-socks": {
+          "seed": 39023,
+          "controller": "unmonitored-blind-socks",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 0,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "passive-controlport-observer": {
+          "seed": 39023,
+          "controller": "passive-controlport-observer",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "newnym-without-path-diversity": {
+          "seed": 39023,
+          "controller": "newnym-without-path-diversity",
+          "metrics": {
+            "observabilityScore": 41,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "full-controlport-circuit-governor": {
+          "seed": 39023,
+          "controller": "full-controlport-circuit-governor",
+          "metrics": {
+            "observabilityScore": 100,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 100,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 0,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byController": {
+        "unmonitored-blind-socks": {
+          "seed": 49031,
+          "controller": "unmonitored-blind-socks",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 0,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "passive-controlport-observer": {
+          "seed": 49031,
+          "controller": "passive-controlport-observer",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "newnym-without-path-diversity": {
+          "seed": 49031,
+          "controller": "newnym-without-path-diversity",
+          "metrics": {
+            "observabilityScore": 41,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "full-controlport-circuit-governor": {
+          "seed": 49031,
+          "controller": "full-controlport-circuit-governor",
+          "metrics": {
+            "observabilityScore": 100,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 100,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 0,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byController": {
+        "unmonitored-blind-socks": {
+          "seed": 59053,
+          "controller": "unmonitored-blind-socks",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 0,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "passive-controlport-observer": {
+          "seed": 59053,
+          "controller": "passive-controlport-observer",
+          "metrics": {
+            "observabilityScore": 0,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 33.33333333333333,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 12,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "newnym-without-path-diversity": {
+          "seed": 59053,
+          "controller": "newnym-without-path-diversity",
+          "metrics": {
+            "observabilityScore": 41,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 0,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 3,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        },
+        "full-controlport-circuit-governor": {
+          "seed": 59053,
+          "controller": "full-controlport-circuit-governor",
+          "metrics": {
+            "observabilityScore": 100,
+            "streamAttributionPct": 100,
+            "sybilRejectionPct": 100,
+            "newnymCleanlinessPct": 100,
+            "sybilPathsUsed": 0,
+            "dirtyCircuitReusesAfterNewnym": 0,
+            "newnymRotationsExecuted": 2
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 12 Tor ControlPort protocol, 100% stream-to-circuit attribution, SIGNAL NEWNYM clean-slate rotation, and 3-hop Guard/Middle/Exit /16 subnet & ASN diversity enforcement across 5 seeds."
+}
