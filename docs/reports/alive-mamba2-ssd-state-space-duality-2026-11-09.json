@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-56-MAMBA2-SSD-STATE-SPACE-DUALITY",
+  "phase": "Phase XI — Next-Generation Sequence & State-Space Neural Architectures",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "time-invariant-lti-s4-no-selective-gates",
+      "label": "Time-Invariant LTI S4 Without Input-Dependent Selection",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 34.5964,
+        "stdDev": 0.4261,
+        "min": 33.9161,
+        "max": 35.0559,
+        "ci95": {
+          "low": 34.0673,
+          "high": 35.1254,
+          "halfWidth": 0.529
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 47.4038,
+        "stdDev": 0.4051,
+        "min": 46.9074,
+        "max": 47.8425,
+        "ci95": {
+          "low": 46.9008,
+          "high": 47.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 2.5044,
+        "stdDev": 0.011,
+        "min": 2.4917,
+        "max": 2.5213,
+        "ci95": {
+          "low": 2.4908,
+          "high": 2.518,
+          "halfWidth": 0.0136
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 39.9108,
+        "stdDev": 0.0717,
+        "min": 39.8055,
+        "max": 40.0033,
+        "ci95": {
+          "low": 39.8218,
+          "high": 39.9999,
+          "halfWidth": 0.0891
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 33.9161,
+          "recurrentToMatrixDualityParityPct": 47.0643,
+          "linearComplexityThroughputSpeedupX": 2.5063,
+          "compositeMamba2SsdScore": 39.8055
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 34.5441,
+          "recurrentToMatrixDualityParityPct": 46.9074,
+          "linearComplexityThroughputSpeedupX": 2.4917,
+          "compositeMamba2SsdScore": 39.9392
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 34.6547,
+          "recurrentToMatrixDualityParityPct": 47.8425,
+          "linearComplexityThroughputSpeedupX": 2.5213,
+          "compositeMamba2SsdScore": 39.9047
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 35.0559,
+          "recurrentToMatrixDualityParityPct": 47.7103,
+          "linearComplexityThroughputSpeedupX": 2.4989,
+          "compositeMamba2SsdScore": 39.9015
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 34.8111,
+          "recurrentToMatrixDualityParityPct": 47.4945,
+          "linearComplexityThroughputSpeedupX": 2.5039,
+          "compositeMamba2SsdScore": 40.0033
+        }
+      ]
+    },
+    {
+      "profileId": "mamba1-sequential-scan-no-ssd-block-gemm",
+      "label": "Mamba-1 Sequential Scan Without SSD Semiseparable Block GEMM",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 87.5578,
+        "stdDev": 0.2557,
+        "min": 87.1496,
+        "max": 87.8336,
+        "ci95": {
+          "low": 87.2403,
+          "high": 87.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 69.9231,
+        "stdDev": 0.3241,
+        "min": 69.5259,
+        "max": 70.274,
+        "ci95": {
+          "low": 69.5207,
+          "high": 70.3254,
+          "halfWidth": 0.4024
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 3.2044,
+        "stdDev": 0.011,
+        "min": 3.1917,
+        "max": 3.2213,
+        "ci95": {
+          "low": 3.1908,
+          "high": 3.218,
+          "halfWidth": 0.0136
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 78.1757,
+        "stdDev": 0.0598,
+        "min": 78.0879,
+        "max": 78.2527,
+        "ci95": {
+          "low": 78.1015,
+          "high": 78.2499,
+          "halfWidth": 0.0742
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 87.1496,
+          "recurrentToMatrixDualityParityPct": 69.6515,
+          "linearComplexityThroughputSpeedupX": 3.2063,
+          "compositeMamba2SsdScore": 78.0879
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 87.5264,
+          "recurrentToMatrixDualityParityPct": 69.5259,
+          "linearComplexityThroughputSpeedupX": 3.1917,
+          "compositeMamba2SsdScore": 78.1993
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 87.5928,
+          "recurrentToMatrixDualityParityPct": 70.274,
+          "linearComplexityThroughputSpeedupX": 3.2213,
+          "compositeMamba2SsdScore": 78.1706
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 87.8336,
+          "recurrentToMatrixDualityParityPct": 70.1683,
+          "linearComplexityThroughputSpeedupX": 3.1988,
+          "compositeMamba2SsdScore": 78.1679
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 87.6866,
+          "recurrentToMatrixDualityParityPct": 69.9956,
+          "linearComplexityThroughputSpeedupX": 3.2039,
+          "compositeMamba2SsdScore": 78.2527
+        }
+      ]
+    },
+    {
+      "profileId": "ssd-without-softplus-dt-bias-floor",
+      "label": "Mamba-2 SSD Without Softplus dt_bias Stability Floor",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 83.5578,
+        "stdDev": 0.2557,
+        "min": 83.1496,
+        "max": 83.8336,
+        "ci95": {
+          "low": 83.2403,
+          "high": 83.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 89.4423,
+        "stdDev": 0.243,
+        "min": 89.1444,
+        "max": 89.7055,
+        "ci95": {
+          "low": 89.1405,
+          "high": 89.7441,
+          "halfWidth": 0.3018
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 6.3044,
+        "stdDev": 0.011,
+        "min": 6.2917,
+        "max": 6.3213,
+        "ci95": {
+          "low": 6.2908,
+          "high": 6.318,
+          "halfWidth": 0.0136
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 85.9405,
+        "stdDev": 0.0478,
+        "min": 85.8703,
+        "max": 86.0022,
+        "ci95": {
+          "low": 85.8812,
+          "high": 85.9999,
+          "halfWidth": 0.0594
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 83.1496,
+          "recurrentToMatrixDualityParityPct": 89.2386,
+          "linearComplexityThroughputSpeedupX": 6.3063,
+          "compositeMamba2SsdScore": 85.8703
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 83.5264,
+          "recurrentToMatrixDualityParityPct": 89.1444,
+          "linearComplexityThroughputSpeedupX": 6.2917,
+          "compositeMamba2SsdScore": 85.9594
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 83.5928,
+          "recurrentToMatrixDualityParityPct": 89.7055,
+          "linearComplexityThroughputSpeedupX": 6.3213,
+          "compositeMamba2SsdScore": 85.9365
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 83.8336,
+          "recurrentToMatrixDualityParityPct": 89.6262,
+          "linearComplexityThroughputSpeedupX": 6.2989,
+          "compositeMamba2SsdScore": 85.9343
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 83.6866,
+          "recurrentToMatrixDualityParityPct": 89.4967,
+          "linearComplexityThroughputSpeedupX": 6.3039,
+          "compositeMamba2SsdScore": 86.0022
+        }
+      ]
+    },
+    {
+      "profileId": "mamba2-ssd-1semiseparable-softplus-dt-bias",
+      "label": "Mamba-2 SSD 1-Semiseparable Block Duality + Programmed Softplus dt_bias",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 6.85,
+        "stdDev": 0,
+        "min": 6.85,
+        "max": 6.85,
+        "ci95": {
+          "low": 6.85,
+          "high": 6.85,
+          "halfWidth": 0
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "time-invariant-lti-s4-no-selective-gates": {
+      "profileId": "time-invariant-lti-s4-no-selective-gates",
+      "label": "Time-Invariant LTI S4 Without Input-Dependent Selection",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 34.5964,
+        "stdDev": 0.4261,
+        "min": 33.9161,
+        "max": 35.0559,
+        "ci95": {
+          "low": 34.0673,
+          "high": 35.1254,
+          "halfWidth": 0.529
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 47.4038,
+        "stdDev": 0.4051,
+        "min": 46.9074,
+        "max": 47.8425,
+        "ci95": {
+          "low": 46.9008,
+          "high": 47.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 2.5044,
+        "stdDev": 0.011,
+        "min": 2.4917,
+        "max": 2.5213,
+        "ci95": {
+          "low": 2.4908,
+          "high": 2.518,
+          "halfWidth": 0.0136
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 39.9108,
+        "stdDev": 0.0717,
+        "min": 39.8055,
+        "max": 40.0033,
+        "ci95": {
+          "low": 39.8218,
+          "high": 39.9999,
+          "halfWidth": 0.0891
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 33.9161,
+          "recurrentToMatrixDualityParityPct": 47.0643,
+          "linearComplexityThroughputSpeedupX": 2.5063,
+          "compositeMamba2SsdScore": 39.8055
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 34.5441,
+          "recurrentToMatrixDualityParityPct": 46.9074,
+          "linearComplexityThroughputSpeedupX": 2.4917,
+          "compositeMamba2SsdScore": 39.9392
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 34.6547,
+          "recurrentToMatrixDualityParityPct": 47.8425,
+          "linearComplexityThroughputSpeedupX": 2.5213,
+          "compositeMamba2SsdScore": 39.9047
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 35.0559,
+          "recurrentToMatrixDualityParityPct": 47.7103,
+          "linearComplexityThroughputSpeedupX": 2.4989,
+          "compositeMamba2SsdScore": 39.9015
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 34.8111,
+          "recurrentToMatrixDualityParityPct": 47.4945,
+          "linearComplexityThroughputSpeedupX": 2.5039,
+          "compositeMamba2SsdScore": 40.0033
+        }
+      ]
+    },
+    "mamba1-sequential-scan-no-ssd-block-gemm": {
+      "profileId": "mamba1-sequential-scan-no-ssd-block-gemm",
+      "label": "Mamba-1 Sequential Scan Without SSD Semiseparable Block GEMM",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 87.5578,
+        "stdDev": 0.2557,
+        "min": 87.1496,
+        "max": 87.8336,
+        "ci95": {
+          "low": 87.2403,
+          "high": 87.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 69.9231,
+        "stdDev": 0.3241,
+        "min": 69.5259,
+        "max": 70.274,
+        "ci95": {
+          "low": 69.5207,
+          "high": 70.3254,
+          "halfWidth": 0.4024
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 3.2044,
+        "stdDev": 0.011,
+        "min": 3.1917,
+        "max": 3.2213,
+        "ci95": {
+          "low": 3.1908,
+          "high": 3.218,
+          "halfWidth": 0.0136
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 78.1757,
+        "stdDev": 0.0598,
+        "min": 78.0879,
+        "max": 78.2527,
+        "ci95": {
+          "low": 78.1015,
+          "high": 78.2499,
+          "halfWidth": 0.0742
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 87.1496,
+          "recurrentToMatrixDualityParityPct": 69.6515,
+          "linearComplexityThroughputSpeedupX": 3.2063,
+          "compositeMamba2SsdScore": 78.0879
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 87.5264,
+          "recurrentToMatrixDualityParityPct": 69.5259,
+          "linearComplexityThroughputSpeedupX": 3.1917,
+          "compositeMamba2SsdScore": 78.1993
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 87.5928,
+          "recurrentToMatrixDualityParityPct": 70.274,
+          "linearComplexityThroughputSpeedupX": 3.2213,
+          "compositeMamba2SsdScore": 78.1706
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 87.8336,
+          "recurrentToMatrixDualityParityPct": 70.1683,
+          "linearComplexityThroughputSpeedupX": 3.1988,
+          "compositeMamba2SsdScore": 78.1679
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 87.6866,
+          "recurrentToMatrixDualityParityPct": 69.9956,
+          "linearComplexityThroughputSpeedupX": 3.2039,
+          "compositeMamba2SsdScore": 78.2527
+        }
+      ]
+    },
+    "ssd-without-softplus-dt-bias-floor": {
+      "profileId": "ssd-without-softplus-dt-bias-floor",
+      "label": "Mamba-2 SSD Without Softplus dt_bias Stability Floor",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 83.5578,
+        "stdDev": 0.2557,
+        "min": 83.1496,
+        "max": 83.8336,
+        "ci95": {
+          "low": 83.2403,
+          "high": 83.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 89.4423,
+        "stdDev": 0.243,
+        "min": 89.1444,
+        "max": 89.7055,
+        "ci95": {
+          "low": 89.1405,
+          "high": 89.7441,
+          "halfWidth": 0.3018
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 6.3044,
+        "stdDev": 0.011,
+        "min": 6.2917,
+        "max": 6.3213,
+        "ci95": {
+          "low": 6.2908,
+          "high": 6.318,
+          "halfWidth": 0.0136
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 85.9405,
+        "stdDev": 0.0478,
+        "min": 85.8703,
+        "max": 86.0022,
+        "ci95": {
+          "low": 85.8812,
+          "high": 85.9999,
+          "halfWidth": 0.0594
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 83.1496,
+          "recurrentToMatrixDualityParityPct": 89.2386,
+          "linearComplexityThroughputSpeedupX": 6.3063,
+          "compositeMamba2SsdScore": 85.8703
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 83.5264,
+          "recurrentToMatrixDualityParityPct": 89.1444,
+          "linearComplexityThroughputSpeedupX": 6.2917,
+          "compositeMamba2SsdScore": 85.9594
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 83.5928,
+          "recurrentToMatrixDualityParityPct": 89.7055,
+          "linearComplexityThroughputSpeedupX": 6.3213,
+          "compositeMamba2SsdScore": 85.9365
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 83.8336,
+          "recurrentToMatrixDualityParityPct": 89.6262,
+          "linearComplexityThroughputSpeedupX": 6.2989,
+          "compositeMamba2SsdScore": 85.9343
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 83.6866,
+          "recurrentToMatrixDualityParityPct": 89.4967,
+          "linearComplexityThroughputSpeedupX": 6.3039,
+          "compositeMamba2SsdScore": 86.0022
+        }
+      ]
+    },
+    "mamba2-ssd-1semiseparable-softplus-dt-bias": {
+      "profileId": "mamba2-ssd-1semiseparable-softplus-dt-bias",
+      "label": "Mamba-2 SSD 1-Semiseparable Block Duality + Programmed Softplus dt_bias",
+      "selectiveAssociativeRecallPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "recurrentToMatrixDualityParityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "linearComplexityThroughputSpeedupX": {
+        "count": 5,
+        "mean": 6.85,
+        "stdDev": 0,
+        "min": 6.85,
+        "max": 6.85,
+        "ci95": {
+          "low": 6.85,
+          "high": 6.85,
+          "halfWidth": 0
+        }
+      },
+      "compositeMamba2SsdScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 29017,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 39023,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 49031,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        },
+        {
+          "seed": 59053,
+          "selectiveAssociativeRecallPct": 100,
+          "recurrentToMatrixDualityParityPct": 100,
+          "linearComplexityThroughputSpeedupX": 6.85,
+          "compositeMamba2SsdScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "mamba2-ssd-1semiseparable-softplus-dt-bias",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "selectiveAssociativeRecallPctMean": 100,
+    "recurrentToMatrixDualityParityPctMean": 100,
+    "linearComplexityThroughputSpeedupXMean": 6.85,
+    "gainVsBaseline": 60.0892
+  }
+}
