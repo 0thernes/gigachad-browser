@@ -1,0 +1,849 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-07-research-provenance-contradiction-writing-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "pipelines": [
+      "ungrounded-freeform",
+      "naive-concatenator",
+      "citation-only-filter",
+      "provenance-contradiction-writer"
+    ],
+    "documentsPerSeed": 9,
+    "contradictionsPerSeed": 3,
+    "hallucinationProbesPerSeed": 2
+  },
+  "summary": {
+    "provBeatCitationSeeds": 5,
+    "provBeatNaiveSeeds": 5,
+    "exactContradictionRecallSeeds": 5,
+    "zeroHallucinationSeeds": 5,
+    "pairedDeltas": {
+      "provVsCitationScoreGain": {
+        "count": 5,
+        "mean": 62.27932300013064,
+        "sampleStandardDeviation": 0.046849539918583746,
+        "ci95": [
+          62.221151613081325,
+          62.33749438717995
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "provVsNaiveScoreGain": {
+        "count": 5,
+        "mean": 74.15221086758167,
+        "sampleStandardDeviation": 0.0536502460372909,
+        "ci95": [
+          74.0855952885824,
+          74.21882644658095
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byPipeline": {
+      "ungrounded-freeform": {
+        "pipeline": "ungrounded-freeform",
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "claimPrecisionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "primaryRecallPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contradictionRecallPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hallucinationRatePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "meanSourceQuality": {
+          "count": 5,
+          "mean": 0.2,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.2,
+            0.2
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "naive-concatenator": {
+        "pipeline": "naive-concatenator",
+        "compositeScore": {
+          "count": 5,
+          "mean": 25.564439337255124,
+          "sampleStandardDeviation": 0.03570251386800752,
+          "ci95": [
+            25.52010881113985,
+            25.608769863370398
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "claimPrecisionPct": {
+          "count": 5,
+          "mean": 58.333333333333336,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            58.333333333333336,
+            58.333333333333336
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "primaryRecallPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contradictionRecallPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hallucinationRatePct": {
+          "count": 5,
+          "mean": 16.666666666666664,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            16.666666666666664,
+            16.666666666666664
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "meanSourceQuality": {
+          "count": 5,
+          "mean": 0.7064439337255123,
+          "sampleStandardDeviation": 0.0035702513868007177,
+          "ci95": [
+            0.7020108811139848,
+            0.7108769863370398
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "citation-only-filter": {
+        "pipeline": "citation-only-filter",
+        "compositeScore": {
+          "count": 5,
+          "mean": 37.43732720470615,
+          "sampleStandardDeviation": 0.04284301664160901,
+          "ci95": [
+            37.38413057336782,
+            37.49052383604448
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "claimPrecisionPct": {
+          "count": 5,
+          "mean": 70,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            70,
+            70
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "primaryRecallPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contradictionRecallPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hallucinationRatePct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "meanSourceQuality": {
+          "count": 5,
+          "mean": 0.8437327204706146,
+          "sampleStandardDeviation": 0.004284301664160836,
+          "ci95": [
+            0.8384130573367816,
+            0.8490523836044477
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "provenance-contradiction-writer": {
+        "pipeline": "provenance-contradiction-writer",
+        "compositeScore": {
+          "count": 5,
+          "mean": 99.71665020483678,
+          "sampleStandardDeviation": 0.08846072485600892,
+          "ci95": [
+            99.60681170752807,
+            99.8264887021455
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "claimPrecisionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "primaryRecallPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contradictionRecallPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "hallucinationRatePct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "meanSourceQuality": {
+          "count": 5,
+          "mean": 0.9716650204836791,
+          "sampleStandardDeviation": 0.008846072485600553,
+          "ci95": [
+            0.960681170752808,
+            0.9826488702145502
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "pipelines": {
+        "ungrounded-freeform": {
+          "seed": 19013,
+          "pipeline": "ungrounded-freeform",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 14,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 0,
+            "claimPrecisionPct": 0,
+            "primaryRecallPct": 0,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 100,
+            "meanSourceQuality": 0.2
+          }
+        },
+        "naive-concatenator": {
+          "seed": 19013,
+          "pipeline": "naive-concatenator",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 12,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 25.571772506747706,
+            "claimPrecisionPct": 58.333333333333336,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 16.666666666666664,
+            "meanSourceQuality": 0.7071772506747704
+          }
+        },
+        "citation-only-filter": {
+          "seed": 19013,
+          "pipeline": "citation-only-filter",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 10,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 37.44612700809725,
+            "claimPrecisionPct": 70,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.8446127008097246
+          }
+        },
+        "provenance-contradiction-writer": {
+          "seed": 19013,
+          "pipeline": "provenance-contradiction-writer",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2615,
+          "persistedCount": 1,
+          "emittedClaimsCount": 7,
+          "detectedContradictionsCount": 3,
+          "detectedContradictions": [
+            {
+              "propId": "P1",
+              "primaryClaim": "0.000 bits drift",
+              "primaryUrl": "https://spec.ietf-archive.example.org/rfc-1113/architecture",
+              "primaryReceiptSha256": "e5a28cd318d1ea47b5c014fb5ef11ec4203a838c4ce18a8be792923a98819fd2",
+              "conflictingClaim": "0.420 bits drift; PRNG omittable",
+              "conflictingUrl": "https://blog-mirror.secondary.example.org/post-19013/opinion-p1",
+              "conflictingReceiptSha256": "a811aa4dff5c822fc7a45e9fb65f3eb55a07857e8f34f1fc86a06102453e7f19",
+              "authorityDelta": 0.4725455310568213
+            },
+            {
+              "propId": "P2",
+              "primaryClaim": "2816 synapses/step; 94 calls full sweep",
+              "primaryUrl": "https://bench.empirical.example.org/run-19013/code",
+              "primaryReceiptSha256": "a361c18a9c33a22a0565d9ba13abca04d4f76e99c25b64642475cb5904107c49",
+              "conflictingClaim": "22528 synapses/step; 1 call sweep",
+              "conflictingUrl": "https://forum-notes.secondary.example.org/thread-19013/synapse-claim",
+              "conflictingReceiptSha256": "c8f2727bbc5e84c2a599f3601866e579dcf3d2999003ecf720a9e4cd055f4c85",
+              "authorityDelta": 0.3525455310568213
+            },
+            {
+              "propId": "P3",
+              "primaryClaim": "wraps at 512 phases (4096 floats)",
+              "primaryUrl": "https://verif.counterexample.example.org/audit-19013/results",
+              "primaryReceiptSha256": "82a8376a926254d1831b3374b561908c3676b4fd1f55af6b13c25ee198e8cc9a",
+              "conflictingClaim": "1024 phases valid on 8192 floats",
+              "conflictingUrl": "https://old-wiki.secondary.example.org/page-19013/attention-phases",
+              "conflictingReceiptSha256": "51b7178526507c6b1c99e7ce7a9820a2aaafc54dbec410ead28fbe0722810935",
+              "authorityDelta": 0.4572349355462938
+            }
+          ],
+          "metrics": {
+            "compositeScore": 99.72736285412684,
+            "claimPrecisionPct": 100,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 100,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.972736285412684
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "pipelines": {
+        "ungrounded-freeform": {
+          "seed": 29017,
+          "pipeline": "ungrounded-freeform",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 14,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 0,
+            "claimPrecisionPct": 0,
+            "primaryRecallPct": 0,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 100,
+            "meanSourceQuality": 0.2
+          }
+        },
+        "naive-concatenator": {
+          "seed": 29017,
+          "pipeline": "naive-concatenator",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 12,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 25.552823489943208,
+            "claimPrecisionPct": 58.333333333333336,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 16.666666666666664,
+            "meanSourceQuality": 0.7052823489943209
+          }
+        },
+        "citation-only-filter": {
+          "seed": 29017,
+          "pipeline": "citation-only-filter",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 10,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 37.42338818793185,
+            "claimPrecisionPct": 70,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.8423388187931851
+          }
+        },
+        "provenance-contradiction-writer": {
+          "seed": 29017,
+          "pipeline": "provenance-contradiction-writer",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2615,
+          "persistedCount": 1,
+          "emittedClaimsCount": 7,
+          "detectedContradictionsCount": 3,
+          "detectedContradictions": [
+            {
+              "propId": "P1",
+              "primaryClaim": "0.000 bits drift",
+              "primaryUrl": "https://spec.ietf-archive.example.org/rfc-1217/architecture",
+              "primaryReceiptSha256": "87725183a5451420e845d83164e2ef2163798378454086d4488feb1d2ce33eb6",
+              "conflictingClaim": "0.420 bits drift; PRNG omittable",
+              "conflictingUrl": "https://blog-mirror.secondary.example.org/post-29017/opinion-p1",
+              "conflictingReceiptSha256": "8aeea4c3bfb73f7a60273c4638152f6d3036ee870e27aaa8a47840c9f965e915",
+              "authorityDelta": 0.46459927830845116
+            },
+            {
+              "propId": "P2",
+              "primaryClaim": "2816 synapses/step; 94 calls full sweep",
+              "primaryUrl": "https://bench.empirical.example.org/run-29017/code",
+              "primaryReceiptSha256": "c2b81cf9e6e0c44f596498e6b45fadd6a9efdde3919d69c4975afbcf7a6cb070",
+              "conflictingClaim": "22528 synapses/step; 1 call sweep",
+              "conflictingUrl": "https://forum-notes.secondary.example.org/thread-29017/synapse-claim",
+              "conflictingReceiptSha256": "8f524210fe2e03fd70a7d950c7d13970a2d26f71f48a8ccd7711dd949897dd0a",
+              "authorityDelta": 0.34459927830845116
+            },
+            {
+              "propId": "P3",
+              "primaryClaim": "wraps at 512 phases (4096 floats)",
+              "primaryUrl": "https://verif.counterexample.example.org/audit-29017/results",
+              "primaryReceiptSha256": "315faff722d8c9dba3f4a31fdc1154718c82b7aeeb8ad8fff32177f81b9918ab",
+              "conflictingClaim": "1024 phases valid on 8192 floats",
+              "conflictingUrl": "https://old-wiki.secondary.example.org/page-29017/attention-phases",
+              "conflictingReceiptSha256": "6a43c638229cfd501fdc146c1b912455c95b05ee01fe86571b79f595a51ba5ad",
+              "authorityDelta": 0.4475915087107568
+            }
+          ],
+          "metrics": {
+            "compositeScore": 99.6716405385706,
+            "claimPrecisionPct": 100,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 100,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.9671640538570604
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "pipelines": {
+        "ungrounded-freeform": {
+          "seed": 39023,
+          "pipeline": "ungrounded-freeform",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 14,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 0,
+            "claimPrecisionPct": 0,
+            "primaryRecallPct": 0,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 100,
+            "meanSourceQuality": 0.2
+          }
+        },
+        "naive-concatenator": {
+          "seed": 39023,
+          "pipeline": "naive-concatenator",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 12,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 25.532655382226224,
+            "claimPrecisionPct": 58.333333333333336,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 16.666666666666664,
+            "meanSourceQuality": 0.703265538222622
+          }
+        },
+        "citation-only-filter": {
+          "seed": 39023,
+          "pipeline": "citation-only-filter",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 10,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 37.399186458671466,
+            "claimPrecisionPct": 70,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.8399186458671466
+          }
+        },
+        "provenance-contradiction-writer": {
+          "seed": 39023,
+          "pipeline": "provenance-contradiction-writer",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2615,
+          "persistedCount": 1,
+          "emittedClaimsCount": 7,
+          "detectedContradictionsCount": 3,
+          "detectedContradictions": [
+            {
+              "propId": "P1",
+              "primaryClaim": "0.000 bits drift",
+              "primaryUrl": "https://spec.ietf-archive.example.org/rfc-1323/architecture",
+              "primaryReceiptSha256": "eecb5d2ca6d86e5a18eddcf665230eb2a0ad42383be6400e837a1c0f96000a5b",
+              "conflictingClaim": "0.420 bits drift; PRNG omittable",
+              "conflictingUrl": "https://blog-mirror.secondary.example.org/post-39023/opinion-p1",
+              "conflictingReceiptSha256": "71ce90b3f1d76f2daf46e14ca1e825b2ae1f3a75170d5f2084da00cdc60b9aa4",
+              "authorityDelta": 0.44948309984058143
+            },
+            {
+              "propId": "P2",
+              "primaryClaim": "2816 synapses/step; 94 calls full sweep",
+              "primaryUrl": "https://bench.empirical.example.org/run-39023/code",
+              "primaryReceiptSha256": "d62658554f0b0e24a7f780f4638ca0689368d36e2a45ab7291c9f792283f317e",
+              "conflictingClaim": "22528 synapses/step; 1 call sweep",
+              "conflictingUrl": "https://forum-notes.secondary.example.org/thread-39023/synapse-claim",
+              "conflictingReceiptSha256": "f7f920ebcc934eed4f8c6fb166eb1d8ba986df568f7d8aca14127e601a9c944f",
+              "authorityDelta": 0.32948309984058144
+            },
+            {
+              "propId": "P3",
+              "primaryClaim": "wraps at 512 phases (4096 floats)",
+              "primaryUrl": "https://verif.counterexample.example.org/audit-39023/results",
+              "primaryReceiptSha256": "745d00e2b4f73f98cac8a78fb20e74f9e5b7718f795355ab19ff7ef6f7e2276e",
+              "conflictingClaim": "1024 phases valid on 8192 floats",
+              "conflictingUrl": "https://old-wiki.secondary.example.org/page-39023/attention-phases",
+              "conflictingReceiptSha256": "1d790739ff564f264e16205fd31a7e983c7c07c6aea01b689b1ef5de4e831c65",
+              "authorityDelta": 0.4621359428483993
+            }
+          ],
+          "metrics": {
+            "compositeScore": 99.6347784722623,
+            "claimPrecisionPct": 100,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 100,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.9634778472262303
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "pipelines": {
+        "ungrounded-freeform": {
+          "seed": 49031,
+          "pipeline": "ungrounded-freeform",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 14,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 0,
+            "claimPrecisionPct": 0,
+            "primaryRecallPct": 0,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 100,
+            "meanSourceQuality": 0.2
+          }
+        },
+        "naive-concatenator": {
+          "seed": 49031,
+          "pipeline": "naive-concatenator",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 12,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 25.622779935295696,
+            "claimPrecisionPct": 58.333333333333336,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 16.666666666666664,
+            "meanSourceQuality": 0.7122779935295694
+          }
+        },
+        "citation-only-filter": {
+          "seed": 49031,
+          "pipeline": "citation-only-filter",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 10,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 37.507335922354834,
+            "claimPrecisionPct": 70,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.8507335922354834
+          }
+        },
+        "provenance-contradiction-writer": {
+          "seed": 49031,
+          "pipeline": "provenance-contradiction-writer",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2615,
+          "persistedCount": 1,
+          "emittedClaimsCount": 7,
+          "detectedContradictionsCount": 3,
+          "detectedContradictions": [
+            {
+              "propId": "P1",
+              "primaryClaim": "0.000 bits drift",
+              "primaryUrl": "https://spec.ietf-archive.example.org/rfc-1431/architecture",
+              "primaryReceiptSha256": "6af71ca9a43f0fb6d7bafbcead20b94683e055970bc38d7a556d71d28080f68d",
+              "conflictingClaim": "0.420 bits drift; PRNG omittable",
+              "conflictingUrl": "https://blog-mirror.secondary.example.org/post-49031/opinion-p1",
+              "conflictingReceiptSha256": "a6d5d130f7a1997c95a43a40b4ea7264b68263e16cfbb240b24376294464eae9",
+              "authorityDelta": 0.49016060259193184
+            },
+            {
+              "propId": "P2",
+              "primaryClaim": "2816 synapses/step; 94 calls full sweep",
+              "primaryUrl": "https://bench.empirical.example.org/run-49031/code",
+              "primaryReceiptSha256": "5bc4bd1110135025e7e140ee170c7a10adcc45c91052a56747488e76dd6c3f89",
+              "conflictingClaim": "22528 synapses/step; 1 call sweep",
+              "conflictingUrl": "https://forum-notes.secondary.example.org/thread-49031/synapse-claim",
+              "conflictingReceiptSha256": "fe74655f3bc35e8dde4207abcea20cf67e346525a257275bd6d70cce0cfc9150",
+              "authorityDelta": 0.37016060259193184
+            },
+            {
+              "propId": "P3",
+              "primaryClaim": "wraps at 512 phases (4096 floats)",
+              "primaryUrl": "https://verif.counterexample.example.org/audit-49031/results",
+              "primaryReceiptSha256": "b7880fbf071d47843a29a95027001189de5e19d5688fb88647f2a42439069392",
+              "conflictingClaim": "1024 phases valid on 8192 floats",
+              "conflictingUrl": "https://old-wiki.secondary.example.org/page-49031/attention-phases",
+              "conflictingReceiptSha256": "870a5ebdea1397e1875868b13cebed9cc0ffc7f4710dedce88e657d2505916fa",
+              "authorityDelta": 0.4952874830085784
+            }
+          ],
+          "metrics": {
+            "compositeScore": 99.86336301374915,
+            "claimPrecisionPct": 100,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 100,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.9863363013749146
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "pipelines": {
+        "ungrounded-freeform": {
+          "seed": 59053,
+          "pipeline": "ungrounded-freeform",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 14,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 0,
+            "claimPrecisionPct": 0,
+            "primaryRecallPct": 0,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 100,
+            "meanSourceQuality": 0.2
+          }
+        },
+        "naive-concatenator": {
+          "seed": 59053,
+          "pipeline": "naive-concatenator",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 12,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 25.542165372062783,
+            "claimPrecisionPct": 58.333333333333336,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 16.666666666666664,
+            "meanSourceQuality": 0.7042165372062784
+          }
+        },
+        "citation-only-filter": {
+          "seed": 59053,
+          "pipeline": "citation-only-filter",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2410,
+          "persistedCount": 1,
+          "emittedClaimsCount": 10,
+          "detectedContradictionsCount": 0,
+          "detectedContradictions": [],
+          "metrics": {
+            "compositeScore": 37.41059844647534,
+            "claimPrecisionPct": 70,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 0,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.8410598446475342
+          }
+        },
+        "provenance-contradiction-writer": {
+          "seed": 59053,
+          "pipeline": "provenance-contradiction-writer",
+          "notebookStatus": "completed",
+          "notebookCharacters": 2615,
+          "persistedCount": 1,
+          "emittedClaimsCount": 7,
+          "detectedContradictionsCount": 3,
+          "detectedContradictions": [
+            {
+              "propId": "P1",
+              "primaryClaim": "0.000 bits drift",
+              "primaryUrl": "https://spec.ietf-archive.example.org/rfc-1553/architecture",
+              "primaryReceiptSha256": "36332da93de11cfd75361ba440470496b2d57d3e99a367a516ffa93cb2597341",
+              "conflictingClaim": "0.420 bits drift; PRNG omittable",
+              "conflictingUrl": "https://blog-mirror.secondary.example.org/post-59053/opinion-p1",
+              "conflictingReceiptSha256": "681cc436abb8afeb306455b500bf026c655344582afcd402e7e28466dbf0c415",
+              "authorityDelta": 0.4667122527584434
+            },
+            {
+              "propId": "P2",
+              "primaryClaim": "2816 synapses/step; 94 calls full sweep",
+              "primaryUrl": "https://bench.empirical.example.org/run-59053/code",
+              "primaryReceiptSha256": "d5600dd9ff96866c8041b839c06d9492600cfad2d36658348babd9437c2a7f7e",
+              "conflictingClaim": "22528 synapses/step; 1 call sweep",
+              "conflictingUrl": "https://forum-notes.secondary.example.org/thread-59053/synapse-claim",
+              "conflictingReceiptSha256": "483049ae30b723d4b19582a2ccffca580f11494c5a55ece47ccb9bff3adf5a00",
+              "authorityDelta": 0.3467122527584434
+            },
+            {
+              "propId": "P3",
+              "primaryClaim": "wraps at 512 phases (4096 floats)",
+              "primaryUrl": "https://verif.counterexample.example.org/audit-59053/results",
+              "primaryReceiptSha256": "a1e193426cd43fac01ffb94bf962a39bd655a5f35be37b094ee9767d4a7d8fed",
+              "conflictingClaim": "1024 phases valid on 8192 floats",
+              "conflictingUrl": "https://old-wiki.secondary.example.org/page-59053/attention-phases",
+              "conflictingReceiptSha256": "1e8718722c29f47e6d0277bc39e12e5c92955bd92d2b4a8ee7142911de6b8a72",
+              "authorityDelta": 0.46824489154852933
+            }
+          ],
+          "metrics": {
+            "compositeScore": 99.68610614547507,
+            "claimPrecisionPct": 100,
+            "primaryRecallPct": 100,
+            "contradictionRecallPct": 100,
+            "hallucinationRatePct": 0,
+            "meanSourceQuality": 0.968610614547506
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 7 evaluation of Ghost Swarm and Ghost Write provenance receipts, SHA-256 excerpt hashing, source quality scoring, contradiction detection, and hallucination rejection across 5 independent seeds."
+}

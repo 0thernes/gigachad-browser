@@ -357,5 +357,36 @@ test('runColonyFitness renders 5-seed colony differentiation, state separation a
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runProvenanceEval renders 5-seed research provenance and contradiction tracking in section 13', async () => {
+  const { window, dom } = load();
+  window.AliveResearchProvenanceEvaluator = {
+    run: async () => ({
+      summary: {
+        provBeatCitationSeeds: 5,
+        provBeatNaiveSeeds: 5,
+        exactContradictionRecallSeeds: 5,
+        zeroHallucinationSeeds: 5,
+        pairedDeltas: {
+          provVsCitationScoreGain: { mean: 62.29 },
+          provVsNaiveScoreGain: { mean: 74.16 }
+        },
+        byPipeline: {
+          'ungrounded-freeform': { compositeScore: { mean: 12.10 }, claimPrecisionPct: { mean: 33.3 }, contradictionRecallPct: { mean: 0 }, hallucinationRatePct: { mean: 66.7 }, meanSourceQuality: { mean: 0.35 } },
+          'naive-concatenator': { compositeScore: { mean: 25.54 }, claimPrecisionPct: { mean: 66.7 }, contradictionRecallPct: { mean: 0 }, hallucinationRatePct: { mean: 33.3 }, meanSourceQuality: { mean: 0.52 } },
+          'citation-only-filter': { compositeScore: { mean: 37.41 }, claimPrecisionPct: { mean: 100.0 }, contradictionRecallPct: { mean: 0 }, hallucinationRatePct: { mean: 0.0 }, meanSourceQuality: { mean: 0.72 } },
+          'provenance-contradiction-writer': { compositeScore: { mean: 99.70 }, claimPrecisionPct: { mean: 100.0 }, contradictionRecallPct: { mean: 100.0 }, hallucinationRatePct: { mean: 0.0 }, meanSourceQuality: { mean: 0.97 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runProvenanceEval();
+  assert.equal(report.summary.provBeatCitationSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · prov vs citation +62.3 (5/5)')), 'provenance summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('provenance-contradicti')), 'provenance synthesizer rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 

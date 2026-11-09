@@ -305,6 +305,7 @@
   let latestRestartEq = null, restartEqBusy = false;
   let latestContinualTransfer = null, continualTransferBusy = false;
   let latestColonyFitness = null, colonyFitnessBusy = false;
+  let latestProvenanceEval = null, provenanceEvalBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -366,6 +367,19 @@
       return latestColonyFitness;
     } finally {
       colonyFitnessBusy = false;
+    }
+  }
+  async function runProvenanceEval() {
+    const runner = root.AliveResearchProvenanceEvaluator;
+    if (provenanceEvalBusy || typeof runner?.run !== 'function') return latestProvenanceEval;
+    provenanceEvalBusy = true;
+    try {
+      latestProvenanceEval = await runner.run();
+      root.__aliveLatestProvenanceEval = latestProvenanceEval;
+      draw();
+      return latestProvenanceEval;
+    } finally {
+      provenanceEvalBusy = false;
     }
   }
 
@@ -702,6 +716,51 @@
     ctx.fillText('matched 5-substep/tick compute budget · cov=niche coverage · col=collision penalty · stv=ATP starvation events', 8, height - 6);
   }
 
+  // ---------- 13. Pass 7 research provenance & contradiction tracking -------
+  function drawProvenanceEval(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestProvenanceEval || root.__aliveLatestProvenanceEval;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byPipeline) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(provenanceEvalBusy ? 'Running 5-seed research provenance & contradiction tracking suite…' : 'Click "Run provenance" above to evaluate citation precision, contradiction recall, and zero-hallucination synthesis across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const gCit = s.pairedDeltas?.provVsCitationScoreGain?.mean || 0;
+    const gNav = s.pairedDeltas?.provVsNaiveScoreGain?.mean || 0;
+    ctx.fillText(`5 seeds · prov vs citation +${gCit.toFixed(1)} (${s.provBeatCitationSeeds}/5) · prov vs naive +${gNav.toFixed(1)} (${s.provBeatNaiveSeeds}/5) · 100% contradiction recall (${s.exactContradictionRecallSeeds}/5) · 0% hallucination (${s.zeroHallucinationSeeds}/5)`, 8, 12);
+
+    const modes = ['ungrounded-freeform', 'naive-concatenator', 'citation-only-filter', 'provenance-contradiction-writer'];
+    const colors = {
+      'ungrounded-freeform': '#f43f5e',
+      'naive-concatenator': '#f59e0b',
+      'citation-only-filter': '#38bdf8',
+      'provenance-contradiction-writer': '#34d399'
+    };
+    const barW = Math.max(80, width - 450);
+    modes.forEach((mode, idx) => {
+      const entry = s.byPipeline[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const comp = entry.compositeScore?.mean || 0;
+      const citP = entry.claimPrecisionPct?.mean || 0;
+      const conR = entry.contradictionRecallPct?.mean || 0;
+      const halR = entry.hallucinationRatePct?.mean || 0;
+      const srcQ = entry.meanSourceQuality?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, comp / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`score=${comp.toFixed(1)} clmP=${citP.toFixed(0)}% conR=${conR.toFixed(0)}% hal=${halR.toFixed(0)}% srcQ=${srcQ.toFixed(2)}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('clmP=grounded claim precision · conR=contradiction recall · hal=hallucination rate · srcQ=mean source quality', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -739,20 +798,23 @@
     const colonyBtn = doc.createElement('button'); colonyBtn.type = 'button'; colonyBtn.textContent = 'Run colony';
     colonyBtn.title = 'Run 5-seed colony differentiation, state separation and population fitness suite';
     colonyBtn.addEventListener('click', () => { runColonyFitness(); });
+    const provBtn = doc.createElement('button'); provBtn.type = 'button'; provBtn.textContent = 'Run provenance';
+    provBtn.title = 'Run 5-seed research provenance, contradiction tracking and source-grounded writing evaluation';
+    provBtn.addEventListener('click', () => { runProvenanceEval(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
       utility = canvas('alive-fabric-utility', 300), runtimeSeries = canvas('alive-fabric-series', 240), substrate = canvas('alive-fabric-substrate', 260),
       benchmarkCanvas = canvas('alive-fabric-benchmark', 210), ablationsCanvas = canvas('alive-fabric-ablations', 280),
       restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200),
-      colonyCanvas = canvas('alive-fabric-colony-fitness', 190);
+      colonyCanvas = canvas('alive-fabric-colony-fitness', 190), provenanceCanvas = canvas('alive-fabric-provenance', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -767,7 +829,8 @@
       section('9 · Architecture ablations — 14 brains × 7 precision × AoT/ToT/GoT × specialists', ablationsCanvas),
       section('10 · State contracts & restart equivalence — optimizer · recurrent · replay · RNG · curriculum · fabric', restartEqCanvas),
       section('11 · Continual learning, distinct-task retention & morphology transfer (5 seeds)', continualCanvas),
-      section('12 · Colony differentiation, role assignment, state separation & population fitness (5 seeds)', colonyCanvas));
+      section('12 · Colony differentiation, role assignment, state separation & population fitness (5 seeds)', colonyCanvas),
+      section('13 · Research provenance, contradiction tracking & source-grounded writing (5 seeds)', provenanceCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -778,7 +841,8 @@
       () => drawAblations(ablationsCanvas),
       () => drawRestartEquivalence(restartEqCanvas),
       () => drawContinualTransfer(continualCanvas),
-      () => drawColonyFitness(colonyCanvas));
+      () => drawColonyFitness(colonyCanvas),
+      () => drawProvenanceEval(provenanceCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -821,6 +885,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

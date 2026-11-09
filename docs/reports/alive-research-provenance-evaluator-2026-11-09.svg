@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="390" viewBox="0 0 980 390">
+<rect width="100%" height="100%" fill="#05090f"/>
+<text x="20" y="28" fill="#67e8f9" font-family="Consolas, monospace" font-size="14" font-weight="bold">ALIVE Pass 7 — Research Provenance, Contradiction Tracking &amp; Source-Grounded Writing (5 Seeds)</text>
+<text x="20" y="48" fill="#cbd5e1" font-family="Consolas, monospace" font-size="11">prov vs citation +62.28 (5/5) · prov vs naive +74.15 (5/5) · 100% contradiction recall (5/5) · 0% hallucination (5/5)</text>
+<text x="220" y="92" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">ungrounded-freeform</text>
+<rect x="230" y="76" width="360" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="230" y="79" width="2.0" height="18" fill="#f43f5e"/>
+<text x="598" y="91" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">score=0.00 [0.00, 0.00] · clmP=0.0% · conR=0.0% · hal=100.0% · srcQ=0.200</text>
+<text x="230" y="116" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">primaryRecall=0.0% · compositeScoreSD=0.000</text>
+<text x="220" y="158" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">naive-concatenator</text>
+<rect x="230" y="142" width="360" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="230" y="145" width="92.0" height="18" fill="#f59e0b"/>
+<text x="598" y="157" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">score=25.56 [25.52, 25.61] · clmP=58.3% · conR=0.0% · hal=16.7% · srcQ=0.706</text>
+<text x="230" y="182" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">primaryRecall=100.0% · compositeScoreSD=0.036</text>
+<text x="220" y="224" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">citation-only-filter</text>
+<rect x="230" y="208" width="360" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="230" y="211" width="134.8" height="18" fill="#38bdf8"/>
+<text x="598" y="223" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">score=37.44 [37.38, 37.49] · clmP=70.0% · conR=0.0% · hal=0.0% · srcQ=0.844</text>
+<text x="230" y="248" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">primaryRecall=100.0% · compositeScoreSD=0.043</text>
+<text x="220" y="290" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">provenance-contradiction-writer</text>
+<rect x="230" y="274" width="360" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="230" y="277" width="359.0" height="18" fill="#34d399"/>
+<text x="598" y="289" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">score=99.72 [99.61, 99.83] · clmP=100.0% · conR=100.0% · hal=0.0% · srcQ=0.972</text>
+<text x="230" y="314" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">primaryRecall=100.0% · compositeScoreSD=0.088</text>
+<text x="20" y="374" fill="#64748b" font-family="Consolas, monospace" font-size="10">Seeds: 19013, 29017, 39023, 49031, 59053 · 9 documents/seed (3 primary, 3 conflicting, 2 hallucination probes, 1 corroborative) with SHA-256 excerpt receipts</text>
+</svg>

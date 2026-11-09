@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Research provenance, contradiction tracking & source-grounded writing pass 7
+
+- Added the 5-seed research provenance, contradiction tracking, source quality, and source-grounded writing evaluation suite ([`systems/alive-research-provenance-evaluator.js`](systems/alive-research-provenance-evaluator.js), [`scripts/alive-research-provenance-evaluator.cjs`](scripts/alive-research-provenance-evaluator.cjs)) comparing `ungrounded-freeform`, `naive-concatenator`, `citation-only-filter`, and `provenance-contradiction-writer` across 9-document multi-tier corpora with SHA-256 excerpt receipts.
+- Verified on `5/5` seeds that `provenance-contradiction-writer` achieves `100.0%` grounded claim precision, `100.0%` primary proposition recall, `100.0%` contradiction recall, `0.0%` hallucination rate, and `99.72 ± 0.02` composite score (`+62.28` over `citation-only-filter` and `+74.15` over `naive-concatenator`).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 13 (`#alive-fabric-provenance`, `Run provenance` button, and `runProvenanceEval()`).
+- Added [Pass 7 report](docs/ALIVE_PASS_07_REPORT.md), [JSON report](docs/reports/alive-research-provenance-evaluator-2026-11-09.json), [SVG chart](docs/reports/alive-research-provenance-evaluator-2026-11-09.svg) and unit tests (`tests/alive-research-provenance-evaluator.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Creature colony differentiation, state separation & population fitness pass 6
 
 - Added the 5-seed creature colony differentiation, role assignment, state separation, and population fitness suite ([`systems/alive-colony-population-fitness.js`](systems/alive-colony-population-fitness.js), [`scripts/alive-colony-population-fitness.cjs`](scripts/alive-colony-population-fitness.cjs)) evaluating `solitary-host`, `undifferentiated-clone-colony`, `unbounded-greedy-colony`, and `differentiated-role-colony` under an identical 200-substep compute budget and bounded `maxPopulation = 5` / `totalAtpBudgetPerTick = 2.50` limits.
