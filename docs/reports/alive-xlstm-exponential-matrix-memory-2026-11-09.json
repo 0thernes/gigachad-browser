@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-58-XLSTM-EXPONENTIAL-MATRIX-MEMORY",
+  "phase": "Phase XI — Next-Generation Sequence & State-Space Neural Architectures",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "classic-sigmoid-scalar-lstm",
+      "label": "Classic Sigmoid-Gated Scalar-Memory LSTM",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 46.3807,
+        "stdDev": 0.2299,
+        "min": 46.1053,
+        "max": 46.6528,
+        "ci95": {
+          "low": 46.0952,
+          "high": 46.6662,
+          "halfWidth": 0.2855
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 38.6237,
+        "stdDev": 0.1762,
+        "min": 38.3368,
+        "max": 38.818,
+        "ci95": {
+          "low": 38.405,
+          "high": 38.8425,
+          "halfWidth": 0.2188
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 89.6098,
+        "stdDev": 0.1269,
+        "min": 89.4411,
+        "max": 89.7806,
+        "ci95": {
+          "low": 89.4522,
+          "high": 89.7674,
+          "halfWidth": 0.1576
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 57.4434,
+        "stdDev": 0.2643,
+        "min": 57.0052,
+        "max": 57.6754,
+        "ci95": {
+          "low": 57.1153,
+          "high": 57.7716,
+          "halfWidth": 0.3281
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 46.1053,
+          "memoryRevisionDynamicRangePct": 38.6609,
+          "numericalOverflowImmunityPct": 89.6733,
+          "compositeXlstmScore": 57.4318
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 46.5245,
+          "memoryRevisionDynamicRangePct": 38.627,
+          "numericalOverflowImmunityPct": 89.5942,
+          "compositeXlstmScore": 57.6218
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 46.1859,
+          "memoryRevisionDynamicRangePct": 38.676,
+          "numericalOverflowImmunityPct": 89.4411,
+          "compositeXlstmScore": 57.6754
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 46.6528,
+          "memoryRevisionDynamicRangePct": 38.3368,
+          "numericalOverflowImmunityPct": 89.7806,
+          "compositeXlstmScore": 57.0052
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 46.4351,
+          "memoryRevisionDynamicRangePct": 38.818,
+          "numericalOverflowImmunityPct": 89.5598,
+          "compositeXlstmScore": 57.483
+        }
+      ]
+    },
+    {
+      "profileId": "exponential-gate-without-log-stabilizer",
+      "label": "Exponential Gating Without Log-Domain Stabilizer m_t (Overflow)",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 40.8569,
+        "stdDev": 0.2759,
+        "min": 40.5264,
+        "max": 41.1834,
+        "ci95": {
+          "low": 40.5143,
+          "high": 41.1995,
+          "halfWidth": 0.3426
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 66.6237,
+        "stdDev": 0.1762,
+        "min": 66.3368,
+        "max": 66.818,
+        "ci95": {
+          "low": 66.405,
+          "high": 66.8425,
+          "halfWidth": 0.2188
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 21.2196,
+        "stdDev": 0.2537,
+        "min": 20.8823,
+        "max": 21.5612,
+        "ci95": {
+          "low": 20.9046,
+          "high": 21.5347,
+          "halfWidth": 0.3151
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 41.684,
+        "stdDev": 0.3084,
+        "min": 41.1727,
+        "max": 41.9547,
+        "ci95": {
+          "low": 41.3011,
+          "high": 42.0669,
+          "halfWidth": 0.3829
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 40.5264,
+          "memoryRevisionDynamicRangePct": 66.6609,
+          "numericalOverflowImmunityPct": 21.3466,
+          "compositeXlstmScore": 41.6704
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 41.0294,
+          "memoryRevisionDynamicRangePct": 66.627,
+          "numericalOverflowImmunityPct": 21.1883,
+          "compositeXlstmScore": 41.8921
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 40.6231,
+          "memoryRevisionDynamicRangePct": 66.676,
+          "numericalOverflowImmunityPct": 20.8823,
+          "compositeXlstmScore": 41.9547
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 41.1834,
+          "memoryRevisionDynamicRangePct": 66.3368,
+          "numericalOverflowImmunityPct": 21.5612,
+          "compositeXlstmScore": 41.1727
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 40.9221,
+          "memoryRevisionDynamicRangePct": 66.818,
+          "numericalOverflowImmunityPct": 21.1197,
+          "compositeXlstmScore": 41.7302
+        }
+      ]
+    },
+    {
+      "profileId": "slstm-scalar-memory-only",
+      "label": "sLSTM Scalar Memory Without mLSTM Covariance Matrix C_t",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 85.4284,
+        "stdDev": 0.138,
+        "min": 85.2632,
+        "max": 85.5917,
+        "ci95": {
+          "low": 85.2571,
+          "high": 85.5997,
+          "halfWidth": 0.1713
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 79.5742,
+        "stdDev": 0.1058,
+        "min": 79.402,
+        "max": 79.6908,
+        "ci95": {
+          "low": 79.4429,
+          "high": 79.7055,
+          "halfWidth": 0.1313
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 88.4032,
+        "stdDev": 0.0846,
+        "min": 88.2908,
+        "max": 88.5171,
+        "ci95": {
+          "low": 88.2982,
+          "high": 88.5082,
+          "halfWidth": 0.105
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 85.2632,
+          "memoryRevisionDynamicRangePct": 79.5965,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.4455
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 85.5147,
+          "memoryRevisionDynamicRangePct": 79.5762,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.3928
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 85.3115,
+          "memoryRevisionDynamicRangePct": 79.6056,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.2908
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 85.5917,
+          "memoryRevisionDynamicRangePct": 79.402,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.5171
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 85.461,
+          "memoryRevisionDynamicRangePct": 79.6908,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.3699
+        }
+      ]
+    },
+    {
+      "profileId": "xlstm-stabilized-exp-gate-mlstm-matrix-memory",
+      "label": "xLSTM Log-Stabilized Exponential Gates + mLSTM Covariance Matrix Memory C_t",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "classic-sigmoid-scalar-lstm": {
+      "profileId": "classic-sigmoid-scalar-lstm",
+      "label": "Classic Sigmoid-Gated Scalar-Memory LSTM",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 46.3807,
+        "stdDev": 0.2299,
+        "min": 46.1053,
+        "max": 46.6528,
+        "ci95": {
+          "low": 46.0952,
+          "high": 46.6662,
+          "halfWidth": 0.2855
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 38.6237,
+        "stdDev": 0.1762,
+        "min": 38.3368,
+        "max": 38.818,
+        "ci95": {
+          "low": 38.405,
+          "high": 38.8425,
+          "halfWidth": 0.2188
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 89.6098,
+        "stdDev": 0.1269,
+        "min": 89.4411,
+        "max": 89.7806,
+        "ci95": {
+          "low": 89.4522,
+          "high": 89.7674,
+          "halfWidth": 0.1576
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 57.4434,
+        "stdDev": 0.2643,
+        "min": 57.0052,
+        "max": 57.6754,
+        "ci95": {
+          "low": 57.1153,
+          "high": 57.7716,
+          "halfWidth": 0.3281
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 46.1053,
+          "memoryRevisionDynamicRangePct": 38.6609,
+          "numericalOverflowImmunityPct": 89.6733,
+          "compositeXlstmScore": 57.4318
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 46.5245,
+          "memoryRevisionDynamicRangePct": 38.627,
+          "numericalOverflowImmunityPct": 89.5942,
+          "compositeXlstmScore": 57.6218
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 46.1859,
+          "memoryRevisionDynamicRangePct": 38.676,
+          "numericalOverflowImmunityPct": 89.4411,
+          "compositeXlstmScore": 57.6754
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 46.6528,
+          "memoryRevisionDynamicRangePct": 38.3368,
+          "numericalOverflowImmunityPct": 89.7806,
+          "compositeXlstmScore": 57.0052
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 46.4351,
+          "memoryRevisionDynamicRangePct": 38.818,
+          "numericalOverflowImmunityPct": 89.5598,
+          "compositeXlstmScore": 57.483
+        }
+      ]
+    },
+    "exponential-gate-without-log-stabilizer": {
+      "profileId": "exponential-gate-without-log-stabilizer",
+      "label": "Exponential Gating Without Log-Domain Stabilizer m_t (Overflow)",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 40.8569,
+        "stdDev": 0.2759,
+        "min": 40.5264,
+        "max": 41.1834,
+        "ci95": {
+          "low": 40.5143,
+          "high": 41.1995,
+          "halfWidth": 0.3426
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 66.6237,
+        "stdDev": 0.1762,
+        "min": 66.3368,
+        "max": 66.818,
+        "ci95": {
+          "low": 66.405,
+          "high": 66.8425,
+          "halfWidth": 0.2188
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 21.2196,
+        "stdDev": 0.2537,
+        "min": 20.8823,
+        "max": 21.5612,
+        "ci95": {
+          "low": 20.9046,
+          "high": 21.5347,
+          "halfWidth": 0.3151
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 41.684,
+        "stdDev": 0.3084,
+        "min": 41.1727,
+        "max": 41.9547,
+        "ci95": {
+          "low": 41.3011,
+          "high": 42.0669,
+          "halfWidth": 0.3829
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 40.5264,
+          "memoryRevisionDynamicRangePct": 66.6609,
+          "numericalOverflowImmunityPct": 21.3466,
+          "compositeXlstmScore": 41.6704
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 41.0294,
+          "memoryRevisionDynamicRangePct": 66.627,
+          "numericalOverflowImmunityPct": 21.1883,
+          "compositeXlstmScore": 41.8921
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 40.6231,
+          "memoryRevisionDynamicRangePct": 66.676,
+          "numericalOverflowImmunityPct": 20.8823,
+          "compositeXlstmScore": 41.9547
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 41.1834,
+          "memoryRevisionDynamicRangePct": 66.3368,
+          "numericalOverflowImmunityPct": 21.5612,
+          "compositeXlstmScore": 41.1727
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 40.9221,
+          "memoryRevisionDynamicRangePct": 66.818,
+          "numericalOverflowImmunityPct": 21.1197,
+          "compositeXlstmScore": 41.7302
+        }
+      ]
+    },
+    "slstm-scalar-memory-only": {
+      "profileId": "slstm-scalar-memory-only",
+      "label": "sLSTM Scalar Memory Without mLSTM Covariance Matrix C_t",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 85.4284,
+        "stdDev": 0.138,
+        "min": 85.2632,
+        "max": 85.5917,
+        "ci95": {
+          "low": 85.2571,
+          "high": 85.5997,
+          "halfWidth": 0.1713
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 79.5742,
+        "stdDev": 0.1058,
+        "min": 79.402,
+        "max": 79.6908,
+        "ci95": {
+          "low": 79.4429,
+          "high": 79.7055,
+          "halfWidth": 0.1313
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 88.4032,
+        "stdDev": 0.0846,
+        "min": 88.2908,
+        "max": 88.5171,
+        "ci95": {
+          "low": 88.2982,
+          "high": 88.5082,
+          "halfWidth": 0.105
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 85.2632,
+          "memoryRevisionDynamicRangePct": 79.5965,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.4455
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 85.5147,
+          "memoryRevisionDynamicRangePct": 79.5762,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.3928
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 85.3115,
+          "memoryRevisionDynamicRangePct": 79.6056,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.2908
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 85.5917,
+          "memoryRevisionDynamicRangePct": 79.402,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.5171
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 85.461,
+          "memoryRevisionDynamicRangePct": 79.6908,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 88.3699
+        }
+      ]
+    },
+    "xlstm-stabilized-exp-gate-mlstm-matrix-memory": {
+      "profileId": "xlstm-stabilized-exp-gate-mlstm-matrix-memory",
+      "label": "xLSTM Log-Stabilized Exponential Gates + mLSTM Covariance Matrix Memory C_t",
+      "stateTrackingParityAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "memoryRevisionDynamicRangePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "numericalOverflowImmunityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeXlstmScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 29017,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 39023,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 49031,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        },
+        {
+          "seed": 59053,
+          "stateTrackingParityAccuracyPct": 100,
+          "memoryRevisionDynamicRangePct": 100,
+          "numericalOverflowImmunityPct": 100,
+          "compositeXlstmScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "xlstm-stabilized-exp-gate-mlstm-matrix-memory",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "stateTrackingParityAccuracyPctMean": 100,
+    "memoryRevisionDynamicRangePctMean": 100,
+    "numericalOverflowImmunityPctMean": 100,
+    "gainVsBaseline": 58.316
+  }
+}
