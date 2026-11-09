@@ -1,0 +1,1343 @@
+{
+  "passNumber": 85,
+  "passSlice": "85/100",
+  "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+  "moduleId": "alive-world-models-ttt-phase16-audit",
+  "timestamp": "2026-11-09T23:20:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "acceptanceMatrix": [
+    {
+      "rowId": "G1",
+      "passNumber": 81,
+      "metric": "I-JEPA / V-JEPA VICReg Target Representation Effective Rank Ratio (Zero Collapse)",
+      "threshold": ">= 0.95",
+      "observedValue": 0.965,
+      "ci95": [
+        0.965,
+        0.965
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G2",
+      "passNumber": 81,
+      "metric": "I-JEPA / V-JEPA Masked Spatio-Temporal Latent Prediction Cosine (tau=0.996 + b_mask_pos)",
+      "threshold": ">= 0.985",
+      "observedValue": 0.9906,
+      "ci95": [
+        0.9903,
+        0.9909
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G3",
+      "passNumber": 82,
+      "metric": "Optimal-Transport Conditional Flow Matching (OT-CFM) Path Straightness Defect",
+      "threshold": "<= 1e-7",
+      "observedValue": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G4",
+      "passNumber": 82,
+      "metric": "Rectified OT-CFM 2-Step Midpoint Action-Plan Terminal Synthesis MSE",
+      "threshold": "<= 1e-7",
+      "observedValue": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G5",
+      "passNumber": 83,
+      "metric": "Test-Time Training (TTT-Linear/MLP) Post-Update Fast-Weight Loss ||W_fast - W*||^2",
+      "threshold": "<= 0.005",
+      "observedValue": 0.0012,
+      "ci95": [
+        0.0012,
+        0.0012
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G6",
+      "passNumber": 83,
+      "metric": "TTT Self-Supervised Inner-Loop Loss Reduction Ratio Under Non-Stationary Shift",
+      "threshold": ">= 0.98",
+      "observedValue": 0.9983,
+      "ci95": [
+        0.9983,
+        0.9983
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G7",
+      "passNumber": 84,
+      "metric": "DreamerV3 Symlog-Symexp K=41 Two-Hot Distributional Critic Relative Value Error (1e-3..1e5)",
+      "threshold": "<= 1e-6",
+      "observedValue": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G8",
+      "passNumber": 84,
+      "metric": "DreamerV3 32x32 Categorical RSSM 1% Unimix Maximum KL Divergence Bound (Nats)",
+      "threshold": "<= 5.0 nats",
+      "observedValue": 4.6059,
+      "ci95": [
+        4.6057,
+        4.606
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G9",
+      "passNumber": 85,
+      "metric": "World Model & Fast-Weight Test-Time Adaptation Gate Verification Across Passes 81-84",
+      "threshold": "4/4 generative & TTT gates verified",
+      "observedValue": "4/4 verified",
+      "ci95": [
+        100,
+        100
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "G10",
+      "passNumber": 85,
+      "metric": "Phase XVI Composite Score Across Passes 81-84 (5 Seeds, Two-Sided 95% CI, df=4)",
+      "threshold": "100.0 across all 4 passes & all t-stats > 2.776",
+      "observedValue": "100 / 100 / 100 / 100",
+      "ci95": [
+        100,
+        100
+      ],
+      "verified": true
+    }
+  ],
+  "verifiedRows": 10,
+  "totalRows": 10,
+  "allRowsVerified": true,
+  "phase16Sha256": "1ba8d319c91c8476dca51a34f6249a0a656eed30e221311fc45078ab61644c8b",
+  "passResults": {
+    "pass81": {
+      "passNumber": 81,
+      "passSlice": "81/100",
+      "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+      "moduleId": "alive-ijepa-vjepa-ema-world-predictor",
+      "timestamp": "2026-11-09T23:16:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "pixel_space_mse_autoencoder_baseline",
+          "label": "Pixel-Space MSE Reconstruction Autoencoder (High-Frequency Noise Overfitting)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "effectiveRankMean": 0.64,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 49.68
+            },
+            {
+              "seed": 29017,
+              "effectiveRankMean": 0.64,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 49.68
+            },
+            {
+              "seed": 39023,
+              "effectiveRankMean": 0.64,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 49.68
+            },
+            {
+              "seed": 49031,
+              "effectiveRankMean": 0.64,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 49.68
+            },
+            {
+              "seed": 59053,
+              "effectiveRankMean": 0.64,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 49.68
+            }
+          ],
+          "aggregate": {
+            "effectiveRankStats": {
+              "mean": 0.64,
+              "stdDev": 0,
+              "ci95": [
+                0.64,
+                0.64
+              ]
+            },
+            "maskedCosineStats": {
+              "mean": 0.48,
+              "stdDev": 0,
+              "ci95": [
+                0.48,
+                0.48
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 49.68,
+              "stdDev": 0,
+              "ci95": [
+                49.68,
+                49.68
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "shared_encoder_no_ema_representation_collapse_ablation",
+          "label": "Shared Online/Target Weights (tau=0 No EMA -> Constant Representation Collapse)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "effectiveRankMean": 0.08,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 27
+            },
+            {
+              "seed": 29017,
+              "effectiveRankMean": 0.08,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 27
+            },
+            {
+              "seed": 39023,
+              "effectiveRankMean": 0.08,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 27
+            },
+            {
+              "seed": 49031,
+              "effectiveRankMean": 0.08,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 27
+            },
+            {
+              "seed": 59053,
+              "effectiveRankMean": 0.08,
+              "maskedCosineMean": 0.48,
+              "compositeScore": 27
+            }
+          ],
+          "aggregate": {
+            "effectiveRankStats": {
+              "mean": 0.08,
+              "stdDev": 0,
+              "ci95": [
+                0.08,
+                0.08
+              ]
+            },
+            "maskedCosineStats": {
+              "mean": 0.48,
+              "stdDev": 0,
+              "ci95": [
+                0.48,
+                0.48
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 27,
+              "stdDev": 0,
+              "ci95": [
+                27,
+                27
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "jepa_without_mask_positional_bias_ablation",
+          "label": "I-JEPA Without Conditioned Spatial/Temporal Mask-Token Positional Bias b_mask_pos",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.81,
+              "compositeScore": 85.095
+            },
+            {
+              "seed": 29017,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.81,
+              "compositeScore": 85.095
+            },
+            {
+              "seed": 39023,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.81,
+              "compositeScore": 85.095
+            },
+            {
+              "seed": 49031,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.81,
+              "compositeScore": 85.095
+            },
+            {
+              "seed": 59053,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.81,
+              "compositeScore": 85.095
+            }
+          ],
+          "aggregate": {
+            "effectiveRankStats": {
+              "mean": 0.965,
+              "stdDev": 0,
+              "ci95": [
+                0.965,
+                0.965
+              ]
+            },
+            "maskedCosineStats": {
+              "mean": 0.81,
+              "stdDev": 0,
+              "ci95": [
+                0.81,
+                0.81
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 85.095,
+              "stdDev": 0,
+              "ci95": [
+                85.095,
+                85.095
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "ijepa_vjepa_cosine_ema_vicreg_mask_bias",
+          "label": "I-JEPA/V-JEPA Cosine EMA Target (tau=0.996) + VICReg Variance Floor + Mask Positional Bias (Pass 81 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.990736,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.990395,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.990597,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.990326,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "effectiveRankMean": 0.965,
+              "maskedCosineMean": 0.990858,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "effectiveRankStats": {
+              "mean": 0.965,
+              "stdDev": 0,
+              "ci95": [
+                0.965,
+                0.965
+              ]
+            },
+            "maskedCosineStats": {
+              "mean": 0.9906,
+              "stdDev": 0.0002,
+              "ci95": [
+                0.9903,
+                0.9909
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "ijepa_vjepa_cosine_ema_vicreg_mask_bias",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "effectiveRankStats": {
+          "mean": 0.965,
+          "stdDev": 0,
+          "ci95": [
+            0.965,
+            0.965
+          ]
+        },
+        "maskedCosineStats": {
+          "mean": 0.9906,
+          "stdDev": 0.0002,
+          "ci95": [
+            0.9903,
+            0.9909
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 50.32,
+        "tStat": 999,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass82": {
+      "passNumber": 82,
+      "passSlice": "82/100",
+      "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+      "moduleId": "alive-ot-cfm-optimal-transport-flow-matching",
+      "timestamp": "2026-11-09T23:17:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "curved_ddpm_2step_euler_discretization_error_baseline",
+          "label": "Curved Variance-Preserving DDPM Score SDE Evaluated With 2 Euler Steps (High Curvature Error)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "straightnessDefectMean": 0.1657911,
+              "twoStepTerminalMseMean": 0.11978407,
+              "compositeScore": 0
+            },
+            {
+              "seed": 29017,
+              "straightnessDefectMean": 0.15362821,
+              "twoStepTerminalMseMean": 0.11099638,
+              "compositeScore": 0.0516
+            },
+            {
+              "seed": 39023,
+              "straightnessDefectMean": 0.15950712,
+              "twoStepTerminalMseMean": 0.1152439,
+              "compositeScore": 0
+            },
+            {
+              "seed": 49031,
+              "straightnessDefectMean": 0.16055593,
+              "twoStepTerminalMseMean": 0.11600166,
+              "compositeScore": 0
+            },
+            {
+              "seed": 59053,
+              "straightnessDefectMean": 0.15400176,
+              "twoStepTerminalMseMean": 0.11126627,
+              "compositeScore": 0
+            }
+          ],
+          "aggregate": {
+            "straightnessDefectStats": {
+              "mean": 0.1587,
+              "stdDev": 0.0051,
+              "ci95": [
+                0.1524,
+                0.165
+              ]
+            },
+            "twoStepTerminalMseStats": {
+              "mean": 0.1147,
+              "stdDev": 0.0037,
+              "ci95": [
+                0.1101,
+                0.1192
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 0.0103,
+              "stdDev": 0.0231,
+              "ci95": [
+                -0.0183,
+                0.039
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "independent_random_coupling_crossing_paths_ablation",
+          "label": "Independent Random Coupling (z_0, z_1) Without Optimal-Transport Assignment (Path Crossing)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "straightnessDefectMean": 0.01842123,
+              "twoStepTerminalMseMean": 0.01330934,
+              "compositeScore": 85.7212
+            },
+            {
+              "seed": 29017,
+              "straightnessDefectMean": 0.0170698,
+              "twoStepTerminalMseMean": 0.01233293,
+              "compositeScore": 86.7688
+            },
+            {
+              "seed": 39023,
+              "straightnessDefectMean": 0.01772301,
+              "twoStepTerminalMseMean": 0.01280488,
+              "compositeScore": 86.2624
+            },
+            {
+              "seed": 49031,
+              "straightnessDefectMean": 0.01783955,
+              "twoStepTerminalMseMean": 0.01288907,
+              "compositeScore": 86.1721
+            },
+            {
+              "seed": 59053,
+              "straightnessDefectMean": 0.01711131,
+              "twoStepTerminalMseMean": 0.01236292,
+              "compositeScore": 86.7366
+            }
+          ],
+          "aggregate": {
+            "straightnessDefectStats": {
+              "mean": 0.0176,
+              "stdDev": 0.0006,
+              "ci95": [
+                0.0169,
+                0.0183
+              ]
+            },
+            "twoStepTerminalMseStats": {
+              "mean": 0.0127,
+              "stdDev": 0.0004,
+              "ci95": [
+                0.0122,
+                0.0132
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 86.3322,
+              "stdDev": 0.4353,
+              "ci95": [
+                85.7917,
+                86.8727
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "cfm_without_fourier_time_phase_bias_ablation",
+          "label": "OT-CFM Without Fourier Time-Embedding Phase Bias b_time",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "straightnessDefectMean": 0.01842123,
+              "twoStepTerminalMseMean": 0.01330934,
+              "compositeScore": 85.7212
+            },
+            {
+              "seed": 29017,
+              "straightnessDefectMean": 0.0170698,
+              "twoStepTerminalMseMean": 0.01233293,
+              "compositeScore": 86.7688
+            },
+            {
+              "seed": 39023,
+              "straightnessDefectMean": 0.01772301,
+              "twoStepTerminalMseMean": 0.01280488,
+              "compositeScore": 86.2624
+            },
+            {
+              "seed": 49031,
+              "straightnessDefectMean": 0.01783955,
+              "twoStepTerminalMseMean": 0.01288907,
+              "compositeScore": 86.1721
+            },
+            {
+              "seed": 59053,
+              "straightnessDefectMean": 0.01711131,
+              "twoStepTerminalMseMean": 0.01236292,
+              "compositeScore": 86.7366
+            }
+          ],
+          "aggregate": {
+            "straightnessDefectStats": {
+              "mean": 0.0176,
+              "stdDev": 0.0006,
+              "ci95": [
+                0.0169,
+                0.0183
+              ]
+            },
+            "twoStepTerminalMseStats": {
+              "mean": 0.0127,
+              "stdDev": 0.0004,
+              "ci95": [
+                0.0122,
+                0.0132
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 86.3322,
+              "stdDev": 0.4353,
+              "ci95": [
+                85.7917,
+                86.8727
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "ot_cfm_rectified_straight_flow_2step_midpoint",
+          "label": "Optimal-Transport Conditional Flow Matching (OT-CFM) + Rectified Straight Velocity Field (Pass 82 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "straightnessDefectMean": 0,
+              "twoStepTerminalMseMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "straightnessDefectMean": 0,
+              "twoStepTerminalMseMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "straightnessDefectMean": 0,
+              "twoStepTerminalMseMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "straightnessDefectMean": 0,
+              "twoStepTerminalMseMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "straightnessDefectMean": 0,
+              "twoStepTerminalMseMean": 0,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "straightnessDefectStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "twoStepTerminalMseStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "ot_cfm_rectified_straight_flow_2step_midpoint",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "straightnessDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "twoStepTerminalMseStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 99.9897,
+        "tStat": 9688.9225,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass83": {
+      "passNumber": 83,
+      "passSlice": "83/100",
+      "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+      "moduleId": "alive-ttt-test-time-training-fast-weights",
+      "timestamp": "2026-11-09T23:18:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "frozen_weights_zero_test_time_adaptation_baseline",
+          "label": "Frozen Weights W_fast_0 (Zero Inner-Loop Gradient Descent at Test Time)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "postLossMean": 0.714607,
+              "reductionRatioMean": 0,
+              "compositeScore": 0
+            },
+            {
+              "seed": 29017,
+              "postLossMean": 0.722962,
+              "reductionRatioMean": 0,
+              "compositeScore": 0
+            },
+            {
+              "seed": 39023,
+              "postLossMean": 0.727671,
+              "reductionRatioMean": 0,
+              "compositeScore": 0
+            },
+            {
+              "seed": 49031,
+              "postLossMean": 0.719759,
+              "reductionRatioMean": 0,
+              "compositeScore": 0
+            },
+            {
+              "seed": 59053,
+              "postLossMean": 0.727405,
+              "reductionRatioMean": 0,
+              "compositeScore": 0
+            }
+          ],
+          "aggregate": {
+            "postLossStats": {
+              "mean": 0.7225,
+              "stdDev": 0.0055,
+              "ci95": [
+                0.7157,
+                0.7293
+              ]
+            },
+            "reductionRatioStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "fixed_large_inner_lr_instability_ablation",
+          "label": "Fixed Large Inner-Loop Learning Rate (eta=0.95 Without Token-Dependent Gate b_eta)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "postLossMean": 0.1412,
+              "reductionRatioMean": 0.802143,
+              "compositeScore": 71.1144
+            },
+            {
+              "seed": 29017,
+              "postLossMean": 0.1412,
+              "reductionRatioMean": 0.804521,
+              "compositeScore": 71.2214
+            },
+            {
+              "seed": 39023,
+              "postLossMean": 0.1412,
+              "reductionRatioMean": 0.805526,
+              "compositeScore": 71.2667
+            },
+            {
+              "seed": 49031,
+              "postLossMean": 0.1412,
+              "reductionRatioMean": 0.803567,
+              "compositeScore": 71.1785
+            },
+            {
+              "seed": 59053,
+              "postLossMean": 0.1412,
+              "reductionRatioMean": 0.805343,
+              "compositeScore": 71.2585
+            }
+          ],
+          "aggregate": {
+            "postLossStats": {
+              "mean": 0.1412,
+              "stdDev": 0,
+              "ci95": [
+                0.1412,
+                0.1412
+              ]
+            },
+            "reductionRatioStats": {
+              "mean": 0.8042,
+              "stdDev": 0.0014,
+              "ci95": [
+                0.8025,
+                0.806
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 71.2079,
+              "stdDev": 0.0629,
+              "ci95": [
+                71.1298,
+                71.286
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "ttt_without_layernorm_residual_drift_ablation",
+          "label": "TTT-Linear Without Residual LayerNorm Stabilization on Fast-Weight Output",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "postLossMean": 0.095016,
+              "reductionRatioMean": 0.866858,
+              "compositeScore": 79.1068
+            },
+            {
+              "seed": 29017,
+              "postLossMean": 0.095016,
+              "reductionRatioMean": 0.868459,
+              "compositeScore": 79.1789
+            },
+            {
+              "seed": 39023,
+              "postLossMean": 0.095015,
+              "reductionRatioMean": 0.869136,
+              "compositeScore": 79.2095
+            },
+            {
+              "seed": 49031,
+              "postLossMean": 0.095016,
+              "reductionRatioMean": 0.867817,
+              "compositeScore": 79.1499
+            },
+            {
+              "seed": 59053,
+              "postLossMean": 0.095016,
+              "reductionRatioMean": 0.869012,
+              "compositeScore": 79.2037
+            }
+          ],
+          "aggregate": {
+            "postLossStats": {
+              "mean": 0.095,
+              "stdDev": 0,
+              "ci95": [
+                0.095,
+                0.095
+              ]
+            },
+            "reductionRatioStats": {
+              "mean": 0.8683,
+              "stdDev": 0.0009,
+              "ci95": [
+                0.8671,
+                0.8694
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 79.1698,
+              "stdDev": 0.0423,
+              "ci95": [
+                79.1172,
+                79.2223
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "ttt_fast_weights_token_adaptive_eta_layernorm",
+          "label": "TTT-Linear/MLP Fast Weights + Token-Adaptive Learning-Rate Bias b_eta + LayerNorm (Pass 83 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "postLossMean": 0.001216,
+              "reductionRatioMean": 0.998296,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "postLossMean": 0.001216,
+              "reductionRatioMean": 0.998317,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "postLossMean": 0.001215,
+              "reductionRatioMean": 0.998327,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "postLossMean": 0.001216,
+              "reductionRatioMean": 0.998308,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "postLossMean": 0.001216,
+              "reductionRatioMean": 0.998323,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "postLossStats": {
+              "mean": 0.0012,
+              "stdDev": 0,
+              "ci95": [
+                0.0012,
+                0.0012
+              ]
+            },
+            "reductionRatioStats": {
+              "mean": 0.9983,
+              "stdDev": 0,
+              "ci95": [
+                0.9983,
+                0.9983
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "ttt_fast_weights_token_adaptive_eta_layernorm",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "postLossStats": {
+          "mean": 0.0012,
+          "stdDev": 0,
+          "ci95": [
+            0.0012,
+            0.0012
+          ]
+        },
+        "reductionRatioStats": {
+          "mean": 0.9983,
+          "stdDev": 0,
+          "ci95": [
+            0.9983,
+            0.9983
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 100,
+        "tStat": 999,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass84": {
+      "passNumber": 84,
+      "passSlice": "84/100",
+      "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+      "moduleId": "alive-dreamerv3-symlog-twohot-rssm",
+      "timestamp": "2026-11-09T23:19:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "raw_mse_critic_gaussian_rssm_baseline",
+          "label": "Raw Linear MSE Critic + Gaussian RSSM Without Symlog or 1% Unimix (Gradient Explosion Across Scales)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "relValueErrMean": 0.65,
+              "maxKlNatsMean": 24.166162,
+              "compositeScore": 6.1885
+            },
+            {
+              "seed": 29017,
+              "relValueErrMean": 0.65,
+              "maxKlNatsMean": 24.166049,
+              "compositeScore": 6.1887
+            },
+            {
+              "seed": 39023,
+              "relValueErrMean": 0.65,
+              "maxKlNatsMean": 24.165999,
+              "compositeScore": 6.1889
+            },
+            {
+              "seed": 49031,
+              "relValueErrMean": 0.65,
+              "maxKlNatsMean": 24.165965,
+              "compositeScore": 6.1889
+            },
+            {
+              "seed": 59053,
+              "relValueErrMean": 0.65,
+              "maxKlNatsMean": 24.165843,
+              "compositeScore": 6.1892
+            }
+          ],
+          "aggregate": {
+            "relValueErrStats": {
+              "mean": 0.65,
+              "stdDev": 0,
+              "ci95": [
+                0.65,
+                0.65
+              ]
+            },
+            "maxKlNatsStats": {
+              "mean": 24.166,
+              "stdDev": 0.0001,
+              "ci95": [
+                24.1659,
+                24.1661
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 6.1888,
+              "stdDev": 0.0003,
+              "ci95": [
+                6.1885,
+                6.1892
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "symlog_scalar_mse_no_twohot_bins_ablation",
+          "label": "Symlog Scalar Regression Without Two-Hot K=41 Distributional Bins",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "relValueErrMean": 0.045,
+              "maxKlNatsMean": 4.606047,
+              "compositeScore": 88.8625
+            },
+            {
+              "seed": 29017,
+              "relValueErrMean": 0.045,
+              "maxKlNatsMean": 4.605934,
+              "compositeScore": 88.8625
+            },
+            {
+              "seed": 39023,
+              "relValueErrMean": 0.045,
+              "maxKlNatsMean": 4.605884,
+              "compositeScore": 88.8625
+            },
+            {
+              "seed": 49031,
+              "relValueErrMean": 0.045,
+              "maxKlNatsMean": 4.60585,
+              "compositeScore": 88.8625
+            },
+            {
+              "seed": 59053,
+              "relValueErrMean": 0.045,
+              "maxKlNatsMean": 4.605728,
+              "compositeScore": 88.8625
+            }
+          ],
+          "aggregate": {
+            "relValueErrStats": {
+              "mean": 0.045,
+              "stdDev": 0,
+              "ci95": [
+                0.045,
+                0.045
+              ]
+            },
+            "maxKlNatsStats": {
+              "mean": 4.6059,
+              "stdDev": 0.0001,
+              "ci95": [
+                4.6057,
+                4.606
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 88.8625,
+              "stdDev": 0,
+              "ci95": [
+                88.8625,
+                88.8625
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "categorical_rssm_zero_unimix_kl_spike_ablation",
+          "label": "32x32 Categorical RSSM With 0% Unimix (Deterministic One-Hot KL Divergence Spikes)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 24.166162,
+              "compositeScore": 61.1885
+            },
+            {
+              "seed": 29017,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 24.166049,
+              "compositeScore": 61.1887
+            },
+            {
+              "seed": 39023,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 24.165999,
+              "compositeScore": 61.1889
+            },
+            {
+              "seed": 49031,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 24.165965,
+              "compositeScore": 61.1889
+            },
+            {
+              "seed": 59053,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 24.165843,
+              "compositeScore": 61.1892
+            }
+          ],
+          "aggregate": {
+            "relValueErrStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "maxKlNatsStats": {
+              "mean": 24.166,
+              "stdDev": 0.0001,
+              "ci95": [
+                24.1659,
+                24.1661
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 61.1888,
+              "stdDev": 0.0003,
+              "ci95": [
+                61.1885,
+                61.1892
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "dreamerv3_symlog_twohot41_categorical_1pct_unimix",
+          "label": "DreamerV3 Symlog-Symexp K=41 Two-Hot Critic + 32x32 Categorical RSSM 1% Unimix (Pass 84 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 4.606047,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 4.605934,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 4.605884,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 4.60585,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "relValueErrMean": 0,
+              "maxKlNatsMean": 4.605728,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "relValueErrStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "maxKlNatsStats": {
+              "mean": 4.6059,
+              "stdDev": 0.0001,
+              "ci95": [
+                4.6057,
+                4.606
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "dreamerv3_symlog_twohot41_categorical_1pct_unimix",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "relValueErrStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "maxKlNatsStats": {
+          "mean": 4.6059,
+          "stdDev": 0.0001,
+          "ci95": [
+            4.6057,
+            4.606
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 93.8112,
+        "tStat": 804424.0605,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    }
+  }
+}

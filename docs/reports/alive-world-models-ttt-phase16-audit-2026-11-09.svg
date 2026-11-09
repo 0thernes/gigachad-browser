@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360">
+  <rect width="960" height="360" fill="#0f172a" />
+  <text x="24" y="32" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">ALIVE Pass 85 (85/100) — Phase XVI World Models &amp; Test-Time Training Matrix (G1-G10)</text>
+  <text x="24" y="52" fill="#f8fafc" font-family="monospace" font-size="12">Verified: 10/10 | Frozen SHA-256: 1ba8d319c91c8476dca51a34f6249a0a656eed30e221311fc45078ab61644c8b</text>
+  <text x="24" y="78" fill="#10b981" font-family="monospace" font-size="12">[PASS] G1 (Pass 81): I-JEPA / V-JEPA VICReg Target Representation Effective Rank Ratio (Zero Collapse) = 0.965</text>
+<text x="24" y="104" fill="#10b981" font-family="monospace" font-size="12">[PASS] G2 (Pass 81): I-JEPA / V-JEPA Masked Spatio-Temporal Latent Prediction Cosine (tau=0.996 + b_mask_pos) = 0.9906</text>
+<text x="24" y="130" fill="#10b981" font-family="monospace" font-size="12">[PASS] G3 (Pass 82): Optimal-Transport Conditional Flow Matching (OT-CFM) Path Straightness Defect = 0</text>
+<text x="24" y="156" fill="#10b981" font-family="monospace" font-size="12">[PASS] G4 (Pass 82): Rectified OT-CFM 2-Step Midpoint Action-Plan Terminal Synthesis MSE = 0</text>
+<text x="24" y="182" fill="#10b981" font-family="monospace" font-size="12">[PASS] G5 (Pass 83): Test-Time Training (TTT-Linear/MLP) Post-Update Fast-Weight Loss ||W_fast - W*||^2 = 0.0012</text>
+<text x="24" y="208" fill="#10b981" font-family="monospace" font-size="12">[PASS] G6 (Pass 83): TTT Self-Supervised Inner-Loop Loss Reduction Ratio Under Non-Stationary Shift = 0.9983</text>
+<text x="24" y="234" fill="#10b981" font-family="monospace" font-size="12">[PASS] G7 (Pass 84): DreamerV3 Symlog-Symexp K=41 Two-Hot Distributional Critic Relative Value Error (1e-3..1e5) = 0</text>
+<text x="24" y="260" fill="#10b981" font-family="monospace" font-size="12">[PASS] G8 (Pass 84): DreamerV3 32x32 Categorical RSSM 1% Unimix Maximum KL Divergence Bound (Nats) = 4.6059</text>
+<text x="24" y="286" fill="#10b981" font-family="monospace" font-size="12">[PASS] G9 (Pass 85): World Model & Fast-Weight Test-Time Adaptation Gate Verification Across Passes 81-84 = 4/4 verified</text>
+<text x="24" y="312" fill="#10b981" font-family="monospace" font-size="12">[PASS] G10 (Pass 85): Phase XVI Composite Score Across Passes 81-84 (5 Seeds, Two-Sided 95% CI, df=4) = 100 / 100 / 100 / 100</text>
+</svg>
