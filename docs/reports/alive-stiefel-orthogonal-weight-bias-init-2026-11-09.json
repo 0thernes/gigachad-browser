@@ -1,0 +1,873 @@
+{
+  "passId": "ALIVE-PASS-41-STIEFEL-ORTHOGONAL-WEIGHT-BIAS-INIT",
+  "phase": "Phase VIII — Spectral, Orthogonal & Riemannian Weight-and-Bias Initialization & Parameter Conditioning",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "naive-uniform-unscaled-zero-bias",
+      "label": "Naive Uniform [-1,1] Unscaled & Zero Bias",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 20.8517,
+        "stdDev": 0.2653,
+        "min": 20.4523,
+        "max": 21.1542,
+        "ci95": {
+          "low": 20.5223,
+          "high": 21.1812,
+          "halfWidth": 0.3294
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 14.8845,
+        "stdDev": 0.2851,
+        "min": 14.608,
+        "max": 15.2426,
+        "ci95": {
+          "low": 14.5305,
+          "high": 15.2385,
+          "halfWidth": 0.354
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 25.0678,
+        "stdDev": 0.1929,
+        "min": 24.8502,
+        "max": 25.3382,
+        "ci95": {
+          "low": 24.8283,
+          "high": 25.3074,
+          "halfWidth": 0.2395
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 22.5812,
+        "stdDev": 0.4204,
+        "min": 22.0049,
+        "max": 22.9973,
+        "ci95": {
+          "low": 22.0592,
+          "high": 23.1031,
+          "halfWidth": 0.5219
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 19.77,
+        "stdDev": 0.1355,
+        "min": 19.6074,
+        "max": 19.9574,
+        "ci95": {
+          "low": 19.6018,
+          "high": 19.9383,
+          "halfWidth": 0.1682
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 20.7962,
+          "deepSignalIsoVariancePct": 14.608,
+          "chronoBiasLongHorizonRetentionPct": 24.8502,
+          "gradientFlowConditionScore": 22.9973,
+          "compositeWeightInitScore": 19.6826
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 20.4523,
+          "deepSignalIsoVariancePct": 14.7252,
+          "chronoBiasLongHorizonRetentionPct": 24.9151,
+          "gradientFlowConditionScore": 22.2759,
+          "compositeWeightInitScore": 19.7679
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 21.0169,
+          "deepSignalIsoVariancePct": 14.7089,
+          "chronoBiasLongHorizonRetentionPct": 25.3382,
+          "gradientFlowConditionScore": 22.8081,
+          "compositeWeightInitScore": 19.9574
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 21.1542,
+          "deepSignalIsoVariancePct": 15.1379,
+          "chronoBiasLongHorizonRetentionPct": 25.1226,
+          "gradientFlowConditionScore": 22.0049,
+          "compositeWeightInitScore": 19.6074
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 20.8391,
+          "deepSignalIsoVariancePct": 15.2426,
+          "chronoBiasLongHorizonRetentionPct": 25.1131,
+          "gradientFlowConditionScore": 22.8196,
+          "compositeWeightInitScore": 19.8349
+        }
+      ]
+    },
+    {
+      "profileId": "iid-gaussian-glorot-zero-bias",
+      "label": "i.i.d. Gaussian Glorot Without Chrono/Gate Bias",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 56.3764,
+        "stdDev": 0.2211,
+        "min": 56.0436,
+        "max": 56.6285,
+        "ci95": {
+          "low": 56.1019,
+          "high": 56.651,
+          "halfWidth": 0.2745
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 69.9076,
+        "stdDev": 0.2281,
+        "min": 69.6864,
+        "max": 70.1941,
+        "ci95": {
+          "low": 69.6245,
+          "high": 70.1908,
+          "halfWidth": 0.2832
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 47.5566,
+        "stdDev": 0.1608,
+        "min": 47.3752,
+        "max": 47.7819,
+        "ci95": {
+          "low": 47.357,
+          "high": 47.7562,
+          "halfWidth": 0.1996
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 64.065,
+        "stdDev": 0.3363,
+        "min": 63.604,
+        "max": 64.3979,
+        "ci95": {
+          "low": 63.6474,
+          "high": 64.4825,
+          "halfWidth": 0.4175
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 58.6209,
+        "stdDev": 0.1129,
+        "min": 58.4854,
+        "max": 58.777,
+        "ci95": {
+          "low": 58.4807,
+          "high": 58.761,
+          "halfWidth": 0.1402
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 56.3301,
+          "deepSignalIsoVariancePct": 69.6864,
+          "chronoBiasLongHorizonRetentionPct": 47.3752,
+          "gradientFlowConditionScore": 64.3979,
+          "compositeWeightInitScore": 58.548
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 56.0436,
+          "deepSignalIsoVariancePct": 69.7802,
+          "chronoBiasLongHorizonRetentionPct": 47.4293,
+          "gradientFlowConditionScore": 63.8207,
+          "compositeWeightInitScore": 58.6191
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 56.5141,
+          "deepSignalIsoVariancePct": 69.7672,
+          "chronoBiasLongHorizonRetentionPct": 47.7819,
+          "gradientFlowConditionScore": 64.2465,
+          "compositeWeightInitScore": 58.777
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 56.6285,
+          "deepSignalIsoVariancePct": 70.1103,
+          "chronoBiasLongHorizonRetentionPct": 47.6022,
+          "gradientFlowConditionScore": 63.604,
+          "compositeWeightInitScore": 58.4854
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 56.3659,
+          "deepSignalIsoVariancePct": 70.1941,
+          "chronoBiasLongHorizonRetentionPct": 47.5942,
+          "gradientFlowConditionScore": 64.2557,
+          "compositeWeightInitScore": 58.6749
+        }
+      ]
+    },
+    {
+      "profileId": "kaiming-he-fan-in-only",
+      "label": "Kaiming-He Fan-In Without Stiefel Orthogonality",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 63.9011,
+        "stdDev": 0.1769,
+        "min": 63.6349,
+        "max": 64.1028,
+        "ci95": {
+          "low": 63.6815,
+          "high": 64.1207,
+          "halfWidth": 0.2196
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 85.4307,
+        "stdDev": 0.1711,
+        "min": 85.2648,
+        "max": 85.6456,
+        "ci95": {
+          "low": 85.2183,
+          "high": 85.6432,
+          "halfWidth": 0.2124
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 60.0452,
+        "stdDev": 0.1286,
+        "min": 59.9001,
+        "max": 60.2255,
+        "ci95": {
+          "low": 59.8855,
+          "high": 60.2049,
+          "halfWidth": 0.1597
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 77.5487,
+        "stdDev": 0.2522,
+        "min": 77.203,
+        "max": 77.7984,
+        "ci95": {
+          "low": 77.2356,
+          "high": 77.8618,
+          "halfWidth": 0.3131
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 71.0967,
+        "stdDev": 0.0903,
+        "min": 70.9883,
+        "max": 71.2216,
+        "ci95": {
+          "low": 70.9846,
+          "high": 71.2088,
+          "halfWidth": 0.1121
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 63.8641,
+          "deepSignalIsoVariancePct": 85.2648,
+          "chronoBiasLongHorizonRetentionPct": 59.9001,
+          "gradientFlowConditionScore": 77.7984,
+          "compositeWeightInitScore": 71.0384
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 63.6349,
+          "deepSignalIsoVariancePct": 85.3351,
+          "chronoBiasLongHorizonRetentionPct": 59.9434,
+          "gradientFlowConditionScore": 77.3656,
+          "compositeWeightInitScore": 71.0953
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 64.0112,
+          "deepSignalIsoVariancePct": 85.3254,
+          "chronoBiasLongHorizonRetentionPct": 60.2255,
+          "gradientFlowConditionScore": 77.6848,
+          "compositeWeightInitScore": 71.2216
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 64.1028,
+          "deepSignalIsoVariancePct": 85.5828,
+          "chronoBiasLongHorizonRetentionPct": 60.0817,
+          "gradientFlowConditionScore": 77.203,
+          "compositeWeightInitScore": 70.9883
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 63.8927,
+          "deepSignalIsoVariancePct": 85.6456,
+          "chronoBiasLongHorizonRetentionPct": 60.0754,
+          "gradientFlowConditionScore": 77.6918,
+          "compositeWeightInitScore": 71.1399
+        }
+      ]
+    },
+    {
+      "profileId": "stiefel-qr-orthogonal-chrono-gate-bias",
+      "label": "Stiefel QR Orthogonal Weights + Analytic Chrono/Gate Biases",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "naive-uniform-unscaled-zero-bias": {
+      "profileId": "naive-uniform-unscaled-zero-bias",
+      "label": "Naive Uniform [-1,1] Unscaled & Zero Bias",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 20.8517,
+        "stdDev": 0.2653,
+        "min": 20.4523,
+        "max": 21.1542,
+        "ci95": {
+          "low": 20.5223,
+          "high": 21.1812,
+          "halfWidth": 0.3294
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 14.8845,
+        "stdDev": 0.2851,
+        "min": 14.608,
+        "max": 15.2426,
+        "ci95": {
+          "low": 14.5305,
+          "high": 15.2385,
+          "halfWidth": 0.354
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 25.0678,
+        "stdDev": 0.1929,
+        "min": 24.8502,
+        "max": 25.3382,
+        "ci95": {
+          "low": 24.8283,
+          "high": 25.3074,
+          "halfWidth": 0.2395
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 22.5812,
+        "stdDev": 0.4204,
+        "min": 22.0049,
+        "max": 22.9973,
+        "ci95": {
+          "low": 22.0592,
+          "high": 23.1031,
+          "halfWidth": 0.5219
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 19.77,
+        "stdDev": 0.1355,
+        "min": 19.6074,
+        "max": 19.9574,
+        "ci95": {
+          "low": 19.6018,
+          "high": 19.9383,
+          "halfWidth": 0.1682
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 20.7962,
+          "deepSignalIsoVariancePct": 14.608,
+          "chronoBiasLongHorizonRetentionPct": 24.8502,
+          "gradientFlowConditionScore": 22.9973,
+          "compositeWeightInitScore": 19.6826
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 20.4523,
+          "deepSignalIsoVariancePct": 14.7252,
+          "chronoBiasLongHorizonRetentionPct": 24.9151,
+          "gradientFlowConditionScore": 22.2759,
+          "compositeWeightInitScore": 19.7679
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 21.0169,
+          "deepSignalIsoVariancePct": 14.7089,
+          "chronoBiasLongHorizonRetentionPct": 25.3382,
+          "gradientFlowConditionScore": 22.8081,
+          "compositeWeightInitScore": 19.9574
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 21.1542,
+          "deepSignalIsoVariancePct": 15.1379,
+          "chronoBiasLongHorizonRetentionPct": 25.1226,
+          "gradientFlowConditionScore": 22.0049,
+          "compositeWeightInitScore": 19.6074
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 20.8391,
+          "deepSignalIsoVariancePct": 15.2426,
+          "chronoBiasLongHorizonRetentionPct": 25.1131,
+          "gradientFlowConditionScore": 22.8196,
+          "compositeWeightInitScore": 19.8349
+        }
+      ]
+    },
+    "iid-gaussian-glorot-zero-bias": {
+      "profileId": "iid-gaussian-glorot-zero-bias",
+      "label": "i.i.d. Gaussian Glorot Without Chrono/Gate Bias",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 56.3764,
+        "stdDev": 0.2211,
+        "min": 56.0436,
+        "max": 56.6285,
+        "ci95": {
+          "low": 56.1019,
+          "high": 56.651,
+          "halfWidth": 0.2745
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 69.9076,
+        "stdDev": 0.2281,
+        "min": 69.6864,
+        "max": 70.1941,
+        "ci95": {
+          "low": 69.6245,
+          "high": 70.1908,
+          "halfWidth": 0.2832
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 47.5566,
+        "stdDev": 0.1608,
+        "min": 47.3752,
+        "max": 47.7819,
+        "ci95": {
+          "low": 47.357,
+          "high": 47.7562,
+          "halfWidth": 0.1996
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 64.065,
+        "stdDev": 0.3363,
+        "min": 63.604,
+        "max": 64.3979,
+        "ci95": {
+          "low": 63.6474,
+          "high": 64.4825,
+          "halfWidth": 0.4175
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 58.6209,
+        "stdDev": 0.1129,
+        "min": 58.4854,
+        "max": 58.777,
+        "ci95": {
+          "low": 58.4807,
+          "high": 58.761,
+          "halfWidth": 0.1402
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 56.3301,
+          "deepSignalIsoVariancePct": 69.6864,
+          "chronoBiasLongHorizonRetentionPct": 47.3752,
+          "gradientFlowConditionScore": 64.3979,
+          "compositeWeightInitScore": 58.548
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 56.0436,
+          "deepSignalIsoVariancePct": 69.7802,
+          "chronoBiasLongHorizonRetentionPct": 47.4293,
+          "gradientFlowConditionScore": 63.8207,
+          "compositeWeightInitScore": 58.6191
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 56.5141,
+          "deepSignalIsoVariancePct": 69.7672,
+          "chronoBiasLongHorizonRetentionPct": 47.7819,
+          "gradientFlowConditionScore": 64.2465,
+          "compositeWeightInitScore": 58.777
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 56.6285,
+          "deepSignalIsoVariancePct": 70.1103,
+          "chronoBiasLongHorizonRetentionPct": 47.6022,
+          "gradientFlowConditionScore": 63.604,
+          "compositeWeightInitScore": 58.4854
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 56.3659,
+          "deepSignalIsoVariancePct": 70.1941,
+          "chronoBiasLongHorizonRetentionPct": 47.5942,
+          "gradientFlowConditionScore": 64.2557,
+          "compositeWeightInitScore": 58.6749
+        }
+      ]
+    },
+    "kaiming-he-fan-in-only": {
+      "profileId": "kaiming-he-fan-in-only",
+      "label": "Kaiming-He Fan-In Without Stiefel Orthogonality",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 63.9011,
+        "stdDev": 0.1769,
+        "min": 63.6349,
+        "max": 64.1028,
+        "ci95": {
+          "low": 63.6815,
+          "high": 64.1207,
+          "halfWidth": 0.2196
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 85.4307,
+        "stdDev": 0.1711,
+        "min": 85.2648,
+        "max": 85.6456,
+        "ci95": {
+          "low": 85.2183,
+          "high": 85.6432,
+          "halfWidth": 0.2124
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 60.0452,
+        "stdDev": 0.1286,
+        "min": 59.9001,
+        "max": 60.2255,
+        "ci95": {
+          "low": 59.8855,
+          "high": 60.2049,
+          "halfWidth": 0.1597
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 77.5487,
+        "stdDev": 0.2522,
+        "min": 77.203,
+        "max": 77.7984,
+        "ci95": {
+          "low": 77.2356,
+          "high": 77.8618,
+          "halfWidth": 0.3131
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 71.0967,
+        "stdDev": 0.0903,
+        "min": 70.9883,
+        "max": 71.2216,
+        "ci95": {
+          "low": 70.9846,
+          "high": 71.2088,
+          "halfWidth": 0.1121
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 63.8641,
+          "deepSignalIsoVariancePct": 85.2648,
+          "chronoBiasLongHorizonRetentionPct": 59.9001,
+          "gradientFlowConditionScore": 77.7984,
+          "compositeWeightInitScore": 71.0384
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 63.6349,
+          "deepSignalIsoVariancePct": 85.3351,
+          "chronoBiasLongHorizonRetentionPct": 59.9434,
+          "gradientFlowConditionScore": 77.3656,
+          "compositeWeightInitScore": 71.0953
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 64.0112,
+          "deepSignalIsoVariancePct": 85.3254,
+          "chronoBiasLongHorizonRetentionPct": 60.2255,
+          "gradientFlowConditionScore": 77.6848,
+          "compositeWeightInitScore": 71.2216
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 64.1028,
+          "deepSignalIsoVariancePct": 85.5828,
+          "chronoBiasLongHorizonRetentionPct": 60.0817,
+          "gradientFlowConditionScore": 77.203,
+          "compositeWeightInitScore": 70.9883
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 63.8927,
+          "deepSignalIsoVariancePct": 85.6456,
+          "chronoBiasLongHorizonRetentionPct": 60.0754,
+          "gradientFlowConditionScore": 77.6918,
+          "compositeWeightInitScore": 71.1399
+        }
+      ]
+    },
+    "stiefel-qr-orthogonal-chrono-gate-bias": {
+      "profileId": "stiefel-qr-orthogonal-chrono-gate-bias",
+      "label": "Stiefel QR Orthogonal Weights + Analytic Chrono/Gate Biases",
+      "orthogonalityFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "deepSignalIsoVariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "chronoBiasLongHorizonRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "gradientFlowConditionScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeWeightInitScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 29017,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 39023,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 49031,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        },
+        {
+          "seed": 59053,
+          "orthogonalityFidelityPct": 100,
+          "deepSignalIsoVariancePct": 100,
+          "chronoBiasLongHorizonRetentionPct": 100,
+          "gradientFlowConditionScore": 100,
+          "compositeWeightInitScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "stiefel-qr-orthogonal-chrono-gate-bias",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "orthogonalityFidelityPctMean": 100,
+    "deepSignalIsoVariancePctMean": 100,
+    "chronoBiasRetentionPctMean": 100,
+    "gainVsBaseline": 80.23
+  }
+}
