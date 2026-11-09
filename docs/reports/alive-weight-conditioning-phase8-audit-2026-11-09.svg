@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="400" viewBox="0 0 940 400">
+  <rect width="940" height="400" fill="#071018"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="15" font-weight="bold">ALIVE Pass 45 · Phase VIII Weight &amp; Bias Conditioning Acceptance Matrix (W1..W10)</text>
+  <text x="24" y="56" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12">Verified=10/10 · Score=100% · SHA-256=332a9a5b02688cce6d497ba2a1400875…</text>
+  <text x="24" y="88" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W1-Stiefel-QR-Orthogonality-Fidelity (Pass 41) · mean=100.0000 · Orthogonality == 100%</text>
+  <text x="24" y="116" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W2-Analytic-Chrono-And-Gate-Bias-Retention (Pass 41) · mean=100.0000 · Chrono Bias Retention == 100%</text>
+  <text x="24" y="144" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W3-Stiefel-Superiority-Over-Naive-Init (Pass 41) · mean=80.2300 · Gain vs Naive >= +75.0</text>
+  <text x="24" y="172" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W4-Power-Iteration-1Lipschitz-Compliance (Pass 42) · mean=100.0000 · 1-Lipschitz Compliance == 100%</text>
+  <text x="24" y="200" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W5-Deep-Jacobian-Spectral-Radius-Stability (Pass 42) · mean=0.0000 · Spectral Deviation < 1e-6</text>
+  <text x="24" y="228" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W6-MuP-Width-Invariant-ZeroShot-Transfer (Pass 43) · mean=100.0000 · muP Transfer == 100%</text>
+  <text x="24" y="256" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W7-MuP-Feature-Evolution-Coordinate-Check (Pass 43) · mean=100.0000 · Optimal LR Shift == 0.0</text>
+  <text x="24" y="284" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W8-PreRMSNorm-ReZero-64Layer-Signal (Pass 44) · mean=100.0000 · 64-Layer Preservation == 100%</text>
+  <text x="24" y="312" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W9-QKNorm-Effective-Rank-Retention (Pass 44) · mean=100.0000 · Rank Retention == 100%</text>
+  <text x="24" y="340" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] W10-Runtime-Primary-Cortex-Hub-Weight-Programming (Pass 45) · mean=13.0000 · 13 Runtime Tensors Programmed</text>
+</svg>
