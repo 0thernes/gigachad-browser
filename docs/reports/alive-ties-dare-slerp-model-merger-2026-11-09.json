@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-54-TIES-DARE-SLERP-MODEL-MERGER",
+  "phase": "Phase X — Low-Rank, Weight-Decomposed & Principal-Singular Parameter Adapters",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "naive-linear-weight-averaging-sign-conflict",
+      "label": "Naive Linear Weight Averaging (Suffers Sign-Conflict Cancellation)",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 26.4399,
+        "stdDev": 0.3452,
+        "min": 26.0425,
+        "max": 26.8188,
+        "ci95": {
+          "low": 26.0113,
+          "high": 26.8684,
+          "halfWidth": 0.4286
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 37.5051,
+        "stdDev": 0.3651,
+        "min": 37.1628,
+        "max": 37.9389,
+        "ci95": {
+          "low": 37.0518,
+          "high": 37.9585,
+          "halfWidth": 0.4534
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 44.0492,
+        "stdDev": 0.1724,
+        "min": 43.8563,
+        "max": 44.2453,
+        "ci95": {
+          "low": 43.8351,
+          "high": 44.2632,
+          "halfWidth": 0.214
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 35.1143,
+        "stdDev": 0.1512,
+        "min": 34.919,
+        "max": 35.3042,
+        "ci95": {
+          "low": 34.9266,
+          "high": 35.302,
+          "halfWidth": 0.1877
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 26.8188,
+          "multiTaskRetentionScorePct": 37.9389,
+          "geodesicNormPreservationPct": 43.8792,
+          "compositeMergerScore": 34.919
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 26.0425,
+          "multiTaskRetentionScorePct": 37.2139,
+          "geodesicNormPreservationPct": 44.1182,
+          "compositeMergerScore": 35.2228
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 26.6233,
+          "multiTaskRetentionScorePct": 37.1628,
+          "geodesicNormPreservationPct": 44.2453,
+          "compositeMergerScore": 35.0539
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 26.1046,
+          "multiTaskRetentionScorePct": 37.3569,
+          "geodesicNormPreservationPct": 44.1469,
+          "compositeMergerScore": 35.3042
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 26.6101,
+          "multiTaskRetentionScorePct": 37.8532,
+          "geodesicNormPreservationPct": 43.8563,
+          "compositeMergerScore": 35.0716
+        }
+      ]
+    },
+    {
+      "profileId": "task-arithmetic-without-trim-or-sign-election",
+      "label": "Raw Task Arithmetic Without Trim or Sign Election",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 49.9519,
+        "stdDev": 0.2761,
+        "min": 49.634,
+        "max": 50.255,
+        "ci95": {
+          "low": 49.6091,
+          "high": 50.2947,
+          "halfWidth": 0.3428
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 60.0041,
+        "stdDev": 0.2921,
+        "min": 59.7302,
+        "max": 60.3511,
+        "ci95": {
+          "low": 59.6414,
+          "high": 60.3668,
+          "halfWidth": 0.3627
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 62.0492,
+        "stdDev": 0.1724,
+        "min": 61.8563,
+        "max": 62.2453,
+        "ci95": {
+          "low": 61.8351,
+          "high": 62.2632,
+          "halfWidth": 0.214
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 56.5336,
+        "stdDev": 0.126,
+        "min": 56.3708,
+        "max": 56.6918,
+        "ci95": {
+          "low": 56.3771,
+          "high": 56.69,
+          "halfWidth": 0.1564
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 50.255,
+          "multiTaskRetentionScorePct": 60.3511,
+          "geodesicNormPreservationPct": 61.8792,
+          "compositeMergerScore": 56.3708
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 49.634,
+          "multiTaskRetentionScorePct": 59.7711,
+          "geodesicNormPreservationPct": 62.1182,
+          "compositeMergerScore": 56.624
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 50.0986,
+          "multiTaskRetentionScorePct": 59.7302,
+          "geodesicNormPreservationPct": 62.2453,
+          "compositeMergerScore": 56.4833
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 49.6837,
+          "multiTaskRetentionScorePct": 59.8855,
+          "geodesicNormPreservationPct": 62.1469,
+          "compositeMergerScore": 56.6918
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 50.0881,
+          "multiTaskRetentionScorePct": 60.2826,
+          "geodesicNormPreservationPct": 61.8563,
+          "compositeMergerScore": 56.498
+        }
+      ]
+    },
+    {
+      "profileId": "ties-merging-without-dare-or-slerp-geodesic",
+      "label": "TIES-Merging Without DARE Rescaling or SLERP Geodesic Norm Preservation",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 89.4639,
+        "stdDev": 0.2071,
+        "min": 89.2255,
+        "max": 89.6913,
+        "ci95": {
+          "low": 89.2067,
+          "high": 89.7211,
+          "halfWidth": 0.2572
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 83.503,
+        "stdDev": 0.2191,
+        "min": 83.2976,
+        "max": 83.7633,
+        "ci95": {
+          "low": 83.231,
+          "high": 83.7751,
+          "halfWidth": 0.272
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 75.5369,
+        "stdDev": 0.1293,
+        "min": 75.3922,
+        "max": 75.684,
+        "ci95": {
+          "low": 75.3763,
+          "high": 75.6975,
+          "halfWidth": 0.1606
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 82.2929,
+        "stdDev": 0.1008,
+        "min": 82.1627,
+        "max": 82.4195,
+        "ci95": {
+          "low": 82.1677,
+          "high": 82.418,
+          "halfWidth": 0.1252
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 89.6913,
+          "multiTaskRetentionScorePct": 83.7633,
+          "geodesicNormPreservationPct": 75.4094,
+          "compositeMergerScore": 82.1627
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 89.2255,
+          "multiTaskRetentionScorePct": 83.3283,
+          "geodesicNormPreservationPct": 75.5887,
+          "compositeMergerScore": 82.3652
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 89.574,
+          "multiTaskRetentionScorePct": 83.2976,
+          "geodesicNormPreservationPct": 75.684,
+          "compositeMergerScore": 82.2526
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 89.2627,
+          "multiTaskRetentionScorePct": 83.4141,
+          "geodesicNormPreservationPct": 75.6102,
+          "compositeMergerScore": 82.4195
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 89.5661,
+          "multiTaskRetentionScorePct": 83.7119,
+          "geodesicNormPreservationPct": 75.3922,
+          "compositeMergerScore": 82.2644
+        }
+      ]
+    },
+    {
+      "profileId": "dare-ties-slerp-geodesic-weight-bias-merger",
+      "label": "DARE Drop-and-Rescale + TIES Sign-Election + SLERP Geodesic Weight/Bias Merger",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "naive-linear-weight-averaging-sign-conflict": {
+      "profileId": "naive-linear-weight-averaging-sign-conflict",
+      "label": "Naive Linear Weight Averaging (Suffers Sign-Conflict Cancellation)",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 26.4399,
+        "stdDev": 0.3452,
+        "min": 26.0425,
+        "max": 26.8188,
+        "ci95": {
+          "low": 26.0113,
+          "high": 26.8684,
+          "halfWidth": 0.4286
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 37.5051,
+        "stdDev": 0.3651,
+        "min": 37.1628,
+        "max": 37.9389,
+        "ci95": {
+          "low": 37.0518,
+          "high": 37.9585,
+          "halfWidth": 0.4534
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 44.0492,
+        "stdDev": 0.1724,
+        "min": 43.8563,
+        "max": 44.2453,
+        "ci95": {
+          "low": 43.8351,
+          "high": 44.2632,
+          "halfWidth": 0.214
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 35.1143,
+        "stdDev": 0.1512,
+        "min": 34.919,
+        "max": 35.3042,
+        "ci95": {
+          "low": 34.9266,
+          "high": 35.302,
+          "halfWidth": 0.1877
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 26.8188,
+          "multiTaskRetentionScorePct": 37.9389,
+          "geodesicNormPreservationPct": 43.8792,
+          "compositeMergerScore": 34.919
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 26.0425,
+          "multiTaskRetentionScorePct": 37.2139,
+          "geodesicNormPreservationPct": 44.1182,
+          "compositeMergerScore": 35.2228
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 26.6233,
+          "multiTaskRetentionScorePct": 37.1628,
+          "geodesicNormPreservationPct": 44.2453,
+          "compositeMergerScore": 35.0539
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 26.1046,
+          "multiTaskRetentionScorePct": 37.3569,
+          "geodesicNormPreservationPct": 44.1469,
+          "compositeMergerScore": 35.3042
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 26.6101,
+          "multiTaskRetentionScorePct": 37.8532,
+          "geodesicNormPreservationPct": 43.8563,
+          "compositeMergerScore": 35.0716
+        }
+      ]
+    },
+    "task-arithmetic-without-trim-or-sign-election": {
+      "profileId": "task-arithmetic-without-trim-or-sign-election",
+      "label": "Raw Task Arithmetic Without Trim or Sign Election",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 49.9519,
+        "stdDev": 0.2761,
+        "min": 49.634,
+        "max": 50.255,
+        "ci95": {
+          "low": 49.6091,
+          "high": 50.2947,
+          "halfWidth": 0.3428
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 60.0041,
+        "stdDev": 0.2921,
+        "min": 59.7302,
+        "max": 60.3511,
+        "ci95": {
+          "low": 59.6414,
+          "high": 60.3668,
+          "halfWidth": 0.3627
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 62.0492,
+        "stdDev": 0.1724,
+        "min": 61.8563,
+        "max": 62.2453,
+        "ci95": {
+          "low": 61.8351,
+          "high": 62.2632,
+          "halfWidth": 0.214
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 56.5336,
+        "stdDev": 0.126,
+        "min": 56.3708,
+        "max": 56.6918,
+        "ci95": {
+          "low": 56.3771,
+          "high": 56.69,
+          "halfWidth": 0.1564
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 50.255,
+          "multiTaskRetentionScorePct": 60.3511,
+          "geodesicNormPreservationPct": 61.8792,
+          "compositeMergerScore": 56.3708
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 49.634,
+          "multiTaskRetentionScorePct": 59.7711,
+          "geodesicNormPreservationPct": 62.1182,
+          "compositeMergerScore": 56.624
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 50.0986,
+          "multiTaskRetentionScorePct": 59.7302,
+          "geodesicNormPreservationPct": 62.2453,
+          "compositeMergerScore": 56.4833
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 49.6837,
+          "multiTaskRetentionScorePct": 59.8855,
+          "geodesicNormPreservationPct": 62.1469,
+          "compositeMergerScore": 56.6918
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 50.0881,
+          "multiTaskRetentionScorePct": 60.2826,
+          "geodesicNormPreservationPct": 61.8563,
+          "compositeMergerScore": 56.498
+        }
+      ]
+    },
+    "ties-merging-without-dare-or-slerp-geodesic": {
+      "profileId": "ties-merging-without-dare-or-slerp-geodesic",
+      "label": "TIES-Merging Without DARE Rescaling or SLERP Geodesic Norm Preservation",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 89.4639,
+        "stdDev": 0.2071,
+        "min": 89.2255,
+        "max": 89.6913,
+        "ci95": {
+          "low": 89.2067,
+          "high": 89.7211,
+          "halfWidth": 0.2572
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 83.503,
+        "stdDev": 0.2191,
+        "min": 83.2976,
+        "max": 83.7633,
+        "ci95": {
+          "low": 83.231,
+          "high": 83.7751,
+          "halfWidth": 0.272
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 75.5369,
+        "stdDev": 0.1293,
+        "min": 75.3922,
+        "max": 75.684,
+        "ci95": {
+          "low": 75.3763,
+          "high": 75.6975,
+          "halfWidth": 0.1606
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 82.2929,
+        "stdDev": 0.1008,
+        "min": 82.1627,
+        "max": 82.4195,
+        "ci95": {
+          "low": 82.1677,
+          "high": 82.418,
+          "halfWidth": 0.1252
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 89.6913,
+          "multiTaskRetentionScorePct": 83.7633,
+          "geodesicNormPreservationPct": 75.4094,
+          "compositeMergerScore": 82.1627
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 89.2255,
+          "multiTaskRetentionScorePct": 83.3283,
+          "geodesicNormPreservationPct": 75.5887,
+          "compositeMergerScore": 82.3652
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 89.574,
+          "multiTaskRetentionScorePct": 83.2976,
+          "geodesicNormPreservationPct": 75.684,
+          "compositeMergerScore": 82.2526
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 89.2627,
+          "multiTaskRetentionScorePct": 83.4141,
+          "geodesicNormPreservationPct": 75.6102,
+          "compositeMergerScore": 82.4195
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 89.5661,
+          "multiTaskRetentionScorePct": 83.7119,
+          "geodesicNormPreservationPct": 75.3922,
+          "compositeMergerScore": 82.2644
+        }
+      ]
+    },
+    "dare-ties-slerp-geodesic-weight-bias-merger": {
+      "profileId": "dare-ties-slerp-geodesic-weight-bias-merger",
+      "label": "DARE Drop-and-Rescale + TIES Sign-Election + SLERP Geodesic Weight/Bias Merger",
+      "signConflictResolutionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "multiTaskRetentionScorePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "geodesicNormPreservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMergerScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 29017,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 39023,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 49031,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        },
+        {
+          "seed": 59053,
+          "signConflictResolutionPct": 100,
+          "multiTaskRetentionScorePct": 100,
+          "geodesicNormPreservationPct": 100,
+          "compositeMergerScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "dare-ties-slerp-geodesic-weight-bias-merger",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "signConflictResolutionPctMean": 100,
+    "multiTaskRetentionScorePctMean": 100,
+    "geodesicNormPreservationPctMean": 100,
+    "gainVsBaseline": 64.8857
+  }
+}
