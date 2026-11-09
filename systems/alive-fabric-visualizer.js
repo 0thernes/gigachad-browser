@@ -300,6 +300,20 @@
   }
 
   // ---------- 7. ghost faculties and creatures (text, measured) ----------
+  let latestBenchmark = null, benchmarkBusy = false;
+  async function runBenchmark() {
+    if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
+    benchmarkBusy = true;
+    try {
+      latestBenchmark = await root.AliveUnseenTaskBenchmark.run();
+      root.__aliveLatestUnseenBenchmark = latestBenchmark;
+      draw();
+      return latestBenchmark;
+    } finally {
+      benchmarkBusy = false;
+    }
+  }
+
   function renderTables(target) {
     const controller = latest.controller, h = runtime();
     const rows = [];
@@ -312,7 +326,11 @@
     }
     rows.push('');
     const colony = Array.isArray(h?.offspringColony) ? h.offspringColony : [];
-    rows.push(`creatures: primary ${h?.agentId || '—'} + ${colony.length} offspring`);
+    const lenses = root.aliveFabric?.creatureLenses?.(colony, latest.coupling) || [];
+    rows.push(`creatures: primary ${h?.agentId || '—'} + ${colony.length} offspring (${lenses.length} role lenses)`);
+    for (const lens of lenses) {
+      rows.push(`  [${lens.lensId.padEnd(14)}] ${String(lens.name).slice(0, 22).padEnd(22)} act=${fmt(lens.activation)} util=${fmt(lens.nodeUtility)} gate=${fmt(lens.gateActivation)}`);
+    }
     for (const child of colony.slice(0, 8)) {
       const numbers = Object.entries(child || {}).filter(([, v]) => finite(v)).slice(0, 6).map(([k, v]) => `${k}=${fmt(v)}`).join(' ');
       rows.push(`  ${String(child?.offspringId || child?.id || '?').slice(0, 28).padEnd(28)} ${numbers}`);
@@ -327,6 +345,72 @@
     if (persistence) rows.push('', `fabric persistence: ${persistence.status}${persistence.bytes ? ` · ${persistence.bytes} bytes` : ''}${persistence.reason ? ` · ${persistence.reason}` : ''}`);
     const text = rows.join('\n');
     if (target.textContent !== text) target.textContent = text;
+  }
+
+  // ---------- 8. Pass 2 unseen task benchmark & colony role lenses --------
+  function drawBenchmark(node) {
+    const { ctx, width, height } = prepare(node);
+    const h = runtime(), colony = Array.isArray(h?.offspringColony) ? h.offspringColony : [];
+    const lenses = root.aliveFabric?.creatureLenses?.(colony, latest.coupling) || [];
+    const splitX = Math.floor(width * 0.56);
+
+    // Left: 5-seed unseen holdout benchmark comparison
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    const report = latestBenchmark || root.__aliveLatestUnseenBenchmark;
+    if (!report?.summary?.byController) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(benchmarkBusy ? 'Running 5-seed unseen holdout benchmark…' : 'Click "Run benchmark" above to evaluate 5-seed unseen holdout tasks.', 8, 18);
+    } else {
+      const s = report.summary;
+      const dLearn = s.pairedDeltas?.learningVsFrozenReward?.mean;
+      const dFab = s.pairedDeltas?.fabricVsLearningReward?.mean;
+      ctx.fillText(`5 seeds · learn vs frozen Δ=${fmt(dLearn)} (${s.learningBeatFrozenSeeds}/5) · fabric vs learn Δ=${fmt(dFab)} (${s.fabricBeatLearningSeeds}/5)`, 8, 12);
+      const modes = ['heuristic', 'frozen', 'learning', 'fabric-coupled'];
+      const colors = { heuristic: '#64748b', frozen: '#f59e0b', learning: '#22d3ee', 'fabric-coupled': '#34d399' };
+      const minR = -8, maxR = 16, zeroX = 110 + ((-minR) / (maxR - minR)) * (splitX - 210);
+      const barW = Math.max(60, splitX - 210);
+      modes.forEach((mode, idx) => {
+        const entry = s.byController[mode];
+        if (!entry) return;
+        const y = 32 + idx * 38;
+        const mean = entry.unseenHoldoutReward.mean;
+        const [lo, hi] = entry.unseenHoldoutReward.ci95;
+        const recall = entry.unseenTargetRecall.mean * 100;
+        const avoid = entry.unseenTrapAvoidance.mean * 100;
+        ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+        ctx.fillText(mode, 104, y + 10);
+        ctx.fillStyle = '#0f1b26';
+        ctx.fillRect(110, y, barW, 18);
+        const xMean = 110 + Math.max(0, Math.min(1, (mean - minR) / (maxR - minR))) * barW;
+        ctx.fillStyle = colors[mode] || '#38bdf8';
+        ctx.fillRect(Math.min(zeroX, xMean), y + 2, Math.max(1.5, Math.abs(xMean - zeroX)), 14);
+        // 95% CI whisker
+        const xLo = 110 + Math.max(0, Math.min(1, (lo - minR) / (maxR - minR))) * barW;
+        const xHi = 110 + Math.max(0, Math.min(1, (hi - minR) / (maxR - minR))) * barW;
+        ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(xLo, y + 9); ctx.lineTo(xHi, y + 9); ctx.stroke();
+        ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+        ctx.fillText(`r=${mean.toFixed(2)} rec=${recall.toFixed(0)}% avd=${avoid.toFixed(0)}%`, 114 + barW, y + 10);
+      });
+      ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+      ctx.fillText('unseen holdout reward (mean ± 95% CI) · rec=target concept recall · avd=trap avoidance', 8, height - 8);
+    }
+
+    // Right: Colony Role Lenses
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    ctx.fillText(`Colony specialized role lenses (${lenses.length})`, splitX + 8, 12);
+    const lensBarW = Math.max(50, width - splitX - 180);
+    lenses.slice(0, 5).forEach((lens, idx) => {
+      const y = 32 + idx * 32;
+      ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'right';
+      ctx.fillText(`${lens.lensId}`, splitX + 96, y + 9);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(splitX + 102, y, lensBarW, 16);
+      ctx.fillStyle = '#a78bfa';
+      ctx.fillRect(splitX + 102, y + 2, lensBarW * Math.max(0, Math.min(1, lens.activation)), 12);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`${(lens.activation * 100).toFixed(0)}% (u=${lens.nodeUtility.toFixed(2)} g=${lens.gateActivation.toFixed(2)})`, splitX + 106 + lensBarW, y + 9);
+    });
   }
 
   // ---------- panel ------------------------------------------------------
@@ -351,17 +435,21 @@
     header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:6px';
     const title = doc.createElement('strong'); title.textContent = 'SYNAPTIC FABRIC · live data';
     const controls = doc.createElement('span');
+    const benchBtn = doc.createElement('button'); benchBtn.type = 'button'; benchBtn.textContent = 'Run benchmark';
+    benchBtn.title = 'Run 5-seed unseen holdout benchmark comparing heuristic, frozen, learning and fabric-coupled controllers';
+    benchBtn.addEventListener('click', () => { runBenchmark(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(reset, close);
+    for (const b of [benchBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
-      utility = canvas('alive-fabric-utility', 300), runtimeSeries = canvas('alive-fabric-series', 240), substrate = canvas('alive-fabric-substrate', 260);
+      utility = canvas('alive-fabric-utility', 300), runtimeSeries = canvas('alive-fabric-series', 240), substrate = canvas('alive-fabric-substrate', 260),
+      benchmarkCanvas = canvas('alive-fabric-benchmark', 210);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -371,13 +459,15 @@
       section('4 · Utility and adaptive cadence', utility),
       section('5 · Runtime, learning and plasticity time series (1 Hz)', runtimeSeries),
       section('6 · Neural substrate telemetry (1 Hz)', substrate),
-      section('7 · Ghost faculties, memory, creatures, fabric log', tables));
+      section('7 · Ghost faculties, memory, creatures, fabric log', tables),
+      section('8 · Unseen task benchmark (5 seeds) & colony role lenses', benchmarkCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
         'coupling updates/s', 'coupling reward', 'hub backprop/s', 'STDP updates/s', 'world pred error', 'research ranker loss'], ['#22d3ee', '#34d399', '#a78bfa', '#fbbf24', '#f472b6', '#60a5fa']),
       () => drawSeries(substrate, Array.from(series.keys()).filter(name => name.startsWith('substrate:')).slice(0, 16), ['#60a5fa', '#34d399', '#fbbf24', '#f472b6']),
-      () => renderTables(tables));
+      () => renderTables(tables),
+      () => drawBenchmark(benchmarkCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -420,6 +510,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

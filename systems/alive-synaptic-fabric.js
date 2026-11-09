@@ -35,6 +35,13 @@
     'research-plan', 'deep-dark-dive', 'epoch-handoff', 'portal-jump']);
   const TERMINAL = Object.freeze(['completed', 'observed', 'blocked', 'unavailable', 'error', 'timeout']);
   const VOLATILE = new Set(['tick', 'at', 'ageMs', 'checkedAt', 'sampledAt', 'durationMs', 'elapsedMs', 'timestamp', 'now', 'observedAt']);
+  const COLONY_LENSES = Object.freeze([
+    Object.freeze({ id: 'mechanism', label: 'Architecture & Mechanisms', nodes: Object.freeze(['reasoning', 'ghost-swarm', 'macro', 'millennium']), gates: Object.freeze([0, 1, 14, 21]) }),
+    Object.freeze({ id: 'implementation', label: 'Code & Implementation', nodes: Object.freeze(['dom-body', 'ghost-write', 'meso', 'connectome']), gates: Object.freeze([2, 5, 16, 22]) }),
+    Object.freeze({ id: 'verification', label: 'Evidence & Counterexamples', nodes: Object.freeze(['learning-five-seed', 'acceptance-gates', 'metacognition', 'brains-precision']), gates: Object.freeze([3, 7, 17, 23]) }),
+    Object.freeze({ id: 'topology', label: 'Connectome & Memory Topology', nodes: Object.freeze(['flywire', 'memory', 'dream', 'micro']), gates: Object.freeze([6, 9, 18, 22]) }),
+    Object.freeze({ id: 'frontier', label: 'Frontier & Anomaly Foraging', nodes: Object.freeze(['research-plan', 'portal-jump', 'deep-dark-dive', 'grover-collapse']), gates: Object.freeze([4, 11, 19, 21]) })
+  ]);
 
   // [from, to, initial weight]. Data-flow motivated: a fresh page observation
   // feeds cognition; cognition feeds ghost faculties; learning feeds replay;
@@ -131,11 +138,68 @@
         this.outgoing.get(from).push(edge);
       }
       this.edgeByKey = new Map(this.edges.map(edge => [edge.key, edge]));
+      this.ablatedNodes = new Set();
+      this.ablatedEdges = new Set();
       this.spans = [];
       this.events = [];
-      this.totals = { events: 0, excitations: 0, suppressed: 0, potentiations: 0, depressions: 0, cadenceAdjustments: 0, novel: 0, repeated: 0, foreign: 0, scalings: 0 };
+      this.totals = { events: 0, excitations: 0, suppressed: 0, potentiations: 0, depressions: 0, cadenceAdjustments: 0, novel: 0, repeated: 0, foreign: 0, scalings: 0, ablated: 0 };
       this.rates = [];
       this.receivedEvents = new WeakSet();
+    }
+
+    setAblation(target, ablated = true) {
+      if (typeof target !== 'string' || !target) return false;
+      const enable = Boolean(ablated);
+      if (target.includes('>')) {
+        if (!this.edgeByKey.has(target)) return false;
+        if (enable) this.ablatedEdges.add(target); else this.ablatedEdges.delete(target);
+        this._log(enable ? 'ablate-edge' : 'restore-edge', { edge: target });
+        return true;
+      }
+      if (!this.controller.jobs.has(target)) return false;
+      if (enable) this.ablatedNodes.add(target); else this.ablatedNodes.delete(target);
+      this._log(enable ? 'ablate-node' : 'restore-node', { node: target });
+      return true;
+    }
+
+    clearAblations() {
+      this.ablatedNodes.clear();
+      this.ablatedEdges.clear();
+      return true;
+    }
+
+    creatureLenses(colony = [], coupling = null) {
+      const members = [{ name: 'Primary Homunculus', stage: 'HOST' }].concat(
+        (Array.isArray(colony) ? colony.slice(0, 4) : []).map((c, idx) => ({
+          name: c && c.name ? String(c.name) : `Offspring #${idx + 1}`,
+          stage: c && c.stage ? String(c.stage) : 'COLONY'
+        }))
+      );
+      const gates = Array.isArray(coupling?.gateValues) ? coupling.gateValues : null;
+      return members.map((member, index) => {
+        const lens = COLONY_LENSES[index % COLONY_LENSES.length];
+        const presentNodes = lens.nodes.filter(id => this.controller.jobs.has(id));
+        const nodeUtility = presentNodes.length
+          ? presentNodes.reduce((sum, id) => sum + (1 + this.node(id).utility) * 0.5, 0) / presentNodes.length
+          : 0.5;
+        const validGates = gates ? lens.gates.filter(g => finite(gates[g])) : [];
+        const gateActivation = validGates.length
+          ? validGates.reduce((sum, g) => sum + clamp(gates[g], 0, 1), 0) / validGates.length
+          : 0.5;
+        const activation = clamp(nodeUtility * 0.6 + gateActivation * 0.4, 0, 1);
+        return {
+          index,
+          name: member.name,
+          stage: member.stage,
+          lensId: lens.id,
+          lensLabel: lens.label,
+          nodes: lens.nodes.slice(),
+          gates: lens.gates.slice(),
+          nodeUtility,
+          gateActivation,
+          activation
+        };
+      });
     }
 
     node(id) {
@@ -149,7 +213,7 @@
     }
 
     cadenceFactor(id) {
-      if (this.paced.has(id)) return 1;
+      if (this.paced.has(id) || this.ablatedNodes.has(id)) return 1;
       const { cadenceGain, minCadence, maxCadence } = this.options;
       return clamp(Math.pow(2, -cadenceGain * this.node(id).utility), minCadence, maxCadence);
     }
@@ -261,6 +325,7 @@
     }
 
     _adaptCadence(id, job, at) {
+      if (this.ablatedNodes.has(id)) { this.node(id).cadence = 1; return; }
       const factor = this.cadenceFactor(id);
       this.node(id).cadence = factor;
       if (factor === 1 || !finite(job.nextDueAt) || job.nextDueAt <= at) return;
@@ -271,8 +336,10 @@
     }
 
     _excite(source, at) {
+      if (this.ablatedNodes.has(source)) { this.totals.ablated++; return; }
       const c = this.controller;
       for (const edge of this.outgoing.get(source) || []) {
+        if (this.ablatedEdges.has(edge.key) || this.ablatedNodes.has(edge.to)) { this.totals.ablated++; continue; }
         const target = c.jobs.get(edge.to);
         if (!target || this.paced.has(edge.to)) continue;
         const eligible = c.running && !c.suspended && typeof target.adapter?.run === 'function' && !target.manualOnly &&
@@ -302,7 +369,7 @@
       const nodes = ids.map(id => {
         const node = this.node(id), job = this.controller.jobs.get(id);
         return { id, label: job.label || id, group: job.group || null, mode: job.mode || null, status: job.status,
-          utility: node.utility, cadence: this.cadenceFactor(id), paced: this.paced.has(id),
+          utility: node.utility, cadence: this.cadenceFactor(id), paced: this.paced.has(id), ablated: this.ablatedNodes.has(id),
           baseIntervalMs: job.intervalMs, effectiveIntervalMs: Math.round(job.intervalMs * this.cadenceFactor(id)),
           novel: node.novel, repeated: node.repeated, failures: node.failures, excited: node.excitedCount,
           lastExcitedBy: node.lastExcitedBy, lastExcitedAgoMs: finite(node.lastExcitedAt) ? Math.max(0, now - node.lastExcitedAt) : null,
@@ -314,9 +381,12 @@
         version: VERSION, sampledAt: now, totals: { ...this.totals },
         graph: { nodes: nodes.length, edges: active.length, meanWeight,
           meanUtility: nodes.length ? nodes.reduce((a, n) => a + n.utility, 0) / nodes.length : 0,
-          weightDrift: active.reduce((a, edge) => a + Math.abs(edge.weight - edge.initial), 0) },
+          weightDrift: active.reduce((a, edge) => a + Math.abs(edge.weight - edge.initial), 0),
+          ablatedNodes: Array.from(this.ablatedNodes),
+          ablatedEdges: Array.from(this.ablatedEdges) },
         nodes,
         edges: active.map(edge => ({ from: edge.from, to: edge.to, weight: edge.weight, initial: edge.initial,
+          ablated: this.ablatedEdges.has(edge.key),
           excitations: edge.excitations, potentiations: edge.potentiations, depressions: edge.depressions,
           lastExcitedAgoMs: finite(edge.lastExcitedAt) ? Math.max(0, now - edge.lastExcitedAt) : null })),
         spans: this.spans.map(span => ({ ...span })),
@@ -401,7 +471,10 @@
       attach,
       snapshot: () => (attach() && fabric ? { ...fabric.snapshot(), persistence: { ...persistence } } : null),
       exportState: () => (fabric ? fabric.exportState() : null),
-      reset: () => { if (!fabric) return false; for (const edge of fabric.edges) edge.weight = edge.initial; for (const node of fabric.nodes.values()) node.utility = 0; save(); return true; },
+      setAblation: (target, ablated = true) => (attach() && fabric ? fabric.setAblation(target, ablated) : false),
+      clearAblations: () => (attach() && fabric ? fabric.clearAblations() : false),
+      creatureLenses: (colony, coupling) => (attach() && fabric ? fabric.creatureLenses(colony, coupling) : []),
+      reset: () => { if (!fabric) return false; fabric.clearAblations(); for (const edge of fabric.edges) edge.weight = edge.initial; for (const node of fabric.nodes.values()) node.utility = 0; save(); return true; },
       stop: () => { clearInterval(saveTimer); save(); }
     });
     if (!attach()) {
@@ -410,5 +483,5 @@
     }
   }
 
-  return Object.freeze({ SynapticFabric, DEFAULT_EDGES, DEFAULTS, PACED, STORAGE_KEY, evidenceDigest, connectivity, installBrowser });
+  return Object.freeze({ SynapticFabric, DEFAULT_EDGES, DEFAULTS, PACED, COLONY_LENSES, STORAGE_KEY, evidenceDigest, connectivity, installBrowser });
 });

@@ -1,0 +1,2938 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-02-unseen-research-navigation-tasks-v1",
+  "status": "completed",
+  "livePolicyModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "controllers": [
+      "heuristic",
+      "frozen",
+      "learning",
+      "fabric-coupled"
+    ],
+    "dimensions": {
+      "input": 16,
+      "hidden": 12,
+      "parameters": 217
+    },
+    "trainingTasksPerSeed": 3,
+    "unseenHoldoutTasksPerSeed": 3,
+    "retentionTasksPerSeed": 2,
+    "stepsPerTask": 8,
+    "productionModules": [
+      "AliveResearchPolicy",
+      "AliveCognitiveFaculties",
+      "AliveSynapticFabric"
+    ],
+    "holdoutIsolation": "Unseen holdout tasks use disjoint domains, URLs and concept vocabularies; ranker weights are held fixed during holdout evaluation"
+  },
+  "summary": {
+    "byController": {
+      "heuristic": {
+        "unseenHoldoutReward": {
+          "count": 5,
+          "mean": -4.9275,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            -4.9275,
+            -4.9275
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTargetRecall": {
+          "count": 5,
+          "mean": 0.16666666666666666,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.16666666666666666,
+            0.16666666666666666
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTrapAvoidance": {
+          "count": 5,
+          "mean": 0.25,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.25,
+            0.25
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "heldOutMSE": {
+          "count": 5,
+          "mean": 0.41045,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.41045,
+            0.41045
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "retentionReward": {
+          "count": 5,
+          "mean": -3.285,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            -3.285,
+            -3.285
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "frozen": {
+        "unseenHoldoutReward": {
+          "count": 5,
+          "mean": -4.9275,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            -4.9275,
+            -4.9275
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTargetRecall": {
+          "count": 5,
+          "mean": 0.16666666666666666,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.16666666666666666,
+            0.16666666666666666
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTrapAvoidance": {
+          "count": 5,
+          "mean": 0.25,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.25,
+            0.25
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "heldOutMSE": {
+          "count": 5,
+          "mean": 0.41792778533044234,
+          "sampleStandardDeviation": 0.016735355957013167,
+          "ci95": [
+            0.3971480963414942,
+            0.4387074743193905
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "retentionReward": {
+          "count": 5,
+          "mean": -3.285,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            -3.285,
+            -3.285
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "learning": {
+        "unseenHoldoutReward": {
+          "count": 5,
+          "mean": 8.4105,
+          "sampleStandardDeviation": 1.2590772290650007,
+          "ci95": [
+            6.847149133711833,
+            9.973850866288169
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTargetRecall": {
+          "count": 5,
+          "mean": 0.4666666666666667,
+          "sampleStandardDeviation": 0.04564354645876383,
+          "ci95": [
+            0.4099927182784786,
+            0.5233406150548547
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTrapAvoidance": {
+          "count": 5,
+          "mean": 0.7,
+          "sampleStandardDeviation": 0.06846531968814577,
+          "ci95": [
+            0.6149890774177178,
+            0.7850109225822821
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "heldOutMSE": {
+          "count": 5,
+          "mean": 0.2607668921290035,
+          "sampleStandardDeviation": 0.03580220609155298,
+          "ci95": [
+            0.2163125817688506,
+            0.3052212024891564
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "retentionReward": {
+          "count": 5,
+          "mean": 5.607,
+          "sampleStandardDeviation": 0.839384819376667,
+          "ci95": [
+            4.564766089141221,
+            6.649233910858779
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "fabric-coupled": {
+        "unseenHoldoutReward": {
+          "count": 5,
+          "mean": 14.520000000000005,
+          "sampleStandardDeviation": 0.1844756081437333,
+          "ci95": [
+            14.290943278821185,
+            14.749056721178825
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTargetRecall": {
+          "count": 5,
+          "mean": 0.6666666666666666,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.6666666666666666,
+            0.6666666666666666
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenTrapAvoidance": {
+          "count": 5,
+          "mean": 1,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1,
+            1
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "heldOutMSE": {
+          "count": 5,
+          "mean": 0.35782732524051036,
+          "sampleStandardDeviation": 0.039548752496808,
+          "ci95": [
+            0.30872106309135255,
+            0.40693358738966817
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "retentionReward": {
+          "count": 5,
+          "mean": 9.59375,
+          "sampleStandardDeviation": 0.09728742853010365,
+          "ci95": [
+            9.472951702516347,
+            9.714548297483653
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    },
+    "pairedDeltas": {
+      "learningVsFrozenReward": {
+        "count": 5,
+        "mean": 13.338,
+        "sampleStandardDeviation": 1.2590772290650005,
+        "ci95": [
+          11.774649133711831,
+          14.901350866288167
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "learningVsHeuristicReward": {
+        "count": 5,
+        "mean": 13.338,
+        "sampleStandardDeviation": 1.2590772290650005,
+        "ci95": [
+          11.774649133711831,
+          14.901350866288167
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fabricVsLearningReward": {
+        "count": 5,
+        "mean": 6.109500000000002,
+        "sampleStandardDeviation": 1.3449734546636973,
+        "ci95": [
+          4.439494882804343,
+          7.7795051171956615
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fabricVsHeuristicReward": {
+        "count": 5,
+        "mean": 19.4475,
+        "sampleStandardDeviation": 0.1844756081437333,
+        "ci95": [
+          19.218443278821184,
+          19.67655672117882
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "learningVsFrozenRecall": {
+        "count": 5,
+        "mean": 0.3,
+        "sampleStandardDeviation": 0.04564354645876386,
+        "ci95": [
+          0.2433260516118119,
+          0.3566739483881881
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fabricVsHeuristicRecall": {
+        "count": 5,
+        "mean": 0.5,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          0.5,
+          0.5
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "learningVsFrozenTrapReduction": {
+        "count": 5,
+        "mean": 0.45,
+        "sampleStandardDeviation": 0.06846531968814576,
+        "ci95": [
+          0.3649890774177179,
+          0.5350109225822821
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "retentionVsFrozenDelta": {
+        "count": 5,
+        "mean": 8.892,
+        "sampleStandardDeviation": 0.8393848193766664,
+        "ci95": [
+          7.849766089141221,
+          9.934233910858778
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "learningBeatFrozenSeeds": 5,
+    "learningBeatHeuristicSeeds": 5,
+    "fabricBeatLearningSeeds": 5,
+    "fabricBeatHeuristicSeeds": 5
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "status": "completed",
+      "initialStateSha256": "fa516b65a67029fb913567ba312af5669c49371b55588bc4600a4ec58e0f62e5",
+      "controllers": {
+        "heuristic": {
+          "mode": "heuristic",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "finalStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.41045,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "frozen": {
+          "mode": "frozen",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "fa516b65a67029fb913567ba312af5669c49371b55588bc4600a4ec58e0f62e5",
+          "finalStateSha256": "fa516b65a67029fb913567ba312af5669c49371b55588bc4600a4ec58e0f62e5",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.4084962837223998,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "learning": {
+          "mode": "learning",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "fa516b65a67029fb913567ba312af5669c49371b55588bc4600a4ec58e0f62e5",
+          "finalStateSha256": "746fdcb976087bf1e25017bab1ed4c4aece85fa9ec0fb21f55907e732642fcb5",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 3.726054510247195,
+            "l2": 0.5456690734237488,
+            "maxAbs": 0.275965639972128
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 9.33,
+            "meanTaskReward": 3.11,
+            "targetConceptRecall": 0.5,
+            "trapSelectionRate": 0.25,
+            "trapAvoidanceRate": 0.75,
+            "heldOutMSE": 0.25073604039356323,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": 6.22,
+            "meanTaskReward": 3.11,
+            "targetConceptRecall": 0.5
+          }
+        },
+        "fabric-coupled": {
+          "mode": "fabric-coupled",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "fa516b65a67029fb913567ba312af5669c49371b55588bc4600a4ec58e0f62e5",
+          "finalStateSha256": "7f0ac368d2bd7d11913f014e613f3be7fb53c8156dcc6d0be574ac329ec2ce9b",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 3.823168963455828,
+            "l2": 0.5413690635459836,
+            "maxAbs": 0.24106539192143828
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": 0.07750000000000012,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": 0.5775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 2.7725,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 3.5075000000000003,
+              "targetConceptRecall": 0.5833333333333334,
+              "trapRate": 0.125
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 14.602500000000003,
+            "meanTaskReward": 4.867500000000001,
+            "targetConceptRecall": 0.6666666666666666,
+            "trapSelectionRate": 0,
+            "trapAvoidanceRate": 1,
+            "heldOutMSE": 0.32526447956951704,
+            "roleHits": 111
+          },
+          "retention": {
+            "cumulativeReward": 9.59125,
+            "meanTaskReward": 4.795625,
+            "targetConceptRecall": 0.6666666666666666
+          }
+        }
+      },
+      "pairedDeltas": {
+        "learningVsFrozenReward": 14.2575,
+        "learningVsHeuristicReward": 14.2575,
+        "fabricVsLearningReward": 5.272500000000003,
+        "fabricVsHeuristicReward": 19.53,
+        "learningVsFrozenRecall": 0.33333333333333337,
+        "fabricVsHeuristicRecall": 0.5,
+        "learningVsFrozenTrapReduction": 0.5,
+        "retentionVsFrozenDelta": 9.504999999999999
+      }
+    },
+    {
+      "seed": 29017,
+      "status": "completed",
+      "initialStateSha256": "5031cfaf5b6c24d4daf48c1281f96696cf5c2571861cf837eeb828d4d2dc07d9",
+      "controllers": {
+        "heuristic": {
+          "mode": "heuristic",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "finalStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.41045,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "frozen": {
+          "mode": "frozen",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "5031cfaf5b6c24d4daf48c1281f96696cf5c2571861cf837eeb828d4d2dc07d9",
+          "finalStateSha256": "5031cfaf5b6c24d4daf48c1281f96696cf5c2571861cf837eeb828d4d2dc07d9",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.3935397255487683,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "learning": {
+          "mode": "learning",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "5031cfaf5b6c24d4daf48c1281f96696cf5c2571861cf837eeb828d4d2dc07d9",
+          "finalStateSha256": "2151f932acff3f639205d6511fc64cbf517549fc9280bb6738d57fe5a089b18f",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 4.796516348986188,
+            "l2": 0.5682462254882646,
+            "maxAbs": 0.19415856897830963
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": 2.34375,
+              "targetConceptRecall": 0.4166666666666667,
+              "trapRate": 0.375
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 9.33,
+            "meanTaskReward": 3.11,
+            "targetConceptRecall": 0.5,
+            "trapSelectionRate": 0.25,
+            "trapAvoidanceRate": 0.75,
+            "heldOutMSE": 0.22052537498460065,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": 6.22,
+            "meanTaskReward": 3.11,
+            "targetConceptRecall": 0.5
+          }
+        },
+        "fabric-coupled": {
+          "mode": "fabric-coupled",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "5031cfaf5b6c24d4daf48c1281f96696cf5c2571861cf837eeb828d4d2dc07d9",
+          "finalStateSha256": "2dd7c3fe37ceb7de45f870facef643d6017f85445a50fc8d6cb3404b72a8e569",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 4.240268657478737,
+            "l2": 0.5221119921211538,
+            "maxAbs": 0.23972077667713165
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 4.0075,
+              "targetConceptRecall": 0.5833333333333334,
+              "trapRate": 0.125
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 14.602500000000003,
+            "meanTaskReward": 4.867500000000001,
+            "targetConceptRecall": 0.6666666666666666,
+            "trapSelectionRate": 0,
+            "trapAvoidanceRate": 1,
+            "heldOutMSE": 0.3849661476961291,
+            "roleHits": 111
+          },
+          "retention": {
+            "cumulativeReward": 9.59125,
+            "meanTaskReward": 4.795625,
+            "targetConceptRecall": 0.6666666666666666
+          }
+        }
+      },
+      "pairedDeltas": {
+        "learningVsFrozenReward": 14.2575,
+        "learningVsHeuristicReward": 14.2575,
+        "fabricVsLearningReward": 5.272500000000003,
+        "fabricVsHeuristicReward": 19.53,
+        "learningVsFrozenRecall": 0.33333333333333337,
+        "fabricVsHeuristicRecall": 0.5,
+        "learningVsFrozenTrapReduction": 0.5,
+        "retentionVsFrozenDelta": 9.504999999999999
+      }
+    },
+    {
+      "seed": 39023,
+      "status": "completed",
+      "initialStateSha256": "eac03d3334722ddf1913ae8cc22a985395e1ddf2a6c1ba62e44a5b31a5ca8250",
+      "controllers": {
+        "heuristic": {
+          "mode": "heuristic",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "finalStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.41045,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "frozen": {
+          "mode": "frozen",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "eac03d3334722ddf1913ae8cc22a985395e1ddf2a6c1ba62e44a5b31a5ca8250",
+          "finalStateSha256": "eac03d3334722ddf1913ae8cc22a985395e1ddf2a6c1ba62e44a5b31a5ca8250",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.42892319233530124,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "learning": {
+          "mode": "learning",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "eac03d3334722ddf1913ae8cc22a985395e1ddf2a6c1ba62e44a5b31a5ca8250",
+          "finalStateSha256": "19a56e423f55f260d65da7a42e3ea5cfb2754ac22de31e798988625f0dce8e53",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 4.645280723983888,
+            "l2": 0.5634233347440837,
+            "maxAbs": 0.2551885172724724
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": 2.34375,
+              "targetConceptRecall": 0.4166666666666667,
+              "trapRate": 0.375
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 3.11,
+              "targetConceptRecall": 0.5,
+              "trapRate": 0.25
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 9.33,
+            "meanTaskReward": 3.11,
+            "targetConceptRecall": 0.5,
+            "trapSelectionRate": 0.25,
+            "trapAvoidanceRate": 0.75,
+            "heldOutMSE": 0.2827107622692734,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": 6.22,
+            "meanTaskReward": 3.11,
+            "targetConceptRecall": 0.5
+          }
+        },
+        "fabric-coupled": {
+          "mode": "fabric-coupled",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "eac03d3334722ddf1913ae8cc22a985395e1ddf2a6c1ba62e44a5b31a5ca8250",
+          "finalStateSha256": "34c7fe2e34967862d009ba6b979e07e181b4ea7813ebbd3d2b97bfe0dca140ef",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 4.063396893383469,
+            "l2": 0.528454366059623,
+            "maxAbs": 0.2810300886631012
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": 4.0075,
+              "targetConceptRecall": 0.5833333333333334,
+              "trapRate": 0.125
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": 4.73,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 4.0075,
+              "targetConceptRecall": 0.5833333333333334,
+              "trapRate": 0.125
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 4.73,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 4.73,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 4.0075,
+              "targetConceptRecall": 0.5833333333333334,
+              "trapRate": 0.125
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 14.190000000000001,
+            "meanTaskReward": 4.73,
+            "targetConceptRecall": 0.6666666666666666,
+            "trapSelectionRate": 0,
+            "trapAvoidanceRate": 1,
+            "heldOutMSE": 0.41407903340423086,
+            "roleHits": 93
+          },
+          "retention": {
+            "cumulativeReward": 9.46,
+            "meanTaskReward": 4.73,
+            "targetConceptRecall": 0.6666666666666666
+          }
+        }
+      },
+      "pairedDeltas": {
+        "learningVsFrozenReward": 14.2575,
+        "learningVsHeuristicReward": 14.2575,
+        "fabricVsLearningReward": 4.860000000000001,
+        "fabricVsHeuristicReward": 19.1175,
+        "learningVsFrozenRecall": 0.33333333333333337,
+        "fabricVsHeuristicRecall": 0.5,
+        "learningVsFrozenTrapReduction": 0.5,
+        "retentionVsFrozenDelta": 9.504999999999999
+      }
+    },
+    {
+      "seed": 49031,
+      "status": "completed",
+      "initialStateSha256": "f4dabc47338f9749974d1d23e9fcd0af966f5c7046ae4a44b64dea78257c6153",
+      "controllers": {
+        "heuristic": {
+          "mode": "heuristic",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "finalStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.41045,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "frozen": {
+          "mode": "frozen",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "f4dabc47338f9749974d1d23e9fcd0af966f5c7046ae4a44b64dea78257c6153",
+          "finalStateSha256": "f4dabc47338f9749974d1d23e9fcd0af966f5c7046ae4a44b64dea78257c6153",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.424086868774525,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "learning": {
+          "mode": "learning",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "f4dabc47338f9749974d1d23e9fcd0af966f5c7046ae4a44b64dea78257c6153",
+          "finalStateSha256": "016cf4d849f540b57de54807b36aed197e0964463b8fffb35c4fb8a038d20342",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 4.437010683242988,
+            "l2": 0.5681344580077862,
+            "maxAbs": 0.26212691329419613
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 2.34375,
+              "targetConceptRecall": 0.4166666666666667,
+              "trapRate": 0.375
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 7.03125,
+            "meanTaskReward": 2.34375,
+            "targetConceptRecall": 0.4166666666666667,
+            "trapSelectionRate": 0.375,
+            "trapAvoidanceRate": 0.625,
+            "heldOutMSE": 0.2394036254139691,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": 4.6875,
+            "meanTaskReward": 2.34375,
+            "targetConceptRecall": 0.4166666666666667
+          }
+        },
+        "fabric-coupled": {
+          "mode": "fabric-coupled",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "f4dabc47338f9749974d1d23e9fcd0af966f5c7046ae4a44b64dea78257c6153",
+          "finalStateSha256": "224b4725e6a26612aea5ce4714e053b8b385f0d8eee48e835b360731e89f9ae6",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 4.110782471077982,
+            "l2": 0.557020306653536,
+            "maxAbs": 0.27870110236108303
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -0.25749999999999984,
+              "targetConceptRecall": 0.25,
+              "trapRate": 0.625
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 2.4375,
+              "targetConceptRecall": 0.4166666666666667,
+              "trapRate": 0.375
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 4.0075,
+              "targetConceptRecall": 0.5833333333333334,
+              "trapRate": 0.125
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 4.867500000000001,
+              "targetConceptRecall": 0.6666666666666666,
+              "trapRate": 0
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 14.602500000000003,
+            "meanTaskReward": 4.867500000000001,
+            "targetConceptRecall": 0.6666666666666666,
+            "trapSelectionRate": 0,
+            "trapAvoidanceRate": 1,
+            "heldOutMSE": 0.33107571525962115,
+            "roleHits": 111
+          },
+          "retention": {
+            "cumulativeReward": 9.59125,
+            "meanTaskReward": 4.795625,
+            "targetConceptRecall": 0.6666666666666666
+          }
+        }
+      },
+      "pairedDeltas": {
+        "learningVsFrozenReward": 11.95875,
+        "learningVsHeuristicReward": 11.95875,
+        "fabricVsLearningReward": 7.571250000000003,
+        "fabricVsHeuristicReward": 19.53,
+        "learningVsFrozenRecall": 0.25,
+        "fabricVsHeuristicRecall": 0.5,
+        "learningVsFrozenTrapReduction": 0.375,
+        "retentionVsFrozenDelta": 7.9725
+      }
+    },
+    {
+      "seed": 59053,
+      "status": "completed",
+      "initialStateSha256": "57620cc5580100f807e008fa642030ed31aef95585790e4c49a573abe5a4f8f5",
+      "controllers": {
+        "heuristic": {
+          "mode": "heuristic",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "finalStateSha256": "dcca84e263b91d5cf5a9ae15b4ca23f103f713ea2c62a8c4c15555ab71c7ae13",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.41045,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "frozen": {
+          "mode": "frozen",
+          "optimizerUpdates": 0,
+          "initialStateSha256": "57620cc5580100f807e008fa642030ed31aef95585790e4c49a573abe5a4f8f5",
+          "finalStateSha256": "57620cc5580100f807e008fa642030ed31aef95585790e4c49a573abe5a4f8f5",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 0,
+            "l1": 0,
+            "l2": 0,
+            "maxAbs": 0
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": -4.9275,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666,
+            "trapSelectionRate": 0.75,
+            "trapAvoidanceRate": 0.25,
+            "heldOutMSE": 0.43459285627121713,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": -3.285,
+            "meanTaskReward": -1.6425,
+            "targetConceptRecall": 0.16666666666666666
+          }
+        },
+        "learning": {
+          "mode": "learning",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "57620cc5580100f807e008fa642030ed31aef95585790e4c49a573abe5a4f8f5",
+          "finalStateSha256": "fcff5ec64cbda0746135f42fa9f79646063336402e920734f127084ea623e444",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 4.001562292018207,
+            "l2": 0.5162745542979464,
+            "maxAbs": 0.2227507047355175
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 2.34375,
+              "targetConceptRecall": 0.4166666666666667,
+              "trapRate": 0.375
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 7.03125,
+            "meanTaskReward": 2.34375,
+            "targetConceptRecall": 0.4166666666666667,
+            "trapSelectionRate": 0.375,
+            "trapAvoidanceRate": 0.625,
+            "heldOutMSE": 0.3104586575836113,
+            "roleHits": 0
+          },
+          "retention": {
+            "cumulativeReward": 4.6875,
+            "meanTaskReward": 2.34375,
+            "targetConceptRecall": 0.4166666666666667
+          }
+        },
+        "fabric-coupled": {
+          "mode": "fabric-coupled",
+          "optimizerUpdates": 96,
+          "initialStateSha256": "57620cc5580100f807e008fa642030ed31aef95585790e4c49a573abe5a4f8f5",
+          "finalStateSha256": "8897c0ca59089f819726f5a8d29ee24d6a9c0d583d788e37f0631a93a35484b7",
+          "parameterDelta": {
+            "count": 217,
+            "changed": 181,
+            "l1": 3.7722496486385353,
+            "l2": 0.5183045001829905,
+            "maxAbs": 0.2509137801826
+          },
+          "trainingCurve": [
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 1,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 2,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 1,
+              "taskIndex": 3,
+              "cumulativeReward": -1.6425,
+              "targetConceptRecall": 0.16666666666666666,
+              "trapRate": 0.75
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 4,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 5,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 2,
+              "taskIndex": 6,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 7,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 8,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 3,
+              "taskIndex": 9,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 10,
+              "cumulativeReward": 1.0775000000000001,
+              "targetConceptRecall": 0.3333333333333333,
+              "trapRate": 0.5
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 11,
+              "cumulativeReward": 2.4375,
+              "targetConceptRecall": 0.4166666666666667,
+              "trapRate": 0.375
+            },
+            {
+              "phase": "train",
+              "epoch": 4,
+              "taskIndex": 12,
+              "cumulativeReward": 4.0075,
+              "targetConceptRecall": 0.5833333333333334,
+              "trapRate": 0.125
+            }
+          ],
+          "unseenHoldout": {
+            "cumulativeReward": 14.602500000000003,
+            "meanTaskReward": 4.867500000000001,
+            "targetConceptRecall": 0.6666666666666666,
+            "trapSelectionRate": 0,
+            "trapAvoidanceRate": 1,
+            "heldOutMSE": 0.3337512502730537,
+            "roleHits": 111
+          },
+          "retention": {
+            "cumulativeReward": 9.735000000000001,
+            "meanTaskReward": 4.867500000000001,
+            "targetConceptRecall": 0.6666666666666666
+          }
+        }
+      },
+      "pairedDeltas": {
+        "learningVsFrozenReward": 11.95875,
+        "learningVsHeuristicReward": 11.95875,
+        "fabricVsLearningReward": 7.571250000000003,
+        "fabricVsHeuristicReward": 19.53,
+        "learningVsFrozenRecall": 0.25,
+        "fabricVsHeuristicRecall": 0.5,
+        "learningVsFrozenTrapReduction": 0.375,
+        "retentionVsFrozenDelta": 7.9725
+      }
+    }
+  ],
+  "scope": "Pass 2 comparative evaluation of heuristic, frozen, online-learning and fabric-coupled controllers on unseen simulated multi-domain research graphs using the production ranker and Ghost Swarm role filters. Does not claim open-web general intelligence or qualify the eight PDF acceptance gates.",
+  "provenance": {
+    "generatedAtUtc": "2026-11-09T15:24:19.225Z",
+    "node": "v25.8.2",
+    "platform": "win32",
+    "architecture": "x64",
+    "cpu": "Intel(R) Core(TM) Ultra 9 275HX",
+    "sourceFiles": {
+      "systems/alive-research-policy.js": "b838b90daf077f71e9089346c75fcf0a1719a15dca032356c08b3694165c53e3",
+      "systems/alive-cognitive-faculties.js": "e610e72dc3704996c6fd32d8cece53ba5548b8655b997182665e8daca0c5fcb1",
+      "systems/alive-synaptic-fabric.js": "4fc59dcefea1abb66d6d5b47100789d2d7d1f04b1cc8c9c1b229da2da90f30bd",
+      "systems/alive-unseen-task-benchmark.js": "00c8745b38775c199afe3a60edd0dc2807026ab495ae760faf15401f0890de2a",
+      "scripts/alive-unseen-task-benchmark.cjs": "aacd6c15a27e767e8289466a486de2708ebdcf4a5558bbbf1f0b275686978127"
+    },
+    "baseGitCommit": "dcd1051056c9e15a9fbe08b90c0d4f3a0e099033",
+    "sourceState": "Source hashes identify the measured working files; baseGitCommit is context, not a claim that these edits were already committed"
+  }
+}

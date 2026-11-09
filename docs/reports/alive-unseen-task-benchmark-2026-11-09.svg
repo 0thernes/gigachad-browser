@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 420" width="920" height="420" style="background:#05090f;font-family:Consolas,monospace;font-size:12px">
+  <rect width="920" height="420" fill="#05090f"/>
+  <text x="20" y="28" fill="#67e8f9" font-weight="700" font-size="14">PASS 2 · Unseen Research &amp; Navigation Task Benchmark (5 Seeds, Matched Budget)</text>
+  <text x="20" y="48" fill="#94a3b8" font-size="11">Seeds: 19013, 29017, 39023, 49031, 59053 · 3 unseen holdout tasks × 8 steps · Two-sided Student-t 95% CI (df=4)</text>
+  <line x1="283.3" y1="70" x2="283.3" y2="250" stroke="#334155" stroke-dasharray="3,3"/>
+  <text x="158" y="95" fill="#e2e8f0" text-anchor="end">heuristic</text>
+  <rect x="170" y="80" width="340" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="213.5" y="83" width="69.8" height="16" fill="#64748b" rx="2"/>
+  <line x1="213.5" y1="91" x2="213.5" y2="91" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="213.5" y1="86" x2="213.5" y2="96" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="213.5" y1="86" x2="213.5" y2="96" stroke="#f8fafc" stroke-width="1.5"/>
+  <text x="524" y="95" fill="#cbd5e1" font-size="11">reward -4.93 [-4.93, -4.93] · recall 16.7% · avoid 25.0% · MSE 0.4104</text>
+  <text x="158" y="139" fill="#e2e8f0" text-anchor="end">frozen</text>
+  <rect x="170" y="124" width="340" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="213.5" y="127" width="69.8" height="16" fill="#f59e0b" rx="2"/>
+  <line x1="213.5" y1="135" x2="213.5" y2="135" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="213.5" y1="130" x2="213.5" y2="140" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="213.5" y1="130" x2="213.5" y2="140" stroke="#f8fafc" stroke-width="1.5"/>
+  <text x="524" y="139" fill="#cbd5e1" font-size="11">reward -4.93 [-4.93, -4.93] · recall 16.7% · avoid 25.0% · MSE 0.4179</text>
+  <text x="158" y="183" fill="#e2e8f0" text-anchor="end">learning</text>
+  <rect x="170" y="168" width="340" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="283.3" y="171" width="119.1" height="16" fill="#22d3ee" rx="2"/>
+  <line x1="380.3" y1="179" x2="424.6" y2="179" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="380.3" y1="174" x2="380.3" y2="184" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="424.6" y1="174" x2="424.6" y2="184" stroke="#f8fafc" stroke-width="1.5"/>
+  <text x="524" y="183" fill="#cbd5e1" font-size="11">reward 8.41 [6.85, 9.97] · recall 46.7% · avoid 70.0% · MSE 0.2608</text>
+  <text x="158" y="227" fill="#e2e8f0" text-anchor="end">fabric-coupled</text>
+  <rect x="170" y="212" width="340" height="22" fill="#0f1b26" rx="3"/>
+  <rect x="283.3" y="215" width="205.7" height="16" fill="#34d399" rx="2"/>
+  <line x1="485.8" y1="223" x2="492.3" y2="223" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="485.8" y1="218" x2="485.8" y2="228" stroke="#f8fafc" stroke-width="1.5"/>
+  <line x1="492.3" y1="218" x2="492.3" y2="228" stroke="#f8fafc" stroke-width="1.5"/>
+  <text x="524" y="227" fill="#cbd5e1" font-size="11">reward 14.52 [14.29, 14.75] · recall 66.7% · avoid 100.0% · MSE 0.3578</text>
+  <rect x="20" y="272" width="880" height="126" fill="#09131c" stroke="#155e75" rx="6"/>
+  <text x="36" y="296" fill="#67e8f9" font-weight="700">Paired Multi-Seed Comparisons (Unseen Holdout &amp; Retention Suites)</text>
+  <text x="36" y="320" fill="#e2e8f0">1. Learning vs Frozen Holdout Reward Δ: +13.338 (95% CI [+11.775, +14.901], 5/5 seeds)</text>
+  <text x="36" y="340" fill="#e2e8f0">2. Fabric-Coupled vs Learning Holdout Reward Δ: +6.110 (95% CI [+4.439, +7.780], 5/5 seeds)</text>
+  <text x="36" y="360" fill="#e2e8f0">3. Learning vs Frozen Target Concept Recall Δ: +30.0% (95% CI [+24.3%, +35.7%]) · Retention Reward Δ: +8.892</text>
+  <text x="36" y="382" fill="#64748b" font-size="10">Scope: Measured on production AliveResearchPolicy (16x12x1 tanh ranker) + AliveCognitiveFaculties (3-role Ghost Swarm) + AliveSynapticFabric.</text>
+</svg>

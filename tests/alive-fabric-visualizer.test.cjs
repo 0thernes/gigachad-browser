@@ -157,5 +157,38 @@ test('workspace registration is used for a docked exclusive panel when provided'
   window.aliveWorkspace = { registerPanel(id, panel, close) { calls.push(['register', id]); dom.body.appendChild(panel); this.close = close; }, prepareExternalPanel(id) { calls.push(['prepare', id]); }, unregisterPanel(id) { calls.push(['unregister', id]); } };
   window.toggleAliveFabricPanel(true); assert.deepEqual(calls.slice(0, 2), [['register', 'fabric'], ['prepare', 'fabric']]);
   window.aliveWorkspace.close(); assert.equal(window.aliveFabricVisualizer.isOpen(), false);
+  window.aliveWorkspace.destroy?.();
   window.aliveFabricVisualizer.destroy(); assert.deepEqual(calls.at(-1), ['unregister', 'fabric']);
+});
+
+test('runBenchmark renders 5-seed unseen holdout metrics and colony role lenses in section 8', async () => {
+  const { window, dom } = load();
+  window.aliveFabric.creatureLenses = () => [
+    { index: 0, name: 'Primary Homunculus', stage: 'HOST', lensId: 'mechanism', lensLabel: 'Architecture', nodeUtility: 0.72, gateActivation: 0.64, activation: 0.69 },
+    { index: 1, name: 'Spawn Alpha', stage: 'B', lensId: 'implementation', lensLabel: 'Code', nodeUtility: 0.58, gateActivation: 0.51, activation: 0.55 }
+  ];
+  window.AliveUnseenTaskBenchmark = {
+    run: async () => ({
+      summary: {
+        learningBeatFrozenSeeds: 5,
+        fabricBeatLearningSeeds: 5,
+        pairedDeltas: {
+          learningVsFrozenReward: { mean: 12.45 },
+          fabricVsLearningReward: { mean: 5.82 }
+        },
+        byController: {
+          heuristic: { unseenHoldoutReward: { mean: -4.99, ci95: [-4.99, -4.99] }, unseenTargetRecall: { mean: 0.25 }, unseenTrapAvoidance: { mean: 0.25 } },
+          frozen: { unseenHoldoutReward: { mean: -4.99, ci95: [-4.99, -4.99] }, unseenTargetRecall: { mean: 0.25 }, unseenTrapAvoidance: { mean: 0.25 } },
+          learning: { unseenHoldoutReward: { mean: 7.46, ci95: [6.06, 8.86] }, unseenTargetRecall: { mean: 0.72 }, unseenTrapAvoidance: { mean: 0.70 } },
+          'fabric-coupled': { unseenHoldoutReward: { mean: 13.28, ci95: [13.04, 13.52] }, unseenTargetRecall: { mean: 0.80 }, unseenTrapAvoidance: { mean: 1.0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runBenchmark();
+  assert.equal(report.summary.learningBeatFrozenSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · learn vs frozen')), 'benchmark summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('Colony specialized role lenses (2)')), 'colony lenses drawn');
+  window.aliveFabricVisualizer.destroy();
 });

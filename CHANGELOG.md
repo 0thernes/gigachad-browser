@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Unseen research/navigation benchmark & colony lenses pass 2
+
+- Added the five-seed unseen research and navigation task benchmark ([`systems/alive-unseen-task-benchmark.js`](systems/alive-unseen-task-benchmark.js), [`scripts/alive-unseen-task-benchmark.cjs`](scripts/alive-unseen-task-benchmark.cjs)) comparing `heuristic`, `frozen`, `learning` and `fabric-coupled` controllers on disjoint multi-domain holdout and retention task graphs using the production `AliveResearchPolicy`, `AliveCognitiveFaculties` and `AliveSynapticFabric` modules.
+- Extended [`systems/alive-synaptic-fabric.js`](systems/alive-synaptic-fabric.js) with runtime node/edge ablation controls (`setAblation`, `clearAblations`) and per-creature specialized role lenses (`COLONY_LENSES`, `creatureLenses`).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 8 (`#alive-fabric-benchmark` and `Run benchmark` control) plotting 5-seed unseen holdout reward + 95% Student-$t$ CIs, target concept recall, trap avoidance, and colony role lens activations.
+- Added [Pass 2 report](docs/ALIVE_PASS_02_REPORT.md), [JSON report](docs/reports/alive-unseen-task-benchmark-2026-11-09.json), [SVG chart](docs/reports/alive-unseen-task-benchmark-2026-11-09.svg) and unit tests (`tests/alive-unseen-task-benchmark.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Continuous cognition pass 1
 
 - Added six coordinated capabilities for a total of 36, shared source-grounded Ghost research/writing, explicit memory/metacognition evidence, idempotent acknowledged DOM Warp, and independent five-training-seed diagnostics.

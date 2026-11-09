@@ -253,3 +253,53 @@ test('authentic timeout credits once, retains the execution lock, and late settl
   assert.equal(fabric.node('a').failures, 1); assert.equal(fabric.totals.novel, 0);
   assert.equal(controller.inFlight.size, 0);
 });
+
+test('node and edge ablations suppress downstream excitation and cadence changes until cleared', async () => {
+  let n = 0;
+  const { controller, fabric, job, advance } = rig(
+    { a: () => ({ evidence: { step: ++n } }), b: () => ({ evidence: { step: n } }) },
+    [['a', 'b', 0.6]]
+  );
+  assert.equal(fabric.setAblation('unknown-node', true), false);
+  assert.equal(fabric.setAblation('a>b', true), true);
+  job('b').nextDueAt = 5000;
+  controller.tick(); await flush();
+  assert.equal(job('b').nextDueAt, 5000, 'ablated edge a>b must not pull b earlier');
+  assert.equal(fabric.totals.excitations, 0);
+  assert.equal(fabric.totals.ablated, 1);
+
+  assert.equal(fabric.clearAblations(), true);
+  assert.equal(fabric.setAblation('a', true), true);
+  advance(2000); job('a').nextDueAt = 2000; job('b').nextDueAt = 6000;
+  controller.tick(); await flush();
+  assert.equal(job('b').nextDueAt, 6000, 'ablated source node a must not excite b');
+  assert.equal(fabric.cadenceFactor('a'), 1, 'ablated node keeps neutral cadence');
+
+  const snap = fabric.snapshot();
+  assert.deepEqual(snap.graph.ablatedNodes, ['a']);
+  assert.equal(snap.nodes.find(x => x.id === 'a').ablated, true);
+  fabric.clearAblations();
+  assert.deepEqual(fabric.snapshot().graph.ablatedNodes, []);
+});
+
+test('creatureLenses maps primary homunculus and colony offspring to specialized role lenses', () => {
+  const { fabric } = rig({
+    reasoning: () => 1, 'ghost-swarm': () => 1, macro: () => 1, millennium: () => 1,
+    'dom-body': () => 1, 'ghost-write': () => 1, meso: () => 1, connectome: () => 1
+  }, []);
+  fabric.node('reasoning').utility = 0.8;
+  fabric.node('ghost-swarm').utility = 0.6;
+  const gates = Array.from({ length: 24 }, (_, i) => (i === 0 || i === 1 ? 0.9 : 0.2));
+  const lenses = fabric.creatureLenses(
+    [{ name: 'Spawn Alpha', stage: 'B' }, { name: 'Spawn Beta', stage: 'C' }],
+    { gateValues: gates }
+  );
+  assert.equal(lenses.length, 3);
+  assert.equal(lenses[0].name, 'Primary Homunculus');
+  assert.equal(lenses[0].lensId, 'mechanism');
+  assert.equal(lenses[1].name, 'Spawn Alpha');
+  assert.equal(lenses[1].lensId, 'implementation');
+  assert.equal(lenses[2].name, 'Spawn Beta');
+  assert.equal(lenses[2].lensId, 'verification');
+  assert(lenses[0].activation > lenses[1].activation, 'elevated mechanism nodes and gates raise primary mechanism lens activation');
+});

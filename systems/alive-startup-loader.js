@@ -28,6 +28,7 @@
     'systems/alive-workspace-ui.js',
     'systems/alive-faculty-visuals.js',
     'systems/alive-synaptic-fabric.js',
+    'systems/alive-unseen-task-benchmark.js',
     'systems/alive-fabric-visualizer.js'
   ]);
   const message = error => String(error?.message || error || 'Startup failed').slice(0, 300);
