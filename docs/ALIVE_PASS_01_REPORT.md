@@ -60,13 +60,23 @@ inputs do not receive fabricated activity credit.
 | Prior/posterior/master/actor/critic projections | 65,536 weights in two phases | 32,768 reads |
 | Actor-output/decoder gradient lanes | 12,288 weights in eight phases | 1,536 updates |
 | Q/K/V coefficient readout | 12,288 coefficients in 768 calls | 16 reads |
-| Attention output coefficient readout | 8,192 coefficients in 1,024 calls | Eight reads |
+| Attention output coefficient readout | 4,096 coefficients in 512 calls | Eight reads |
 | Episodic memory readout | 16,384 values across 128 slots | One bounded slot readout |
 
 These are instrumented production-method fixtures, including formerly omitted
 final-lane perturbations that change downstream values. They are sparse rotating
 approximations, not an equivalent dense forward pass or dense gradient at every
 step. Coverage and causal wiring do not establish better open-web task results.
+
+The subsequent cortex persistence audit corrected the attention-output row.
+The earlier release fixture allocated 8,192 values while the actual constructor
+allocates `W_attn_out[64,64]`, or 4,096. Its 1,024-phase traversal could therefore
+read beyond the matrix at phase 512 and produce nonfinite expert gates. Current
+fixtures derive their matrix sizes from the constructor, and the corrected
+512-phase traversal has a separate boundary regression with the original failing
+algorithm retained as a control. Earlier release receipts remain historical;
+their passing oversized fixture did not verify the actual allocation boundary.
+See [the cortex contract](ALIVE_CORTEX_STATE.md) for the correction and evidence scope.
 
 ## Independent learning measurement
 

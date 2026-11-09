@@ -752,7 +752,7 @@ app.on('web-contents-created', (_event, contents) => {
 const requiredSourcePaths=['index.html','main.js','preload.js','config.js','alife_neural_cyber_engine.js','scripts/alive-overdrive-probe.cjs','scripts/alive-public-navigation-probe.cjs','systems/cortex-neural-cyber-engine.js','systems/alive-overdrive-runtime.js','systems/alive-overdrive-adapters.js','systems/alive-checkpoints.js','systems/alive-guest-execution.js','systems/alive-authority.js','systems/alive-neural-coupling.js','systems/alive-autosave.js','systems/alive-genome-codec.js','systems/authentic-asmodensius-adapter.js','systems/generated/authentic-asmodensius.js','systems/ported-multiverse-brains.js','systems/alife-learning-evidence.js','systems/alive-workspace-ui.js','assets/alive-workspace.css'];
 requiredSourcePaths.push('scripts/alive-specialist-fusion-evidence.cjs','scripts/alive-navigation-cache-probe.cjs','scripts/alive-genome-durable-evidence.cjs');
 requiredSourcePaths.push('systems/alive-startup-loader.js','systems/alive-primary-policy-bootstrap.js','systems/alive-primary-policy-state.js',
-  'systems/alive-trainer-state.js','systems/alive-replay-state.js','systems/alive-hub-state.js',
+  'systems/alive-trainer-state.js','systems/alive-replay-state.js','systems/alive-hub-state.js','systems/alive-cortex-state.js','systems/alife-25-bleeding-edge-models.js',
   'systems/alive-learned-state-registry.js','systems/alive-learned-state-codec.js','systems/alive-genome-persistence.js');
 if(splitHabitatChecks)requiredSourcePaths.push('scripts/alive-split-habitat-probe.cjs','systems/alive-page-exploration.js','systems/alive-habitat.js');
 const optionalSourcePaths=['systems/deep-web-transport.js','systems/sha3-256.cjs','systems/alive-specialist-fusion.js','systems/alive-research-planner.cjs','systems/alive-research-policy.js','systems/alive-tor-service.cjs'];
@@ -1115,7 +1115,10 @@ async function main() {
       const selected={savedAt:p.savedAt,simulationTick:p.simulationTick,authorityEpoch:p.authorityEpoch,policyCid:p.policyCid,bodyCid:p.bodyRecipe?.bodyCid,W_actor:p.W_actor};
       report.canonicalGenomeReadback={independent:durable.evidence,comparison:await evaluate(`(p=>{const h=humunculusRuntime;return {actorValuesChecked:p.W_actor?.length||0,actorMatchesCurrentRounded:Array.isArray(p.W_actor)&&p.W_actor.length===h.W_actor.length&&p.W_actor.every((v,i)=>v===Number(h.W_actor[i].toFixed(5))),tickMatchesCurrent:p.simulationTick===h.simulationTick,policyMatchesCurrent:p.policyCid===h.policyCid,epochMatchesCurrent:p.authorityEpoch===h.authorityEpoch,bodyMatchesCurrent:p.bodyCid===h.bodyRecipe?.bodyCid};})(${JSON.stringify(selected)})`)};
       fs.copyFileSync(durablePath,path.join(outputDir,'verified-autosave.snapshot'));
-      report.limitations.push('Canonical autosave was independently read and hash/length checked after a paused flush; selected actor/identity fields match the paused model. Separate process-restart verification covers broader hydration.');
+      const pausedMatch = ['actorMatchesCurrentRounded','tickMatchesCurrent','policyMatchesCurrent','epochMatchesCurrent','bodyMatchesCurrent']
+        .every(key => report.canonicalGenomeReadback.comparison[key] === true);
+      report.limitations.push('Canonical autosave was independently read and hash/length checked after the paused flush attempt; selected actor/identity fields ' +
+        (pausedMatch ? 'match' : 'do not all match') + ' the paused model. Flush success and revision agreement are checked separately. Separate process-restart verification covers broader hydration.');
     }
   }
   if(process.env.GIGACHAD_PROBE_RESTORE==='1') {

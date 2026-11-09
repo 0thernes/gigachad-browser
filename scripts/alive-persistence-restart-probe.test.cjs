@@ -6,10 +6,13 @@ const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const fs = require('node:fs');
 const path = require('node:path');
+const os = require('node:os');
+const { createHash } = require('node:crypto');
 const { adaptMain, observeHost, replaceOnce, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit,
   capturePausedReplayBoundary, applyLegacySentinels, captureNaturalHubReplay, assessNaturalHubEvolution, assessComponentSnapshotBinding,
-  assessNaturalReplayPopulation, sourceHashes } = require('./alive-persistence-restart-probe.cjs');
+  assessNaturalCortexEvolution, assessNaturalReplayPopulation, writeRawEvidence, readRawEvidence, sourceHashes } = require('./alive-persistence-restart-probe.cjs');
 const { captureHubHydration } = require('./alive-hub-state-evidence.cjs');
+const { captureCortexHydration } = require('./alive-cortex-state-evidence.cjs');
 
 function replayObservation(count = 1, cursor = count < 32 ? count : 0, seed = 0) {
   const tensor = (length, offset) => {
@@ -24,22 +27,27 @@ function replayObservation(count = 1, cursor = count < 32 ? count : 0, seed = 0)
     }) };
 }
 
-test('paused writer captures hub then replay before callbacks and retains both direct observations separately', () => {
-  const trace = [], runtime = { marker: 0 }, raw = replayObservation(), rawHub = { ok: true, directBytes: 'before' }, copied = value => JSON.parse(JSON.stringify(value));
+test('paused writer captures cortex then hub and replay before callbacks and retains first observations', () => {
+  const trace = [], runtime = { marker: 0 }, raw = replayObservation(), rawHub = { ok: true, directBytes: 'before' },
+    rawCortex = { ok: true, dataBase64: 'original' }, copied = value => JSON.parse(JSON.stringify(value));
   const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
   const result = observe(runtime, {
     captureReplay(h) { assert.equal(h, runtime); trace.push('direct-replay'); return copied(raw); },
     captureHub(h) { assert.equal(h, runtime); trace.push('direct-hub'); return copied(rawHub); },
+    captureCortex(h) { assert.equal(h, runtime); trace.push('direct-cortex'); return copied(rawCortex); },
     legacySentinels(h) { trace.push('historical-sentinels'); h.marker = 1; },
-    captureTrainer(h) { trace.push('trainer-read'); assert.equal(h.marker, 1); raw.entries[0].z16Hex = '00'.repeat(64); rawHub.directBytes = 'callback-corruption'; return { epoch: 7 }; }
+    captureTrainer(h) { trace.push('trainer-read'); assert.equal(h.marker, 1); raw.entries[0].z16Hex = '00'.repeat(64); rawHub.directBytes = 'callback-corruption'; rawCortex.dataBase64 = 'callback-corruption'; return { epoch: 7 }; }
   });
-  assert.deepEqual(trace, ['direct-hub', 'direct-replay', 'historical-sentinels', 'direct-hub', 'direct-replay', 'trainer-read']);
+  assert.deepEqual(trace, ['direct-cortex', 'direct-hub', 'direct-replay', 'historical-sentinels', 'direct-cortex', 'direct-hub', 'direct-replay', 'trainer-read']);
   assert.deepEqual(result.replayBeforeSentinels, replayObservation()); assert.deepEqual(result.replayBeforeFlush, replayObservation());
   assert.notEqual(result.replayBeforeSentinels, result.replayBeforeFlush);
   assert.deepEqual(result.hubBeforeSentinels, { ok: true, directBytes: 'before' });
   assert.deepEqual(result.hubBeforeFlush, { ok: true, directBytes: 'before' });
   assert.notEqual(result.hubBeforeSentinels, result.hubBeforeFlush);
-  assert.match(result.sentinelScope, /Three historical/); assert.match(result.sentinelScope, /no hub view\/counter/);
+  assert.deepEqual(result.cortexBeforeSentinels, { ok: true, dataBase64: 'original' });
+  assert.deepEqual(result.cortexBeforeFlush, { ok: true, dataBase64: 'original' });
+  assert.notEqual(result.cortexBeforeSentinels, result.cortexBeforeFlush);
+  assert.match(result.sentinelScope, /Two historical/); assert.match(result.sentinelScope, /no actor, cortex, hub, replay/);
 });
 
 test('a failed first raw replay observation prevents healing callbacks or observation retry', () => {
@@ -48,6 +56,7 @@ test('a failed first raw replay observation prevents healing callbacks or observ
   assert.throws(() => observe({}, {
     captureReplay() { attempts++; return attempts === 1 ? { ok: false, reason: 'malformed ring' } : replayObservation(); },
     captureHub() { return { ok: true }; },
+    captureCortex() { return { ok: true }; },
     legacySentinels() { callbacks++; }, captureTrainer() { callbacks++; }
   }), /Initial paused replay observation failed/);
   assert.equal(attempts, 1); assert.equal(callbacks, 0);
@@ -59,34 +68,59 @@ test('failed first hub observation prevents replay, mutation and metadata callba
   const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
   assert.throws(() => observe({}, {
     captureHub() { attempts++; return attempts === 1 ? { ok: false, reason: 'wrong arena' } : { ok: true }; },
+    captureCortex() { return { ok: true }; },
     captureReplay() { callbacks++; return replayObservation(); }, legacySentinels() { callbacks++; }, captureTrainer() { callbacks++; }
   }), /Initial paused hub observation failed/);
   assert.equal(attempts, 1); assert.equal(callbacks, 0);
 });
 
-test('natural baseline directly observes hub then replay together and rejects a failed first result', () => {
+test('failed first cortex observation prevents every later callback and retry', () => {
+  let attempts = 0, callbacks = 0;
+  const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
+  assert.throws(() => observe({}, {
+    captureCortex() { attempts++; return attempts === 1 ? { ok: false, reason: 'wrong native alias' } : { ok: true }; },
+    captureHub() { callbacks++; }, captureReplay() { callbacks++; }, legacySentinels() { callbacks++; }, captureTrainer() { callbacks++; }
+  }), /Initial paused cortex observation failed/);
+  assert.equal(attempts, 1); assert.equal(callbacks, 0);
+});
+
+test('a failed post-sentinel cortex capture prevents later reads and cannot be healed by trainer metadata', () => {
+  let attempts = 0, sentinels = 0, trainers = 0, hubReads = 0, replayReads = 0;
+  const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
+  assert.throws(() => observe({}, {
+    captureCortex() { attempts++; return attempts === 1 ? { ok: true } : { ok: false, reason: 'alias changed' }; },
+    captureHub() { hubReads++; return { ok: true }; },
+    captureReplay() { replayReads++; return replayObservation(); },
+    legacySentinels() { sentinels++; }, captureTrainer() { trainers++; return { ok: true }; }
+  }), /Cortex observation after legacy sentinels failed/);
+  assert.equal(attempts, 2); assert.equal(sentinels, 1); assert.equal(trainers, 0);
+  assert.equal(hubReads, 1); assert.equal(replayReads, 1);
+});
+
+test('natural baseline directly observes cortex then hub and replay and rejects a failed first result', () => {
   const observe = vm.runInNewContext('(' + captureNaturalHubReplay.toString() + ')'), trace = [];
-  const result = observe({}, { captureHub() { trace.push('hub'); return { ok: true }; }, captureReplay() { trace.push('replay'); return replayObservation(); } });
-  assert.deepEqual(trace, ['hub', 'replay']); assert.equal(result.hub.ok, true); assert.equal(result.replay.count, 1);
+  const result = observe({}, { captureCortex() { trace.push('cortex'); return { ok: true }; }, captureHub() { trace.push('hub'); return { ok: true }; }, captureReplay() { trace.push('replay'); return replayObservation(); } });
+  assert.deepEqual(trace, ['cortex', 'hub', 'replay']); assert.equal(result.cortex.ok, true); assert.equal(result.hub.ok, true); assert.equal(result.replay.count, 1);
   trace.length = 0;
-  assert.throws(() => observe({}, { captureHub() { trace.push('hub'); return { ok: false }; }, captureReplay() { trace.push('replay'); } }), /Initial natural hub/);
-  assert.deepEqual(trace, ['hub']);
+  assert.throws(() => observe({}, { captureCortex() { trace.push('cortex'); return { ok: false }; }, captureHub() { trace.push('hub'); }, captureReplay() { trace.push('replay'); } }), /Initial natural cortex/);
+  assert.deepEqual(trace, ['cortex']);
 });
 
-test('remaining historical sentinels mutate only actor/world/pellets and preserve all hub data', () => {
+test('remaining historical sentinels mutate only world/pellets and preserve actor and all containers', () => {
   const hub = { W_perc_enc: new Float32Array([.125, -.25]), replayRing32: [], replayWritePtr: 0, totalBackpropStepsTrained: 23 };
-  const runtime = { W_actor: new Float32Array([1, 2]), W_world: new Float32Array([3, 4]), pelletsEatenCount: 7, trainableAlifeNeuralHub: hub };
-  const before = structuredClone(hub), apply = vm.runInNewContext('(' + applyLegacySentinels.toString() + ')');
+  const actor = new Float32Array([1, 2]), cortex = { W_actor: actor, W_enc1: new Float32Array([7, 8]) };
+  const runtime = { W_actor: actor, deepCortex: cortex, W_world: new Float32Array([3, 4]), pelletsEatenCount: 7, trainableAlifeNeuralHub: hub };
+  const before = structuredClone({ actor, cortex, hub }), apply = vm.runInNewContext('(' + applyLegacySentinels.toString() + ')');
   apply(runtime);
-  assert.equal(runtime.W_actor[0], Math.fround(.314159)); assert.equal(runtime.W_actor[1], 2);
+  assert.equal(runtime.W_actor, actor); assert.deepEqual(actor, before.actor); assert.deepEqual(cortex, before.cortex);
   assert.equal(runtime.W_world[0], 3); assert.equal(runtime.W_world[1], Math.fround(-.271828)); assert.equal(runtime.pelletsEatenCount, 98765);
-  assert.equal(runtime.trainableAlifeNeuralHub, hub); assert.deepEqual(hub, before);
+  assert.equal(runtime.trainableAlifeNeuralHub, hub); assert.deepEqual(hub, before.hub);
 });
 
-test('all four component snapshots must share the complete seven fields and outer saved identity', () => {
+test('all five component snapshots must share the complete seven fields and outer saved identity', () => {
   const snapshot = { creatureId: 'fixture', policyId: 'policy', checkpointId: 'checkpoint', logicalTick: 3, modelEpoch: 4,
     capturedAt: '2026-11-10T00:00:00.000Z', resumeBoundary: 'fresh-browser-authority' };
-  const fields = ['primaryPolicyState', 'trainerCommittedState', 'replayMemoryState', 'hubMemoryState'];
+  const fields = ['primaryPolicyState', 'trainerCommittedState', 'replayMemoryState', 'hubMemoryState', 'cortexMemoryState'];
   const make = () => ({ simulationTick: 3, policyCid: 'policy', checkpointCid: 'checkpoint', agentId: 'fixture',
     ...Object.fromEntries(fields.map(field => [field, { snapshot: { ...snapshot } }])) });
   assert.equal(assessComponentSnapshotBinding(make()).ok, true);
@@ -140,6 +174,97 @@ test('natural hub gate rejects malformed raw evidence instead of accepting diffe
   }
 });
 
+function cortexFixture() {
+  // Actual allocation and eager cold state only. The fixed constructor RNG is
+  // a unit-test fixture; the real process probe never injects model values.
+  const source = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
+  const start = source.indexOf('        const initXavier = (rows, cols) => {');
+  const end = source.indexOf('        // Sovereign Browser Master Controller Telemetry', start);
+  assert.ok(start >= 0 && end > start);
+  const runtime = { W_actor: new Float32Array(80), W_critic: new Float32Array(16) };
+  new Function('hybridQrng', source.slice(start, end)).call(runtime, { u64: () => 1n });
+  return runtime;
+}
+
+test('natural cortex gate separates trained matrix bytes from scratch buffers and counters', () => {
+  const runtime = cortexFixture(), before = captureCortexHydration(runtime);
+  assert.equal(before.ok, true, before.reason);
+  assert.equal(assessNaturalCortexEvolution(before, before).ok, false);
+  runtime.deepCortex.cortexCoverageStep++;
+  let result = assessNaturalCortexEvolution(before, captureCortexHydration(runtime));
+  assert.equal(result.ok, false); assert.equal(result.changedLearnedMatrixBytes, 0); assert.ok(result.changedStateIds.length);
+  runtime.deepCortex.x64[0] = .25;
+  result = assessNaturalCortexEvolution(before, captureCortexHydration(runtime));
+  assert.equal(result.ok, false); assert.ok(result.changedScratchBytes > 0); assert.equal(result.changedLearnedMatrixBytes, 0);
+  runtime.deepCortex.M_hopfield[0] += .0625;
+  result = assessNaturalCortexEvolution(before, captureCortexHydration(runtime));
+  assert.equal(result.ok, false); assert.ok(result.changedScratchIds.includes('dc.M_hopfield'));
+  assert.equal(result.changedLearnedMatrixBytes, 0, 'associative memory alone is insufficient for this conservative matrix gate');
+  runtime.deepCortex.W_dec[0] += .125;
+  result = assessNaturalCortexEvolution(before, captureCortexHydration(runtime));
+  assert.equal(result.ok, true); assert.ok(result.changedLearnedMatrixBytes > 0); assert.ok(result.changedLearnedMatrixIds.length);
+  assert.ok(result.changedScratchBytes > 0); assert.ok(result.changedStateIds.length);
+  assert.deepEqual(result.changedLearnedMatrixIds, ['dc.W_dec']);
+  assert.doesNotMatch(JSON.stringify(result), /"dataBase64":|"hex":/, 'natural evolution reports metadata only');
+  assert.match(result.scope, /learning-quality or next-output equivalence/);
+});
+
+test('natural cortex gate rejects malformed observations and lost primary/connectome aliases', () => {
+  const runtime = cortexFixture(), before = captureCortexHydration(runtime);
+  for (const mutate of [
+    value => { value.ok = false; }, value => { value.totals.uniqueBytes--; },
+    value => { value.backings[0].dataBase64 = 'bad'; }, value => { value.views.pop(); }, value => { value.aliases.pop(); }
+  ]) {
+    const after = structuredClone(before); mutate(after);
+    assert.equal(assessNaturalCortexEvolution(before, after).ok, false);
+  }
+  runtime.deepCortex.W_actor = new Float32Array(runtime.W_actor);
+  assert.equal(assessNaturalCortexEvolution(before, captureCortexHydration(runtime)).ok, false);
+});
+
+function withEvidenceProfile(run) {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'alive-cortex-proof-test-'));
+  try { return run(directory); }
+  finally {
+    const target = path.resolve(directory), parent = path.resolve(os.tmpdir());
+    assert.equal(path.dirname(target), parent); assert.ok(path.basename(target).startsWith('alive-cortex-proof-test-'));
+    fs.rmSync(target, { recursive: true, force: true });
+  }
+}
+
+test('owned raw evidence files preserve the first snapshot with metadata-only immutable receipts', () => withEvidenceProfile(profile => {
+  const raw = { schema: 'gigachad.cortex-hydration-evidence.v1', ok: true, backings: [{ dataBase64: 'AQID' }] };
+  const receipt = writeRawEvidence(profile, 'cortexBeforeNatural', raw);
+  assert.deepEqual(Object.keys(receipt).sort(), ['byteLength', 'file', 'schema', 'sha256']);
+  assert.doesNotMatch(JSON.stringify(receipt), /AQID|dataBase64/);
+  raw.backings[0].dataBase64 = 'changed';
+  assert.equal(readRawEvidence(profile, 'cortexBeforeNatural', receipt).backings[0].dataBase64, 'AQID');
+  assert.throws(() => writeRawEvidence(profile, 'cortexBeforeNatural', raw), /EEXIST/);
+  const boot = { beforeBaseline: true, snapshot: { cortexEvidence: { ok: false, reason: 'first failure' } } };
+  const bootReceipt = writeRawEvidence(profile, 'readerBoot', boot);
+  boot.snapshot.cortexEvidence.ok = true;
+  const observed = readRawEvidence(profile, 'readerBoot', bootReceipt);
+  assert.equal(observed.snapshot.cortexEvidence.ok, false); assert.equal(observed.schema, 'gigachad.persistence-boot-observation.v1');
+}));
+
+test('raw evidence rejects traversal, wrong receipts, missing/truncated/tampered files and schema substitutions', () => withEvidenceProfile(profile => {
+  const raw = { schema: 'gigachad.cortex-hydration-evidence.v1', ok: true };
+  const receipt = writeRawEvidence(profile, 'cortexBeforeNatural', raw), file = path.join(profile, receipt.file), original = fs.readFileSync(file);
+  for (const bad of [{ ...receipt, file: '../outside.json' }, { ...receipt, byteLength: 16 * 1024 * 1024 + 1 },
+    { ...receipt, sha256: '0'.repeat(64) }, { ...receipt, schema: 'wrong' }]) assert.throws(() => readRawEvidence(profile, 'cortexBeforeNatural', bad));
+  assert.throws(() => writeRawEvidence(profile, '../outside', raw), /path\/key/);
+  assert.throws(() => writeRawEvidence('relative', 'cortexBeforeNatural', raw), /path\/key/);
+  assert.throws(() => readRawEvidence(profile, 'cortexBeforeFlush', receipt));
+  fs.writeFileSync(file, original.subarray(0, original.length - 1)); assert.throws(() => readRawEvidence(profile, 'cortexBeforeNatural', receipt), /truncated/);
+  const tampered = Buffer.from(original); tampered[0] ^= 1; fs.writeFileSync(file, tampered);
+  assert.throws(() => readRawEvidence(profile, 'cortexBeforeNatural', receipt), /hash mismatch/);
+  const wrongSchema = Buffer.from(JSON.stringify({ schema: 'wrong' })); fs.writeFileSync(file, wrongSchema);
+  assert.throws(() => readRawEvidence(profile, 'cortexBeforeNatural', { ...receipt, byteLength: wrongSchema.length,
+    sha256: createHash('sha256').update(wrongSchema).digest('hex') }), /schema mismatch/);
+  fs.unlinkSync(file); assert.throws(() => readRawEvidence(profile, 'cortexBeforeNatural', receipt), /ENOENT/);
+  fs.mkdirSync(file); assert.throws(() => readRawEvidence(profile, 'cortexBeforeNatural', receipt), /missing or replaced/);
+}));
+
 test('natural replay assessment requires nonempty changed physical state and never accepts display-only progress', () => {
   const empty = replayObservation(0), partial = replayObservation(2), full = replayObservation(32, 7);
   assert.equal(assessNaturalReplayPopulation(empty, partial).ok, true);
@@ -169,10 +294,11 @@ test('natural population rejects invalid bounds, holes, order, malformed bytes a
   assert.equal(assessNaturalReplayPopulation({ ok: false }, replayObservation()).ok, false);
 });
 
-test('proof source hashes include replay/hub production and independent oracle dependencies', () => {
+test('proof source hashes include replay/hub/cortex production and independent oracle dependencies', () => {
   const hashes = sourceHashes();
   for (const name of ['systems/alive-replay-state.js', 'scripts/alive-replay-state-evidence.cjs',
     'systems/alive-hub-state.js', 'scripts/alive-hub-state-evidence.cjs',
+    'systems/alive-cortex-state.js', 'scripts/alive-cortex-state-evidence.cjs',
     'scripts/alive-genome-hydration-evidence.cjs', 'scripts/alive-persistence-restart-probe.cjs']) assert.match(hashes[name] || '', /^[0-9a-f]{64}$/, name);
 });
 

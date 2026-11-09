@@ -12,8 +12,9 @@ const root = path.resolve(__dirname, '..');
 const { readRecord } = require('./alive-genome-durable-evidence.cjs');
 const { capturePauseDiagnostics, assessPauseEvidence } = require('./alive-public-navigation-probe.cjs');
 const { captureTrainerHydration, assessTrainerHydration, captureReplayHydration, assessReplayHydration,
-  captureHubHydration, assessHubHydration } = require('./alive-genome-hydration-evidence.cjs');
+  captureHubHydration, assessHubHydration, captureCortexHydration, assessCortexHydration } = require('./alive-genome-hydration-evidence.cjs');
 const { compareHubHydration } = require('./alive-hub-state-evidence.cjs');
+const { compareCortexHydration } = require('./alive-cortex-state-evidence.cjs');
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_neural_cyber_engine.js',
@@ -27,6 +28,7 @@ const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_
   'systems/alive-trainer-state.js', 'scripts/alive-trainer-state-evidence.cjs',
   'systems/alive-replay-state.js', 'scripts/alive-replay-state-evidence.cjs',
   'systems/alive-hub-state.js', 'scripts/alive-hub-state-evidence.cjs',
+  'systems/alive-cortex-state.js', 'scripts/alive-cortex-state-evidence.cjs',
   'systems/alive-learned-state-codec.js', 'systems/alive-learned-state-registry.js',
   'scripts/alive-primary-policy-evidence.cjs', 'scripts/alive-learned-state-wire-evidence.cjs',
   'scripts/alive-model-state-evidence.cjs', 'scripts/alive-persistence-restart-probe.cjs',
@@ -41,35 +43,46 @@ function replaceOnce(source, target, replacement, label) {
   if (count !== 1) throw new Error(`${label} expected one exact location, found ${count}`);
   return source.replace(target, replacement);
 }
-// Both raw containers precede private trainer APIs and legacy callbacks. Their
+// All raw containers precede private trainer APIs and legacy callbacks. Their
 // initial owned bytes remain the evidence even if a later callback changes them.
-function capturePausedReplayBoundary(runtime, { captureReplay, captureHub, captureTrainer, legacySentinels } = {}) {
-  if (typeof captureReplay !== 'function' || typeof captureHub !== 'function' || typeof captureTrainer !== 'function' || typeof legacySentinels !== 'function') throw new Error('Missing paused replay/hub observation contract');
+function capturePausedReplayBoundary(runtime, { captureCortex, captureReplay, captureHub, captureTrainer, legacySentinels } = {}) {
+  if (typeof captureCortex !== 'function' || typeof captureReplay !== 'function' || typeof captureHub !== 'function' || typeof captureTrainer !== 'function' || typeof legacySentinels !== 'function') throw new Error('Missing paused replay/hub/cortex observation contract');
+  const cortexBeforeSentinels = captureCortex(runtime);
+  if (cortexBeforeSentinels?.ok !== true) throw new Error('Initial paused cortex observation failed; no callback or retry was invoked');
   const hubBeforeSentinels = captureHub(runtime);
   if (hubBeforeSentinels?.ok !== true) throw new Error('Initial paused hub observation failed; no sentinel callback was invoked');
   const replayBeforeSentinels = captureReplay(runtime);
   if (replayBeforeSentinels?.ok !== true) throw new Error('Initial paused replay observation failed; no sentinel callback was invoked');
   legacySentinels(runtime);
+  const cortexBeforeFlush = captureCortex(runtime);
+  if (cortexBeforeFlush?.ok !== true) throw new Error('Cortex observation after legacy sentinels failed');
   const hubBeforeFlush = captureHub(runtime);
   if (hubBeforeFlush?.ok !== true) throw new Error('Hub observation after legacy sentinels failed');
   const replayBeforeFlush = captureReplay(runtime);
   if (replayBeforeFlush?.ok !== true) throw new Error('Replay observation after legacy sentinels failed');
   const trainerBeforeFlush = captureTrainer(runtime);
-  return { replayBeforeSentinels, replayBeforeFlush, hubBeforeSentinels, hubBeforeFlush, trainerBeforeFlush,
-    sentinelScope: 'Three historical paused actor/world/pellet sentinels only; no hub view/counter, replay record/cursor, trainer clock or replay fixture is written' };
+  return { cortexBeforeSentinels, cortexBeforeFlush, replayBeforeSentinels, replayBeforeFlush, hubBeforeSentinels, hubBeforeFlush, trainerBeforeFlush,
+    sentinelScope: 'Two historical paused world/pellet sentinels only; no actor, cortex, hub, replay or trainer state is written' };
 }
 function applyLegacySentinels(h) {
-  h.W_actor[0] = 0.314159;
   h.W_world[h.W_world.length - 1] = -0.271828;
   h.pelletsEatenCount = 98765;
 }
-function captureNaturalHubReplay(runtime, { captureHub, captureReplay } = {}) {
-  if (typeof captureHub !== 'function' || typeof captureReplay !== 'function') throw new Error('Missing natural hub/replay observation contract');
+function captureNaturalHubReplay(runtime, { captureCortex, captureHub, captureReplay } = {}) {
+  if (typeof captureCortex !== 'function' || typeof captureHub !== 'function' || typeof captureReplay !== 'function') throw new Error('Missing natural cortex/hub/replay observation contract');
+  const cortex = captureCortex(runtime);
+  if (cortex?.ok !== true) throw new Error('Initial natural cortex observation failed');
   const hub = captureHub(runtime);
   if (hub?.ok !== true) throw new Error('Initial natural hub observation failed');
   const replay = captureReplay(runtime);
   if (replay?.ok !== true) throw new Error('Initial natural replay observation failed');
-  return { hub, replay };
+  return { cortex, hub, replay };
+}
+function assessNaturalCortexEvolution(before, after) {
+  const result = compareCortexHydration(before, after);
+  return { ...result, ok: result?.ok === true && result.equal === false && result.changedLearnedMatrixBytes > 0 &&
+      Array.isArray(result.changedLearnedMatrixIds) && result.changedLearnedMatrixIds.length > 0,
+    scope: 'Independent direct bytes in the declared four training matrices changed during natural scheduled work; other backing bytes (scratch/associative state and excluded matrices) and counters are reported separately. No injected cortex values, learning-quality or next-output equivalence claim' };
 }
 function assessNaturalHubEvolution(before, after) {
   const result = compareHubHydration(before, after);
@@ -77,7 +90,7 @@ function assessNaturalHubEvolution(before, after) {
     scope: 'Independent direct hub bytes changed during natural scheduled work; no hub weight/counter injection and no next-output equivalence claim' };
 }
 function assessComponentSnapshotBinding(payload) {
-  const fields = ['primaryPolicyState', 'trainerCommittedState', 'replayMemoryState', 'hubMemoryState'];
+  const fields = ['primaryPolicyState', 'trainerCommittedState', 'replayMemoryState', 'hubMemoryState', 'cortexMemoryState'];
   const keys = ['creatureId', 'policyId', 'checkpointId', 'logicalTick', 'modelEpoch', 'capturedAt', 'resumeBoundary'];
   const missing = fields.filter(field => !payload?.[field]?.snapshot || typeof payload[field].snapshot !== 'object' ||
     Array.isArray(payload[field].snapshot) || Object.keys(payload[field].snapshot).length !== keys.length || keys.some(key => !Object.hasOwn(payload[field].snapshot, key)));
@@ -86,7 +99,7 @@ function assessComponentSnapshotBinding(payload) {
   const outerMatches = !missing.length && snapshot.logicalTick === payload.simulationTick && snapshot.policyId === payload.policyCid &&
     snapshot.checkpointId === payload.checkpointCid && (!Object.hasOwn(payload, 'agentId') || snapshot.creatureId === payload.agentId);
   return { ok: !missing.length && !mismatches.length && Boolean(outerMatches), missing, mismatches, outerMatches: Boolean(outerMatches),
-    scope: 'All four exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately' };
+    scope: 'All five exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately' };
 }
 function assessNaturalReplayPopulation(before, after) {
   const valid = observation => {
@@ -189,6 +202,57 @@ function assertOwned(paths) {
   return marker;
 }
 function writeJSON(filename, value) { fs.writeFileSync(filename, JSON.stringify(value, null, 2)); }
+const rawEvidenceFiles = Object.freeze({
+  cortexBeforeNatural: 'probe-writer-cortex-before-natural.json',
+  cortexBeforeSentinels: 'probe-writer-cortex-before-sentinels.json',
+  cortexBeforeFlush: 'probe-writer-cortex-before-flush.json',
+  writerBoot: 'probe-writer-boot-observation.json', readerBoot: 'probe-reader-boot-observation.json'
+});
+function rawEvidenceContract(profile, key) {
+  if (typeof profile !== 'string' || !path.isAbsolute(profile) || !Object.hasOwn(rawEvidenceFiles, key)) throw new Error('Invalid owned raw evidence path/key');
+  const directory = path.resolve(profile), file = rawEvidenceFiles[key], filename = path.resolve(directory, file);
+  if (path.dirname(filename) !== directory || path.basename(filename) !== file) throw new Error('Raw evidence escaped its owned profile');
+  const boot = key.endsWith('Boot');
+  return { filename, file, maximumBytes: (boot ? 96 : 16) * 1024 * 1024,
+    schema: boot ? 'gigachad.persistence-boot-observation.v1' : 'gigachad.cortex-hydration-evidence.v1' };
+}
+function writeRawEvidence(profile, key, observation) {
+  const contract = rawEvidenceContract(profile, key);
+  const value = key.endsWith('Boot') ? { ...observation, schema: contract.schema } : observation;
+  if (!value || value.schema !== contract.schema) throw new Error('Unexpected raw observation schema');
+  // The renderer returned an owned structured-clone receipt before this
+  // synchronous serialization. No model/exporter callback is invoked here.
+  const bytes = Buffer.from(JSON.stringify(value), 'utf8');
+  if (!bytes.length || bytes.length > contract.maximumBytes) throw new Error('Raw evidence exceeded its bounded file contract');
+  fs.writeFileSync(contract.filename, bytes, { flag: 'wx' });
+  return { file: contract.file, schema: contract.schema, byteLength: bytes.length, sha256: sha(bytes) };
+}
+function readRawEvidence(profile, key, receipt) {
+  const contract = rawEvidenceContract(profile, key);
+  if (!receipt || receipt.file !== contract.file || receipt.schema !== contract.schema ||
+      !Number.isSafeInteger(receipt.byteLength) || receipt.byteLength < 1 || receipt.byteLength > contract.maximumBytes ||
+      typeof receipt.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(receipt.sha256)) throw new Error('Invalid raw evidence receipt');
+  const entry = fs.lstatSync(contract.filename);
+  if (!entry.isFile() || entry.isSymbolicLink()) throw new Error('Raw evidence file missing or replaced');
+  const descriptor = fs.openSync(contract.filename, 'r');
+  let bytes;
+  try {
+    const stat = fs.fstatSync(descriptor);
+    if (!stat.isFile() || stat.size !== receipt.byteLength) throw new Error('Raw evidence file missing, replaced or truncated');
+    const bounded = Buffer.alloc(receipt.byteLength + 1); let used = 0;
+    while (used < bounded.length) {
+      const count = fs.readSync(descriptor, bounded, used, bounded.length - used, null);
+      if (!count) break; used += count;
+    }
+    bytes = bounded.subarray(0, used);
+  } finally { fs.closeSync(descriptor); }
+  if (bytes.length !== receipt.byteLength || sha(bytes) !== receipt.sha256) throw new Error('Raw evidence file length/hash mismatch');
+  const json = bytes.toString('utf8');
+  if (!Buffer.from(json, 'utf8').equals(bytes)) throw new Error('Raw evidence is not valid UTF8');
+  const value = JSON.parse(json);
+  if (!value || typeof value !== 'object' || Array.isArray(value) || value.schema !== contract.schema) throw new Error('Raw evidence schema mismatch');
+  return value;
+}
 function isProbeEntry({ electron, childContract, entryPath, isMain }, filename) {
   // Electron's default entry loader does not set require.main in installed35.
   // Require our explicit child contract AND exact entry file instead.
@@ -210,8 +274,8 @@ async function runParent() {
   fs.mkdirSync(output, { recursive: true });
   const before = sourceHashes();
   const report = { startedAt: new Date().toISOString(), output, paths, sourceHashes: before, cases: [], runs: [],
-    scope: 'Actual isolated application process restart, exact naturally evolved hub/replay containers and observed constructor restoration; three historical legacy sentinels are separate. Not next-output, power-loss or full-model persistence proof',
-    requestedPhases: ['normal-worker-commit', 'natural-replay-population', 'natural-hub-evolution', 'normal-close', 'two-process-restart', 'constructor-hydration', 'immediate-replay-hydration', 'immediate-hub-hydration', 'no-recurring-legacy-write'],
+    scope: 'Actual isolated application process restart, exact naturally evolved cortex/hub/replay and observed constructor restoration; two historical world/pellet sentinels are separate. Changed trainable matrices do not establish learning quality, next-output, power-loss or full-model persistence proof',
+    requestedPhases: ['normal-worker-commit', 'natural-replay-population', 'natural-hub-evolution', 'natural-cortex-matrix-evolution', 'normal-close', 'two-process-restart', 'constructor-hydration', 'immediate-replay-hydration', 'immediate-hub-hydration', 'immediate-cortex-hydration', 'no-recurring-legacy-write'],
     notRun: ['legacy-migration', 'corrupt-bootstrap', 'delayed-bootstrap', 'in-flight-checkpoint-fence', 'write-failure', 'late-acknowledgement'] };
   const reportPath = path.join(output, 'report.json');
   writeJSON(reportPath, report);
@@ -245,9 +309,12 @@ async function runParent() {
       const childReportPath = path.join(phaseOutput, 'report.json');
       record(`${phase}-child-report-present`, fs.existsSync(childReportPath), run);
       const childReport = JSON.parse(fs.readFileSync(childReportPath, 'utf8'));
+      run.rawEvidence = childReport.rawEvidence;
       record(`${phase}-process`, child.status === 0 && childReport.completed === true && !childReport.error,
         { pid: child.pid, versions: childReport.versions, userData: childReport.userData, error: childReport.error || null });
       record(`${phase}-source-stability`, JSON.stringify(before) === JSON.stringify(childReport.sourceHashesAfter), { changed: Object.keys(before).filter(key => before[key] !== childReport.sourceHashesAfter?.[key]) });
+      const boot = readRawEvidence(profile, phase + 'Boot', childReport.rawEvidence?.[phase + 'Boot']);
+      record(`${phase}-raw-boot-observation-verified`, Boolean(boot.snapshot && boot.beforeBaseline), childReport.rawEvidence[phase + 'Boot']);
       const final = readRecord(path.join(profile, 'alive-genome-v1.snapshot'));
       fs.copyFileSync(path.join(profile, 'alive-genome-v1.snapshot'), path.join(phaseOutput, 'after-exit.snapshot'));
       record(`${phase}-all-commits-settled`, childReport.commits.every(item => item.result && !item.error && Number.isSafeInteger(item.replyOrder)),
@@ -269,10 +336,13 @@ async function runParent() {
       record(`${phase}-verified-normal-close`, shutdown.status === 'persisted-and-drained' && shutdown.persistenceVerified === true && shutdown.drain?.settled === true &&
         shutdown.renderer?.revision === final.header.revision && closeAt >= 0 && closedAt > closeAt && quitAt > closedAt,
         { shutdown, closeAt, closedAt, quitAt });
-      const markersMatch = payload => payload.W_actor?.[0] === 0.31416 && payload.W_world?.at(-1) === -0.27183 && payload.pelletsEatenCount === 98765;
-      record(`${phase}-committed-sentinels`, markersMatch(final.payload), { actor: final.payload.W_actor?.[0], worldTail: final.payload.W_world?.at(-1), pellets: final.payload.pelletsEatenCount,
-        scope: 'Three historical paused actor/world/pellet sentinels; hub state uses naturally evolved exact-byte evidence' });
+      const markersMatch = payload => payload.W_world?.at(-1) === -0.27183 && payload.pelletsEatenCount === 98765;
+      record(`${phase}-committed-sentinels`, markersMatch(final.payload), { worldTail: final.payload.W_world?.at(-1), pellets: final.payload.pelletsEatenCount,
+        scope: 'Two historical paused world/pellet sentinels; actor/cortex/hub/replay receive no sentinel mutation' });
       if (phase === 'writer') {
+        const cortexBeforeNatural = readRawEvidence(profile, 'cortexBeforeNatural', childReport.rawEvidence?.cortexBeforeNatural);
+        const cortexBeforeSentinels = readRawEvidence(profile, 'cortexBeforeSentinels', childReport.rawEvidence?.cortexBeforeSentinels);
+        const cortexBeforeFlush = readRawEvidence(profile, 'cortexBeforeFlush', childReport.rawEvidence?.cortexBeforeFlush);
         const explicit = commits.find(item => item.result.revision === childReport.flush?.revision && item.ownerId === childReport.flush?.ownerId && item.epoch === childReport.flush?.epoch && item.jobId === childReport.flush?.jobId);
         const explicitPayload = explicit ? JSON.parse(fs.readFileSync(path.join(phaseOutput, explicit.payloadFile), 'utf8')) : null;
         record('explicit-worker-flush', Boolean(explicit) && markersMatch(explicitPayload) && childReport.workerAfterFlush?.workerMode === 'worker' && childReport.workerAfterFlush?.fallbackCount === 0 && childReport.workerAfterFlush?.storageMode === 'async-main',
@@ -308,9 +378,21 @@ async function runParent() {
           { expectedSnapshot: final.payload.primaryPolicyState?.snapshot });
         record('exact-hub-component-retained-at-close', hubFinal.ok && hubFinal.arraysChecked === 59 && hubFinal.actualNativeViews === 58 &&
           hubFinal.comparedBytes === 21368 && hubFinal.comparedStates === 44, hubFinal);
+        const cortexEvolution = assessNaturalCortexEvolution(cortexBeforeNatural, cortexBeforeSentinels);
+        record('natural-cortex-trainable-matrix-evolution', cortexEvolution.ok, cortexEvolution);
+        const unchangedCortex = compareCortexHydration(cortexBeforeSentinels, cortexBeforeFlush);
+        record('legacy-sentinels-preserve-natural-cortex', unchangedCortex.ok && unchangedCortex.equal, unchangedCortex);
+        const cortexFlush = assessCortexHydration(explicitPayload?.cortexMemoryState, cortexBeforeFlush,
+          { expectedSnapshot: explicitPayload?.primaryPolicyState?.snapshot });
+        record('exact-cortex-component-flushed', cortexFlush.ok && cortexFlush.arraysChecked === 47 &&
+          cortexFlush.elementsDifferent === 0 && cortexFlush.comparedBytes === 4994760 && cortexFlush.comparedStates === 43, cortexFlush);
+        const cortexFinal = assessCortexHydration(final.payload.cortexMemoryState, cortexBeforeFlush,
+          { expectedSnapshot: final.payload.primaryPolicyState?.snapshot });
+        record('exact-cortex-component-retained-at-close', cortexFinal.ok && cortexFinal.arraysChecked === 47 &&
+          cortexFinal.elementsDifferent === 0 && cortexFinal.comparedBytes === 4994760 && cortexFinal.comparedStates === 43, cortexFinal);
         const flushBinding = assessComponentSnapshotBinding(explicitPayload), closeBinding = assessComponentSnapshotBinding(final.payload);
-        record('flush-all-four-components-share-snapshot', flushBinding.ok, flushBinding);
-        record('close-all-four-components-share-snapshot', closeBinding.ok, closeBinding);
+        record('flush-all-five-components-share-snapshot', flushBinding.ok, flushBinding);
+        record('close-all-five-components-share-snapshot', closeBinding.ok, closeBinding);
         const naturalTrainer = childReport.naturalTrainer;
         record('natural-trainer-commit', naturalTrainer?.committedEpochDelta >= 1 && naturalTrainer?.appliedDelta >= 1 && naturalTrainer?.durationMs >= 11000,
           naturalTrainer ? { committedEpochDelta: naturalTrainer.committedEpochDelta, appliedDelta: naturalTrainer.appliedDelta,
@@ -319,7 +401,6 @@ async function runParent() {
         record('no-recurring-legacy-write', natural?.durationMs >= 10000 && natural?.legacyWrites?.length === 0 && natural?.verifiedCommitDelta >= 2, natural);
       } else {
         record('distinct-processes', report.runs[0].pid !== child.pid && report.runs[0].status === 0, report.runs.map(({ phase, pid, status }) => ({ phase, pid, status })));
-        const boot = JSON.parse(fs.readFileSync(path.join(phaseOutput, 'boot-observation.json'), 'utf8'));
         record('canonical-bootstrap', boot.beforeBaseline && boot.bootstrap?.status === 'ready' && boot.bootstrap?.json === priorPayload && boot.bootstrap?.revision === priorRecord.revision,
           { status: boot.bootstrap?.status, revision: boot.bootstrap?.revision, expected: priorRecord.revision });
         const hydration = assessGenomeHydration(priorPayload, boot.snapshot, { initialState: boot.initialState });
@@ -334,8 +415,10 @@ async function runParent() {
           hydration.replay);
         record('immediate-exact-hub-hydration', hydration.hub?.ok === true && hydration.hub.arraysChecked === 59 &&
           hydration.hub.actualNativeViews === 58 && hydration.hub.comparedBytes === 21368 && hydration.hub.comparedStates === 44, hydration.hub);
+        record('immediate-exact-cortex-hydration', hydration.cortex?.ok === true && hydration.cortex.arraysChecked === 47 &&
+          hydration.cortex.elementsDifferent === 0 && hydration.cortex.comparedBytes === 4994760 && hydration.cortex.comparedStates === 43, hydration.cortex);
         const readerBinding = assessComponentSnapshotBinding(JSON.parse(priorPayload));
-        record('reader-all-four-components-share-snapshot', readerBinding.ok, readerBinding);
+        record('reader-all-five-components-share-snapshot', readerBinding.ok, readerBinding);
         record('monotonic-durable-revision', final.header.revision > priorRecord.revision, { before: priorRecord.revision, after: final.header.revision });
       }
     }
@@ -362,7 +445,7 @@ async function runChild() {
   globalThis.__alivePersistenceProbe = contract;
   const { app, BrowserWindow, ipcMain } = require('electron');
   const report = { phase: contract.phase, pid: process.pid, startedAt: new Date().toISOString(), versions: process.versions,
-    commits: [], lifecycle: [], console: [], loadFailures: [], processFailures: [], sourceHashes: sourceHashes() };
+    commits: [], lifecycle: [], console: [], loadFailures: [], processFailures: [], rawEvidence: {}, sourceHashes: sourceHashes() };
   const reportPath = path.join(contract.output, 'report.json');
   let finishing = false, closeRequested = false, completionOrder = 0, retainedPayloadBytes = 0;
   const save = () => {
@@ -412,11 +495,12 @@ async function runChild() {
         report.startup = await evaluate('(' + waitForRendererStartup.toString() + ')(' + JSON.stringify({ required }) + ')');
         const boot = await evaluate('window.__alivePersistenceBootObservation');
         if (!boot?.snapshot || !boot.beforeBaseline) throw new Error('Constructor observation missing');
-        writeJSON(path.join(contract.output, 'boot-observation.json'), boot);
+        report.rawEvidence[contract.phase + 'Boot'] = writeRawEvidence(contract.profile, contract.phase + 'Boot', boot);
         if (contract.phase === 'writer') {
           win.showInactive();
           const containersBeforeNatural = await evaluate('(' + captureNaturalHubReplay.toString() + ')(humunculusRuntime,{' +
-            'captureHub:(' + captureHubHydration.toString() + '),captureReplay:(' + captureReplayHydration.toString() + ')})');
+            'captureCortex:(' + captureCortexHydration.toString() + '),captureHub:(' + captureHubHydration.toString() + '),captureReplay:(' + captureReplayHydration.toString() + ')})');
+          report.rawEvidence.cortexBeforeNatural = writeRawEvidence(contract.profile, 'cortexBeforeNatural', containersBeforeNatural.cortex);
           report.replayBeforeNatural = containersBeforeNatural.replay;
           report.hubBeforeNatural = containersBeforeNatural.hub;
           const trainerBefore = await evaluate('(' + captureTrainerHydration.toString() + ')(humunculusRuntime)');
@@ -431,18 +515,24 @@ async function runChild() {
           report.pauseAssessment = assessPauseEvidence(report.pause);
           if (!report.pauseAssessment.ok) throw new Error('Guest authority did not settle before sentinel snapshot: ' + report.pauseAssessment.reasons.join('; '));
           const paused = await evaluate('(' + capturePausedReplayBoundary.toString() + ')(humunculusRuntime,{' +
-            'captureReplay:(' + captureReplayHydration.toString() + '),captureHub:(' + captureHubHydration.toString() + '),' +
+            'captureCortex:(' + captureCortexHydration.toString() + '),captureReplay:(' + captureReplayHydration.toString() + '),captureHub:(' + captureHubHydration.toString() + '),' +
             'captureTrainer:(' + captureTrainerHydration.toString() + '),legacySentinels:(' + applyLegacySentinels.toString() + ')})');
           report.replayBeforeSentinels = paused.replayBeforeSentinels;
           report.replayBeforeFlush = paused.replayBeforeFlush;
           report.trainerBeforeFlush = paused.trainerBeforeFlush;
           report.hubBeforeSentinels = paused.hubBeforeSentinels;
           report.hubBeforeFlush = paused.hubBeforeFlush;
+          report.rawEvidence.cortexBeforeSentinels = writeRawEvidence(contract.profile, 'cortexBeforeSentinels', paused.cortexBeforeSentinels);
+          report.rawEvidence.cortexBeforeFlush = writeRawEvidence(contract.profile, 'cortexBeforeFlush', paused.cortexBeforeFlush);
           report.replaySentinelScope = paused.sentinelScope;
           if (!assessNaturalReplayPopulation(report.replayBeforeNatural, report.replayBeforeSentinels).ok) throw new Error('No verified natural nonempty replay population/change before pause');
           if (!assessNaturalHubEvolution(report.hubBeforeNatural, report.hubBeforeSentinels).ok) throw new Error('No verified natural hub byte evolution before pause');
+          const cortexEvolution = assessNaturalCortexEvolution(containersBeforeNatural.cortex, paused.cortexBeforeSentinels);
+          if (!cortexEvolution.ok) throw new Error('No verified natural cortex trainable-matrix byte evolution before pause');
           if (!isDeepStrictEqual(report.replayBeforeSentinels, report.replayBeforeFlush)) throw new Error('Historical legacy sentinel callback changed replay state');
           if (!isDeepStrictEqual(report.hubBeforeSentinels, report.hubBeforeFlush)) throw new Error('Historical legacy sentinel callback changed hub state');
+          const cortexPreserved = compareCortexHydration(paused.cortexBeforeSentinels, paused.cortexBeforeFlush);
+          if (!cortexPreserved.ok || !cortexPreserved.equal) throw new Error('Historical legacy sentinel callback changed cortex state');
           report.flush = await evaluate("Promise.resolve(window.aliveAutosave.flush('independent-durability-proof'))");
           if (report.flush?.persistenceVerified !== true) throw new Error('Explicit production flush was not verified');
           report.workerAfterFlush = await evaluate('window.aliveAutosave.snapshot()');
@@ -467,7 +557,7 @@ async function runChild() {
 
 module.exports = { adaptMain, observeHost, replaceOnce, assertOwned, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit,
   capturePausedReplayBoundary, applyLegacySentinels, captureNaturalHubReplay, assessNaturalHubEvolution, assessComponentSnapshotBinding,
-  assessNaturalReplayPopulation, sourceHashes };
+  assessNaturalCortexEvolution, assessNaturalReplayPopulation, writeRawEvidence, readRawEvidence, sourceHashes };
 if (isProbeEntry({ electron: process.versions.electron, childContract: process.env.GIGACHAD_PERSISTENCE_PROBE_CHILD,
   entryPath: process.argv[1], isMain: require.main === module }, __filename)) {
   (process.versions.electron ? runChild() : runParent()).catch(error => { console.error(error.stack || error); process.exitCode = 1; });

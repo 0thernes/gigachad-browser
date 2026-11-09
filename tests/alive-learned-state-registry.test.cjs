@@ -210,6 +210,67 @@ test('64-bit integer tensor bounds use BigInt and preserve all bits', async () =
   restore(f, target); assert.equal(hex(target.model.rng), hex(source.model.rng));
 });
 
+test('finite-only native Float32/64 capture and verified import reject first, interior and final nonfinite values', async () => {
+  for (const dtype of ['Float32Array', 'Float64Array']) {
+    const C = globalThis[dtype], d = definition(); d.tensors = [tensor('values', dtype, 257)]; d.states = [];
+    const registry = await moduleUnderTest.compile(d, options);
+    const source = { model: { values: new C(257).fill(.25) } };
+    for (const value of [NaN, Infinity, -Infinity]) for (const index of [0, 128, 256]) {
+      source.model.values.fill(.25); source.model.values[index] = value;
+      assert.throws(() => registry.capture(source, snapshot(), { generation: 2 }), /tensor numeric policy rejected values/);
+      source.model.values.fill(.25);
+      const captured = registry.capture(source, snapshot(), { generation: 2 });
+      new C(captured.tensors[0].bytes)[index] = value;
+      // Freshly encode checksums: malformed numerical content must also fail
+      // after valid wire verification, before any destination byte is written.
+      const decoded = await roundtrip(captured), target = { model: { values: new C(257).fill(.75) } };
+      const before = hex(target.model.values);
+      assert.throws(() => registry.preflight(decoded, target, { generation: 2 }), /tensor numeric policy rejected values/);
+      assert.equal(hex(target.model.values), before);
+    }
+  }
+});
+
+test('finite-only native scans preserve raw signed zero, both subnormal signs and finite boundary bits', async () => {
+  const fixtures = [
+    ['Float32Array', new Uint32Array([0, 0x80000000, 1, 0x80000001, 0x007fffff, 0x00800000, 0x7f7fffff, 0xff7fffff])],
+    ['Float64Array', new BigUint64Array([0n, 0x8000000000000000n, 1n, 0x8000000000000001n,
+      0x000fffffffffffffn, 0x0010000000000000n, 0x7fefffffffffffffn, 0xffefffffffffffffn])]
+  ];
+  for (const [dtype, raw] of fixtures) {
+    const C = globalThis[dtype], values = new C(raw.buffer), expected = hex(values), d = definition();
+    d.tensors = [tensor('values', dtype, values.length)]; d.states = [];
+    const registry = await moduleUnderTest.compile(d, options), source = { model: { values } };
+    const captured = registry.capture(source, snapshot(), { generation: 2 }); values.fill(2);
+    const decoded = await roundtrip(captured), target = { model: { values: new C(raw.length).fill(3) } };
+    const prepared = registry.preflight(decoded, target, { generation: 2 });
+    assert.equal(registry.apply(prepared, target, { generation: 2 }).readbackVerified, true);
+    assert.equal(hex(target.model.values), expected); assert.ok(Object.is(target.model.values[1], -0));
+  }
+});
+
+test('native floating range and finite-disabled policies retain the original fallback semantics', async () => {
+  for (const dtype of ['Float32Array', 'Float64Array']) {
+    const C = globalThis[dtype], d = definition(); d.tensors = [tensor('values', dtype, 3)]; d.states = [];
+    d.tensors[0].policy = { format: 'native', finite: false };
+    const permissive = await moduleUnderTest.compile(d, options), source = { model: { values: new C([NaN, Infinity, -Infinity]) } };
+    assert.doesNotThrow(() => permissive.capture(source, snapshot(), { generation: 2 }));
+    d.tensors[0].policy = { format: 'native', finite: false, min: 0 };
+    const lowerBound = await moduleUnderTest.compile(d, options);
+    source.model.values.set([0, -0, Infinity]);
+    assert.doesNotThrow(() => lowerBound.capture(source, snapshot(), { generation: 2 }));
+    for (const value of [NaN, -.25, -Infinity]) {
+      source.model.values[1] = value;
+      assert.throws(() => lowerBound.capture(source, snapshot(), { generation: 2 }), /numeric policy/);
+    }
+    d.tensors[0].policy = { format: 'native', finite: true, min: 0, max: 1 };
+    const bounded = await moduleUnderTest.compile(d, options); source.model.values.set([0, -0, 1]);
+    assert.doesNotThrow(() => bounded.capture(source, snapshot(), { generation: 2 }));
+    source.model.values[2] = 1.25;
+    assert.throws(() => bounded.capture(source, snapshot(), { generation: 2 }), /numeric policy/);
+  }
+});
+
 test('wrong scalar tags and negative-zero integer metadata reject without application', async () => {
   const f = await fixture(), wrong = { ...f.captured, stateValues: { ...f.captured.stateValues, step: codec.float64(42) }, stateManifest: f.captured.stateManifest.map(r => r.id === 'step' ? { ...r, valueType: 'f64' } : r) };
   const decoded = await roundtrip(wrong), target = roots(), before = state(target);

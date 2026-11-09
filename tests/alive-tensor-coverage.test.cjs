@@ -142,7 +142,14 @@ test('silent neurons claim no synapse execution or coverage and the sparse phase
   assert.equal(cn.uniqueSynapsesTraversed, 64);
 });
 
-function attentionFixture() { return { W_attn_qkv: new Float32Array(12288), W_attn_out: new Float32Array(8192), attnWeights8: new Float32Array(8) }; }
+function declaredCortexMatrix(name) {
+  const start = page.indexOf('        this.deepCortex = {'), end = page.indexOf('        this.deepCortex.totalParams =', start);
+  assert(start > 0 && end > start);
+  const matches = [...page.slice(start, end).matchAll(new RegExp('\\b' + name + ':\\s*(initXavier\\(\\s*\\d+\\s*,\\s*\\d+\\s*\\))', 'g'))];
+  assert.equal(matches.length, 1, 'one actual constructor allocation for ' + name);
+  return vm.runInNewContext(matches[0][1], { initXavier: (rows, columns) => new Float32Array(rows * columns) });
+}
+function attentionFixture() { return { W_attn_qkv: declaredCortexMatrix('W_attn_qkv'), W_attn_out: declaredCortexMatrix('W_attn_out'), attnWeights8: new Float32Array(8) }; }
 test('bounded attention consumes all Q/K/V and output coefficients with the original 16 plus 8 reads per step', () => {
   const dc = attentionFixture(), qkv = watchReads(dc.W_attn_qkv), out = watchReads(dc.W_attn_out);
   dc.W_attn_qkv = qkv.proxy; dc.W_attn_out = out.proxy;
@@ -157,7 +164,7 @@ test('bounded attention consumes all Q/K/V and output coefficients with the orig
     assert(dc.attnWeights8.every(value => Number.isFinite(value) && value > 0));
     if (step === 767) assert.equal(qkv.unique, 12288);
   }
-  assert.equal(qkv.unique, 12288); assert.equal(out.unique, 8192);
+  assert.equal(qkv.unique, 12288); assert.equal(out.unique, 4096);
   assert(qkv.seen.every(Boolean)); assert(out.seen.every(Boolean));
   assert.equal(dc.attentionParameterCoveragePct, 100);
 });
@@ -166,7 +173,7 @@ for (const field of ['W_attn_qkv', 'W_attn_out']) test(`the last previously unus
   const base = attentionFixture(), changed = attentionFixture(), latent = new Float32Array(128).fill(.2);
   attention(base, latent, latent, latent); attention(changed, latent, latent, latent);
   base.attentionQkvPhase = changed.attentionQkvPhase = 767;
-  base.attentionOutputPhase = changed.attentionOutputPhase = 1023;
+  base.attentionOutputPhase = changed.attentionOutputPhase = 511;
   changed[field][changed[field].length - 1] = 2;
   attention(base, latent, latent, latent); attention(changed, latent, latent, latent);
   assert(changed.attnWeights8[7] > base.attnWeights8[7]);
@@ -243,7 +250,7 @@ test('the entire production cortex method composes the rotated paths and publish
     W_enc2: 32768, b_enc2: 128, ln2_g: 128, h128: 128, W_moe_experts: 524288, attnWeights8: 8,
     W_rssm_rec: 16384, W_rssm_in: 16384, W_prior: 16384, W_post: 16384, W_dec: 8192,
     rssmH: 128, rssmZPrior: 128, rssmZPost: 128, nextRH: 128, decX64: 64,
-    W_attn_qkv: 12288, W_attn_out: 8192, M_hopfield: 16384, W_browser_master: 8192, masterCmd64: 64,
+    W_attn_qkv: declaredCortexMatrix('W_attn_qkv').length, W_attn_out: declaredCortexMatrix('W_attn_out').length, M_hopfield: 16384, W_browser_master: 8192, masterCmd64: 64,
     W_actor_h: 16384, W_actor_out: 4096, W_critic_h: 8192, W_critic_out: 64, actH: 128, act32: 32 };
   for (const [key, length] of Object.entries(sizes)) dc[key] = Float32Array.from({ length }, (_, i) => .002 + .001 * Math.sin(i));
   dc.ln1_g.fill(1); dc.ln2_g.fill(1); dc.hopfieldWritePtr = 0; dc.criticValue = 0;

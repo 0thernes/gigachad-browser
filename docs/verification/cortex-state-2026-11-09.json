@@ -1,0 +1,966 @@
+{
+  "schema": "gigachad.cortex-qualification.v1",
+  "baseCommit": "22912bcd9a9d587d0841cbd16c98ccbea43b2c0e",
+  "qualifiedTree": "fde79b1c91b6e17b34e4e8b46bb6d6b274b59a38",
+  "qualificationScope": "Isolated full local cortex/connectome persistence and attention boundary correction, with equivalent finite-only scan optimization. Unrelated provider/page/research edits excluded. One public evidence document added after qualification. This is not full-model continuation, learning-quality, consciousness or a universal no-stutter result.",
+  "component": {
+    "id": "deep-cortex-connectome",
+    "schemaVersion": 1,
+    "architecture": "680085e1c02e829c50f532228784e848d6c2ee4e1d3af2f7ab6d1a6dfb62ec0e",
+    "implementationDigest": "a67d9b59efe0b388f58058b0af888858bb98e04009000b100bf363a7eab9c292",
+    "views": 47,
+    "tensorBytes": 4994760,
+    "stateRows": 43,
+    "cortexFields": 74,
+    "connectomeFields": 21,
+    "internalAliasPaths": 3,
+    "primaryOwnedAliasPaths": 2
+  },
+  "attentionCorrection": {
+    "allocatedOutputShape": [
+      64,
+      64
+    ],
+    "allocatedOutputValues": 4096,
+    "previousPhaseCount": 1024,
+    "correctedPhaseCount": 512,
+    "coefficientsPerStep": 8,
+    "oldFirstInvalidPhase": 512,
+    "coverageDenominator": 16384,
+    "regression": "Actual constructor allocation, repeated wraps, final-coefficient causal effect, and old out-of-range control; historical oversized fixture and documentation explicitly corrected."
+  },
+  "node": {
+    "passed": 1405,
+    "failed": 0,
+    "skipped": 0,
+    "run": {
+      "action": "node",
+      "startedAt": "2026-11-09T15:00:35.739Z",
+      "elapsedMs": 60452,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "pid": 8696,
+      "args": [
+        "scripts/run-node-tests.cjs"
+      ],
+      "tree": "fde79b1c91b6e17b34e4e8b46bb6d6b274b59a38"
+    }
+  },
+  "smoke": {
+    "passed": true,
+    "pythonTests": 6,
+    "electron": "45.2.3",
+    "embeddedNode": "24.22.2",
+    "cortexPrepared": true,
+    "liveReloadPerformed": false,
+    "run": {
+      "action": "smoke",
+      "startedAt": "2026-11-09T15:01:48.305Z",
+      "elapsedMs": 72401,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "pid": 53348,
+      "args": [
+        "scripts/smoke.js"
+      ],
+      "tree": "fde79b1c91b6e17b34e4e8b46bb6d6b274b59a38"
+    },
+    "earlierHarnessFailure": "A shared concurrent provider/agent test-runner edit entered the refreshed isolated runner without its out-of-scope test files. It failed before Electron. The isolated runner was restored to its original cortex-only hunks; shared edits were preserved and the final full Node/smoke checks rerun."
+  },
+  "startup": {
+    "passed": true,
+    "checks": 23,
+    "moduleCount": 15,
+    "sourceStable": true,
+    "run": {
+      "action": "startup",
+      "startedAt": "2026-11-09T15:03:12.064Z",
+      "elapsedMs": 747,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "pid": 54672,
+      "args": [
+        "scripts/alive-startup-loader-electron-probe.cjs"
+      ],
+      "tree": "fde79b1c91b6e17b34e4e8b46bb6d6b274b59a38"
+    },
+    "harnessCorrection": "An initial parent invocation lacked the required coordinated opt-in and refused before launching Electron. The ignored launcher was corrected; the failed receipt remains local."
+  },
+  "continuation": {
+    "sourceMethod": "Complete production stepDeepCortex185K with controlled external observations/body/mesh/tick; no RNG in this method",
+    "restoreSteps": [
+      0,
+      7,
+      127,
+      511,
+      767,
+      1023
+    ],
+    "furtherStepsPerRestore": 5,
+    "compared": "All95 direct fields,52 typed-view paths and supplied motor/external outputs; local-only scope",
+    "eagerInitialization": "Pinned22912 constructor allocation with only marked cold-state block removed; equal entropy draws and9 full numerical steps",
+    "retainedStateCausalControls": 9
+  },
+  "restart": {
+    "passed": true,
+    "cases": [
+      {
+        "id": "writer-child-report-present",
+        "ok": true
+      },
+      {
+        "id": "writer-process",
+        "ok": true
+      },
+      {
+        "id": "writer-source-stability",
+        "ok": true
+      },
+      {
+        "id": "writer-raw-boot-observation-verified",
+        "ok": true
+      },
+      {
+        "id": "writer-all-commits-settled",
+        "ok": true
+      },
+      {
+        "id": "writer-latest-acknowledged-revision",
+        "ok": true
+      },
+      {
+        "id": "writer-verified-normal-close",
+        "ok": true
+      },
+      {
+        "id": "writer-committed-sentinels",
+        "ok": true
+      },
+      {
+        "id": "explicit-worker-flush",
+        "ok": true
+      },
+      {
+        "id": "exact-trainer-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-trainer-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "natural-replay-population",
+        "ok": true
+      },
+      {
+        "id": "legacy-sentinels-preserve-natural-replay",
+        "ok": true
+      },
+      {
+        "id": "exact-replay-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-replay-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "natural-hub-evolution",
+        "ok": true
+      },
+      {
+        "id": "legacy-sentinels-preserve-natural-hub",
+        "ok": true
+      },
+      {
+        "id": "exact-hub-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-hub-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "natural-cortex-trainable-matrix-evolution",
+        "ok": true
+      },
+      {
+        "id": "legacy-sentinels-preserve-natural-cortex",
+        "ok": true
+      },
+      {
+        "id": "exact-cortex-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-cortex-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "flush-all-five-components-share-snapshot",
+        "ok": true
+      },
+      {
+        "id": "close-all-five-components-share-snapshot",
+        "ok": true
+      },
+      {
+        "id": "natural-trainer-commit",
+        "ok": true
+      },
+      {
+        "id": "no-recurring-legacy-write",
+        "ok": true
+      },
+      {
+        "id": "reader-child-report-present",
+        "ok": true
+      },
+      {
+        "id": "reader-process",
+        "ok": true
+      },
+      {
+        "id": "reader-source-stability",
+        "ok": true
+      },
+      {
+        "id": "reader-raw-boot-observation-verified",
+        "ok": true
+      },
+      {
+        "id": "reader-all-commits-settled",
+        "ok": true
+      },
+      {
+        "id": "reader-latest-acknowledged-revision",
+        "ok": true
+      },
+      {
+        "id": "reader-verified-normal-close",
+        "ok": true
+      },
+      {
+        "id": "reader-committed-sentinels",
+        "ok": true
+      },
+      {
+        "id": "distinct-processes",
+        "ok": true
+      },
+      {
+        "id": "canonical-bootstrap",
+        "ok": true
+      },
+      {
+        "id": "actual-constructor-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-trainer-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-replay-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-hub-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-cortex-hydration",
+        "ok": true
+      },
+      {
+        "id": "reader-all-five-components-share-snapshot",
+        "ok": true
+      },
+      {
+        "id": "monotonic-durable-revision",
+        "ok": true
+      }
+    ],
+    "runs": [
+      {
+        "phase": "writer",
+        "pid": 61932,
+        "status": 0,
+        "signal": null,
+        "elapsedMs": 13944,
+        "error": null,
+        "stdout": "\r\n",
+        "stderr": "(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.\n[61932:1109/070343.839:ERROR:mojo\\public\\cpp\\bindings\\lib\\interface_endpoint_client.cc:652] Message 2 rejected by interface blink.mojom.Widget\r\n",
+        "rawEvidence": {
+          "writerBoot": {
+            "file": "probe-writer-boot-observation.json",
+            "schema": "gigachad.persistence-boot-observation.v1",
+            "byteLength": 7484874,
+            "sha256": "3a7dfa26814d422808f2121f30d7804c563d4fbfbfae6e341049f23a61981e11"
+          },
+          "cortexBeforeNatural": {
+            "file": "probe-writer-cortex-before-natural.json",
+            "schema": "gigachad.cortex-hydration-evidence.v1",
+            "byteLength": 6671444,
+            "sha256": "0780f54350255c6adc8b9c036a59a3bd6fd737de1ff1a4cbd885d93a98c53cba"
+          },
+          "cortexBeforeSentinels": {
+            "file": "probe-writer-cortex-before-sentinels.json",
+            "schema": "gigachad.cortex-hydration-evidence.v1",
+            "byteLength": 6672339,
+            "sha256": "4c29eff3879ebcc2569f691f0cf384ca4a2c5fa572436c8333d9c464d6456877"
+          },
+          "cortexBeforeFlush": {
+            "file": "probe-writer-cortex-before-flush.json",
+            "schema": "gigachad.cortex-hydration-evidence.v1",
+            "byteLength": 6672339,
+            "sha256": "4c29eff3879ebcc2569f691f0cf384ca4a2c5fa572436c8333d9c464d6456877"
+          }
+        }
+      },
+      {
+        "phase": "reader",
+        "pid": 56468,
+        "status": 0,
+        "signal": null,
+        "elapsedMs": 3188,
+        "error": null,
+        "stdout": "\r\n",
+        "stderr": "(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.\n",
+        "rawEvidence": {
+          "readerBoot": {
+            "file": "probe-reader-boot-observation.json",
+            "schema": "gigachad.persistence-boot-observation.v1",
+            "byteLength": 15347946,
+            "sha256": "97f2b7346838bdf3bea5c373fe37615f76cb59f0a02b930270b299408d82b080"
+          }
+        }
+      }
+    ],
+    "sourceChanges": [],
+    "naturalCortexEvolution": {
+      "ok": true,
+      "status": "compared-cortex-subset",
+      "equal": false,
+      "changedBackingBytes": 970946,
+      "changedLearnedMatrixBytes": 798927,
+      "changedLearnedMatrixIds": [
+        "dc.W_actor_out",
+        "dc.W_connectome_synapses",
+        "dc.W_dec",
+        "dc.W_moe_experts"
+      ],
+      "changedScratchBytes": 172019,
+      "comparedBytes": 4994760,
+      "comparedStates": 43,
+      "actualNativeViews": 47,
+      "validatedAliasCount": 5,
+      "completeApplicationCatalog": false,
+      "scope": "Independent direct bytes in the declared four training matrices changed during natural scheduled work; other backing bytes (scratch/associative state and excluded matrices) and counters are reported separately. No injected cortex values, learning-quality or next-output equivalence claim"
+    },
+    "sentinelsPreservedCortex": {
+      "ok": true,
+      "status": "compared-cortex-subset",
+      "equal": true,
+      "changedBackingBytes": 0,
+      "changedLearnedMatrixBytes": 0,
+      "changedLearnedMatrixIds": [],
+      "changedScratchBytes": 0,
+      "comparedBytes": 4994760,
+      "comparedStates": 43,
+      "actualNativeViews": 47,
+      "validatedAliasCount": 5,
+      "completeApplicationCatalog": false,
+      "scope": "Two direct supplied observations; learned-matrix byte changes are parameter evolution, not proof of learning quality, equal future outputs or durable restart; other backing bytes include scratch, associative state and matrices outside the conservative learned set"
+    },
+    "flushCortex": {
+      "ok": true,
+      "status": "passed-cortex-subset",
+      "arraysChecked": 47,
+      "actualNativeViews": 47,
+      "elementsChecked": 1250814,
+      "elementsDifferent": 0,
+      "comparedBytes": 4994760,
+      "comparedStates": 43,
+      "changedBackingBytes": 0,
+      "changedLearnedMatrixBytes": 0,
+      "changedLearnedMatrixIds": [],
+      "changedScratchBytes": 0,
+      "validatedAliasCount": 5,
+      "snapshotMatched": true,
+      "completeApplicationCatalog": false,
+      "scope": "Supplied cortex wire compared with first direct observation; complete application continuity, provenance and durable restart require separate evidence"
+    },
+    "closeCortex": {
+      "ok": true,
+      "status": "passed-cortex-subset",
+      "arraysChecked": 47,
+      "actualNativeViews": 47,
+      "elementsChecked": 1250814,
+      "elementsDifferent": 0,
+      "comparedBytes": 4994760,
+      "comparedStates": 43,
+      "changedBackingBytes": 0,
+      "changedLearnedMatrixBytes": 0,
+      "changedLearnedMatrixIds": [],
+      "changedScratchBytes": 0,
+      "validatedAliasCount": 5,
+      "snapshotMatched": true,
+      "completeApplicationCatalog": false,
+      "scope": "Supplied cortex wire compared with first direct observation; complete application continuity, provenance and durable restart require separate evidence"
+    },
+    "firstHydrationCortex": {
+      "ok": true,
+      "status": "passed-cortex-subset",
+      "arraysChecked": 47,
+      "actualNativeViews": 47,
+      "elementsChecked": 1250814,
+      "elementsDifferent": 0,
+      "comparedBytes": 4994760,
+      "comparedStates": 43,
+      "changedBackingBytes": 0,
+      "changedLearnedMatrixBytes": 0,
+      "changedLearnedMatrixIds": [],
+      "changedScratchBytes": 0,
+      "validatedAliasCount": 5,
+      "snapshotMatched": true,
+      "completeApplicationCatalog": false,
+      "scope": "Supplied cortex wire compared with first direct observation; complete application continuity, provenance and durable restart require separate evidence"
+    },
+    "allFiveSnapshotBindings": [
+      {
+        "id": "flush-all-five-components-share-snapshot",
+        "ok": true,
+        "missing": [],
+        "mismatches": [],
+        "outerMatches": true,
+        "scope": "All five exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately"
+      },
+      {
+        "id": "close-all-five-components-share-snapshot",
+        "ok": true,
+        "missing": [],
+        "mismatches": [],
+        "outerMatches": true,
+        "scope": "All five exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately"
+      },
+      {
+        "id": "reader-all-five-components-share-snapshot",
+        "ok": true,
+        "missing": [],
+        "mismatches": [],
+        "outerMatches": true,
+        "scope": "All five exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately"
+      }
+    ],
+    "scope": "Actual isolated application process restart, exact naturally evolved cortex/hub/replay and observed constructor restoration; two historical world/pellet sentinels are separate. Changed trainable matrices do not establish learning quality, next-output, power-loss or full-model persistence proof",
+    "notRun": [
+      "legacy-migration",
+      "corrupt-bootstrap",
+      "delayed-bootstrap",
+      "in-flight-checkpoint-fence",
+      "write-failure",
+      "late-acknowledgement"
+    ]
+  },
+  "performance": {
+    "passed": true,
+    "processId": 17144,
+    "conditions": "60-second visible nonfocusable input-isolated offline fixture, GPU enabled, inspectors closed, provider network disabled, Auto-Hop off; natural scheduled work, no manual sweep or cadence acceleration.",
+    "presentation": {
+      "frames": 3553,
+      "durationMs": 60024.30000000447,
+      "averageFps": 59.19269362574383,
+      "rollingSamples": 240,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 20.19999999552965,
+      "p99Ms": 25.599999994039536
+    },
+    "fullPresentation": {
+      "samples": 3552,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 21.700000002980232,
+      "p99Ms": 33.600000001490116,
+      "maxMs": 84.20000000298023
+    },
+    "longTasks": 0,
+    "totalLongTaskMs": 0,
+    "rendererErrors": 0,
+    "backpropDelta": 1325,
+    "stdpDelta": 523296,
+    "runsAfterStop": 0,
+    "backpropAfterStop": 0,
+    "simulationTicksAfterStop": 0,
+    "worker": {
+      "requested": true,
+      "ok": true,
+      "cases": [
+        {
+          "id": "full-app-worker-applied",
+          "passed": true
+        },
+        {
+          "id": "finite-target-changed-while-running",
+          "passed": true
+        },
+        {
+          "id": "pause-retired-worker",
+          "passed": true
+        },
+        {
+          "id": "pause-kept-target-and-clock-unchanged",
+          "passed": true
+        },
+        {
+          "id": "no-worker-faults-or-timeouts",
+          "passed": true
+        }
+      ],
+      "initial": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 3,
+        "committedEpoch": 0,
+        "workerEpochsCompleted": 0,
+        "lastReplayGradNorm": null,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 0,
+        "applied": 0,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 0,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "running": {
+        "active": true,
+        "phase": "ready",
+        "generation": 7,
+        "committedEpoch": 44,
+        "workerEpochsCompleted": 44,
+        "lastReplayGradNorm": 0.02161,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 44,
+        "applied": 44,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "stopped": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 11,
+        "committedEpoch": 44,
+        "workerEpochsCompleted": 44,
+        "lastReplayGradNorm": 0.02161,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 44,
+        "applied": 44,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "settled": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 11,
+        "committedEpoch": 44,
+        "workerEpochsCompleted": 44,
+        "lastReplayGradNorm": 0.02161,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 44,
+        "applied": 44,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "targetBefore": {
+        "length": 16,
+        "sum": 0.18063001381233335,
+        "abs": 3.217488527763635,
+        "squared": 0.7737653820048438,
+        "nonFinite": 0,
+        "sample": [
+          0.19326530396938324,
+          0.295634925365448,
+          0.25896281003952026,
+          0.10049644857645035,
+          -0.10523496568202972,
+          -0.2614727318286896,
+          -0.29473578929901123,
+          -0.1893799901008606,
+          0.005044170189648867,
+          0.19709597527980804,
+          0.2964504659175873,
+          0.2563796639442444,
+          0.09572950750589371,
+          -0.10994374006986618,
+          -0.263908714056015,
+          -0.29375332593917847
+        ]
+      },
+      "targetRunning": {
+        "length": 16,
+        "sum": -1.1663436628878117,
+        "abs": 5.016063813120127,
+        "squared": 1.7651544198566218,
+        "nonFinite": 0,
+        "sample": [
+          0.21240460872650146,
+          -0.37500548362731934,
+          -0.04947187379002571,
+          -0.34508076310157776,
+          -0.4094211161136627,
+          0.3448124825954437,
+          -0.2774737775325775,
+          0.39461156725883484,
+          0.2407611459493637,
+          -0.37435051798820496,
+          -0.08232298493385315,
+          -0.365431547164917,
+          -0.42785292863845825,
+          0.34382912516593933,
+          -0.3847927451133728,
+          0.38844114542007446
+        ]
+      },
+      "targetStopped": {
+        "length": 16,
+        "sum": -1.1063435804098845,
+        "abs": 4.866678221151233,
+        "squared": 1.684289637559957,
+        "nonFinite": 0,
+        "sample": [
+          0.17695806920528412,
+          -0.3501172661781311,
+          -0.06639318913221359,
+          -0.3919294476509094,
+          -0.37989622354507446,
+          0.3592226803302765,
+          -0.28459054231643677,
+          0.38445693254470825,
+          0.24478071928024292,
+          -0.3738026022911072,
+          -0.030803149566054344,
+          -0.36310476064682007,
+          -0.3996959924697876,
+          0.3203147351741791,
+          -0.34617772698402405,
+          0.3944341838359833
+        ]
+      },
+      "targetSettled": {
+        "length": 16,
+        "sum": -1.1063435804098845,
+        "abs": 4.866678221151233,
+        "squared": 1.684289637559957,
+        "nonFinite": 0,
+        "sample": [
+          0.17695806920528412,
+          -0.3501172661781311,
+          -0.06639318913221359,
+          -0.3919294476509094,
+          -0.37989622354507446,
+          0.3592226803302765,
+          -0.28459054231643677,
+          0.38445693254470825,
+          0.24478071928024292,
+          -0.3738026022911072,
+          -0.030803149566054344,
+          -0.36310476064682007,
+          -0.3996959924697876,
+          0.3203147351741791,
+          -0.34617772698402405,
+          0.3944341838359833
+        ]
+      },
+      "scope": "Full production application and constructor, natural worker dispatch and native replies; unchanged 16-value target and committed epoch during the existing three-second production Pause interval. Running target changes also include synchronous model updates; worker application is established by its committed reply counter."
+    },
+    "autosave": {
+      "requests": 280,
+      "coalescedRequests": 251,
+      "flushAttempts": 28,
+      "cancellations": 0,
+      "lastDurationMs": 16.799999997019768,
+      "totalDurationMs": 462.90000000596046,
+      "maxDurationMs": 34,
+      "lastFlushAt": 59440.70000000298,
+      "lastOutcome": "pending",
+      "lastError": "",
+      "lastReason": "deadline",
+      "persistenceVerified": false,
+      "verifiedWrites": 27,
+      "workerFlushes": 28,
+      "fallbackCount": 0,
+      "lastFallbackReason": "",
+      "lastCaptureMs": 6.600000001490116,
+      "totalCaptureMs": 200.10000000149012,
+      "lastCommitMs": 0,
+      "totalCommitMs": 0,
+      "lastCommitDispatchMs": 5.5,
+      "totalCommitDispatchMs": 137.90000002086163,
+      "lastAsyncCommitLatencyMs": 121.29999999701977,
+      "totalAsyncCommitLatencyMs": 3466.8000000193715,
+      "lastDispatchMs": 4.699999995529652,
+      "totalDispatchMs": 124.89999998360872,
+      "lastSerializationMs": 281.30000000447035,
+      "totalSerializationMs": 7331.10000000149,
+      "lastRoundTripMs": 314.6000000014901,
+      "workerMode": "worker",
+      "storageMode": "async-main",
+      "pending": true,
+      "flushing": true,
+      "disposed": false,
+      "inFlightId": 28,
+      "phase": "serializing",
+      "epoch": 1,
+      "admissionClosed": false,
+      "draining": false,
+      "disposing": false,
+      "lastDrain": {
+        "status": "cancelled",
+        "settled": true,
+        "epoch": 1,
+        "reason": "startup-hydration"
+      },
+      "deadlineAt": 63381.90000000596
+    },
+    "settledAutosave": {
+      "requests": 280,
+      "coalescedRequests": 251,
+      "flushAttempts": 30,
+      "cancellations": 0,
+      "lastDurationMs": 16.200000002980232,
+      "totalDurationMs": 511.19999999552965,
+      "maxDurationMs": 34,
+      "lastFlushAt": 65153.20000000298,
+      "lastOutcome": "persisted",
+      "lastError": "",
+      "lastReason": "probe-verification",
+      "persistenceVerified": true,
+      "verifiedWrites": 30,
+      "workerFlushes": 30,
+      "fallbackCount": 0,
+      "lastFallbackReason": "",
+      "lastCaptureMs": 5.399999998509884,
+      "totalCaptureMs": 217.69999999552965,
+      "lastCommitMs": 0,
+      "totalCommitMs": 0,
+      "lastCommitDispatchMs": 6.200000002980232,
+      "totalCommitDispatchMs": 154.40000001341105,
+      "lastAsyncCommitLatencyMs": 135.10000000149012,
+      "totalAsyncCommitLatencyMs": 3948.800000011921,
+      "lastDispatchMs": 4.600000001490116,
+      "totalDispatchMs": 139.09999998658895,
+      "lastSerializationMs": 242.89999999850988,
+      "totalSerializationMs": 8060.4000000059605,
+      "lastRoundTripMs": 271.29999999701977,
+      "workerMode": "worker",
+      "storageMode": "async-main",
+      "pending": false,
+      "flushing": false,
+      "disposed": false,
+      "inFlightId": null,
+      "phase": null,
+      "epoch": 1,
+      "admissionClosed": false,
+      "draining": false,
+      "disposing": false,
+      "lastDrain": {
+        "status": "cancelled",
+        "settled": true,
+        "epoch": 1,
+        "reason": "startup-hydration"
+      },
+      "deadlineAt": null
+    },
+    "flush": {
+      "status": "persisted",
+      "persistenceVerified": true,
+      "ownerId": "4322ddfb-6421-4ec7-a0cc-504c8c34264d",
+      "epoch": 1,
+      "jobId": 30,
+      "revision": 30,
+      "digest": "8e3d20e99a4324f72c4aea2d0ceb6f1aa2c51cdd70473dcfca09cec3329bc8ec",
+      "durationMs": 16.200000002980232,
+      "captureMs": 5.399999998509884,
+      "commitMs": 0,
+      "commitDispatchMs": 6.200000002980232,
+      "asyncCommitLatencyMs": 135.10000000149012,
+      "dispatchMs": 4.600000001490116,
+      "serializationMs": 242.89999999850988,
+      "roundTripMs": 271.29999999701977
+    },
+    "requiredFailures": [],
+    "sourceChanges": [],
+    "timingBoundary": "Observed elapsed presentation intervals, not a guarantee across workloads or devices. Autosave duration counters sum synchronous capture/dispatch/commit-dispatch phases; they are not one continuous task or total wall latency."
+  },
+  "finiteScanOptimization": {
+    "scope": "Node-only paired capture microbenchmark; no Electron, renderer FPS, serialization or storage claim",
+    "node": "v25.8.2",
+    "v8": "14.1.146.11-node.24",
+    "protocol": {
+      "matureSteps": 128,
+      "seed": 17,
+      "captureWarmupsPerVariant": 20,
+      "pairedSamples": 100,
+      "order": "alternating AB/BA",
+      "quantiles": "nearest rank",
+      "forcedGC": false,
+      "encodingIncluded": false,
+      "steppingIncluded": false
+    },
+    "counts": {
+      "tensors": 47,
+      "bytes": 4994760,
+      "states": 43
+    },
+    "differential": {
+      "cases": 122,
+      "sameAcceptRejectAndError": true,
+      "scope": "native Float32/64 finite and nonfinite, signed zero/subnormal/extrema, finite-disabled and min/max; all integer types, BigInt, f16 and bf16 fallback unchanged"
+    },
+    "timing": {
+      "original": {
+        "n": 100,
+        "p50Ms": 15.072700000000168,
+        "p95Ms": 17.853999999999928,
+        "maxMs": 19.502499999999827,
+        "meanMs": 15.082969999999996
+      },
+      "indexed": {
+        "n": 100,
+        "p50Ms": 2.751600000000053,
+        "p95Ms": 5.094600000000355,
+        "maxMs": 6.488599999999906,
+        "meanMs": 3.1230720000000054
+      },
+      "pairedSavings": {
+        "n": 100,
+        "p50Ms": 11.596900000000232,
+        "p95Ms": 15.035899999999856,
+        "maxMs": 17.181699999999637,
+        "meanMs": 11.959897999999994
+      },
+      "medianReductionPct": 81.74447842788604
+    },
+    "identicalCaptureDigest": "e4a1b3efc282ed41f98293d617608545b8ae8ee475c8d7a37bdb32e32976a290",
+    "originalRegistrySHA256": "75d260ba2095b13ff5564df843bef602374ba48a3a650dc25d4da70333ff2899",
+    "qualifiedRegistrySHA256": "5dfd7132817c95767846dc38f65cf05ded18cfca3c0a3c3ac009323a59a0ccca",
+    "semantics": "Only native Float32/Float64 finite:true without min/max use indexed scanning; every value still checked. All other policies retain prior path."
+  },
+  "retainedFailedRun": {
+    "qualified": false,
+    "reason": "C drive reached zero free bytes; canonical saves failed ENOSPC after14 verified writes. The last completed record remained valid but no longer matched the paused model.",
+    "presentation": {
+      "frames": 3536,
+      "durationMs": 60016,
+      "averageFps": 58.91762196747534,
+      "rollingSamples": 240,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 27.899999998509884,
+      "p99Ms": 37
+    },
+    "fullPresentation": {
+      "samples": 3535,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 21.30000000447035,
+      "p99Ms": 30.69999999552965,
+      "maxMs": 79.20000000298023
+    },
+    "longTasks": 1,
+    "totalLongTaskMs": 53,
+    "requiredFailures": [
+      "Worker autosave did not verify persisted output",
+      "Settled autosave differs from the paused current model",
+      "Canonical autosave revision differs from the acknowledged paused flush"
+    ],
+    "note": "Its53ms longtask cause is unassigned. Probe wording formerly asserted field matches unconditionally; current source reports the actual comparison. Failed original report is preserved without edits.",
+    "remediation": "Relocated only owned prior build artifacts to project-drive archive; new temporary profiles use project-drive TEMP/TMP. No user profile or unrelated files deleted."
+  },
+  "sourceHashes": {
+    "index.html": "0993b837774534f2446a64d22e694577422fd85247dc9b1cc6160252b3b447df",
+    "main.js": "898dc02368c1aafcce3d820043c125dcd3b7454f0101c77040868e519d010056",
+    "docs/ALIVE_CORTEX_STATE.md": "44559bfbe617fc14bf00762533b05d7a2bcb4ce5eff009492ef1f6410b4fe60d",
+    "docs/ALIVE_LEARNED_STATE_INTEGRATION_PLAN.md": "2bb72267bd354127a993cfc99b2a4ca771408661ec91bc993a346d8fccf05db6",
+    "docs/ALIVE_PRIMARY_STATE_STARTUP.md": "fa45b6665b2482767b9d06cea7d93dd563f045e1f142c732241036cea4f04289",
+    "docs/ALIVE_PASS_01_REPORT.md": "1b46bec916969aff063f8def5cec5a11756f7571c67b08e67ce7395eb07d887a",
+    "docs/ALIVE_LEARNING_FIVE_SEED.md": "8e9a0f16ec7d6164061e256a6f1795e956f8cd16a2d9c8af3af06632af1f984b",
+    "scripts/alive-cortex-state-evidence.cjs": "e31724b78baf7151a68eb08ee9c0d83bf8e1c54d6bdc6f4be39a7c93ef53ba2b",
+    "scripts/alive-cortex-state-evidence.test.cjs": "16192d74499f8cd00d54f57478d2a09844cb3f5494a8a764fb922cc4039f69e2",
+    "scripts/alive-genome-hydration-evidence.cjs": "5952d0278577070c36d1b8cb346e52b8983a87de7fb362210e3aceea9074c776",
+    "scripts/alive-genome-hydration-evidence.test.cjs": "3ec9769814b08ec31675d06e99a1a41d70e696fba6c7da8d9db68bf595fb6cd2",
+    "scripts/alive-persistence-restart-probe.cjs": "2ff9d5eaca3555a44814d61f4996d8ebdfb806e721986c5185c460f78db8376f",
+    "scripts/alive-persistence-restart-probe.test.cjs": "fdc24625305cc4a228deab084f0fcb5aa2e93d1a67a3fc59f9375997a9b225af",
+    "scripts/alive-overdrive-probe.cjs": "b15c59c51040ed55fa6c5737dbde4d55dbd8a3945c871dc111c6bf9919053628",
+    "scripts/alive-startup-loader-electron-probe.cjs": "6e10431506c7b0d4b19dc01a60f3a723a6da21bf6915f32d0ceec517589e0349",
+    "scripts/smoke.js": "d784115926608a926dc445e48340dc90ce1ed0107de8b8b389998abcc2de8c24",
+    "systems/alive-cortex-state.js": "9528e79cdd1546c81619d8743505b45517ec22c36814814f3eb83268c982fd35",
+    "systems/alive-genome-codec.js": "e9e43390d3f9f5ec23f6ed42d73d780cb7157acba60c047abff24ea94fcb56b1",
+    "systems/alive-primary-policy-bootstrap.js": "2d4e8bf0591eef148cfdfd47254ff1414c6bd1deabfab3064ce000ba3b2393d2",
+    "systems/alive-startup-loader.js": "ea27218b7d88cf27fa4243c69a227cf7bc1965259988d87142030cbae440e283",
+    "systems/alive-learned-state-registry.js": "5dfd7132817c95767846dc38f65cf05ded18cfca3c0a3c3ac009323a59a0ccca",
+    "tests/alive-learned-state-registry.test.cjs": "937a773e8c85a5c420bc29c511476c69d7a653c6fa1060921ed11ce2af8f4487",
+    "tests/alive-cortex-state.test.cjs": "e3e6263e5c64bd4ab91bae905de61df6377f3d76d639c53159618616c5102e7e",
+    "tests/alive-cortex-continuation.test.cjs": "85c2fbe01bc826142fa11c040e0761de7fd369ef4b1cae6a81adf5ecf8c8e5a7",
+    "tests/alive-cortex-integration.test.cjs": "29b77571e2b20fae94699166b84d97fd372e1e7d9fe3d6dd5bbc746b03de7395",
+    "tests/alive-cortex-attention-boundary.test.cjs": "4c59f2aa43cca2c7d9718ca81664bb594b64097f380621d691c8229c85f20a07",
+    "tests/alive-startup-loader.test.cjs": "8f8c068f48a62c73b0e8717e92039c06ae18805a344cdf1d0eb348f638659b5a",
+    "tests/alive-tensor-coverage.test.cjs": "e6babe3e95cd95f1a517088104e3db3ef53b27fc34a0bd0ce734f77f27f95285"
+  },
+  "sourceHashSemantics": "Raw tested file hashes. Git attributes normalize CRLF in alive-overdrive-probe.cjs; staged blob identity is checked under those attributes.",
+  "rawEvidence": {
+    "localDirectory": "research_notes/cortex-state-qualification",
+    "restartReportSHA256": "950c5dec50d05d68f9fe0572561552511888146fffa5ce894f383ca557491ce3",
+    "performanceReportSHA256": "4f74ab58a1bf46ef850d594d22a16b50cd6025b98b8ad95c542824e5755ac8d0",
+    "failedPerformanceReportSHA256": "e3f4bcb3592dab85a5e0dc78550ab0b47748ab0085850153766818f29c603cf4",
+    "experimentReportSHA256": "4e417859366aa67fc307455a08476111f7417c7001d868fc3f590475e13c2fb7",
+    "independentExport": "research_notes/cortex-verifier-owned-20261109-v1/manifest.json",
+    "availability": "Raw logs, owned temporary profiles, screenshots and experiments are ignored local evidence; not public download assets."
+  }
+}

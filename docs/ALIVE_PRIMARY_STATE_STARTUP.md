@@ -140,6 +140,15 @@ all component bytes before hashing, and startup validates them before activation
 Numerical continuation of the local hub is tested with controlled external
 inputs and entropy; this does not establish full application continuation.
 
+The [cortex/connectome component](ALIVE_CORTEX_STATE.md) adds the mature direct
+neural graph: 47 owned buffers, 43 scalar/array state rows and the declared
+primary and synaptic aliases. Cortex-bearing snapshots require all five exact
+components with matching snapshot metadata. Traversal buffers exist before
+restoration, so the first numerical step cannot erase saved phases and cursors.
+Publication order is primary, trainer, hub, cortex, then replay, with all five
+destinations prepared before the first write. Historical records missing cortex
+remain readable without a claim that their omitted cortex history was recovered.
+
 The independent candidate catalog records proposed dispositions for 648 observed
 constructor views, not a certified mature-state registry. Lazy allocations,
 private closures, aliases and non-tensor fields still need explicit ownership.

@@ -160,6 +160,11 @@
   function numeric(bytes, row) {
     const C = constructors[row.dtype], values = new C(bytes.buffer, bytes.byteOffset, bytes.byteLength / C.BYTES_PER_ELEMENT), p = row.policy;
     const big = /Big/.test(row.dtype), min = own(p,'min') ? big ? BigInt(p.min) : p.min : null, max = own(p,'max') ? big ? BigInt(p.max) : p.max : null;
+    if (p.format === 'native' && p.finite === true && min === null && max === null &&
+        (row.dtype === 'Float32Array' || row.dtype === 'Float64Array')) {
+      for (let i = 0; i < values.length; i++) if (!Number.isFinite(values[i])) fail('tensor numeric policy rejected ' + row.id);
+      return;
+    }
     const scratch = new DataView(new ArrayBuffer(4));
     for (const raw of values) {
       let v = raw;

@@ -2187,6 +2187,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
   <script src="systems/alive-trainer-state.js"></script>
   <script src="systems/alive-replay-state.js"></script>
   <script src="systems/alive-hub-state.js"></script>
+  <script src="systems/alive-cortex-state.js"></script>
   <script src="systems/alive-primary-policy-bootstrap.js"></script>
   <script src="alife_neural_cyber_engine.js"></script>
   <script src="systems/alive-asset-hydration.js"></script>
@@ -11023,6 +11024,52 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           meanSynapticWeight: 0.042
         };
 
+        // BEGIN ALIVE CORTEX COLD STATE
+        // Allocate retained traversal history before canonical restoration. These
+        // are the existing first-use zeros; no inference or learning runs here.
+        Object.assign(this.deepCortex, {
+          moeCoveragePhases8: new Uint8Array(8),
+          moeCoverageMasks8: new Uint8Array(8),
+          moeInput256: new Float32Array(256),
+          moeResidual256: new Float32Array(256),
+          moeExplorationCursor: 0,
+          moeParameterVisits: 0,
+          moeUniqueParametersVisited: 0,
+          moeActiveExpertIndices: [],
+          moeActiveGates: [],
+          moeParameterVisitsThisStep: 0,
+          moeParameterCoveragePct: 0,
+          moeCoverageScope: '',
+          attentionQkvCoverage768: new Uint8Array(768),
+          attentionOutputCoverage512: new Uint8Array(512),
+          attentionQkvPhase: 0,
+          attentionOutputPhase: 0,
+          attentionQkvUniqueParameters: 0,
+          attentionOutputUniqueParameters: 0,
+          attentionParameterVisits: 0,
+          attentionParameterVisitsThisStep: 0,
+          attentionParameterCoveragePct: 0,
+          attentionCoverageScope: '',
+          hopfieldReadoutScope: '',
+          cortexCoverageStep: 0,
+          cortexPairedReadMask: 0,
+          cortexGradientMask: 0,
+          cortexPairedWeightVisitsThisStep: 0,
+          cortexGradientUpdatesThisStep: 0,
+          cortexCoverageScope: ''
+        });
+        Object.assign(this.connectome512, {
+          axonCoveragePhases512: new Uint8Array(512),
+          axonCoverageMasks512: new Uint8Array(512),
+          axonalPresynapticCursor: 0,
+          synapseVisits: 0,
+          uniqueSynapsesTraversed: 0,
+          processedPresynapticSpikes: 0,
+          synapseCoveragePct: 0,
+          synapseCoverageScope: ''
+        });
+        // END ALIVE CORTEX COLD STATE
+
         // Sovereign Browser Master Controller Telemetry (Full Zero-LLM Control of Native Browser Organs)
         this.sovereignMaster = {
           commandsExecutedCount: 0,
@@ -16219,7 +16266,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
           hasExact = Object.prototype.hasOwnProperty.call(data, 'primaryPolicyState') ||
             Object.prototype.hasOwnProperty.call(data, 'trainerCommittedState') ||
             Object.prototype.hasOwnProperty.call(data, 'replayMemoryState') ||
-            Object.prototype.hasOwnProperty.call(data, 'hubMemoryState');
+            Object.prototype.hasOwnProperty.call(data, 'hubMemoryState') ||
+            Object.prototype.hasOwnProperty.call(data, 'cortexMemoryState');
           if (hasExact && !window.alivePrimaryPolicyBootstrap) throw new Error('Exact component bootstrap is unavailable');
           // Paired restore belongs only to the unpublished constructor during
           // ordered startup. A live reload has no cross-component rollback yet.
@@ -16466,6 +16514,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             if (exact.trainer) payload.trainerCommittedState = window.AliveGenomeCodec.trainerState(exact.trainer);
             if (exact.replay) payload.replayMemoryState = window.AliveGenomeCodec.replayState(exact.replay);
             if (exact.hub) payload.hubMemoryState = window.AliveGenomeCodec.hubState(exact.hub);
+            if (exact.cortex) payload.cortexMemoryState = window.AliveGenomeCodec.cortexState(exact.cortex);
           }
           return payload;
       }
@@ -16982,16 +17031,17 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         // Sparse rotating Q/K/V and output projections: 16 + 8 coefficient
         // reads per call, as before. This is not a full dense attention forward.
         const Wqkv = dc.W_attn_qkv, Wao = dc.W_attn_out;
-        if (!dc.attentionQkvCoverage768 || !dc.attentionOutputCoverage1024) {
+        if (!dc.attentionQkvCoverage768 || !dc.attentionOutputCoverage512) {
           dc.attentionQkvCoverage768 = new Uint8Array(768);
-          dc.attentionOutputCoverage1024 = new Uint8Array(1024);
+          dc.attentionOutputCoverage512 = new Uint8Array(512);
           dc.attentionQkvPhase = 0;
           dc.attentionOutputPhase = 0;
           dc.attentionQkvUniqueParameters = 0;
           dc.attentionOutputUniqueParameters = 0;
           dc.attentionParameterVisits = 0;
         }
-        const qkvPhase = dc.attentionQkvPhase % 768, outputPhase = dc.attentionOutputPhase % 1024;
+        // W_attn_out is 64x64: eight reads per phase exhaust it in 512 phases.
+        const qkvPhase = dc.attentionQkvPhase % 768, outputPhase = dc.attentionOutputPhase % 512;
         const qkvBase = qkvPhase * 16, outputBase = outputPhase * 8;
         let attnScoreSum = 0;
         for (let sp = 0; sp < 8; sp++) {
@@ -17009,13 +17059,13 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
         }
         for (let sp = 0; sp < 8; sp++) dc.attnWeights8[sp] /= Math.max(1e-6, attnScoreSum);
         if (!dc.attentionQkvCoverage768[qkvPhase]) dc.attentionQkvUniqueParameters += 16;
-        if (!dc.attentionOutputCoverage1024[outputPhase]) dc.attentionOutputUniqueParameters += 8;
-        dc.attentionQkvCoverage768[qkvPhase] = dc.attentionOutputCoverage1024[outputPhase] = 1;
+        if (!dc.attentionOutputCoverage512[outputPhase]) dc.attentionOutputUniqueParameters += 8;
+        dc.attentionQkvCoverage768[qkvPhase] = dc.attentionOutputCoverage512[outputPhase] = 1;
         dc.attentionQkvPhase = (qkvPhase + 1) % 768;
-        dc.attentionOutputPhase = (outputPhase + 1) % 1024;
+        dc.attentionOutputPhase = (outputPhase + 1) % 512;
         dc.attentionParameterVisits += 24;
         dc.attentionParameterVisitsThisStep = 24;
-        dc.attentionParameterCoveragePct = 100 * (dc.attentionQkvUniqueParameters + dc.attentionOutputUniqueParameters) / 20480;
+        dc.attentionParameterCoveragePct = 100 * (dc.attentionQkvUniqueParameters + dc.attentionOutputUniqueParameters) / (Wqkv.length + Wao.length);
         dc.attentionCoverageScope = 'Rotating sparse coefficient projections; all Q/K/V and output lanes can influence expert gates over time; not dense attention equivalence';
         // END BOUNDED ATTENTION COVERAGE
 

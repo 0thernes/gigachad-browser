@@ -86,12 +86,14 @@ function browserSetup(nonce, phase) {
   window.AlivePrimaryPolicyState = {}; window.AliveTrainerState = { create() {} };
   window.AliveReplayState = { create() {} };
   window.AliveHubState = { create() {} };
+  window.AliveCortexState = { create() {} };
   window.AliveLearnedStateRegistry = {}; window.AliveLearnedStateCodec = {};
   window.AlivePrimaryPolicyBootstrap = { async prepare(args) {
     state.preparationDependenciesForwarded = args?.json === null && args.primary === window.AlivePrimaryPolicyState &&
       args.trainer === window.AliveTrainerState && typeof args.trainer.create === 'function' &&
       args.replay === window.AliveReplayState && typeof args.replay.create === 'function' &&
       args.hub === window.AliveHubState && typeof args.hub.create === 'function' &&
+      args.cortex === window.AliveCortexState && typeof args.cortex.create === 'function' &&
       args.registry === window.AliveLearnedStateRegistry && args.codec === window.AliveLearnedStateCodec && args.crypto === window.crypto;
     if (!state.preparationDependenciesForwarded) throw Error('Startup dependency forwarding mismatch');
     state.events.push('prepare'); return Object.freeze({ preflight() {}, apply() {}, capture() {}, captureComponents() {}, snapshot() {} });

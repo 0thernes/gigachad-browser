@@ -6,7 +6,8 @@ const path = require('node:path');
 const vm = require('node:vm');
 const codec = require('../systems/alive-genome-codec.js');
 const { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration, captureTrainerHydration, assessTrainerHydration,
-  captureReplayHydration, assessReplayHydration, captureHubHydration, assessHubHydration } = require('./alive-genome-hydration-evidence.cjs');
+  captureReplayHydration, assessReplayHydration, captureHubHydration, assessHubHydration,
+  captureCortexHydration, assessCortexHydration } = require('./alive-genome-hydration-evidence.cjs');
 const index = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 const HUB = ['W_perc_enc', 'W_perc_dec', 'W_dyn1', 'W_dyn2', 'W_diff1', 'W_diff2', 'W_gen1', 'W_gen2', 'W_disc1', 'W_disc2', 'W_aware16'];
 const SLTC = ['sltcWeights64', 'sltcRecWeights64', 'sltcBias64'];
@@ -788,4 +789,200 @@ test('historical genomes without exact hub retain legacy array and counter check
     assert.equal(assessGenomeHydration(f.raw, changed, { initialState: f.initialState }).ok, false);
   }
   assert.equal(captureHubHydration({}).ok, false);
+});
+
+// Build only an interchange fixture: actual constructor allocations plus an
+// independently declared verification catalog. No production cortex adapter,
+// learned-state codec, importer or model step supplies expected bytes.
+function exactCortexHydration() {
+  const f = exactHubHydration(), { createHash } = require('node:crypto');
+  const catalog = require('./alive-cortex-state-evidence.cjs').createExpectedCortexCatalog();
+  const start = index.indexOf('        const initXavier = (rows, cols) => {');
+  const end = index.indexOf('        // Sovereign Browser Master Controller Telemetry', start);
+  assert.ok(start >= 0 && end > start && end - start < 20000, 'bounded actual cortex/connectome allocation includes eager cold defaults');
+  let seed = 23n;
+  new Function('hybridQrng', index.slice(start, end)).call(f.runtime, { u64() { return seed++; } });
+  const dc = f.runtime.deepCortex, cn = f.runtime.connectome512;
+  dc.W_enc1[0] = Math.fround(.123456789); dc.criticValue = -0;
+  dc.moeActiveExpertIndices = [0, 4]; dc.moeActiveGates = [.625, .375];
+  const roots = { h: f.runtime, dc, cn };
+  const readPath = declared => {
+    assert.ok(Object.hasOwn(roots, declared.root), 'independent catalog uses a known fixture root');
+    return declared.keys.reduce((object, key) => Object.getOwnPropertyDescriptor(object, key).value, roots[declared.root]);
+  };
+  const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+  const chunks = [], tensorManifest = []; let blobOffset = 0;
+  for (const row of catalog.tensors) {
+    const view = readPath(row.paths[0]);
+    const bytes = Buffer.from(new Uint8Array(view.buffer, view.byteOffset, view.byteLength));
+    assert.equal(bytes.length, row.byteLength);
+    tensorManifest.push({ ...row, blobOffset, sha256: sha(bytes) }); chunks.push(bytes); blobOffset += bytes.length;
+  }
+  const tagged = (value, schema) => {
+    if (typeof value === 'number') {
+      if (schema.type === 'i53') return { $type: 'i53', value };
+      assert.equal(schema.type, 'f64');
+      const bytes = Buffer.alloc(8); bytes.writeDoubleLE(value); return { $type: 'f64', hex: bytes.toString('hex') };
+    }
+    if (Array.isArray(value)) return { $type: 'array', items: value.map(item => tagged(item, schema.items)) };
+    assert.equal(typeof value, 'string'); return value;
+  };
+  const stateValues = {};
+  for (const row of catalog.states) {
+    const declaration = catalog.descriptorDefinition.states.find(entry => entry.id === row.id);
+    stateValues[row.id] = tagged(readPath(declaration.paths[0]), declaration.schema);
+  }
+  const bytes = Buffer.concat(chunks);
+  f.saved.cortexMemoryState = { schema: 'gigachad.learned-state.v1', architecture: catalog.architecture,
+    snapshot: { ...f.saved.primaryPolicyState.snapshot }, tensorManifest,
+    tensorBlob: { encoding: 'base64', byteLength: bytes.length, sha256: sha(bytes), data: bytes.toString('base64') },
+    stateManifest: catalog.states, stateValues, resumeRules: catalog.resumeRules };
+  f.context.window.alivePrimaryPolicyBootstrap.captureComponents = () => ({ primary: { fixtureOnly: true }, trainer: { fixtureOnly: true },
+    replay: { fixtureOnly: true }, hub: { fixtureOnly: true }, cortex: { fixtureOnly: true } });
+  f.dc = dc; f.cn = cn; f.raw = JSON.stringify(f.saved); f.snapshot = f.recapture();
+  return f;
+}
+
+test('cortex verifies first raw bytes, state and aliases while keeping exact peers and unrelated legacy checks', () => {
+  const f = exactCortexHydration(), result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
+  assert.equal(result.ok, true, JSON.stringify(result)); assert.equal(result.cortex.ok, true);
+  assert.equal(result.cortex.arraysChecked, 47); assert.equal(result.cortex.actualNativeViews, 47);
+  assert.equal(result.cortex.comparedBytes, 4994760); assert.equal(result.cortex.comparedStates, 43);
+  assert.deepEqual(f.snapshot.cortexEvidence.totals, { views: 47, backings: 47, uniqueBytes: 4994760, stateFields: 43 });
+  assert.equal(f.snapshot.cortexCaptureError, null); assert.equal(f.snapshot.cortexDiagnosticOmitted, true);
+  assert.equal(Object.hasOwn(JSON.parse(f.snapshot.encodedJSON), 'cortexMemoryState'), false);
+  assert.equal(f.runtime.capturePersistentGenomePayload().cortexMemoryState.__alive_genome_cortex_state_v1__, true);
+  assert.notEqual(f.saved.W_actor.length, f.runtime.W_actor.length, 'rounded legacy primary copy is deliberately not authoritative');
+  assert.equal(f.dc.W_actor, f.runtime.W_actor); assert.equal(f.dc.W_critic, f.runtime.W_critic);
+  assert.ok(result.comparisons.some(row => row.path === 'deepWebAndSltcConnectomeEngine.sltcWeights64'));
+  assert.doesNotMatch(JSON.stringify(result), /"(?:hex|data|dataBase64)":/, 'assessment contains metadata only');
+});
+
+test('cortex first raw bytes and signed-zero state cannot be healed by trainer, metadata or exporter callbacks', () => {
+  const f = exactCortexHydration(), originals = Object.getOwnPropertyDescriptors(f.runtime);
+  const originalTrainer = { capture: f.engine.captureCommittedTrainerState, snapshot: f.engine.workerTrainerSnapshot };
+  const original = new Uint8Array(f.dc.W_enc1.buffer).slice();
+  for (const phase of ['trainer-capture', 'trainer-snapshot', 'metadata', 'export']) {
+    Object.defineProperties(f.runtime, originals);
+    f.engine.captureCommittedTrainerState = originalTrainer.capture; f.engine.workerTrainerSnapshot = originalTrainer.snapshot;
+    new Uint8Array(f.dc.W_enc1.buffer).set(original); new Uint8Array(f.dc.W_enc1.buffer)[0] ^= 1; f.dc.criticValue = 0;
+    const first = captureCortexHydration(f.runtime); assert.equal(first.ok, true);
+    const calls = installReplayMutation(f, phase, () => { new Uint8Array(f.dc.W_enc1.buffer).set(original); f.dc.criticValue = -0; });
+    const observed = f.recapture(); assert.ok(calls() > 0);
+    assert.deepEqual(observed.cortexEvidence, first, phase + ' cannot rewrite owned first evidence');
+    assert.equal(Object.is(f.dc.criticValue, -0), true);
+    const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+    assert.equal(result.ok, false); assert.equal(result.cortex.ok, false);
+  }
+});
+
+test('later callbacks cannot contaminate an initially correct owned cortex observation', () => {
+  const f = exactCortexHydration(), originalEvidence = f.snapshot.cortexEvidence;
+  const originals = Object.getOwnPropertyDescriptors(f.runtime), originalWeights = new Uint8Array(f.dc.W_enc1.buffer).slice();
+  const originalTrainer = { capture: f.engine.captureCommittedTrainerState, snapshot: f.engine.workerTrainerSnapshot };
+  for (const phase of ['trainer-capture', 'trainer-snapshot', 'metadata', 'export']) {
+    Object.defineProperties(f.runtime, originals);
+    f.engine.captureCommittedTrainerState = originalTrainer.capture; f.engine.workerTrainerSnapshot = originalTrainer.snapshot;
+    new Uint8Array(f.dc.W_enc1.buffer).set(originalWeights); f.dc.criticValue = -0;
+    const calls = installReplayMutation(f, phase, () => { f.dc.W_enc1[0] = .875; f.dc.criticValue = .25; });
+    const observed = f.recapture(); assert.ok(calls() > 0);
+    assert.deepEqual(observed.cortexEvidence, originalEvidence);
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, true, phase);
+  }
+});
+
+test('cortex invalid first layout, alias or numeric observations remain failures after exporter repairs', () => {
+  const f = exactCortexHydration(), dcSlots = Object.getOwnPropertyDescriptors(f.dc), cnSlots = Object.getOwnPropertyDescriptors(f.cn);
+  const exportOriginal = f.runtime.capturePersistentGenomePayload;
+  const attentionBytes = new Uint8Array(f.dc.attnWeights8.buffer).slice();
+  const repair = () => { Object.defineProperties(f.dc, dcSlots); Object.defineProperties(f.cn, cnSlots);
+    new Uint8Array(f.dc.attnWeights8.buffer).set(attentionBytes); };
+  for (const change of [
+    () => { f.dc.W_actor = new Float32Array(f.runtime.W_actor); },
+    () => { f.dc.W_critic = new Float32Array(f.runtime.W_critic); },
+    () => { f.cn.synWeights262K = new Float32Array(f.dc.W_connectome_synapses); },
+    () => { f.cn.synapticWeights = new Float32Array(f.dc.W_connectome_synapses); },
+    () => { f.cn.eligibilityTraces = f.cn.synWeights262K; },
+    () => { f.dc.W_attn_out = new Float32Array(8192); },
+    () => { f.dc.attnWeights8[7] = NaN; },
+    () => { f.dc.attentionOutputPhase = 512; },
+    () => { f.dc.criticValue = NaN; },
+    () => { f.dc.moeActiveGates = [NaN, .5]; },
+    () => { f.dc.moeActiveExpertIndices = [-0, 4]; },
+    () => { f.cn.stdpUpdatesCount = -1; }
+  ]) {
+    repair(); f.runtime.capturePersistentGenomePayload = exportOriginal; change();
+    const calls = installReplayMutation(f, 'export', repair);
+    const observed = f.recapture(); assert.ok(calls() > 0);
+    assert.equal(observed.cortexEvidence.ok, false); assert.ok(observed.cortexCaptureError);
+    assert.match(observed.errors.join(';'), /Initial (?:primary|cortex) capture failed/);
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+    observed.errors = []; observed.encodedJSON = '{}';
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false, 'export diagnostic failure is not the only rejection');
+  }
+});
+
+test('cortex requires all four exact peers, all seven shared snapshot fields and outer identity', () => {
+  const f = exactCortexHydration();
+  for (const field of ['primaryPolicyState', 'trainerCommittedState', 'replayMemoryState', 'hubMemoryState']) {
+    const saved = { ...f.saved }; delete saved[field];
+    const result = assessGenomeHydration(JSON.stringify(saved), f.snapshot, { initialState: f.initialState });
+    assert.equal(result.ok, false); assert.ok(result.differences.some(row => row.kind === 'cortex-requires-' + field));
+    const changed = { ...f.saved, [field]: { ...f.saved[field], snapshot: { ...f.saved[field].snapshot,
+      modelEpoch: f.saved[field].snapshot.modelEpoch + 1 } } };
+    const disagreement = assessGenomeHydration(JSON.stringify(changed), f.snapshot, { initialState: f.initialState });
+    assert.equal(disagreement.ok, false);
+    assert.ok(disagreement.comparisons.some(row => row.path === 'cortex-paired-' + field + '-snapshot' && row.ok === false));
+  }
+  for (const key of ['creatureId', 'policyId', 'checkpointId', 'logicalTick', 'modelEpoch', 'capturedAt', 'resumeBoundary']) {
+    const value = f.saved.cortexMemoryState.snapshot[key];
+    const saved = { ...f.saved, cortexMemoryState: { ...f.saved.cortexMemoryState,
+      snapshot: { ...f.saved.cortexMemoryState.snapshot, [key]: typeof value === 'number' ? value + 1 : 'different' } } };
+    assert.equal(assessGenomeHydration(JSON.stringify(saved), f.snapshot, { initialState: f.initialState }).ok, false, key);
+  }
+  for (const change of [{ agentId: 'different-outer' }, { simulationTick: f.saved.simulationTick + 1 },
+    { policyCid: 'different-policy' }, { checkpointCid: 'different-checkpoint' }]) {
+    assert.equal(assessGenomeHydration(JSON.stringify({ ...f.saved, ...change }), f.snapshot, { initialState: f.initialState }).ok, false);
+  }
+});
+
+test('malformed cortex wrappers and missing first evidence never fall back to rounded legacy state', () => {
+  const f = exactCortexHydration(), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime); let reads = 0;
+  for (const wrapper of [null, {}, { __alive_genome_cortex_state_v1__: false, captured: {} },
+    { __alive_genome_cortex_state_v1__: true, captured: null }, { __alive_genome_cortex_state_v1__: true, captured: {}, extra: true },
+    Object.defineProperty({ captured: {} }, '__alive_genome_cortex_state_v1__', { enumerable: true, get() { reads++; return true; } })]) {
+    f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), cortexMemoryState: wrapper });
+    const observed = f.recapture(); assert.ok(observed.errors.length);
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+  }
+  assert.equal(reads, 0); assert.equal(assessCortexHydration(f.saved.cortexMemoryState, null).ok, false);
+  assert.equal(assessGenomeHydration(f.raw, { ...f.snapshot, cortexEvidence: null, cortexCaptureError: null }, { initialState: f.initialState }).ok, false);
+});
+
+test('sealed cortex diagnostic must independently match the first raw observation', () => {
+  const f = exactCortexHydration(), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime);
+  f.context.window.AliveGenomeCodec = { ...codec, encode: payload => JSON.stringify(payload) };
+  f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), cortexMemoryState: f.saved.cortexMemoryState });
+  let observed = f.recapture(); assert.equal(observed.cortexDiagnosticOmitted, false);
+  assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, true);
+  const invalid = { ...f.saved.cortexMemoryState, tensorBlob: { ...f.saved.cortexMemoryState.tensorBlob, sha256: '0'.repeat(64) } };
+  f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), cortexMemoryState: invalid });
+  observed = f.recapture(); assert.deepEqual(observed.errors, []);
+  const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+  assert.equal(result.ok, false); assert.ok(result.differences.some(row => row.path === 'cortexMemoryState.exportDiagnostic'));
+});
+
+test('historical checkpoints without cortex remain compatible and retain unrelated legacy byte checks', () => {
+  for (const fixture of [hydrate, exactPrimaryHydration, exactTrainerHydration, exactReplayHydration, exactHubHydration]) {
+    const f = fixture(), result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
+    assert.equal(result.ok, true, JSON.stringify(result)); assert.equal(result.cortex, null);
+    assert.equal(f.snapshot.cortexEvidence.ok, false); assert.deepEqual(f.snapshot.errors, []);
+    f.runtime.deepWebAndSltcConnectomeEngine.sltcWeights64[0] += .01;
+    const changed = f.recapture ? f.recapture() : JSON.parse(JSON.stringify(vm.runInContext(`(${captureGenomeHydration.toString()})(runtime)`, f.context)));
+    assert.equal(assessGenomeHydration(f.raw, changed, { initialState: f.initialState }).ok, false);
+  }
+  assert.equal(captureCortexHydration({}).ok, false);
+  const verificationSource = fs.readFileSync(require.resolve('./alive-genome-hydration-evidence.cjs'), 'utf8');
+  assert.doesNotMatch(verificationSource, /require\([^\n]*(?:alive-cortex-state\.js|alive-learned-state-codec|alive-learned-state-registry)/);
+  assert.doesNotMatch(captureGenomeHydration.toString(), /AliveCortexState|alivePrimaryPolicyBootstrap/);
 });

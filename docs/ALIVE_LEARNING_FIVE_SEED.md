@@ -135,13 +135,22 @@ only rewrote the memory slot without consuming recall in that path.
 | Prior/posterior/master/actor/critic projections | 65,536 weights | 32,768 coefficient reads | 2 alternating column-pair phases |
 | Actor-output/decoder learning | 12,288 weights | 1,536 gradient updates | 8 column phases |
 | Q/K/V coefficient projections | 12,288 weights | 16 coefficient reads | 768 |
-| Attention output projection | 8,192 weights | 8 coefficient reads | 1,024 |
+| Attention output projection | 4,096 weights | 8 coefficient reads | 512 |
 | Episodic slot readout | 16,384 memory values | 128 reads/writes | 128 slots |
 
 Fourteen tensor-coverage tests instrument actual production array reads and check
 the final previously omitted weight in each projection for a causal output
 change. A full extracted cortex-method test exercises eight composed steps and
 checks finite latent, master, expert-gating and joint-motor outputs.
+
+The later cortex-state audit found that the historical attention fixture used
+8,192 output values despite the constructor's actual 64x64 allocation. The old
+1,024-phase production rotation consequently exceeded that allocation at phase
+512. The current fixture derives both attention allocations from the constructor;
+output traversal now wraps after 512 phases, and a separate boundary regression
+covers repeated wraps, the final coefficient and a control reproducing the old
+nonfinite result. The earlier coverage assertion was too broad. This correction
+does not alter or expand the separate five-seed compact steering measurement.
 
 These operations are explicitly **sparse rotating approximations**. Accumulating
 coverage over many calls is not equivalent to computing a full dense forward pass

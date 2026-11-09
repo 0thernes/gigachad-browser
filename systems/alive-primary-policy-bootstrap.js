@@ -11,10 +11,12 @@
   const TRAINER_FIELD = 'trainerCommittedState';
   const REPLAY_FIELD = 'replayMemoryState';
   const HUB_FIELD = 'hubMemoryState';
+  const CORTEX_FIELD = 'cortexMemoryState';
   const SCOPE = 'Exact six primary tensors only; remaining legacy genome is partial, not full learned-state continuity';
   const PAIRED_SCOPE = 'Exact six primary tensors plus committed trainer u/epoch/timeout; external inputs and ordering are not restored, not full learned-state continuity';
   const REPLAY_SCOPE = 'Exact primary tensors, committed trainer and dense replay ring/cursor; surrounding learning state and event order remain external, not full learned-state continuity';
   const HUB_SCOPE = 'Exact primary tensors, committed trainer, local trainable hub and dense replay ring/cursor; external models, inputs and event order are not restored, not full learned-state continuity';
+  const CORTEX_SCOPE = 'Exact primary tensors, committed trainer, local hub, cortex/connectome and dense replay ring/cursor; remaining models, inputs and event order are not restored, not full learned-state continuity';
   const SNAPSHOT_FIELDS = ['creatureId', 'policyId', 'checkpointId', 'logicalTick', 'modelEpoch', 'capturedAt', 'resumeBoundary'];
   const PRIMARY_KEYS = ['W_actor', 'W_metamorph', 'W_critic', 'W_world', 'W_actor_frozen', 'W_world_frozen'];
   const viewBuffer = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Float32Array.prototype), 'buffer').get;
@@ -34,7 +36,7 @@
   // Outer legacy JSON may contain whitespace. Decode the primary member from
   // its original substring so the inner codec retains its strict JSON policy.
   function inspect(raw) {
-    if (raw === null || raw === undefined || raw === '') return { present: false, trainerPresent: false, replayPresent: false, hubPresent: false, outer: null };
+    if (raw === null || raw === undefined || raw === '') return { present: false, trainerPresent: false, replayPresent: false, hubPresent: false, cortexPresent: false, outer: null };
     if (typeof raw !== 'string' || raw.length > MAX_JSON_BYTES || new TextEncoder().encode(raw).byteLength > MAX_JSON_BYTES) fail('invalid or oversized source JSON');
     const outer = JSON.parse(raw);
     if (!outer || typeof outer !== 'object' || Array.isArray(outer)) fail('source must be a JSON object');
@@ -49,7 +51,7 @@
       }
       fail('unterminated source string');
     };
-    const names = new Set(); let offset = skip(0) + 1, primaryJSON = null, trainerJSON = null, replayJSON = null, hubJSON = null;
+    const names = new Set(); let offset = skip(0) + 1, primaryJSON = null, trainerJSON = null, replayJSON = null, hubJSON = null, cortexJSON = null;
     while (true) {
       offset = skip(offset);
       if (raw[offset] === '}') break;
@@ -69,9 +71,10 @@
       if (key === TRAINER_FIELD) trainerJSON = raw.slice(start, end);
       if (key === REPLAY_FIELD) replayJSON = raw.slice(start, end);
       if (key === HUB_FIELD) hubJSON = raw.slice(start, end);
+      if (key === CORTEX_FIELD) cortexJSON = raw.slice(start, end);
       offset = raw[i] === ',' ? i + 1 : i;
     }
-    return { present: names.has(FIELD), trainerPresent: names.has(TRAINER_FIELD), replayPresent: names.has(REPLAY_FIELD), hubPresent: names.has(HUB_FIELD), outer, primaryJSON, trainerJSON, replayJSON, hubJSON };
+    return { present: names.has(FIELD), trainerPresent: names.has(TRAINER_FIELD), replayPresent: names.has(REPLAY_FIELD), hubPresent: names.has(HUB_FIELD), cortexPresent: names.has(CORTEX_FIELD), outer, primaryJSON, trainerJSON, replayJSON, hubJSON, cortexJSON };
   }
   function validationTarget() {
     const h = { D_OBS: 16, D_ACT: 5, D_MORPH: 6,
@@ -94,12 +97,13 @@
     }
     fail('missing trainer method: ' + name);
   }
-  async function prepare({ primary, trainer, replay, hub, registry, codec, crypto, json = null } = {}) {
+  async function prepare({ primary, trainer, replay, hub, cortex, registry, codec, crypto, json = null } = {}) {
     if (typeof primary?.create !== 'function' || typeof codec?.decode !== 'function' || typeof codec?.verifiedCopy !== 'function') fail('primary adapter and codec required');
     const source = inspect(json);
     if (source.trainerPresent && !source.present) fail('trainer committed state requires primary policy state');
     if (source.replayPresent && (!source.present || !source.trainerPresent)) fail('replay memory state requires both primary and trainer state');
     if (source.hubPresent && (!source.present || !source.trainerPresent || !source.replayPresent)) fail('hub memory state requires primary, trainer and replay state');
+    if (source.cortexPresent && (!source.present || !source.trainerPresent || !source.replayPresent || !source.hubPresent)) fail('cortex memory state requires primary, trainer, replay and hub state');
     if (source.trainerPresent && typeof trainer?.create !== 'function') fail('trainer adapter required for committed state');
     if (trainer !== undefined && typeof trainer?.create !== 'function') fail('invalid trainer adapter');
     if (source.replayPresent && typeof replay?.create !== 'function') fail('replay adapter required for replay memory state');
@@ -108,11 +112,15 @@
     if (source.hubPresent && typeof hub?.create !== 'function') fail('hub adapter required for hub memory state');
     if (hub !== undefined && typeof hub?.create !== 'function') fail('invalid hub adapter');
     if (hub && (!trainer || !replay)) fail('hub capture requires trainer and replay adapters');
+    if (source.cortexPresent && typeof cortex?.create !== 'function') fail('cortex adapter required for cortex memory state');
+    if (cortex !== undefined && typeof cortex?.create !== 'function') fail('invalid cortex adapter');
+    if (cortex && (!trainer || !replay || !hub)) fail('cortex capture requires trainer, replay and hub adapters');
     const adapter = await primary.create({ registry, codec, crypto });
     const trainerAdapter = trainer ? await trainer.create({ registry, codec, crypto }) : null;
     const replayAdapter = replay ? await replay.create({ registry, codec, crypto }) : null;
     const hubAdapter = hub ? await hub.create({ registry, codec, crypto }) : null;
-    let decoded = null, savedSnapshot = null, trainerDecoded = null, replayDecoded = null, replayMetadata = null, hubDecoded = null, hubMetadata = null;
+    const cortexAdapter = cortex ? await cortex.create({ registry, codec, crypto }) : null;
+    let decoded = null, savedSnapshot = null, trainerDecoded = null, replayDecoded = null, replayMetadata = null, hubDecoded = null, hubMetadata = null, cortexDecoded = null, cortexMetadata = null;
     if (source.present) {
       decoded = await codec.decode(source.primaryJSON, { crypto });
       const verified = codec.verifiedCopy(decoded);
@@ -148,8 +156,17 @@
       hubMetadata = hubAdapter.validate(hubDecoded);
       if (hubMetadata?.status !== 'validated' || hubMetadata.tensorCount !== 59 || hubMetadata.tensorBytes !== 21368 || hubMetadata.stateCount !== 44) fail('hub validation did not return the declared local-state bounds');
     }
-    const preparedRaw = json, hasPrimary = source.present, hasTrainer = source.trainerPresent, hasReplay = source.replayPresent, hasHub = source.hubPresent, states = new WeakMap();
-    const scope = hasHub ? HUB_SCOPE : hasReplay ? REPLAY_SCOPE : hasTrainer ? PAIRED_SCOPE : SCOPE;
+    if (source.cortexPresent) {
+      cortexDecoded = await codec.decode(source.cortexJSON, { crypto });
+      const verified = codec.verifiedCopy(cortexDecoded);
+      if (codec.canonicalDescriptorJSON(verified.architecture) !== codec.canonicalDescriptorJSON(cortexAdapter.architecture)) fail('cortex architecture mismatch');
+      if (SNAPSHOT_FIELDS.some(key => verified.snapshot[key] !== savedSnapshot[key])) fail('cortex snapshot conflicts with primary snapshot');
+      checkOuter(verified.snapshot, source.outer);
+      cortexMetadata = cortexAdapter.validate(cortexDecoded);
+      if (cortexMetadata?.status !== 'validated' || cortexMetadata.tensorCount !== 47 || cortexMetadata.tensorBytes !== 4994760 || cortexMetadata.stateCount !== 43) fail('cortex validation did not return the declared local-state bounds');
+    }
+    const preparedRaw = json, hasPrimary = source.present, hasTrainer = source.trainerPresent, hasReplay = source.replayPresent, hasHub = source.hubPresent, hasCortex = source.cortexPresent, states = new WeakMap();
+    const scope = hasCortex ? CORTEX_SCOPE : hasHub ? HUB_SCOPE : hasReplay ? REPLAY_SCOPE : hasTrainer ? PAIRED_SCOPE : SCOPE;
     function stateFor(h) {
       if (!h || typeof h !== 'object') fail('runtime object required');
       let state = states.get(h);
@@ -158,7 +175,9 @@
           creatureId: null, modelEpoch: 0, applied: false, trainerInitialized: !hasTrainer,
           trainerStatus: hasTrainer ? 'unapplied' : 'trainer-not-present', trainerReceipt: null,
           trainerBinding: null, replayInitialized: !hasReplay, replayStatus: hasReplay ? 'unapplied' : 'replay-not-present',
-          replayReceipt: null, replayBinding: null, hubInitialized: !hasHub, hubStatus: hasHub ? 'unapplied' : 'hub-not-present', hubReceipt: null, partialApplication: false };
+          replayReceipt: null, replayBinding: null, hubInitialized: !hasHub, hubStatus: hasHub ? 'unapplied' : 'hub-not-present', hubReceipt: null,
+          cortexInitialized: !hasCortex, cortexStatus: hasCortex ? 'unapplied' : 'cortex-not-present', cortexReceipt: null,
+          cortexBinding: null, connectomeBinding: null, partialApplication: false };
         states.set(h, state);
       }
       return state;
@@ -167,7 +186,7 @@
       if (raw === preparedRaw) return hasPrimary;
       if (hasTrainer) fail('paired exact component source differs from asynchronously prepared JSON; prepare a new controller');
       const other = inspect(raw);
-      if (other.present || other.trainerPresent || other.replayPresent || other.hubPresent) fail('exact component source differs from asynchronously prepared JSON; prepare a new controller');
+      if (other.present || other.trainerPresent || other.replayPresent || other.hubPresent || other.cortexPresent) fail('exact component source differs from asynchronously prepared JSON; prepare a new controller');
       return false;
     }
     function engineFor(h, state) {
@@ -227,6 +246,62 @@
         if (ArrayBuffer.isView(value) && reserved.has(viewBuffer.call(value))) fail('hub and primary/trainer tensor backings must be disjoint');
       }
     }
+    function cortexFor(h, state) {
+      const result = {};
+      for (const [key, binding] of [['deepCortex', 'cortexBinding'], ['connectome512', 'connectomeBinding']]) {
+        const descriptor = Object.getOwnPropertyDescriptor(h, key);
+        if (!descriptor || !own(descriptor, 'value') || !descriptor.value || typeof descriptor.value !== 'object') fail('cortex runtime owner must be an own data field: ' + key);
+        const previous = state[binding];
+        if (previous && ['value', 'writable', 'enumerable', 'configurable'].some(name => descriptor[name] !== previous[name])) fail('cortex runtime binding changed: ' + key);
+        if (!previous) state[binding] = descriptor;
+        result[key] = descriptor.value;
+      }
+      return result;
+    }
+    function cortexPlan(h, state) {
+      const targets = cortexFor(h, state);
+      return { ...targets, plan: cortexAdapter.preflight(cortexDecoded, h, { generation: state.generation }) };
+    }
+    function sameCortexCounts(receipt) {
+      return receipt?.tensorCount === cortexMetadata.tensorCount && receipt.tensorBytes === cortexMetadata.tensorBytes && receipt.stateCount === cortexMetadata.stateCount;
+    }
+    function cortexReady(prepared, h, state) {
+      const targets = cortexFor(h, state);
+      if (targets.deepCortex !== prepared.deepCortex || targets.connectome512 !== prepared.connectome512) return false;
+      const receipt = cortexAdapter.recheck(prepared.plan, h, { generation: state.generation });
+      return receipt?.status === 'ready' && receipt.generation === state.generation && sameCortexCounts(receipt);
+    }
+    function checkCortexDisjoint(h, targets, hub, engine) {
+      const reserved = new Set(PRIMARY_KEYS.map(key => viewBuffer.call(ownValue(h, key))));
+      reserved.add(viewBuffer.call(ownValue(engine, 'W_hyper_u')));
+      const viewFields = owner => {
+        const keys = Reflect.ownKeys(owner);
+        if (keys.length > 4096) fail('component field inspection bound exceeded');
+        return keys.flatMap(key => {
+          const descriptor = Object.getOwnPropertyDescriptor(owner, key);
+          return descriptor && own(descriptor, 'value') && ArrayBuffer.isView(descriptor.value) ? [[key, descriptor.value]] : [];
+        });
+      };
+      reserved.add(ownValue(hub, 'mixedArenaBuffer'));
+      for (const [, view] of viewFields(hub)) reserved.add(viewBuffer.call(view));
+      const ring = ownValue(hub, 'replayRing32');
+      if (!Array.isArray(ring) || ring.length > 32) fail('bounded replay ring required for cortex separation');
+      for (let index = 0; index < ring.length; index++) {
+        const record = ownValue(ring, String(index));
+        for (const key of ['z16', 'a8', 'zNext16']) reserved.add(viewBuffer.call(ownValue(record, key)));
+      }
+      for (const [key, view] of viewFields(targets.deepCortex)) {
+        if (key === 'W_actor' || key === 'W_critic') {
+          if (view !== ownValue(h, key)) fail('cortex primary alias changed: ' + key);
+          continue; // These two views belong to primary and are never cortex writes.
+        }
+        if (reserved.has(viewBuffer.call(view))) fail('cortex and primary/trainer/hub/replay tensor backings must be disjoint');
+      }
+      // The three connectome aliases share cortex-owned tensors intentionally.
+      for (const [, view] of viewFields(targets.connectome512)) {
+        if (reserved.has(viewBuffer.call(view))) fail('connectome and primary/trainer/hub/replay tensor backings must be disjoint');
+      }
+    }
     function checkReplayDisjoint(h, hub, engine) {
       const reserved = new Set(PRIMARY_KEYS.map(key => viewBuffer.call(ownValue(h, key))));
       reserved.add(viewBuffer.call(ownValue(engine, 'W_hyper_u')));
@@ -238,6 +313,7 @@
     }
     function discardReplay(prepared) { if (prepared) replayAdapter.discard(prepared.plan); }
     function discardHub(prepared) { if (prepared) hubAdapter.discard(prepared.plan); }
+    function discardCortex(prepared) { if (prepared) cortexAdapter.discard(prepared.plan); }
     function requireStartup(options) {
       const descriptor = options && typeof options === 'object' && Object.getOwnPropertyDescriptor(options, 'startup');
       if (!descriptor || !own(descriptor, 'value') || descriptor.value !== true) fail('unsupported-live-restore: paired exact state is startup-only');
@@ -257,7 +333,7 @@
       adapter.preflight(decoded, h, { generation: state.generation });
       if (hasTrainer) {
         const prepared = trainerPlan(h, state);
-        let preparedReplay = null, preparedHub = null;
+        let preparedReplay = null, preparedHub = null, preparedCortex = null;
         try {
           checkDisjoint(h, prepared.engine);
           if (engineFor(h, state) !== prepared.engine || !trainerAdapter.recheck(prepared.plan, prepared.engine)) fail('trainer preparation changed');
@@ -271,10 +347,15 @@
             checkHubDisjoint(h, preparedHub.hub, prepared.engine);
             if (!hubReady(preparedHub, h, state)) fail('hub preparation changed');
           }
+          if (hasCortex) {
+            preparedCortex = cortexPlan(h, state);
+            checkCortexDisjoint(h, preparedCortex, preparedHub.hub, prepared.engine);
+            if (!cortexReady(preparedCortex, h, state)) fail('cortex preparation changed');
+          }
         }
-        finally { discardTrainer(prepared); discardHub(preparedHub); discardReplay(preparedReplay); }
+        finally { discardTrainer(prepared); discardHub(preparedHub); discardCortex(preparedCortex); discardReplay(preparedReplay); }
       }
-      return { status: 'prepared', tensorCount: 6, trainerPrepared: hasTrainer, replayPrepared: hasReplay, hubPrepared: hasHub, scope };
+      return { status: 'prepared', tensorCount: 6, trainerPrepared: hasTrainer, replayPrepared: hasReplay, hubPrepared: hasHub, cortexPrepared: hasCortex, scope };
     }
     function apply(h, raw, options) {
       const state = stateFor(h);
@@ -285,13 +366,16 @@
         state.trainerInitialized = true; state.trainerStatus = 'trainer-not-present'; state.trainerReceipt = null; state.trainerBinding = null;
         state.replayInitialized = true; state.replayStatus = 'replay-not-present'; state.replayReceipt = null; state.replayBinding = null;
         state.hubInitialized = true; state.hubStatus = 'hub-not-present'; state.hubReceipt = null;
-        return { status: 'not-present', tensorCount: 0, trainer: null, replay: null, hub: null, scope };
+        state.cortexInitialized = true; state.cortexStatus = 'cortex-not-present'; state.cortexReceipt = null;
+        state.cortexBinding = null; state.connectomeBinding = null;
+        return { status: 'not-present', tensorCount: 0, trainer: null, replay: null, hub: null, cortex: null, scope };
       }
       if (hasTrainer) requireStartup(options);
       // Legacy assignments may have changed contents since early validation.
       // Resolve and verify current bindings afresh immediately before applying.
       const plan = adapter.preflight(decoded, h, { generation: state.generation });
-      let preparedTrainer = null, preparedReplay = null, preparedHub = null, result, trainerReceipt = null, replayReceipt = null, hubReceipt = null, primaryApplied = false;
+      let preparedTrainer = null, preparedReplay = null, preparedHub = null, preparedCortex = null, result,
+        trainerReceipt = null, replayReceipt = null, hubReceipt = null, cortexReceipt = null, primaryApplied = false;
       try {
         if (hasTrainer) {
           preparedTrainer = trainerPlan(h, state);
@@ -308,6 +392,11 @@
           checkHubDisjoint(h, preparedHub.hub, preparedTrainer.engine);
           if (!hubReady(preparedHub, h, state)) fail('hub preparation changed before primary apply');
         }
+        if (hasCortex) {
+          preparedCortex = cortexPlan(h, state);
+          checkCortexDisjoint(h, preparedCortex, preparedHub.hub, preparedTrainer.engine);
+          if (!cortexReady(preparedCortex, h, state)) fail('cortex preparation changed before primary apply');
+        }
         result = adapter.apply(plan, h, { generation: state.generation }); primaryApplied = true;
         if (preparedTrainer) {
           trainerReceipt = trainerAdapter.apply(preparedTrainer.plan, preparedTrainer.engine);
@@ -319,6 +408,13 @@
           hubReceipt = hubAdapter.apply(preparedHub.plan, preparedHub.hub, { generation: state.generation });
           if (!hubReceipt || hubReceipt.status !== 'applied' || hubReceipt.readbackVerified !== true ||
               hubReceipt.generation !== state.generation || !sameHubCounts(hubReceipt)) fail('hub commit did not return the expected exact restore receipt');
+        }
+        if (preparedCortex) {
+          if (!cortexReady(preparedCortex, h, state)) fail('cortex preparation changed before cortex apply');
+          checkCortexDisjoint(h, preparedCortex, preparedHub.hub, preparedTrainer.engine);
+          cortexReceipt = cortexAdapter.apply(preparedCortex.plan, h, { generation: state.generation });
+          if (!cortexReceipt || cortexReceipt.status !== 'applied' || cortexReceipt.readbackVerified !== true ||
+              cortexReceipt.generation !== state.generation || !sameCortexCounts(cortexReceipt)) fail('cortex commit did not return the expected exact restore receipt');
         }
         if (preparedReplay) {
           if (!replayReady(preparedReplay, h, state)) fail('replay preparation changed before replay apply');
@@ -332,12 +428,13 @@
           state.initialized = false; state.applied = false; state.trainerInitialized = false;
           state.replayInitialized = false; state.replayStatus = 'partial-application'; state.replayReceipt = null;
           state.hubInitialized = false; state.hubStatus = 'partial-application'; state.hubReceipt = null;
+          state.cortexInitialized = false; state.cortexStatus = 'partial-application'; state.cortexReceipt = null;
           state.trainerStatus = 'partial-application'; state.trainerReceipt = null; state.partialApplication = true;
           const error = new Error('Exact component application failed after writes; runtime must remain closed: ' + String(cause?.message || cause));
           error.partialApplication = true; error.primaryApplied = primaryApplied; throw error;
         }
         throw cause;
-      } finally { discardTrainer(preparedTrainer); discardHub(preparedHub); discardReplay(preparedReplay); }
+      } finally { discardTrainer(preparedTrainer); discardHub(preparedHub); discardCortex(preparedCortex); discardReplay(preparedReplay); }
       state.generation++; state.initialized = true; state.source = 'primary'; state.applied = true;
       state.creatureId = savedSnapshot.creatureId; state.modelEpoch = savedSnapshot.modelEpoch;
       state.trainerInitialized = true; state.trainerStatus = hasTrainer ? 'restored-suspended' : 'trainer-not-present';
@@ -346,8 +443,10 @@
       state.replayReceipt = replayReceipt ? { ...replayReceipt } : null;
       state.hubInitialized = true; state.hubStatus = hasHub ? 'restored' : 'hub-not-present';
       state.hubReceipt = hubReceipt ? { ...hubReceipt } : null;
+      state.cortexInitialized = true; state.cortexStatus = hasCortex ? 'restored' : 'cortex-not-present';
+      state.cortexReceipt = cortexReceipt ? { ...cortexReceipt } : null;
       return { ...result, generation: state.generation, trainer: trainerReceipt ? { ...trainerReceipt } : null,
-        replay: replayReceipt ? { ...replayReceipt } : null, hub: hubReceipt ? { ...hubReceipt } : null, scope };
+        replay: replayReceipt ? { ...replayReceipt } : null, hub: hubReceipt ? { ...hubReceipt } : null, cortex: cortexReceipt ? { ...cortexReceipt } : null, scope };
     }
     function capture(h) {
       const state = stateFor(h);
@@ -365,7 +464,8 @@
       if (!state.trainerInitialized) fail('prepared trainer state has not been applied to this runtime');
       if (!state.replayInitialized) fail('prepared replay state has not been applied to this runtime');
       if (!state.hubInitialized) fail('prepared hub state has not been applied to this runtime');
-      let trainerCapture = null, replayCapture = null, hubCapture = null;
+      if (!state.cortexInitialized) fail('prepared cortex state has not been applied to this runtime');
+      let trainerCapture = null, replayCapture = null, hubCapture = null, cortexCapture = null;
       if (trainerAdapter) {
         const engine = engineFor(h, state); checkDisjoint(h, engine);
         trainerCapture = trainerAdapter.capture(engine, primaryCapture.snapshot,
@@ -384,10 +484,21 @@
               provenance: { component: 'trainable-hub-memory', completeApplicationCatalog: false, bootstrapSource: state.hubStatus } });
             if (hubFor(h, state) !== hub || engineFor(h, state) !== engine) fail('component binding changed during hub capture');
             checkHubDisjoint(h, hub, engine); checkReplayDisjoint(h, hub, engine);
+            if (cortexAdapter) {
+              const targets = cortexFor(h, state);
+              checkCortexDisjoint(h, targets, hub, engine);
+              cortexCapture = cortexAdapter.capture(h, primaryCapture.snapshot, { generation: state.generation,
+                provenance: { component: 'cortex-connectome-memory', completeApplicationCatalog: false, bootstrapSource: state.cortexStatus } });
+              const after = cortexFor(h, state);
+              if (after.deepCortex !== targets.deepCortex || after.connectome512 !== targets.connectome512 ||
+                  hubFor(h, state) !== hub || engineFor(h, state) !== engine) fail('component binding changed during cortex capture');
+              checkCortexDisjoint(h, targets, hub, engine);
+            }
           }
         }
       }
-      return { primary: primaryCapture, trainer: trainerCapture, replay: replayCapture, hub: hubCapture };
+      return { primary: primaryCapture, trainer: trainerCapture, replay: replayCapture, hub: hubCapture,
+        ...(cortexAdapter ? { cortex: cortexCapture } : {}) };
     }
     function snapshot(h) {
       const state = stateFor(h);
@@ -400,10 +511,12 @@
         replayReceipt: state.replayReceipt ? { ...state.replayReceipt } : null,
         hubPrepared: hasHub, hubInitialized: state.hubInitialized, hubStatus: state.hubStatus,
         hubReceipt: state.hubReceipt ? { ...state.hubReceipt } : null,
+        cortexPrepared: hasCortex, cortexInitialized: state.cortexInitialized, cortexStatus: state.cortexStatus,
+        cortexReceipt: state.cortexReceipt ? { ...state.cortexReceipt } : null,
         partialApplication: state.partialApplication, scope };
     }
-    return Object.freeze({ architecture: adapter.architecture, trainerArchitecture: trainerAdapter?.architecture || null, replayArchitecture: replayAdapter?.architecture || null, hubArchitecture: hubAdapter?.architecture || null,
+    return Object.freeze({ architecture: adapter.architecture, trainerArchitecture: trainerAdapter?.architecture || null, replayArchitecture: replayAdapter?.architecture || null, hubArchitecture: hubAdapter?.architecture || null, cortexArchitecture: cortexAdapter?.architecture || null,
       scope, preflight, apply, capture, captureComponents, snapshot });
   }
-  return Object.freeze({ prepare, FIELD, TRAINER_FIELD, REPLAY_FIELD, HUB_FIELD, scope: HUB_SCOPE });
+  return Object.freeze({ prepare, FIELD, TRAINER_FIELD, REPLAY_FIELD, HUB_FIELD, CORTEX_FIELD, scope: CORTEX_SCOPE });
 });

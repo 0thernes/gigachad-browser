@@ -28,6 +28,14 @@ extends exact local state coverage; external models, curriculum, research,
 native assets, coupling and RNG ownership remain broader work. Current release
 qualification must be read from its own evidence receipt.
 
+The subsequent [cortex and connectome component](ALIVE_CORTEX_STATE.md) covers
+the complete mature direct-field graphs, including fixed state formerly created
+on the first inference step. It preserves primary-owned aliases without duplicate
+writes and keeps shared connectome weights in one backing. Its source audit also
+found and corrected the output-attention phase range: the actual 4,096-value
+matrix supports 512 eight-coefficient phases. The component's numerical and
+process qualifications remain distinct from whole-creature continuation.
+
 ## Evidence and the remaining coverage boundary
 
 The inputs are `research_notes/alive-overdrive-verification/learned-state-continuity/candidate-coverage-v3.json`, `SHARED_ARENA_BOUNDARY.md`, `STARTUP_HYDRATION_AUDIT.md`, the implementation/protocol/edge-review documents in that directory, and the current owning sources named below. The candidate catalog explicitly is not a certified registry. Its 648 constructor views are historical observations, not a fixed mature roster, learned-parameter count or proof of learning quality.
