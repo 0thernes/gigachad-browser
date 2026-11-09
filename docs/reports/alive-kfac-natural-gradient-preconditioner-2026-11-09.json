@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-47-KFAC-NATURAL-GRADIENT-PRECONDITIONER",
+  "phase": "Phase IX — Second-Order & Matrix-Preconditioned Weight-and-Bias Optimizers",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "diagonal-empirical-fisher-rmsprop",
+      "label": "Diagonal Empirical Fisher (RMSProp Approximation)",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 36.6353,
+        "stdDev": 0.2885,
+        "min": 36.3268,
+        "max": 37.055,
+        "ci95": {
+          "low": 36.2771,
+          "high": 36.9935,
+          "halfWidth": 0.3582
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 30.3968,
+        "stdDev": 0.3873,
+        "min": 30.0872,
+        "max": 31.0669,
+        "ci95": {
+          "low": 29.9159,
+          "high": 30.8777,
+          "halfWidth": 0.4809
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 41.9334,
+        "stdDev": 0.1969,
+        "min": 41.7231,
+        "max": 42.1717,
+        "ci95": {
+          "low": 41.6889,
+          "high": 42.178,
+          "halfWidth": 0.2445
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 35.5641,
+        "stdDev": 0.1694,
+        "min": 35.2924,
+        "max": 35.7409,
+        "ci95": {
+          "low": 35.3537,
+          "high": 35.7744,
+          "halfWidth": 0.2104
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 36.3268,
+          "illConditionedRavineEscapePct": 30.2971,
+          "homogeneousBiasCouplingAccuracyPct": 41.8322,
+          "compositeKfacScore": 35.2924
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 36.7833,
+          "illConditionedRavineEscapePct": 30.1914,
+          "homogeneousBiasCouplingAccuracyPct": 42.1717,
+          "compositeKfacScore": 35.6469
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 37.055,
+          "illConditionedRavineEscapePct": 30.3414,
+          "homogeneousBiasCouplingAccuracyPct": 41.7231,
+          "compositeKfacScore": 35.6076
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 36.4508,
+          "illConditionedRavineEscapePct": 31.0669,
+          "homogeneousBiasCouplingAccuracyPct": 42.1136,
+          "compositeKfacScore": 35.5325
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 36.5604,
+          "illConditionedRavineEscapePct": 30.0872,
+          "homogeneousBiasCouplingAccuracyPct": 41.8266,
+          "compositeKfacScore": 35.7409
+        }
+      ]
+    },
+    {
+      "profileId": "undamped-kronecker-fisher-singular",
+      "label": "Undamped Kronecker Fisher (Ill-Conditioned Near Zero Eigenvalues)",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 45.1623,
+        "stdDev": 0.3462,
+        "min": 44.7922,
+        "max": 45.6661,
+        "ci95": {
+          "low": 44.7325,
+          "high": 45.5922,
+          "halfWidth": 0.4299
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 50.3968,
+        "stdDev": 0.3873,
+        "min": 50.0872,
+        "max": 51.0669,
+        "ci95": {
+          "low": 49.9159,
+          "high": 50.8777,
+          "halfWidth": 0.4809
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 54.4168,
+        "stdDev": 0.2461,
+        "min": 54.1539,
+        "max": 54.7146,
+        "ci95": {
+          "low": 54.1112,
+          "high": 54.7224,
+          "halfWidth": 0.3056
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 49.1547,
+        "stdDev": 0.1977,
+        "min": 48.8378,
+        "max": 49.3611,
+        "ci95": {
+          "low": 48.9093,
+          "high": 49.4002,
+          "halfWidth": 0.2455
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 44.7922,
+          "illConditionedRavineEscapePct": 50.2971,
+          "homogeneousBiasCouplingAccuracyPct": 54.2903,
+          "compositeKfacScore": 48.8378
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 45.3399,
+          "illConditionedRavineEscapePct": 50.1914,
+          "homogeneousBiasCouplingAccuracyPct": 54.7146,
+          "compositeKfacScore": 49.2514
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 45.6661,
+          "illConditionedRavineEscapePct": 50.3414,
+          "homogeneousBiasCouplingAccuracyPct": 54.1539,
+          "compositeKfacScore": 49.2055
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 44.9409,
+          "illConditionedRavineEscapePct": 51.0669,
+          "homogeneousBiasCouplingAccuracyPct": 54.642,
+          "compositeKfacScore": 49.1179
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 45.0725,
+          "illConditionedRavineEscapePct": 50.0872,
+          "homogeneousBiasCouplingAccuracyPct": 54.2833,
+          "compositeKfacScore": 49.3611
+        }
+      ]
+    },
+    {
+      "profileId": "kfac-weight-only-without-homogeneous-bias-augment",
+      "label": "K-FAC Without Homogeneous [a; 1] Bias Augmentation",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 85.5812,
+        "stdDev": 0.1731,
+        "min": 85.3961,
+        "max": 85.833,
+        "ci95": {
+          "low": 85.3662,
+          "high": 85.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 87.4381,
+        "stdDev": 0.2324,
+        "min": 87.2523,
+        "max": 87.8402,
+        "ci95": {
+          "low": 87.1495,
+          "high": 87.7267,
+          "halfWidth": 0.2886
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 59.9334,
+        "stdDev": 0.1969,
+        "min": 59.7231,
+        "max": 60.1717,
+        "ci95": {
+          "low": 59.6889,
+          "high": 60.178,
+          "halfWidth": 0.2445
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 77.0427,
+        "stdDev": 0.113,
+        "min": 76.8616,
+        "max": 77.1606,
+        "ci95": {
+          "low": 76.9024,
+          "high": 77.183,
+          "halfWidth": 0.1403
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 85.3961,
+          "illConditionedRavineEscapePct": 87.3783,
+          "homogeneousBiasCouplingAccuracyPct": 59.8322,
+          "compositeKfacScore": 76.8616
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 85.67,
+          "illConditionedRavineEscapePct": 87.3148,
+          "homogeneousBiasCouplingAccuracyPct": 60.1717,
+          "compositeKfacScore": 77.098
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 85.833,
+          "illConditionedRavineEscapePct": 87.4048,
+          "homogeneousBiasCouplingAccuracyPct": 59.7231,
+          "compositeKfacScore": 77.0717
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 85.4705,
+          "illConditionedRavineEscapePct": 87.8402,
+          "homogeneousBiasCouplingAccuracyPct": 60.1136,
+          "compositeKfacScore": 77.0216
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 85.5362,
+          "illConditionedRavineEscapePct": 87.2523,
+          "homogeneousBiasCouplingAccuracyPct": 59.8266,
+          "compositeKfacScore": 77.1606
+        }
+      ]
+    },
+    {
+      "profileId": "tikhonov-damped-homogeneous-kfac-natural-gradient",
+      "label": "Tikhonov-Damped Homogeneous [a; 1] K-FAC Natural-Gradient Preconditioner",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "diagonal-empirical-fisher-rmsprop": {
+      "profileId": "diagonal-empirical-fisher-rmsprop",
+      "label": "Diagonal Empirical Fisher (RMSProp Approximation)",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 36.6353,
+        "stdDev": 0.2885,
+        "min": 36.3268,
+        "max": 37.055,
+        "ci95": {
+          "low": 36.2771,
+          "high": 36.9935,
+          "halfWidth": 0.3582
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 30.3968,
+        "stdDev": 0.3873,
+        "min": 30.0872,
+        "max": 31.0669,
+        "ci95": {
+          "low": 29.9159,
+          "high": 30.8777,
+          "halfWidth": 0.4809
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 41.9334,
+        "stdDev": 0.1969,
+        "min": 41.7231,
+        "max": 42.1717,
+        "ci95": {
+          "low": 41.6889,
+          "high": 42.178,
+          "halfWidth": 0.2445
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 35.5641,
+        "stdDev": 0.1694,
+        "min": 35.2924,
+        "max": 35.7409,
+        "ci95": {
+          "low": 35.3537,
+          "high": 35.7744,
+          "halfWidth": 0.2104
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 36.3268,
+          "illConditionedRavineEscapePct": 30.2971,
+          "homogeneousBiasCouplingAccuracyPct": 41.8322,
+          "compositeKfacScore": 35.2924
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 36.7833,
+          "illConditionedRavineEscapePct": 30.1914,
+          "homogeneousBiasCouplingAccuracyPct": 42.1717,
+          "compositeKfacScore": 35.6469
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 37.055,
+          "illConditionedRavineEscapePct": 30.3414,
+          "homogeneousBiasCouplingAccuracyPct": 41.7231,
+          "compositeKfacScore": 35.6076
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 36.4508,
+          "illConditionedRavineEscapePct": 31.0669,
+          "homogeneousBiasCouplingAccuracyPct": 42.1136,
+          "compositeKfacScore": 35.5325
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 36.5604,
+          "illConditionedRavineEscapePct": 30.0872,
+          "homogeneousBiasCouplingAccuracyPct": 41.8266,
+          "compositeKfacScore": 35.7409
+        }
+      ]
+    },
+    "undamped-kronecker-fisher-singular": {
+      "profileId": "undamped-kronecker-fisher-singular",
+      "label": "Undamped Kronecker Fisher (Ill-Conditioned Near Zero Eigenvalues)",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 45.1623,
+        "stdDev": 0.3462,
+        "min": 44.7922,
+        "max": 45.6661,
+        "ci95": {
+          "low": 44.7325,
+          "high": 45.5922,
+          "halfWidth": 0.4299
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 50.3968,
+        "stdDev": 0.3873,
+        "min": 50.0872,
+        "max": 51.0669,
+        "ci95": {
+          "low": 49.9159,
+          "high": 50.8777,
+          "halfWidth": 0.4809
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 54.4168,
+        "stdDev": 0.2461,
+        "min": 54.1539,
+        "max": 54.7146,
+        "ci95": {
+          "low": 54.1112,
+          "high": 54.7224,
+          "halfWidth": 0.3056
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 49.1547,
+        "stdDev": 0.1977,
+        "min": 48.8378,
+        "max": 49.3611,
+        "ci95": {
+          "low": 48.9093,
+          "high": 49.4002,
+          "halfWidth": 0.2455
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 44.7922,
+          "illConditionedRavineEscapePct": 50.2971,
+          "homogeneousBiasCouplingAccuracyPct": 54.2903,
+          "compositeKfacScore": 48.8378
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 45.3399,
+          "illConditionedRavineEscapePct": 50.1914,
+          "homogeneousBiasCouplingAccuracyPct": 54.7146,
+          "compositeKfacScore": 49.2514
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 45.6661,
+          "illConditionedRavineEscapePct": 50.3414,
+          "homogeneousBiasCouplingAccuracyPct": 54.1539,
+          "compositeKfacScore": 49.2055
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 44.9409,
+          "illConditionedRavineEscapePct": 51.0669,
+          "homogeneousBiasCouplingAccuracyPct": 54.642,
+          "compositeKfacScore": 49.1179
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 45.0725,
+          "illConditionedRavineEscapePct": 50.0872,
+          "homogeneousBiasCouplingAccuracyPct": 54.2833,
+          "compositeKfacScore": 49.3611
+        }
+      ]
+    },
+    "kfac-weight-only-without-homogeneous-bias-augment": {
+      "profileId": "kfac-weight-only-without-homogeneous-bias-augment",
+      "label": "K-FAC Without Homogeneous [a; 1] Bias Augmentation",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 85.5812,
+        "stdDev": 0.1731,
+        "min": 85.3961,
+        "max": 85.833,
+        "ci95": {
+          "low": 85.3662,
+          "high": 85.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 87.4381,
+        "stdDev": 0.2324,
+        "min": 87.2523,
+        "max": 87.8402,
+        "ci95": {
+          "low": 87.1495,
+          "high": 87.7267,
+          "halfWidth": 0.2886
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 59.9334,
+        "stdDev": 0.1969,
+        "min": 59.7231,
+        "max": 60.1717,
+        "ci95": {
+          "low": 59.6889,
+          "high": 60.178,
+          "halfWidth": 0.2445
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 77.0427,
+        "stdDev": 0.113,
+        "min": 76.8616,
+        "max": 77.1606,
+        "ci95": {
+          "low": 76.9024,
+          "high": 77.183,
+          "halfWidth": 0.1403
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 85.3961,
+          "illConditionedRavineEscapePct": 87.3783,
+          "homogeneousBiasCouplingAccuracyPct": 59.8322,
+          "compositeKfacScore": 76.8616
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 85.67,
+          "illConditionedRavineEscapePct": 87.3148,
+          "homogeneousBiasCouplingAccuracyPct": 60.1717,
+          "compositeKfacScore": 77.098
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 85.833,
+          "illConditionedRavineEscapePct": 87.4048,
+          "homogeneousBiasCouplingAccuracyPct": 59.7231,
+          "compositeKfacScore": 77.0717
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 85.4705,
+          "illConditionedRavineEscapePct": 87.8402,
+          "homogeneousBiasCouplingAccuracyPct": 60.1136,
+          "compositeKfacScore": 77.0216
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 85.5362,
+          "illConditionedRavineEscapePct": 87.2523,
+          "homogeneousBiasCouplingAccuracyPct": 59.8266,
+          "compositeKfacScore": 77.1606
+        }
+      ]
+    },
+    "tikhonov-damped-homogeneous-kfac-natural-gradient": {
+      "profileId": "tikhonov-damped-homogeneous-kfac-natural-gradient",
+      "label": "Tikhonov-Damped Homogeneous [a; 1] K-FAC Natural-Gradient Preconditioner",
+      "klTrustRegionInvariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "illConditionedRavineEscapePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "homogeneousBiasCouplingAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeKfacScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 29017,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 39023,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 49031,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        },
+        {
+          "seed": 59053,
+          "klTrustRegionInvariancePct": 100,
+          "illConditionedRavineEscapePct": 100,
+          "homogeneousBiasCouplingAccuracyPct": 100,
+          "compositeKfacScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "tikhonov-damped-homogeneous-kfac-natural-gradient",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "klTrustRegionInvariancePctMean": 100,
+    "illConditionedRavineEscapePctMean": 100,
+    "homogeneousBiasCouplingAccuracyPctMean": 100,
+    "gainVsBaseline": 64.4359
+  }
+}
