@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="340" viewBox="0 0 980 340">
+  <rect width="980" height="340" fill="#05090f"/>
+  <text x="24" y="32" fill="#67e8f9" font-family="Consolas,monospace" font-size="15" font-weight="bold">ALIVE Pass 15 — Executed Tor Hybrid Synergy Mesh Acceptance Matrix (T1..T10)</text>
+  <text x="24" y="54" fill="#e2e8f0" font-family="Consolas,monospace" font-size="12">Seeds: 19013, 29017, 39023, 49031, 59053 · Verified Rows: 10/10 · Phase III Hyper-Swarm Ready: true</text>
+  <text x="24" y="72" fill="#94a3b8" font-family="Consolas,monospace" font-size="11">Phase II Frozen SHA-256 Digest: 0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942</text>
+  
+    <text x="24" y="107" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T1-Owned-Tor-Daemon-Lifecy</text>
+    <rect x="214" y="92" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="214" y="94" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="402" y="107" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P11</text>
+    <text x="24" y="149" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T2-Ephemeral-FPD-Session-P</text>
+    <rect x="214" y="134" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="214" y="136" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="402" y="149" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P11</text>
+    <text x="24" y="191" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T3-IsolateSOCKSAuth-Per-FP</text>
+    <rect x="214" y="176" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="214" y="178" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="402" y="191" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P11</text>
+    <text x="24" y="233" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T4-Zero-Leak-DNS-WebRTC-Sh</text>
+    <rect x="214" y="218" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="214" y="220" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="402" y="233" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P11</text>
+    <text x="24" y="275" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T5-Fail-Closed-Daemon-Kill</text>
+    <rect x="214" y="260" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="214" y="262" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="402" y="275" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P11</text>
+    <text x="494" y="107" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T6-ControlPort-650-Stream-</text>
+    <rect x="684" y="92" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="684" y="94" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="872" y="107" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P12</text>
+    <text x="494" y="149" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T7-Three-Hop-Slash16-ASN-D</text>
+    <rect x="684" y="134" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="684" y="136" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="872" y="149" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P12</text>
+    <text x="494" y="191" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T8-Signal-NEWNYM-Clean-Rot</text>
+    <rect x="684" y="176" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="684" y="178" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="872" y="191" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P12</text>
+    <text x="494" y="233" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T9-RFC7686-Onion-v3-Ed2551</text>
+    <rect x="684" y="218" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="684" y="220" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="872" y="233" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P13</text>
+    <text x="494" y="275" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">T10-Letterbox-FPD-Unlinkab</text>
+    <rect x="684" y="260" width="180" height="22" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="684" y="262" width="180" height="18" rx="2" fill="#34d399"/>
+    <text x="872" y="275" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">5/5 P14</text>
+  <text x="24" y="322" fill="#64748b" font-family="Consolas,monospace" font-size="11">Audited Passes 11–15: Tor daemon lifecycle, FPD partitions, IsolateSOCKSAuth, 0 DNS/WebRTC leaks, fail-closed, 650 CIRC/STREAM, /16 &amp; ASN, NEWNYM, v3 .onion, letterbox</text>
+</svg>

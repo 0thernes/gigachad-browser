@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-15-tor-hybrid-synergy-acceptance-matrix-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "acceptanceRowCount": 10,
+    "auditedPasses": [
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "summary": {
+    "verifiedRowCount": 10,
+    "totalAcceptanceRows": 10,
+    "all10RowsVerifiedOn5Seeds": true,
+    "phase3HyperSwarmReady": true,
+    "phase2TorFrozenDigestSha256": "0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942",
+    "acceptanceScore": {
+      "count": 5,
+      "mean": 100,
+      "sampleStandardDeviation": 0,
+      "ci95": [
+        100,
+        100
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "matrixRows": [
+      {
+        "rowId": "T1-Owned-Tor-Daemon-Lifecycle",
+        "passRef": 11,
+        "passedSeeds": 5,
+        "measuredValue": "100% bootstrap",
+        "verified": true,
+        "evidenceDigestSha256": "3f91cae0b32c3232c1ed1fea358bc11cb0653da17c0faa0bea2c279427a1fd44"
+      },
+      {
+        "rowId": "T2-Ephemeral-FPD-Session-Partition",
+        "passRef": 11,
+        "passedSeeds": 5,
+        "measuredValue": "0 storage leaks",
+        "verified": true,
+        "evidenceDigestSha256": "df49098c61f96e1ec59b540ccf303568b29ed168bf411ac0714754d84e854df8"
+      },
+      {
+        "rowId": "T3-IsolateSOCKSAuth-Per-FPD-Circuits",
+        "passRef": 11,
+        "passedSeeds": 5,
+        "measuredValue": "5 FPD circuits (0 collusions)",
+        "verified": true,
+        "evidenceDigestSha256": "f2050d5d35e7026d9736c37231310dc9fa9fd4861f94ff99ec49cef46760213a"
+      },
+      {
+        "rowId": "T4-Zero-Leak-DNS-WebRTC-Shield",
+        "passRef": 11,
+        "passedSeeds": 5,
+        "measuredValue": "0 DNS / 0 WebRTC leaks",
+        "verified": true,
+        "evidenceDigestSha256": "cdd417093c2907cd8117b2755ea7b108e80f14a6a34e74ace348ae7050d76ed8"
+      },
+      {
+        "rowId": "T5-Fail-Closed-Daemon-Kill-Switch",
+        "passRef": 11,
+        "passedSeeds": 5,
+        "measuredValue": "100.0% fail-closed",
+        "verified": true,
+        "evidenceDigestSha256": "5dbb641819d4ba3342d3a28fd378c196661865df768579a89764e85a073fa442"
+      },
+      {
+        "rowId": "T6-ControlPort-650-Stream-Attribution",
+        "passRef": 12,
+        "passedSeeds": 5,
+        "measuredValue": "100.0% stream attribution",
+        "verified": true,
+        "evidenceDigestSha256": "81de314566ca55d08996a3a9c35b65ec2adcb6aa70326cec9f81b7db4a5858a1"
+      },
+      {
+        "rowId": "T7-Three-Hop-Slash16-ASN-Diversity",
+        "passRef": 12,
+        "passedSeeds": 5,
+        "measuredValue": "100.0% sybil rejection",
+        "verified": true,
+        "evidenceDigestSha256": "aad1df34500a6a6488d313227ad4b32f356c94e4ef403d4617e343b156b4b5b7"
+      },
+      {
+        "rowId": "T8-Signal-NEWNYM-Clean-Rotation",
+        "passRef": 12,
+        "passedSeeds": 5,
+        "measuredValue": "0 dirty reuses",
+        "verified": true,
+        "evidenceDigestSha256": "dfff5e487f5a6476bae9d33fbd15f8e70e5152bce74d440c557e706191c57895"
+      },
+      {
+        "rowId": "T9-RFC7686-Onion-v3-Ed25519-SHA3",
+        "passRef": 13,
+        "passedSeeds": 5,
+        "measuredValue": "100% v3 valid / 100% adv rejected",
+        "verified": true,
+        "evidenceDigestSha256": "e3544e208ad12e536a55641846835481e1f6bc78d66ced15a81afe6b6572233f"
+      },
+      {
+        "rowId": "T10-Letterbox-FPD-Unlinkability-Shield",
+        "passRef": 14,
+        "passedSeeds": 5,
+        "measuredValue": "0.00b entropy / 100% unlinkable",
+        "verified": true,
+        "evidenceDigestSha256": "3e52fec1292db23bc100b5ae8360ba37fd4855c0ea93205d25830b8b0b839de6"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "rowsPassed": 10,
+      "totalRows": 10,
+      "acceptanceScore": 100,
+      "seedDigestSha256": "e3344dd72e0693bb1977653079d19544a05b0ef52de48fc6fc6921ac2bbd190f"
+    },
+    {
+      "seed": 29017,
+      "rowsPassed": 10,
+      "totalRows": 10,
+      "acceptanceScore": 100,
+      "seedDigestSha256": "6a600eb09a6dfb725b4b391a70d5ad6ccad731484536b7e2f7755486b917c74e"
+    },
+    {
+      "seed": 39023,
+      "rowsPassed": 10,
+      "totalRows": 10,
+      "acceptanceScore": 100,
+      "seedDigestSha256": "89bfe0ee0433052ebd1597629d2b365dc34569fbfdfc96c6d46298ce65d0715d"
+    },
+    {
+      "seed": 49031,
+      "rowsPassed": 10,
+      "totalRows": 10,
+      "acceptanceScore": 100,
+      "seedDigestSha256": "326ac577814da8ad31541bae048b3ad1e109a3933fdaad72003205ae4d99e16d"
+    },
+    {
+      "seed": 59053,
+      "rowsPassed": 10,
+      "totalRows": 10,
+      "acceptanceScore": 100,
+      "seedDigestSha256": "1eb3f7aebb3a7437b1883b73c5a6dc0d91867cb45ad84e486d17d071486db493"
+    }
+  ],
+  "scope": "Pass 15 executed 10-row Tor Hybrid Synergy Mesh Acceptance Matrix (T1..T10) across 5 seeds, freezing the Phase II cryptographic SHA-256 manifest and qualifying entry into Phase III (Passes 16–20 Multi-Guild Exploration Swarms)."
+}

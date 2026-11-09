@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Executed Tor Hybrid Synergy Mesh acceptance matrix pass 15
+
+- Added the 5-seed executed 10-row Tor Hybrid Synergy Mesh acceptance matrix ([`systems/alive-tor-acceptance-matrix.js`](systems/alive-tor-acceptance-matrix.js), [`scripts/alive-tor-acceptance-matrix.cjs`](scripts/alive-tor-acceptance-matrix.cjs)) auditing [`systems/alive-tor-service.cjs`](systems/alive-tor-service.cjs) (`T1`) and Passes 11–14 (`T2`–`T10`).
+- Verified `10/10` acceptance rows (`T1-Owned-Tor-Daemon-Lifecycle` through `T10-Letterbox-FPD-Unlinkability-Shield`) across `5/5` seeds (`100.0` acceptance score), freezing the Phase II cryptographic `SHA-256` manifest (`0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942`) and qualifying entry into Phase III (`Passes 16–20`: Multi-Guild Exploration Swarms).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 21 (`#alive-fabric-tor-acceptance`, `Run Tor matrix` button, and `runTorAcceptance()`).
+- Added [Pass 15 report](docs/ALIVE_PASS_15_REPORT.md), [JSON report](docs/reports/alive-tor-acceptance-matrix-2026-11-09.json), [SVG chart](docs/reports/alive-tor-acceptance-matrix-2026-11-09.svg) and unit tests (`tests/alive-tor-acceptance-matrix.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Tor anti-fingerprinting & anonymity hardening matrix pass 14
 
 - Added the 5-seed Tor Browser-grade anti-fingerprinting and cross-origin unlinkability shield ([`systems/alive-tor-fingerprint-shield.js`](systems/alive-tor-fingerprint-shield.js), [`scripts/alive-tor-fingerprint-shield.cjs`](scripts/alive-tor-fingerprint-shield.cjs)) comparing `unprotected-native-chromium`, `ua-header-spoof-only`, `static-global-noise-injection`, and `full-tor-letterbox-fpd-shield` across 24 probes per seed (`6` hardware machines $\times$ `4` First-Party Domains).

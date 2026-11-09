@@ -313,6 +313,7 @@
   let latestTorCircuits = null, torCircuitsBusy = false;
   let latestOnionV3 = null, onionV3Busy = false;
   let latestTorShield = null, torShieldBusy = false;
+  let latestTorAcceptance = null, torAcceptanceBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -478,6 +479,19 @@
       return latestTorShield;
     } finally {
       torShieldBusy = false;
+    }
+  }
+  async function runTorAcceptance() {
+    const runner = root.AliveTorAcceptanceMatrix;
+    if (torAcceptanceBusy || typeof runner?.run !== 'function') return latestTorAcceptance;
+    torAcceptanceBusy = true;
+    try {
+      latestTorAcceptance = await runner.run();
+      root.__aliveLatestTorAcceptance = latestTorAcceptance;
+      draw();
+      return latestTorAcceptance;
+    } finally {
+      torAcceptanceBusy = false;
     }
   }
 
@@ -1161,6 +1175,41 @@
     ctx.fillText('24 probes/seed (6 hardware machines × 4 First-Party Domains) · 1000×800@1x letterboxing · 100ms timer · FPD-keyed Canvas', 8, height - 6);
   }
 
+  // ---------- 21. Pass 15 Tor Hybrid Synergy Mesh acceptance matrix ---------
+  function drawTorAcceptance(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestTorAcceptance || root.__aliveLatestTorAcceptance;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.matrixRows) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(torAcceptanceBusy ? 'Running 5-seed 10-row Tor Hybrid Synergy Mesh acceptance matrix…' : 'Click "Run Tor matrix" above to execute all 10 named Tor Hybrid Synergy Mesh acceptance tests (T1..T10) across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const shaShort = String(s.phase2TorFrozenDigestSha256 || '').slice(0, 16);
+    ctx.fillText(`5 seeds · Tor Matrix ${s.verifiedRowCount}/${s.totalAcceptanceRows} verified · Phase III Hyper-Swarm Ready: ${s.phase3HyperSwarmReady} · SHA-256=${shaShort}…`, 8, 12);
+
+    const rows = s.matrixRows || [];
+    const colW = Math.floor((width - 24) / 2);
+    rows.forEach((r, idx) => {
+      const col = idx < 5 ? 0 : 1;
+      const row = idx % 5;
+      const x = 8 + col * (colW + 8);
+      const y = 26 + row * 29;
+      const barW = Math.max(50, colW - 225);
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'left';
+      ctx.fillText(r.rowId.slice(0, 22), x, y + 8);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(x + 142, y, barW, 14);
+      ctx.fillStyle = r.verified ? '#34d399' : '#f43f5e';
+      ctx.fillRect(x + 142, y + 2, barW * (r.passedSeeds / 5), 10);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(`${r.passedSeeds}/5 P${r.passRef} PASS`, x + 147 + barW, y + 8);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('Phase II Tor Hybrid Synergy Mesh frozen (T1..T10: daemon, FPD, IsolateSOCKSAuth, DNS/WebRTC, fail-closed, 650, /16, NEWNYM, v3 .onion, letterbox)', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1222,13 +1271,16 @@
     const torShieldBtn = doc.createElement('button'); torShieldBtn.type = 'button'; torShieldBtn.textContent = 'Run Tor shield';
     torShieldBtn.title = 'Run 5-seed Tor anti-fingerprinting, letterboxing and cross-FPD unlinkability evaluation';
     torShieldBtn.addEventListener('click', () => { runTorShield(); });
+    const torMatrixBtn = doc.createElement('button'); torMatrixBtn.type = 'button'; torMatrixBtn.textContent = 'Run Tor matrix';
+    torMatrixBtn.title = 'Run 5-seed 10-row Tor Hybrid Synergy Mesh acceptance matrix (T1..T10)';
+    torMatrixBtn.addEventListener('click', () => { runTorAcceptance(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1239,7 +1291,7 @@
       faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190), sustainedPerfCanvas = canvas('alive-fabric-sustained-perf', 190),
       releaseAuditCanvas = canvas('alive-fabric-release-audit', 190), torMeshCanvas = canvas('alive-fabric-tor-mesh', 190),
       torCircuitsCanvas = canvas('alive-fabric-tor-circuits', 190), onionV3Canvas = canvas('alive-fabric-onion-v3', 190),
-      torShieldCanvas = canvas('alive-fabric-tor-shield', 190);
+      torShieldCanvas = canvas('alive-fabric-tor-shield', 190), torAcceptanceCanvas = canvas('alive-fabric-tor-acceptance', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1262,7 +1314,8 @@
       section('17 · Tor Hybrid Synergy Mesh — IsolateSOCKSAuth, FPD partitions & zero-leak policy (5 seeds)', torMeshCanvas),
       section('18 · Tor ControlPort — stream attribution, NEWNYM rotation & 3-hop path diversity (5 seeds)', torCircuitsCanvas),
       section('19 · RFC 7686 & Tor v3 .onion cryptographic verifier — Ed25519 + SHA3-256 + HSDir sig (5 seeds)', onionV3Canvas),
-      section('20 · Anti-fingerprinting & anonymity shield — letterboxing, 100ms timers & FPD canvas (5 seeds)', torShieldCanvas));
+      section('20 · Anti-fingerprinting & anonymity shield — letterboxing, 100ms timers & FPD canvas (5 seeds)', torShieldCanvas),
+      section('21 · Tor Hybrid Synergy Mesh acceptance matrix (T1..T10) & Phase II SHA-256 freeze', torAcceptanceCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1281,7 +1334,8 @@
       () => drawTorHybridMesh(torMeshCanvas),
       () => drawTorCircuits(torCircuitsCanvas),
       () => drawOnionV3Verifier(onionV3Canvas),
-      () => drawTorShield(torShieldCanvas));
+      () => drawTorShield(torShieldCanvas),
+      () => drawTorAcceptance(torAcceptanceCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1324,6 +1378,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

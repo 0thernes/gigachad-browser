@@ -32,7 +32,7 @@ benefit remains to be measured in the next pass.
 | 12 | Tor ControlPort Protocol, Stream-to-Circuit Observability, `NEWNYM` Identity Rotation & Guard/Middle/Exit Path Verification | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_12_REPORT.md), [Tor circuits JSON](reports/alive-tor-circuit-controller-2026-11-09.json), [Tor circuits SVG](reports/alive-tor-circuit-controller-2026-11-09.svg) |
 | 13 | RFC 7686 / Tor Rendezvous Spec v3 `.onion` Address Cryptographic Verification (56-char Base32 Ed25519 Pubkey, `.onion checksum` SHA3-256 validation, Descriptor Auth & Reachability State Machine) | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_13_REPORT.md), [Onion v3 JSON](reports/alive-onion-v3-verifier-2026-11-09.json), [Onion v3 SVG](reports/alive-onion-v3-verifier-2026-11-09.svg) |
 | 14 | Anti-Fingerprinting & Anonymity Hardening Matrix (Letterboxing Viewport Quantization, Canvas/WebGL/AudioContext Entropy Bounding, Header/Timer/Font Uniformity & Cross-Origin Unlinkability) | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_14_REPORT.md), [Tor shield JSON](reports/alive-tor-fingerprint-shield-2026-11-09.json), [Tor shield SVG](reports/alive-tor-fingerprint-shield-2026-11-09.svg) |
-| 15 | Executed Tor Hybrid Synergy Mesh Acceptance Matrix (Fail-Closed Proxy Kill-Switch, Circuit Recovery Under Relay Failure, Partition Isolation Proof & End-to-End Routing Audit) | Proposed |
+| 15 | Executed Tor Hybrid Synergy Mesh Acceptance Matrix (Fail-Closed Proxy Kill-Switch, Circuit Recovery Under Relay Failure, Partition Isolation Proof & End-to-End Routing Audit) | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_15_REPORT.md), [Tor matrix JSON](reports/alive-tor-acceptance-matrix-2026-11-09.json), [Tor matrix SVG](reports/alive-tor-acceptance-matrix-2026-11-09.svg) |
 
 The user requests a Chromium/Electron/Tor Browser hybrid as the next phase.
 Existing managed Tor transport is not a completed Tor Browser integration.
@@ -43,7 +43,15 @@ of fully operational must be a named, executed acceptance matrix rather than a
 blanket percentage. No Tor Browser replacement or embedded integration is shipped
 by pass 1.
 
-## Following phase: larger exploration swarms
+## Following phase: larger exploration swarms (Passes 16–20)
+
+| Pass | Intended focus | Status |
+| --- | --- | --- |
+| 16 | Multi-Entity Exploration Swarm Coordinator (`Raven-Cognition`, `Locust-Forager`, `Fish-School-Consensus` Guilds, Explicit Entity Identity & Independent vs Shared Model Ownership) | Proposed |
+| 17 | Public-Web & Onion Swarm Resource Governor (Per-Domain Concurrency Semaphores, Token-Bucket Request Budgets, Global Pause/Kill-Switch & Bounded Population Growth) | Proposed |
+| 18 | Learned Inter-Entity Cooperation, Stigmergic Pheromone Knowledge Graph, Distributed Frontier Deduplication & Byzantine-Fault-Tolerant Source Consensus | Proposed |
+| 19 | 5-Seed Multi-Guild Swarm Exploration Benchmark Across Clearnet + `.onion` Topologies (Comparing Solitary, Uncoordinated Flock, Centralized Queue & Stigmergic Hybrid Synergy Swarm) | Proposed |
+| 20 | 20-Pass Grand Synthesis & Cryptographic Evidence Package Qualification (Cross-Auditing All 20 Passes, All 36 Capabilities, 14 Brains × 7 Precision, Tor Hybrid Synergy Mesh & Multi-Guild Exploration Swarms) | Proposed |
 
 Expand from the current shared controller and bounded colony into larger groups
 with explicit entity identity, independent or shared model ownership, research

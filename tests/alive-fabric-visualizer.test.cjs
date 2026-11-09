@@ -601,13 +601,37 @@ test('runTorShield renders 5-seed Tor anti-fingerprinting and cross-origin unlin
   window.aliveFabricVisualizer.destroy();
 });
 
-
-
-
-
-
-
-
-
+test('runTorAcceptance renders 10-row Tor Hybrid Synergy Mesh acceptance matrix (T1..T10) in section 21', async () => {
+  const { window, dom } = load();
+  window.AliveTorAcceptanceMatrix = {
+    run: async () => ({
+      summary: {
+        verifiedRowCount: 10,
+        totalAcceptanceRows: 10,
+        all10RowsVerifiedOn5Seeds: true,
+        phase3HyperSwarmReady: true,
+        phase2TorFrozenDigestSha256: 'a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90',
+        matrixRows: [
+          { rowId: 'T1-Owned-Tor-Daemon-Lifecycle', passRef: 11, passedSeeds: 5, verified: true },
+          { rowId: 'T2-Ephemeral-FPD-Session-Partition', passRef: 11, passedSeeds: 5, verified: true },
+          { rowId: 'T3-IsolateSOCKSAuth-Per-FPD-Circuits', passRef: 11, passedSeeds: 5, verified: true },
+          { rowId: 'T4-Zero-Leak-DNS-WebRTC-Shield', passRef: 11, passedSeeds: 5, verified: true },
+          { rowId: 'T5-Fail-Closed-Daemon-Kill-Switch', passRef: 11, passedSeeds: 5, verified: true },
+          { rowId: 'T6-ControlPort-650-Stream-Attribution', passRef: 12, passedSeeds: 5, verified: true },
+          { rowId: 'T7-Three-Hop-Slash16-ASN-Diversity', passRef: 12, passedSeeds: 5, verified: true },
+          { rowId: 'T8-Signal-NEWNYM-Clean-Rotation', passRef: 12, passedSeeds: 5, verified: true },
+          { rowId: 'T9-RFC7686-Onion-v3-Ed25519-SHA3', passRef: 13, passedSeeds: 5, verified: true },
+          { rowId: 'T10-Letterbox-FPD-Unlinkability-Shield', passRef: 14, passedSeeds: 5, verified: true }
+        ]
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runTorAcceptance();
+  assert.equal(report.summary.verifiedRowCount, 10);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Tor Matrix 10/10 verified · Phase III Hyper-Swarm Ready: true')), 'Tor acceptance matrix summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('T1-Owned-Tor-Daemon-Li')), 'Tor acceptance matrix rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
 
 
