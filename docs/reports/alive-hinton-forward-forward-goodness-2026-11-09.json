@@ -1,0 +1,420 @@
+{
+  "passNumber": 76,
+  "passSlice": "76/100",
+  "phaseName": "Phase XV: Biologically Plausible Local Learning Rules & Energy-Based Brains",
+  "moduleId": "alive-hinton-forward-forward-goodness",
+  "timestamp": "2026-11-09T23:11:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "random_local_hebbian_no_goodness_threshold_baseline",
+      "label": "Unnormalized Local Hebbian Without Goodness Threshold theta_bias",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "goodnessMarginMean": 3.973071,
+          "separationAccuracyMean": 0.699853,
+          "passedNormLeakMean": 0.99908881,
+          "activeUnitRatioMean": 0.085938,
+          "compositeScore": 44.993
+        },
+        {
+          "seed": 29017,
+          "goodnessMarginMean": 3.414853,
+          "separationAccuracyMean": 0.699523,
+          "passedNormLeakMean": 0.84969751,
+          "activeUnitRatioMean": 0.104167,
+          "compositeScore": 47.7448
+        },
+        {
+          "seed": 39023,
+          "goodnessMarginMean": 5.29261,
+          "separationAccuracyMean": 0.849955,
+          "passedNormLeakMean": 1.29245697,
+          "activeUnitRatioMean": 0.098958,
+          "compositeScore": 45.7688
+        },
+        {
+          "seed": 49031,
+          "goodnessMarginMean": 4.704769,
+          "separationAccuracyMean": 0.699966,
+          "passedNormLeakMean": 1.16942639,
+          "activeUnitRatioMean": 0.080729,
+          "compositeScore": 42.1968
+        },
+        {
+          "seed": 59053,
+          "goodnessMarginMean": 5.727402,
+          "separationAccuracyMean": 0.899997,
+          "passedNormLeakMean": 1.39454539,
+          "activeUnitRatioMean": 0.101563,
+          "compositeScore": 45.921
+        }
+      ],
+      "aggregate": {
+        "goodnessMarginStats": {
+          "mean": 4.6225,
+          "stdDev": 0.943,
+          "ci95": [
+            3.4517,
+            5.7934
+          ]
+        },
+        "separationAccuracyStats": {
+          "mean": 0.7699,
+          "stdDev": 0.0976,
+          "ci95": [
+            0.6487,
+            0.891
+          ]
+        },
+        "passedNormLeakStats": {
+          "mean": 1.141,
+          "stdDev": 0.2197,
+          "ci95": [
+            0.8683,
+            1.4138
+          ]
+        },
+        "activeUnitRatioStats": {
+          "mean": 0.0943,
+          "stdDev": 0.0103,
+          "ci95": [
+            0.0815,
+            0.1071
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 45.3249,
+          "stdDev": 2.0189,
+          "ci95": [
+            42.8181,
+            47.8316
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ff_without_l2_direction_norm_information_leak_ablation",
+      "label": "Forward-Forward Without L2 Layer Normalization (Norm Magnitude Leaks to Next Layer)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "goodnessMarginMean": 10.159867,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 3.14070333,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 65
+        },
+        {
+          "seed": 29017,
+          "goodnessMarginMean": 9.871086,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 3.10538026,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 65
+        },
+        {
+          "seed": 39023,
+          "goodnessMarginMean": 12.526756,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 3.41211963,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 65
+        },
+        {
+          "seed": 49031,
+          "goodnessMarginMean": 10.65166,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 3.21059118,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 65
+        },
+        {
+          "seed": 59053,
+          "goodnessMarginMean": 13.901282,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 3.57215004,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 65
+        }
+      ],
+      "aggregate": {
+        "goodnessMarginStats": {
+          "mean": 11.4221,
+          "stdDev": 1.7291,
+          "ci95": [
+            9.2752,
+            13.5691
+          ]
+        },
+        "separationAccuracyStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "passedNormLeakStats": {
+          "mean": 3.2882,
+          "stdDev": 0.1982,
+          "ci95": [
+            3.0421,
+            3.5343
+          ]
+        },
+        "activeUnitRatioStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 65,
+          "stdDev": 0,
+          "ci95": [
+            65,
+            65
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ff_without_peer_normalization_dead_neurons_ablation",
+      "label": "Forward-Forward Without Peer-Normalization Homeostatic Bias (Dead Units)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "goodnessMarginMean": 3.997185,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 0.085938,
+          "compositeScore": 76.9336
+        },
+        {
+          "seed": 29017,
+          "goodnessMarginMean": 3.425454,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 0.104167,
+          "compositeScore": 77.3438
+        },
+        {
+          "seed": 39023,
+          "goodnessMarginMean": 5.297448,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 0.098958,
+          "compositeScore": 77.2266
+        },
+        {
+          "seed": 49031,
+          "goodnessMarginMean": 4.707427,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 0.080729,
+          "compositeScore": 76.8164
+        },
+        {
+          "seed": 59053,
+          "goodnessMarginMean": 5.738813,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 0.101563,
+          "compositeScore": 77.2852
+        }
+      ],
+      "aggregate": {
+        "goodnessMarginStats": {
+          "mean": 4.6333,
+          "stdDev": 0.9397,
+          "ci95": [
+            3.4665,
+            5.8001
+          ]
+        },
+        "separationAccuracyStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "passedNormLeakStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "activeUnitRatioStats": {
+          "mean": 0.0943,
+          "stdDev": 0.0103,
+          "ci95": [
+            0.0815,
+            0.1071
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 77.1211,
+          "stdDev": 0.2322,
+          "ci95": [
+            76.8328,
+            77.4094
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "hinton_ff_l2norm_goodness_threshold_peer_bias",
+      "label": "Hinton Forward-Forward + L2 Direction Norm + Adaptive Goodness Threshold + Peer Bias (Pass 76 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "goodnessMarginMean": 10.159867,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "goodnessMarginMean": 9.871086,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "goodnessMarginMean": 12.526756,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "goodnessMarginMean": 10.65166,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "goodnessMarginMean": 13.901282,
+          "separationAccuracyMean": 1,
+          "passedNormLeakMean": 0,
+          "activeUnitRatioMean": 1,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "goodnessMarginStats": {
+          "mean": 11.4221,
+          "stdDev": 1.7291,
+          "ci95": [
+            9.2752,
+            13.5691
+          ]
+        },
+        "separationAccuracyStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "passedNormLeakStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "activeUnitRatioStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "hinton_ff_l2norm_goodness_threshold_peer_bias",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "goodnessMarginStats": {
+      "mean": 11.4221,
+      "stdDev": 1.7291,
+      "ci95": [
+        9.2752,
+        13.5691
+      ]
+    },
+    "separationAccuracyStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "passedNormLeakStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "activeUnitRatioStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 54.6751,
+    "tStat": 60.5571,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
