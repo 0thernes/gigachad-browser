@@ -1,0 +1,420 @@
+{
+  "passNumber": 73,
+  "passSlice": "73/100",
+  "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+  "moduleId": "alive-pantheon-cortical-striatal-chaos-weights",
+  "timestamp": "2026-11-09T23:04:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "unmodulated_supercritical_brains_9to14_baseline",
+      "label": "Unmodulated Synapses + Supercritical Reservoir (rho=1.35) + Unbounded Viscera Brains 9-14",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "striatalCreditAlignmentMean": 0.628691,
+          "purkinjeMotorErrorMean": 0.066512,
+          "spectralRadiusMean": 1.35,
+          "allostaticDeviationMean": 0.088825,
+          "compositeScore": 63.6247
+        },
+        {
+          "seed": 29017,
+          "striatalCreditAlignmentMean": 0.645828,
+          "purkinjeMotorErrorMean": 0.069979,
+          "spectralRadiusMean": 1.35,
+          "allostaticDeviationMean": 0.090829,
+          "compositeScore": 63.5514
+        },
+        {
+          "seed": 39023,
+          "striatalCreditAlignmentMean": 0.624698,
+          "purkinjeMotorErrorMean": 0.06884,
+          "spectralRadiusMean": 1.35,
+          "allostaticDeviationMean": 0.088628,
+          "compositeScore": 63.2724
+        },
+        {
+          "seed": 49031,
+          "striatalCreditAlignmentMean": 0.627026,
+          "purkinjeMotorErrorMean": 0.070513,
+          "spectralRadiusMean": 1.35,
+          "allostaticDeviationMean": 0.089292,
+          "compositeScore": 63.0951
+        },
+        {
+          "seed": 59053,
+          "striatalCreditAlignmentMean": 0.622558,
+          "purkinjeMotorErrorMean": 0.068467,
+          "spectralRadiusMean": 1.35,
+          "allostaticDeviationMean": 0.088203,
+          "compositeScore": 63.2908
+        }
+      ],
+      "aggregate": {
+        "striatalCreditAlignmentStats": {
+          "mean": 0.6298,
+          "stdDev": 0.0093,
+          "ci95": [
+            0.6182,
+            0.6413
+          ]
+        },
+        "purkinjeMotorErrorStats": {
+          "mean": 0.0689,
+          "stdDev": 0.0016,
+          "ci95": [
+            0.0669,
+            0.0708
+          ]
+        },
+        "spectralRadiusStats": {
+          "mean": 1.35,
+          "stdDev": 0,
+          "ci95": [
+            1.35,
+            1.35
+          ]
+        },
+        "allostaticDeviationStats": {
+          "mean": 0.0892,
+          "stdDev": 0.001,
+          "ci95": [
+            0.0879,
+            0.0904
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 63.3669,
+          "stdDev": 0.2174,
+          "ci95": [
+            63.0969,
+            63.6369
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "two_factor_hebbian_no_dopamine_rpe_ablation",
+      "label": "Two-Factor Hebbian Striatum (No Dopamine RPE Modulation delta_RPE)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "striatalCreditAlignmentMean": 0.628691,
+          "purkinjeMotorErrorMean": 0.004763,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003677,
+          "compositeScore": 87.9177
+        },
+        {
+          "seed": 29017,
+          "striatalCreditAlignmentMean": 0.645828,
+          "purkinjeMotorErrorMean": 0.005023,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003755,
+          "compositeScore": 88.4061
+        },
+        {
+          "seed": 39023,
+          "striatalCreditAlignmentMean": 0.624698,
+          "purkinjeMotorErrorMean": 0.004938,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003669,
+          "compositeScore": 87.8039
+        },
+        {
+          "seed": 49031,
+          "striatalCreditAlignmentMean": 0.627026,
+          "purkinjeMotorErrorMean": 0.005063,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003695,
+          "compositeScore": 87.8702
+        },
+        {
+          "seed": 59053,
+          "striatalCreditAlignmentMean": 0.622558,
+          "purkinjeMotorErrorMean": 0.00491,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003652,
+          "compositeScore": 87.7429
+        }
+      ],
+      "aggregate": {
+        "striatalCreditAlignmentStats": {
+          "mean": 0.6298,
+          "stdDev": 0.0093,
+          "ci95": [
+            0.6182,
+            0.6413
+          ]
+        },
+        "purkinjeMotorErrorStats": {
+          "mean": 0.0049,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0048,
+            0.0051
+          ]
+        },
+        "spectralRadiusStats": {
+          "mean": 0.985,
+          "stdDev": 0,
+          "ci95": [
+            0.985,
+            0.985
+          ]
+        },
+        "allostaticDeviationStats": {
+          "mean": 0.0037,
+          "stdDev": 0,
+          "ci95": [
+            0.0036,
+            0.0037
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 87.9482,
+          "stdDev": 0.2644,
+          "ci95": [
+            87.6198,
+            88.2765
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "subcritical_damped_reservoir_rho055_ablation",
+      "label": "Over-Damped Reservoir (rho=0.55 Subcritical Memory Decay)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.00493,
+          "spectralRadiusMean": 0.55,
+          "allostaticDeviationMean": 0.003538,
+          "compositeScore": 87.6025
+        },
+        {
+          "seed": 29017,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.005187,
+          "spectralRadiusMean": 0.55,
+          "allostaticDeviationMean": 0.00374,
+          "compositeScore": 87.6025
+        },
+        {
+          "seed": 39023,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.004871,
+          "spectralRadiusMean": 0.55,
+          "allostaticDeviationMean": 0.003674,
+          "compositeScore": 87.6025
+        },
+        {
+          "seed": 49031,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.004905,
+          "spectralRadiusMean": 0.55,
+          "allostaticDeviationMean": 0.003772,
+          "compositeScore": 87.6025
+        },
+        {
+          "seed": 59053,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.004838,
+          "spectralRadiusMean": 0.55,
+          "allostaticDeviationMean": 0.003652,
+          "compositeScore": 87.6025
+        }
+      ],
+      "aggregate": {
+        "striatalCreditAlignmentStats": {
+          "mean": 0.9594,
+          "stdDev": 0,
+          "ci95": [
+            0.9594,
+            0.9594
+          ]
+        },
+        "purkinjeMotorErrorStats": {
+          "mean": 0.0049,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0048,
+            0.0051
+          ]
+        },
+        "spectralRadiusStats": {
+          "mean": 0.55,
+          "stdDev": 0,
+          "ci95": [
+            0.55,
+            0.55
+          ]
+        },
+        "allostaticDeviationStats": {
+          "mean": 0.0037,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0036,
+            0.0038
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 87.6025,
+          "stdDev": 0,
+          "ci95": [
+            87.6025,
+            87.6025
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "cortical_d1d2_stdp_purkinje_chaos0985_allostatic_brains_9to14",
+      "label": "Cortical L2/3-L5 + Striatal D1/D2 Dopamine STDP + Purkinje LTD + Chaos rho=0.985 + Allostatic (Pass 73 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.00493,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003538,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.005187,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.00374,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.004871,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003674,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.004905,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003772,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "striatalCreditAlignmentMean": 0.959419,
+          "purkinjeMotorErrorMean": 0.004838,
+          "spectralRadiusMean": 0.985,
+          "allostaticDeviationMean": 0.003652,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "striatalCreditAlignmentStats": {
+          "mean": 0.9594,
+          "stdDev": 0,
+          "ci95": [
+            0.9594,
+            0.9594
+          ]
+        },
+        "purkinjeMotorErrorStats": {
+          "mean": 0.0049,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0048,
+            0.0051
+          ]
+        },
+        "spectralRadiusStats": {
+          "mean": 0.985,
+          "stdDev": 0,
+          "ci95": [
+            0.985,
+            0.985
+          ]
+        },
+        "allostaticDeviationStats": {
+          "mean": 0.0037,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0036,
+            0.0038
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "cortical_d1d2_stdp_purkinje_chaos0985_allostatic_brains_9to14",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "striatalCreditAlignmentStats": {
+      "mean": 0.9594,
+      "stdDev": 0,
+      "ci95": [
+        0.9594,
+        0.9594
+      ]
+    },
+    "purkinjeMotorErrorStats": {
+      "mean": 0.0049,
+      "stdDev": 0.0001,
+      "ci95": [
+        0.0048,
+        0.0051
+      ]
+    },
+    "spectralRadiusStats": {
+      "mean": 0.985,
+      "stdDev": 0,
+      "ci95": [
+        0.985,
+        0.985
+      ]
+    },
+    "allostaticDeviationStats": {
+      "mean": 0.0037,
+      "stdDev": 0.0001,
+      "ci95": [
+        0.0036,
+        0.0038
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 36.6331,
+    "tStat": 376.7434,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
