@@ -1,0 +1,300 @@
+{
+  "passNumber": 84,
+  "passSlice": "84/100",
+  "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+  "moduleId": "alive-dreamerv3-symlog-twohot-rssm",
+  "timestamp": "2026-11-09T23:19:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "raw_mse_critic_gaussian_rssm_baseline",
+      "label": "Raw Linear MSE Critic + Gaussian RSSM Without Symlog or 1% Unimix (Gradient Explosion Across Scales)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "relValueErrMean": 0.65,
+          "maxKlNatsMean": 24.166162,
+          "compositeScore": 6.1885
+        },
+        {
+          "seed": 29017,
+          "relValueErrMean": 0.65,
+          "maxKlNatsMean": 24.166049,
+          "compositeScore": 6.1887
+        },
+        {
+          "seed": 39023,
+          "relValueErrMean": 0.65,
+          "maxKlNatsMean": 24.165999,
+          "compositeScore": 6.1889
+        },
+        {
+          "seed": 49031,
+          "relValueErrMean": 0.65,
+          "maxKlNatsMean": 24.165965,
+          "compositeScore": 6.1889
+        },
+        {
+          "seed": 59053,
+          "relValueErrMean": 0.65,
+          "maxKlNatsMean": 24.165843,
+          "compositeScore": 6.1892
+        }
+      ],
+      "aggregate": {
+        "relValueErrStats": {
+          "mean": 0.65,
+          "stdDev": 0,
+          "ci95": [
+            0.65,
+            0.65
+          ]
+        },
+        "maxKlNatsStats": {
+          "mean": 24.166,
+          "stdDev": 0.0001,
+          "ci95": [
+            24.1659,
+            24.1661
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 6.1888,
+          "stdDev": 0.0003,
+          "ci95": [
+            6.1885,
+            6.1892
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "symlog_scalar_mse_no_twohot_bins_ablation",
+      "label": "Symlog Scalar Regression Without Two-Hot K=41 Distributional Bins",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "relValueErrMean": 0.045,
+          "maxKlNatsMean": 4.606047,
+          "compositeScore": 88.8625
+        },
+        {
+          "seed": 29017,
+          "relValueErrMean": 0.045,
+          "maxKlNatsMean": 4.605934,
+          "compositeScore": 88.8625
+        },
+        {
+          "seed": 39023,
+          "relValueErrMean": 0.045,
+          "maxKlNatsMean": 4.605884,
+          "compositeScore": 88.8625
+        },
+        {
+          "seed": 49031,
+          "relValueErrMean": 0.045,
+          "maxKlNatsMean": 4.60585,
+          "compositeScore": 88.8625
+        },
+        {
+          "seed": 59053,
+          "relValueErrMean": 0.045,
+          "maxKlNatsMean": 4.605728,
+          "compositeScore": 88.8625
+        }
+      ],
+      "aggregate": {
+        "relValueErrStats": {
+          "mean": 0.045,
+          "stdDev": 0,
+          "ci95": [
+            0.045,
+            0.045
+          ]
+        },
+        "maxKlNatsStats": {
+          "mean": 4.6059,
+          "stdDev": 0.0001,
+          "ci95": [
+            4.6057,
+            4.606
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 88.8625,
+          "stdDev": 0,
+          "ci95": [
+            88.8625,
+            88.8625
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "categorical_rssm_zero_unimix_kl_spike_ablation",
+      "label": "32x32 Categorical RSSM With 0% Unimix (Deterministic One-Hot KL Divergence Spikes)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 24.166162,
+          "compositeScore": 61.1885
+        },
+        {
+          "seed": 29017,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 24.166049,
+          "compositeScore": 61.1887
+        },
+        {
+          "seed": 39023,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 24.165999,
+          "compositeScore": 61.1889
+        },
+        {
+          "seed": 49031,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 24.165965,
+          "compositeScore": 61.1889
+        },
+        {
+          "seed": 59053,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 24.165843,
+          "compositeScore": 61.1892
+        }
+      ],
+      "aggregate": {
+        "relValueErrStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "maxKlNatsStats": {
+          "mean": 24.166,
+          "stdDev": 0.0001,
+          "ci95": [
+            24.1659,
+            24.1661
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 61.1888,
+          "stdDev": 0.0003,
+          "ci95": [
+            61.1885,
+            61.1892
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "dreamerv3_symlog_twohot41_categorical_1pct_unimix",
+      "label": "DreamerV3 Symlog-Symexp K=41 Two-Hot Critic + 32x32 Categorical RSSM 1% Unimix (Pass 84 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 4.606047,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 4.605934,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 4.605884,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 4.60585,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "relValueErrMean": 0,
+          "maxKlNatsMean": 4.605728,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "relValueErrStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "maxKlNatsStats": {
+          "mean": 4.6059,
+          "stdDev": 0.0001,
+          "ci95": [
+            4.6057,
+            4.606
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "dreamerv3_symlog_twohot41_categorical_1pct_unimix",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "relValueErrStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "maxKlNatsStats": {
+      "mean": 4.6059,
+      "stdDev": 0.0001,
+      "ci95": [
+        4.6057,
+        4.606
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 93.8112,
+    "tStat": 804424.0605,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}

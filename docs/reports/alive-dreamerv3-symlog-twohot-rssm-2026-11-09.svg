@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="320" viewBox="0 0 820 320">
+  <rect width="820" height="320" fill="#0f172a" />
+  <text x="24" y="34" fill="#38bdf8" font-family="monospace" font-size="16" font-weight="bold">ALIVE Pass 84 (84/100) — alive-dreamerv3-symlog-twohot-rssm</text>
+  <text x="24" y="54" fill="#94a3b8" font-family="monospace" font-size="12">Winner: dreamerv3_symlog_twohot41_categorical_1pct_unimix | Score: 100 | t=804424.0605</text>
+  
+      <text x="24" y="78" fill="#e2e8f0" font-family="monospace" font-size="12">raw_mse_critic_gaussian_rssm_baseline</text>
+      <rect x="24" y="86" width="30" height="18" rx="4" fill="#6366f1" />
+      <text x="62" y="99" fill="#f8fafc" font-family="monospace" font-size="12">6.19 (95% CI [6.1885, 6.1892])</text>
+
+      <text x="24" y="130" fill="#e2e8f0" font-family="monospace" font-size="12">symlog_scalar_mse_no_twohot_bins_ablation</text>
+      <rect x="24" y="138" width="427" height="18" rx="4" fill="#6366f1" />
+      <text x="459" y="151" fill="#f8fafc" font-family="monospace" font-size="12">88.86 (95% CI [88.8625, 88.8625])</text>
+
+      <text x="24" y="182" fill="#e2e8f0" font-family="monospace" font-size="12">categorical_rssm_zero_unimix_kl_spike_ablation</text>
+      <rect x="24" y="190" width="294" height="18" rx="4" fill="#6366f1" />
+      <text x="326" y="203" fill="#f8fafc" font-family="monospace" font-size="12">61.19 (95% CI [61.1885, 61.1892])</text>
+
+      <text x="24" y="234" fill="#e2e8f0" font-family="monospace" font-size="12">dreamerv3_symlog_twohot41_categorical_1pct_unimix</text>
+      <rect x="24" y="242" width="480" height="18" rx="4" fill="#10b981" />
+      <text x="512" y="255" fill="#f8fafc" font-family="monospace" font-size="12">100.00 (95% CI [100, 100])</text>
+</svg>
