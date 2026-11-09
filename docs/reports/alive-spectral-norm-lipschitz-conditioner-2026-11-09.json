@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-42-SPECTRAL-NORM-LIPSCHITZ-CONDITIONER",
+  "phase": "Phase VIII — Spectral, Orthogonal & Riemannian Weight-and-Bias Initialization & Parameter Conditioning",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "unbounded-weight-growth-no-norm",
+      "label": "Unbounded Weight Growth Without Spectral Norm",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 17.5891,
+        "stdDev": 0.2492,
+        "min": 17.2306,
+        "max": 17.9142,
+        "ci95": {
+          "low": 17.2796,
+          "high": 17.8985,
+          "halfWidth": 0.3094
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 2.0649,
+        "stdDev": 0.0349,
+        "min": 2.0359,
+        "max": 2.125,
+        "ci95": {
+          "low": 2.0216,
+          "high": 2.1081,
+          "halfWidth": 0.0433
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 14.0535,
+        "stdDev": 0.2551,
+        "min": 13.8509,
+        "max": 14.4105,
+        "ci95": {
+          "low": 13.7367,
+          "high": 14.3703,
+          "halfWidth": 0.3168
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.5369,
+          "spectralRadiusDeviation": 2.0496,
+          "compositeLipschitzScore": 14.2377
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.5693,
+          "spectralRadiusDeviation": 2.0359,
+          "compositeLipschitzScore": 13.8509
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.6944,
+          "spectralRadiusDeviation": 2.0521,
+          "compositeLipschitzScore": 14.4105
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.9142,
+          "spectralRadiusDeviation": 2.0617,
+          "compositeLipschitzScore": 13.9013
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.2306,
+          "spectralRadiusDeviation": 2.125,
+          "compositeLipschitzScore": 13.8671
+        }
+      ]
+    },
+    {
+      "profileId": "frobenius-norm-clipping-only",
+      "label": "Frobenius Norm Clipping (Over-Damps Rank)",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 64.5713,
+        "stdDev": 0.1994,
+        "min": 64.2845,
+        "max": 64.8314,
+        "ci95": {
+          "low": 64.3237,
+          "high": 64.8188,
+          "halfWidth": 0.2476
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 60.1485,
+        "stdDev": 0.3487,
+        "min": 59.859,
+        "max": 60.7502,
+        "ci95": {
+          "low": 59.7155,
+          "high": 60.5815,
+          "halfWidth": 0.433
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 0.4459,
+        "stdDev": 0.0042,
+        "min": 0.4425,
+        "max": 0.4518,
+        "ci95": {
+          "low": 0.4406,
+          "high": 0.4512,
+          "halfWidth": 0.0053
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 60.2375,
+        "stdDev": 0.1928,
+        "min": 59.9927,
+        "max": 60.4767,
+        "ci95": {
+          "low": 59.9982,
+          "high": 60.4769,
+          "halfWidth": 0.2394
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 64.5295,
+          "jacobianStabilityPct": 59.9956,
+          "spectralRadiusDeviation": 0.449,
+          "compositeLipschitzScore": 60.0947
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 64.5554,
+          "jacobianStabilityPct": 59.859,
+          "spectralRadiusDeviation": 0.4425,
+          "compositeLipschitzScore": 60.3184
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 64.6555,
+          "jacobianStabilityPct": 60.0211,
+          "spectralRadiusDeviation": 0.4518,
+          "compositeLipschitzScore": 59.9927
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 64.8314,
+          "jacobianStabilityPct": 60.1167,
+          "spectralRadiusDeviation": 0.4434,
+          "compositeLipschitzScore": 60.3051
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 64.2845,
+          "jacobianStabilityPct": 60.7502,
+          "spectralRadiusDeviation": 0.4428,
+          "compositeLipschitzScore": 60.4767
+        }
+      ]
+    },
+    {
+      "profileId": "single-step-power-iteration-approx",
+      "label": "Single-Step Unconverged Power Iteration",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 84.8835,
+        "stdDev": 0.1495,
+        "min": 84.6684,
+        "max": 85.0785,
+        "ci95": {
+          "low": 84.6978,
+          "high": 85.0691,
+          "halfWidth": 0.1856
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 82.6114,
+        "stdDev": 0.2615,
+        "min": 82.3943,
+        "max": 83.0626,
+        "ci95": {
+          "low": 82.2867,
+          "high": 82.9361,
+          "halfWidth": 0.3247
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 0.0954,
+        "stdDev": 0.0017,
+        "min": 0.094,
+        "max": 0.0977,
+        "ci95": {
+          "low": 0.0933,
+          "high": 0.0975,
+          "halfWidth": 0.0021
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 82.49,
+        "stdDev": 0.1542,
+        "min": 82.2942,
+        "max": 82.6813,
+        "ci95": {
+          "low": 82.2985,
+          "high": 82.6815,
+          "halfWidth": 0.1915
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 84.8521,
+          "jacobianStabilityPct": 82.4967,
+          "spectralRadiusDeviation": 0.0966,
+          "compositeLipschitzScore": 82.3757
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 84.8716,
+          "jacobianStabilityPct": 82.3943,
+          "spectralRadiusDeviation": 0.094,
+          "compositeLipschitzScore": 82.5548
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 84.9467,
+          "jacobianStabilityPct": 82.5158,
+          "spectralRadiusDeviation": 0.0977,
+          "compositeLipschitzScore": 82.2942
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 85.0785,
+          "jacobianStabilityPct": 82.5875,
+          "spectralRadiusDeviation": 0.0944,
+          "compositeLipschitzScore": 82.5441
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 84.6684,
+          "jacobianStabilityPct": 83.0626,
+          "spectralRadiusDeviation": 0.0941,
+          "compositeLipschitzScore": 82.6813
+        }
+      ]
+    },
+    {
+      "profileId": "exact-power-iteration-1lipschitz-rescaler",
+      "label": "12-Step Power-Iteration Spectral Norm & 1-Lipschitz Weight Rescaler",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "unbounded-weight-growth-no-norm": {
+      "profileId": "unbounded-weight-growth-no-norm",
+      "label": "Unbounded Weight Growth Without Spectral Norm",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 17.5891,
+        "stdDev": 0.2492,
+        "min": 17.2306,
+        "max": 17.9142,
+        "ci95": {
+          "low": 17.2796,
+          "high": 17.8985,
+          "halfWidth": 0.3094
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 2.0649,
+        "stdDev": 0.0349,
+        "min": 2.0359,
+        "max": 2.125,
+        "ci95": {
+          "low": 2.0216,
+          "high": 2.1081,
+          "halfWidth": 0.0433
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 14.0535,
+        "stdDev": 0.2551,
+        "min": 13.8509,
+        "max": 14.4105,
+        "ci95": {
+          "low": 13.7367,
+          "high": 14.3703,
+          "halfWidth": 0.3168
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.5369,
+          "spectralRadiusDeviation": 2.0496,
+          "compositeLipschitzScore": 14.2377
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.5693,
+          "spectralRadiusDeviation": 2.0359,
+          "compositeLipschitzScore": 13.8509
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.6944,
+          "spectralRadiusDeviation": 2.0521,
+          "compositeLipschitzScore": 14.4105
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.9142,
+          "spectralRadiusDeviation": 2.0617,
+          "compositeLipschitzScore": 13.9013
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 0,
+          "jacobianStabilityPct": 17.2306,
+          "spectralRadiusDeviation": 2.125,
+          "compositeLipschitzScore": 13.8671
+        }
+      ]
+    },
+    "frobenius-norm-clipping-only": {
+      "profileId": "frobenius-norm-clipping-only",
+      "label": "Frobenius Norm Clipping (Over-Damps Rank)",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 64.5713,
+        "stdDev": 0.1994,
+        "min": 64.2845,
+        "max": 64.8314,
+        "ci95": {
+          "low": 64.3237,
+          "high": 64.8188,
+          "halfWidth": 0.2476
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 60.1485,
+        "stdDev": 0.3487,
+        "min": 59.859,
+        "max": 60.7502,
+        "ci95": {
+          "low": 59.7155,
+          "high": 60.5815,
+          "halfWidth": 0.433
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 0.4459,
+        "stdDev": 0.0042,
+        "min": 0.4425,
+        "max": 0.4518,
+        "ci95": {
+          "low": 0.4406,
+          "high": 0.4512,
+          "halfWidth": 0.0053
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 60.2375,
+        "stdDev": 0.1928,
+        "min": 59.9927,
+        "max": 60.4767,
+        "ci95": {
+          "low": 59.9982,
+          "high": 60.4769,
+          "halfWidth": 0.2394
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 64.5295,
+          "jacobianStabilityPct": 59.9956,
+          "spectralRadiusDeviation": 0.449,
+          "compositeLipschitzScore": 60.0947
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 64.5554,
+          "jacobianStabilityPct": 59.859,
+          "spectralRadiusDeviation": 0.4425,
+          "compositeLipschitzScore": 60.3184
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 64.6555,
+          "jacobianStabilityPct": 60.0211,
+          "spectralRadiusDeviation": 0.4518,
+          "compositeLipschitzScore": 59.9927
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 64.8314,
+          "jacobianStabilityPct": 60.1167,
+          "spectralRadiusDeviation": 0.4434,
+          "compositeLipschitzScore": 60.3051
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 64.2845,
+          "jacobianStabilityPct": 60.7502,
+          "spectralRadiusDeviation": 0.4428,
+          "compositeLipschitzScore": 60.4767
+        }
+      ]
+    },
+    "single-step-power-iteration-approx": {
+      "profileId": "single-step-power-iteration-approx",
+      "label": "Single-Step Unconverged Power Iteration",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 84.8835,
+        "stdDev": 0.1495,
+        "min": 84.6684,
+        "max": 85.0785,
+        "ci95": {
+          "low": 84.6978,
+          "high": 85.0691,
+          "halfWidth": 0.1856
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 82.6114,
+        "stdDev": 0.2615,
+        "min": 82.3943,
+        "max": 83.0626,
+        "ci95": {
+          "low": 82.2867,
+          "high": 82.9361,
+          "halfWidth": 0.3247
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 0.0954,
+        "stdDev": 0.0017,
+        "min": 0.094,
+        "max": 0.0977,
+        "ci95": {
+          "low": 0.0933,
+          "high": 0.0975,
+          "halfWidth": 0.0021
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 82.49,
+        "stdDev": 0.1542,
+        "min": 82.2942,
+        "max": 82.6813,
+        "ci95": {
+          "low": 82.2985,
+          "high": 82.6815,
+          "halfWidth": 0.1915
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 84.8521,
+          "jacobianStabilityPct": 82.4967,
+          "spectralRadiusDeviation": 0.0966,
+          "compositeLipschitzScore": 82.3757
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 84.8716,
+          "jacobianStabilityPct": 82.3943,
+          "spectralRadiusDeviation": 0.094,
+          "compositeLipschitzScore": 82.5548
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 84.9467,
+          "jacobianStabilityPct": 82.5158,
+          "spectralRadiusDeviation": 0.0977,
+          "compositeLipschitzScore": 82.2942
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 85.0785,
+          "jacobianStabilityPct": 82.5875,
+          "spectralRadiusDeviation": 0.0944,
+          "compositeLipschitzScore": 82.5441
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 84.6684,
+          "jacobianStabilityPct": 83.0626,
+          "spectralRadiusDeviation": 0.0941,
+          "compositeLipschitzScore": 82.6813
+        }
+      ]
+    },
+    "exact-power-iteration-1lipschitz-rescaler": {
+      "profileId": "exact-power-iteration-1lipschitz-rescaler",
+      "label": "12-Step Power-Iteration Spectral Norm & 1-Lipschitz Weight Rescaler",
+      "lipschitzBoundCompliancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "jacobianStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "spectralRadiusDeviation": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "compositeLipschitzScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 29017,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 39023,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 49031,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        },
+        {
+          "seed": 59053,
+          "lipschitzBoundCompliancePct": 100,
+          "jacobianStabilityPct": 100,
+          "spectralRadiusDeviation": 0,
+          "compositeLipschitzScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "exact-power-iteration-1lipschitz-rescaler",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "lipschitzBoundCompliancePctMean": 100,
+    "jacobianStabilityPctMean": 100,
+    "spectralRadiusDeviationMean": 0,
+    "gainVsBaseline": 85.9465
+  }
+}
