@@ -1,0 +1,420 @@
+{
+  "passNumber": 89,
+  "passSlice": "89/100",
+  "phaseName": "Phase XVII: Hardware-Sympathetic Tensor Systems Engineering",
+  "moduleId": "alive-double-buffered-atomic-weight-server",
+  "timestamp": "2026-11-09T23:24:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "in_place_unvalidated_weight_mutation_baseline",
+      "label": "In-Place Direct Weight Mutation Without NaN/Inf or Spectral Firewall (Read Tearing & Corruption)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 1,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 24.75
+        },
+        {
+          "seed": 29017,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 1,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 24.75
+        },
+        {
+          "seed": 39023,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 1,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 24.75
+        },
+        {
+          "seed": 49031,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 1,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 24.75
+        },
+        {
+          "seed": 59053,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 1,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 24.75
+        }
+      ],
+      "aggregate": {
+        "nanLeakedStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "specLeakedStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "tornReadsStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "rollbackRateStats": {
+          "mean": 0.35,
+          "stdDev": 0,
+          "ci95": [
+            0.35,
+            0.35
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 24.75,
+          "stdDev": 0,
+          "ci95": [
+            24.75,
+            24.75
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "double_buffered_without_nan_inf_firewall_ablation",
+      "label": "Double-Buffered RCU Swap Without IEEE-754 NaN/Inf/Subnormal Firewall",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 45.75
+        },
+        {
+          "seed": 29017,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 45.75
+        },
+        {
+          "seed": 39023,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 45.75
+        },
+        {
+          "seed": 49031,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 45.75
+        },
+        {
+          "seed": 59053,
+          "nanLeakedMean": 1,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 45.75
+        }
+      ],
+      "aggregate": {
+        "nanLeakedStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "specLeakedStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "tornReadsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "rollbackRateStats": {
+          "mean": 0.35,
+          "stdDev": 0,
+          "ci95": [
+            0.35,
+            0.35
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 45.75,
+          "stdDev": 0,
+          "ci95": [
+            45.75,
+            45.75
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "double_buffered_without_spectral_firewall_ablation",
+      "label": "Double-Buffered RCU + NaN Guard Without Spectral-Norm Explosion Firewall",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 73.75
+        },
+        {
+          "seed": 29017,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 73.75
+        },
+        {
+          "seed": 39023,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 73.75
+        },
+        {
+          "seed": 49031,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 73.75
+        },
+        {
+          "seed": 59053,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 1,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 0.35,
+          "compositeScore": 73.75
+        }
+      ],
+      "aggregate": {
+        "nanLeakedStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "specLeakedStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "tornReadsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "rollbackRateStats": {
+          "mean": 0.35,
+          "stdDev": 0,
+          "ci95": [
+            0.35,
+            0.35
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 73.75,
+          "stdDev": 0,
+          "ci95": [
+            73.75,
+            73.75
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "double_buffered_rcu_ieee754_spectral_atomic_server",
+      "label": "Double-Buffered RCU Parameter Server + IEEE-754 NaN/Inf Firewall + Spectral Guard (Pass 89 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 0,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 0,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 0,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 0,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "nanLeakedMean": 0,
+          "specLeakedMean": 0,
+          "tornReadsMean": 0,
+          "rollbackRateMean": 1,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "nanLeakedStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "specLeakedStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "tornReadsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "rollbackRateStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "double_buffered_rcu_ieee754_spectral_atomic_server",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "nanLeakedStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "specLeakedStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "tornReadsStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "rollbackRateStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 75.25,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
