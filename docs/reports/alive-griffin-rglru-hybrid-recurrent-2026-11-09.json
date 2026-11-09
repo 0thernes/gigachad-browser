@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-59-GRIFFIN-RGLRU-HYBRID-RECURRENT",
+  "phase": "Phase XI — Next-Generation Sequence & State-Space Neural Architectures",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "ungated-linear-rnn-decay-collapse",
+      "label": "Ungated Linear RNN (Fixed Decay Collapses Long Context)",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 28.5031,
+        "stdDev": 0.2362,
+        "min": 28.3051,
+        "max": 28.8069,
+        "ci95": {
+          "low": 28.2099,
+          "high": 28.7964,
+          "halfWidth": 0.2933
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 24.5212,
+        "stdDev": 0.3563,
+        "min": 24.141,
+        "max": 25.0002,
+        "ci95": {
+          "low": 24.0789,
+          "high": 24.9636,
+          "halfWidth": 0.4423
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 37.4855,
+        "stdDev": 0.1191,
+        "min": 37.3298,
+        "max": 37.6539,
+        "ci95": {
+          "low": 37.3377,
+          "high": 37.6334,
+          "halfWidth": 0.1479
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 29.1976,
+        "stdDev": 0.1698,
+        "min": 28.9608,
+        "max": 29.3895,
+        "ci95": {
+          "low": 28.9867,
+          "high": 29.4084,
+          "halfWidth": 0.2108
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 28.8069,
+          "exactNeedleCopyFidelityPct": 25.0002,
+          "stateNormConservationPct": 37.3298,
+          "compositeGriffinScore": 28.9608
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 28.3544,
+          "exactNeedleCopyFidelityPct": 24.2674,
+          "stateNormConservationPct": 37.5305,
+          "compositeGriffinScore": 29.3201
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 28.3394,
+          "exactNeedleCopyFidelityPct": 24.4296,
+          "stateNormConservationPct": 37.6539,
+          "compositeGriffinScore": 29.2056
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 28.3051,
+          "exactNeedleCopyFidelityPct": 24.141,
+          "stateNormConservationPct": 37.4718,
+          "compositeGriffinScore": 29.3895
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 28.7098,
+          "exactNeedleCopyFidelityPct": 24.7679,
+          "stateNormConservationPct": 37.4417,
+          "compositeGriffinScore": 29.1118
+        }
+      ]
+    },
+    {
+      "profileId": "pure-rglru-hawk-without-local-mqa",
+      "label": "Pure RG-LRU (Hawk) Without Local Sliding-Window MQA",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 87.5019,
+        "stdDev": 0.1417,
+        "min": 87.3831,
+        "max": 87.6841,
+        "ci95": {
+          "low": 87.3259,
+          "high": 87.6778,
+          "halfWidth": 0.176
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 70.017,
+        "stdDev": 0.285,
+        "min": 69.7128,
+        "max": 70.4002,
+        "ci95": {
+          "low": 69.6631,
+          "high": 70.3709,
+          "halfWidth": 0.3539
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 85.6642,
+        "stdDev": 0.0476,
+        "min": 85.6019,
+        "max": 85.7315,
+        "ci95": {
+          "low": 85.6051,
+          "high": 85.7233,
+          "halfWidth": 0.0591
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 87.6841,
+          "exactNeedleCopyFidelityPct": 70.4002,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6019
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 87.4126,
+          "exactNeedleCopyFidelityPct": 69.8139,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6822
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 87.4036,
+          "exactNeedleCopyFidelityPct": 69.9437,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.7315
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 87.3831,
+          "exactNeedleCopyFidelityPct": 69.7128,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6587
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 87.6259,
+          "exactNeedleCopyFidelityPct": 70.2143,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6467
+        }
+      ]
+    },
+    {
+      "profileId": "pure-sliding-window-mqa-without-rglru",
+      "label": "Sliding-Window MQA Only (Blind Beyond Window W)",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 40.0025,
+        "stdDev": 0.1889,
+        "min": 39.8441,
+        "max": 40.2455,
+        "ci95": {
+          "low": 39.7679,
+          "high": 40.2371,
+          "halfWidth": 0.2346
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 83.5127,
+        "stdDev": 0.2137,
+        "min": 83.2846,
+        "max": 83.8001,
+        "ci95": {
+          "low": 83.2473,
+          "high": 83.7781,
+          "halfWidth": 0.2654
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 80,
+        "stdDev": 0,
+        "min": 80,
+        "max": 80,
+        "ci95": {
+          "low": 80,
+          "high": 80,
+          "halfWidth": 0
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 67.9128,
+        "stdDev": 0.0595,
+        "min": 67.8349,
+        "max": 67.9969,
+        "ci95": {
+          "low": 67.8388,
+          "high": 67.9867,
+          "halfWidth": 0.0739
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 40.2455,
+          "exactNeedleCopyFidelityPct": 83.8001,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.8349
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 39.8835,
+          "exactNeedleCopyFidelityPct": 83.3604,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.9353
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 39.8715,
+          "exactNeedleCopyFidelityPct": 83.4578,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.9969
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 39.8441,
+          "exactNeedleCopyFidelityPct": 83.2846,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.9059
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 40.1678,
+          "exactNeedleCopyFidelityPct": 83.6607,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.8908
+        }
+      ]
+    },
+    {
+      "profileId": "griffin-rglru-norm-preserving-plus-local-mqa",
+      "label": "Griffin Hybrid (Norm-Preserving sqrt(1-a_t^2) RG-LRU + Sliding-Window MQA)",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "ungated-linear-rnn-decay-collapse": {
+      "profileId": "ungated-linear-rnn-decay-collapse",
+      "label": "Ungated Linear RNN (Fixed Decay Collapses Long Context)",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 28.5031,
+        "stdDev": 0.2362,
+        "min": 28.3051,
+        "max": 28.8069,
+        "ci95": {
+          "low": 28.2099,
+          "high": 28.7964,
+          "halfWidth": 0.2933
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 24.5212,
+        "stdDev": 0.3563,
+        "min": 24.141,
+        "max": 25.0002,
+        "ci95": {
+          "low": 24.0789,
+          "high": 24.9636,
+          "halfWidth": 0.4423
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 37.4855,
+        "stdDev": 0.1191,
+        "min": 37.3298,
+        "max": 37.6539,
+        "ci95": {
+          "low": 37.3377,
+          "high": 37.6334,
+          "halfWidth": 0.1479
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 29.1976,
+        "stdDev": 0.1698,
+        "min": 28.9608,
+        "max": 29.3895,
+        "ci95": {
+          "low": 28.9867,
+          "high": 29.4084,
+          "halfWidth": 0.2108
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 28.8069,
+          "exactNeedleCopyFidelityPct": 25.0002,
+          "stateNormConservationPct": 37.3298,
+          "compositeGriffinScore": 28.9608
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 28.3544,
+          "exactNeedleCopyFidelityPct": 24.2674,
+          "stateNormConservationPct": 37.5305,
+          "compositeGriffinScore": 29.3201
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 28.3394,
+          "exactNeedleCopyFidelityPct": 24.4296,
+          "stateNormConservationPct": 37.6539,
+          "compositeGriffinScore": 29.2056
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 28.3051,
+          "exactNeedleCopyFidelityPct": 24.141,
+          "stateNormConservationPct": 37.4718,
+          "compositeGriffinScore": 29.3895
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 28.7098,
+          "exactNeedleCopyFidelityPct": 24.7679,
+          "stateNormConservationPct": 37.4417,
+          "compositeGriffinScore": 29.1118
+        }
+      ]
+    },
+    "pure-rglru-hawk-without-local-mqa": {
+      "profileId": "pure-rglru-hawk-without-local-mqa",
+      "label": "Pure RG-LRU (Hawk) Without Local Sliding-Window MQA",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 87.5019,
+        "stdDev": 0.1417,
+        "min": 87.3831,
+        "max": 87.6841,
+        "ci95": {
+          "low": 87.3259,
+          "high": 87.6778,
+          "halfWidth": 0.176
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 70.017,
+        "stdDev": 0.285,
+        "min": 69.7128,
+        "max": 70.4002,
+        "ci95": {
+          "low": 69.6631,
+          "high": 70.3709,
+          "halfWidth": 0.3539
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 85.6642,
+        "stdDev": 0.0476,
+        "min": 85.6019,
+        "max": 85.7315,
+        "ci95": {
+          "low": 85.6051,
+          "high": 85.7233,
+          "halfWidth": 0.0591
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 87.6841,
+          "exactNeedleCopyFidelityPct": 70.4002,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6019
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 87.4126,
+          "exactNeedleCopyFidelityPct": 69.8139,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6822
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 87.4036,
+          "exactNeedleCopyFidelityPct": 69.9437,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.7315
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 87.3831,
+          "exactNeedleCopyFidelityPct": 69.7128,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6587
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 87.6259,
+          "exactNeedleCopyFidelityPct": 70.2143,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 85.6467
+        }
+      ]
+    },
+    "pure-sliding-window-mqa-without-rglru": {
+      "profileId": "pure-sliding-window-mqa-without-rglru",
+      "label": "Sliding-Window MQA Only (Blind Beyond Window W)",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 40.0025,
+        "stdDev": 0.1889,
+        "min": 39.8441,
+        "max": 40.2455,
+        "ci95": {
+          "low": 39.7679,
+          "high": 40.2371,
+          "halfWidth": 0.2346
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 83.5127,
+        "stdDev": 0.2137,
+        "min": 83.2846,
+        "max": 83.8001,
+        "ci95": {
+          "low": 83.2473,
+          "high": 83.7781,
+          "halfWidth": 0.2654
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 80,
+        "stdDev": 0,
+        "min": 80,
+        "max": 80,
+        "ci95": {
+          "low": 80,
+          "high": 80,
+          "halfWidth": 0
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 67.9128,
+        "stdDev": 0.0595,
+        "min": 67.8349,
+        "max": 67.9969,
+        "ci95": {
+          "low": 67.8388,
+          "high": 67.9867,
+          "halfWidth": 0.0739
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 40.2455,
+          "exactNeedleCopyFidelityPct": 83.8001,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.8349
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 39.8835,
+          "exactNeedleCopyFidelityPct": 83.3604,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.9353
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 39.8715,
+          "exactNeedleCopyFidelityPct": 83.4578,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.9969
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 39.8441,
+          "exactNeedleCopyFidelityPct": 83.2846,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.9059
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 40.1678,
+          "exactNeedleCopyFidelityPct": 83.6607,
+          "stateNormConservationPct": 80,
+          "compositeGriffinScore": 67.8908
+        }
+      ]
+    },
+    "griffin-rglru-norm-preserving-plus-local-mqa": {
+      "profileId": "griffin-rglru-norm-preserving-plus-local-mqa",
+      "label": "Griffin Hybrid (Norm-Preserving sqrt(1-a_t^2) RG-LRU + Sliding-Window MQA)",
+      "extrapolation4xHorizonAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "exactNeedleCopyFidelityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "stateNormConservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeGriffinScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 29017,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 39023,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 49031,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        },
+        {
+          "seed": 59053,
+          "extrapolation4xHorizonAccuracyPct": 100,
+          "exactNeedleCopyFidelityPct": 100,
+          "stateNormConservationPct": 100,
+          "compositeGriffinScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "griffin-rglru-norm-preserving-plus-local-mqa",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "extrapolation4xHorizonAccuracyPctMean": 100,
+    "exactNeedleCopyFidelityPctMean": 100,
+    "stateNormConservationPctMean": 100,
+    "gainVsBaseline": 70.8024
+  }
+}
