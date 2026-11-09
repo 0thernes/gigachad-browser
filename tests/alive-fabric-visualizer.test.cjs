@@ -970,6 +970,32 @@ test('runLocustPolyphenism renders 5-seed Locust Solitaria-to-Gregaria Phase Pol
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runFishHydrodynamics renders 5-seed Fish-School Lateral-Line & Kuramoto Hydrodynamics in section 34', async () => {
+  const { window, dom } = load();
+  window.AliveFishLateralLineHydrodynamics = {
+    run: async () => ({
+      summary: {
+        fullHydroScoreMean: 100.0,
+        meanKuramotoR: 0.9992,
+        meanEvasionWaveLatencyMs: 1.60,
+        gainVsUncoupledDrifters: 100.0
+      },
+      aggregatedByProfile: {
+        'uncoupled-random-drifters': { fishHydroCompositeScore: { mean: 0 }, kuramotoSyncHealthPct: { mean: 0 }, cStartEvasionSurvivalPct: { mean: 0 }, byzantineGlitchImmunityPct: { mean: 0 }, meanKuramotoR: { mean: 0.72 } },
+        'nearest-neighbor-slow-cascade': { fishHydroCompositeScore: { mean: 30.0 }, kuramotoSyncHealthPct: { mean: 0 }, cStartEvasionSurvivalPct: { mean: 0 }, byzantineGlitchImmunityPct: { mean: 100 }, meanKuramotoR: { mean: 0.91 } },
+        'rigid-global-lock-echo-chamber': { fishHydroCompositeScore: { mean: 35.0 }, kuramotoSyncHealthPct: { mean: 0 }, cStartEvasionSurvivalPct: { mean: 100 }, byzantineGlitchImmunityPct: { mean: 0 }, meanKuramotoR: { mean: 1.0 } },
+        'lateral-line-kuramoto-cstart-school': { fishHydroCompositeScore: { mean: 100.0 }, kuramotoSyncHealthPct: { mean: 100 }, cStartEvasionSurvivalPct: { mean: 100 }, byzantineGlitchImmunityPct: { mean: 100 }, meanKuramotoR: { mean: 0.99 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runFishHydrodynamics();
+  assert.equal(report.summary.fullHydroScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Lateral-Line Kuramoto score=100.0')), 'Fish Hydrodynamics summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('lateral-line-kuramoto-')), 'Fish Hydrodynamics rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 

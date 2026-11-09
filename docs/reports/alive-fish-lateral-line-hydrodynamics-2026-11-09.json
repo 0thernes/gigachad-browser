@@ -1,0 +1,501 @@
+{
+  "pass": 28,
+  "title": "Fish-School Lateral-Line Hydrodynamic Coupling, Kuramoto Phase Synchronization & Sub-Tick Anomaly Evasion Wave",
+  "generatedAt": "2026-11-09T21:15:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "profiles": [
+    {
+      "id": "uncoupled-random-drifters",
+      "label": "Uncoupled Random Drifters (K=0, No Lateral Line)",
+      "couplingK": 0,
+      "hasLateralLineDipole": false,
+      "hasCStartWave": false,
+      "hasNeuromastMedianFilter": false
+    },
+    {
+      "id": "nearest-neighbor-slow-cascade",
+      "label": "Nearest-Neighbor Slow Cascade (No Dipole Pressure Wave)",
+      "couplingK": 1.4,
+      "hasLateralLineDipole": false,
+      "hasCStartWave": false,
+      "hasNeuromastMedianFilter": true
+    },
+    {
+      "id": "rigid-global-lock-echo-chamber",
+      "label": "Rigid Global Lock Echo-Chamber (No Byzantine Glitch Filter)",
+      "couplingK": 9,
+      "hasLateralLineDipole": true,
+      "hasCStartWave": true,
+      "hasNeuromastMedianFilter": false
+    },
+    {
+      "id": "lateral-line-kuramoto-cstart-school",
+      "label": "Lateral-Line Dipole + Kuramoto Sync + Sub-Tick C-Start School",
+      "couplingK": 3.4,
+      "hasLateralLineDipole": true,
+      "hasCStartWave": true,
+      "hasNeuromastMedianFilter": true
+    }
+  ],
+  "seedRuns": [
+    {
+      "seed": 19013,
+      "scenarioCount": 24,
+      "byProfile": {
+        "uncoupled-random-drifters": {
+          "profileId": "uncoupled-random-drifters",
+          "label": "Uncoupled Random Drifters (K=0, No Lateral Line)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 0.8553,
+          "meanEvasionWaveLatencyMs": 25.65,
+          "fishHydroCompositeScore": 0
+        },
+        "nearest-neighbor-slow-cascade": {
+          "profileId": "nearest-neighbor-slow-cascade",
+          "label": "Nearest-Neighbor Slow Cascade (No Dipole Pressure Wave)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.9998,
+          "meanEvasionWaveLatencyMs": 19.0025,
+          "fishHydroCompositeScore": 30
+        },
+        "rigid-global-lock-echo-chamber": {
+          "profileId": "rigid-global-lock-echo-chamber",
+          "label": "Rigid Global Lock Echo-Chamber (No Byzantine Glitch Filter)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 1,
+          "meanEvasionWaveLatencyMs": 1.6118,
+          "fishHydroCompositeScore": 35
+        },
+        "lateral-line-kuramoto-cstart-school": {
+          "profileId": "lateral-line-kuramoto-cstart-school",
+          "label": "Lateral-Line Dipole + Kuramoto Sync + Sub-Tick C-Start School",
+          "kuramotoSyncHealthPct": 100,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.987,
+          "meanEvasionWaveLatencyMs": 1.6118,
+          "fishHydroCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "scenarioCount": 24,
+      "byProfile": {
+        "uncoupled-random-drifters": {
+          "profileId": "uncoupled-random-drifters",
+          "label": "Uncoupled Random Drifters (K=0, No Lateral Line)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 0.8703,
+          "meanEvasionWaveLatencyMs": 25.65,
+          "fishHydroCompositeScore": 0
+        },
+        "nearest-neighbor-slow-cascade": {
+          "profileId": "nearest-neighbor-slow-cascade",
+          "label": "Nearest-Neighbor Slow Cascade (No Dipole Pressure Wave)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.9998,
+          "meanEvasionWaveLatencyMs": 19.0152,
+          "fishHydroCompositeScore": 30
+        },
+        "rigid-global-lock-echo-chamber": {
+          "profileId": "rigid-global-lock-echo-chamber",
+          "label": "Rigid Global Lock Echo-Chamber (No Byzantine Glitch Filter)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 1,
+          "meanEvasionWaveLatencyMs": 1.5996,
+          "fishHydroCompositeScore": 35
+        },
+        "lateral-line-kuramoto-cstart-school": {
+          "profileId": "lateral-line-kuramoto-cstart-school",
+          "label": "Lateral-Line Dipole + Kuramoto Sync + Sub-Tick C-Start School",
+          "kuramotoSyncHealthPct": 100,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.987,
+          "meanEvasionWaveLatencyMs": 1.5996,
+          "fishHydroCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "scenarioCount": 24,
+      "byProfile": {
+        "uncoupled-random-drifters": {
+          "profileId": "uncoupled-random-drifters",
+          "label": "Uncoupled Random Drifters (K=0, No Lateral Line)",
+          "kuramotoSyncHealthPct": 8.3333,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 0.8853,
+          "meanEvasionWaveLatencyMs": 25.65,
+          "fishHydroCompositeScore": 2.9167
+        },
+        "nearest-neighbor-slow-cascade": {
+          "profileId": "nearest-neighbor-slow-cascade",
+          "label": "Nearest-Neighbor Slow Cascade (No Dipole Pressure Wave)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.9998,
+          "meanEvasionWaveLatencyMs": 18.9846,
+          "fishHydroCompositeScore": 30
+        },
+        "rigid-global-lock-echo-chamber": {
+          "profileId": "rigid-global-lock-echo-chamber",
+          "label": "Rigid Global Lock Echo-Chamber (No Byzantine Glitch Filter)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 1,
+          "meanEvasionWaveLatencyMs": 1.5862,
+          "fishHydroCompositeScore": 35
+        },
+        "lateral-line-kuramoto-cstart-school": {
+          "profileId": "lateral-line-kuramoto-cstart-school",
+          "label": "Lateral-Line Dipole + Kuramoto Sync + Sub-Tick C-Start School",
+          "kuramotoSyncHealthPct": 100,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.987,
+          "meanEvasionWaveLatencyMs": 1.5862,
+          "fishHydroCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "scenarioCount": 24,
+      "byProfile": {
+        "uncoupled-random-drifters": {
+          "profileId": "uncoupled-random-drifters",
+          "label": "Uncoupled Random Drifters (K=0, No Lateral Line)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 0.8888,
+          "meanEvasionWaveLatencyMs": 25.65,
+          "fishHydroCompositeScore": 0
+        },
+        "nearest-neighbor-slow-cascade": {
+          "profileId": "nearest-neighbor-slow-cascade",
+          "label": "Nearest-Neighbor Slow Cascade (No Dipole Pressure Wave)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.9998,
+          "meanEvasionWaveLatencyMs": 19.015,
+          "fishHydroCompositeScore": 30
+        },
+        "rigid-global-lock-echo-chamber": {
+          "profileId": "rigid-global-lock-echo-chamber",
+          "label": "Rigid Global Lock Echo-Chamber (No Byzantine Glitch Filter)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 1,
+          "meanEvasionWaveLatencyMs": 1.617,
+          "fishHydroCompositeScore": 35
+        },
+        "lateral-line-kuramoto-cstart-school": {
+          "profileId": "lateral-line-kuramoto-cstart-school",
+          "label": "Lateral-Line Dipole + Kuramoto Sync + Sub-Tick C-Start School",
+          "kuramotoSyncHealthPct": 100,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.987,
+          "meanEvasionWaveLatencyMs": 1.617,
+          "fishHydroCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "scenarioCount": 24,
+      "byProfile": {
+        "uncoupled-random-drifters": {
+          "profileId": "uncoupled-random-drifters",
+          "label": "Uncoupled Random Drifters (K=0, No Lateral Line)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 0.8903,
+          "meanEvasionWaveLatencyMs": 25.65,
+          "fishHydroCompositeScore": 0
+        },
+        "nearest-neighbor-slow-cascade": {
+          "profileId": "nearest-neighbor-slow-cascade",
+          "label": "Nearest-Neighbor Slow Cascade (No Dipole Pressure Wave)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 0,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.9998,
+          "meanEvasionWaveLatencyMs": 18.9804,
+          "fishHydroCompositeScore": 30
+        },
+        "rigid-global-lock-echo-chamber": {
+          "profileId": "rigid-global-lock-echo-chamber",
+          "label": "Rigid Global Lock Echo-Chamber (No Byzantine Glitch Filter)",
+          "kuramotoSyncHealthPct": 0,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 0,
+          "meanKuramotoR": 1,
+          "meanEvasionWaveLatencyMs": 1.573,
+          "fishHydroCompositeScore": 35
+        },
+        "lateral-line-kuramoto-cstart-school": {
+          "profileId": "lateral-line-kuramoto-cstart-school",
+          "label": "Lateral-Line Dipole + Kuramoto Sync + Sub-Tick C-Start School",
+          "kuramotoSyncHealthPct": 100,
+          "cStartEvasionSurvivalPct": 100,
+          "byzantineGlitchImmunityPct": 100,
+          "meanKuramotoR": 0.987,
+          "meanEvasionWaveLatencyMs": 1.573,
+          "fishHydroCompositeScore": 100
+        }
+      }
+    }
+  ],
+  "aggregatedByProfile": {
+    "uncoupled-random-drifters": {
+      "profileId": "uncoupled-random-drifters",
+      "label": "Uncoupled Random Drifters (K=0, No Lateral Line)",
+      "kuramotoSyncHealthPct": {
+        "mean": 1.6667,
+        "sd": 3.7268,
+        "se": 1.6667,
+        "ci95HalfWidth": 4.6274,
+        "ci95Lower": -2.9607,
+        "ci95Upper": 6.294
+      },
+      "cStartEvasionSurvivalPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "byzantineGlitchImmunityPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "meanKuramotoR": {
+        "mean": 0.878,
+        "sd": 0.015,
+        "se": 0.0067,
+        "ci95HalfWidth": 0.0186,
+        "ci95Lower": 0.8594,
+        "ci95Upper": 0.8966
+      },
+      "meanEvasionWaveLatencyMs": {
+        "mean": 25.65,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 25.65,
+        "ci95Upper": 25.65
+      },
+      "fishHydroCompositeScore": {
+        "mean": 0.5833,
+        "sd": 1.3044,
+        "se": 0.5833,
+        "ci95HalfWidth": 1.6196,
+        "ci95Lower": -1.0363,
+        "ci95Upper": 2.203
+      }
+    },
+    "nearest-neighbor-slow-cascade": {
+      "profileId": "nearest-neighbor-slow-cascade",
+      "label": "Nearest-Neighbor Slow Cascade (No Dipole Pressure Wave)",
+      "kuramotoSyncHealthPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "cStartEvasionSurvivalPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "byzantineGlitchImmunityPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "meanKuramotoR": {
+        "mean": 0.9998,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0.9998,
+        "ci95Upper": 0.9998
+      },
+      "meanEvasionWaveLatencyMs": {
+        "mean": 18.9995,
+        "sd": 0.0165,
+        "se": 0.0074,
+        "ci95HalfWidth": 0.0204,
+        "ci95Lower": 18.9791,
+        "ci95Upper": 19.02
+      },
+      "fishHydroCompositeScore": {
+        "mean": 30,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 30,
+        "ci95Upper": 30
+      }
+    },
+    "rigid-global-lock-echo-chamber": {
+      "profileId": "rigid-global-lock-echo-chamber",
+      "label": "Rigid Global Lock Echo-Chamber (No Byzantine Glitch Filter)",
+      "kuramotoSyncHealthPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "cStartEvasionSurvivalPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "byzantineGlitchImmunityPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "meanKuramotoR": {
+        "mean": 1,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 1,
+        "ci95Upper": 1
+      },
+      "meanEvasionWaveLatencyMs": {
+        "mean": 1.5975,
+        "sd": 0.0181,
+        "se": 0.0081,
+        "ci95HalfWidth": 0.0225,
+        "ci95Lower": 1.575,
+        "ci95Upper": 1.6201
+      },
+      "fishHydroCompositeScore": {
+        "mean": 35,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 35,
+        "ci95Upper": 35
+      }
+    },
+    "lateral-line-kuramoto-cstart-school": {
+      "profileId": "lateral-line-kuramoto-cstart-school",
+      "label": "Lateral-Line Dipole + Kuramoto Sync + Sub-Tick C-Start School",
+      "kuramotoSyncHealthPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "cStartEvasionSurvivalPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "byzantineGlitchImmunityPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "meanKuramotoR": {
+        "mean": 0.987,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0.987,
+        "ci95Upper": 0.987
+      },
+      "meanEvasionWaveLatencyMs": {
+        "mean": 1.5975,
+        "sd": 0.0181,
+        "se": 0.0081,
+        "ci95HalfWidth": 0.0225,
+        "ci95Lower": 1.575,
+        "ci95Upper": 1.6201
+      },
+      "fishHydroCompositeScore": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      }
+    }
+  },
+  "summary": {
+    "winningProfile": "lateral-line-kuramoto-cstart-school",
+    "allSeedsVerified": true,
+    "fullHydroScoreMean": 100,
+    "kuramotoSyncHealthPctMean": 100,
+    "cStartEvasionSurvivalPctMean": 100,
+    "byzantineGlitchImmunityPctMean": 100,
+    "meanKuramotoR": 0.987,
+    "meanEvasionWaveLatencyMs": 1.5975,
+    "gainVsUncoupledDrifters": 99.4167,
+    "gainVsSlowCascade": 70,
+    "gainVsRigidEchoChamber": 65
+  }
+}

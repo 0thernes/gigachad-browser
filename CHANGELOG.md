@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Fish-school lateral-line hydrodynamic coupling & Kuramoto phase synchronization pass 28
+
+- Added the 5-seed Fish-School Lateral-Line Hydrodynamic Coupling, Kuramoto Phase Synchronization, and Sub-Tick Anomaly Evasion Wave evaluator ([`systems/alive-fish-lateral-line-hydrodynamics.js`](systems/alive-fish-lateral-line-hydrodynamics.js), [`scripts/alive-fish-lateral-line-hydrodynamics.cjs`](scripts/alive-fish-lateral-line-hydrodynamics.cjs)).
+- Verified on `5/5` seeds across 24 hydrodynamic scenarios per seed that `lateral-line-kuramoto-cstart-school` achieves `100.0` composite score (`+99.42` over `uncoupled-random-drifters`, `+70.0` over `nearest-neighbor-slow-cascade`, `+65.0` over `rigid-global-lock-echo-chamber`), `100.0%` Kuramoto sync health (`meanKuramotoR = 0.9870`), `100.0%` sub-tick C-start predator evasion (`meanEvasionWaveLatencyMs = 1.5975 ms`), and `100.0%` Byzantine neuromast glitch immunity.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 34 (`#alive-fabric-fish-hydrodynamics`, `Run Fish Hydro` button, and `runFishHydrodynamics()`).
+- Added [Pass 28 report](docs/ALIVE_PASS_28_REPORT.md), [JSON report](docs/reports/alive-fish-lateral-line-hydrodynamics-2026-11-09.json), [SVG chart](docs/reports/alive-fish-lateral-line-hydrodynamics-2026-11-09.svg) and unit tests (`tests/alive-fish-lateral-line-hydrodynamics.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Locust Solitaria-to-Gregaria phase polyphenism & adaptive trophic backoff pass 27
 
 - Added the 5-seed Locust Solitaria-to-Gregaria Phase Polyphenism, Density-Dependent Frontier Wavefront Expansion, and Adaptive Trophic Backoff evaluator ([`systems/alive-locust-phase-polyphenism.js`](systems/alive-locust-phase-polyphenism.js), [`scripts/alive-locust-phase-polyphenism.cjs`](scripts/alive-locust-phase-polyphenism.cjs)).

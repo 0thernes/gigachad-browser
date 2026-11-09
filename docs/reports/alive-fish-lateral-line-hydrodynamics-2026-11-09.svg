@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="340" viewBox="0 0 1180 340">
+  <rect width="1180" height="340" fill="#020617"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="16" font-weight="bold">ALIVE PASS 28 — Fish-School Lateral-Line Hydrodynamics &amp; Kuramoto Phase Synchronization (5 Seeds)</text>
+  <text x="24" y="58" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">Seeds: 19013, 29017, 39023, 49031, 59053 · Winner: lateral-line-kuramoto-cstart-school (100.0/100) · Kuramoto R: 0.9870 · C-Start Wave Latency: 1.60 ms</text>
+  
+      <text x="245" y="110" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">uncoupled-random-drifters</text>
+      <rect x="255" y="92" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="94" width="2" height="22" rx="3" fill="#f43f5e"/>
+      <text x="605" y="110" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=0.58 | sync=1.7% | evade=0.0% | glitchImm=0.0% | R=0.8780 | lat=25.65ms</text>
+    
+      <text x="245" y="164" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">nearest-neighbor-slow-cascade</text>
+      <rect x="255" y="146" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="148" width="102" height="22" rx="3" fill="#f59e0b"/>
+      <text x="605" y="164" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=30.00 | sync=0.0% | evade=0.0% | glitchImm=100.0% | R=0.9998 | lat=19.00ms</text>
+    
+      <text x="245" y="218" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">rigid-global-lock-echo-chamber</text>
+      <rect x="255" y="200" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="202" width="119" height="22" rx="3" fill="#38bdf8"/>
+      <text x="605" y="218" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=35.00 | sync=0.0% | evade=100.0% | glitchImm=0.0% | R=1.0000 | lat=1.60ms</text>
+    
+      <text x="245" y="272" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12" text-anchor="end">lateral-line-kuramoto-cstart-school</text>
+      <rect x="255" y="254" width="340" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="255" y="256" width="340" height="22" rx="3" fill="#34d399"/>
+      <text x="605" y="272" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12">score=100.00 | sync=100.0% | evade=100.0% | glitchImm=100.0% | R=0.9870 | lat=1.60ms</text>
+    
+  <text x="24" y="322" fill="#64748b" font-family="Consolas, monospace" font-size="11">24 hydrodynamic scenarios/seed (6 Kuramoto stream sync, 6 predator C-start evasion, 6 Byzantine neuromast glitch, 6 vortex shear recovery)</text>
+</svg>
