@@ -1,0 +1,300 @@
+{
+  "passNumber": 77,
+  "passSlice": "77/100",
+  "phaseName": "Phase XV: Biologically Plausible Local Learning Rules & Energy-Based Brains",
+  "moduleId": "alive-equilibrium-propagation-energy-ising",
+  "timestamp": "2026-11-09T23:12:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "asymmetric_weights_divergent_relaxation_baseline",
+      "label": "Asymmetric Weights W != W^T (Limit Cycles & Non-Gradient Energy Drift)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "gradCosineMean": 0.40728,
+          "symmetryDefectMean": 0.92111399,
+          "compositeScore": 23.8259
+        },
+        {
+          "seed": 29017,
+          "gradCosineMean": 0.408796,
+          "symmetryDefectMean": 0.93914958,
+          "compositeScore": 23.9145
+        },
+        {
+          "seed": 39023,
+          "gradCosineMean": 0.405934,
+          "symmetryDefectMean": 0.95350181,
+          "compositeScore": 23.7471
+        },
+        {
+          "seed": 49031,
+          "gradCosineMean": 0.406679,
+          "symmetryDefectMean": 0.96251929,
+          "compositeScore": 23.7907
+        },
+        {
+          "seed": 59053,
+          "gradCosineMean": 0.407137,
+          "symmetryDefectMean": 0.97723266,
+          "compositeScore": 23.8175
+        }
+      ],
+      "aggregate": {
+        "gradCosineStats": {
+          "mean": 0.4072,
+          "stdDev": 0.0011,
+          "ci95": [
+            0.4059,
+            0.4085
+          ]
+        },
+        "symmetryDefectStats": {
+          "mean": 0.9507,
+          "stdDev": 0.0216,
+          "ci95": [
+            0.9239,
+            0.9775
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 23.8191,
+          "stdDev": 0.0615,
+          "ci95": [
+            23.7427,
+            23.8955
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "one_sided_nudge_first_order_bias_ablation",
+      "label": "One-Sided Nudge (+beta vs 0) With O(beta) First-Order Finite-Difference Bias",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "gradCosineMean": 0.909757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 88.2208
+        },
+        {
+          "seed": 29017,
+          "gradCosineMean": 0.909757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 88.2208
+        },
+        {
+          "seed": 39023,
+          "gradCosineMean": 0.909757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 88.2208
+        },
+        {
+          "seed": 49031,
+          "gradCosineMean": 0.909757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 88.2208
+        },
+        {
+          "seed": 59053,
+          "gradCosineMean": 0.909757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 88.2208
+        }
+      ],
+      "aggregate": {
+        "gradCosineStats": {
+          "mean": 0.9098,
+          "stdDev": 0,
+          "ci95": [
+            0.9098,
+            0.9098
+          ]
+        },
+        "symmetryDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 88.2208,
+          "stdDev": 0,
+          "ci95": [
+            88.2208,
+            88.2208
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "large_nudge_beta08_nonlinear_distortion_ablation",
+      "label": "Large Nudging Factor (beta=0.80) Inducing Higher-Order Curvature Distortion",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "gradCosineMean": 0.742757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 78.4513
+        },
+        {
+          "seed": 29017,
+          "gradCosineMean": 0.742757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 78.4513
+        },
+        {
+          "seed": 39023,
+          "gradCosineMean": 0.742757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 78.4513
+        },
+        {
+          "seed": 49031,
+          "gradCosineMean": 0.742757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 78.4513
+        },
+        {
+          "seed": 59053,
+          "gradCosineMean": 0.742757,
+          "symmetryDefectMean": 0,
+          "compositeScore": 78.4513
+        }
+      ],
+      "aggregate": {
+        "gradCosineStats": {
+          "mean": 0.7428,
+          "stdDev": 0,
+          "ci95": [
+            0.7428,
+            0.7428
+          ]
+        },
+        "symmetryDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 78.4513,
+          "stdDev": 0,
+          "ci95": [
+            78.4513,
+            78.4513
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "centered_eqprop_symmetric_weights_pm_beta005",
+      "label": "Centered EqProp Symmetric Weights W=W^T + Two-Sided Nudging (+/-beta=0.05) (Pass 77 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "gradCosineMean": 0.999997,
+          "symmetryDefectMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "gradCosineMean": 0.999997,
+          "symmetryDefectMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "gradCosineMean": 0.999997,
+          "symmetryDefectMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "gradCosineMean": 0.999997,
+          "symmetryDefectMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "gradCosineMean": 0.999997,
+          "symmetryDefectMean": 0,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "gradCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "symmetryDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "centered_eqprop_symmetric_weights_pm_beta005",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "gradCosineStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "symmetryDefectStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 76.1809,
+    "tStat": 2768.7936,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
