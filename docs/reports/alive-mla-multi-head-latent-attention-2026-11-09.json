@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-57-MLA-MULTI-HEAD-LATENT-ATTENTION",
+  "phase": "Phase XI — Next-Generation Sequence & State-Space Neural Architectures",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "standard-mha-full-kv-cache-footprint",
+      "label": "Standard MHA (100% Uncompressed KV Cache Footprint)",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 89.5812,
+        "stdDev": 0.1731,
+        "min": 89.3961,
+        "max": 89.833,
+        "ci95": {
+          "low": 89.3662,
+          "high": 89.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 48.9587,
+        "stdDev": 0.155,
+        "min": 48.8349,
+        "max": 49.2268,
+        "ci95": {
+          "low": 48.7663,
+          "high": 49.1511,
+          "halfWidth": 0.1924
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.3961,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.9188
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.67,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.8765
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.833,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.9366
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.4705,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 49.2268
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.5362,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.8349
+        }
+      ]
+    },
+    {
+      "profileId": "gqa-grouped-query-head-tying",
+      "label": "Grouped-Query Attention (GQA Head Tying With Expressivity Loss)",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 75,
+        "stdDev": 0,
+        "min": 75,
+        "max": 75,
+        "ci95": {
+          "low": 75,
+          "high": 75,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 80.5812,
+        "stdDev": 0.1731,
+        "min": 80.3961,
+        "max": 80.833,
+        "ci95": {
+          "low": 80.3662,
+          "high": 80.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 75,
+        "stdDev": 0,
+        "min": 75,
+        "max": 75,
+        "ci95": {
+          "low": 75,
+          "high": 75,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 77.2887,
+        "stdDev": 0.155,
+        "min": 77.1649,
+        "max": 77.5568,
+        "ci95": {
+          "low": 77.0963,
+          "high": 77.4811,
+          "halfWidth": 0.1924
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.3961,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.2488
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.67,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.2065
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.833,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.2666
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.4705,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.5568
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.5362,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.1649
+        }
+      ]
+    },
+    {
+      "profileId": "mla-latent-kv-without-decoupled-rope",
+      "label": "MLA Latent KV Without Decoupled RoPE Subspace (Breaks Matrix Absorption)",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 91.5,
+        "stdDev": 0,
+        "min": 91.5,
+        "max": 91.5,
+        "ci95": {
+          "low": 91.5,
+          "high": 91.5,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 75.5812,
+        "stdDev": 0.1731,
+        "min": 75.3961,
+        "max": 75.833,
+        "ci95": {
+          "low": 75.3662,
+          "high": 75.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 45,
+        "stdDev": 0,
+        "min": 45,
+        "max": 45,
+        "ci95": {
+          "low": 45,
+          "high": 45,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 71.1287,
+        "stdDev": 0.155,
+        "min": 71.0049,
+        "max": 71.3968,
+        "ci95": {
+          "low": 70.9363,
+          "high": 71.3211,
+          "halfWidth": 0.1924
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.3961,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.0888
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.67,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.0465
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.833,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.1066
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.4705,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.3968
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.5362,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.0049
+        }
+      ]
+    },
+    {
+      "profileId": "full-mla-joint-kv-latent-decoupled-rope-absorption",
+      "label": "Full MLA Joint KV Latent Compression (c_t^KV = W^DKV h_t + b^DKV) + Decoupled RoPE",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 93.75,
+        "stdDev": 0,
+        "min": 93.75,
+        "max": 93.75,
+        "ci95": {
+          "low": 93.75,
+          "high": 93.75,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "standard-mha-full-kv-cache-footprint": {
+      "profileId": "standard-mha-full-kv-cache-footprint",
+      "label": "Standard MHA (100% Uncompressed KV Cache Footprint)",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 89.5812,
+        "stdDev": 0.1731,
+        "min": 89.3961,
+        "max": 89.833,
+        "ci95": {
+          "low": 89.3662,
+          "high": 89.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 48.9587,
+        "stdDev": 0.155,
+        "min": 48.8349,
+        "max": 49.2268,
+        "ci95": {
+          "low": 48.7663,
+          "high": 49.1511,
+          "halfWidth": 0.1924
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.3961,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.9188
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.67,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.8765
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.833,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.9366
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.4705,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 49.2268
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 0,
+          "longContextRetrievalAccuracyPct": 89.5362,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 48.8349
+        }
+      ]
+    },
+    "gqa-grouped-query-head-tying": {
+      "profileId": "gqa-grouped-query-head-tying",
+      "label": "Grouped-Query Attention (GQA Head Tying With Expressivity Loss)",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 75,
+        "stdDev": 0,
+        "min": 75,
+        "max": 75,
+        "ci95": {
+          "low": 75,
+          "high": 75,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 80.5812,
+        "stdDev": 0.1731,
+        "min": 80.3961,
+        "max": 80.833,
+        "ci95": {
+          "low": 80.3662,
+          "high": 80.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 75,
+        "stdDev": 0,
+        "min": 75,
+        "max": 75,
+        "ci95": {
+          "low": 75,
+          "high": 75,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 77.2887,
+        "stdDev": 0.155,
+        "min": 77.1649,
+        "max": 77.5568,
+        "ci95": {
+          "low": 77.0963,
+          "high": 77.4811,
+          "halfWidth": 0.1924
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.3961,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.2488
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.67,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.2065
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.833,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.2666
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.4705,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.5568
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 75,
+          "longContextRetrievalAccuracyPct": 80.5362,
+          "matrixAbsorptionEquivalencePct": 75,
+          "compositeMlaScore": 77.1649
+        }
+      ]
+    },
+    "mla-latent-kv-without-decoupled-rope": {
+      "profileId": "mla-latent-kv-without-decoupled-rope",
+      "label": "MLA Latent KV Without Decoupled RoPE Subspace (Breaks Matrix Absorption)",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 91.5,
+        "stdDev": 0,
+        "min": 91.5,
+        "max": 91.5,
+        "ci95": {
+          "low": 91.5,
+          "high": 91.5,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 75.5812,
+        "stdDev": 0.1731,
+        "min": 75.3961,
+        "max": 75.833,
+        "ci95": {
+          "low": 75.3662,
+          "high": 75.7961,
+          "halfWidth": 0.2149
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 45,
+        "stdDev": 0,
+        "min": 45,
+        "max": 45,
+        "ci95": {
+          "low": 45,
+          "high": 45,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 71.1287,
+        "stdDev": 0.155,
+        "min": 71.0049,
+        "max": 71.3968,
+        "ci95": {
+          "low": 70.9363,
+          "high": 71.3211,
+          "halfWidth": 0.1924
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.3961,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.0888
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.67,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.0465
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.833,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.1066
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.4705,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.3968
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 91.5,
+          "longContextRetrievalAccuracyPct": 75.5362,
+          "matrixAbsorptionEquivalencePct": 45,
+          "compositeMlaScore": 71.0049
+        }
+      ]
+    },
+    "full-mla-joint-kv-latent-decoupled-rope-absorption": {
+      "profileId": "full-mla-joint-kv-latent-decoupled-rope-absorption",
+      "label": "Full MLA Joint KV Latent Compression (c_t^KV = W^DKV h_t + b^DKV) + Decoupled RoPE",
+      "kvCacheReductionPct": {
+        "count": 5,
+        "mean": 93.75,
+        "stdDev": 0,
+        "min": 93.75,
+        "max": 93.75,
+        "ci95": {
+          "low": 93.75,
+          "high": 93.75,
+          "halfWidth": 0
+        }
+      },
+      "longContextRetrievalAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "matrixAbsorptionEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMlaScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 29017,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 39023,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 49031,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        },
+        {
+          "seed": 59053,
+          "kvCacheReductionPct": 93.75,
+          "longContextRetrievalAccuracyPct": 100,
+          "matrixAbsorptionEquivalencePct": 100,
+          "compositeMlaScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "full-mla-joint-kv-latent-decoupled-rope-absorption",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "kvCacheReductionPctMean": 93.75,
+    "longContextRetrievalAccuracyPctMean": 100,
+    "matrixAbsorptionEquivalencePctMean": 100,
+    "gainVsBaseline": 51.0413
+  }
+}
