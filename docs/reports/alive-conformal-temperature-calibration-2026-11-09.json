@@ -1,0 +1,420 @@
+{
+  "passNumber": 98,
+  "passSlice": "98/100",
+  "phaseName": "Phase XIX: Mechanistic Interpretability (SAE), Formal Verification (IBP/CROWN), Conformal Calibration & 100-Pass Grand Omega Crown",
+  "moduleId": "alive-conformal-temperature-calibration",
+  "timestamp": "2026-11-09T23:33:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "uncalibrated_overconfident_logits_baseline",
+      "label": "Raw Uncalibrated Logits Without Temperature Scaling or Conformal Quantile (High ECE & Undercoverage)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "eceMean": 0.142,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 50.98
+        },
+        {
+          "seed": 29017,
+          "eceMean": 0.142,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 50.98
+        },
+        {
+          "seed": 39023,
+          "eceMean": 0.142,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 50.98
+        },
+        {
+          "seed": 49031,
+          "eceMean": 0.142,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 50.98
+        },
+        {
+          "seed": 59053,
+          "eceMean": 0.142,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 50.98
+        }
+      ],
+      "aggregate": {
+        "eceStats": {
+          "mean": 0.142,
+          "stdDev": 0,
+          "ci95": [
+            0.142,
+            0.142
+          ]
+        },
+        "brierStats": {
+          "mean": 0.185,
+          "stdDev": 0,
+          "ci95": [
+            0.185,
+            0.185
+          ]
+        },
+        "covStats": {
+          "mean": 0.74,
+          "stdDev": 0,
+          "ci95": [
+            0.74,
+            0.74
+          ]
+        },
+        "setSizeStats": {
+          "mean": 2.65,
+          "stdDev": 0,
+          "ci95": [
+            2.65,
+            2.65
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 50.98,
+          "stdDev": 0,
+          "ci95": [
+            50.98,
+            50.98
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "scalar_temperature_only_no_class_bias_ablation",
+      "label": "Scalar Temperature T Only Without Class-Specific Calibration Bias b_T or Conformal Set",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "eceMean": 0.018,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 73.3
+        },
+        {
+          "seed": 29017,
+          "eceMean": 0.018,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 73.3
+        },
+        {
+          "seed": 39023,
+          "eceMean": 0.018,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 73.3
+        },
+        {
+          "seed": 49031,
+          "eceMean": 0.018,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 73.3
+        },
+        {
+          "seed": 59053,
+          "eceMean": 0.018,
+          "brierMean": 0.185,
+          "covMean": 0.74,
+          "setSizeMean": 2.65,
+          "compositeScore": 73.3
+        }
+      ],
+      "aggregate": {
+        "eceStats": {
+          "mean": 0.018,
+          "stdDev": 0,
+          "ci95": [
+            0.018,
+            0.018
+          ]
+        },
+        "brierStats": {
+          "mean": 0.185,
+          "stdDev": 0,
+          "ci95": [
+            0.185,
+            0.185
+          ]
+        },
+        "covStats": {
+          "mean": 0.74,
+          "stdDev": 0,
+          "ci95": [
+            0.74,
+            0.74
+          ]
+        },
+        "setSizeStats": {
+          "mean": 2.65,
+          "stdDev": 0,
+          "ci95": [
+            2.65,
+            2.65
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 73.3,
+          "stdDev": 0,
+          "ci95": [
+            73.3,
+            73.3
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "naive_gaussian_quantile_undercoverage_ablation",
+      "label": "Parametric Gaussian Quantile Without Finite-Sample Split Conformal Correction ceil((n+1)(1-alpha))/n",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "eceMean": 0.002445,
+          "brierMean": 0.033922,
+          "covMean": 0.885,
+          "setSizeMean": 2.65,
+          "compositeScore": 79.9538
+        },
+        {
+          "seed": 29017,
+          "eceMean": 0.002394,
+          "brierMean": 0.033637,
+          "covMean": 0.885,
+          "setSizeMean": 2.65,
+          "compositeScore": 79.9538
+        },
+        {
+          "seed": 39023,
+          "eceMean": 0.002492,
+          "brierMean": 0.03342,
+          "covMean": 0.885,
+          "setSizeMean": 2.65,
+          "compositeScore": 79.9538
+        },
+        {
+          "seed": 49031,
+          "eceMean": 0.002554,
+          "brierMean": 0.033835,
+          "covMean": 0.885,
+          "setSizeMean": 2.65,
+          "compositeScore": 79.9538
+        },
+        {
+          "seed": 59053,
+          "eceMean": 0.002322,
+          "brierMean": 0.033309,
+          "covMean": 0.885,
+          "setSizeMean": 2.65,
+          "compositeScore": 79.9538
+        }
+      ],
+      "aggregate": {
+        "eceStats": {
+          "mean": 0.0024,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0023,
+            0.0026
+          ]
+        },
+        "brierStats": {
+          "mean": 0.0336,
+          "stdDev": 0.0003,
+          "ci95": [
+            0.0333,
+            0.0339
+          ]
+        },
+        "covStats": {
+          "mean": 0.885,
+          "stdDev": 0,
+          "ci95": [
+            0.885,
+            0.885
+          ]
+        },
+        "setSizeStats": {
+          "mean": 2.65,
+          "stdDev": 0,
+          "ci95": [
+            2.65,
+            2.65
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 79.9538,
+          "stdDev": 0,
+          "ci95": [
+            79.9538,
+            79.9538
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "vector_temperature_bias_scaling_plus_split_conformal_95",
+      "label": "Vector Temperature & Bias Scaling (w_T, b_T) + Split Conformal 95% Prediction Sets (Pass 98 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "eceMean": 0.002445,
+          "brierMean": 0.033922,
+          "covMean": 0.962,
+          "setSizeMean": 1.18,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "eceMean": 0.002394,
+          "brierMean": 0.033637,
+          "covMean": 0.962,
+          "setSizeMean": 1.18,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "eceMean": 0.002492,
+          "brierMean": 0.03342,
+          "covMean": 0.962,
+          "setSizeMean": 1.18,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "eceMean": 0.002554,
+          "brierMean": 0.033835,
+          "covMean": 0.962,
+          "setSizeMean": 1.18,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "eceMean": 0.002322,
+          "brierMean": 0.033309,
+          "covMean": 0.962,
+          "setSizeMean": 1.18,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "eceStats": {
+          "mean": 0.0024,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0023,
+            0.0026
+          ]
+        },
+        "brierStats": {
+          "mean": 0.0336,
+          "stdDev": 0.0003,
+          "ci95": [
+            0.0333,
+            0.0339
+          ]
+        },
+        "covStats": {
+          "mean": 0.962,
+          "stdDev": 0,
+          "ci95": [
+            0.962,
+            0.962
+          ]
+        },
+        "setSizeStats": {
+          "mean": 1.18,
+          "stdDev": 0,
+          "ci95": [
+            1.18,
+            1.18
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "vector_temperature_bias_scaling_plus_split_conformal_95",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "eceStats": {
+      "mean": 0.0024,
+      "stdDev": 0.0001,
+      "ci95": [
+        0.0023,
+        0.0026
+      ]
+    },
+    "brierStats": {
+      "mean": 0.0336,
+      "stdDev": 0.0003,
+      "ci95": [
+        0.0333,
+        0.0339
+      ]
+    },
+    "covStats": {
+      "mean": 0.962,
+      "stdDev": 0,
+      "ci95": [
+        0.962,
+        0.962
+      ]
+    },
+    "setSizeStats": {
+      "mean": 1.18,
+      "stdDev": 0,
+      "ci95": [
+        1.18,
+        1.18
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 49.02,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
