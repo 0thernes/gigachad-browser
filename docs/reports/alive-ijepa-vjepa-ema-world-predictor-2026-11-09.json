@@ -1,0 +1,300 @@
+{
+  "passNumber": 81,
+  "passSlice": "81/100",
+  "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+  "moduleId": "alive-ijepa-vjepa-ema-world-predictor",
+  "timestamp": "2026-11-09T23:16:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "pixel_space_mse_autoencoder_baseline",
+      "label": "Pixel-Space MSE Reconstruction Autoencoder (High-Frequency Noise Overfitting)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "effectiveRankMean": 0.64,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 49.68
+        },
+        {
+          "seed": 29017,
+          "effectiveRankMean": 0.64,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 49.68
+        },
+        {
+          "seed": 39023,
+          "effectiveRankMean": 0.64,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 49.68
+        },
+        {
+          "seed": 49031,
+          "effectiveRankMean": 0.64,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 49.68
+        },
+        {
+          "seed": 59053,
+          "effectiveRankMean": 0.64,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 49.68
+        }
+      ],
+      "aggregate": {
+        "effectiveRankStats": {
+          "mean": 0.64,
+          "stdDev": 0,
+          "ci95": [
+            0.64,
+            0.64
+          ]
+        },
+        "maskedCosineStats": {
+          "mean": 0.48,
+          "stdDev": 0,
+          "ci95": [
+            0.48,
+            0.48
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 49.68,
+          "stdDev": 0,
+          "ci95": [
+            49.68,
+            49.68
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "shared_encoder_no_ema_representation_collapse_ablation",
+      "label": "Shared Online/Target Weights (tau=0 No EMA -> Constant Representation Collapse)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "effectiveRankMean": 0.08,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 27
+        },
+        {
+          "seed": 29017,
+          "effectiveRankMean": 0.08,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 27
+        },
+        {
+          "seed": 39023,
+          "effectiveRankMean": 0.08,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 27
+        },
+        {
+          "seed": 49031,
+          "effectiveRankMean": 0.08,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 27
+        },
+        {
+          "seed": 59053,
+          "effectiveRankMean": 0.08,
+          "maskedCosineMean": 0.48,
+          "compositeScore": 27
+        }
+      ],
+      "aggregate": {
+        "effectiveRankStats": {
+          "mean": 0.08,
+          "stdDev": 0,
+          "ci95": [
+            0.08,
+            0.08
+          ]
+        },
+        "maskedCosineStats": {
+          "mean": 0.48,
+          "stdDev": 0,
+          "ci95": [
+            0.48,
+            0.48
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 27,
+          "stdDev": 0,
+          "ci95": [
+            27,
+            27
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "jepa_without_mask_positional_bias_ablation",
+      "label": "I-JEPA Without Conditioned Spatial/Temporal Mask-Token Positional Bias b_mask_pos",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.81,
+          "compositeScore": 85.095
+        },
+        {
+          "seed": 29017,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.81,
+          "compositeScore": 85.095
+        },
+        {
+          "seed": 39023,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.81,
+          "compositeScore": 85.095
+        },
+        {
+          "seed": 49031,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.81,
+          "compositeScore": 85.095
+        },
+        {
+          "seed": 59053,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.81,
+          "compositeScore": 85.095
+        }
+      ],
+      "aggregate": {
+        "effectiveRankStats": {
+          "mean": 0.965,
+          "stdDev": 0,
+          "ci95": [
+            0.965,
+            0.965
+          ]
+        },
+        "maskedCosineStats": {
+          "mean": 0.81,
+          "stdDev": 0,
+          "ci95": [
+            0.81,
+            0.81
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 85.095,
+          "stdDev": 0,
+          "ci95": [
+            85.095,
+            85.095
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ijepa_vjepa_cosine_ema_vicreg_mask_bias",
+      "label": "I-JEPA/V-JEPA Cosine EMA Target (tau=0.996) + VICReg Variance Floor + Mask Positional Bias (Pass 81 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.990736,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.990395,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.990597,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.990326,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "effectiveRankMean": 0.965,
+          "maskedCosineMean": 0.990858,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "effectiveRankStats": {
+          "mean": 0.965,
+          "stdDev": 0,
+          "ci95": [
+            0.965,
+            0.965
+          ]
+        },
+        "maskedCosineStats": {
+          "mean": 0.9906,
+          "stdDev": 0.0002,
+          "ci95": [
+            0.9903,
+            0.9909
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "ijepa_vjepa_cosine_ema_vicreg_mask_bias",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "effectiveRankStats": {
+      "mean": 0.965,
+      "stdDev": 0,
+      "ci95": [
+        0.965,
+        0.965
+      ]
+    },
+    "maskedCosineStats": {
+      "mean": 0.9906,
+      "stdDev": 0.0002,
+      "ci95": [
+        0.9903,
+        0.9909
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 50.32,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
