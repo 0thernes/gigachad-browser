@@ -810,6 +810,33 @@ test('runTorPluggableTransports renders 5-seed Tor Pluggable Transports (obfs4/s
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runOnionPowClientAuth renders 5-seed Onion v3 Equi-X PoW & x25519 Client Auth in section 28', async () => {
+  const { window, dom } = load();
+  window.AliveOnionPowClientAuth = {
+    run: async () => ({
+      summary: {
+        fullPowAuthScoreMean: 100.0,
+        gainVsUnauthenticatedNoPow: 73.3,
+        gainVsClientAuthOnlyNoPow: 38.3,
+        meanEquiXEffort: 35.2
+      },
+      aggregatedByProfile: {
+        'unauthenticated-no-pow': { powAuthCompositeScore: { mean: 26.7 }, legitimateRendezvousRatePct: { mean: 33.3 }, privateAuthDecryptionRatePct: { mean: 0 }, ddosQueueAdmissionRatePct: { mean: 0 }, tamperedDescriptorRejectionRatePct: { mean: 100 } },
+        'client-auth-only-no-pow': { powAuthCompositeScore: { mean: 61.7 }, legitimateRendezvousRatePct: { mean: 33.3 }, privateAuthDecryptionRatePct: { mean: 100 }, ddosQueueAdmissionRatePct: { mean: 0 }, tamperedDescriptorRejectionRatePct: { mean: 100 } },
+        'static-low-pow-no-mac-verify': { powAuthCompositeScore: { mean: 36.7 }, legitimateRendezvousRatePct: { mean: 33.3 }, privateAuthDecryptionRatePct: { mean: 100 }, ddosQueueAdmissionRatePct: { mean: 0 }, tamperedDescriptorRejectionRatePct: { mean: 0 } },
+        'full-equix-pow-x25519-client-auth': { powAuthCompositeScore: { mean: 100.0 }, legitimateRendezvousRatePct: { mean: 100 }, privateAuthDecryptionRatePct: { mean: 100 }, ddosQueueAdmissionRatePct: { mean: 100 }, tamperedDescriptorRejectionRatePct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runOnionPowClientAuth();
+  assert.equal(report.summary.fullPowAuthScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full Equi-X + x25519 score=100.0')), 'Onion PoW summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-equix-pow-x25519-')), 'Onion PoW rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

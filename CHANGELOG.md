@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Tor v3 .onion Equi-X Proof-of-Work (Proposal 327) & x25519 client authorization pass 22
+
+- Added the 5-seed Tor v3 `.onion` Equi-X Proof-of-Work (`rend-spec-v3` §3.4 / Proposal 327) & `x25519` Client Authorization Descriptor Decryption evaluator ([`systems/alive-onion-pow-client-auth.js`](systems/alive-onion-pow-client-auth.js), [`scripts/alive-onion-pow-client-auth.cjs`](scripts/alive-onion-pow-client-auth.cjs)).
+- Verified on `5/5` seeds across 20 `.onion` v3 scenarios per seed that `full-equix-pow-x25519-client-auth` achieves `100.0` composite score (`+73.33` over `unauthenticated-no-pow`, `+48.33` over `client-auth-only-no-pow`, `+63.33` over `static-low-pow-no-mac-verify`), `100.0%` legitimate rendezvous rate, `100.0%` private `x25519` decryption rate, `100.0%` DDoS priority-queue admission rate (`meanEquiXEffort = 34.4`, `meanEquiXSolveTimeMs = 8.071 ms`), and `100.0%` tampered `D_MAC` / expired PoW seed rejection.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 28 (`#alive-fabric-onion-pow`, `Run Onion PoW` button, and `runOnionPowClientAuth()`).
+- Added [Pass 22 report](docs/ALIVE_PASS_22_REPORT.md), [JSON report](docs/reports/alive-onion-pow-client-auth-2026-11-09.json), [SVG chart](docs/reports/alive-onion-pow-client-auth-2026-11-09.svg) and unit tests (`tests/alive-onion-pow-client-auth.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Tor pluggable transports (obfs4 IAT-2 + Snowflake WebRTC) & active-probing DPI resistance pass 21
 
 - Added the 5-seed Tor Pluggable Transports (`obfs4` Elligator2/ntor + `iat-mode=2` polymorphic framing and `Snowflake` domain-fronted ephemeral WebRTC bridge fallback) & Active-Probing DPI Resistance evaluator ([`systems/alive-tor-pluggable-transports.js`](systems/alive-tor-pluggable-transports.js), [`scripts/alive-tor-pluggable-transports.cjs`](scripts/alive-tor-pluggable-transports.cjs)).

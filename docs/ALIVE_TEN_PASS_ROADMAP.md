@@ -70,7 +70,7 @@ validation conditions and remaining work.
 | Pass | Intended focus | Status |
 | --- | --- | --- |
 | 21 | Pluggable Transports (`obfs4` IAT-2 Polymorphic Framing + `Snowflake` Ephemeral WebRTC/Domain-Fronting Bridge Fallback) & Active-Probing DPI Resistance | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_21_REPORT.md), [PT JSON](reports/alive-tor-pluggable-transports-2026-11-09.json), [PT SVG](reports/alive-tor-pluggable-transports-2026-11-09.svg) |
-| 22 | Tor v3 `.onion` Equi-X Proof-of-Work (`rend-spec-v3` §3.4 / Proposal 327) & `x25519` Client Authorization Descriptor Decryption | Planned (Pass 22) |
+| 22 | Tor v3 `.onion` Equi-X Proof-of-Work (`rend-spec-v3` §3.4 / Proposal 327) & `x25519` Client Authorization Descriptor Decryption | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_22_REPORT.md), [Onion PoW JSON](reports/alive-onion-pow-client-auth-2026-11-09.json), [Onion PoW SVG](reports/alive-onion-pow-client-auth-2026-11-09.svg) |
 | 23 | Website Fingerprinting (`WF`) Defense & Circuit Padding Machines (Adaptive WTF-PAD / RegulaTor Burst Shaping & Inter-Arrival Time Masking) | Planned (Pass 23) |
 | 24 | Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger across Ephemeral `.onion` & Clearnet Sources | Planned (Pass 24) |
 | 25 | Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix (`D1`–`D10` Executed Audit & Cryptographic SHA-256 Freeze) | Planned (Pass 25) |
