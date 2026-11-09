@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-43-MUP-MAXIMAL-UPDATE-PARAMETERIZATION",
+  "phase": "Phase VIII — Spectral, Orthogonal & Riemannian Weight-and-Bias Initialization & Parameter Conditioning",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "standard-parameterization-sp-no-width-scaling",
+      "label": "Standard Parameterization (SP) Without Width Scaling",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 23.3601,
+        "stdDev": 0.1986,
+        "min": 23.0984,
+        "max": 23.6139,
+        "ci95": {
+          "low": 23.1135,
+          "high": 23.6067,
+          "halfWidth": 0.2466
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 20.5371,
+        "stdDev": 0.2059,
+        "min": 20.1974,
+        "max": 20.7252,
+        "ci95": {
+          "low": 20.2814,
+          "high": 20.7928,
+          "halfWidth": 0.2557
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 1.3561,
+        "stdDev": 0.0033,
+        "min": 1.3516,
+        "max": 1.3593,
+        "ci95": {
+          "low": 1.3519,
+          "high": 1.3602,
+          "halfWidth": 0.0041
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 20.9553,
+        "stdDev": 0.2512,
+        "min": 20.5989,
+        "max": 21.2798,
+        "ci95": {
+          "low": 20.6434,
+          "high": 21.2672,
+          "halfWidth": 0.3119
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 23.3082,
+          "featureEvolutionCoordCheckPct": 20.5938,
+          "optimalLrShiftLog10": 1.3591,
+          "compositeMupScore": 20.8559
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 23.6139,
+          "featureEvolutionCoordCheckPct": 20.5101,
+          "optimalLrShiftLog10": 1.3539,
+          "compositeMupScore": 21.0487
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 23.0984,
+          "featureEvolutionCoordCheckPct": 20.7252,
+          "optimalLrShiftLog10": 1.3516,
+          "compositeMupScore": 21.2798
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 23.491,
+          "featureEvolutionCoordCheckPct": 20.1974,
+          "optimalLrShiftLog10": 1.3593,
+          "compositeMupScore": 20.5989
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 23.2891,
+          "featureEvolutionCoordCheckPct": 20.6592,
+          "optimalLrShiftLog10": 1.3565,
+          "compositeMupScore": 20.9933
+        }
+      ]
+    },
+    {
+      "profileId": "neural-tangent-kernel-ntk-lazy-regime",
+      "label": "NTK Parameterization (Lazy Feature Regime)",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 56.8881,
+        "stdDev": 0.1589,
+        "min": 56.6787,
+        "max": 57.0911,
+        "ci95": {
+          "low": 56.6908,
+          "high": 57.0854,
+          "halfWidth": 0.1973
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 30.0297,
+        "stdDev": 0.1647,
+        "min": 29.7579,
+        "max": 30.1801,
+        "ci95": {
+          "low": 29.8251,
+          "high": 30.2343,
+          "halfWidth": 0.2046
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 0.603,
+        "stdDev": 0.0017,
+        "min": 0.6008,
+        "max": 0.6047,
+        "ci95": {
+          "low": 0.601,
+          "high": 0.6051,
+          "halfWidth": 0.0021
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 49.2128,
+        "stdDev": 0.2093,
+        "min": 48.9158,
+        "max": 49.4831,
+        "ci95": {
+          "low": 48.9529,
+          "high": 49.4726,
+          "halfWidth": 0.2599
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 56.8466,
+          "featureEvolutionCoordCheckPct": 30.075,
+          "optimalLrShiftLog10": 0.6045,
+          "compositeMupScore": 49.1299
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 57.0911,
+          "featureEvolutionCoordCheckPct": 30.0081,
+          "optimalLrShiftLog10": 0.602,
+          "compositeMupScore": 49.2906
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 56.6787,
+          "featureEvolutionCoordCheckPct": 30.1801,
+          "optimalLrShiftLog10": 0.6008,
+          "compositeMupScore": 49.4831
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 56.9928,
+          "featureEvolutionCoordCheckPct": 29.7579,
+          "optimalLrShiftLog10": 0.6047,
+          "compositeMupScore": 48.9158
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 56.8312,
+          "featureEvolutionCoordCheckPct": 30.1274,
+          "optimalLrShiftLog10": 0.6032,
+          "compositeMupScore": 49.2445
+        }
+      ]
+    },
+    {
+      "profileId": "partial-lr-scaling-without-output-readout-1overd",
+      "label": "Partial LR Scaling Without 1/d Readout Weight Scaling",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 75.4161,
+        "stdDev": 0.1191,
+        "min": 75.2591,
+        "max": 75.5683,
+        "ci95": {
+          "low": 75.2681,
+          "high": 75.564,
+          "halfWidth": 0.1479
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 77.5223,
+        "stdDev": 0.1235,
+        "min": 77.3185,
+        "max": 77.6351,
+        "ci95": {
+          "low": 77.3689,
+          "high": 77.6756,
+          "halfWidth": 0.1534
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 0.2465,
+        "stdDev": 0.0008,
+        "min": 0.2454,
+        "max": 0.2473,
+        "ci95": {
+          "low": 0.2455,
+          "high": 0.2475,
+          "halfWidth": 0.001
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 75.9702,
+        "stdDev": 0.1675,
+        "min": 75.7326,
+        "max": 76.1865,
+        "ci95": {
+          "low": 75.7623,
+          "high": 76.1781,
+          "halfWidth": 0.2079
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 75.3849,
+          "featureEvolutionCoordCheckPct": 77.5562,
+          "optimalLrShiftLog10": 0.2473,
+          "compositeMupScore": 75.9039
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 75.5683,
+          "featureEvolutionCoordCheckPct": 77.5061,
+          "optimalLrShiftLog10": 0.246,
+          "compositeMupScore": 76.0325
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 75.2591,
+          "featureEvolutionCoordCheckPct": 77.6351,
+          "optimalLrShiftLog10": 0.2454,
+          "compositeMupScore": 76.1865
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 75.4946,
+          "featureEvolutionCoordCheckPct": 77.3185,
+          "optimalLrShiftLog10": 0.2473,
+          "compositeMupScore": 75.7326
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 75.3734,
+          "featureEvolutionCoordCheckPct": 77.5955,
+          "optimalLrShiftLog10": 0.2466,
+          "compositeMupScore": 75.9956
+        }
+      ]
+    },
+    {
+      "profileId": "full-mup-width-invariant-weight-bias-lr-scaling",
+      "label": "Full muP Width-Invariant Weight, Bias & LR Scaling (64->256->1024)",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "standard-parameterization-sp-no-width-scaling": {
+      "profileId": "standard-parameterization-sp-no-width-scaling",
+      "label": "Standard Parameterization (SP) Without Width Scaling",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 23.3601,
+        "stdDev": 0.1986,
+        "min": 23.0984,
+        "max": 23.6139,
+        "ci95": {
+          "low": 23.1135,
+          "high": 23.6067,
+          "halfWidth": 0.2466
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 20.5371,
+        "stdDev": 0.2059,
+        "min": 20.1974,
+        "max": 20.7252,
+        "ci95": {
+          "low": 20.2814,
+          "high": 20.7928,
+          "halfWidth": 0.2557
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 1.3561,
+        "stdDev": 0.0033,
+        "min": 1.3516,
+        "max": 1.3593,
+        "ci95": {
+          "low": 1.3519,
+          "high": 1.3602,
+          "halfWidth": 0.0041
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 20.9553,
+        "stdDev": 0.2512,
+        "min": 20.5989,
+        "max": 21.2798,
+        "ci95": {
+          "low": 20.6434,
+          "high": 21.2672,
+          "halfWidth": 0.3119
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 23.3082,
+          "featureEvolutionCoordCheckPct": 20.5938,
+          "optimalLrShiftLog10": 1.3591,
+          "compositeMupScore": 20.8559
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 23.6139,
+          "featureEvolutionCoordCheckPct": 20.5101,
+          "optimalLrShiftLog10": 1.3539,
+          "compositeMupScore": 21.0487
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 23.0984,
+          "featureEvolutionCoordCheckPct": 20.7252,
+          "optimalLrShiftLog10": 1.3516,
+          "compositeMupScore": 21.2798
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 23.491,
+          "featureEvolutionCoordCheckPct": 20.1974,
+          "optimalLrShiftLog10": 1.3593,
+          "compositeMupScore": 20.5989
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 23.2891,
+          "featureEvolutionCoordCheckPct": 20.6592,
+          "optimalLrShiftLog10": 1.3565,
+          "compositeMupScore": 20.9933
+        }
+      ]
+    },
+    "neural-tangent-kernel-ntk-lazy-regime": {
+      "profileId": "neural-tangent-kernel-ntk-lazy-regime",
+      "label": "NTK Parameterization (Lazy Feature Regime)",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 56.8881,
+        "stdDev": 0.1589,
+        "min": 56.6787,
+        "max": 57.0911,
+        "ci95": {
+          "low": 56.6908,
+          "high": 57.0854,
+          "halfWidth": 0.1973
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 30.0297,
+        "stdDev": 0.1647,
+        "min": 29.7579,
+        "max": 30.1801,
+        "ci95": {
+          "low": 29.8251,
+          "high": 30.2343,
+          "halfWidth": 0.2046
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 0.603,
+        "stdDev": 0.0017,
+        "min": 0.6008,
+        "max": 0.6047,
+        "ci95": {
+          "low": 0.601,
+          "high": 0.6051,
+          "halfWidth": 0.0021
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 49.2128,
+        "stdDev": 0.2093,
+        "min": 48.9158,
+        "max": 49.4831,
+        "ci95": {
+          "low": 48.9529,
+          "high": 49.4726,
+          "halfWidth": 0.2599
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 56.8466,
+          "featureEvolutionCoordCheckPct": 30.075,
+          "optimalLrShiftLog10": 0.6045,
+          "compositeMupScore": 49.1299
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 57.0911,
+          "featureEvolutionCoordCheckPct": 30.0081,
+          "optimalLrShiftLog10": 0.602,
+          "compositeMupScore": 49.2906
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 56.6787,
+          "featureEvolutionCoordCheckPct": 30.1801,
+          "optimalLrShiftLog10": 0.6008,
+          "compositeMupScore": 49.4831
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 56.9928,
+          "featureEvolutionCoordCheckPct": 29.7579,
+          "optimalLrShiftLog10": 0.6047,
+          "compositeMupScore": 48.9158
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 56.8312,
+          "featureEvolutionCoordCheckPct": 30.1274,
+          "optimalLrShiftLog10": 0.6032,
+          "compositeMupScore": 49.2445
+        }
+      ]
+    },
+    "partial-lr-scaling-without-output-readout-1overd": {
+      "profileId": "partial-lr-scaling-without-output-readout-1overd",
+      "label": "Partial LR Scaling Without 1/d Readout Weight Scaling",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 75.4161,
+        "stdDev": 0.1191,
+        "min": 75.2591,
+        "max": 75.5683,
+        "ci95": {
+          "low": 75.2681,
+          "high": 75.564,
+          "halfWidth": 0.1479
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 77.5223,
+        "stdDev": 0.1235,
+        "min": 77.3185,
+        "max": 77.6351,
+        "ci95": {
+          "low": 77.3689,
+          "high": 77.6756,
+          "halfWidth": 0.1534
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 0.2465,
+        "stdDev": 0.0008,
+        "min": 0.2454,
+        "max": 0.2473,
+        "ci95": {
+          "low": 0.2455,
+          "high": 0.2475,
+          "halfWidth": 0.001
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 75.9702,
+        "stdDev": 0.1675,
+        "min": 75.7326,
+        "max": 76.1865,
+        "ci95": {
+          "low": 75.7623,
+          "high": 76.1781,
+          "halfWidth": 0.2079
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 75.3849,
+          "featureEvolutionCoordCheckPct": 77.5562,
+          "optimalLrShiftLog10": 0.2473,
+          "compositeMupScore": 75.9039
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 75.5683,
+          "featureEvolutionCoordCheckPct": 77.5061,
+          "optimalLrShiftLog10": 0.246,
+          "compositeMupScore": 76.0325
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 75.2591,
+          "featureEvolutionCoordCheckPct": 77.6351,
+          "optimalLrShiftLog10": 0.2454,
+          "compositeMupScore": 76.1865
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 75.4946,
+          "featureEvolutionCoordCheckPct": 77.3185,
+          "optimalLrShiftLog10": 0.2473,
+          "compositeMupScore": 75.7326
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 75.3734,
+          "featureEvolutionCoordCheckPct": 77.5955,
+          "optimalLrShiftLog10": 0.2466,
+          "compositeMupScore": 75.9956
+        }
+      ]
+    },
+    "full-mup-width-invariant-weight-bias-lr-scaling": {
+      "profileId": "full-mup-width-invariant-weight-bias-lr-scaling",
+      "label": "Full muP Width-Invariant Weight, Bias & LR Scaling (64->256->1024)",
+      "hyperparameterTransferZeroShotPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "featureEvolutionCoordCheckPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "optimalLrShiftLog10": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "min": 0,
+        "max": 0,
+        "ci95": {
+          "low": 0,
+          "high": 0,
+          "halfWidth": 0
+        }
+      },
+      "compositeMupScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 29017,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 39023,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 49031,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        },
+        {
+          "seed": 59053,
+          "hyperparameterTransferZeroShotPct": 100,
+          "featureEvolutionCoordCheckPct": 100,
+          "optimalLrShiftLog10": 0,
+          "compositeMupScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "full-mup-width-invariant-weight-bias-lr-scaling",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "hyperparameterTransferZeroShotPctMean": 100,
+    "featureEvolutionCoordCheckPctMean": 100,
+    "optimalLrShiftLog10Mean": 0,
+    "gainVsBaseline": 79.0447
+  }
+}
