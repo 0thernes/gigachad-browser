@@ -1105,6 +1105,33 @@ test('runHyperbolicPoincare renders 5-seed Hyperbolic Poincaré Ball Knowledge E
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runNeurosymbolicSynth renders 5-seed Neuro-Symbolic CEGIS + SMT Program Synthesizer in section 39', async () => {
+  const { window, dom } = load();
+  window.AliveNeurosymbolicProgramSynthesizer = {
+    run: async () => ({
+      summary: {
+        fullSynthesisScoreMean: 100.0,
+        smtInvariantSoundnessPctMean: 100.0,
+        meanCegisIterations: 2.0,
+        gainVsRegexScraper: 100.0
+      },
+      aggregatedByProfile: {
+        'fragile-regex-xpath-scraper': { compositeSynthesisScore: { mean: 0.0 }, smtInvariantSoundnessPct: { mean: 0 }, mutationHoldoutSurvivalPct: { mean: 0 }, decoyRejectionPct: { mean: 0 }, meanCegisSteps: { mean: 1.0 } },
+        'neural-sketch-no-cegis-verifier': { compositeSynthesisScore: { mean: 18.3 }, smtInvariantSoundnessPct: { mean: 0 }, mutationHoldoutSurvivalPct: { mean: 16.7 }, decoyRejectionPct: { mean: 50.0 }, meanCegisSteps: { mean: 1.0 } },
+        'enumerative-bottom-up-untyped': { compositeSynthesisScore: { mean: 40.5 }, smtInvariantSoundnessPct: { mean: 0 }, mutationHoldoutSurvivalPct: { mean: 44.4 }, decoyRejectionPct: { mean: 100.0 }, meanCegisSteps: { mean: 6.0 } },
+        'neurosymbolic-cegis-smt-synthesizer': { compositeSynthesisScore: { mean: 100.0 }, smtInvariantSoundnessPct: { mean: 100 }, mutationHoldoutSurvivalPct: { mean: 100 }, decoyRejectionPct: { mean: 100 }, meanCegisSteps: { mean: 2.0 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runNeurosymbolicSynth();
+  assert.equal(report.summary.fullSynthesisScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · CEGIS+SMT Synth score=100.0')), 'Neuro-Symbolic Synth summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('neurosymbolic-cegis-sm')), 'Neuro-Symbolic Synth rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

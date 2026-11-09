@@ -331,6 +331,7 @@
   let latestPhase5Audit = null, phase5AuditBusy = false;
   let latestActiveInf = null, activeInfBusy = false;
   let latestHyperbolic = null, hyperbolicBusy = false;
+  let latestNeurosymbolic = null, neurosymbolicBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -730,6 +731,19 @@
       return latestHyperbolic;
     } finally {
       hyperbolicBusy = false;
+    }
+  }
+  async function runNeurosymbolicSynth() {
+    const runner = root.AliveNeurosymbolicProgramSynthesizer;
+    if (neurosymbolicBusy || typeof runner?.run !== 'function') return latestNeurosymbolic;
+    neurosymbolicBusy = true;
+    try {
+      latestNeurosymbolic = await runner.run();
+      root.__aliveLatestNeurosymbolic = latestNeurosymbolic;
+      draw();
+      return latestNeurosymbolic;
+    } finally {
+      neurosymbolicBusy = false;
     }
   }
 
@@ -2133,6 +2147,48 @@
     ctx.fillText('40-node ternary hierarchy/seed: d_B(u,v) arcosh geodesic + Möbius gyrovector u ⊕_c v + Riemannian boundary safety', 8, height - 6);
   }
 
+  // ---------- 39. Pass 33 Neuro-Symbolic Program Synthesizer ----------------
+  function drawNeurosymbolicSynth(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestNeurosymbolic || root.__aliveLatestNeurosymbolic;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(neurosymbolicBusy ? 'Running 5-seed Neuro-Symbolic CEGIS + SMT Invariant Synthesizer…' : 'Click "Run Neuro-Sym" above to evaluate Typed DSL + CEGIS + SMT Invariant Program Synthesis across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · CEGIS+SMT Synth score=${(s.fullSynthesisScoreMean || 0).toFixed(1)} · SMT=${(s.smtInvariantSoundnessPctMean || 0).toFixed(0)}% · CEGIS=${(s.meanCegisIterations || 0).toFixed(1)} steps · vs RegEx +${(s.gainVsRegexScraper || 0).toFixed(1)}`, 8, 12);
+    const modes = ['fragile-regex-xpath-scraper', 'neural-sketch-no-cegis-verifier', 'enumerative-bottom-up-untyped', 'neurosymbolic-cegis-smt-synthesizer'];
+    const colors = {
+      'fragile-regex-xpath-scraper': '#f43f5e',
+      'neural-sketch-no-cegis-verifier': '#f59e0b',
+      'enumerative-bottom-up-untyped': '#38bdf8',
+      'neurosymbolic-cegis-smt-synthesizer': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.compositeSynthesisScore?.mean || 0;
+      const smt = entry.smtInvariantSoundnessPct?.mean || 0;
+      const mut = entry.mutationHoldoutSurvivalPct?.mean || 0;
+      const dec = entry.decoyRejectionPct?.mean || 0;
+      const stp = entry.meanCegisSteps?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} SMT=${smt.toFixed(0)}% holdout=${mut.toFixed(0)}% decoy=${dec.toFixed(0)}% iter=${stp.toFixed(1)}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('24 DOM/API specs/seed: Typed Combinator DSL + CEGIS counterexample refinement + Hoare/SMT invariant proof', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -2248,13 +2304,16 @@
     const hyperbolicBtn = doc.createElement('button'); hyperbolicBtn.type = 'button'; hyperbolicBtn.textContent = 'Run Poincaré';
     hyperbolicBtn.title = 'Run 5-seed Hyperbolic Poincaré Ball (B^d_c) Hierarchical Ontology & Citation Tree Embedding evaluation';
     hyperbolicBtn.addEventListener('click', () => { runHyperbolicPoincare(); });
+    const neurosymBtn = doc.createElement('button'); neurosymBtn.type = 'button'; neurosymBtn.textContent = 'Run Neuro-Sym';
+    neurosymBtn.title = 'Run 5-seed Neuro-Symbolic DOM/API Extractor Program Synthesis & SMT Invariant Verification evaluation';
+    neurosymBtn.addEventListener('click', () => { runNeurosymbolicSynth(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -2274,7 +2333,7 @@
       corvidCanvas = canvas('alive-fabric-corvid-epistemology', 190), locustCanvas = canvas('alive-fabric-locust-polyphenism', 190),
       fishHydroCanvas = canvas('alive-fabric-fish-hydrodynamics', 190), symbioticCanvas = canvas('alive-fabric-symbiotic-coevolution', 190),
       phase5AuditCanvas = canvas('alive-fabric-phase5-audit', 190), activeInfCanvas = canvas('alive-fabric-active-inference', 190),
-      hyperbolicCanvas = canvas('alive-fabric-hyperbolic-poincare', 190);
+      hyperbolicCanvas = canvas('alive-fabric-hyperbolic-poincare', 190), neurosymCanvas = canvas('alive-fabric-neurosymbolic-synth', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -2315,7 +2374,8 @@
       section('35 · Symbiotic Cross-Guild Co-Evolution, Shapley Credit & 3D Pareto Speciation (5 seeds)', symbioticCanvas),
       section('36 · Phase V Hyper-Swarm Acceptance Matrix (E1..E10) & Cryptographic SHA-256 Freeze (5 seeds)', phase5AuditCanvas),
       section('37 · Variational Free-Energy (F) & Epistemic-Pragmatic Expected Free Energy G(pi) Planner (5 seeds)', activeInfCanvas),
-      section('38 · Hyperbolic Poincaré Ball (B^d_c) Hierarchical Ontology & Citation Tree Embedding (5 seeds)', hyperbolicCanvas));
+      section('38 · Hyperbolic Poincaré Ball (B^d_c) Hierarchical Ontology & Citation Tree Embedding (5 seeds)', hyperbolicCanvas),
+      section('39 · Neuro-Symbolic DOM/API Extractor Program Synthesis & SMT Invariant Verifier (5 seeds)', neurosymCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -2352,7 +2412,8 @@
       () => drawSymbioticCoevolution(symbioticCanvas),
       () => drawPhase5SwarmAudit(phase5AuditCanvas),
       () => drawActiveInference(activeInfCanvas),
-      () => drawHyperbolicPoincare(hyperbolicCanvas));
+      () => drawHyperbolicPoincare(hyperbolicCanvas),
+      () => drawNeurosymbolicSynth(neurosymCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -2395,6 +2456,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, runNeurosymbolicSynth, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);
