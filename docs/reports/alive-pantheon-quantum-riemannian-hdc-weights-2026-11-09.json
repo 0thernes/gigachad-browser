@@ -1,0 +1,420 @@
+{
+  "passNumber": 72,
+  "passSlice": "72/100",
+  "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+  "moduleId": "alive-pantheon-quantum-riemannian-hdc-weights",
+  "timestamp": "2026-11-09T23:03:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "non_unitary_euclidean_dense_brains_5to8_baseline",
+      "label": "Non-Unitary Complex + Euclidean Metric + Dense Low-D + Naive Linear Brains 5-8",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "unitarityDefectMean": 0.72661832,
+          "geodesicDriftMean": 0.100764,
+          "hdcRecallAccuracyMean": 0.720296,
+          "koopmanMultiStepMseMean": 0.082476,
+          "compositeScore": 47.2419
+        },
+        {
+          "seed": 29017,
+          "unitarityDefectMean": 0.72661832,
+          "geodesicDriftMean": 0.101211,
+          "hdcRecallAccuracyMean": 0.727214,
+          "koopmanMultiStepMseMean": 0.07762,
+          "compositeScore": 48.0875
+        },
+        {
+          "seed": 39023,
+          "unitarityDefectMean": 0.72661832,
+          "geodesicDriftMean": 0.104727,
+          "hdcRecallAccuracyMean": 0.720866,
+          "koopmanMultiStepMseMean": 0.079647,
+          "compositeScore": 47.1852
+        },
+        {
+          "seed": 49031,
+          "unitarityDefectMean": 0.72661832,
+          "geodesicDriftMean": 0.098009,
+          "hdcRecallAccuracyMean": 0.718994,
+          "koopmanMultiStepMseMean": 0.080904,
+          "compositeScore": 47.7897
+        },
+        {
+          "seed": 59053,
+          "unitarityDefectMean": 0.72661832,
+          "geodesicDriftMean": 0.098637,
+          "hdcRecallAccuracyMean": 0.720866,
+          "koopmanMultiStepMseMean": 0.082692,
+          "compositeScore": 47.4897
+        }
+      ],
+      "aggregate": {
+        "unitarityDefectStats": {
+          "mean": 0.7266,
+          "stdDev": 0,
+          "ci95": [
+            0.7266,
+            0.7266
+          ]
+        },
+        "geodesicDriftStats": {
+          "mean": 0.1007,
+          "stdDev": 0.0026,
+          "ci95": [
+            0.0974,
+            0.104
+          ]
+        },
+        "hdcRecallAccuracyStats": {
+          "mean": 0.7216,
+          "stdDev": 0.0032,
+          "ci95": [
+            0.7177,
+            0.7256
+          ]
+        },
+        "koopmanMultiStepMseStats": {
+          "mean": 0.0807,
+          "stdDev": 0.0021,
+          "ci95": [
+            0.0781,
+            0.0833
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 47.5588,
+          "stdDev": 0.38,
+          "ci95": [
+            47.087,
+            48.0306
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "cayley_unitary_no_riemannian_metric_ablation",
+      "label": "Cayley Unitary CQM Only (Flat Euclidean Metric / No Christoffel Geodesics)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.100764,
+          "hdcRecallAccuracyMean": 0.921269,
+          "koopmanMultiStepMseMean": 0.002121,
+          "compositeScore": 87.6545
+        },
+        {
+          "seed": 29017,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.101211,
+          "hdcRecallAccuracyMean": 0.9198,
+          "koopmanMultiStepMseMean": 0.00218,
+          "compositeScore": 87.5986
+        },
+        {
+          "seed": 39023,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.104727,
+          "hdcRecallAccuracyMean": 0.919218,
+          "koopmanMultiStepMseMean": 0.002108,
+          "compositeScore": 87.1592
+        },
+        {
+          "seed": 49031,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.098009,
+          "hdcRecallAccuracyMean": 0.919987,
+          "koopmanMultiStepMseMean": 0.002126,
+          "compositeScore": 87.9989
+        },
+        {
+          "seed": 59053,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.098637,
+          "hdcRecallAccuracyMean": 0.919885,
+          "koopmanMultiStepMseMean": 0.002131,
+          "compositeScore": 87.9204
+        }
+      ],
+      "aggregate": {
+        "unitarityDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "geodesicDriftStats": {
+          "mean": 0.1007,
+          "stdDev": 0.0026,
+          "ci95": [
+            0.0974,
+            0.104
+          ]
+        },
+        "hdcRecallAccuracyStats": {
+          "mean": 0.92,
+          "stdDev": 0.0008,
+          "ci95": [
+            0.9191,
+            0.921
+          ]
+        },
+        "koopmanMultiStepMseStats": {
+          "mean": 0.0021,
+          "stdDev": 0,
+          "ci95": [
+            0.0021,
+            0.0022
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 87.6663,
+          "stdDev": 0.3306,
+          "ci95": [
+            87.2559,
+            88.0768
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "no_hdc_kanerva_binding_ablation",
+      "label": "Cayley Unitary + Riemannian Metric Without 10,240-Bit HDC Kanerva Memory",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000533,
+          "hdcRecallAccuracyMean": 0.717774,
+          "koopmanMultiStepMseMean": 0.002027,
+          "compositeScore": 92.9443
+        },
+        {
+          "seed": 29017,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000498,
+          "hdcRecallAccuracyMean": 0.724854,
+          "koopmanMultiStepMseMean": 0.002223,
+          "compositeScore": 93.1213
+        },
+        {
+          "seed": 39023,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000523,
+          "hdcRecallAccuracyMean": 0.724121,
+          "koopmanMultiStepMseMean": 0.00207,
+          "compositeScore": 93.103
+        },
+        {
+          "seed": 49031,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000515,
+          "hdcRecallAccuracyMean": 0.718425,
+          "koopmanMultiStepMseMean": 0.002072,
+          "compositeScore": 92.9606
+        },
+        {
+          "seed": 59053,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000513,
+          "hdcRecallAccuracyMean": 0.717692,
+          "koopmanMultiStepMseMean": 0.002155,
+          "compositeScore": 92.9423
+        }
+      ],
+      "aggregate": {
+        "unitarityDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "geodesicDriftStats": {
+          "mean": 0.0005,
+          "stdDev": 0,
+          "ci95": [
+            0.0005,
+            0.0005
+          ]
+        },
+        "hdcRecallAccuracyStats": {
+          "mean": 0.7206,
+          "stdDev": 0.0036,
+          "ci95": [
+            0.7161,
+            0.725
+          ]
+        },
+        "koopmanMultiStepMseStats": {
+          "mean": 0.0021,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.002,
+            0.0022
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 93.0143,
+          "stdDev": 0.0898,
+          "ci95": [
+            92.9027,
+            93.1259
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "cayley_unitary_riemannian_hdc10240_koopman_brains_5to8",
+      "label": "Cayley Unitary CQM + Riemannian Christoffel + 10,240-Bit HDC Kanerva + Koopman Spectral (Pass 72 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000533,
+          "hdcRecallAccuracyMean": 0.921199,
+          "koopmanMultiStepMseMean": 0.002096,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000498,
+          "hdcRecallAccuracyMean": 0.919735,
+          "koopmanMultiStepMseMean": 0.002164,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000523,
+          "hdcRecallAccuracyMean": 0.919279,
+          "koopmanMultiStepMseMean": 0.002068,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000515,
+          "hdcRecallAccuracyMean": 0.919942,
+          "koopmanMultiStepMseMean": 0.002137,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "unitarityDefectMean": 0,
+          "geodesicDriftMean": 0.000513,
+          "hdcRecallAccuracyMean": 0.919897,
+          "koopmanMultiStepMseMean": 0.002092,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "unitarityDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "geodesicDriftStats": {
+          "mean": 0.0005,
+          "stdDev": 0,
+          "ci95": [
+            0.0005,
+            0.0005
+          ]
+        },
+        "hdcRecallAccuracyStats": {
+          "mean": 0.92,
+          "stdDev": 0.0007,
+          "ci95": [
+            0.9191,
+            0.9209
+          ]
+        },
+        "koopmanMultiStepMseStats": {
+          "mean": 0.0021,
+          "stdDev": 0,
+          "ci95": [
+            0.0021,
+            0.0022
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "cayley_unitary_riemannian_hdc10240_koopman_brains_5to8",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "unitarityDefectStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "geodesicDriftStats": {
+      "mean": 0.0005,
+      "stdDev": 0,
+      "ci95": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "hdcRecallAccuracyStats": {
+      "mean": 0.92,
+      "stdDev": 0.0007,
+      "ci95": [
+        0.9191,
+        0.9209
+      ]
+    },
+    "koopmanMultiStepMseStats": {
+      "mean": 0.0021,
+      "stdDev": 0,
+      "ci95": [
+        0.0021,
+        0.0022
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 52.4412,
+    "tStat": 308.5802,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
