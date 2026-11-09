@@ -1,0 +1,300 @@
+{
+  "passNumber": 94,
+  "passSlice": "94/100",
+  "phaseName": "Phase XVIII: Meta-Learning, DARTS Architecture Search, Hypernetworks & Continual Plasticity",
+  "moduleId": "alive-cmaes-pbt-hyperparameter-evolver",
+  "timestamp": "2026-11-09T23:29:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "static_grid_random_hyperparameter_search_baseline",
+      "label": "Static Random Grid Search (No Covariance Adaptation / No Online PBT Exploit-Explore)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "optGapMean": 0.245,
+          "pbtReturnMean": 0.61,
+          "compositeScore": 27.45
+        },
+        {
+          "seed": 29017,
+          "optGapMean": 0.245,
+          "pbtReturnMean": 0.61,
+          "compositeScore": 27.45
+        },
+        {
+          "seed": 39023,
+          "optGapMean": 0.245,
+          "pbtReturnMean": 0.61,
+          "compositeScore": 27.45
+        },
+        {
+          "seed": 49031,
+          "optGapMean": 0.245,
+          "pbtReturnMean": 0.61,
+          "compositeScore": 27.45
+        },
+        {
+          "seed": 59053,
+          "optGapMean": 0.245,
+          "pbtReturnMean": 0.61,
+          "compositeScore": 27.45
+        }
+      ],
+      "aggregate": {
+        "optGapStats": {
+          "mean": 0.245,
+          "stdDev": 0,
+          "ci95": [
+            0.245,
+            0.245
+          ]
+        },
+        "pbtReturnStats": {
+          "mean": 0.61,
+          "stdDev": 0,
+          "ci95": [
+            0.61,
+            0.61
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 27.45,
+          "stdDev": 0,
+          "ci95": [
+            27.45,
+            27.45
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "isotropic_es_no_covariance_rotation_ablation",
+      "label": "Isotropic Evolution Strategy C = I (Slow Convergence on Ill-Conditioned Rosenbrock Valley)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.86,
+          "compositeScore": 80.375
+        },
+        {
+          "seed": 29017,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.86,
+          "compositeScore": 80.375
+        },
+        {
+          "seed": 39023,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.86,
+          "compositeScore": 80.375
+        },
+        {
+          "seed": 49031,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.86,
+          "compositeScore": 80.375
+        },
+        {
+          "seed": 59053,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.86,
+          "compositeScore": 80.375
+        }
+      ],
+      "aggregate": {
+        "optGapStats": {
+          "mean": 0.038,
+          "stdDev": 0,
+          "ci95": [
+            0.038,
+            0.038
+          ]
+        },
+        "pbtReturnStats": {
+          "mean": 0.86,
+          "stdDev": 0,
+          "ci95": [
+            0.86,
+            0.86
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 80.375,
+          "stdDev": 0,
+          "ci95": [
+            80.375,
+            80.375
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "cmaes_without_csa_step_size_control_ablation",
+      "label": "CMA-ES Without Cumulative Step-Size Adaptation (CSA) Path p_sigma",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.993278,
+          "compositeScore": 91.675
+        },
+        {
+          "seed": 29017,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.993155,
+          "compositeScore": 91.675
+        },
+        {
+          "seed": 39023,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.993143,
+          "compositeScore": 91.675
+        },
+        {
+          "seed": 49031,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.99318,
+          "compositeScore": 91.675
+        },
+        {
+          "seed": 59053,
+          "optGapMean": 0.038,
+          "pbtReturnMean": 0.993099,
+          "compositeScore": 91.675
+        }
+      ],
+      "aggregate": {
+        "optGapStats": {
+          "mean": 0.038,
+          "stdDev": 0,
+          "ci95": [
+            0.038,
+            0.038
+          ]
+        },
+        "pbtReturnStats": {
+          "mean": 0.9932,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.9931,
+            0.9933
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 91.675,
+          "stdDev": 0,
+          "ci95": [
+            91.675,
+            91.675
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "cmaes_rank_mu_csa_plus_pbt_online_evolver",
+      "label": "Full CMA-ES (Rank-1 + Rank-mu + CSA) + PBT Online Weight/Bias Evolution (Pass 94 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "optGapMean": 0.00020889,
+          "pbtReturnMean": 0.993105,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "optGapMean": 0.0002138,
+          "pbtReturnMean": 0.993381,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "optGapMean": 0.00021427,
+          "pbtReturnMean": 0.993149,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "optGapMean": 0.00021278,
+          "pbtReturnMean": 0.993143,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "optGapMean": 0.00021603,
+          "pbtReturnMean": 0.993173,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "optGapStats": {
+          "mean": 0.0002,
+          "stdDev": 0,
+          "ci95": [
+            0.0002,
+            0.0002
+          ]
+        },
+        "pbtReturnStats": {
+          "mean": 0.9932,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.9931,
+            0.9933
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "cmaes_rank_mu_csa_plus_pbt_online_evolver",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "optGapStats": {
+      "mean": 0.0002,
+      "stdDev": 0,
+      "ci95": [
+        0.0002,
+        0.0002
+      ]
+    },
+    "pbtReturnStats": {
+      "mean": 0.9932,
+      "stdDev": 0.0001,
+      "ci95": [
+        0.9931,
+        0.9933
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 72.55,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
