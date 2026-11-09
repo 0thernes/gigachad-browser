@@ -1,0 +1,838 @@
+{
+  "passId": "ALIVE-PASS-38-SELF-HEALING-BYZANTINE-WATCHDOG",
+  "phase": "Phase VII — Adversarial Immunity, Long-Horizon Autonomous Missions & 40-Pass Grand Omega Qualification",
+  "generatedAt": "2026-11-09T20:56:24.185Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "tCritical95Df4": 2.7764451051977987,
+  "profileSummaries": [
+    {
+      "profileId": "unprotected-in-place-mutation",
+      "label": "Unprotected In-Place State Mutation (No Watchdog / Full Fabric Poisoning)",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 35,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 35,
+        "ci95High": 35,
+        "min": 35,
+        "max": 35
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        }
+      ]
+    },
+    {
+      "profileId": "nan-clamp-only-no-quarantine-no-rollback",
+      "label": "NaN Clamp Only (No Spectral/Digest Quarantine / No CoW Rollback)",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 35,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 35,
+        "ci95High": 35,
+        "min": 35,
+        "max": 35
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        }
+      ]
+    },
+    {
+      "profileId": "coarse-periodic-reboot-data-loss",
+      "label": "Coarse Periodic Cold Reboot (Quarantines Faults but Loses In-Flight Data)",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 30,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 30,
+        "ci95High": 30,
+        "min": 30,
+        "max": 30
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        }
+      ]
+    },
+    {
+      "profileId": "cow-shadow-ring-byzantine-quarantine-watchdog",
+      "label": "CoW Shadow Ring + Byzantine Adapter Quarantine + Micro-Journal Zero-Loss Watchdog",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "unprotected-in-place-mutation": {
+      "profileId": "unprotected-in-place-mutation",
+      "label": "Unprotected In-Place State Mutation (No Watchdog / Full Fabric Poisoning)",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 35,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 35,
+        "ci95High": 35,
+        "min": 35,
+        "max": 35
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        }
+      ]
+    },
+    "nan-clamp-only-no-quarantine-no-rollback": {
+      "profileId": "nan-clamp-only-no-quarantine-no-rollback",
+      "label": "NaN Clamp Only (No Spectral/Digest Quarantine / No CoW Rollback)",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 35,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 35,
+        "ci95High": 35,
+        "min": 35,
+        "max": 35
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 0,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 35
+        }
+      ]
+    },
+    "coarse-periodic-reboot-data-loss": {
+      "profileId": "coarse-periodic-reboot-data-loss",
+      "label": "Coarse Periodic Cold Reboot (Quarantines Faults but Loses In-Flight Data)",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 30,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 30,
+        "ci95High": 30,
+        "min": 30,
+        "max": 30
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 0,
+          "zeroDataLossPct": 0,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 30
+        }
+      ]
+    },
+    "cow-shadow-ring-byzantine-quarantine-watchdog": {
+      "profileId": "cow-shadow-ring-byzantine-quarantine-watchdog",
+      "label": "CoW Shadow Ring + Byzantine Adapter Quarantine + Micro-Journal Zero-Loss Watchdog",
+      "stateIntegrityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "zeroDataLossPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "byzantineQuarantinePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanRecoveryLatencyMs": {
+        "count": 5,
+        "mean": 0.835,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.835,
+        "ci95High": 0.835,
+        "min": 0.835,
+        "max": 0.835
+      },
+      "compositeWatchdogScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 29017,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 39023,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 49031,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        },
+        {
+          "seed": 59053,
+          "stateIntegrityPct": 100,
+          "zeroDataLossPct": 100,
+          "byzantineQuarantinePct": 100,
+          "meanRecoveryLatencyMs": 0.835,
+          "compositeWatchdogScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "cow-shadow-ring-byzantine-quarantine-watchdog",
+    "allSeedsVerified": true,
+    "fullWatchdogScoreMean": 100,
+    "stateIntegrityPctMean": 100,
+    "zeroDataLossPctMean": 100,
+    "byzantineQuarantinePctMean": 100,
+    "meanRecoveryLatencyMs": 0.835,
+    "gainVsUnprotected": 65,
+    "gainVsNanClampOnly": 65,
+    "gainVsCoarseReboot": 70
+  }
+}

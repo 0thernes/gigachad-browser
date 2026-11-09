@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="350" viewBox="0 0 1180 350">
+    <rect width="1180" height="350" fill="#020617"/>
+    <text x="24" y="36" fill="#38bdf8" font-family="Consolas, monospace" font-size="18" font-weight="bold">ALIVE Pass 38 — Self-Healing Byzantine Watchdog, CoW Rollback &amp; Zero-Loss Recovery (5 Seeds)</text>
+    <text x="24" y="62" fill="#94a3b8" font-family="Consolas, monospace" font-size="13">Winner: cow-shadow-ring-byzantine-quarantine-watchdog | Score: 100.00 | Zero-Data-Loss: 100.0% | Latency: 0.83ms | vs Raw: +65.00</text>
+    
+      <text x="24" y="113" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">unprotected-in-place-mutation</text>
+      <rect x="340" y="95" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="340" y="95" width="147" height="26" rx="4" fill="#f43f5e"/>
+      <text x="772" y="113" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=35.00 | int=0.0% | zeroLoss=100.0% | qrn=0.0%</text>
+    
+      <text x="24" y="167" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">nan-clamp-only-no-quarantine-no-rollback</text>
+      <rect x="340" y="149" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="340" y="149" width="147" height="26" rx="4" fill="#f59e0b"/>
+      <text x="772" y="167" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=35.00 | int=0.0% | zeroLoss=100.0% | qrn=0.0%</text>
+    
+      <text x="24" y="221" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">coarse-periodic-reboot-data-loss</text>
+      <rect x="340" y="203" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="340" y="203" width="126" height="26" rx="4" fill="#38bdf8"/>
+      <text x="772" y="221" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=30.00 | int=0.0% | zeroLoss=0.0% | qrn=100.0%</text>
+    
+      <text x="24" y="275" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">cow-shadow-ring-byzantine-quarantine-watchdog</text>
+      <rect x="340" y="257" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="340" y="257" width="420" height="26" rx="4" fill="#34d399"/>
+      <text x="772" y="275" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=100.00 | int=100.0% | zeroLoss=100.0% | qrn=100.0%</text>
+    
+  </svg>

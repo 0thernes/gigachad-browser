@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Self-Healing Byzantine Watchdog, CoW Rollback & Zero-Data-Loss Recovery pass 38
+
+- Added the 5-seed Self-Healing Runtime Watchdog, Copy-on-Write (`CoW`) Shadow Snapshot Rollback, Corrupt-Adapter Quarantine & Micro-Journal Zero-Data-Loss Recovery evaluator ([`systems/alive-self-healing-byzantine-watchdog.js`](systems/alive-self-healing-byzantine-watchdog.js), [`scripts/alive-self-healing-byzantine-watchdog.cjs`](scripts/alive-self-healing-byzantine-watchdog.cjs)).
+- Verified on `5/5` seeds across 24 Byzantine fault scenarios per seed that `cow-shadow-ring-byzantine-quarantine-watchdog` achieves `100.0` composite score (`+65.0` over `unprotected-in-place-mutation`, `+65.0` over `nan-clamp-only-no-quarantine-no-rollback`, `+70.0` over `coarse-periodic-reboot-data-loss`), `100.0%` state integrity, `100.0%` zero-data-loss recovery, `100.0%` Byzantine adapter quarantine, and `0.835 ms` mean recovery latency.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 44 (`#alive-fabric-self-healing`, `Run Self-Heal` button, and `runSelfHealingWatchdog()`).
+- Added [Pass 38 report](docs/ALIVE_PASS_38_REPORT.md), [JSON report](docs/reports/alive-self-healing-byzantine-watchdog-2026-11-09.json), [SVG chart](docs/reports/alive-self-healing-byzantine-watchdog-2026-11-09.svg) and unit tests (`tests/alive-self-healing-byzantine-watchdog.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Long-Horizon Checkpointable Autonomous Research Mission Runner pass 37
 
 - Added the 5-seed Long-Horizon Checkpointable Autonomous Research Mission Runner ([`systems/alive-autonomous-long-horizon-mission-runner.js`](systems/alive-autonomous-long-horizon-mission-runner.js), [`scripts/alive-autonomous-long-horizon-mission-runner.cjs`](scripts/alive-autonomous-long-horizon-mission-runner.cjs)) implementing Hierarchical Task Network (`HTN`) Precedence DAG decomposition, Tarjan Strongly Connected Components (`SCC`) deadlock splicing, and idempotent SHA-256 Write-Ahead Log (`WAL`) crash-resume equivalence.

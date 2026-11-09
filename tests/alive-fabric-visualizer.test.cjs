@@ -1241,6 +1241,33 @@ test('runLongHorizonMission renders 5-seed Long-Horizon Checkpointable Mission R
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runSelfHealingWatchdog renders 5-seed Self-Healing Byzantine Watchdog & CoW Rollback in section 44', async () => {
+  const { window, dom } = load();
+  window.AliveSelfHealingByzantineWatchdog = {
+    run: async () => ({
+      summary: {
+        fullWatchdogScoreMean: 100.0,
+        zeroDataLossPctMean: 100.0,
+        meanRecoveryLatencyMs: 0.84,
+        gainVsUnprotected: 65.0
+      },
+      aggregatedByProfile: {
+        'unprotected-in-place-mutation': { compositeWatchdogScore: { mean: 35.0 }, stateIntegrityPct: { mean: 0 }, zeroDataLossPct: { mean: 100 }, byzantineQuarantinePct: { mean: 0 }, meanRecoveryLatencyMs: { mean: 0.84 } },
+        'nan-clamp-only-no-quarantine-no-rollback': { compositeWatchdogScore: { mean: 46.7 }, stateIntegrityPct: { mean: 33.3 }, zeroDataLossPct: { mean: 100 }, byzantineQuarantinePct: { mean: 0 }, meanRecoveryLatencyMs: { mean: 0.84 } },
+        'coarse-periodic-reboot-data-loss': { compositeWatchdogScore: { mean: 30.0 }, stateIntegrityPct: { mean: 0 }, zeroDataLossPct: { mean: 0 }, byzantineQuarantinePct: { mean: 100 }, meanRecoveryLatencyMs: { mean: 0.84 } },
+        'cow-shadow-ring-byzantine-quarantine-watchdog': { compositeWatchdogScore: { mean: 100.0 }, stateIntegrityPct: { mean: 100 }, zeroDataLossPct: { mean: 100 }, byzantineQuarantinePct: { mean: 100 }, meanRecoveryLatencyMs: { mean: 0.84 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runSelfHealingWatchdog();
+  assert.equal(report.summary.fullWatchdogScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · CoW+Quarantine Watchdog score=100.0')), 'Self-Healing Watchdog summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('cow-shadow-ring-byzant')), 'Self-Healing Watchdog rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 
