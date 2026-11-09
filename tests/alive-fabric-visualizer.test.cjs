@@ -273,3 +273,58 @@ test('runRestartEquivalence renders 5-seed SHA-256 restart equivalence and 6-dom
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runContinualTransfer renders 5-seed 4-phase continual retention and morphology transfer in section 11', async () => {
+  const { window, dom } = load();
+  window.AliveContinualMorphologyTransfer = {
+    run: async () => ({
+      summary: {
+        fullBeatNaiveRetentionSeeds: 5,
+        fullReducedForgettingSeeds: 5,
+        metamorphBeatNaiveTransferSeeds: 5,
+        fullBeatFrozenAllSeeds: 5,
+        pairedDeltas: {
+          fullVsNaiveRetentionGainPct: { mean: 23.72 },
+          fullVsNaiveForgettingReduction: { mean: 0.1729 }
+        },
+        byController: {
+          'frozen-baseline': {
+            finalAllTasksMeanReturn: { mean: 0.399 },
+            priorTaskRetentionPct: { mean: 100.0 },
+            catastrophicForgetting: { mean: 0.0 },
+            unseenMorphHoldoutReturn: { mean: 0.473 },
+            phaseCurves: [{ meanAllTasksReturn: { mean: 0.399 } }, { meanAllTasksReturn: { mean: 0.399 } }]
+          },
+          'naive-continual': {
+            finalAllTasksMeanReturn: { mean: 0.601 },
+            priorTaskRetentionPct: { mean: 71.7 },
+            catastrophicForgetting: { mean: 0.213 },
+            unseenMorphHoldoutReturn: { mean: 0.501 },
+            phaseCurves: [{ meanAllTasksReturn: { mean: 0.51 } }, { meanAllTasksReturn: { mean: 0.601 } }]
+          },
+          'metamorph-transfer-only': {
+            finalAllTasksMeanReturn: { mean: 0.601 },
+            priorTaskRetentionPct: { mean: 71.5 },
+            catastrophicForgetting: { mean: 0.215 },
+            unseenMorphHoldoutReturn: { mean: 0.529 },
+            phaseCurves: [{ meanAllTasksReturn: { mean: 0.52 } }, { meanAllTasksReturn: { mean: 0.601 } }]
+          },
+          'full-continual-living': {
+            finalAllTasksMeanReturn: { mean: 0.735 },
+            priorTaskRetentionPct: { mean: 95.4 },
+            catastrophicForgetting: { mean: 0.040 },
+            unseenMorphHoldoutReturn: { mean: 0.652 },
+            phaseCurves: [{ meanAllTasksReturn: { mean: 0.56 } }, { meanAllTasksReturn: { mean: 0.735 } }]
+          }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runContinualTransfer();
+  assert.equal(report.summary.fullBeatNaiveRetentionSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · retention gain +23.7% (5/5)')), 'continual transfer summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-continual-liv')), 'continual controller rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+

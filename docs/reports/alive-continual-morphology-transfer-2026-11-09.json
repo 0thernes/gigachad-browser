@@ -1,0 +1,3793 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-05-continual-retention-morphology-transfer-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "controllers": [
+      "frozen-baseline",
+      "naive-continual",
+      "metamorph-transfer-only",
+      "full-continual-living"
+    ],
+    "episodesPerPhase": 15,
+    "stepsPerEpisode": 20,
+    "phases": 4,
+    "totalStepsPerControllerPerSeed": 1200,
+    "tasks": [
+      {
+        "id": "T1-orbital-stabilization",
+        "label": "Task 1 · Orbital Attractor Stabilization & Crypto Foraging",
+        "morphologyId": "biped-scanner"
+      },
+      {
+        "id": "T2-shear-crosswind",
+        "label": "Task 2 · Shear Crosswind Navigation & Connectome Foraging",
+        "morphologyId": "octo-crawler"
+      },
+      {
+        "id": "T3-saddle-escape",
+        "label": "Task 3 · Bistable Saddle Escape & Consensus Foraging",
+        "morphologyId": "arachnid-weaver"
+      },
+      {
+        "id": "T4-vortex-pursuit",
+        "label": "Task 4 · Vortex Curl Pursuit & Onion Routing Foraging",
+        "morphologyId": "eldritch-tentacle-swarm"
+      }
+    ],
+    "morphologies": [
+      {
+        "id": "biped-scanner",
+        "label": "Morph A · Biped Scanner",
+        "role": "phase-1",
+        "morphVec": [
+          0.67,
+          0.75,
+          0.575,
+          0.58,
+          0.88,
+          1
+        ]
+      },
+      {
+        "id": "octo-crawler",
+        "label": "Morph B · Octo Crawler",
+        "role": "phase-2",
+        "morphVec": [
+          0.92,
+          0.96,
+          0.82,
+          0.44,
+          0.74,
+          0.8
+        ]
+      },
+      {
+        "id": "arachnid-weaver",
+        "label": "Morph C · Arachnid Weaver",
+        "role": "phase-3",
+        "morphVec": [
+          0.84,
+          0.88,
+          0.94,
+          0.36,
+          0.91,
+          0.65
+        ]
+      },
+      {
+        "id": "eldritch-tentacle-swarm",
+        "label": "Morph D · Eldritch Tentacle Swarm",
+        "role": "phase-4",
+        "morphVec": [
+          1,
+          1,
+          0.98,
+          0.72,
+          0.68,
+          0.35
+        ]
+      },
+      {
+        "id": "hexapod-strider-holdout",
+        "label": "Morph E · Unseen Hexapod Strider (Holdout)",
+        "role": "unseen-holdout",
+        "morphVec": [
+          0.88,
+          0.91,
+          0.86,
+          0.48,
+          0.82,
+          0.72
+        ]
+      }
+    ],
+    "uncertaintyMethod": "Two-sided Student t 95% confidence interval across five independent seeds (df=4)"
+  },
+  "summary": {
+    "fullBeatNaiveRetentionSeeds": 5,
+    "fullReducedForgettingSeeds": 5,
+    "metamorphBeatNaiveTransferSeeds": 5,
+    "fullBeatFrozenAllSeeds": 5,
+    "pairedDeltas": {
+      "fullVsNaiveRetentionGainPct": {
+        "count": 5,
+        "mean": 23.716843838926525,
+        "sampleStandardDeviation": 5.228497248202829,
+        "ci95": [
+          17.224807041125608,
+          30.208880636727443
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsNaiveForgettingReduction": {
+        "count": 5,
+        "mean": 0.17287688572012144,
+        "sampleStandardDeviation": 0.040366272115585175,
+        "ci95": [
+          0.12275553889250274,
+          0.22299823254774015
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "metamorphVsNaiveUnseenMorphGain": {
+        "count": 5,
+        "mean": 0.027908160325463005,
+        "sampleStandardDeviation": 0.009671099263751709,
+        "ci95": [
+          0.015899904546607557,
+          0.03991641610431845
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsFrozenFinalGain": {
+        "count": 5,
+        "mean": 0.33594569049176065,
+        "sampleStandardDeviation": 0.05116483739461635,
+        "ci95": [
+          0.27241615392491575,
+          0.39947522705860555
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byController": {
+      "frozen-baseline": {
+        "controller": "frozen-baseline",
+        "finalAllTasksMeanReturn": {
+          "count": 5,
+          "mean": 0.39919412071213733,
+          "sampleStandardDeviation": 0.03929537604943953,
+          "ci95": [
+            0.35040246697566974,
+            0.44798577444860493
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "priorTaskRetentionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "catastrophicForgetting": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "zeroShotMorphTransferReturn": {
+          "count": 5,
+          "mean": 0.42437839254665033,
+          "sampleStandardDeviation": 0.053350720804690416,
+          "ci95": [
+            0.35813472324524553,
+            0.4906220618480551
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenMorphHoldoutReturn": {
+          "count": 5,
+          "mean": 0.4727449620947056,
+          "sampleStandardDeviation": 0.06569803646020925,
+          "ci95": [
+            0.39117007546938537,
+            0.5543198487200258
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "phaseCurves": [
+          {
+            "phaseIndex": 0,
+            "taskId": "T1-orbital-stabilization",
+            "morphologyId": "biped-scanner",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.39919412071213733,
+              "sampleStandardDeviation": 0.03929537604943953,
+              "ci95": [
+                0.35040246697566974,
+                0.44798577444860493
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.32364130520859835,
+              "sampleStandardDeviation": 0.047206084318570686,
+              "ci95": [
+                0.26502720981405775,
+                0.38225540060313895
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.32364130520859835,
+              "sampleStandardDeviation": 0.047206084318570686,
+              "ci95": [
+                0.26502720981405775,
+                0.38225540060313895
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 1,
+            "taskId": "T2-shear-crosswind",
+            "morphologyId": "octo-crawler",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.39919412071213733,
+              "sampleStandardDeviation": 0.03929537604943953,
+              "ci95": [
+                0.35040246697566974,
+                0.44798577444860493
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.3630674381060236,
+              "sampleStandardDeviation": 0.020558603658709818,
+              "ci95": [
+                0.3375405600896634,
+                0.3885943161223838
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.4024935710034489,
+              "sampleStandardDeviation": 0.07452576842280115,
+              "ci95": [
+                0.3099576074143856,
+                0.4950295345925122
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 2,
+            "taskId": "T3-saddle-escape",
+            "morphologyId": "arachnid-weaver",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.39919412071213733,
+              "sampleStandardDeviation": 0.03929537604943953,
+              "ci95": [
+                0.35040246697566974,
+                0.44798577444860493
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.3877543445485442,
+              "sampleStandardDeviation": 0.037000986967711515,
+              "ci95": [
+                0.34181155113273004,
+                0.4336971379643583
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.43712815743358535,
+              "sampleStandardDeviation": 0.09811261889118436,
+              "ci95": [
+                0.31530525078691496,
+                0.5589510640802557
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 3,
+            "taskId": "T4-vortex-pursuit",
+            "morphologyId": "eldritch-tentacle-swarm",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.39919412071213733,
+              "sampleStandardDeviation": 0.03929537604943953,
+              "ci95": [
+                0.35040246697566974,
+                0.44798577444860493
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.39919412071213733,
+              "sampleStandardDeviation": 0.03929537604943953,
+              "ci95": [
+                0.35040246697566974,
+                0.44798577444860493
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.4335134492029165,
+              "sampleStandardDeviation": 0.13045463117242265,
+              "ci95": [
+                0.27153263027716845,
+                0.5954942681286646
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          }
+        ]
+      },
+      "naive-continual": {
+        "controller": "naive-continual",
+        "finalAllTasksMeanReturn": {
+          "count": 5,
+          "mean": 0.6006409211364233,
+          "sampleStandardDeviation": 0.010544961584511844,
+          "ci95": [
+            0.5875476219744932,
+            0.6137342202983535
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "priorTaskRetentionPct": {
+          "count": 5,
+          "mean": 71.67184888838531,
+          "sampleStandardDeviation": 1.4688256925822647,
+          "ci95": [
+            69.8480609062692,
+            73.49563687050143
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "catastrophicForgetting": {
+          "count": 5,
+          "mean": 0.21307894864734953,
+          "sampleStandardDeviation": 0.009064214660151176,
+          "ci95": [
+            0.20182423963184903,
+            0.22433365766285002
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "zeroShotMorphTransferReturn": {
+          "count": 5,
+          "mean": 0.40737962924178667,
+          "sampleStandardDeviation": 0.04300934284365093,
+          "ci95": [
+            0.3539764766464225,
+            0.4607827818371508
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenMorphHoldoutReturn": {
+          "count": 5,
+          "mean": 0.5008885985488883,
+          "sampleStandardDeviation": 0.019078141013106748,
+          "ci95": [
+            0.47719995770025897,
+            0.5245772393975178
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "phaseCurves": [
+          {
+            "phaseIndex": 0,
+            "taskId": "T1-orbital-stabilization",
+            "morphologyId": "biped-scanner",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.5011076931878634,
+              "sampleStandardDeviation": 0.04049241822582844,
+              "ci95": [
+                0.45082971527664223,
+                0.5513856710990847
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.7545593041707542,
+              "sampleStandardDeviation": 0.01232236330301681,
+              "ci95": [
+                0.739259069284611,
+                0.7698595390568974
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7545593041707542,
+              "sampleStandardDeviation": 0.01232236330301681,
+              "ci95": [
+                0.739259069284611,
+                0.7698595390568974
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 1,
+            "taskId": "T2-shear-crosswind",
+            "morphologyId": "octo-crawler",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.5359011329642429,
+              "sampleStandardDeviation": 0.009985458604271701,
+              "ci95": [
+                0.5235025485097647,
+                0.5482997174187211
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.7251587312526355,
+              "sampleStandardDeviation": 0.012059903661064336,
+              "ci95": [
+                0.7101843830548862,
+                0.7401330794503849
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7437978322946053,
+              "sampleStandardDeviation": 0.008155229708436677,
+              "ci95": [
+                0.7336717771685577,
+                0.7539238874206529
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 2,
+            "taskId": "T3-saddle-escape",
+            "morphologyId": "arachnid-weaver",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.5937943080838979,
+              "sampleStandardDeviation": 0.008487581044853967,
+              "ci95": [
+                0.583255584268666,
+                0.6043330318991298
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.650290142169793,
+              "sampleStandardDeviation": 0.017712936412597014,
+              "ci95": [
+                0.6282966267237987,
+                0.6722836576157872
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7569314849319919,
+              "sampleStandardDeviation": 0.011592592439479577,
+              "ci95": [
+                0.7425373802540409,
+                0.7713255896099429
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 3,
+            "taskId": "T4-vortex-pursuit",
+            "morphologyId": "eldritch-tentacle-swarm",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.6006409211364233,
+              "sampleStandardDeviation": 0.010544961584511844,
+              "ci95": [
+                0.5875476219744932,
+                0.6137342202983535
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.6006409211364233,
+              "sampleStandardDeviation": 0.010544961584511844,
+              "ci95": [
+                0.5875476219744932,
+                0.6137342202983535
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7865119090903903,
+              "sampleStandardDeviation": 0.007634881899954718,
+              "ci95": [
+                0.7770319511046789,
+                0.7959918670761016
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          }
+        ]
+      },
+      "metamorph-transfer-only": {
+        "controller": "metamorph-transfer-only",
+        "finalAllTasksMeanReturn": {
+          "count": 5,
+          "mean": 0.6012698532042212,
+          "sampleStandardDeviation": 0.013465060243172943,
+          "ci95": [
+            0.5845507726666285,
+            0.617988933741814
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "priorTaskRetentionPct": {
+          "count": 5,
+          "mean": 71.54858697020643,
+          "sampleStandardDeviation": 2.1554112315887055,
+          "ci95": [
+            68.87229044261869,
+            74.22488349779417
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "catastrophicForgetting": {
+          "count": 5,
+          "mean": 0.21550853765815764,
+          "sampleStandardDeviation": 0.014089965209663208,
+          "ci95": [
+            0.19801353512137526,
+            0.23300354019494002
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "zeroShotMorphTransferReturn": {
+          "count": 5,
+          "mean": 0.5125549405728125,
+          "sampleStandardDeviation": 0.05189359706694296,
+          "ci95": [
+            0.44812052935749686,
+            0.5769893517881282
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenMorphHoldoutReturn": {
+          "count": 5,
+          "mean": 0.5287967588743514,
+          "sampleStandardDeviation": 0.01757021652377973,
+          "ci95": [
+            0.5069804535761292,
+            0.5506130641725736
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "phaseCurves": [
+          {
+            "phaseIndex": 0,
+            "taskId": "T1-orbital-stabilization",
+            "morphologyId": "biped-scanner",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.5088135629085035,
+              "sampleStandardDeviation": 0.04199635158268558,
+              "ci95": [
+                0.4566682050923751,
+                0.560958920724632
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.7603158967486051,
+              "sampleStandardDeviation": 0.012858347506348953,
+              "ci95": [
+                0.7443501495735785,
+                0.7762816439236317
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7603158967486051,
+              "sampleStandardDeviation": 0.012858347506348953,
+              "ci95": [
+                0.7443501495735785,
+                0.7762816439236317
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 1,
+            "taskId": "T2-shear-crosswind",
+            "morphologyId": "octo-crawler",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.5263000702970265,
+              "sampleStandardDeviation": 0.0084251079052004,
+              "ci95": [
+                0.5158389171301573,
+                0.5367612234638958
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.7309369930295454,
+              "sampleStandardDeviation": 0.012438371045991188,
+              "ci95": [
+                0.715492715505438,
+                0.7463812705536528
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7506472259805566,
+              "sampleStandardDeviation": 0.008697613200507347,
+              "ci95": [
+                0.7398477127991847,
+                0.7614467391619284
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 2,
+            "taskId": "T3-saddle-escape",
+            "morphologyId": "arachnid-weaver",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.5993742379566702,
+              "sampleStandardDeviation": 0.014401957420752903,
+              "ci95": [
+                0.5814918459236578,
+                0.6172566299896827
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.6532813287187313,
+              "sampleStandardDeviation": 0.026036610680039398,
+              "ci95": [
+                0.6209526066020787,
+                0.685610050835384
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7583652662050966,
+              "sampleStandardDeviation": 0.011819732692952308,
+              "ci95": [
+                0.7436891296518656,
+                0.7730414027583276
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 3,
+            "taskId": "T4-vortex-pursuit",
+            "morphologyId": "eldritch-tentacle-swarm",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.6012698532042212,
+              "sampleStandardDeviation": 0.013465060243172943,
+              "ci95": [
+                0.5845507726666285,
+                0.617988933741814
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.6012698532042212,
+              "sampleStandardDeviation": 0.013465060243172943,
+              "ci95": [
+                0.5845507726666285,
+                0.617988933741814
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7822766368570997,
+              "sampleStandardDeviation": 0.009169672455827206,
+              "ci95": [
+                0.7708909846933784,
+                0.793662289020821
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          }
+        ]
+      },
+      "full-continual-living": {
+        "controller": "full-continual-living",
+        "finalAllTasksMeanReturn": {
+          "count": 5,
+          "mean": 0.7351398112038979,
+          "sampleStandardDeviation": 0.021634586304528098,
+          "ci95": [
+            0.7082769242735332,
+            0.7620026981342627
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "priorTaskRetentionPct": {
+          "count": 5,
+          "mean": 95.38869272731183,
+          "sampleStandardDeviation": 4.514588492358156,
+          "ci95": [
+            89.78309072964569,
+            100.99429472497798
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "catastrophicForgetting": {
+          "count": 5,
+          "mean": 0.040202062927228124,
+          "sampleStandardDeviation": 0.037258729305703446,
+          "ci95": [
+            -0.006060759870483462,
+            0.08646488572493971
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "zeroShotMorphTransferReturn": {
+          "count": 5,
+          "mean": 0.48008707130763983,
+          "sampleStandardDeviation": 0.04352937617225262,
+          "ci95": [
+            0.42603821205028486,
+            0.5341359305649948
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "unseenMorphHoldoutReturn": {
+          "count": 5,
+          "mean": 0.6516112339150981,
+          "sampleStandardDeviation": 0.007077654756784655,
+          "ci95": [
+            0.642823164811883,
+            0.6603993030183133
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "phaseCurves": [
+          {
+            "phaseIndex": 0,
+            "taskId": "T1-orbital-stabilization",
+            "morphologyId": "biped-scanner",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.507539735295295,
+              "sampleStandardDeviation": 0.042660757387575625,
+              "ci95": [
+                0.4545694087110369,
+                0.560510061879553
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.7619615372866417,
+              "sampleStandardDeviation": 0.015355187155231015,
+              "ci95": [
+                0.7428955542103105,
+                0.781027520362973
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7619615372866417,
+              "sampleStandardDeviation": 0.015355187155231015,
+              "ci95": [
+                0.7428955542103105,
+                0.781027520362973
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 1,
+            "taskId": "T2-shear-crosswind",
+            "morphologyId": "octo-crawler",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.5382373353594685,
+              "sampleStandardDeviation": 0.015394475088954765,
+              "ci95": [
+                0.5191225698702686,
+                0.5573521008486684
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.749943295308684,
+              "sampleStandardDeviation": 0.010745685240763133,
+              "ci95": [
+                0.7366007648091988,
+                0.7632858258081692
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7506394281844053,
+              "sampleStandardDeviation": 0.009087668182512507,
+              "ci95": [
+                0.7393555977745577,
+                0.7619232585942529
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 2,
+            "taskId": "T3-saddle-escape",
+            "morphologyId": "arachnid-weaver",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.6618167971673804,
+              "sampleStandardDeviation": 0.012473891866570315,
+              "ci95": [
+                0.6463284147191732,
+                0.6773051796155876
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.7465522009363343,
+              "sampleStandardDeviation": 0.020896302940923456,
+              "ci95": [
+                0.7206060138790302,
+                0.7724983879936385
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7584134692029662,
+              "sampleStandardDeviation": 0.020067912773781883,
+              "ci95": [
+                0.7334958643926677,
+                0.7833310740132646
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          },
+          {
+            "phaseIndex": 3,
+            "taskId": "T4-vortex-pursuit",
+            "morphologyId": "eldritch-tentacle-swarm",
+            "meanAllTasksReturn": {
+              "count": 5,
+              "mean": 0.7351398112038979,
+              "sampleStandardDeviation": 0.021634586304528098,
+              "ci95": [
+                0.7082769242735332,
+                0.7620026981342627
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "meanSeenTasksReturn": {
+              "count": 5,
+              "mean": 0.7351398112038979,
+              "sampleStandardDeviation": 0.021634586304528098,
+              "ci95": [
+                0.7082769242735332,
+                0.7620026981342627
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            },
+            "activeTaskReturn": {
+              "count": 5,
+              "mean": 0.7750406011953791,
+              "sampleStandardDeviation": 0.006818762586836403,
+              "ci95": [
+                0.7665739891790055,
+                0.7835072132117527
+              ],
+              "method": "Two-sided Student t interval across five independent seeds; df=4"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "controllers": {
+        "frozen-baseline": {
+          "seed": 19013,
+          "controller": "frozen-baseline",
+          "initialSha256": "05904fb19c34d6915f9bad6d5a73bbc07b73b1318e2dcfccc6e82879dcc57766",
+          "finalSha256": "05904fb19c34d6915f9bad6d5a73bbc07b73b1318e2dcfccc6e82879dcc57766",
+          "optimizerUpdates": 0,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.2996511066854496,
+              0.43356777871724334,
+              0.5705712855304658,
+              0.2704317179017758
+            ],
+            [
+              0.2996511066854496,
+              0.43356777871724334,
+              0.5705712855304658,
+              0.2704317179017758
+            ],
+            [
+              0.2996511066854496,
+              0.43356777871724334,
+              0.5705712855304658,
+              0.2704317179017758
+            ],
+            [
+              0.2996511066854496,
+              0.43356777871724334,
+              0.5705712855304658,
+              0.2704317179017758
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.2996511066854496,
+              "meanAllTasksReturnAfterPhase": 0.39355547220873355,
+              "meanSeenTasksReturnAfterPhase": 0.2996511066854496,
+              "phaseTrainMeanReturn": 0.32653941445158396
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.43356777871724334,
+              "meanAllTasksReturnAfterPhase": 0.39355547220873355,
+              "meanSeenTasksReturnAfterPhase": 0.36660944270134643,
+              "phaseTrainMeanReturn": 0.4962058939080602
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.5705712855304658,
+              "meanAllTasksReturnAfterPhase": 0.39355547220873355,
+              "meanSeenTasksReturnAfterPhase": 0.4345967236443862,
+              "phaseTrainMeanReturn": 0.71219365682674
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.2704317179017758,
+              "meanAllTasksReturnAfterPhase": 0.39355547220873355,
+              "meanSeenTasksReturnAfterPhase": 0.39355547220873355,
+              "phaseTrainMeanReturn": 0.32214268793537626
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.2996511066854496
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.43356777871724334
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.5705712855304658
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.2704317179017758
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.42244756716153375,
+              0.5330847619771344,
+              0.468091803440095,
+              0.40570115325730416
+            ],
+            "meanReturn": 0.4573313214590168
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.39355547220873355,
+            "meanPriorTaskRetentionRatio": 1,
+            "meanPriorTaskRetentionPct": 100,
+            "meanCatastrophicForgetting": 0,
+            "meanZeroShotMorphTransferReturn": 0.42485692738316166,
+            "unseenMorphMeanReturn": 0.4573313214590168
+          }
+        },
+        "naive-continual": {
+          "seed": 19013,
+          "controller": "naive-continual",
+          "initialSha256": "05904fb19c34d6915f9bad6d5a73bbc07b73b1318e2dcfccc6e82879dcc57766",
+          "finalSha256": "d6fe419e5205b287cd0ac4eed6ddcec56fec6a710424505e39099706cf714de1",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 8.787044050943223,
+              "l2": 1.3220816231884165,
+              "maxAbs": 0.45081403106451035
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7606469931080811,
+              0.3464633057313436,
+              0.4287662991852842,
+              0.2888087625140407
+            ],
+            [
+              0.7393435547665977,
+              0.7319999243898125,
+              0.3896244392430536,
+              0.2580696065469007
+            ],
+            [
+              0.4697161028938492,
+              0.765283077719228,
+              0.7618774199259407,
+              0.3654173379899103
+            ],
+            [
+              0.4020426165582823,
+              0.6372784661356796,
+              0.6032883036746112,
+              0.7832231833078906
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7606469931080811,
+              "meanAllTasksReturnAfterPhase": 0.4561713401346874,
+              "meanSeenTasksReturnAfterPhase": 0.7606469931080811,
+              "phaseTrainMeanReturn": 0.7289494045812266
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7319999243898125,
+              "meanAllTasksReturnAfterPhase": 0.5297593812365912,
+              "meanSeenTasksReturnAfterPhase": 0.7356717395782051,
+              "phaseTrainMeanReturn": 0.7503401610190877
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7618774199259407,
+              "meanAllTasksReturnAfterPhase": 0.590573484632232,
+              "meanSeenTasksReturnAfterPhase": 0.665625533513006,
+              "phaseTrainMeanReturn": 0.7725580132027379
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7832231833078906,
+              "meanAllTasksReturnAfterPhase": 0.6064581424191159,
+              "meanSeenTasksReturnAfterPhase": 0.6064581424191159,
+              "phaseTrainMeanReturn": 0.7275714757914449
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.2996511066854496
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.3464633057313436
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.3896244392430536
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.3654173379899103
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.5710545604937365,
+              0.4351676209626846,
+              0.6977091720030442,
+              0.30904830939432876
+            ],
+            "meanReturn": 0.5032449157134485
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.6064581424191159,
+            "meanPriorTaskRetentionRatio": 0.7303322946869607,
+            "meanPriorTaskRetentionPct": 73.03322946869606,
+            "meanCatastrophicForgetting": 0.20397165035175377,
+            "meanZeroShotMorphTransferReturn": 0.36716836098810246,
+            "unseenMorphMeanReturn": 0.5032449157134485
+          }
+        },
+        "metamorph-transfer-only": {
+          "seed": 19013,
+          "controller": "metamorph-transfer-only",
+          "initialSha256": "05904fb19c34d6915f9bad6d5a73bbc07b73b1318e2dcfccc6e82879dcc57766",
+          "finalSha256": "ff346aea5462c82715ff83347476dcbc7902fec54de1ba654c99b3a642060965",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 7.612022665824043,
+              "l2": 1.149475080573867,
+              "maxAbs": 0.41593240946531296
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 5.433239022968337,
+              "l2": 1.3363311001211402,
+              "maxAbs": 0.6055904775857925
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7662000494247849,
+              0.41577499903313797,
+              0.41453950876387086,
+              0.2840616860125541
+            ],
+            [
+              0.7385637600606524,
+              0.7382755358763863,
+              0.31676170118499,
+              0.25901458079009226
+            ],
+            [
+              0.47369901446685214,
+              0.7509988884873389,
+              0.766373578840097,
+              0.35999806151295194
+            ],
+            [
+              0.3973025034908474,
+              0.649212574469659,
+              0.6341355710099401,
+              0.7781504126747176
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7662000494247849,
+              "meanAllTasksReturnAfterPhase": 0.47014406080858695,
+              "meanSeenTasksReturnAfterPhase": 0.7662000494247849,
+              "phaseTrainMeanReturn": 0.7388786244856952
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7382755358763863,
+              "meanAllTasksReturnAfterPhase": 0.5131538944780302,
+              "meanSeenTasksReturnAfterPhase": 0.7384196479685193,
+              "phaseTrainMeanReturn": 0.7616821857732531
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.766373578840097,
+              "meanAllTasksReturnAfterPhase": 0.58776738582681,
+              "meanSeenTasksReturnAfterPhase": 0.6636904939314293,
+              "phaseTrainMeanReturn": 0.7806387387521558
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7781504126747176,
+              "meanAllTasksReturnAfterPhase": 0.614700265411291,
+              "meanSeenTasksReturnAfterPhase": 0.614700265411291,
+              "phaseTrainMeanReturn": 0.7250628076435002
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.2996511066854496
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.4738010027834563
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.5422331836311366
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.46132967903052763
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.6460898699553299,
+              0.4335169330217898,
+              0.71520830744436,
+              0.31720210443858954
+            ],
+            "meanReturn": 0.5280043037150173
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.614700265411291,
+            "meanPriorTaskRetentionRatio": 0.741783150905667,
+            "meanPriorTaskRetentionPct": 74.1783150905667,
+            "meanCatastrophicForgetting": 0.19673283839027392,
+            "meanZeroShotMorphTransferReturn": 0.49245462181504024,
+            "unseenMorphMeanReturn": 0.5280043037150173
+          }
+        },
+        "full-continual-living": {
+          "seed": 19013,
+          "controller": "full-continual-living",
+          "initialSha256": "05904fb19c34d6915f9bad6d5a73bbc07b73b1318e2dcfccc6e82879dcc57766",
+          "finalSha256": "00bb9dd1a48312d4c62efac06728b9c56cd7ea4237f471e99c05cd878cb56f4b",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 4000,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 9.514455905911746,
+              "l2": 1.4338753423518433,
+              "maxAbs": 0.6078248471021652
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 7.624334956286475,
+              "l2": 1.7536981038121524,
+              "maxAbs": 0.7567734196782112
+            }
+          },
+          "returnMatrix": [
+            [
+              0.76892613667355,
+              0.4205881798092472,
+              0.4046348325408286,
+              0.28299445265674256
+            ],
+            [
+              0.7581848166715045,
+              0.7523646095969078,
+              0.3190312658193438,
+              0.25653264770600337
+            ],
+            [
+              0.7661083747855436,
+              0.7686152846340495,
+              0.7757538413029353,
+              0.36004538804097885
+            ],
+            [
+              0.7674300057220358,
+              0.7186752519424585,
+              0.7668802285109092,
+              0.7674374159043691
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 400,
+              "activeTaskReturnAfterPhase": 0.76892613667355,
+              "meanAllTasksReturnAfterPhase": 0.4692859004200921,
+              "meanSeenTasksReturnAfterPhase": 0.76892613667355,
+              "phaseTrainMeanReturn": 0.7330931883629067
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 1200,
+              "activeTaskReturnAfterPhase": 0.7523646095969078,
+              "meanAllTasksReturnAfterPhase": 0.5215283349484399,
+              "meanSeenTasksReturnAfterPhase": 0.7552747131342061,
+              "phaseTrainMeanReturn": 0.7591652202518854
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 2400,
+              "activeTaskReturnAfterPhase": 0.7757538413029353,
+              "meanAllTasksReturnAfterPhase": 0.6676307221908768,
+              "meanSeenTasksReturnAfterPhase": 0.7701591669075095,
+              "phaseTrainMeanReturn": 0.772148011132666
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 4000,
+              "activeTaskReturnAfterPhase": 0.7674374159043691,
+              "meanAllTasksReturnAfterPhase": 0.7551057255199431,
+              "meanSeenTasksReturnAfterPhase": 0.7551057255199431,
+              "phaseTrainMeanReturn": 0.7025806426889701
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.2996511066854496
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.4755546745615079
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.49467546645462496
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.41500123048089943
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.8034000185338686,
+              0.7415835633036012,
+              0.7366507905552667,
+              0.3298553526199046
+            ],
+            "meanReturn": 0.6528724312531603
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.7551057255199431,
+            "meanPriorTaskRetentionRatio": 0.9806125318864325,
+            "meanPriorTaskRetentionPct": 98.06125318864325,
+            "meanCatastrophicForgetting": 0.01468636713266321,
+            "meanZeroShotMorphTransferReturn": 0.46174379049901076,
+            "unseenMorphMeanReturn": 0.6528724312531603
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "controllers": {
+        "frozen-baseline": {
+          "seed": 29017,
+          "controller": "frozen-baseline",
+          "initialSha256": "4a661878ffe59f292942321c2487c99f1c0efd8bad418a998ebd63f11a51a982",
+          "finalSha256": "4a661878ffe59f292942321c2487c99f1c0efd8bad418a998ebd63f11a51a982",
+          "optimizerUpdates": 0,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.3470701290250232,
+              0.3453032303411303,
+              0.4977567587291648,
+              0.6235676213362353
+            ],
+            [
+              0.3470701290250232,
+              0.3453032303411303,
+              0.4977567587291648,
+              0.6235676213362353
+            ],
+            [
+              0.3470701290250232,
+              0.3453032303411303,
+              0.4977567587291648,
+              0.6235676213362353
+            ],
+            [
+              0.3470701290250232,
+              0.3453032303411303,
+              0.4977567587291648,
+              0.6235676213362353
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.3470701290250232,
+              "meanAllTasksReturnAfterPhase": 0.4534244348578884,
+              "meanSeenTasksReturnAfterPhase": 0.3470701290250232,
+              "phaseTrainMeanReturn": 0.3868560430671977
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.3453032303411303,
+              "meanAllTasksReturnAfterPhase": 0.4534244348578884,
+              "meanSeenTasksReturnAfterPhase": 0.34618667968307676,
+              "phaseTrainMeanReturn": 0.4505757520872896
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.4977567587291648,
+              "meanAllTasksReturnAfterPhase": 0.4534244348578884,
+              "meanSeenTasksReturnAfterPhase": 0.3967100393651061,
+              "phaseTrainMeanReturn": 0.3980738871768166
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.6235676213362353,
+              "meanAllTasksReturnAfterPhase": 0.4534244348578884,
+              "meanSeenTasksReturnAfterPhase": 0.4534244348578884,
+              "phaseTrainMeanReturn": 0.6767271149644496
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3470701290250232
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.3453032303411303
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.4977567587291648
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.6235676213362353
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.37134598546498854,
+              0.3767742469365766,
+              0.48715218835991986,
+              0.44370591095903844
+            ],
+            "meanReturn": 0.41974458293013084
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.4534244348578884,
+            "meanPriorTaskRetentionRatio": 1,
+            "meanPriorTaskRetentionPct": 100,
+            "meanCatastrophicForgetting": 0,
+            "meanZeroShotMorphTransferReturn": 0.4888758701355102,
+            "unseenMorphMeanReturn": 0.41974458293013084
+          }
+        },
+        "naive-continual": {
+          "seed": 29017,
+          "controller": "naive-continual",
+          "initialSha256": "4a661878ffe59f292942321c2487c99f1c0efd8bad418a998ebd63f11a51a982",
+          "finalSha256": "3a3088ab59ecfdb2b6cf5a257d3d2f74a00e63df07de2ad308bef31732b4ecb8",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 8.862042509919775,
+              "l2": 1.258533250496192,
+              "maxAbs": 0.3829413801431656
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7504204242747103,
+              0.4155393115131244,
+              0.5081851187060162,
+              0.5610684377429488
+            ],
+            [
+              0.7083745590061034,
+              0.7543489419412023,
+              0.4013246141388905,
+              0.3440224727536677
+            ],
+            [
+              0.377880575576388,
+              0.7442817567079432,
+              0.7671016942389791,
+              0.5297104837435882
+            ],
+            [
+              0.3419020515367818,
+              0.5959350492041822,
+              0.7153208703080157,
+              0.791620576201986
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7504204242747103,
+              "meanAllTasksReturnAfterPhase": 0.5588033230591999,
+              "meanSeenTasksReturnAfterPhase": 0.7504204242747103,
+              "phaseTrainMeanReturn": 0.743100064708099
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7543489419412023,
+              "meanAllTasksReturnAfterPhase": 0.5520176469599659,
+              "meanSeenTasksReturnAfterPhase": 0.7313617504736528,
+              "phaseTrainMeanReturn": 0.76153523536143
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7671016942389791,
+              "meanAllTasksReturnAfterPhase": 0.6047436275667246,
+              "meanSeenTasksReturnAfterPhase": 0.62975467550777,
+              "phaseTrainMeanReturn": 0.7505388504270383
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.791620576201986,
+              "meanAllTasksReturnAfterPhase": 0.6111946368127414,
+              "meanSeenTasksReturnAfterPhase": 0.6111946368127414,
+              "phaseTrainMeanReturn": 0.7528163648148646
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3470701290250232
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.4155393115131244
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.4013246141388905
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.5297104837435882
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.6195598818781892,
+              0.5352141014748076,
+              0.6785347104007886,
+              0.297230601835184
+            ],
+            "meanReturn": 0.5326348238972424
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.6111946368127414,
+            "meanPriorTaskRetentionRatio": 0.7260370941940302,
+            "meanPriorTaskRetentionPct": 72.60370941940302,
+            "meanCatastrophicForgetting": 0.20623769646863735,
+            "meanZeroShotMorphTransferReturn": 0.44885813646520106,
+            "unseenMorphMeanReturn": 0.5326348238972424
+          }
+        },
+        "metamorph-transfer-only": {
+          "seed": 29017,
+          "controller": "metamorph-transfer-only",
+          "initialSha256": "4a661878ffe59f292942321c2487c99f1c0efd8bad418a998ebd63f11a51a982",
+          "finalSha256": "beecb22972e21be44414ad42b76c52964472a82f66cec51f78084a0d1bfe54ff",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 7.500623149680905,
+              "l2": 1.0633971944976899,
+              "maxAbs": 0.34703709185123444
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 4.98948375810869,
+              "l2": 1.0864202814132986,
+              "maxAbs": 0.4783412292599678
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7564845843265383,
+              0.44996647732538547,
+              0.5212950565648399,
+              0.5593639624932338
+            ],
+            [
+              0.7057938749262938,
+              0.7619959655589095,
+              0.3573985982093953,
+              0.31098881113330173
+            ],
+            [
+              0.3580376060770615,
+              0.7357695656450096,
+              0.7685962923902471,
+              0.5853932438848115
+            ],
+            [
+              0.31720517616761224,
+              0.5914390832569972,
+              0.7246314442056743,
+              0.7898960836635498
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7564845843265383,
+              "meanAllTasksReturnAfterPhase": 0.5717775201774994,
+              "meanSeenTasksReturnAfterPhase": 0.7564845843265383,
+              "phaseTrainMeanReturn": 0.7505337126705324
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7619959655589095,
+              "meanAllTasksReturnAfterPhase": 0.534044312456975,
+              "meanSeenTasksReturnAfterPhase": 0.7338949202426016,
+              "phaseTrainMeanReturn": 0.7678676193728785
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7685962923902471,
+              "meanAllTasksReturnAfterPhase": 0.6119491769992824,
+              "meanSeenTasksReturnAfterPhase": 0.6208011547041061,
+              "phaseTrainMeanReturn": 0.7693866710741181
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7898960836635498,
+              "meanAllTasksReturnAfterPhase": 0.6057929468234584,
+              "meanSeenTasksReturnAfterPhase": 0.6057929468234584,
+              "phaseTrainMeanReturn": 0.7522748449861812
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3470701290250232
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.483543398874733
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.6059135710223124
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.672807511581935
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.6597070223464438,
+              0.5535259173819618,
+              0.7104756788191008,
+              0.30704109070718866
+            ],
+            "meanReturn": 0.5576874273136738
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.6057929468234584,
+            "meanPriorTaskRetentionRatio": 0.7127613979626757,
+            "meanPriorTaskRetentionPct": 71.27613979626757,
+            "meanCatastrophicForgetting": 0.21793371288180372,
+            "meanZeroShotMorphTransferReturn": 0.5874214938263268,
+            "unseenMorphMeanReturn": 0.5576874273136738
+          }
+        },
+        "full-continual-living": {
+          "seed": 29017,
+          "controller": "full-continual-living",
+          "initialSha256": "4a661878ffe59f292942321c2487c99f1c0efd8bad418a998ebd63f11a51a982",
+          "finalSha256": "9a93e5d69972fa9a057682072bfb01563a47bef8eefd4ac94488cdb901452a69",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 4000,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 9.831688469020548,
+              "l2": 1.3717608939386094,
+              "maxAbs": 0.4133300147950649
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 6.297427111072466,
+              "l2": 1.4092542021987189,
+              "maxAbs": 0.6402904242277145
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7604005846337938,
+              0.4549931637267588,
+              0.5205054200373948,
+              0.5537965887906231
+            ],
+            [
+              0.7551104186293955,
+              0.7589323000608149,
+              0.40841180823653034,
+              0.3309155116518
+            ],
+            [
+              0.6609471506245072,
+              0.7848585126354379,
+              0.7659549366152232,
+              0.4838365500256464
+            ],
+            [
+              0.5243595443336581,
+              0.7679690484315842,
+              0.7887336350498889,
+              0.7822931586252684
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 400,
+              "activeTaskReturnAfterPhase": 0.7604005846337938,
+              "meanAllTasksReturnAfterPhase": 0.5724239392971426,
+              "meanSeenTasksReturnAfterPhase": 0.7604005846337938,
+              "phaseTrainMeanReturn": 0.7481358960166509
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 1200,
+              "activeTaskReturnAfterPhase": 0.7589323000608149,
+              "meanAllTasksReturnAfterPhase": 0.5633425096446352,
+              "meanSeenTasksReturnAfterPhase": 0.7570213593451052,
+              "phaseTrainMeanReturn": 0.7590023331409044
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 2400,
+              "activeTaskReturnAfterPhase": 0.7659549366152232,
+              "meanAllTasksReturnAfterPhase": 0.6738992874752037,
+              "meanSeenTasksReturnAfterPhase": 0.7372535332917227,
+              "phaseTrainMeanReturn": 0.7589936575238033
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 4000,
+              "activeTaskReturnAfterPhase": 0.7822931586252684,
+              "meanAllTasksReturnAfterPhase": 0.7158388466100998,
+              "meanSeenTasksReturnAfterPhase": 0.7158388466100998,
+              "phaseTrainMeanReturn": 0.737445871618739
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3470701290250232
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.4875168692879959
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.6269008477026945
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.5034032291167291
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.7815401201589907,
+              0.7406928271507349,
+              0.7690319489178423,
+              0.3148555849751239
+            ],
+            "meanReturn": 0.6515301203006729
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.7158388466100998,
+            "meanPriorTaskRetentionRatio": 0.9104098133259161,
+            "meanPriorTaskRetentionPct": 91.04098133259161,
+            "meanCatastrophicForgetting": 0.07868034676671191,
+            "meanZeroShotMorphTransferReturn": 0.5392736487024732,
+            "unseenMorphMeanReturn": 0.6515301203006729
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "controllers": {
+        "frozen-baseline": {
+          "seed": 39023,
+          "controller": "frozen-baseline",
+          "initialSha256": "53140d17f69755c95f66955f50ae7d0082a5922befc4c9cba54032848c4556b0",
+          "finalSha256": "53140d17f69755c95f66955f50ae7d0082a5922befc4c9cba54032848c4556b0",
+          "optimizerUpdates": 0,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.3950857976631867,
+              0.3270593011863511,
+              0.35358054006172956,
+              0.4528199180194458
+            ],
+            [
+              0.3950857976631867,
+              0.3270593011863511,
+              0.35358054006172956,
+              0.4528199180194458
+            ],
+            [
+              0.3950857976631867,
+              0.3270593011863511,
+              0.35358054006172956,
+              0.4528199180194458
+            ],
+            [
+              0.3950857976631867,
+              0.3270593011863511,
+              0.35358054006172956,
+              0.4528199180194458
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.3950857976631867,
+              "meanAllTasksReturnAfterPhase": 0.3821363892326783,
+              "meanSeenTasksReturnAfterPhase": 0.3950857976631867,
+              "phaseTrainMeanReturn": 0.4587008896849169
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.3270593011863511,
+              "meanAllTasksReturnAfterPhase": 0.3821363892326783,
+              "meanSeenTasksReturnAfterPhase": 0.3610725494247689,
+              "phaseTrainMeanReturn": 0.3793712995693446
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.35358054006172956,
+              "meanAllTasksReturnAfterPhase": 0.3821363892326783,
+              "meanSeenTasksReturnAfterPhase": 0.35857521297042244,
+              "phaseTrainMeanReturn": 0.4174009785017605
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.4528199180194458,
+              "meanAllTasksReturnAfterPhase": 0.3821363892326783,
+              "meanSeenTasksReturnAfterPhase": 0.3821363892326783,
+              "phaseTrainMeanReturn": 0.40744722636821895
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3950857976631867
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.3270593011863511
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.35358054006172956
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.4528199180194458
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.4075594819447347,
+              0.45387825628401757,
+              0.5509755891768938,
+              0.5246217522581362
+            ],
+            "meanReturn": 0.4842587699159456
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.3821363892326783,
+            "meanPriorTaskRetentionRatio": 1,
+            "meanPriorTaskRetentionPct": 100,
+            "meanCatastrophicForgetting": 0,
+            "meanZeroShotMorphTransferReturn": 0.3778199197558422,
+            "unseenMorphMeanReturn": 0.4842587699159456
+          }
+        },
+        "naive-continual": {
+          "seed": 39023,
+          "controller": "naive-continual",
+          "initialSha256": "53140d17f69755c95f66955f50ae7d0082a5922befc4c9cba54032848c4556b0",
+          "finalSha256": "fa8748d1a2680db9f53c70ca1ba16029222ccbe98cbdbd86243011877ac15df0",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 10.065354908350855,
+              "l2": 1.4518542710165259,
+              "maxAbs": 0.4372076392173767
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7630015439466785,
+              0.47246626494929406,
+              0.457071075336599,
+              0.4037926343097957
+            ],
+            [
+              0.6948251114705232,
+              0.7473486550897668,
+              0.44494002737514415,
+              0.2690233468890162
+            ],
+            [
+              0.4694876160746796,
+              0.7283382427964054,
+              0.7472962563691825,
+              0.44854909991716674
+            ],
+            [
+              0.39105837197479476,
+              0.5723262837214612,
+              0.640952076226575,
+              0.7814464252928754
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7630015439466785,
+              "meanAllTasksReturnAfterPhase": 0.5240828796355917,
+              "meanSeenTasksReturnAfterPhase": 0.7630015439466785,
+              "phaseTrainMeanReturn": 0.7918870414511028
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7473486550897668,
+              "meanAllTasksReturnAfterPhase": 0.5390342852061125,
+              "meanSeenTasksReturnAfterPhase": 0.7210868832801449,
+              "phaseTrainMeanReturn": 0.7401817521494264
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7472962563691825,
+              "meanAllTasksReturnAfterPhase": 0.5984178037893585,
+              "meanSeenTasksReturnAfterPhase": 0.6483740384134224,
+              "phaseTrainMeanReturn": 0.7708698555442896
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7814464252928754,
+              "meanAllTasksReturnAfterPhase": 0.5964457893039266,
+              "meanSeenTasksReturnAfterPhase": 0.5964457893039266,
+              "phaseTrainMeanReturn": 0.7491825060195273
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3950857976631867
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.47246626494929406
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.44494002737514415
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.44854909991716674
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.5712557291061102,
+              0.48617594058481606,
+              0.6240280640707077,
+              0.2876277521855163
+            ],
+            "meanReturn": 0.4922718714867875
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.5964457893039266,
+            "meanPriorTaskRetentionRatio": 0.712010003927912,
+            "meanPriorTaskRetentionPct": 71.2010003927912,
+            "meanCatastrophicForgetting": 0.21776990782759895,
+            "meanZeroShotMorphTransferReturn": 0.455318464080535,
+            "unseenMorphMeanReturn": 0.4922718714867875
+          }
+        },
+        "metamorph-transfer-only": {
+          "seed": 39023,
+          "controller": "metamorph-transfer-only",
+          "initialSha256": "53140d17f69755c95f66955f50ae7d0082a5922befc4c9cba54032848c4556b0",
+          "finalSha256": "0e430857538cfd555d2471bd5826857d559302dd3df3c87d99ecf6c81f0ac3bc",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 8.675218838325236,
+              "l2": 1.2380730167232377,
+              "maxAbs": 0.36564771831035614
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 5.095543544040993,
+              "l2": 1.2087747220942293,
+              "maxAbs": 0.530385434627533
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7686214087105767,
+              0.5014311681977435,
+              0.4451547614383767,
+              0.40870684270602975
+            ],
+            [
+              0.6904800250953884,
+              0.754010618892818,
+              0.40553205615128024,
+              0.2783558761876559
+            ],
+            [
+              0.4952190288659519,
+              0.7342644899011648,
+              0.7496344455913582,
+              0.4145522141501008
+            ],
+            [
+              0.3716694255578402,
+              0.5754537841402367,
+              0.6621246647879817,
+              0.7782063353737125
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7686214087105767,
+              "meanAllTasksReturnAfterPhase": 0.5309785452631817,
+              "meanSeenTasksReturnAfterPhase": 0.7686214087105767,
+              "phaseTrainMeanReturn": 0.7984650863519183
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.754010618892818,
+              "meanAllTasksReturnAfterPhase": 0.5320946440817856,
+              "meanSeenTasksReturnAfterPhase": 0.7222453219941032,
+              "phaseTrainMeanReturn": 0.7519077960682056
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7496344455913582,
+              "meanAllTasksReturnAfterPhase": 0.5984175446271439,
+              "meanSeenTasksReturnAfterPhase": 0.6597059881194917,
+              "phaseTrainMeanReturn": 0.7744744937423863
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7782063353737125,
+              "meanAllTasksReturnAfterPhase": 0.5968635524649428,
+              "meanSeenTasksReturnAfterPhase": 0.5968635524649428,
+              "phaseTrainMeanReturn": 0.7514109903887277
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3950857976631867
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.629081244250458
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.5086370142940357
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.4942990864148382
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.6064479337318046,
+              0.4980764309564124,
+              0.6710566233520497,
+              0.3027557876102646
+            ],
+            "meanReturn": 0.5195841939126328
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.5968635524649428,
+            "meanPriorTaskRetentionRatio": 0.7100024200209072,
+            "meanPriorTaskRetentionPct": 71.00024200209072,
+            "meanCatastrophicForgetting": 0.22100619956956472,
+            "meanZeroShotMorphTransferReturn": 0.5440057816531106,
+            "unseenMorphMeanReturn": 0.5195841939126328
+          }
+        },
+        "full-continual-living": {
+          "seed": 39023,
+          "controller": "full-continual-living",
+          "initialSha256": "53140d17f69755c95f66955f50ae7d0082a5922befc4c9cba54032848c4556b0",
+          "finalSha256": "60bf1d38d4ae80d637abe6ed7fd2da744feb15f57eee06eb67dbb250a3cb350d",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 4000,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 10.620644019218162,
+              "l2": 1.5517966479148368,
+              "maxAbs": 0.5438028760254383
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 6.166241124970838,
+              "l2": 1.4503547929074019,
+              "maxAbs": 0.6699628829956055
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7647930549286629,
+              0.5097949169365246,
+              0.4453502509419403,
+              0.39422456820537055
+            ],
+            [
+              0.732910428913201,
+              0.7521543439648717,
+              0.36464768982300827,
+              0.2952478214807484
+            ],
+            [
+              0.6412003555234472,
+              0.7635626394201019,
+              0.7557847536263204,
+              0.4120981870604218
+            ],
+            [
+              0.5209200987190699,
+              0.7575777389051901,
+              0.7722332949747631,
+              0.7807709691148221
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 400,
+              "activeTaskReturnAfterPhase": 0.7647930549286629,
+              "meanAllTasksReturnAfterPhase": 0.5285406977531245,
+              "meanSeenTasksReturnAfterPhase": 0.7647930549286629,
+              "phaseTrainMeanReturn": 0.7943447790101129
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 1200,
+              "activeTaskReturnAfterPhase": 0.7521543439648717,
+              "meanAllTasksReturnAfterPhase": 0.5362400710454573,
+              "meanSeenTasksReturnAfterPhase": 0.7425323864390363,
+              "phaseTrainMeanReturn": 0.7457431930666645
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 2400,
+              "activeTaskReturnAfterPhase": 0.7557847536263204,
+              "meanAllTasksReturnAfterPhase": 0.6431614839075728,
+              "meanSeenTasksReturnAfterPhase": 0.7201825828566232,
+              "phaseTrainMeanReturn": 0.7624737220373077
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 4000,
+              "activeTaskReturnAfterPhase": 0.7807709691148221,
+              "meanAllTasksReturnAfterPhase": 0.7078755254284613,
+              "meanSeenTasksReturnAfterPhase": 0.7078755254284613,
+              "phaseTrainMeanReturn": 0.7390907977059781
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.3950857976631867
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.6301980552032316
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.44095274209006724
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.4560408487564958
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.7880803946192076,
+              0.739558218029831,
+              0.7383187010416543,
+              0.29301072573959064
+            ],
+            "meanReturn": 0.639742009857571
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.7078755254284613,
+            "meanPriorTaskRetentionRatio": 0.903366522965925,
+            "meanPriorTaskRetentionPct": 90.3366522965925,
+            "meanCatastrophicForgetting": 0.08129098540319768,
+            "meanZeroShotMorphTransferReturn": 0.5090638820165981,
+            "unseenMorphMeanReturn": 0.639742009857571
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "controllers": {
+        "frozen-baseline": {
+          "seed": 49031,
+          "controller": "frozen-baseline",
+          "initialSha256": "33d3e75e5554cbd3023b54d002e6d63b524020db832398c8338f81570171148d",
+          "finalSha256": "33d3e75e5554cbd3023b54d002e6d63b524020db832398c8338f81570171148d",
+          "optimizerUpdates": 0,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.27890742468600604,
+              0.5129908284968591,
+              0.4262138982903365,
+              0.45461083010724296
+            ],
+            [
+              0.27890742468600604,
+              0.5129908284968591,
+              0.4262138982903365,
+              0.45461083010724296
+            ],
+            [
+              0.27890742468600604,
+              0.5129908284968591,
+              0.4262138982903365,
+              0.45461083010724296
+            ],
+            [
+              0.27890742468600604,
+              0.5129908284968591,
+              0.4262138982903365,
+              0.45461083010724296
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.27890742468600604,
+              "meanAllTasksReturnAfterPhase": 0.41818074539511113,
+              "meanSeenTasksReturnAfterPhase": 0.27890742468600604,
+              "phaseTrainMeanReturn": 0.45090051787012325
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.5129908284968591,
+              "meanAllTasksReturnAfterPhase": 0.41818074539511113,
+              "meanSeenTasksReturnAfterPhase": 0.39594912659143255,
+              "phaseTrainMeanReturn": 0.4159500995273428
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.4262138982903365,
+              "meanAllTasksReturnAfterPhase": 0.41818074539511113,
+              "meanSeenTasksReturnAfterPhase": 0.4060373838244005,
+              "phaseTrainMeanReturn": 0.531318000041387
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.45461083010724296,
+              "meanAllTasksReturnAfterPhase": 0.41818074539511113,
+              "meanSeenTasksReturnAfterPhase": 0.41818074539511113,
+              "phaseTrainMeanReturn": 0.3916222434345791
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.27890742468600604
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.5129908284968591
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.4262138982903365
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.45461083010724296
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.5338846844153581,
+              0.6418864449775112,
+              0.6743228894610542,
+              0.47049534312413765
+            ],
+            "meanReturn": 0.5801473404945153
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.41818074539511113,
+            "meanPriorTaskRetentionRatio": 1,
+            "meanPriorTaskRetentionPct": 100,
+            "meanCatastrophicForgetting": 0,
+            "meanZeroShotMorphTransferReturn": 0.4646051856314795,
+            "unseenMorphMeanReturn": 0.5801473404945153
+          }
+        },
+        "naive-continual": {
+          "seed": 49031,
+          "controller": "naive-continual",
+          "initialSha256": "33d3e75e5554cbd3023b54d002e6d63b524020db832398c8338f81570171148d",
+          "finalSha256": "a4e039238cbd77b75f795daa96633d49ce8cf4df98728a2d2688422b28ff8e28",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 9.972044336143881,
+              "l2": 1.481012474986973,
+              "maxAbs": 0.466395765542984
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7347365123157064,
+              0.33543552657208914,
+              0.48991256481956835,
+              0.3916702366054736
+            ],
+            [
+              0.6694499021082934,
+              0.7422909019870765,
+              0.44519734580258036,
+              0.25372802834113245
+            ],
+            [
+              0.4230499140856675,
+              0.7459810995461995,
+              0.7419069007318171,
+              0.41758406762700473
+            ],
+            [
+              0.3535227500862715,
+              0.584754204021092,
+              0.6019321036446537,
+              0.7972265885543225
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7347365123157064,
+              "meanAllTasksReturnAfterPhase": 0.4879387100782094,
+              "meanSeenTasksReturnAfterPhase": 0.7347365123157064,
+              "phaseTrainMeanReturn": 0.7905099903364534
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7422909019870765,
+              "meanAllTasksReturnAfterPhase": 0.5276665445597707,
+              "meanSeenTasksReturnAfterPhase": 0.7058704020476849,
+              "phaseTrainMeanReturn": 0.7281251965064619
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7419069007318171,
+              "meanAllTasksReturnAfterPhase": 0.5821304954976723,
+              "meanSeenTasksReturnAfterPhase": 0.6369793047878948,
+              "phaseTrainMeanReturn": 0.7797800357551027
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7972265885543225,
+              "meanAllTasksReturnAfterPhase": 0.5843589115765849,
+              "meanSeenTasksReturnAfterPhase": 0.5843589115765849,
+              "phaseTrainMeanReturn": 0.7264132512451235
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.27890742468600604
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.33543552657208914
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.44519734580258036
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.41758406762700473
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.508553758110713,
+              0.48658853873480756,
+              0.6768794006419894,
+              0.2992191308199758
+            ],
+            "meanReturn": 0.49281020707687145
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.5843589115765849,
+            "meanPriorTaskRetentionRatio": 0.6934188219770446,
+            "meanPriorTaskRetentionPct": 69.34188219770446,
+            "meanCatastrophicForgetting": 0.22624175242752761,
+            "meanZeroShotMorphTransferReturn": 0.3994056466672247,
+            "unseenMorphMeanReturn": 0.49281020707687145
+          }
+        },
+        "metamorph-transfer-only": {
+          "seed": 49031,
+          "controller": "metamorph-transfer-only",
+          "initialSha256": "33d3e75e5554cbd3023b54d002e6d63b524020db832398c8338f81570171148d",
+          "finalSha256": "2d65e2ece3029731bc366e1a4abbae5e060da0945ddeb122de071147206d8421",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 9.132837419398129,
+              "l2": 1.3131480119670325,
+              "maxAbs": 0.41183236241340637
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 5.35514993336983,
+              "l2": 1.237665653119731,
+              "maxAbs": 0.6438520103693008
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7394935602259061,
+              0.35539179443387325,
+              0.46004319735229177,
+              0.40139475282806575
+            ],
+            [
+              0.6815888789054763,
+              0.7476480640655945,
+              0.404621931510861,
+              0.25873060183044244
+            ],
+            [
+              0.4175696391263912,
+              0.7447857406628435,
+              0.7420225609627369,
+              0.42761938373567626
+            ],
+            [
+              0.32827071138174935,
+              0.5739312524686324,
+              0.6246652164469064,
+              0.793622210517927
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7394935602259061,
+              "meanAllTasksReturnAfterPhase": 0.48908082621003424,
+              "meanSeenTasksReturnAfterPhase": 0.7394935602259061,
+              "phaseTrainMeanReturn": 0.795856491161263
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7476480640655945,
+              "meanAllTasksReturnAfterPhase": 0.5231473690780936,
+              "meanSeenTasksReturnAfterPhase": 0.7146184714855354,
+              "phaseTrainMeanReturn": 0.7349234275938914
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7420225609627369,
+              "meanAllTasksReturnAfterPhase": 0.5829993311219119,
+              "meanSeenTasksReturnAfterPhase": 0.6347926469173238,
+              "phaseTrainMeanReturn": 0.7814412840427905
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.793622210517927,
+              "meanAllTasksReturnAfterPhase": 0.5801223477038038,
+              "meanSeenTasksReturnAfterPhase": 0.5801223477038038,
+              "phaseTrainMeanReturn": 0.7233902504687559
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.27890742468600604
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.40189136380426643
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.5006877326731098
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.4897570603284437
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.5353568160327387,
+              0.4963877604816475,
+              0.7005090941068703,
+              0.31213527701248295
+            ],
+            "meanReturn": 0.5110972369084349
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.5801223477038038,
+            "meanPriorTaskRetentionRatio": 0.6844676989993652,
+            "meanPriorTaskRetentionPct": 68.44676989993653,
+            "meanCatastrophicForgetting": 0.23409900165231642,
+            "meanZeroShotMorphTransferReturn": 0.4641120522686067,
+            "unseenMorphMeanReturn": 0.5110972369084349
+          }
+        },
+        "full-continual-living": {
+          "seed": 49031,
+          "controller": "full-continual-living",
+          "initialSha256": "33d3e75e5554cbd3023b54d002e6d63b524020db832398c8338f81570171148d",
+          "finalSha256": "e9fff559b84a5da40f37239e19324dad53918a681a16d4769bed1ed17e9c51bb",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 4000,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 10.810761782937334,
+              "l2": 1.5796825933479743,
+              "maxAbs": 0.6181582510471344
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 6.531775220297277,
+              "l2": 1.515675650684191,
+              "maxAbs": 0.7780966907739639
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7372252934764623,
+              0.35323894757089447,
+              0.4702043683418441,
+              0.3899840066502344
+            ],
+            [
+              0.7346193288465639,
+              0.7351314032294929,
+              0.392172148865458,
+              0.2888255827892027
+            ],
+            [
+              0.7331125348196826,
+              0.7608831248526968,
+              0.7249395209331955,
+              0.4023841976288945
+            ],
+            [
+              0.7348824369969693,
+              0.7543938562491579,
+              0.7227481768989554,
+              0.7761101299864781
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 400,
+              "activeTaskReturnAfterPhase": 0.7372252934764623,
+              "meanAllTasksReturnAfterPhase": 0.48766315400985877,
+              "meanSeenTasksReturnAfterPhase": 0.7372252934764623,
+              "phaseTrainMeanReturn": 0.7939098392492453
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 1200,
+              "activeTaskReturnAfterPhase": 0.7351314032294929,
+              "meanAllTasksReturnAfterPhase": 0.5376871159326794,
+              "meanSeenTasksReturnAfterPhase": 0.7348753660380284,
+              "phaseTrainMeanReturn": 0.7292755553708816
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 2400,
+              "activeTaskReturnAfterPhase": 0.7249395209331955,
+              "meanAllTasksReturnAfterPhase": 0.6553298445586174,
+              "meanSeenTasksReturnAfterPhase": 0.7396450602018584,
+              "phaseTrainMeanReturn": 0.7739093466890081
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 4000,
+              "activeTaskReturnAfterPhase": 0.7761101299864781,
+              "meanAllTasksReturnAfterPhase": 0.7470336500328901,
+              "meanSeenTasksReturnAfterPhase": 0.7470336500328901,
+              "phaseTrainMeanReturn": 0.7210096440990057
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.27890742468600604
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.3949812211493655
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.4991191877306921
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.48705729166070794
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.7802561938599651,
+              0.7958914642088853,
+              0.7414385784577363,
+              0.312716090955828
+            ],
+            "meanReturn": 0.6575755818706037
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.7470336500328901,
+            "meanPriorTaskRetentionRatio": 1.006667333539635,
+            "meanPriorTaskRetentionPct": 100.6667333539635,
+            "meanCatastrophicForgetting": 0.0015114001712443297,
+            "meanZeroShotMorphTransferReturn": 0.4603859001802552,
+            "unseenMorphMeanReturn": 0.6575755818706037
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "controllers": {
+        "frozen-baseline": {
+          "seed": 59053,
+          "controller": "frozen-baseline",
+          "initialSha256": "4448fb8bde9c6f97fbc669fa71eeca885e1eda5cf1170ff312af1f0aedeeef71",
+          "finalSha256": "4448fb8bde9c6f97fbc669fa71eeca885e1eda5cf1170ff312af1f0aedeeef71",
+          "optimizerUpdates": 0,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.29749206798332617,
+              0.39354671627566085,
+              0.3375183045562301,
+              0.3661371586498829
+            ],
+            [
+              0.29749206798332617,
+              0.39354671627566085,
+              0.3375183045562301,
+              0.3661371586498829
+            ],
+            [
+              0.29749206798332617,
+              0.39354671627566085,
+              0.3375183045562301,
+              0.3661371586498829
+            ],
+            [
+              0.29749206798332617,
+              0.39354671627566085,
+              0.3375183045562301,
+              0.3661371586498829
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.29749206798332617,
+              "meanAllTasksReturnAfterPhase": 0.348673561866275,
+              "meanSeenTasksReturnAfterPhase": 0.29749206798332617,
+              "phaseTrainMeanReturn": 0.31764864278853916
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.39354671627566085,
+              "meanAllTasksReturnAfterPhase": 0.348673561866275,
+              "meanSeenTasksReturnAfterPhase": 0.3455193921294935,
+              "phaseTrainMeanReturn": 0.5182827543478995
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.3375183045562301,
+              "meanAllTasksReturnAfterPhase": 0.348673561866275,
+              "meanSeenTasksReturnAfterPhase": 0.3428523629384057,
+              "phaseTrainMeanReturn": 0.4089094178793699
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 0,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.3661371586498829,
+              "meanAllTasksReturnAfterPhase": 0.348673561866275,
+              "meanSeenTasksReturnAfterPhase": 0.348673561866275,
+              "phaseTrainMeanReturn": 0.44160124032535847
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.29749206798332617
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.39354671627566085
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.3375183045562301
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.3661371586498829
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.5567810415114917,
+              0.39273044881556646,
+              0.345794244744792,
+              0.3936654476238302
+            ],
+            "meanReturn": 0.42224279567392003
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.348673561866275,
+            "meanPriorTaskRetentionRatio": 1,
+            "meanPriorTaskRetentionPct": 100,
+            "meanCatastrophicForgetting": 0,
+            "meanZeroShotMorphTransferReturn": 0.365734059827258,
+            "unseenMorphMeanReturn": 0.42224279567392003
+          }
+        },
+        "naive-continual": {
+          "seed": 59053,
+          "controller": "naive-continual",
+          "initialSha256": "4448fb8bde9c6f97fbc669fa71eeca885e1eda5cf1170ff312af1f0aedeeef71",
+          "finalSha256": "bc9758090824034252e58cb95a7db10985371b9c2fd4bd8736981ad0938461d1",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 0,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 8.948138264240697,
+              "l2": 1.3149616141827782,
+              "maxAbs": 0.4876147657632828
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 0,
+              "l1": 0,
+              "l2": 0,
+              "maxAbs": 0
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7639910472085952,
+              0.364307233166932,
+              0.38857461956824585,
+              0.39729595218273966
+            ],
+            [
+              0.7206050237018113,
+              0.7430007380651681,
+              0.3738623410032843,
+              0.286643124664832
+            ],
+            [
+              0.5058651827419374,
+              0.7398111397446364,
+              0.7664751533940404,
+              0.3602730398533935
+            ],
+            [
+              0.39369402844801443,
+              0.5851164286421335,
+              0.6611352730939657,
+              0.7790427720948766
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7639910472085952,
+              "meanAllTasksReturnAfterPhase": 0.4785422130316282,
+              "meanSeenTasksReturnAfterPhase": 0.7639910472085952,
+              "phaseTrainMeanReturn": 0.7270674419985733
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7430007380651681,
+              "meanAllTasksReturnAfterPhase": 0.5310278068587739,
+              "meanSeenTasksReturnAfterPhase": 0.7318028808834898,
+              "phaseTrainMeanReturn": 0.7715242407904214
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7664751533940404,
+              "meanAllTasksReturnAfterPhase": 0.5931061289335019,
+              "meanSeenTasksReturnAfterPhase": 0.6707171586268714,
+              "phaseTrainMeanReturn": 0.7710636185181877
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7790427720948766,
+              "meanAllTasksReturnAfterPhase": 0.6047471255697475,
+              "meanSeenTasksReturnAfterPhase": 0.6047471255697475,
+              "phaseTrainMeanReturn": 0.7402053704053739
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.29749206798332617
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.364307233166932
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.3738623410032843
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.3602730398533935
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.5620933512393346,
+              0.4707348922506839,
+              0.6029606367457637,
+              0.29813581804458605
+            ],
+            "meanReturn": 0.4834811745700921
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.6047471255697475,
+            "meanPriorTaskRetentionRatio": 0.7217942296333176,
+            "meanPriorTaskRetentionPct": 72.17942296333176,
+            "meanCatastrophicForgetting": 0.21117373616123003,
+            "meanZeroShotMorphTransferReturn": 0.36614753800787,
+            "unseenMorphMeanReturn": 0.4834811745700921
+          }
+        },
+        "metamorph-transfer-only": {
+          "seed": 59053,
+          "controller": "metamorph-transfer-only",
+          "initialSha256": "4448fb8bde9c6f97fbc669fa71eeca885e1eda5cf1170ff312af1f0aedeeef71",
+          "finalSha256": "48c878083d8bc57434af8fdd26b3731c2c2eb5ca1146bbe289197a20e2b56020",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 0,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 7.608228086493909,
+              "l2": 1.1251363086952288,
+              "maxAbs": 0.4538998454809189
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 5.814301405334845,
+              "l2": 1.3915260699007994,
+              "maxAbs": 0.7284612730145454
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7707798810552191,
+              0.3945795722678749,
+              0.3608168737395073,
+              0.40217112127026045
+            ],
+            [
+              0.7397072614048611,
+              0.7513059455090744,
+              0.3485088598255831,
+              0.2767184588214725
+            ],
+            [
+              0.5561054235744886,
+              0.7409442029483846,
+              0.7651994532410438,
+              0.40070192506889546
+            ],
+            [
+              0.39693196959589255,
+              0.5974781899747457,
+              0.6695623128442112,
+              0.7715081420555917
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7707798810552191,
+              "meanAllTasksReturnAfterPhase": 0.4820868620832155,
+              "meanSeenTasksReturnAfterPhase": 0.7707798810552191,
+              "phaseTrainMeanReturn": 0.7356856545389089
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7513059455090744,
+              "meanAllTasksReturnAfterPhase": 0.5290601313902478,
+              "meanSeenTasksReturnAfterPhase": 0.7455066034569677,
+              "phaseTrainMeanReturn": 0.7784624123259236
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7651994532410438,
+              "meanAllTasksReturnAfterPhase": 0.6157377512082031,
+              "meanSeenTasksReturnAfterPhase": 0.6874163599213056,
+              "phaseTrainMeanReturn": 0.7818357223328766
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 0,
+              "activeTaskReturnAfterPhase": 0.7715081420555917,
+              "meanAllTasksReturnAfterPhase": 0.6088701536176103,
+              "meanSeenTasksReturnAfterPhase": 0.6088701536176103,
+              "phaseTrainMeanReturn": 0.7374796058859681
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.29749206798332617
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.4644920158563489
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.4937861720478337
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.46606407199875033
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.6230692114692599,
+              0.4778804814134091,
+              0.7011319829000154,
+              0.3083608543053087
+            ],
+            "meanReturn": 0.5276106325219982
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.6088701536176103,
+            "meanPriorTaskRetentionRatio": 0.7284146806217063,
+            "meanPriorTaskRetentionPct": 72.84146806217063,
+            "meanCatastrophicForgetting": 0.2077709357968293,
+            "meanZeroShotMorphTransferReturn": 0.47478075330097763,
+            "unseenMorphMeanReturn": 0.5276106325219982
+          }
+        },
+        "full-continual-living": {
+          "seed": 59053,
+          "controller": "full-continual-living",
+          "initialSha256": "4448fb8bde9c6f97fbc669fa71eeca885e1eda5cf1170ff312af1f0aedeeef71",
+          "finalSha256": "6b8ef4c1875471495a4931a1d08e303ec096a8194fe8be0b72329651c7a52c01",
+          "optimizerUpdates": 1200,
+          "dreamReplaySteps": 4000,
+          "morphAdaptationSteps": 1296,
+          "parameterDeltas": {
+            "actor": {
+              "count": 80,
+              "changed": 80,
+              "l1": 9.371055621188134,
+              "l2": 1.3924048600841301,
+              "maxAbs": 0.5230995491147041
+            },
+            "metamorph": {
+              "count": 30,
+              "changed": 30,
+              "l1": 7.793127237353474,
+              "l2": 1.8282537368494718,
+              "maxAbs": 0.877438373863697
+            }
+          },
+          "returnMatrix": [
+            [
+              0.7784626167207397,
+              0.3882922161564009,
+              0.35220505650654815,
+              0.400180050601338
+            ],
+            [
+              0.765410819104148,
+              0.7546144840699394,
+              0.3284868147524872,
+              0.2810424629779463
+            ],
+            [
+              0.7660818125458856,
+              0.7608458781888308,
+              0.7696342935371567,
+              0.3796886065466535
+            ],
+            [
+              0.7658625591762627,
+              0.6926908961274458,
+              0.7722364460627141,
+              0.7685913323459579
+            ]
+          ],
+          "learningCurve": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "optimizerUpdates": 300,
+              "dreamReplaySteps": 400,
+              "activeTaskReturnAfterPhase": 0.7784626167207397,
+              "meanAllTasksReturnAfterPhase": 0.4797849849962567,
+              "meanSeenTasksReturnAfterPhase": 0.7784626167207397,
+              "phaseTrainMeanReturn": 0.7314791134744948
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "optimizerUpdates": 600,
+              "dreamReplaySteps": 1200,
+              "activeTaskReturnAfterPhase": 0.7546144840699394,
+              "meanAllTasksReturnAfterPhase": 0.5323886452261303,
+              "meanSeenTasksReturnAfterPhase": 0.7600126515870437,
+              "phaseTrainMeanReturn": 0.7733741904717165
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "optimizerUpdates": 900,
+              "dreamReplaySteps": 2400,
+              "activeTaskReturnAfterPhase": 0.7696342935371567,
+              "meanAllTasksReturnAfterPhase": 0.6690626477046316,
+              "meanSeenTasksReturnAfterPhase": 0.7655206614239577,
+              "phaseTrainMeanReturn": 0.7644150395155827
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "optimizerUpdates": 1200,
+              "dreamReplaySteps": 4000,
+              "activeTaskReturnAfterPhase": 0.7685913323459579,
+              "meanAllTasksReturnAfterPhase": 0.7498453084280952,
+              "meanSeenTasksReturnAfterPhase": 0.7498453084280952,
+              "phaseTrainMeanReturn": 0.7079058563685606
+            }
+          ],
+          "zeroShotMorphTransferReturns": [
+            {
+              "phaseIndex": 0,
+              "taskId": "T1-orbital-stabilization",
+              "morphologyId": "biped-scanner",
+              "meanReturn": 0.29749206798332617
+            },
+            {
+              "phaseIndex": 1,
+              "taskId": "T2-shear-crosswind",
+              "morphologyId": "octo-crawler",
+              "meanReturn": 0.44935287331234397
+            },
+            {
+              "phaseIndex": 2,
+              "taskId": "T3-saddle-escape",
+              "morphologyId": "arachnid-weaver",
+              "meanReturn": 0.4653115641057276
+            },
+            {
+              "phaseIndex": 3,
+              "taskId": "T4-vortex-pursuit",
+              "morphologyId": "eldritch-tentacle-swarm",
+              "meanReturn": 0.37523996800151443
+            }
+          ],
+          "unseenMorphologyHoldout": {
+            "morphologyId": "hexapod-strider-holdout",
+            "perTaskReturns": [
+              0.775575911571241,
+              0.7517779890338956,
+              0.767336439035429,
+              0.3306537655333653
+            ],
+            "meanReturn": 0.6563360262934828
+          },
+          "metrics": {
+            "finalAllTasksMeanReturn": 0.7498453084280952,
+            "meanPriorTaskRetentionRatio": 0.9683784346476827,
+            "meanPriorTaskRetentionPct": 96.83784346476827,
+            "meanCatastrophicForgetting": 0.024841215162323516,
+            "meanZeroShotMorphTransferReturn": 0.42996813513986204,
+            "unseenMorphMeanReturn": 0.6563360262934828
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 5 long-duration continual learning, distinct-task retention, and body morphology transfer across five independent seeds ([19013, 29017, 39023, 49031, 59053]). Evaluates frozen-baseline, naive-continual, metamorph-transfer-only, and full-continual-living across 4 sequential task-morphology phases plus an unseen 5th holdout morphology."
+}

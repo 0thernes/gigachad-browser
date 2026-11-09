@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Continual learning, distinct-task retention & morphology transfer pass 5
+
+- Added the 5-seed, 4-phase continual learning, distinct-task retention, and body morphology transfer suite ([`systems/alive-continual-morphology-transfer.js`](systems/alive-continual-morphology-transfer.js), [`scripts/alive-continual-morphology-transfer.cjs`](scripts/alive-continual-morphology-transfer.cjs)) evaluating `frozen-baseline`, `naive-continual`, `metamorph-transfer-only`, and `full-continual-living` across 4 distinct tasks (`T1..T4`), 4 body morphologies (`biped-scanner`, `octo-crawler`, `arachnid-weaver`, `eldritch-tentacle-swarm`), and an unseen 5th holdout morphology (`hexapod-strider-holdout`).
+- Verified on `5/5` seeds that `full-continual-living` (`W_metamorph` + `FlyWire` ring compass + `Dream SWS / Dream Replay` + `Memory 4 Tier` Hopfield anchor + `SynapticFabric`) improves prior-task retention (`95.39%` vs `71.67%`, paired `+23.72%`, 95% CI `[+17.22%, +30.21%]`), reduces catastrophic forgetting by `81.1%` (`0.0402` vs `0.2131`), and transfers to unseen holdout morphology (`0.6516` vs `0.5009`).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 11 (`#alive-fabric-continual-transfer`, `Run continual` button, and `runContinualTransfer()`).
+- Added [Pass 5 report](docs/ALIVE_PASS_05_REPORT.md), [JSON report](docs/reports/alive-continual-morphology-transfer-2026-11-09.json), [SVG chart](docs/reports/alive-continual-morphology-transfer-2026-11-09.svg) and unit tests (`tests/alive-continual-morphology-transfer.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · State contracts & split-horizon restart equivalence pass 4
 
 - Added the 6-domain state contract and split-horizon restart equivalence verifier ([`systems/alive-restart-equivalence.js`](systems/alive-restart-equivalence.js), [`scripts/alive-restart-equivalence.cjs`](scripts/alive-restart-equivalence.cjs)) covering `optimizer`, `recurrent`, `replay`, `rng`, `curriculum`, and `synapticFabric` across 5 independent seeds (`[19013, 29017, 39023, 49031, 59053]`).

@@ -303,6 +303,7 @@
   let latestBenchmark = null, benchmarkBusy = false;
   let latestAblations = null, ablationsBusy = false;
   let latestRestartEq = null, restartEqBusy = false;
+  let latestContinualTransfer = null, continualTransferBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -338,6 +339,19 @@
       return latestRestartEq;
     } finally {
       restartEqBusy = false;
+    }
+  }
+  async function runContinualTransfer() {
+    const runner = root.AliveContinualMorphologyTransfer;
+    if (continualTransferBusy || typeof runner?.run !== 'function') return latestContinualTransfer;
+    continualTransferBusy = true;
+    try {
+      latestContinualTransfer = await runner.run();
+      root.__aliveLatestContinualTransfer = latestContinualTransfer;
+      draw();
+      return latestContinualTransfer;
+    } finally {
+      continualTransferBusy = false;
     }
   }
 
@@ -564,6 +578,72 @@
     ctx.fillText('left: full 6-domain restore (0.0 drift, identical SHA-256) · right: post-restore trajectory drift when each domain is omitted', 8, height - 6);
   }
 
+  // ---------- 11. Pass 5 continual learning, retention & morphology transfer ---
+  function drawContinualTransfer(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestContinualTransfer || root.__aliveLatestContinualTransfer;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byController) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(continualTransferBusy ? 'Running 5-seed continual learning & morphology transfer suite…' : 'Click "Run continual" above to measure 4-phase continual learning, distinct-task retention and morphology transfer across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const splitX = Math.floor(width * 0.52);
+    const retGain = s.pairedDeltas?.fullVsNaiveRetentionGainPct?.mean || 0;
+    const forgRed = s.pairedDeltas?.fullVsNaiveForgettingReduction?.mean || 0;
+    ctx.fillText(`5 seeds · retention gain +${retGain.toFixed(1)}% (${s.fullBeatNaiveRetentionSeeds}/5) · forgetting Δ=-${forgRed.toFixed(3)} (${s.fullReducedForgettingSeeds}/5) · morph transfer (${s.metamorphBeatNaiveTransferSeeds}/5)`, 8, 12);
+
+    const modes = ['frozen-baseline', 'naive-continual', 'metamorph-transfer-only', 'full-continual-living'];
+    const colors = {
+      'frozen-baseline': '#64748b',
+      'naive-continual': '#f59e0b',
+      'metamorph-transfer-only': '#38bdf8',
+      'full-continual-living': '#34d399'
+    };
+
+    // Left: Prior-task retention % & Final 4-task mean return with 95% CIs
+    const barW = Math.max(60, splitX - 245);
+    modes.forEach((mode, idx) => {
+      const entry = s.byController[mode];
+      if (!entry) return;
+      const y = 30 + idx * 38;
+      const retPct = entry.priorTaskRetentionPct?.mean || 0;
+      const allRet = entry.finalAllTasksMeanReturn?.mean || 0;
+      const unseenMorph = entry.unseenMorphHoldoutReturn?.mean || 0;
+      const forg = entry.catastrophicForgetting?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 18), 114, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(120, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(120, y + 2, barW * Math.max(0, Math.min(1, allRet / 0.85)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`all=${allRet.toFixed(3)} ret=${retPct.toFixed(1)}% frg=${forg.toFixed(3)} mE=${unseenMorph.toFixed(3)}`, 124 + barW, y + 10);
+    });
+
+    // Right: 4-phase continual learning trajectory (Phase 1..4 seen-task return curves)
+    const chartX = splitX + 24, chartY = 28, chartW = Math.max(80, width - splitX - 44), chartH = height - 52;
+    ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1;
+    ctx.strokeRect(chartX, chartY, chartW, chartH);
+    const minY = 0.30, maxY = 0.82;
+    modes.forEach(mode => {
+      const curves = s.byController[mode]?.phaseCurves || [];
+      if (!curves.length) return;
+      ctx.strokeStyle = colors[mode]; ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      curves.forEach((pt, idx) => {
+        const val = pt.meanAllTasksReturn?.mean ?? 0;
+        const px = chartX + (idx / Math.max(1, curves.length - 1)) * chartW;
+        const py = chartY + chartH - Math.max(0, Math.min(1, (val - minY) / (maxY - minY))) * chartH;
+        if (idx === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      });
+      ctx.stroke();
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('left: 4-task final return, prior-task retention %, forgetting & unseen Morph E · right: Phase 1→4 trajectory', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -595,19 +675,22 @@
     const restartBtn = doc.createElement('button'); restartBtn.type = 'button'; restartBtn.textContent = 'Run restart check';
     restartBtn.title = 'Run 5-seed split-horizon restart equivalence check across optimizer, recurrent, replay, RNG, curriculum and fabric domains';
     restartBtn.addEventListener('click', () => { runRestartEquivalence(); });
+    const continualBtn = doc.createElement('button'); continualBtn.type = 'button'; continualBtn.textContent = 'Run continual';
+    continualBtn.title = 'Run 5-seed 4-phase continual learning, distinct-task retention and morphology transfer suite';
+    continualBtn.addEventListener('click', () => { runContinualTransfer(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
       utility = canvas('alive-fabric-utility', 300), runtimeSeries = canvas('alive-fabric-series', 240), substrate = canvas('alive-fabric-substrate', 260),
       benchmarkCanvas = canvas('alive-fabric-benchmark', 210), ablationsCanvas = canvas('alive-fabric-ablations', 280),
-      restartEqCanvas = canvas('alive-fabric-restart-eq', 200);
+      restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -620,7 +703,8 @@
       section('7 · Ghost faculties, memory, creatures, fabric log', tables),
       section('8 · Unseen task benchmark (5 seeds) & colony role lenses', benchmarkCanvas),
       section('9 · Architecture ablations — 14 brains × 7 precision × AoT/ToT/GoT × specialists', ablationsCanvas),
-      section('10 · State contracts & restart equivalence — optimizer · recurrent · replay · RNG · curriculum · fabric', restartEqCanvas));
+      section('10 · State contracts & restart equivalence — optimizer · recurrent · replay · RNG · curriculum · fabric', restartEqCanvas),
+      section('11 · Continual learning, distinct-task retention & morphology transfer (5 seeds)', continualCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -629,7 +713,8 @@
       () => renderTables(tables),
       () => drawBenchmark(benchmarkCanvas),
       () => drawAblations(ablationsCanvas),
-      () => drawRestartEquivalence(restartEqCanvas));
+      () => drawRestartEquivalence(restartEqCanvas),
+      () => drawContinualTransfer(continualCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -672,6 +757,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);
