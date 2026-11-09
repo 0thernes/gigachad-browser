@@ -89,7 +89,7 @@ validation conditions and remaining work.
 
 | Pass | Intended focus | Status |
 | --- | --- | --- |
-| 31 | Variational Free-Energy Minimization ($\mathcal{F}$) & Epistemic-Pragmatic Expected Free Energy ($\mathcal{G}(\pi)$) Planner | Planned (Pass 31) |
+| 31 | Variational Free-Energy Minimization ($\mathcal{F}$) & Epistemic-Pragmatic Expected Free Energy ($\mathcal{G}(\pi)$) Planner | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_31_REPORT.md), [Active Inference JSON](reports/alive-active-inference-free-energy-2026-11-09.json), [Active Inference SVG](reports/alive-active-inference-free-energy-2026-11-09.svg) |
 | 32 | Hyperbolic Poincaré Ball ($\mathbb{B}^d_c$) Hierarchical Ontology & Deep Citation Tree Embedding Engine | Planned (Pass 32) |
 | 33 | Neuro-Symbolic DOM/API Extractor Program Synthesis & SMT-Style Invariant Verification | Planned (Pass 33) |
 | 34 | Dynamic Mixed-Precision Tensor Quantization (`FP64`/`FP32`/`BF16`/`INT8`/`INT4`/`NF4`/`Binary`) & Spectral Error-Feedback Compensation | Planned (Pass 34) |

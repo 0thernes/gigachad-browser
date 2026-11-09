@@ -329,6 +329,7 @@
   let latestFishHydro = null, fishHydroBusy = false;
   let latestSymbiotic = null, symbioticBusy = false;
   let latestPhase5Audit = null, phase5AuditBusy = false;
+  let latestActiveInf = null, activeInfBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -702,6 +703,19 @@
       return latestPhase5Audit;
     } finally {
       phase5AuditBusy = false;
+    }
+  }
+  async function runActiveInference() {
+    const runner = root.AliveActiveInferenceFreeEnergy;
+    if (activeInfBusy || typeof runner?.run !== 'function') return latestActiveInf;
+    activeInfBusy = true;
+    try {
+      latestActiveInf = await runner.run();
+      root.__aliveLatestActiveInf = latestActiveInf;
+      draw();
+      return latestActiveInf;
+    } finally {
+      activeInfBusy = false;
     }
   }
 
@@ -2021,6 +2035,48 @@
     ctx.fillText('E1..E10: Corvid Meta-Tools & Pearl do(X) · Locust 5-HT Polyphenism · Fish Kuramoto Hydrodynamics · Symbiotic Shapley+Pareto', 8, height - 6);
   }
 
+  // ---------- 37. Pass 31 Variational Free-Energy & EFE Active Inference ----
+  function drawActiveInference(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestActiveInf || root.__aliveLatestActiveInf;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(activeInfBusy ? 'Running 5-seed Variational Free-Energy & EFE Active Inference suite…' : 'Click "Run Active Inf" above to evaluate VFE Minimization (F) & Epistemic-Pragmatic EFE G(pi) across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · VFE+EFE Active Inference score=${(s.fullActiveInferenceScoreMean || 0).toFixed(1)} · ΔF=-${(s.meanVfeDropNats || 0).toFixed(3)} nats · vs greedy +${(s.gainVsGreedyPragmatic || 0).toFixed(1)} · vs curiosity +${(s.gainVsPureCuriosity || 0).toFixed(1)}`, 8, 12);
+    const modes = ['greedy-pragmatic-reward-only', 'pure-epistemic-curiosity-drifter', 'uncalibrated-prior-dogmatic-agent', 'full-vfe-efe-active-inference-planner'];
+    const colors = {
+      'greedy-pragmatic-reward-only': '#f59e0b',
+      'pure-epistemic-curiosity-drifter': '#38bdf8',
+      'uncalibrated-prior-dogmatic-agent': '#f43f5e',
+      'full-vfe-efe-active-inference-planner': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.activeInferenceScore?.mean || 0;
+      const vfe = entry.vfeMonotonicReductionPct?.mean || 0;
+      const epi = entry.epistemicDisambiguationPct?.mean || 0;
+      const prg = entry.pragmaticGoalConvergencePct?.mean || 0;
+      const drp = entry.meanVfeDropNats?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} dF<0=${vfe.toFixed(0)}% epist=${epi.toFixed(0)}% goal=${prg.toFixed(0)}% drop=${drp.toFixed(2)}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('24 POMDP episodes/seed: VFE F(Q,o) natural-gradient belief update + Expected Free Energy G(pi) epistemic-pragmatic balance', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -2130,13 +2186,16 @@
     const phase5AuditBtn = doc.createElement('button'); phase5AuditBtn.type = 'button'; phase5AuditBtn.textContent = 'Run Phase V Audit';
     phase5AuditBtn.title = 'Run 5-seed Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix (E1..E10)';
     phase5AuditBtn.addEventListener('click', () => { runPhase5SwarmAudit(); });
+    const activeInfBtn = doc.createElement('button'); activeInfBtn.type = 'button'; activeInfBtn.textContent = 'Run Active Inf';
+    activeInfBtn.title = 'Run 5-seed Variational Free-Energy (F) & Expected Free Energy (G(pi)) Active Inference Planner evaluation';
+    activeInfBtn.addEventListener('click', () => { runActiveInference(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -2155,7 +2214,7 @@
       onionMerkleCanvas = canvas('alive-fabric-onion-merkle', 190), phase4AuditCanvas = canvas('alive-fabric-phase4-audit', 190),
       corvidCanvas = canvas('alive-fabric-corvid-epistemology', 190), locustCanvas = canvas('alive-fabric-locust-polyphenism', 190),
       fishHydroCanvas = canvas('alive-fabric-fish-hydrodynamics', 190), symbioticCanvas = canvas('alive-fabric-symbiotic-coevolution', 190),
-      phase5AuditCanvas = canvas('alive-fabric-phase5-audit', 190);
+      phase5AuditCanvas = canvas('alive-fabric-phase5-audit', 190), activeInfCanvas = canvas('alive-fabric-active-inference', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -2194,7 +2253,8 @@
       section('33 · Locust Solitaria-to-Gregaria Phase Polyphenism & Adaptive Trophic Backoff (5 seeds)', locustCanvas),
       section('34 · Fish-School Lateral-Line Hydrodynamic Coupling & Kuramoto Phase Synchronization (5 seeds)', fishHydroCanvas),
       section('35 · Symbiotic Cross-Guild Co-Evolution, Shapley Credit & 3D Pareto Speciation (5 seeds)', symbioticCanvas),
-      section('36 · Phase V Hyper-Swarm Acceptance Matrix (E1..E10) & Cryptographic SHA-256 Freeze (5 seeds)', phase5AuditCanvas));
+      section('36 · Phase V Hyper-Swarm Acceptance Matrix (E1..E10) & Cryptographic SHA-256 Freeze (5 seeds)', phase5AuditCanvas),
+      section('37 · Variational Free-Energy (F) & Epistemic-Pragmatic Expected Free Energy G(pi) Planner (5 seeds)', activeInfCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -2229,7 +2289,8 @@
       () => drawLocustPolyphenism(locustCanvas),
       () => drawFishHydrodynamics(fishHydroCanvas),
       () => drawSymbioticCoevolution(symbioticCanvas),
-      () => drawPhase5SwarmAudit(phase5AuditCanvas));
+      () => drawPhase5SwarmAudit(phase5AuditCanvas),
+      () => drawActiveInference(activeInfCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -2272,6 +2333,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

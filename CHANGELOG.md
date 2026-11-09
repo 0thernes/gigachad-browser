@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Variational Free-Energy (VFE) & Expected Free Energy (EFE) Active Inference Planner pass 31
+
+- Added the 5-seed Karl Friston POMDP Active Inference Planner ([`systems/alive-active-inference-free-energy.js`](systems/alive-active-inference-free-energy.js), [`scripts/alive-active-inference-free-energy.cjs`](scripts/alive-active-inference-free-energy.cjs)) implementing Variational Free-Energy minimization $\mathcal{F}(Q(s), o)$ and Epistemic-Pragmatic Expected Free Energy $\mathcal{G}(\pi)$ policy selection across 24 deceptive/ambiguous POMDP tasks per seed.
+- Verified on `5/5` seeds that `full-vfe-efe-active-inference-planner` achieves `100.0` composite score (`+70.0` over `greedy-pragmatic-no-epistemic`, `+70.0` over `pure-curiosity-no-preferences`, `+100.0` over `uncalibrated-dogmatic-prior`), `100.0%` monotonic VFE reduction (`0.7944 nats` mean VFE drop), `100.0%` epistemic ambiguity resolution, and `100.0%` pragmatic goal convergence.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 37 (`#alive-fabric-active-inference`, `Run Active Inference` button, and `runActiveInference()`).
+- Added [Pass 31 report](docs/ALIVE_PASS_31_REPORT.md), [JSON report](docs/reports/alive-active-inference-free-energy-2026-11-09.json), [SVG chart](docs/reports/alive-active-inference-free-energy-2026-11-09.svg) and unit tests (`tests/alive-active-inference-free-energy.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix (E1..E10) pass 30
 
 - Added the 5-seed Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix ([`systems/alive-hyper-swarm-phase5-audit.js`](systems/alive-hyper-swarm-phase5-audit.js), [`scripts/alive-hyper-swarm-phase5-audit.cjs`](scripts/alive-hyper-swarm-phase5-audit.cjs)) auditing Passes 26–29 across `E1-Corvid-Depth3-Meta-Tool-Synthesis` through `E10-Symbiotic-3D-Pareto-Speciation-Survival`.

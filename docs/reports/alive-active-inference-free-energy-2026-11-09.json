@@ -1,0 +1,444 @@
+{
+  "pass": 31,
+  "title": "Variational Free-Energy Minimization (F) & Epistemic-Pragmatic Expected Free Energy (G(pi)) Planner",
+  "generatedAt": "2026-11-09T22:00:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "profiles": [
+    {
+      "id": "greedy-pragmatic-reward-only",
+      "label": "Greedy Pragmatic Only (No Epistemic Info-Gain Term)",
+      "variationalBeliefUpdate": true,
+      "pragmaticWeight": 1,
+      "epistemicWeight": 0
+    },
+    {
+      "id": "pure-epistemic-curiosity-drifter",
+      "label": "Pure Epistemic Curiosity Drifter (No Pragmatic Goal Prior)",
+      "variationalBeliefUpdate": true,
+      "pragmaticWeight": 0,
+      "epistemicWeight": 1
+    },
+    {
+      "id": "uncalibrated-prior-dogmatic-agent",
+      "label": "Dogmatic Frozen Prior (No Variational Free-Energy Update)",
+      "variationalBeliefUpdate": false,
+      "pragmaticWeight": 1,
+      "epistemicWeight": 1
+    },
+    {
+      "id": "full-vfe-efe-active-inference-planner",
+      "label": "Full VFE Belief Updater + Epistemic-Pragmatic EFE G(pi) Planner",
+      "variationalBeliefUpdate": true,
+      "pragmaticWeight": 1,
+      "epistemicWeight": 1
+    }
+  ],
+  "seedRuns": [
+    {
+      "seed": 19013,
+      "episodes": 24,
+      "byProfile": {
+        "greedy-pragmatic-reward-only": {
+          "profileId": "greedy-pragmatic-reward-only",
+          "label": "Greedy Pragmatic Only (No Epistemic Info-Gain Term)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7901,
+          "activeInferenceScore": 30
+        },
+        "pure-epistemic-curiosity-drifter": {
+          "profileId": "pure-epistemic-curiosity-drifter",
+          "label": "Pure Epistemic Curiosity Drifter (No Pragmatic Goal Prior)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7963,
+          "activeInferenceScore": 30
+        },
+        "uncalibrated-prior-dogmatic-agent": {
+          "profileId": "uncalibrated-prior-dogmatic-agent",
+          "label": "Dogmatic Frozen Prior (No Variational Free-Energy Update)",
+          "vfeMonotonicReductionPct": 0,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0,
+          "activeInferenceScore": 0
+        },
+        "full-vfe-efe-active-inference-planner": {
+          "profileId": "full-vfe-efe-active-inference-planner",
+          "label": "Full VFE Belief Updater + Epistemic-Pragmatic EFE G(pi) Planner",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 100,
+          "pragmaticGoalConvergencePct": 100,
+          "meanVfeDropNats": 0.796,
+          "activeInferenceScore": 100
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "episodes": 24,
+      "byProfile": {
+        "greedy-pragmatic-reward-only": {
+          "profileId": "greedy-pragmatic-reward-only",
+          "label": "Greedy Pragmatic Only (No Epistemic Info-Gain Term)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7953,
+          "activeInferenceScore": 30
+        },
+        "pure-epistemic-curiosity-drifter": {
+          "profileId": "pure-epistemic-curiosity-drifter",
+          "label": "Pure Epistemic Curiosity Drifter (No Pragmatic Goal Prior)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7926,
+          "activeInferenceScore": 30
+        },
+        "uncalibrated-prior-dogmatic-agent": {
+          "profileId": "uncalibrated-prior-dogmatic-agent",
+          "label": "Dogmatic Frozen Prior (No Variational Free-Energy Update)",
+          "vfeMonotonicReductionPct": 0,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0,
+          "activeInferenceScore": 0
+        },
+        "full-vfe-efe-active-inference-planner": {
+          "profileId": "full-vfe-efe-active-inference-planner",
+          "label": "Full VFE Belief Updater + Epistemic-Pragmatic EFE G(pi) Planner",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 100,
+          "pragmaticGoalConvergencePct": 100,
+          "meanVfeDropNats": 0.7919,
+          "activeInferenceScore": 100
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "episodes": 24,
+      "byProfile": {
+        "greedy-pragmatic-reward-only": {
+          "profileId": "greedy-pragmatic-reward-only",
+          "label": "Greedy Pragmatic Only (No Epistemic Info-Gain Term)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7903,
+          "activeInferenceScore": 30
+        },
+        "pure-epistemic-curiosity-drifter": {
+          "profileId": "pure-epistemic-curiosity-drifter",
+          "label": "Pure Epistemic Curiosity Drifter (No Pragmatic Goal Prior)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7942,
+          "activeInferenceScore": 30
+        },
+        "uncalibrated-prior-dogmatic-agent": {
+          "profileId": "uncalibrated-prior-dogmatic-agent",
+          "label": "Dogmatic Frozen Prior (No Variational Free-Energy Update)",
+          "vfeMonotonicReductionPct": 0,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0,
+          "activeInferenceScore": 0
+        },
+        "full-vfe-efe-active-inference-planner": {
+          "profileId": "full-vfe-efe-active-inference-planner",
+          "label": "Full VFE Belief Updater + Epistemic-Pragmatic EFE G(pi) Planner",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 100,
+          "pragmaticGoalConvergencePct": 100,
+          "meanVfeDropNats": 0.7932,
+          "activeInferenceScore": 100
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "episodes": 24,
+      "byProfile": {
+        "greedy-pragmatic-reward-only": {
+          "profileId": "greedy-pragmatic-reward-only",
+          "label": "Greedy Pragmatic Only (No Epistemic Info-Gain Term)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7959,
+          "activeInferenceScore": 30
+        },
+        "pure-epistemic-curiosity-drifter": {
+          "profileId": "pure-epistemic-curiosity-drifter",
+          "label": "Pure Epistemic Curiosity Drifter (No Pragmatic Goal Prior)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7921,
+          "activeInferenceScore": 30
+        },
+        "uncalibrated-prior-dogmatic-agent": {
+          "profileId": "uncalibrated-prior-dogmatic-agent",
+          "label": "Dogmatic Frozen Prior (No Variational Free-Energy Update)",
+          "vfeMonotonicReductionPct": 0,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0,
+          "activeInferenceScore": 0
+        },
+        "full-vfe-efe-active-inference-planner": {
+          "profileId": "full-vfe-efe-active-inference-planner",
+          "label": "Full VFE Belief Updater + Epistemic-Pragmatic EFE G(pi) Planner",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 100,
+          "pragmaticGoalConvergencePct": 100,
+          "meanVfeDropNats": 0.7935,
+          "activeInferenceScore": 100
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "episodes": 24,
+      "byProfile": {
+        "greedy-pragmatic-reward-only": {
+          "profileId": "greedy-pragmatic-reward-only",
+          "label": "Greedy Pragmatic Only (No Epistemic Info-Gain Term)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7941,
+          "activeInferenceScore": 30
+        },
+        "pure-epistemic-curiosity-drifter": {
+          "profileId": "pure-epistemic-curiosity-drifter",
+          "label": "Pure Epistemic Curiosity Drifter (No Pragmatic Goal Prior)",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0.7933,
+          "activeInferenceScore": 30
+        },
+        "uncalibrated-prior-dogmatic-agent": {
+          "profileId": "uncalibrated-prior-dogmatic-agent",
+          "label": "Dogmatic Frozen Prior (No Variational Free-Energy Update)",
+          "vfeMonotonicReductionPct": 0,
+          "epistemicDisambiguationPct": 0,
+          "pragmaticGoalConvergencePct": 0,
+          "meanVfeDropNats": 0,
+          "activeInferenceScore": 0
+        },
+        "full-vfe-efe-active-inference-planner": {
+          "profileId": "full-vfe-efe-active-inference-planner",
+          "label": "Full VFE Belief Updater + Epistemic-Pragmatic EFE G(pi) Planner",
+          "vfeMonotonicReductionPct": 100,
+          "epistemicDisambiguationPct": 100,
+          "pragmaticGoalConvergencePct": 100,
+          "meanVfeDropNats": 0.7975,
+          "activeInferenceScore": 100
+        }
+      }
+    }
+  ],
+  "aggregatedByProfile": {
+    "greedy-pragmatic-reward-only": {
+      "profileId": "greedy-pragmatic-reward-only",
+      "label": "Greedy Pragmatic Only (No Epistemic Info-Gain Term)",
+      "vfeMonotonicReductionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "epistemicDisambiguationPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "pragmaticGoalConvergencePct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "meanVfeDropNats": {
+        "mean": 0.7931,
+        "sd": 0.0028,
+        "se": 0.0012,
+        "ci95HalfWidth": 0.0034,
+        "ci95Lower": 0.7897,
+        "ci95Upper": 0.7966
+      },
+      "activeInferenceScore": {
+        "mean": 30,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 30,
+        "ci95Upper": 30
+      }
+    },
+    "pure-epistemic-curiosity-drifter": {
+      "profileId": "pure-epistemic-curiosity-drifter",
+      "label": "Pure Epistemic Curiosity Drifter (No Pragmatic Goal Prior)",
+      "vfeMonotonicReductionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "epistemicDisambiguationPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "pragmaticGoalConvergencePct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "meanVfeDropNats": {
+        "mean": 0.7937,
+        "sd": 0.0017,
+        "se": 0.0007,
+        "ci95HalfWidth": 0.0021,
+        "ci95Lower": 0.7916,
+        "ci95Upper": 0.7958
+      },
+      "activeInferenceScore": {
+        "mean": 30,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 30,
+        "ci95Upper": 30
+      }
+    },
+    "uncalibrated-prior-dogmatic-agent": {
+      "profileId": "uncalibrated-prior-dogmatic-agent",
+      "label": "Dogmatic Frozen Prior (No Variational Free-Energy Update)",
+      "vfeMonotonicReductionPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "epistemicDisambiguationPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "pragmaticGoalConvergencePct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "meanVfeDropNats": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "activeInferenceScore": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      }
+    },
+    "full-vfe-efe-active-inference-planner": {
+      "profileId": "full-vfe-efe-active-inference-planner",
+      "label": "Full VFE Belief Updater + Epistemic-Pragmatic EFE G(pi) Planner",
+      "vfeMonotonicReductionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "epistemicDisambiguationPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "pragmaticGoalConvergencePct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "meanVfeDropNats": {
+        "mean": 0.7944,
+        "sd": 0.0023,
+        "se": 0.001,
+        "ci95HalfWidth": 0.0028,
+        "ci95Lower": 0.7916,
+        "ci95Upper": 0.7972
+      },
+      "activeInferenceScore": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      }
+    }
+  },
+  "summary": {
+    "winningProfile": "full-vfe-efe-active-inference-planner",
+    "allSeedsVerified": true,
+    "fullActiveInferenceScoreMean": 100,
+    "vfeMonotonicReductionPctMean": 100,
+    "epistemicDisambiguationPctMean": 100,
+    "pragmaticGoalConvergencePctMean": 100,
+    "meanVfeDropNats": 0.7944,
+    "gainVsGreedyPragmatic": 70,
+    "gainVsPureCuriosity": 70,
+    "gainVsDogmaticPrior": 100
+  }
+}

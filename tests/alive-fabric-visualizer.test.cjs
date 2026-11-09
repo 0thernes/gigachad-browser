@@ -1053,6 +1053,32 @@ test('runPhase5SwarmAudit renders 10-row Phase V Hyper-Swarm Acceptance Matrix (
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runActiveInference renders 5-seed Variational Free-Energy & EFE Active Inference in section 37', async () => {
+  const { window, dom } = load();
+  window.AliveActiveInferenceFreeEnergy = {
+    run: async () => ({
+      summary: {
+        fullActiveInferenceScoreMean: 100.0,
+        meanVfeDropNats: 0.724,
+        gainVsGreedyPragmatic: 70.0,
+        gainVsPureCuriosity: 70.0
+      },
+      aggregatedByProfile: {
+        'greedy-pragmatic-reward-only': { activeInferenceScore: { mean: 30.0 }, vfeMonotonicReductionPct: { mean: 100 }, epistemicDisambiguationPct: { mean: 0 }, pragmaticGoalConvergencePct: { mean: 0 }, meanVfeDropNats: { mean: 0.72 } },
+        'pure-epistemic-curiosity-drifter': { activeInferenceScore: { mean: 30.0 }, vfeMonotonicReductionPct: { mean: 100 }, epistemicDisambiguationPct: { mean: 0 }, pragmaticGoalConvergencePct: { mean: 0 }, meanVfeDropNats: { mean: 0.72 } },
+        'uncalibrated-prior-dogmatic-agent': { activeInferenceScore: { mean: 0.0 }, vfeMonotonicReductionPct: { mean: 0 }, epistemicDisambiguationPct: { mean: 0 }, pragmaticGoalConvergencePct: { mean: 0 }, meanVfeDropNats: { mean: 0.0 } },
+        'full-vfe-efe-active-inference-planner': { activeInferenceScore: { mean: 100.0 }, vfeMonotonicReductionPct: { mean: 100 }, epistemicDisambiguationPct: { mean: 100 }, pragmaticGoalConvergencePct: { mean: 100 }, meanVfeDropNats: { mean: 0.72 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runActiveInference();
+  assert.equal(report.summary.fullActiveInferenceScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · VFE+EFE Active Inference score=100.0')), 'Active Inference summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-vfe-efe-active-in')), 'Active Inference rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 
