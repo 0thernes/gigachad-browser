@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="320" viewBox="0 0 820 320">
+  <rect width="820" height="320" fill="#0f172a" />
+  <text x="24" y="34" fill="#38bdf8" font-family="monospace" font-size="16" font-weight="bold">ALIVE Pass 74 (74/100) — alive-pantheon-cross-attention-fusion-bus</text>
+  <text x="24" y="54" fill="#94a3b8" font-family="monospace" font-size="12">Winner: pantheon_14brain_cross_attention_shapley_precision_bus | Score: 100 | t=8.8685</text>
+  
+      <text x="24" y="78" fill="#e2e8f0" font-family="monospace" font-size="12">uniform_average_14brain_pooling_baseline</text>
+      <rect x="24" y="86" width="439" height="18" rx="4" fill="#6366f1" />
+      <text x="471" y="99" fill="#f8fafc" font-family="monospace" font-size="12">91.47 (95% CI [88.7978, 94.1396])</text>
+
+      <text x="24" y="130" fill="#e2e8f0" font-family="monospace" font-size="12">single_winner_takes_all_14brain_ablation</text>
+      <rect x="24" y="138" width="439" height="18" rx="4" fill="#6366f1" />
+      <text x="471" y="151" fill="#f8fafc" font-family="monospace" font-size="12">91.48 (95% CI [88.8159, 94.149])</text>
+
+      <text x="24" y="182" fill="#e2e8f0" font-family="monospace" font-size="12">uncalibrated_cross_attention_no_shapley_ablation</text>
+      <rect x="24" y="190" width="438" height="18" rx="4" fill="#6366f1" />
+      <text x="470" y="203" fill="#f8fafc" font-family="monospace" font-size="12">91.31 (95% CI [88.6193, 93.9965])</text>
+
+      <text x="24" y="234" fill="#e2e8f0" font-family="monospace" font-size="12">pantheon_14brain_cross_attention_shapley_precision_bus</text>
+      <rect x="24" y="242" width="480" height="18" rx="4" fill="#10b981" />
+      <text x="512" y="255" fill="#f8fafc" font-family="monospace" font-size="12">100.00 (95% CI [100, 100])</text>
+</svg>

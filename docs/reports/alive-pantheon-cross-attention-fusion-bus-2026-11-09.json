@@ -1,0 +1,376 @@
+{
+  "passNumber": 74,
+  "passSlice": "74/100",
+  "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+  "moduleId": "alive-pantheon-cross-attention-fusion-bus",
+  "timestamp": "2026-11-09T23:05:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "pantheonBrains": [
+    "01_Asmodensius_Connectome_302",
+    "02_FlyWire_CentralComplex_Ring",
+    "03_Hippocampal_CA3_CA1_Theta",
+    "04_Glitchling_Stochastic_Dale",
+    "05_CQM_Xylos_Cayley_Unitary",
+    "06_Dimension_Omega_Riemannian",
+    "07_HDC_10240Bit_Kanerva",
+    "08_Koopman_Spectral_Lifting",
+    "09_Cortical_L23_L5_Microcircuit",
+    "10_Striatal_D1_D2_Dopamine_STDP",
+    "11_Cerebellar_Purkinje_LTD",
+    "12_Tsotchke_Dale_Chaos_0985",
+    "13_Allostatic_Interoceptive_Viscera",
+    "14_Sovereign_Meta_Arbiter"
+  ],
+  "evaluations": [
+    {
+      "profileId": "uniform_average_14brain_pooling_baseline",
+      "label": "Uniform 1/14 Average Pooling (No Cross-Attention / No Shapley Attribution)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "fusionCosineMean": 0.99902,
+          "mseFusedMean": 0.001025,
+          "shapleyEfficiencyGapMean": 0.0172396074,
+          "compositeScore": 89.1866
+        },
+        {
+          "seed": 29017,
+          "fusionCosineMean": 0.999035,
+          "mseFusedMean": 0.001,
+          "shapleyEfficiencyGapMean": 0.0166612226,
+          "compositeScore": 89.5867
+        },
+        {
+          "seed": 39023,
+          "fusionCosineMean": 0.999031,
+          "mseFusedMean": 0.001004,
+          "shapleyEfficiencyGapMean": 0.009466228,
+          "compositeScore": 94.0768
+        },
+        {
+          "seed": 49031,
+          "fusionCosineMean": 0.999031,
+          "mseFusedMean": 0.001015,
+          "shapleyEfficiencyGapMean": 0.010873382,
+          "compositeScore": 93.1809
+        },
+        {
+          "seed": 59053,
+          "fusionCosineMean": 0.999075,
+          "mseFusedMean": 0.000972,
+          "shapleyEfficiencyGapMean": 0.0138999126,
+          "compositeScore": 91.3126
+        }
+      ],
+      "aggregate": {
+        "fusionCosineStats": {
+          "mean": 0.999,
+          "stdDev": 0,
+          "ci95": [
+            0.999,
+            0.9991
+          ]
+        },
+        "mseFusedStats": {
+          "mean": 0.001,
+          "stdDev": 0,
+          "ci95": [
+            0.001,
+            0.001
+          ]
+        },
+        "shapleyEfficiencyGapStats": {
+          "mean": 0.0136,
+          "stdDev": 0.0034,
+          "ci95": [
+            0.0094,
+            0.0179
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 91.4687,
+          "stdDev": 2.1511,
+          "ci95": [
+            88.7978,
+            94.1396
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "single_winner_takes_all_14brain_ablation",
+      "label": "Winner-Take-All Argmax Single Brain Selection (Zero Ensemble Diversity)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "fusionCosineMean": 0.999387,
+          "mseFusedMean": 0.000848,
+          "shapleyEfficiencyGapMean": 0.0172396074,
+          "compositeScore": 89.2252
+        },
+        {
+          "seed": 29017,
+          "fusionCosineMean": 0.999422,
+          "mseFusedMean": 0.000817,
+          "shapleyEfficiencyGapMean": 0.0166612226,
+          "compositeScore": 89.5867
+        },
+        {
+          "seed": 39023,
+          "fusionCosineMean": 0.999417,
+          "mseFusedMean": 0.000831,
+          "shapleyEfficiencyGapMean": 0.009466228,
+          "compositeScore": 94.0836
+        },
+        {
+          "seed": 49031,
+          "fusionCosineMean": 0.999398,
+          "mseFusedMean": 0.00084,
+          "shapleyEfficiencyGapMean": 0.010873382,
+          "compositeScore": 93.2041
+        },
+        {
+          "seed": 59053,
+          "fusionCosineMean": 0.999408,
+          "mseFusedMean": 0.00083,
+          "shapleyEfficiencyGapMean": 0.0138999126,
+          "compositeScore": 91.3126
+        }
+      ],
+      "aggregate": {
+        "fusionCosineStats": {
+          "mean": 0.9994,
+          "stdDev": 0,
+          "ci95": [
+            0.9994,
+            0.9994
+          ]
+        },
+        "mseFusedStats": {
+          "mean": 0.0008,
+          "stdDev": 0,
+          "ci95": [
+            0.0008,
+            0.0008
+          ]
+        },
+        "shapleyEfficiencyGapStats": {
+          "mean": 0.0136,
+          "stdDev": 0.0034,
+          "ci95": [
+            0.0094,
+            0.0179
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 91.4824,
+          "stdDev": 2.1476,
+          "ci95": [
+            88.8159,
+            94.149
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "uncalibrated_cross_attention_no_shapley_ablation",
+      "label": "Cross-Attention Bus Without Epistemic Precision or Exact Shapley Efficiency",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "fusionCosineMean": 0.99889,
+          "mseFusedMean": 0.001143,
+          "shapleyEfficiencyGapMean": 0.0172396074,
+          "compositeScore": 89.0003
+        },
+        {
+          "seed": 29017,
+          "fusionCosineMean": 0.998894,
+          "mseFusedMean": 0.001125,
+          "shapleyEfficiencyGapMean": 0.0166612226,
+          "compositeScore": 89.3906
+        },
+        {
+          "seed": 39023,
+          "fusionCosineMean": 0.998945,
+          "mseFusedMean": 0.001071,
+          "shapleyEfficiencyGapMean": 0.009466228,
+          "compositeScore": 93.9713
+        },
+        {
+          "seed": 49031,
+          "fusionCosineMean": 0.998867,
+          "mseFusedMean": 0.00117,
+          "shapleyEfficiencyGapMean": 0.010873382,
+          "compositeScore": 92.9372
+        },
+        {
+          "seed": 59053,
+          "fusionCosineMean": 0.999013,
+          "mseFusedMean": 0.001046,
+          "shapleyEfficiencyGapMean": 0.0138999126,
+          "compositeScore": 91.2401
+        }
+      ],
+      "aggregate": {
+        "fusionCosineStats": {
+          "mean": 0.9989,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.9988,
+            0.999
+          ]
+        },
+        "mseFusedStats": {
+          "mean": 0.0011,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.001,
+            0.0012
+          ]
+        },
+        "shapleyEfficiencyGapStats": {
+          "mean": 0.0136,
+          "stdDev": 0.0034,
+          "ci95": [
+            0.0094,
+            0.0179
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 91.3079,
+          "stdDev": 2.1653,
+          "ci95": [
+            88.6193,
+            93.9965
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "pantheon_14brain_cross_attention_shapley_precision_bus",
+      "label": "14-Brain Cross-Attention Fusion Bus + Epistemic Precision + Shapley Attribution (Pass 74 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "fusionCosineMean": 0.999968,
+          "mseFusedMean": 0.000033,
+          "shapleyEfficiencyGapMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "fusionCosineMean": 0.999969,
+          "mseFusedMean": 0.000032,
+          "shapleyEfficiencyGapMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "fusionCosineMean": 0.99997,
+          "mseFusedMean": 0.000032,
+          "shapleyEfficiencyGapMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "fusionCosineMean": 0.999967,
+          "mseFusedMean": 0.000034,
+          "shapleyEfficiencyGapMean": 0,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "fusionCosineMean": 0.999968,
+          "mseFusedMean": 0.000032,
+          "shapleyEfficiencyGapMean": 0,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "fusionCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "mseFusedStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "shapleyEfficiencyGapStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "pantheon_14brain_cross_attention_shapley_precision_bus",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "fusionCosineStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "mseFusedStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "shapleyEfficiencyGapStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 8.5313,
+    "tStat": 8.8685,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
