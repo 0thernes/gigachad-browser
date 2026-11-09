@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Browser tools, navigation, developer workflows & transport fault recovery pass 8
+
+- Added the 5-seed browser navigation, developer workflows, and transport fault recovery suite ([`systems/alive-browser-fault-recovery.js`](systems/alive-browser-fault-recovery.js), [`scripts/alive-browser-fault-recovery.cjs`](scripts/alive-browser-fault-recovery.cjs)) comparing `unbuffered-naive-nav`, `retry-without-backoff`, `circuit-breaker-only`, and `full-fault-tolerant-navigator` across 16-task representative workflows with 14 injected faults per seed (`ERR_NAME_NOT_RESOLVED`, `HTTP_503_SERVICE_UNAVAILABLE`, `HTTP_429_RATE_LIMITED`, `ERR_CONNECTION_TIMED_OUT`, `STALE_TAB_DISCONNECTED`, `DUPLICATE_WARP_DOM_MUTATION`).
+- Verified on `5/5` seeds that `full-fault-tolerant-navigator` achieves `100.0%` workflow completion, `100.0%` fault recovery, `0` duplicate `Warp DOM` mutations, `0` rate-limit violations, `0` unhandled tab crashes, and `100.0` reliability score (`+89.14` over `circuit-breaker-only`).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 14 (`#alive-fabric-fault-recovery`, `Run fault recovery` button, and `runFaultRecovery()`).
+- Added [Pass 8 report](docs/ALIVE_PASS_08_REPORT.md), [JSON report](docs/reports/alive-browser-fault-recovery-2026-11-09.json), [SVG chart](docs/reports/alive-browser-fault-recovery-2026-11-09.svg) and unit tests (`tests/alive-browser-fault-recovery.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Research provenance, contradiction tracking & source-grounded writing pass 7
 
 - Added the 5-seed research provenance, contradiction tracking, source quality, and source-grounded writing evaluation suite ([`systems/alive-research-provenance-evaluator.js`](systems/alive-research-provenance-evaluator.js), [`scripts/alive-research-provenance-evaluator.cjs`](scripts/alive-research-provenance-evaluator.cjs)) comparing `ungrounded-freeform`, `naive-concatenator`, `citation-only-filter`, and `provenance-contradiction-writer` across 9-document multi-tier corpora with SHA-256 excerpt receipts.

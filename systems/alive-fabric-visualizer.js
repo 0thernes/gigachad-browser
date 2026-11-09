@@ -306,6 +306,7 @@
   let latestContinualTransfer = null, continualTransferBusy = false;
   let latestColonyFitness = null, colonyFitnessBusy = false;
   let latestProvenanceEval = null, provenanceEvalBusy = false;
+  let latestFaultRecovery = null, faultRecoveryBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -380,6 +381,19 @@
       return latestProvenanceEval;
     } finally {
       provenanceEvalBusy = false;
+    }
+  }
+  async function runFaultRecovery() {
+    const runner = root.AliveBrowserFaultRecovery;
+    if (faultRecoveryBusy || typeof runner?.run !== 'function') return latestFaultRecovery;
+    faultRecoveryBusy = true;
+    try {
+      latestFaultRecovery = await runner.run();
+      root.__aliveLatestFaultRecovery = latestFaultRecovery;
+      draw();
+      return latestFaultRecovery;
+    } finally {
+      faultRecoveryBusy = false;
     }
   }
 
@@ -761,6 +775,51 @@
     ctx.fillText('clmP=grounded claim precision · conR=contradiction recall · hal=hallucination rate · srcQ=mean source quality', 8, height - 6);
   }
 
+  // ---------- 14. Pass 8 browser navigation & fault recovery ----------------
+  function drawFaultRecovery(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestFaultRecovery || root.__aliveLatestFaultRecovery;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byController) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(faultRecoveryBusy ? 'Running 5-seed browser navigation & fault recovery suite…' : 'Click "Run fault recovery" above to evaluate DNS/503/429/timeout/stale-tab/idempotent-Warp-DOM recovery across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const gCir = s.pairedDeltas?.fullVsCircuitReliabilityGain?.mean || 0;
+    const gNav = s.pairedDeltas?.fullVsNaiveReliabilityGain?.mean || 0;
+    ctx.fillText(`5 seeds · full vs circuit +${gCir.toFixed(1)} (${s.fullBeatCircuitSeeds}/5) · full vs naive +${gNav.toFixed(1)} (${s.fullBeatNaiveSeeds}/5) · 100% completion (${s.exact100CompletionSeeds}/5) · 0 dup DOM (${s.zeroDuplicateDomSeeds}/5)`, 8, 12);
+
+    const modes = ['unbuffered-naive-nav', 'retry-without-backoff', 'circuit-breaker-only', 'full-fault-tolerant-navigator'];
+    const colors = {
+      'unbuffered-naive-nav': '#f43f5e',
+      'retry-without-backoff': '#f59e0b',
+      'circuit-breaker-only': '#38bdf8',
+      'full-fault-tolerant-navigator': '#34d399'
+    };
+    const barW = Math.max(80, width - 460);
+    modes.forEach((mode, idx) => {
+      const entry = s.byController[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const rel = entry.reliabilityScore?.mean || 0;
+      const cmp = entry.workflowCompletionPct?.mean || 0;
+      const rec = entry.faultRecoveryPct?.mean || 0;
+      const dup = entry.duplicateDomMutations?.mean || 0;
+      const wst = entry.wastedRetryRequests?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, rel / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`rel=${rel.toFixed(1)} cmp=${cmp.toFixed(0)}% rec=${rec.toFixed(0)}% dupDOM=${dup.toFixed(0)} waste=${wst.toFixed(0)}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('16 tasks/seed (14 injected faults: DNS, 503, 429 Retry-After, timeout, stale-tab, duplicate Warp DOM)', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -801,20 +860,24 @@
     const provBtn = doc.createElement('button'); provBtn.type = 'button'; provBtn.textContent = 'Run provenance';
     provBtn.title = 'Run 5-seed research provenance, contradiction tracking and source-grounded writing evaluation';
     provBtn.addEventListener('click', () => { runProvenanceEval(); });
+    const faultBtn = doc.createElement('button'); faultBtn.type = 'button'; faultBtn.textContent = 'Run fault recovery';
+    faultBtn.title = 'Run 5-seed browser navigation, developer workflows and transport fault recovery evaluation';
+    faultBtn.addEventListener('click', () => { runFaultRecovery(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
       utility = canvas('alive-fabric-utility', 300), runtimeSeries = canvas('alive-fabric-series', 240), substrate = canvas('alive-fabric-substrate', 260),
       benchmarkCanvas = canvas('alive-fabric-benchmark', 210), ablationsCanvas = canvas('alive-fabric-ablations', 280),
       restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200),
-      colonyCanvas = canvas('alive-fabric-colony-fitness', 190), provenanceCanvas = canvas('alive-fabric-provenance', 190);
+      colonyCanvas = canvas('alive-fabric-colony-fitness', 190), provenanceCanvas = canvas('alive-fabric-provenance', 190),
+      faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -830,7 +893,8 @@
       section('10 · State contracts & restart equivalence — optimizer · recurrent · replay · RNG · curriculum · fabric', restartEqCanvas),
       section('11 · Continual learning, distinct-task retention & morphology transfer (5 seeds)', continualCanvas),
       section('12 · Colony differentiation, role assignment, state separation & population fitness (5 seeds)', colonyCanvas),
-      section('13 · Research provenance, contradiction tracking & source-grounded writing (5 seeds)', provenanceCanvas));
+      section('13 · Research provenance, contradiction tracking & source-grounded writing (5 seeds)', provenanceCanvas),
+      section('14 · Browser tools, navigation, developer workflows & fault recovery (5 seeds)', faultRecoveryCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -842,7 +906,8 @@
       () => drawRestartEquivalence(restartEqCanvas),
       () => drawContinualTransfer(continualCanvas),
       () => drawColonyFitness(colonyCanvas),
-      () => drawProvenanceEval(provenanceCanvas));
+      () => drawProvenanceEval(provenanceCanvas),
+      () => drawFaultRecovery(faultRecoveryCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -885,6 +950,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

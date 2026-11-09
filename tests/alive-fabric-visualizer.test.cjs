@@ -387,6 +387,37 @@ test('runProvenanceEval renders 5-seed research provenance and contradiction tra
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runFaultRecovery renders 5-seed browser navigation and fault recovery in section 14', async () => {
+  const { window, dom } = load();
+  window.AliveBrowserFaultRecovery = {
+    run: async () => ({
+      summary: {
+        fullBeatCircuitSeeds: 5,
+        fullBeatNaiveSeeds: 5,
+        exact100CompletionSeeds: 5,
+        zeroDuplicateDomSeeds: 5,
+        pairedDeltas: {
+          fullVsCircuitReliabilityGain: { mean: 56.25 },
+          fullVsNaiveReliabilityGain: { mean: 93.12 }
+        },
+        byController: {
+          'unbuffered-naive-nav': { reliabilityScore: { mean: 6.88 }, workflowCompletionPct: { mean: 12.5 }, faultRecoveryPct: { mean: 0 }, duplicateDomMutations: { mean: 6 }, wastedRetryRequests: { mean: 0 } },
+          'retry-without-backoff': { reliabilityScore: { mean: 12.50 }, workflowCompletionPct: { mean: 43.8 }, faultRecoveryPct: { mean: 35.7 }, duplicateDomMutations: { mean: 6 }, wastedRetryRequests: { mean: 21 } },
+          'circuit-breaker-only': { reliabilityScore: { mean: 43.75 }, workflowCompletionPct: { mean: 56.3 }, faultRecoveryPct: { mean: 50.0 }, duplicateDomMutations: { mean: 6 }, wastedRetryRequests: { mean: 2 } },
+          'full-fault-tolerant-navigator': { reliabilityScore: { mean: 100.0 }, workflowCompletionPct: { mean: 100.0 }, faultRecoveryPct: { mean: 100.0 }, duplicateDomMutations: { mean: 0 }, wastedRetryRequests: { mean: 0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runFaultRecovery();
+  assert.equal(report.summary.fullBeatCircuitSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full vs circuit +56.3 (5/5)')), 'fault recovery summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-fault-tolerant-na')), 'fault recovery controller rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 
