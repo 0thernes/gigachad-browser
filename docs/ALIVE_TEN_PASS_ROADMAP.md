@@ -47,7 +47,7 @@ by pass 1.
 
 | Pass | Intended focus | Status |
 | --- | --- | --- |
-| 16 | Multi-Entity Exploration Swarm Coordinator (`Raven-Cognition`, `Locust-Forager`, `Fish-School-Consensus` Guilds, Explicit Entity Identity & Independent vs Shared Model Ownership) | Proposed |
+| 16 | Multi-Entity Exploration Swarm Coordinator (`Raven-Cognition`, `Locust-Forager`, `Fish-School-Consensus` Guilds, Explicit Entity Identity & Independent vs Shared Model Ownership) | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_16_REPORT.md), [hyper swarm JSON](reports/alive-hyper-swarm-coordinator-2026-11-09.json), [hyper swarm SVG](reports/alive-hyper-swarm-coordinator-2026-11-09.svg) |
 | 17 | Public-Web & Onion Swarm Resource Governor (Per-Domain Concurrency Semaphores, Token-Bucket Request Budgets, Global Pause/Kill-Switch & Bounded Population Growth) | Proposed |
 | 18 | Learned Inter-Entity Cooperation, Stigmergic Pheromone Knowledge Graph, Distributed Frontier Deduplication & Byzantine-Fault-Tolerant Source Consensus | Proposed |
 | 19 | 5-Seed Multi-Guild Swarm Exploration Benchmark Across Clearnet + `.onion` Topologies (Comparing Solitary, Uncoordinated Flock, Centralized Queue & Stigmergic Hybrid Synergy Swarm) | Proposed |

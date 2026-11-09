@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="330" viewBox="0 0 980 330">
+  <rect width="980" height="330" fill="#05090f"/>
+  <text x="24" y="32" fill="#67e8f9" font-family="Consolas,monospace" font-size="15" font-weight="bold">ALIVE Pass 16 — Multi-Entity Exploration Swarm Coordinator (5 Seeds, 15 Entities/Seed)</text>
+  <text x="24" y="54" fill="#e2e8f0" font-family="Consolas,monospace" font-size="12">Tri-Guild vs Cloned: +99.00 (5/5) · vs Uncoord: +73.87 (5/5) · Zero Redundancy: 5/5</text>
+  <text x="24" y="72" fill="#94a3b8" font-family="Consolas,monospace" font-size="11">Guilds: 5 Locust-Foragers (Frontier) · 5 Raven-Cognition (Causal AoT/ToT/GoT) · 5 Fish-School-Consensus (BFT Quorum)</text>
+  
+    <text x="230" y="114" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">cloned-tab-flock</text>
+    <rect x="242" y="96" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="98" width="4" height="22" rx="2" fill="#f43f5e"/>
+    <text x="614" y="114" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">syn=1.0 pipe=0% JSD=0.00 wDist=0.000 red=93.3%</text>
+    <text x="230" y="164" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">homogeneous-single-guild</text>
+    <rect x="242" y="146" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="148" width="39" height="22" rx="2" fill="#f59e0b"/>
+    <text x="614" y="164" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">syn=10.9 pipe=0% JSD=0.03 wDist=0.001 red=33.3%</text>
+    <text x="230" y="214" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">uncoordinated-independent-swarm</text>
+    <rect x="242" y="196" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="198" width="94" height="22" rx="2" fill="#38bdf8"/>
+    <text x="614" y="214" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">syn=26.1 pipe=12% JSD=0.09 wDist=0.104 red=35.6%</text>
+    <text x="230" y="264" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">tri-guild-hybrid-synergy-swarm</text>
+    <rect x="242" y="246" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="248" width="360" height="22" rx="2" fill="#34d399"/>
+    <text x="614" y="264" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">syn=100.0 pipe=100% JSD=1.58 wDist=0.263 red=0.0%</text>
+  <text x="24" y="312" fill="#64748b" font-family="Consolas,monospace" font-size="11">Seeds: 19013, 29017, 39023, 49031, 59053 · 30 multi-stage clearnet + .onion tasks/seed · Explicit entity identity &amp; independent parameter tensors</text>
+</svg>

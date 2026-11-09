@@ -314,6 +314,7 @@
   let latestOnionV3 = null, onionV3Busy = false;
   let latestTorShield = null, torShieldBusy = false;
   let latestTorAcceptance = null, torAcceptanceBusy = false;
+  let latestHyperSwarm = null, hyperSwarmBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -492,6 +493,19 @@
       return latestTorAcceptance;
     } finally {
       torAcceptanceBusy = false;
+    }
+  }
+  async function runHyperSwarm() {
+    const runner = root.AliveHyperSwarmCoordinator;
+    if (hyperSwarmBusy || typeof runner?.run !== 'function') return latestHyperSwarm;
+    hyperSwarmBusy = true;
+    try {
+      latestHyperSwarm = await runner.run();
+      root.__aliveLatestHyperSwarm = latestHyperSwarm;
+      draw();
+      return latestHyperSwarm;
+    } finally {
+      hyperSwarmBusy = false;
     }
   }
 
@@ -1210,6 +1224,50 @@
     ctx.fillText('Phase II Tor Hybrid Synergy Mesh frozen (T1..T10: daemon, FPD, IsolateSOCKSAuth, DNS/WebRTC, fail-closed, 650, /16, NEWNYM, v3 .onion, letterbox)', 8, height - 6);
   }
 
+  // ---------- 22. Pass 16 Multi-entity exploration swarm coordinator --------
+  function drawHyperSwarm(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestHyperSwarm || root.__aliveLatestHyperSwarm;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byMode) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(hyperSwarmBusy ? 'Running 5-seed 15-entity Tri-Guild Exploration Swarm Coordinator suite…' : 'Click "Run hyper swarm" above to evaluate Raven-Cognition, Locust-Forager & Fish-School-Consensus guilds across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const gCln = s.pairedDeltas?.triVsClonedSynergyGain?.mean || 0;
+    const gUnc = s.pairedDeltas?.triVsUncoordSynergyGain?.mean || 0;
+    ctx.fillText(`5 seeds · tri-guild vs cloned +${gCln.toFixed(1)} (${s.triBeatClonedSeeds}/5) · vs uncoord +${gUnc.toFixed(1)} (${s.triBeatUncoordSeeds}/5) · 0% redundancy (${s.zeroRedundancySeeds}/5)`, 8, 12);
+
+    const modes = ['cloned-tab-flock', 'homogeneous-single-guild', 'uncoordinated-independent-swarm', 'tri-guild-hybrid-synergy-swarm'];
+    const colors = {
+      'cloned-tab-flock': '#f43f5e',
+      'homogeneous-single-guild': '#f59e0b',
+      'uncoordinated-independent-swarm': '#38bdf8',
+      'tri-guild-hybrid-synergy-swarm': '#34d399'
+    };
+    const barW = Math.max(80, width - 470);
+    modes.forEach((mode, idx) => {
+      const entry = s.byMode[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const syn = entry.swarmSynergyScore?.mean || 0;
+      const pip = entry.pipelineCompletionPct?.mean || 0;
+      const jsd = entry.guildRoleSpecializationJsd?.mean || 0;
+      const wDist = entry.interEntityWeightDistance?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, syn / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`syn=${syn.toFixed(1)} pipe=${pip.toFixed(0)}% JSD=${jsd.toFixed(2)} wDist=${wDist.toFixed(3)}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('15 entities/seed (5 Locust-Foragers · 5 Raven-Cognition · 5 Fish-School-Consensus) · 30 multi-stage tasks/seed', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1274,13 +1332,16 @@
     const torMatrixBtn = doc.createElement('button'); torMatrixBtn.type = 'button'; torMatrixBtn.textContent = 'Run Tor matrix';
     torMatrixBtn.title = 'Run 5-seed 10-row Tor Hybrid Synergy Mesh acceptance matrix (T1..T10)';
     torMatrixBtn.addEventListener('click', () => { runTorAcceptance(); });
+    const hyperSwarmBtn = doc.createElement('button'); hyperSwarmBtn.type = 'button'; hyperSwarmBtn.textContent = 'Run hyper swarm';
+    hyperSwarmBtn.title = 'Run 5-seed 15-entity Tri-Guild Exploration Swarm Coordinator (Raven-Cognition, Locust-Forager, Fish-School-Consensus)';
+    hyperSwarmBtn.addEventListener('click', () => { runHyperSwarm(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1291,7 +1352,8 @@
       faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190), sustainedPerfCanvas = canvas('alive-fabric-sustained-perf', 190),
       releaseAuditCanvas = canvas('alive-fabric-release-audit', 190), torMeshCanvas = canvas('alive-fabric-tor-mesh', 190),
       torCircuitsCanvas = canvas('alive-fabric-tor-circuits', 190), onionV3Canvas = canvas('alive-fabric-onion-v3', 190),
-      torShieldCanvas = canvas('alive-fabric-tor-shield', 190), torAcceptanceCanvas = canvas('alive-fabric-tor-acceptance', 190);
+      torShieldCanvas = canvas('alive-fabric-tor-shield', 190), torAcceptanceCanvas = canvas('alive-fabric-tor-acceptance', 190),
+      hyperSwarmCanvas = canvas('alive-fabric-hyper-swarm', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1315,7 +1377,8 @@
       section('18 · Tor ControlPort — stream attribution, NEWNYM rotation & 3-hop path diversity (5 seeds)', torCircuitsCanvas),
       section('19 · RFC 7686 & Tor v3 .onion cryptographic verifier — Ed25519 + SHA3-256 + HSDir sig (5 seeds)', onionV3Canvas),
       section('20 · Anti-fingerprinting & anonymity shield — letterboxing, 100ms timers & FPD canvas (5 seeds)', torShieldCanvas),
-      section('21 · Tor Hybrid Synergy Mesh acceptance matrix (T1..T10) & Phase II SHA-256 freeze', torAcceptanceCanvas));
+      section('21 · Tor Hybrid Synergy Mesh acceptance matrix (T1..T10) & Phase II SHA-256 freeze', torAcceptanceCanvas),
+      section('22 · Multi-entity exploration swarm — Raven · Locust · Fish guilds (5 seeds)', hyperSwarmCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1335,7 +1398,8 @@
       () => drawTorCircuits(torCircuitsCanvas),
       () => drawOnionV3Verifier(onionV3Canvas),
       () => drawTorShield(torShieldCanvas),
-      () => drawTorAcceptance(torAcceptanceCanvas));
+      () => drawTorAcceptance(torAcceptanceCanvas),
+      () => drawHyperSwarm(hyperSwarmCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1378,6 +1442,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

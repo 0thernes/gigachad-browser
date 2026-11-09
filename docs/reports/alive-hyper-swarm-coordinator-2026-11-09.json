@@ -1,0 +1,1556 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-16-hyper-swarm-coordinator-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "entitiesPerSeed": 15,
+    "guilds": [
+      {
+        "id": "Locust-Forager",
+        "count": 5,
+        "primaryAction": "forage_frontier"
+      },
+      {
+        "id": "Raven-Cognition",
+        "count": 5,
+        "primaryAction": "synthesize_causal_graph"
+      },
+      {
+        "id": "Fish-School-Consensus",
+        "count": 5,
+        "primaryAction": "verify_consensus_quorum"
+      }
+    ],
+    "tasksPerSeed": 30,
+    "modes": [
+      "cloned-tab-flock",
+      "uncoordinated-independent-swarm",
+      "homogeneous-single-guild",
+      "tri-guild-hybrid-synergy-swarm"
+    ]
+  },
+  "summary": {
+    "triBeatClonedSeeds": 5,
+    "triBeatUncoordSeeds": 5,
+    "triBeatHomogeneousSeeds": 5,
+    "zeroRedundancySeeds": 5,
+    "pairedDeltas": {
+      "triVsClonedSynergyGain": {
+        "count": 5,
+        "mean": 99,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          99,
+          99
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "triVsUncoordSynergyGain": {
+        "count": 5,
+        "mean": 73.8709560607978,
+        "sampleStandardDeviation": 8.692164010033723,
+        "ci95": [
+          63.07820894305644,
+          84.66370317853915
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "triVsHomogeneousSynergyGain": {
+        "count": 5,
+        "mean": 89.09880158142298,
+        "sampleStandardDeviation": 0.007863407148100335,
+        "ci95": [
+          89.08903787186397,
+          89.10856529098199
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byMode": {
+      "cloned-tab-flock": {
+        "swarmSynergyScore": {
+          "count": 5,
+          "mean": 1.0000000000000013,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1.0000000000000013,
+            1.0000000000000013
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "pipelineCompletionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "guildRoleSpecializationJsd": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "interEntityWeightDistance": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "redundantWorkPct": {
+          "count": 5,
+          "mean": 93.33333333333333,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            93.33333333333333,
+            93.33333333333333
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimCount": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "uncoordinated-independent-swarm": {
+        "swarmSynergyScore": {
+          "count": 5,
+          "mean": 26.129043939202198,
+          "sampleStandardDeviation": 8.692164010033723,
+          "ci95": [
+            15.336296821460841,
+            36.921791056943555
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "pipelineCompletionPct": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 13.662601021279464,
+          "ci95": [
+            -4.964359809944721,
+            28.96435980994472
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "guildRoleSpecializationJsd": {
+          "count": 5,
+          "mean": 0.08649549377071358,
+          "sampleStandardDeviation": 0.03291117714619313,
+          "ci95": [
+            0.045630869969779,
+            0.12736011757164817
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "interEntityWeightDistance": {
+          "count": 5,
+          "mean": 0.1039166960135219,
+          "sampleStandardDeviation": 0.012802262468704423,
+          "ci95": [
+            0.08802058761057634,
+            0.11981280441646745
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "redundantWorkPct": {
+          "count": 5,
+          "mean": 35.55555555555556,
+          "sampleStandardDeviation": 6.431020501550125,
+          "ci95": [
+            27.57038892707044,
+            43.540722184040675
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimCount": {
+          "count": 5,
+          "mean": 3.6,
+          "sampleStandardDeviation": 4.09878030638384,
+          "ci95": [
+            -1.4893079429834173,
+            8.689307942983417
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "homogeneous-single-guild": {
+        "swarmSynergyScore": {
+          "count": 5,
+          "mean": 10.901198418577028,
+          "sampleStandardDeviation": 0.007863407148101704,
+          "ci95": [
+            10.891434709018013,
+            10.910962128136044
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "pipelineCompletionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "guildRoleSpecializationJsd": {
+          "count": 5,
+          "mean": 0.030352739449755972,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.030352739449755972,
+            0.030352739449755972
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "interEntityWeightDistance": {
+          "count": 5,
+          "mean": 0.0006968012063389769,
+          "sampleStandardDeviation": 0.00009436088577722327,
+          "ci95": [
+            0.0005796366916307809,
+            0.0008139657210471729
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "redundantWorkPct": {
+          "count": 5,
+          "mean": 33.33333333333333,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            33.33333333333333,
+            33.33333333333333
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimCount": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "tri-guild-hybrid-synergy-swarm": {
+        "swarmSynergyScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "pipelineCompletionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "guildRoleSpecializationJsd": {
+          "count": 5,
+          "mean": 1.5849624983046937,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1.5849624983046937,
+            1.5849624983046937
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "interEntityWeightDistance": {
+          "count": 5,
+          "mean": 0.26328273337981056,
+          "sampleStandardDeviation": 0.003595937773013085,
+          "ci95": [
+            0.2588177869072792,
+            0.26774767985234194
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "redundantWorkPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimCount": {
+          "count": 5,
+          "mean": 60,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            60,
+            60
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byMode": {
+        "cloned-tab-flock": {
+          "seed": 19013,
+          "mode": "cloned-tab-flock",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 1.0000000000000013,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0,
+            "interEntityWeightDistance": 0,
+            "redundantWorkPct": 93.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "uncoordinated-independent-swarm": {
+          "seed": 19013,
+          "mode": "uncoordinated-independent-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 39.053612170167746,
+            "pipelineCompletionPct": 33.33333333333333,
+            "guildRoleSpecializationJsd": 0.1257141872606826,
+            "interEntityWeightDistance": 0.11673861695511879,
+            "redundantWorkPct": 27.77777777777778,
+            "verifiedClaimCount": 10
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                5,
+                14,
+                11
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                7,
+                15,
+                8
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                11,
+                19
+              ]
+            }
+          ]
+        },
+        "homogeneous-single-guild": {
+          "seed": 19013,
+          "mode": "homogeneous-single-guild",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 10.895272828941184,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0.030352739449755972,
+            "interEntityWeightDistance": 0.0006256941307088569,
+            "redundantWorkPct": 33.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                24,
+                6,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            }
+          ]
+        },
+        "tri-guild-hybrid-synergy-swarm": {
+          "seed": 19013,
+          "mode": "tri-guild-hybrid-synergy-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 100,
+            "pipelineCompletionPct": 100,
+            "guildRoleSpecializationJsd": 1.5849624983046937,
+            "interEntityWeightDistance": 0.26047339947834663,
+            "redundantWorkPct": 0,
+            "verifiedClaimCount": 60
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                30,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                30,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                0,
+                30
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byMode": {
+        "cloned-tab-flock": {
+          "seed": 29017,
+          "mode": "cloned-tab-flock",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 1.0000000000000013,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0,
+            "interEntityWeightDistance": 0,
+            "redundantWorkPct": 93.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "uncoordinated-independent-swarm": {
+          "seed": 29017,
+          "mode": "uncoordinated-independent-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 28.59436165660125,
+            "pipelineCompletionPct": 13.333333333333334,
+            "guildRoleSpecializationJsd": 0.1048709160507232,
+            "interEntityWeightDistance": 0.11217536786230722,
+            "redundantWorkPct": 31.11111111111111,
+            "verifiedClaimCount": 4
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                5,
+                13,
+                12
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                12,
+                18
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                5,
+                17,
+                8
+              ]
+            }
+          ]
+        },
+        "homogeneous-single-guild": {
+          "seed": 29017,
+          "mode": "homogeneous-single-guild",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 10.89547147050506,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0.030352739449755972,
+            "interEntityWeightDistance": 0.0006280778294753777,
+            "redundantWorkPct": 33.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                24,
+                6,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            }
+          ]
+        },
+        "tri-guild-hybrid-synergy-swarm": {
+          "seed": 29017,
+          "mode": "tri-guild-hybrid-synergy-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 100,
+            "pipelineCompletionPct": 100,
+            "guildRoleSpecializationJsd": 1.5849624983046937,
+            "interEntityWeightDistance": 0.26770692256097756,
+            "redundantWorkPct": 0,
+            "verifiedClaimCount": 60
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                30,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                30,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                0,
+                30
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byMode": {
+        "cloned-tab-flock": {
+          "seed": 39023,
+          "mode": "cloned-tab-flock",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 1.0000000000000013,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0,
+            "interEntityWeightDistance": 0,
+            "redundantWorkPct": 93.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "uncoordinated-independent-swarm": {
+          "seed": 39023,
+          "mode": "uncoordinated-independent-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 16.489869445172587,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0.041410637222656664,
+            "interEntityWeightDistance": 0.08407488760118552,
+            "redundantWorkPct": 44.44444444444444,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                1,
+                18,
+                11
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                16,
+                14
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                12,
+                18
+              ]
+            }
+          ]
+        },
+        "homogeneous-single-guild": {
+          "seed": 39023,
+          "mode": "homogeneous-single-guild",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 10.895996518193874,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0.030352739449755972,
+            "interEntityWeightDistance": 0.0006343784017411424,
+            "redundantWorkPct": 33.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                24,
+                6,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            }
+          ]
+        },
+        "tri-guild-hybrid-synergy-swarm": {
+          "seed": 39023,
+          "mode": "tri-guild-hybrid-synergy-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 100,
+            "pipelineCompletionPct": 100,
+            "guildRoleSpecializationJsd": 1.5849624983046937,
+            "interEntityWeightDistance": 0.26441209413017075,
+            "redundantWorkPct": 0,
+            "verifiedClaimCount": 60
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                30,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                30,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                0,
+                30
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byMode": {
+        "cloned-tab-flock": {
+          "seed": 49031,
+          "mode": "cloned-tab-flock",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 1.0000000000000013,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0,
+            "interEntityWeightDistance": 0,
+            "redundantWorkPct": 93.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "uncoordinated-independent-swarm": {
+          "seed": 49031,
+          "mode": "uncoordinated-independent-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 20.11971475467776,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0.06708914966193685,
+            "interEntityWeightDistance": 0.10707352716882083,
+            "redundantWorkPct": 37.77777777777778,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                2,
+                7,
+                21
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                14,
+                16
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                14,
+                16
+              ]
+            }
+          ]
+        },
+        "homogeneous-single-guild": {
+          "seed": 49031,
+          "mode": "homogeneous-single-guild",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 10.907353377527517,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0.030352739449755972,
+            "interEntityWeightDistance": 0.0007706607137448687,
+            "redundantWorkPct": 33.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                24,
+                6,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            }
+          ]
+        },
+        "tri-guild-hybrid-synergy-swarm": {
+          "seed": 49031,
+          "mode": "tri-guild-hybrid-synergy-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 100,
+            "pipelineCompletionPct": 100,
+            "guildRoleSpecializationJsd": 1.5849624983046937,
+            "interEntityWeightDistance": 0.2650103390995114,
+            "redundantWorkPct": 0,
+            "verifiedClaimCount": 60
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                30,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                30,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                0,
+                30
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byMode": {
+        "cloned-tab-flock": {
+          "seed": 59053,
+          "mode": "cloned-tab-flock",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 1.0000000000000013,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0,
+            "interEntityWeightDistance": 0,
+            "redundantWorkPct": 93.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                150,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "uncoordinated-independent-swarm": {
+          "seed": 59053,
+          "mode": "uncoordinated-independent-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 26.38766166939166,
+            "pipelineCompletionPct": 13.333333333333334,
+            "guildRoleSpecializationJsd": 0.09339257865756863,
+            "interEntityWeightDistance": 0.09952108048017706,
+            "redundantWorkPct": 36.666666666666664,
+            "verifiedClaimCount": 4
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                0,
+                7,
+                23
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                4,
+                11,
+                15
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                11,
+                19
+              ]
+            }
+          ]
+        },
+        "homogeneous-single-guild": {
+          "seed": 59053,
+          "mode": "homogeneous-single-guild",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 10.911897897717498,
+            "pipelineCompletionPct": 0,
+            "guildRoleSpecializationJsd": 0.030352739449755972,
+            "interEntityWeightDistance": 0.0008251949560246388,
+            "redundantWorkPct": 33.33333333333333,
+            "verifiedClaimCount": 0
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                24,
+                6,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                18,
+                12,
+                0
+              ]
+            }
+          ]
+        },
+        "tri-guild-hybrid-synergy-swarm": {
+          "seed": 59053,
+          "mode": "tri-guild-hybrid-synergy-swarm",
+          "entityCount": 15,
+          "metrics": {
+            "swarmSynergyScore": 100,
+            "pipelineCompletionPct": 100,
+            "guildRoleSpecializationJsd": 1.5849624983046937,
+            "interEntityWeightDistance": 0.25881091163004655,
+            "redundantWorkPct": 0,
+            "verifiedClaimCount": 60
+          },
+          "guildSnapshots": [
+            {
+              "guildSlot": "Locust-Forager",
+              "entityIds": [
+                "locust-01",
+                "locust-02",
+                "locust-03",
+                "locust-04",
+                "locust-05"
+              ],
+              "actionDistribution": [
+                30,
+                0,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Raven-Cognition",
+              "entityIds": [
+                "raven-01",
+                "raven-02",
+                "raven-03",
+                "raven-04",
+                "raven-05"
+              ],
+              "actionDistribution": [
+                0,
+                30,
+                0
+              ]
+            },
+            {
+              "guildSlot": "Fish-School-Consensus",
+              "entityIds": [
+                "fish-01",
+                "fish-02",
+                "fish-03",
+                "fish-04",
+                "fish-05"
+              ],
+              "actionDistribution": [
+                0,
+                0,
+                30
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "scope": "Pass 16 5-seed evaluation of the 15-entity Tri-Guild Exploration Swarm Coordinator (5 Locust-Foragers, 5 Raven-Cognition, 5 Fish-School-Consensus) with explicit entity identity and independent parameter ownership."
+}

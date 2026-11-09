@@ -634,4 +634,35 @@ test('runTorAcceptance renders 10-row Tor Hybrid Synergy Mesh acceptance matrix 
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runHyperSwarm renders 5-seed 15-entity Tri-Guild Exploration Swarm Coordinator metrics in section 22', async () => {
+  const { window, dom } = load();
+  window.AliveHyperSwarmCoordinator = {
+    run: async () => ({
+      summary: {
+        triBeatClonedSeeds: 5,
+        triBeatUncoordSeeds: 5,
+        triBeatHomogeneousSeeds: 5,
+        zeroRedundancySeeds: 5,
+        pairedDeltas: {
+          triVsClonedSynergyGain: { mean: 99.0 },
+          triVsUncoordSynergyGain: { mean: 48.0 }
+        },
+        byMode: {
+          'cloned-tab-flock': { swarmSynergyScore: { mean: 1.0 }, pipelineCompletionPct: { mean: 0 }, guildRoleSpecializationJsd: { mean: 0 }, interEntityWeightDistance: { mean: 0 } },
+          'homogeneous-single-guild': { swarmSynergyScore: { mean: 22.0 }, pipelineCompletionPct: { mean: 0 }, guildRoleSpecializationJsd: { mean: 0 }, interEntityWeightDistance: { mean: 0.01 } },
+          'uncoordinated-independent-swarm': { swarmSynergyScore: { mean: 52.0 }, pipelineCompletionPct: { mean: 43.3 }, guildRoleSpecializationJsd: { mean: 0.12 }, interEntityWeightDistance: { mean: 0.22 } },
+          'tri-guild-hybrid-synergy-swarm': { swarmSynergyScore: { mean: 100.0 }, pipelineCompletionPct: { mean: 100 }, guildRoleSpecializationJsd: { mean: 1.0 }, interEntityWeightDistance: { mean: 0.28 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runHyperSwarm();
+  assert.equal(report.summary.triBeatClonedSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · tri-guild vs cloned +99.0 (5/5)')), 'Hyper swarm summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('tri-guild-hybrid-syner')), 'Hyper swarm rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
