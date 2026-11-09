@@ -751,6 +751,9 @@ app.on('web-contents-created', (_event, contents) => {
 });
 const requiredSourcePaths=['index.html','main.js','preload.js','config.js','alife_neural_cyber_engine.js','scripts/alive-overdrive-probe.cjs','scripts/alive-public-navigation-probe.cjs','systems/cortex-neural-cyber-engine.js','systems/alive-overdrive-runtime.js','systems/alive-overdrive-adapters.js','systems/alive-checkpoints.js','systems/alive-guest-execution.js','systems/alive-authority.js','systems/alive-neural-coupling.js','systems/alive-autosave.js','systems/alive-genome-codec.js','systems/authentic-asmodensius-adapter.js','systems/generated/authentic-asmodensius.js','systems/ported-multiverse-brains.js','systems/alife-learning-evidence.js','systems/alive-workspace-ui.js','assets/alive-workspace.css'];
 requiredSourcePaths.push('scripts/alive-specialist-fusion-evidence.cjs','scripts/alive-navigation-cache-probe.cjs','scripts/alive-genome-durable-evidence.cjs');
+requiredSourcePaths.push('systems/alive-startup-loader.js','systems/alive-primary-policy-bootstrap.js','systems/alive-primary-policy-state.js',
+  'systems/alive-trainer-state.js','systems/alive-replay-state.js','systems/alive-hub-state.js',
+  'systems/alive-learned-state-registry.js','systems/alive-learned-state-codec.js','systems/alive-genome-persistence.js');
 if(splitHabitatChecks)requiredSourcePaths.push('scripts/alive-split-habitat-probe.cjs','systems/alive-page-exploration.js','systems/alive-habitat.js');
 const optionalSourcePaths=['systems/deep-web-transport.js','systems/sha3-256.cjs','systems/alive-specialist-fusion.js','systems/alive-research-planner.cjs','systems/alive-research-policy.js','systems/alive-tor-service.cjs'];
 optionalSourcePaths.push('systems/alive-genome-store.cjs','systems/alive-genome-ipc.cjs','systems/alive-genome-persistence.js');

@@ -55,6 +55,7 @@ function captureTrainerHydration(runtime) {
 // inject its .toString() immediately AFTER the real constructor load call.
 // Never replace loadPersistentGenome/importState with this evidence helper.
 function captureGenomeHydration(runtime) {
+  const captureHub = null; // Embedded direct hub observer below.
   const captureReplay = null; // Embedded direct replay observer below.
   const capturePrimaryPolicy = null; // Embedded independent observer below.
   const captureTrainer = null; // Embedded direct trainer observer below.
@@ -66,7 +67,15 @@ function captureGenomeHydration(runtime) {
     ['aotTotGotEngine.', ['W_aot_contractor', 'W_tot_branch4x16x16', 'W_got_attn']]
   ];
   const arrays = {}, errors = [];
-  // Replay must be the first observation. Even the trainer's metadata read is
+  // Own hub and replay directly before any production or metadata callbacks.
+  // An initial malformed hub must remain a failure even if later callbacks heal it.
+  let hubEvidence = null, hubCaptureError = null;
+  try {
+    hubEvidence = captureHub(runtime);
+    if (!hubEvidence || hubEvidence.ok !== true) hubCaptureError = String(hubEvidence?.reason || 'Initial hub observation failed');
+  }
+  catch (error) { hubCaptureError = String(error.message || error); }
+  // Replay must precede every callback. Even the trainer's metadata read is
   // a production callback that could mutate or repair the live replay ring.
   // Retain this first owned observation or failure; never retry after callbacks.
   let replayEvidence = null, replayCaptureError = null;
@@ -115,7 +124,7 @@ function captureGenomeHydration(runtime) {
   const capturedFields = JSON.parse(JSON.stringify(fields));
   const agentIdObserved = runtime.agentId, allowedFormations = Array.from(runtime.SWARM_FORMATIONS || []);
   const byteOrder = new Uint8Array(new Uint16Array([1]).buffer)[0] === 1 ? 'LE' : 'BE';
-  let encodedJSON = null, primaryDiagnosticOmitted = false, trainerDiagnosticOmitted = false, replayDiagnosticOmitted = false;
+  let encodedJSON = null, primaryDiagnosticOmitted = false, trainerDiagnosticOmitted = false, replayDiagnosticOmitted = false, hubDiagnosticOmitted = false;
   try {
     const codec = globalThis.AliveGenomeCodec || globalThis.window?.AliveGenomeCodec;
     if (!codec || typeof runtime.capturePersistentGenomePayload !== 'function') throw new Error('Legacy capture/codec unavailable');
@@ -125,7 +134,8 @@ function captureGenomeHydration(runtime) {
     for (const [field, markerName, label, captureError] of [
       ['primaryPolicyState', '__alive_genome_primary_state_v1__', 'primary', primaryPolicyCaptureError],
       ['trainerCommittedState', '__alive_genome_trainer_state_v1__', 'trainer', trainerCaptureError],
-      ['replayMemoryState', '__alive_genome_replay_state_v1__', 'replay', replayCaptureError]
+      ['replayMemoryState', '__alive_genome_replay_state_v1__', 'replay', replayCaptureError],
+      ['hubMemoryState', '__alive_genome_hub_state_v1__', 'hub', hubCaptureError]
     ]) {
       const member = Object.getOwnPropertyDescriptor(payload, field);
       if (!member) continue;
@@ -153,13 +163,15 @@ function captureGenomeHydration(runtime) {
     }
     primaryDiagnosticOmitted = omitted.has('primaryPolicyState'); trainerDiagnosticOmitted = omitted.has('trainerCommittedState');
     replayDiagnosticOmitted = omitted.has('replayMemoryState');
+    hubDiagnosticOmitted = omitted.has('hubMemoryState');
     encodedJSON = codec.encode(diagnostic);
   } catch (error) { errors.push(String(error.message || error)); }
   return { schema: 'gigachad.genome-hydration-evidence.v1',
     byteOrder, encodedJSON, arrays, primaryPolicyEvidence, primaryPolicyCaptureError, primaryDiagnosticOmitted,
-    trainerEvidence, trainerCaptureError, trainerDiagnosticOmitted, replayEvidence, replayCaptureError, replayDiagnosticOmitted, fields: capturedFields,
+    trainerEvidence, trainerCaptureError, trainerDiagnosticOmitted, replayEvidence, replayCaptureError, replayDiagnosticOmitted,
+    hubEvidence, hubCaptureError, hubDiagnosticOmitted, fields: capturedFields,
     agentIdObserved, allowedFormations, errors,
-    scope: 'Immediate post-load observation before subsequent model steps; legacy fields plus exact primary, committed trainer and bounded replay subsets when present, not the entire runtime' };
+    scope: 'Immediate post-load observation before subsequent model steps; legacy fields plus exact primary, committed trainer, bounded replay and declared hub subsets when present, not the entire runtime' };
 }
 
 // Preserve the existing self-contained .toString()(runtime) injection contract.
@@ -167,7 +179,11 @@ function captureGenomeHydration(runtime) {
 const primaryEvidence = require('./alive-primary-policy-evidence.cjs');
 const replayOracle = require('./alive-replay-state-evidence.cjs');
 const { captureReplayHydration } = replayOracle;
+const hubOracle = require('./alive-hub-state-evidence.cjs');
+const { captureHubHydration } = hubOracle;
 captureGenomeHydration = new Function('return (' + captureGenomeHydration.toString().replace(
+  'const captureHub = null; // Embedded direct hub observer below.',
+  'const captureHub = (' + captureHubHydration.toString() + ');').replace(
   'const captureReplay = null; // Embedded direct replay observer below.',
   'const captureReplay = (' + captureReplayHydration.toString() + ');').replace(
   'const capturePrimaryPolicy = null; // Embedded independent observer below.',
@@ -209,6 +225,14 @@ function assessReplayHydration(sealedWire, evidence, { expectedSnapshot } = {}) 
     return { ok: false, status: 'invalid-replay-evidence', reason: String(error.message || error),
       arraysChecked: 0, elementsChecked: 0, elementsDifferent: 0, comparedBytes: 0, comparedStates: 0,
       differences: [{ id: 'replayMemoryState', kind: 'invalid-evidence' }] };
+  }
+}
+function assessHubHydration(sealedWire, evidence, { expectedSnapshot } = {}) {
+  try { return hubOracle.assessHubStateEvidence(JSON.stringify(sealedWire), evidence, { expectedSnapshot }); }
+  catch (error) {
+    return { ok: false, status: 'invalid-hub-evidence', reason: String(error.message || error),
+      arraysChecked: 0, elementsChecked: 0, elementsDifferent: 0, comparedBytes: 0, comparedStates: 0,
+      differences: [{ id: 'hubMemoryState', kind: 'invalid-evidence' }] };
   }
 }
 const HUB = ['W_perc_enc', 'W_perc_dec', 'W_dyn1', 'W_dyn2', 'W_diff1', 'W_diff2', 'W_gen1', 'W_gen2', 'W_disc1', 'W_disc2', 'W_aware16'];
@@ -257,10 +281,11 @@ function assessGenomeHydration(expectedRawJSON, snapshot, { initialState } = {})
   const hasPrimary = Object.prototype.hasOwnProperty.call(expected, 'primaryPolicyState');
   const hasTrainer = Object.prototype.hasOwnProperty.call(expected, 'trainerCommittedState');
   const hasReplay = Object.prototype.hasOwnProperty.call(expected, 'replayMemoryState');
+  const hasHub = Object.prototype.hasOwnProperty.call(expected, 'hubMemoryState');
   const fields = snapshot.fields || {}, plans = [
     ...(!hasPrimary ? [...['W_actor', 'W_metamorph', 'W_critic', 'W_world'].map(key => [key, key]),
       ['W_actor_frozen', 'W_actor'], ['W_world_frozen', 'W_world']] : []),
-    ...HUB.map(key => ['trainableAlifeNeuralHub.' + key, 'trainableHub.' + key]),
+    ...(!hasHub ? HUB.map(key => ['trainableAlifeNeuralHub.' + key, 'trainableHub.' + key]) : []),
     ...SLTC.map(key => ['deepWebAndSltcConnectomeEngine.' + key, 'sltcLearned.' + key]),
     ...AOT.map(key => ['aotTotGotEngine.' + key, 'aotTotGotLearned.' + key])
   ];
@@ -326,6 +351,41 @@ function assessGenomeHydration(expectedRawJSON, snapshot, { initialState } = {})
     // export must not be silently presented as verified by a legacy-only input.
     omit('replayMemoryState', 'No replay component in the saved input; current replay is outside this hydration claim');
   }
+  let hub = null;
+  if (hasHub) {
+    hub = assessHubHydration(expected.hubMemoryState, snapshot.hubEvidence,
+      { expectedSnapshot: expected.primaryPolicyState?.snapshot });
+    if (snapshot.hubCaptureError) differences.push({ path: 'hubMemoryState', kind: 'initial-capture-failed' });
+    comparisons.push({ path: 'hubMemoryState', ok: hub.ok && !snapshot.hubCaptureError,
+      rule: 'Independent declared hub bytes, exact mixed arena/aliases and scalar state observed before all callbacks',
+      arraysChecked: hub.arraysChecked || 0, elementsChecked: hub.elementsChecked || 0,
+      comparedBytes: hub.comparedBytes || 0, comparedStates: hub.comparedStates || 0 });
+    if (!hub.ok) differences.push(...(hub.differences?.length ? hub.differences : [{ id: 'hubMemoryState', kind: hub.status }])
+      .map(item => ({ ...item, path: 'hub.' + (item.id || 'state') })));
+    arraysChecked += hub.arraysChecked || 0;
+    elementsChecked += hub.elementsChecked || 0;
+    elementsDifferent += hub.elementsDifferent || 0;
+    for (const [field, present] of [['primaryPolicyState', hasPrimary], ['trainerCommittedState', hasTrainer], ['replayMemoryState', hasReplay]]) {
+      if (!present) differences.push({ path: field, kind: 'hub-requires-' + field });
+      record('hub-paired-' + field + '-snapshot', expected[field]?.snapshot, expected.hubMemoryState?.snapshot,
+        'Hub and each required exact component must share all seven snapshot identity fields');
+    }
+    for (const [outer, inner] of [['simulationTick', 'logicalTick'], ['policyCid', 'policyId'], ['checkpointCid', 'checkpointId'],
+      ...(Object.prototype.hasOwnProperty.call(expected, 'agentId') ? [['agentId', 'creatureId']] : [])]) {
+      record('hub.snapshot.' + inner, expected[outer], expected.hubMemoryState?.snapshot?.[inner],
+        'Exact hub snapshot metadata binds to the outer persisted identity');
+    }
+    if (Object.prototype.hasOwnProperty.call(encoded, 'hubMemoryState')) {
+      const diagnostic = assessHubHydration(encoded.hubMemoryState, snapshot.hubEvidence,
+        { expectedSnapshot: expected.hubMemoryState?.snapshot });
+      comparisons.push({ path: 'hubMemoryState.exportDiagnostic', ok: diagnostic.ok,
+        rule: 'A retained sealed hub diagnostic must independently validate and match the original direct observation' });
+      if (!diagnostic.ok) differences.push({ path: 'hubMemoryState.exportDiagnostic', kind: diagnostic.status || 'invalid-sealed-diagnostic' });
+    }
+    omit('legacy trainableHub arrays and counters', 'Exact hubMemoryState is authoritative after legacy load; rounded arrays and truthy-counter fallback copies are not the restored exact state');
+  } else if (snapshot.hubDiagnosticOmitted || Object.prototype.hasOwnProperty.call(encoded, 'hubMemoryState')) {
+    omit('hubMemoryState', 'No hub component in the saved input; current exact hub export is outside this hydration claim');
+  }
   const get = (object, path) => path.split('.').reduce((value, key) => value?.[key], object);
   for (const [runtimePath, storedPath] of plans) {
     const values = get(expected, storedPath), actual = snapshot.arrays?.[runtimePath];
@@ -379,7 +439,7 @@ function assessGenomeHydration(expectedRawJSON, snapshot, { initialState } = {})
   if (expected.sovereignStats) for (const key of ['commandsExecutedCount', 'vaultEngramsCrystallized', 'bookmarksAutonomouslyPinned', 'maxsmartDossiersSynthesized', 'vibeCssMutationsCount', 'emergentQueriesInjected']) {
     record('sovereignStats.' + key, Number(expected.sovereignStats[key]) || (key === 'emergentQueriesInjected' ? 1 : 0), fields.sovereignStats?.[key], 'documented scalar fallback');
   }
-  if (expected.trainableHub) for (const key of ['totalBackpropStepsTrained', 'ideasSynthesizedCount', 'dreamConsolidationSteps']) {
+  if (!hasHub && expected.trainableHub) for (const key of ['totalBackpropStepsTrained', 'ideasSynthesizedCount', 'dreamConsolidationSteps']) {
     const saved = Number(expected.trainableHub[key]);
     if (saved) {
       record('trainableHub.' + key, saved, fields.trainableHub?.[key], 'truthy Number(saved) replaces the destination counter');
@@ -445,12 +505,13 @@ function assessGenomeHydration(expectedRawJSON, snapshot, { initialState } = {})
   return { ok, status: differences.length ? 'mismatch' : inconclusive.length ? 'incomplete-evidence' : 'passed-covered-contract',
     expectedJSONSHA256: hash(expectedRawJSON), capturedJSONSHA256: hash(snapshot.encodedJSON), arraysChecked, elementsChecked, elementsDifferent,
     comparisonCount: comparisons.length, differenceCount: differences.length, differences: differences.slice(0, 24),
-    inconclusive, comparisons, excluded, primaryPolicy, trainer, replay,
-    scope: hasReplay ? 'Immediate exact primary, committed trainer and occupied replay hydration plus declared legacy checks; replay observes dense physical records/cursor before callbacks; omitted cadence, RNG and other model state prevent a full-runtime continuation claim' : hasTrainer
+    inconclusive, comparisons, excluded, primaryPolicy, trainer, replay, hub,
+    scope: hasHub ? 'Immediate exact primary, committed trainer, occupied replay and declared hub hydration plus remaining legacy checks; direct hub/replay evidence precedes callbacks; other runtime state and next-update equivalence are outside this claim' : hasReplay
+      ? 'Immediate exact primary, committed trainer and occupied replay hydration plus declared legacy checks; replay observes dense physical records/cursor before callbacks; omitted cadence, RNG and other model state prevent a full-runtime continuation claim' : hasTrainer
       ? 'Immediate exact primary plus committed trainer hydration (734 Float32 values and private clock/configuration) plus declared legacy checks; clock uses explicit engine API; not full runtime continuation' : hasPrimary
       ? 'Immediate hydration: authoritative exact six primary tensors/declared aliases plus17 legacy Float32 destinations when present and declared persisted fields; not full runtime continuation'
       : 'Immediate legacy hydration, exact23 Float32 destinations when present plus declared persisted fields and exported engine state; not arbitrary runtime replay' };
 }
 
 module.exports = { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration, captureTrainerHydration, assessTrainerHydration,
-  captureReplayHydration, assessReplayHydration };
+  captureReplayHydration, assessReplayHydration, captureHubHydration, assessHubHydration };

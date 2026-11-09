@@ -4,8 +4,12 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
+const fs = require('node:fs');
+const path = require('node:path');
 const { adaptMain, observeHost, replaceOnce, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit,
-  capturePausedReplayBoundary, assessNaturalReplayPopulation, sourceHashes } = require('./alive-persistence-restart-probe.cjs');
+  capturePausedReplayBoundary, applyLegacySentinels, captureNaturalHubReplay, assessNaturalHubEvolution, assessComponentSnapshotBinding,
+  assessNaturalReplayPopulation, sourceHashes } = require('./alive-persistence-restart-probe.cjs');
+const { captureHubHydration } = require('./alive-hub-state-evidence.cjs');
 
 function replayObservation(count = 1, cursor = count < 32 ? count : 0, seed = 0) {
   const tensor = (length, offset) => {
@@ -20,18 +24,22 @@ function replayObservation(count = 1, cursor = count < 32 ? count : 0, seed = 0)
     }) };
 }
 
-test('paused writer captures replay before callbacks and retains both direct observations separately', () => {
-  const trace = [], runtime = { marker: 0 }, raw = replayObservation(), copied = value => JSON.parse(JSON.stringify(value));
+test('paused writer captures hub then replay before callbacks and retains both direct observations separately', () => {
+  const trace = [], runtime = { marker: 0 }, raw = replayObservation(), rawHub = { ok: true, directBytes: 'before' }, copied = value => JSON.parse(JSON.stringify(value));
   const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
   const result = observe(runtime, {
     captureReplay(h) { assert.equal(h, runtime); trace.push('direct-replay'); return copied(raw); },
+    captureHub(h) { assert.equal(h, runtime); trace.push('direct-hub'); return copied(rawHub); },
     legacySentinels(h) { trace.push('historical-sentinels'); h.marker = 1; },
-    captureTrainer(h) { trace.push('trainer-read'); assert.equal(h.marker, 1); raw.entries[0].z16Hex = '00'.repeat(64); return { epoch: 7 }; }
+    captureTrainer(h) { trace.push('trainer-read'); assert.equal(h.marker, 1); raw.entries[0].z16Hex = '00'.repeat(64); rawHub.directBytes = 'callback-corruption'; return { epoch: 7 }; }
   });
-  assert.deepEqual(trace, ['direct-replay', 'historical-sentinels', 'direct-replay', 'trainer-read']);
+  assert.deepEqual(trace, ['direct-hub', 'direct-replay', 'historical-sentinels', 'direct-hub', 'direct-replay', 'trainer-read']);
   assert.deepEqual(result.replayBeforeSentinels, replayObservation()); assert.deepEqual(result.replayBeforeFlush, replayObservation());
   assert.notEqual(result.replayBeforeSentinels, result.replayBeforeFlush);
-  assert.match(result.sentinelScope, /no replay record, cursor, trainer clock/);
+  assert.deepEqual(result.hubBeforeSentinels, { ok: true, directBytes: 'before' });
+  assert.deepEqual(result.hubBeforeFlush, { ok: true, directBytes: 'before' });
+  assert.notEqual(result.hubBeforeSentinels, result.hubBeforeFlush);
+  assert.match(result.sentinelScope, /Three historical/); assert.match(result.sentinelScope, /no hub view\/counter/);
 });
 
 test('a failed first raw replay observation prevents healing callbacks or observation retry', () => {
@@ -39,10 +47,97 @@ test('a failed first raw replay observation prevents healing callbacks or observ
   const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
   assert.throws(() => observe({}, {
     captureReplay() { attempts++; return attempts === 1 ? { ok: false, reason: 'malformed ring' } : replayObservation(); },
+    captureHub() { return { ok: true }; },
     legacySentinels() { callbacks++; }, captureTrainer() { callbacks++; }
   }), /Initial paused replay observation failed/);
   assert.equal(attempts, 1); assert.equal(callbacks, 0);
   assert.throws(() => observe({}, { captureReplay() { throw new Error('Must not run incomplete contract'); } }), /Missing paused replay/);
+});
+
+test('failed first hub observation prevents replay, mutation and metadata callbacks without retry', () => {
+  let attempts = 0, callbacks = 0;
+  const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
+  assert.throws(() => observe({}, {
+    captureHub() { attempts++; return attempts === 1 ? { ok: false, reason: 'wrong arena' } : { ok: true }; },
+    captureReplay() { callbacks++; return replayObservation(); }, legacySentinels() { callbacks++; }, captureTrainer() { callbacks++; }
+  }), /Initial paused hub observation failed/);
+  assert.equal(attempts, 1); assert.equal(callbacks, 0);
+});
+
+test('natural baseline directly observes hub then replay together and rejects a failed first result', () => {
+  const observe = vm.runInNewContext('(' + captureNaturalHubReplay.toString() + ')'), trace = [];
+  const result = observe({}, { captureHub() { trace.push('hub'); return { ok: true }; }, captureReplay() { trace.push('replay'); return replayObservation(); } });
+  assert.deepEqual(trace, ['hub', 'replay']); assert.equal(result.hub.ok, true); assert.equal(result.replay.count, 1);
+  trace.length = 0;
+  assert.throws(() => observe({}, { captureHub() { trace.push('hub'); return { ok: false }; }, captureReplay() { trace.push('replay'); } }), /Initial natural hub/);
+  assert.deepEqual(trace, ['hub']);
+});
+
+test('remaining historical sentinels mutate only actor/world/pellets and preserve all hub data', () => {
+  const hub = { W_perc_enc: new Float32Array([.125, -.25]), replayRing32: [], replayWritePtr: 0, totalBackpropStepsTrained: 23 };
+  const runtime = { W_actor: new Float32Array([1, 2]), W_world: new Float32Array([3, 4]), pelletsEatenCount: 7, trainableAlifeNeuralHub: hub };
+  const before = structuredClone(hub), apply = vm.runInNewContext('(' + applyLegacySentinels.toString() + ')');
+  apply(runtime);
+  assert.equal(runtime.W_actor[0], Math.fround(.314159)); assert.equal(runtime.W_actor[1], 2);
+  assert.equal(runtime.W_world[0], 3); assert.equal(runtime.W_world[1], Math.fround(-.271828)); assert.equal(runtime.pelletsEatenCount, 98765);
+  assert.equal(runtime.trainableAlifeNeuralHub, hub); assert.deepEqual(hub, before);
+});
+
+test('all four component snapshots must share the complete seven fields and outer saved identity', () => {
+  const snapshot = { creatureId: 'fixture', policyId: 'policy', checkpointId: 'checkpoint', logicalTick: 3, modelEpoch: 4,
+    capturedAt: '2026-11-10T00:00:00.000Z', resumeBoundary: 'fresh-browser-authority' };
+  const fields = ['primaryPolicyState', 'trainerCommittedState', 'replayMemoryState', 'hubMemoryState'];
+  const make = () => ({ simulationTick: 3, policyCid: 'policy', checkpointCid: 'checkpoint', agentId: 'fixture',
+    ...Object.fromEntries(fields.map(field => [field, { snapshot: { ...snapshot } }])) });
+  assert.equal(assessComponentSnapshotBinding(make()).ok, true);
+  for (const field of fields) {
+    const missing = make(); delete missing[field]; assert.equal(assessComponentSnapshotBinding(missing).ok, false);
+    for (const key of Object.keys(snapshot)) {
+      const changed = make(); changed[field].snapshot[key] = typeof snapshot[key] === 'number' ? snapshot[key] + 1 : snapshot[key] + '-other';
+      assert.equal(assessComponentSnapshotBinding(changed).ok, false, field + '.' + key);
+    }
+  }
+  for (const key of ['simulationTick', 'policyCid', 'checkpointCid', 'agentId']) {
+    const changed = make(); changed[key] = 'wrong'; assert.equal(assessComponentSnapshotBinding(changed).ok, false);
+  }
+  const extra = make(); extra.hubMemoryState.snapshot.extra = true; assert.equal(assessComponentSnapshotBinding(extra).ok, false);
+});
+
+function hubFixture() {
+  // Only allocate the actual constructor's local arrays. These synthetic test
+  // edits never run in the application probe or count as natural evolution.
+  const source = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
+  const start = source.indexOf('        const mixedArenaBuffer = new ArrayBuffer(8192);');
+  const end = source.indexOf('        // 13G.', start);
+  assert.ok(start >= 0 && end > start, 'Actual inert hub allocation remains present');
+  const runtime = {}; new Function(source.slice(start, end)).call(runtime);
+  return runtime;
+}
+
+test('natural hub gate uses validated direct backing changes and does not mistake counter-only edits for byte evolution', () => {
+  const runtime = hubFixture(), hub = runtime.trainableAlifeNeuralHub, before = captureHubHydration(runtime);
+  assert.equal(before.ok, true, before.reason);
+  assert.equal(assessNaturalHubEvolution(before, before).ok, false);
+  hub.totalBackpropStepsTrained++;
+  const counterOnly = assessNaturalHubEvolution(before, captureHubHydration(runtime));
+  assert.equal(counterOnly.ok, false); assert.equal(counterOnly.changedBackingBytes, 0);
+  assert.ok(counterOnly.changedStateIds.length > 0);
+  hub.W_perc_enc[0] += .25;
+  const after = captureHubHydration(runtime), evolved = assessNaturalHubEvolution(before, after);
+  assert.equal(evolved.ok, true); assert.ok(evolved.changedBackingBytes > 0); assert.ok(evolved.changedStateIds.length > 0);
+  assert.match(evolved.scope, /no next-output equivalence/);
+  assert.doesNotMatch(JSON.stringify(evolved), /"hex":|"data":/, 'Natural-evolution summary never prints raw model values');
+});
+
+test('natural hub gate rejects malformed raw evidence instead of accepting different-looking JSON', () => {
+  const before = captureHubHydration(hubFixture());
+  for (const change of [
+    value => { value.ok = false; }, value => { value.totals.uniqueBytes--; },
+    value => { value.backings[0].hex = 'bad'; }, value => { value.views.pop(); }
+  ]) {
+    const after = structuredClone(before); change(after);
+    assert.equal(assessNaturalHubEvolution(before, after).ok, false);
+  }
 });
 
 test('natural replay assessment requires nonempty changed physical state and never accepts display-only progress', () => {
@@ -74,9 +169,10 @@ test('natural population rejects invalid bounds, holes, order, malformed bytes a
   assert.equal(assessNaturalReplayPopulation({ ok: false }, replayObservation()).ok, false);
 });
 
-test('proof source hashes include replay production and independent oracle dependencies', () => {
+test('proof source hashes include replay/hub production and independent oracle dependencies', () => {
   const hashes = sourceHashes();
   for (const name of ['systems/alive-replay-state.js', 'scripts/alive-replay-state-evidence.cjs',
+    'systems/alive-hub-state.js', 'scripts/alive-hub-state-evidence.cjs',
     'scripts/alive-genome-hydration-evidence.cjs', 'scripts/alive-persistence-restart-probe.cjs']) assert.match(hashes[name] || '', /^[0-9a-f]{64}$/, name);
 });
 

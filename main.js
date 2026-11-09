@@ -3353,6 +3353,7 @@ app.whenReady().then(async () => {
                         json: durableRead.json, primary: window.AlivePrimaryPolicyState,
                         trainer: window.AliveTrainerState,
                         replay: window.AliveReplayState,
+                        hub: window.AliveHubState,
                         registry: window.AliveLearnedStateRegistry, codec: window.AliveLearnedStateCodec,
                         crypto: window.crypto
                       });
@@ -3367,8 +3368,11 @@ app.whenReady().then(async () => {
                         const replayPresent = Object.prototype.hasOwnProperty.call(JSON.parse(durableRead.json), 'replayMemoryState');
                         const replayPrepared = reloadedPrimary.snapshot(humunculusRuntime).replayPrepared === true;
                         if (replayPresent && !replayPrepared) throw new Error('Durable replay component was not prepared');
+                        const hubPresent = Object.prototype.hasOwnProperty.call(JSON.parse(durableRead.json), 'hubMemoryState');
+                        const hubPrepared = reloadedPrimary.snapshot(humunculusRuntime).hubPrepared === true;
+                        if (hubPresent && !hubPrepared) throw new Error('Durable neural hub component was not prepared');
                         durableGenomeValidation = { prepared: true, trainerPrepared: true,
-                          replayPrepared,
+                          replayPrepared, hubPrepared,
                           application: 'startup-only-not-reloaded',
                           scope: 'Declared saved components validated before activation; this smoke run did not restore them into the live model' };
                       } else {

@@ -729,10 +729,18 @@
       if (!runtime || !runtime.deepCortex || !runtime.trainableAlifeNeuralHub || !ipcBridge || typeof ipcBridge.invoke !== 'function') {
         return null;
       }
+      if (globalScope.__alivePersistenceClosing || globalScope.__aliveCheckpointRestore) return null;
       try {
         const dc = runtime.deepCortex;
         const hub = runtime.trainableAlifeNeuralHub;
         const atg = this.aotTotGotEngine;
+        const engineOwner = runtime.frontierNeuralCyberEngine;
+        if (engineOwner != null && engineOwner !== this) return null;
+        const restoreGeneration = runtime.persistentGenomeRestore?.generation;
+        const authorityEpoch = runtime.authorityEpoch;
+        const controller = globalScope.aliveOverdrive;
+        const checkpointStatus = this.diskCheckpointStatus;
+        const hatMaster = this.cyberHatMaster;
         // Pack 4,608 core trainable Float32 weights (18,432 bytes) covering Encoder, RSSM, Actor, Critic, Perception, Dynamics, Diffusion, GAN, ICM, Mamba, JEPA, AoT & GoT
         const packedFloat32 = new Float32Array(4608);
         packedFloat32.set(dc.W_enc1.subarray(0, 512), 0);
@@ -788,7 +796,19 @@
             thoughtCurvatureKappa: hub.thoughtCurvatureKappa
           }
         });
+        // A disk write may finish after shutdown or an in-place checkpoint restore.
+        // Fence its local publication; normal training progress is allowed while
+        // the request is pending. This cannot undo bytes already written to disk.
+        if (globalScope.__alivePersistenceClosing || globalScope.__aliveCheckpointRestore ||
+            globalScope.aliveOverdrive !== controller || runtime.deepCortex !== dc ||
+            runtime.trainableAlifeNeuralHub !== hub || runtime.frontierNeuralCyberEngine !== engineOwner ||
+            this.aotTotGotEngine !== atg || this.diskCheckpointStatus !== checkpointStatus || this.cyberHatMaster !== hatMaster ||
+            runtime.persistentGenomeRestore?.generation !== restoreGeneration || runtime.authorityEpoch !== authorityEpoch) return null;
         if (res && res.ok) {
+          if (!Number.isSafeInteger(hub.persistentWeightCheckpointsSaved) || hub.persistentWeightCheckpointsSaved < 0 ||
+              hub.persistentWeightCheckpointsSaved === Number.MAX_SAFE_INTEGER ||
+              !Number.isSafeInteger(checkpointStatus.saveCount) || checkpointStatus.saveCount < 0 ||
+              checkpointStatus.saveCount === Number.MAX_SAFE_INTEGER) return null;
           this.diskCheckpointStatus.saveCount += 1;
           this.diskCheckpointStatus.lastSavedAt = res.savedAt || new Date().toISOString();
           this.diskCheckpointStatus.binaryBytesSaved = res.byteLength || uint8View.byteLength;

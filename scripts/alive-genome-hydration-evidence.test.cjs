@@ -6,7 +6,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const codec = require('../systems/alive-genome-codec.js');
 const { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration, captureTrainerHydration, assessTrainerHydration,
-  captureReplayHydration, assessReplayHydration } = require('./alive-genome-hydration-evidence.cjs');
+  captureReplayHydration, assessReplayHydration, captureHubHydration, assessHubHydration } = require('./alive-genome-hydration-evidence.cjs');
 const index = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 const HUB = ['W_perc_enc', 'W_perc_dec', 'W_dyn1', 'W_dyn2', 'W_diff1', 'W_diff2', 'W_gen1', 'W_gen2', 'W_disc1', 'W_disc2', 'W_aware16'];
 const SLTC = ['sltcWeights64', 'sltcRecWeights64', 'sltcBias64'];
@@ -51,7 +51,8 @@ function hydrate(input = payload(), { federation = null, authentic = null, initi
     deepWebAndSltcConnectomeEngine: weights(SLTC), aotTotGotEngine: weights(AOT),
     portedMultiverseBrains: federation, authenticAsmodensius: authentic,
     updateMorphologyVector() { this.morphologyUpdated = true; } };
-  const context = vm.createContext({ runtime, window: { AliveGenomeCodec: codec }, btoa, Object, Array, Float32Array, ArrayBuffer, DataView, Uint8Array, Uint16Array,
+  const context = vm.createContext({ runtime, window: { AliveGenomeCodec: codec }, btoa, Object, Array, Float32Array, Float64Array,
+    ArrayBuffer, DataView, Uint8Array, Uint16Array, Int8Array, BigUint64Array,
     localStorage: { getItem: () => raw }, console: { warn() {} } });
   runtime.loadPersistentGenome = method('loadPersistentGenome', context);
   runtime.capturePersistentGenomePayload = method('capturePersistentGenomePayload', context);
@@ -602,4 +603,189 @@ test('legacy snapshots without a replay component remain compatible despite unav
   const result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
   assert.equal(result.ok, true); assert.equal(result.replay, null);
   assert.equal(captureReplayHydration(f.runtime).ok, false);
+});
+
+// Execute only the actual constructor's inert hub allocation in the host realm.
+// Expected wire bytes below come from those original buffers and the independent
+// catalog, never the production hub adapter, exporter, codec or importer.
+function exactHubHydration() {
+  const f = exactReplayHydration(), { createHash } = require('node:crypto');
+  const catalog = require('./alive-hub-state-evidence.cjs').createExpectedHubCatalog();
+  const start = index.indexOf('        const mixedArenaBuffer = new ArrayBuffer(8192);');
+  const end = index.indexOf('        // 13G.', start);
+  assert.ok(start >= 0 && end > start, 'actual hub allocation remains an independently executable fragment');
+  new Function(index.slice(start, end)).call(f.runtime);
+  const hub = f.runtime.trainableAlifeNeuralHub;
+  hub.replayRing32 = f.replayRing; hub.replayWritePtr = f.replayRing.length;
+  hub.W_perc_enc[0] = .123456789; hub.b_aware = -0;
+  hub.totalBackpropStepsTrained = 0; hub.ideasSynthesizedCount = 0; hub.dreamConsolidationSteps = 0;
+  new Uint8Array(hub.mixedArenaBuffer, 4928).set(Uint8Array.from({ length: 3264 }, (_, i) => (i * 37 + 11) & 255));
+  const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+  const chunks = [], tensorManifest = []; let blobOffset = 0, derived = 0;
+  for (const row of catalog.tensors) {
+    const field = row.paths[0].keys.at(-1), view = hub[field];
+    let bytes;
+    if (ArrayBuffer.isView(view)) bytes = Buffer.from(new Uint8Array(view.buffer, view.byteOffset, view.byteLength));
+    else {
+      derived++;
+      assert.equal(row.backingOffset, 4928); assert.equal(row.byteLength, 3264);
+      bytes = Buffer.from(new Uint8Array(hub.mixedArenaBuffer, row.backingOffset, row.byteLength));
+    }
+    assert.equal(bytes.length, row.byteLength);
+    tensorManifest.push({ ...row, blobOffset, sha256: sha(bytes) }); chunks.push(bytes); blobOffset += bytes.length;
+  }
+  assert.equal(derived, 1, 'only the reserved arena tail is a derived wire view');
+  const stateValues = {};
+  for (const row of catalog.states) {
+    const declaration = catalog.descriptorDefinition.states.find(entry => entry.id === row.id);
+    const value = hub[declaration.paths[0].keys.at(-1)];
+    if (row.valueType === 'f64') {
+      const bytes = Buffer.alloc(8); bytes.writeDoubleLE(value); stateValues[row.id] = { $type: 'f64', hex: bytes.toString('hex') };
+    } else if (row.valueType === 'i53') stateValues[row.id] = { $type: 'i53', value };
+    else if (row.valueType === 'array') stateValues[row.id] = { $type: 'array', items: value.slice() };
+    else { assert.equal(row.valueType, 'string'); stateValues[row.id] = value; }
+  }
+  const bytes = Buffer.concat(chunks);
+  f.saved.hubMemoryState = { schema: 'gigachad.learned-state.v1', architecture: catalog.architecture,
+    snapshot: { ...f.saved.primaryPolicyState.snapshot }, tensorManifest,
+    tensorBlob: { encoding: 'base64', byteLength: bytes.length, sha256: sha(bytes), data: bytes.toString('base64') },
+    stateManifest: catalog.states, stateValues, resumeRules: catalog.resumeRules };
+  f.context.window.alivePrimaryPolicyBootstrap.captureComponents = () => ({ primary: { fixtureOnly: true }, trainer: { fixtureOnly: true },
+    replay: { fixtureOnly: true }, hub: { fixtureOnly: true } });
+  f.hub = hub; f.raw = JSON.stringify(f.saved); f.snapshot = f.recapture();
+  return f;
+}
+
+test('exact hub checks the full arena and declared state while superseding rounded legacy hub copies', () => {
+  const f = exactHubHydration(), result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
+  assert.equal(result.ok, true, JSON.stringify(result)); assert.equal(result.hub.ok, true);
+  assert.equal(result.hub.arraysChecked, 59); assert.equal(result.hub.comparedBytes, 21368);
+  assert.equal(result.hub.comparedStates, 44); assert.equal(result.hub.actualNativeViews, 58);
+  assert.deepEqual(f.snapshot.hubEvidence.totals, { views: 58, backings: 46, uniqueBytes: 21368, stateFields: 44 });
+  assert.equal(f.snapshot.hubCaptureError, null); assert.equal(f.snapshot.hubDiagnosticOmitted, true);
+  assert.equal(Object.hasOwn(JSON.parse(f.snapshot.encodedJSON), 'hubMemoryState'), false);
+  assert.equal(f.runtime.capturePersistentGenomePayload().hubMemoryState.__alive_genome_hub_state_v1__, true);
+  assert.notEqual(f.saved.trainableHub.W_perc_enc.length, f.hub.W_perc_enc.length, 'old rounded legacy dimensions are deliberately superseded');
+  assert.notEqual(f.saved.trainableHub.totalBackpropStepsTrained, f.hub.totalBackpropStepsTrained);
+  assert.equal(assessGenomeHydration(f.raw, f.snapshot).ok, true, 'exact zero counters do not need a legacy initializer fallback');
+  assert.ok(result.excluded.some(row => row.path === 'legacy trainableHub arrays and counters'));
+  assert.equal(result.comparisons.some(row => row.path.startsWith('trainableHub.') || row.path.startsWith('trainableAlifeNeuralHub.')), false);
+  assert.doesNotMatch(JSON.stringify(result), /"hex":|"data":/, 'assessment contains metadata only');
+});
+
+test('hub one-bit values, mixed lanes, reserved tail, scalar signs and name state cannot hide behind rounded exports', () => {
+  for (const mutate of [
+    hub => { new Uint8Array(hub.W_perc_enc.buffer)[0] ^= 1; },
+    hub => { new Uint8Array(hub.f64AdamFirstMoment64.buffer, hub.f64AdamFirstMoment64.byteOffset)[2] ^= 1; },
+    hub => { hub.u64SpikeTrainLanes8[7] = 0xfedcba9876543210n; },
+    hub => { hub.fp16PersistentWeights256[3] = 0x3c00; },
+    hub => { new Uint8Array(hub.mixedArenaBuffer)[8191] ^= 1; },
+    hub => { hub.b_aware = 0; }, hub => { hub.totalBackpropStepsTrained++; },
+    hub => { hub.facultyNames16[0] += '-changed'; }
+  ]) {
+    const f = exactHubHydration(); mutate(f.hub);
+    const observed = f.recapture(), result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+    assert.equal(result.ok, false, mutate.toString());
+    if (result.hub) assert.equal(result.hub.ok, false);
+  }
+});
+
+test('hub raw layout and alias failures are retained before any production exporter can repair them', () => {
+  for (const change of [
+    hub => { hub.f64TrajectoryPrev16 = new Float64Array(hub.f64TrajectoryPrev16); },
+    hub => { hub.f64TrajectoryPrev16 = new Float64Array(hub.mixedArenaBuffer, 0, 16); },
+    hub => { hub.b_perc_enc = hub.zPerc16; },
+    hub => { hub.W_aware16 = new DataView(new ArrayBuffer(64)); },
+    hub => { delete hub.W_dyn2; }, hub => { hub.adaptivePlasticityLr = NaN; },
+    hub => { hub.totalBackpropStepsTrained = -1; }
+  ]) {
+    const f = exactHubHydration(), originals = Object.getOwnPropertyDescriptors(f.hub);
+    change(f.hub);
+    const calls = installReplayMutation(f, 'export', () => Object.defineProperties(f.hub, originals));
+    const observed = f.recapture();
+    assert.ok(calls() > 0); assert.equal(observed.hubEvidence.ok, false);
+    assert.match(observed.errors.join(';'), /Initial hub capture failed/);
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+    observed.errors = []; observed.encodedJSON = '{}';
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+  }
+});
+
+test('first hub bytes and scalars survive trainer, metadata and exporter healing callbacks', () => {
+  for (const phase of ['trainer-capture', 'trainer-snapshot', 'metadata', 'export']) {
+    const f = exactHubHydration(), original = new Uint8Array(f.hub.W_perc_enc.buffer).slice();
+    new Uint8Array(f.hub.W_perc_enc.buffer)[1] ^= 1; f.hub.b_aware = 0;
+    const wrong = Buffer.from(f.hub.W_perc_enc.buffer).toString('hex');
+    const calls = installReplayMutation(f, phase, () => { new Uint8Array(f.hub.W_perc_enc.buffer).set(original); f.hub.b_aware = -0; });
+    const observed = f.recapture();
+    assert.ok(calls() > 0); assert.equal(Object.is(f.hub.b_aware, -0), true);
+    assert.equal(observed.hubEvidence.backings.find(row => row.id === 'W_perc_enc').hex, wrong);
+    assert.equal(observed.hubEvidence.states.b_aware.hex, '0000000000000000');
+    const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+    assert.equal(result.ok, false, phase); assert.equal(result.hub.ok, false);
+  }
+});
+
+test('later callbacks cannot contaminate an initially correct exact hub observation', () => {
+  for (const phase of ['trainer-capture', 'trainer-snapshot', 'metadata', 'export']) {
+    const f = exactHubHydration(), original = f.snapshot.hubEvidence;
+    const calls = installReplayMutation(f, phase, () => { f.hub.W_perc_enc.fill(9); f.hub.totalBackpropStepsTrained = 999; new Uint8Array(f.hub.mixedArenaBuffer)[8191] = 7; });
+    const observed = f.recapture(); assert.ok(calls() > 0);
+    assert.deepEqual(observed.hubEvidence, original);
+    const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+    assert.equal(result.ok, true, JSON.stringify({ phase, result }));
+  }
+});
+
+test('exact hub requires all prior components and binds every peer snapshot and outer identity', () => {
+  for (const mutate of [
+    saved => { delete saved.primaryPolicyState; }, saved => { delete saved.trainerCommittedState; }, saved => { delete saved.replayMemoryState; },
+    ...['creatureId', 'policyId', 'checkpointId', 'logicalTick', 'modelEpoch', 'capturedAt', 'resumeBoundary'].map(key => saved => {
+      const value = saved.hubMemoryState.snapshot[key]; saved.hubMemoryState.snapshot[key] = typeof value === 'number' ? value + 1 : 'different';
+    }), saved => { saved.agentId = 'different-outer'; }, saved => { saved.simulationTick++; }
+  ]) {
+    const f = exactHubHydration(); mutate(f.saved);
+    assert.equal(assessGenomeHydration(JSON.stringify(f.saved), f.snapshot, { initialState: f.initialState }).ok, false, mutate.toString());
+  }
+});
+
+test('malformed hub pending wrappers, sealed wire and missing first observation fail closed', () => {
+  const f = exactHubHydration(), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime); let reads = 0;
+  for (const wrapper of [null, {}, { __alive_genome_hub_state_v1__: false, captured: {} },
+    { __alive_genome_hub_state_v1__: true, captured: null }, { __alive_genome_hub_state_v1__: true, captured: {}, extra: true },
+    Object.defineProperty({ captured: {} }, '__alive_genome_hub_state_v1__', { enumerable: true, get() { reads++; return true; } }),
+    { schema: 'gigachad.learned-state.v1', tensorBlob: {} }]) {
+    f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), hubMemoryState: wrapper });
+    const observed = f.recapture(); assert.ok(observed.errors.length);
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+  }
+  assert.equal(reads, 0); assert.equal(assessHubHydration(f.saved.hubMemoryState, null).ok, false);
+  const invalid = structuredClone(f.saved.hubMemoryState); invalid.tensorBlob.sha256 = '0'.repeat(64);
+  assert.equal(assessHubHydration(invalid, f.snapshot.hubEvidence).ok, false);
+  assert.equal(assessGenomeHydration(f.raw, { ...f.snapshot, hubEvidence: null, hubCaptureError: null }, { initialState: f.initialState }).ok, false);
+});
+
+test('retained sealed hub diagnostics are independently checked against the first raw observation', () => {
+  const f = exactHubHydration(), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime);
+  f.context.window.AliveGenomeCodec = { ...codec, encode: payload => JSON.stringify(payload) };
+  f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), hubMemoryState: f.saved.hubMemoryState });
+  let observed = f.recapture(); assert.equal(observed.hubDiagnosticOmitted, false);
+  assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, true);
+  const invalid = structuredClone(f.saved.hubMemoryState); invalid.tensorBlob.sha256 = '0'.repeat(64);
+  f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), hubMemoryState: invalid });
+  observed = f.recapture(); assert.deepEqual(observed.errors, []);
+  const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+  assert.equal(result.ok, false); assert.ok(result.differences.some(row => row.path === 'hubMemoryState.exportDiagnostic'));
+});
+
+test('historical genomes without exact hub retain legacy array and counter checks', () => {
+  for (const fixture of [hydrate, exactPrimaryHydration, exactTrainerHydration, exactReplayHydration]) {
+    const f = fixture(), result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
+    assert.equal(result.ok, true, JSON.stringify(result)); assert.equal(result.hub, null);
+    assert.equal(f.snapshot.hubEvidence.ok, false); assert.deepEqual(f.snapshot.errors, []);
+    f.runtime.trainableAlifeNeuralHub.W_perc_enc[0] += .01;
+    const changed = f.recapture ? f.recapture() : JSON.parse(JSON.stringify(vm.runInContext(`(${captureGenomeHydration.toString()})(runtime)`, f.context)));
+    assert.equal(assessGenomeHydration(f.raw, changed, { initialState: f.initialState }).ok, false);
+  }
+  assert.equal(captureHubHydration({}).ok, false);
 });

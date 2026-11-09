@@ -20,6 +20,14 @@ and serializer. Its qualification is separate from the historical catalog and
 from the previously released primary/trainer receipts; the full catalog remains
 incomplete.
 
+The [local neural hub component](ALIVE_HUB_STATE.md) subsequently retains all
+58 direct typed views, the entire mixed arena including its reserved tail, and
+44 state rows while keeping replay ownership separate. Its full local-step
+continuation tests control external model state and entropy explicitly. This
+extends exact local state coverage; external models, curriculum, research,
+native assets, coupling and RNG ownership remain broader work. Current release
+qualification must be read from its own evidence receipt.
+
 ## Evidence and the remaining coverage boundary
 
 The inputs are `research_notes/alive-overdrive-verification/learned-state-continuity/candidate-coverage-v3.json`, `SHARED_ARENA_BOUNDARY.md`, `STARTUP_HYDRATION_AUDIT.md`, the implementation/protocol/edge-review documents in that directory, and the current owning sources named below. The candidate catalog explicitly is not a certified registry. Its 648 constructor views are historical observations, not a fixed mature roster, learned-parameter count or proof of learning quality.

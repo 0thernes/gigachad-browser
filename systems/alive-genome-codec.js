@@ -29,6 +29,14 @@
   const primaryMarker = '__alive_genome_primary_state_v1__';
   const trainerMarker = '__alive_genome_trainer_state_v1__';
   const replayMarker = '__alive_genome_replay_state_v1__';
+  const hubMarker = '__alive_genome_hub_state_v1__';
+  // Trusted wire names only; individual component schemas remain adapter-owned.
+  const componentFields = Object.freeze([
+    { field: 'primaryPolicyState', marker: primaryMarker, label: 'Primary policy state', name: 'primary' },
+    { field: 'trainerCommittedState', marker: trainerMarker, label: 'Trainer committed state', name: 'trainer' },
+    { field: 'replayMemoryState', marker: replayMarker, label: 'Replay memory state', name: 'replay' },
+    { field: 'hubMemoryState', marker: hubMarker, label: 'Hub memory state', name: 'hub' }
+  ]);
   const authenticSchema = 'gigachad.authentic-asmodensius.state.v1';
   const authenticLimit = 8 * 1024 * 1024;
   function numericArray(values, digits) {
@@ -40,6 +48,12 @@
   function primaryState(captured) { return { [primaryMarker]: true, captured }; }
   function trainerState(captured) { return { [trainerMarker]: true, captured }; }
   function replayState(captured) { return { [replayMarker]: true, captured }; }
+  function hubState(captured) { return { [hubMarker]: true, captured }; }
+  function hubField(payload) {
+    const field = payload && typeof payload === 'object' && Object.getOwnPropertyDescriptor(payload, 'hubMemoryState');
+    if (field && !Object.prototype.hasOwnProperty.call(field, 'value')) throw new TypeError('Hub memory state must be an own data field');
+    return field;
+  }
   function replayField(payload) {
     const field = payload && typeof payload === 'object' && Object.getOwnPropertyDescriptor(payload, 'replayMemoryState');
     if (field && !Object.prototype.hasOwnProperty.call(field, 'value')) throw new TypeError('Replay memory state must be an own data field');
@@ -53,7 +67,7 @@
   function hasAsyncState(payload) {
     // Presence, not marker truthiness: malformed reserved trainer data must
     // never escape through the legacy serialization path.
-    return !!replayField(payload) || !!trainerField(payload) || hasPrimaryState(payload);
+    return !!hubField(payload) || !!replayField(payload) || !!trainerField(payload) || hasPrimaryState(payload);
   }
   function hasPrimaryState(payload) {
     const field = payload && typeof payload === 'object' && Object.getOwnPropertyDescriptor(payload, 'primaryPolicyState');
@@ -99,12 +113,14 @@
     return { schema: authenticSchema, sourceDigest, checksum: hash.toString(16).padStart(8, '0'), payload };
   }
   function encode(payload) {
+    if (hubField(payload)) throw new TypeError('Hub memory state requires asynchronous component encoding');
     if (replayField(payload)) throw new TypeError('Replay memory state requires asynchronous component encoding');
     if (trainerField(payload)) throw new TypeError('Trainer committed state requires paired asynchronous encoding');
     return JSON.stringify(payload, (_key, value) => {
       if (value && value[primaryMarker] === true) throw new TypeError('Pending primary policy state requires asynchronous encoding');
       if (value && value[trainerMarker] === true) throw new TypeError('Pending trainer committed state requires asynchronous encoding');
       if (value && value[replayMarker] === true) throw new TypeError('Pending replay memory state requires asynchronous encoding');
+      if (value && value[hubMarker] === true) throw new TypeError('Pending hub memory state requires asynchronous encoding');
       if (value && value[marker] === true) {
         // Keep the original per-number rounding semantics, including NaN,
         // infinity, negative zero, and toFixed's range/type errors.
@@ -148,12 +164,18 @@
     if (options.signal?.aborted) throw new Error('Genome encoding cancelled');
     const fields = Object.getOwnPropertyDescriptors(payload);
     if (![Object.prototype, null].includes(Object.getPrototypeOf(payload))) throw new TypeError('Primary genome payload must be a plain object');
-    const captured = pendingCapture(fields.primaryPolicyState, primaryMarker, 'Primary policy state');
     const paired = Object.prototype.hasOwnProperty.call(fields, 'trainerCommittedState');
-    const trainer = paired ? pendingCapture(fields.trainerCommittedState, trainerMarker, 'Trainer committed state') : null;
     const withReplay = Object.prototype.hasOwnProperty.call(fields, 'replayMemoryState');
+    const withHub = Object.prototype.hasOwnProperty.call(fields, 'hubMemoryState');
+    // Keep primary marker validation first, including the historic primary-only contract.
+    const captured = pendingCapture(fields.primaryPolicyState, primaryMarker, 'Primary policy state');
+    const trainer = paired ? pendingCapture(fields.trainerCommittedState, trainerMarker, 'Trainer committed state') : null;
     if (withReplay && !paired) throw new TypeError('Replay memory state requires both primary and trainer state');
     const replay = withReplay ? pendingCapture(fields.replayMemoryState, replayMarker, 'Replay memory state') : null;
+    if (withHub && (!paired || !withReplay)) throw new TypeError('Hub memory state requires primary, trainer and replay state');
+    const hub = withHub ? pendingCapture(fields.hubMemoryState, hubMarker, 'Hub memory state') : null;
+    const selected = componentFields.filter((_, index) => index === 0 || index === 1 && paired || index === 2 && withReplay || index === 3 && withHub);
+    const captures = [captured, ...(paired ? [trainer] : []), ...(withReplay ? [replay] : []), ...(withHub ? [hub] : [])];
     // Root replacement could reintroduce the omitted field (and duplicate the
     // appended key). Ordinary legacy encode retains its previous toJSON rules.
     if (fields.toJSON && (!Object.prototype.hasOwnProperty.call(fields.toJSON, 'value') || typeof fields.toJSON.value === 'function')) {
@@ -161,7 +183,7 @@
     }
     const legacy = {};
     for (const key of Reflect.ownKeys(fields)) {
-      if (key === 'primaryPolicyState' || key === 'trainerCommittedState' || key === 'replayMemoryState') continue;
+      if (componentFields.some(component => component.field === key)) continue;
       // Capture the normal JSON behavior now. Never retain a live legacy graph
       // across the first WebCrypto await; descriptors keep getters synchronous.
       Object.defineProperty(legacy, key, fields[key]);
@@ -171,30 +193,27 @@
     const learned = options.learnedCodec || root?.AliveLearnedStateCodec;
     if (!learned || typeof learned.seal !== 'function') throw new Error('Exact learned-state codec is unavailable');
     const sealOptions = { crypto: options.crypto, signal: options.signal };
-    let wire, trainerWire, replayWire;
+    let wires;
     if (paired) {
       // Start all component seals in this turn: each synchronously owns every input byte
       // before its first hash await. A failed sibling cannot finish the physical
       // encoding/drain promise while the other hash remains in progress.
       const start = input => { try { return Promise.resolve(learned.seal(input, sealOptions)); } catch (error) { return Promise.reject(error); } };
-      const seals = [start(captured), start(trainer)];
-      if (withReplay) seals.push(start(replay));
+      const seals = captures.map(start);
       const results = await Promise.allSettled(seals);
       if (options.signal?.aborted) throw new Error('Genome encoding cancelled');
       for (const result of results) if (result.status === 'rejected') throw result.reason;
-      wire = results[0].value; trainerWire = results[1].value;
-      checkPairedSnapshot(wire, trainerWire, legacyJSON);
-      if (withReplay) { replayWire = results[2].value; checkPairedSnapshot(wire, replayWire, legacyJSON, 'replay'); }
+      wires = results.map(result => result.value);
+      for (let index = 1; index < wires.length; index++) checkPairedSnapshot(wires[0], wires[index], legacyJSON, selected[index].name);
     } else {
       // Preserve the existing primary-only contract and legacy formatting.
-      wire = await learned.seal(captured, sealOptions);
+      wires = [await learned.seal(captured, sealOptions)];
     }
     if (options.signal?.aborted) throw new Error('Genome encoding cancelled');
-    const json = legacyJSON.slice(0, -1) + (legacyJSON === '{}' ? '' : ',') + '"primaryPolicyState":' + JSON.stringify(wire) +
-      (paired ? ',"trainerCommittedState":' + JSON.stringify(trainerWire) : '') +
-      (withReplay ? ',"replayMemoryState":' + JSON.stringify(replayWire) : '') + '}';
+    const json = legacyJSON.slice(0, -1) + (legacyJSON === '{}' ? '' : ',') +
+      selected.map((component, index) => JSON.stringify(component.field) + ':' + JSON.stringify(wires[index])).join(',') + '}';
     if (json.length > 32 * 1024 * 1024 || new TextEncoder().encode(json).byteLength > 32 * 1024 * 1024) throw new RangeError('Combined genome exceeds the 32 MiB payload bound');
     return json;
   }
-  return { numericArray, authenticState, primaryState, trainerState, replayState, hasPrimaryState, hasAsyncState, formatAuthenticState, assertIsolatedSnapshot, encode, encodeAsync };
+  return { numericArray, authenticState, primaryState, trainerState, replayState, hubState, hasPrimaryState, hasAsyncState, formatAuthenticState, assertIsolatedSnapshot, encode, encodeAsync };
 });

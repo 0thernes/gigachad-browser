@@ -133,6 +133,13 @@ and private epoch](ALIVE_TRAINER_STATE.md) and the [dense replay memory and
 insertion cursor](ALIVE_REPLAY_STATE.md). Their explicit component contracts and
 qualification scopes do not expand the six-tensor primary wire's own coverage.
 
+The [local neural hub component](ALIVE_HUB_STATE.md) also retains all direct hub
+views, primitive state and complete mixed arena. Hub-bearing snapshots require
+all four exact components to agree on snapshot identity. The serializer owns
+all component bytes before hashing, and startup validates them before activation.
+Numerical continuation of the local hub is tested with controlled external
+inputs and entropy; this does not establish full application continuation.
+
 The independent candidate catalog records proposed dispositions for 648 observed
 constructor views, not a certified mature-state registry. Lazy allocations,
 private closures, aliases and non-tensor fields still need explicit ownership.

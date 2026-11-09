@@ -20,11 +20,12 @@ const PREFIX = 'gigachad-startup-loader-proof-';
 const LOADER = 'systems/alive-startup-loader.js';
 const PHASES = Object.freeze(['ready-order', 'cancel-adopt', 'remove-only-control']);
 const MODULES = Object.freeze([
-  'systems/alife-learning-evidence.js', 'systems/alive-neural-coupling.js',
+  'systems/alife-learning-evidence.js', 'systems/alive-learning-five-seed.js', 'systems/alive-neural-coupling.js',
   'systems/alive-specialist-fusion.js', 'systems/alive-autosave.js',
   'systems/alive-checkpoints.js', 'systems/alive-authority.js',
   'systems/alive-research-policy.js', 'systems/alive-overdrive-adapters.js',
-  'systems/alive-workspace-ui.js'
+  'systems/alive-cognitive-faculties.js', 'systems/alive-tensor-evidence.js', 'systems/alive-workspace-ui.js',
+  'systems/alive-faculty-visuals.js', 'systems/alive-synaptic-fabric.js', 'systems/alive-fabric-visualizer.js'
 ]);
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const key = filename => process.platform === 'win32' ? path.resolve(filename).toLowerCase() : path.resolve(filename);
@@ -84,11 +85,13 @@ function browserSetup(nonce, phase) {
   };
   window.AlivePrimaryPolicyState = {}; window.AliveTrainerState = { create() {} };
   window.AliveReplayState = { create() {} };
+  window.AliveHubState = { create() {} };
   window.AliveLearnedStateRegistry = {}; window.AliveLearnedStateCodec = {};
   window.AlivePrimaryPolicyBootstrap = { async prepare(args) {
     state.preparationDependenciesForwarded = args?.json === null && args.primary === window.AlivePrimaryPolicyState &&
       args.trainer === window.AliveTrainerState && typeof args.trainer.create === 'function' &&
       args.replay === window.AliveReplayState && typeof args.replay.create === 'function' &&
+      args.hub === window.AliveHubState && typeof args.hub.create === 'function' &&
       args.registry === window.AliveLearnedStateRegistry && args.codec === window.AliveLearnedStateCodec && args.crypto === window.crypto;
     if (!state.preparationDependenciesForwarded) throw Error('Startup dependency forwarding mismatch');
     state.events.push('prepare'); return Object.freeze({ preflight() {}, apply() {}, capture() {}, captureComponents() {}, snapshot() {} });
@@ -254,7 +257,7 @@ async function child() {
         check(phase + '-hidden-window', win.isVisible() === false);
         check(phase + '-only-allowlisted-fixture-files', caseReport.deniedRequests === 0 && caseReport.networkRequestsBlocked === 0, { requested: caseReport.requests.length });
         if (phase === 'ready-order') {
-          check('production-loader-ready', observed.startup?.phase === 'ready' && observed.startup.loadedModules === 9 && observed.startup.closeOwned === false && observed.inert === false);
+          check('production-loader-ready', observed.startup?.phase === 'ready' && observed.startup.loadedModules === MODULES.length && observed.startup.closeOwned === false && observed.inert === false);
           check('trainer-and-primary-dependencies-forwarded', observed.state.preparationDependenciesForwarded === true);
           check('exact-postmodule-order', JSON.stringify(observed.state.moduleOrder) === JSON.stringify(MODULES.map((_, index) => index)));
           check('classic-global-lexical-scope-and-single-boot', observed.state.mainRuns === 1 && observed.state.bootCalls === 1 && observed.state.bootValue === 50 && observed.state.globalLexicalIsWindowProperty === false);
@@ -320,10 +323,10 @@ function selfTest() {
     for (const match of text.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)) if (match[1]) { new vm.Script(match[1]); scripts++; }
     assert.equal((text.match(/id="gigachad-main-source"/g) || []).length, phase === 'remove-only-control' ? 0 : 1);
   }
-  for (let i = 0; i < 9; i++) new vm.Script(moduleSource(i));
+  for (let i = 0; i < MODULES.length; i++) new vm.Script(moduleSource(i));
   new vm.Script(PRELOAD);
   assert.throws(() => moduleSource(-1)); assert.throws(() => html('nonce', 'unexpected'));
-  console.log(JSON.stringify({ passed: true, scope: 'Pure path/allowlist/fixture syntax checks only; Electron has not been launched', fixtureInlineScriptsParsed: scripts, fixedModules: 9, sourceHashes: sourceHashes() }));
+  console.log(JSON.stringify({ passed: true, scope: 'Pure path/allowlist/fixture syntax checks only; Electron has not been launched', fixtureInlineScriptsParsed: scripts, fixedModules: MODULES.length, sourceHashes: sourceHashes() }));
 }
 module.exports = { within, resolveRequest, assertOwned, html, moduleSource, selfTest };
 const electronEntry = Boolean(process.versions.electron && process.argv[1] && key(process.argv[1]) === key(__filename));

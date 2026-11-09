@@ -208,10 +208,12 @@
         if (typeof preparePrimary !== 'function') throw new Error('Primary policy bootstrap is unavailable');
         if (typeof win.AliveTrainerState?.create !== 'function') throw new Error('Committed trainer adapter is unavailable');
         if (typeof win.AliveReplayState?.create !== 'function') throw new Error('Replay memory adapter is unavailable');
+        if (typeof win.AliveHubState?.create !== 'function') throw new Error('Neural hub state adapter is unavailable');
         phase = 'preparing';
         const primary = await preparePrimary({ json, primary: win.AlivePrimaryPolicyState,
           trainer: win.AliveTrainerState,
           replay: win.AliveReplayState,
+          hub: win.AliveHubState,
           registry: win.AliveLearnedStateRegistry, codec: win.AliveLearnedStateCodec, crypto: win.crypto });
         if (!current(token)) { cancel(); return; }
         if (!primary || ['preflight', 'apply', 'capture', 'captureComponents', 'snapshot'].some(key => typeof primary[key] !== 'function')) throw new Error('Exact component bootstrap returned an invalid preparation');

@@ -1,0 +1,1043 @@
+{
+  "schema": "gigachad.hub-qualification.v1",
+  "baseCommit": "7299cf85f4356e97c8b792bd1d7463e12032326f",
+  "qualifiedTree": "f4723e3b0abd2dee475d9ff80c8d3c81b084305f",
+  "qualificationScope": "Isolated hub persistence changes; unrelated provider/page/research edits excluded. One evidence document added after qualification. Exact local hub continuation and process hydration; no full-model, consciousness or universal no-stutter claim.",
+  "node": {
+    "passed": 1331,
+    "failed": 0,
+    "run": {
+      "action": "node",
+      "startedAt": "2026-11-09T14:05:14.754Z",
+      "elapsedMs": 27867,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "pid": 61928,
+      "args": [
+        "scripts/run-node-tests.cjs"
+      ]
+    }
+  },
+  "smoke": {
+    "passed": true,
+    "pythonTests": 6,
+    "electron": "45.2.3",
+    "embeddedNode": "24.22.2",
+    "hubPrepared": true,
+    "liveReloadPerformed": false
+  },
+  "startup": {
+    "passed": true,
+    "checks": 23,
+    "moduleCount": 15,
+    "sourceStable": true,
+    "earlierFailure": "Historical isolated fixture allowed nine modules while production already required fifteen. Updated explicit fixture roster/counts and added self-test to smoke. Failed attempt retained locally; final actual probe passed23/23. Full Node and smoke rerun passed on corrected candidate."
+  },
+  "restart": {
+    "passed": true,
+    "cases": [
+      {
+        "id": "writer-child-report-present",
+        "ok": true
+      },
+      {
+        "id": "writer-process",
+        "ok": true
+      },
+      {
+        "id": "writer-source-stability",
+        "ok": true
+      },
+      {
+        "id": "writer-all-commits-settled",
+        "ok": true
+      },
+      {
+        "id": "writer-latest-acknowledged-revision",
+        "ok": true
+      },
+      {
+        "id": "writer-verified-normal-close",
+        "ok": true
+      },
+      {
+        "id": "writer-committed-sentinels",
+        "ok": true
+      },
+      {
+        "id": "explicit-worker-flush",
+        "ok": true
+      },
+      {
+        "id": "exact-trainer-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-trainer-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "natural-replay-population",
+        "ok": true
+      },
+      {
+        "id": "legacy-sentinels-preserve-natural-replay",
+        "ok": true
+      },
+      {
+        "id": "exact-replay-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-replay-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "natural-hub-evolution",
+        "ok": true
+      },
+      {
+        "id": "legacy-sentinels-preserve-natural-hub",
+        "ok": true
+      },
+      {
+        "id": "exact-hub-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-hub-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "flush-all-four-components-share-snapshot",
+        "ok": true
+      },
+      {
+        "id": "close-all-four-components-share-snapshot",
+        "ok": true
+      },
+      {
+        "id": "natural-trainer-commit",
+        "ok": true
+      },
+      {
+        "id": "no-recurring-legacy-write",
+        "ok": true
+      },
+      {
+        "id": "reader-child-report-present",
+        "ok": true
+      },
+      {
+        "id": "reader-process",
+        "ok": true
+      },
+      {
+        "id": "reader-source-stability",
+        "ok": true
+      },
+      {
+        "id": "reader-all-commits-settled",
+        "ok": true
+      },
+      {
+        "id": "reader-latest-acknowledged-revision",
+        "ok": true
+      },
+      {
+        "id": "reader-verified-normal-close",
+        "ok": true
+      },
+      {
+        "id": "reader-committed-sentinels",
+        "ok": true
+      },
+      {
+        "id": "distinct-processes",
+        "ok": true
+      },
+      {
+        "id": "canonical-bootstrap",
+        "ok": true
+      },
+      {
+        "id": "actual-constructor-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-trainer-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-replay-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-hub-hydration",
+        "ok": true
+      },
+      {
+        "id": "reader-all-four-components-share-snapshot",
+        "ok": true
+      },
+      {
+        "id": "monotonic-durable-revision",
+        "ok": true
+      }
+    ],
+    "runs": [
+      {
+        "phase": "writer",
+        "pid": 62480,
+        "status": 0,
+        "signal": null,
+        "elapsedMs": 12438,
+        "error": null,
+        "stdout": "\r\n",
+        "stderr": "(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.\nError occurred in handler for 'GUEST_VIEW_MANAGER_CALL': [Error: Render frame was disposed before the request completed]\n"
+      },
+      {
+        "phase": "reader",
+        "pid": 21592,
+        "status": 0,
+        "signal": null,
+        "elapsedMs": 2037,
+        "error": null,
+        "stdout": "\r\n",
+        "stderr": "(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.\n"
+      }
+    ],
+    "naturalHubEvolution": {
+      "ok": true,
+      "status": "compared-hub-subset",
+      "equal": false,
+      "changedBackingBytes": 14484,
+      "comparedBytes": 21368,
+      "comparedStates": 44,
+      "actualNativeViews": 58,
+      "completeApplicationCatalog": false,
+      "scope": "Independent direct hub bytes changed during natural scheduled work; no hub weight/counter injection and no next-output equivalence claim"
+    },
+    "sentinelsPreservedHub": {
+      "ok": true,
+      "status": "compared-hub-subset",
+      "equal": true,
+      "changedBackingBytes": 0,
+      "comparedBytes": 21368,
+      "comparedStates": 44,
+      "actualNativeViews": 58,
+      "completeApplicationCatalog": false,
+      "scope": "Two supplied raw hub observations only; state evolution is not proof of learning quality, equivalent future outputs or durable restart"
+    },
+    "flushHub": {
+      "ok": true,
+      "status": "passed-hub-subset",
+      "arraysChecked": 59,
+      "actualNativeViews": 58,
+      "elementsChecked": 7814,
+      "elementsDifferent": 0,
+      "comparedBytes": 21368,
+      "comparedStates": 44,
+      "changedBackingBytes": 0,
+      "snapshotMatched": true,
+      "completeApplicationCatalog": false,
+      "scope": "Supplied hub wire compared with direct observation only; provenance, complete application continuity and durable restart require separate evidence"
+    },
+    "closeHub": {
+      "ok": true,
+      "status": "passed-hub-subset",
+      "arraysChecked": 59,
+      "actualNativeViews": 58,
+      "elementsChecked": 7814,
+      "elementsDifferent": 0,
+      "comparedBytes": 21368,
+      "comparedStates": 44,
+      "changedBackingBytes": 0,
+      "snapshotMatched": true,
+      "completeApplicationCatalog": false,
+      "scope": "Supplied hub wire compared with direct observation only; provenance, complete application continuity and durable restart require separate evidence"
+    },
+    "firstHydrationHub": {
+      "ok": true,
+      "status": "passed-hub-subset",
+      "arraysChecked": 59,
+      "actualNativeViews": 58,
+      "elementsChecked": 7814,
+      "elementsDifferent": 0,
+      "comparedBytes": 21368,
+      "comparedStates": 44,
+      "changedBackingBytes": 0,
+      "snapshotMatched": true,
+      "completeApplicationCatalog": false,
+      "scope": "Supplied hub wire compared with direct observation only; provenance, complete application continuity and durable restart require separate evidence"
+    },
+    "allFourSnapshotBindings": [
+      {
+        "id": "flush-all-four-components-share-snapshot",
+        "ok": true,
+        "missing": [],
+        "mismatches": [],
+        "outerMatches": true,
+        "scope": "All four exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately"
+      },
+      {
+        "id": "close-all-four-components-share-snapshot",
+        "ok": true,
+        "missing": [],
+        "mismatches": [],
+        "outerMatches": true,
+        "scope": "All four exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately"
+      },
+      {
+        "id": "reader-all-four-components-share-snapshot",
+        "ok": true,
+        "missing": [],
+        "mismatches": [],
+        "outerMatches": true,
+        "scope": "All four exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately"
+      }
+    ],
+    "scope": "Actual isolated application process restart, exact naturally evolved hub/replay containers and observed constructor restoration; three historical legacy sentinels are separate. Not next-output, power-loss or full-model persistence proof",
+    "notRun": [
+      "legacy-migration",
+      "corrupt-bootstrap",
+      "delayed-bootstrap",
+      "in-flight-checkpoint-fence",
+      "write-failure",
+      "late-acknowledgement"
+    ]
+  },
+  "performance": {
+    "passed": true,
+    "processId": 50484,
+    "conditions": "Visible nonfocusable input-isolated offline fixture, GPU enabled, inspectors closed, provider network disabled, Auto-Hop off; one initial DOM action and Start, no manual sweep or cadence acceleration.",
+    "presentation": {
+      "frames": 3586,
+      "durationMs": 60019.70000000298,
+      "averageFps": 59.747049718672734,
+      "rollingSamples": 240,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 20.80000000447035,
+      "p99Ms": 23.19999999552965
+    },
+    "fullPresentation": {
+      "samples": 3585,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 19.80000000447035,
+      "p99Ms": 24.700000002980232,
+      "maxMs": 156.60000000149012
+    },
+    "observedLongTasks": 0,
+    "rendererErrors": 0,
+    "backpropDelta": 1314,
+    "stdpDelta": 500480,
+    "runsAfterStop": 0,
+    "backpropAfterStop": 0,
+    "simulationTicksAfterStop": 0,
+    "worker": {
+      "requested": true,
+      "ok": true,
+      "cases": [
+        {
+          "id": "full-app-worker-applied",
+          "passed": true
+        },
+        {
+          "id": "finite-target-changed-while-running",
+          "passed": true
+        },
+        {
+          "id": "pause-retired-worker",
+          "passed": true
+        },
+        {
+          "id": "pause-kept-target-and-clock-unchanged",
+          "passed": true
+        },
+        {
+          "id": "no-worker-faults-or-timeouts",
+          "passed": true
+        }
+      ],
+      "initial": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 3,
+        "committedEpoch": 0,
+        "workerEpochsCompleted": 0,
+        "lastReplayGradNorm": null,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 0,
+        "applied": 0,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 0,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "running": {
+        "active": true,
+        "phase": "ready",
+        "generation": 7,
+        "committedEpoch": 43,
+        "workerEpochsCompleted": 43,
+        "lastReplayGradNorm": 0.01976,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 43,
+        "applied": 43,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "stopped": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 11,
+        "committedEpoch": 43,
+        "workerEpochsCompleted": 43,
+        "lastReplayGradNorm": 0.01976,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 43,
+        "applied": 43,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "settled": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 11,
+        "committedEpoch": 43,
+        "workerEpochsCompleted": 43,
+        "lastReplayGradNorm": 0.01976,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 43,
+        "applied": 43,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "targetBefore": {
+        "length": 16,
+        "sum": 0.18063001381233335,
+        "abs": 3.217488527763635,
+        "squared": 0.7737653820048438,
+        "nonFinite": 0,
+        "sample": [
+          0.19326530396938324,
+          0.295634925365448,
+          0.25896281003952026,
+          0.10049644857645035,
+          -0.10523496568202972,
+          -0.2614727318286896,
+          -0.29473578929901123,
+          -0.1893799901008606,
+          0.005044170189648867,
+          0.19709597527980804,
+          0.2964504659175873,
+          0.2563796639442444,
+          0.09572950750589371,
+          -0.10994374006986618,
+          -0.263908714056015,
+          -0.29375332593917847
+        ]
+      },
+      "targetRunning": {
+        "length": 16,
+        "sum": -1.0088427029550076,
+        "abs": 4.8582837246358395,
+        "squared": 1.6934121421791903,
+        "nonFinite": 0,
+        "sample": [
+          0.19137747585773468,
+          -0.2924516201019287,
+          -0.061457399278879166,
+          -0.4392446279525757,
+          -0.37175557017326355,
+          0.4045223295688629,
+          -0.2961943745613098,
+          0.2991989552974701,
+          0.25839000940322876,
+          -0.27266258001327515,
+          -0.03953937441110611,
+          -0.44409966468811035,
+          -0.3790530264377594,
+          0.40606144070625305,
+          -0.3371049761772156,
+          0.36517030000686646
+        ]
+      },
+      "targetStopped": {
+        "length": 16,
+        "sum": -1.0487530720420182,
+        "abs": 4.876083184499294,
+        "squared": 1.7268319322947692,
+        "nonFinite": 0,
+        "sample": [
+          0.1890077292919159,
+          -0.2853858768939972,
+          -0.06825937330722809,
+          -0.4379165768623352,
+          -0.36448124051094055,
+          0.3806520998477936,
+          -0.33214452862739563,
+          0.31952327489852905,
+          0.22629567980766296,
+          -0.28051844239234924,
+          -0.005799178499728441,
+          -0.4408741593360901,
+          -0.38699403405189514,
+          0.4193872809410095,
+          -0.3600447177886963,
+          0.3787989914417267
+        ]
+      },
+      "targetSettled": {
+        "length": 16,
+        "sum": -1.0487530720420182,
+        "abs": 4.876083184499294,
+        "squared": 1.7268319322947692,
+        "nonFinite": 0,
+        "sample": [
+          0.1890077292919159,
+          -0.2853858768939972,
+          -0.06825937330722809,
+          -0.4379165768623352,
+          -0.36448124051094055,
+          0.3806520998477936,
+          -0.33214452862739563,
+          0.31952327489852905,
+          0.22629567980766296,
+          -0.28051844239234924,
+          -0.005799178499728441,
+          -0.4408741593360901,
+          -0.38699403405189514,
+          0.4193872809410095,
+          -0.3600447177886963,
+          0.3787989914417267
+        ]
+      },
+      "scope": "Full production application and constructor, natural worker dispatch and native replies; unchanged 16-value target and committed epoch during the existing three-second production Pause interval. Running target changes also include synchronous model updates; worker application is established by its committed reply counter."
+    },
+    "autosave": {
+      "requests": 254,
+      "coalescedRequests": 226,
+      "flushAttempts": 27,
+      "cancellations": 0,
+      "lastDurationMs": 6.800000004470348,
+      "totalDurationMs": 147.20000004023314,
+      "maxDurationMs": 8.000000014901161,
+      "lastFlushAt": 60269.10000000149,
+      "lastOutcome": "persisted",
+      "lastError": "",
+      "lastReason": "deadline",
+      "persistenceVerified": true,
+      "verifiedWrites": 27,
+      "workerFlushes": 27,
+      "fallbackCount": 0,
+      "lastFallbackReason": "",
+      "lastCaptureMs": 4.600000001490116,
+      "totalCaptureMs": 94.70000001043081,
+      "lastCommitMs": 0,
+      "totalCommitMs": 0,
+      "lastCommitDispatchMs": 0.8999999985098839,
+      "totalCommitDispatchMs": 23.400000020861626,
+      "lastAsyncCommitLatencyMs": 33.899999998509884,
+      "totalAsyncCommitLatencyMs": 809.4000000059605,
+      "lastDispatchMs": 1.3000000044703484,
+      "totalDispatchMs": 29.100000008940697,
+      "lastSerializationMs": 26.899999998509884,
+      "totalSerializationMs": 625.0000000223517,
+      "lastRoundTripMs": 35.79999999701977,
+      "workerMode": "worker",
+      "storageMode": "async-main",
+      "pending": true,
+      "flushing": false,
+      "disposed": false,
+      "inFlightId": null,
+      "phase": null,
+      "epoch": 1,
+      "admissionClosed": false,
+      "draining": false,
+      "disposing": false,
+      "lastDrain": {
+        "status": "cancelled",
+        "settled": true,
+        "epoch": 1,
+        "reason": "startup-hydration"
+      },
+      "deadlineAt": 62567.60000000149
+    },
+    "sourceChanges": []
+  },
+  "diagnosticFollowup": {
+    "passed": true,
+    "processId": 16028,
+    "conditions": "Visible nonfocusable input-isolated offline fixture, GPU enabled, inspectors closed, provider network disabled, Auto-Hop off; one initial DOM action and Start, no manual sweep or cadence acceleration.",
+    "presentation": {
+      "frames": 1196,
+      "durationMs": 20019.79999999702,
+      "averageFps": 59.7408565520224,
+      "rollingSamples": 240,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 17.899999998509884,
+      "p99Ms": 22.399999998509884
+    },
+    "fullPresentation": {
+      "samples": 1195,
+      "p50Ms": 16.69999999552965,
+      "p95Ms": 19.5,
+      "p99Ms": 24.099999994039536,
+      "maxMs": 47.100000001490116
+    },
+    "observedLongTasks": 0,
+    "rendererErrors": 0,
+    "backpropDelta": 429,
+    "stdpDelta": 153696,
+    "runsAfterStop": 0,
+    "backpropAfterStop": 0,
+    "simulationTicksAfterStop": 0,
+    "worker": {
+      "requested": true,
+      "ok": true,
+      "cases": [
+        {
+          "id": "full-app-worker-applied",
+          "passed": true
+        },
+        {
+          "id": "finite-target-changed-while-running",
+          "passed": true
+        },
+        {
+          "id": "pause-retired-worker",
+          "passed": true
+        },
+        {
+          "id": "pause-kept-target-and-clock-unchanged",
+          "passed": true
+        },
+        {
+          "id": "no-worker-faults-or-timeouts",
+          "passed": true
+        }
+      ],
+      "initial": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 3,
+        "committedEpoch": 0,
+        "workerEpochsCompleted": 0,
+        "lastReplayGradNorm": null,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 0,
+        "applied": 0,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 0,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "running": {
+        "active": true,
+        "phase": "ready",
+        "generation": 6,
+        "committedEpoch": 14,
+        "workerEpochsCompleted": 14,
+        "lastReplayGradNorm": 0.02173,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 14,
+        "applied": 14,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "stopped": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 10,
+        "committedEpoch": 14,
+        "workerEpochsCompleted": 14,
+        "lastReplayGradNorm": 0.02173,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 14,
+        "applied": 14,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "settled": {
+        "active": false,
+        "phase": "suspended",
+        "generation": 10,
+        "committedEpoch": 14,
+        "workerEpochsCompleted": 14,
+        "lastReplayGradNorm": 0.02173,
+        "pendingJobId": null,
+        "pendingTargetEpoch": null,
+        "timeoutMs": 5000,
+        "submitted": 14,
+        "applied": 14,
+        "discarded": 0,
+        "rejectedReplies": 0,
+        "rejectedInputs": 0,
+        "busySkips": 0,
+        "faults": 0,
+        "timeouts": 0,
+        "workersCreated": 1,
+        "lastError": "paused",
+        "lastRejectedReason": "",
+        "committedStateRestored": false,
+        "semanticClockPersisted": false,
+        "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+      },
+      "targetBefore": {
+        "length": 16,
+        "sum": 0.18063001381233335,
+        "abs": 3.217488527763635,
+        "squared": 0.7737653820048438,
+        "nonFinite": 0,
+        "sample": [
+          0.19326530396938324,
+          0.295634925365448,
+          0.25896281003952026,
+          0.10049644857645035,
+          -0.10523496568202972,
+          -0.2614727318286896,
+          -0.29473578929901123,
+          -0.1893799901008606,
+          0.005044170189648867,
+          0.19709597527980804,
+          0.2964504659175873,
+          0.2563796639442444,
+          0.09572950750589371,
+          -0.10994374006986618,
+          -0.263908714056015,
+          -0.29375332593917847
+        ]
+      },
+      "targetRunning": {
+        "length": 16,
+        "sum": -1.0850546471774578,
+        "abs": 4.880232613533735,
+        "squared": 1.6372041205967447,
+        "nonFinite": 0,
+        "sample": [
+          0.22248445451259613,
+          -0.3799040615558624,
+          -0.10012347251176834,
+          -0.3793073892593384,
+          -0.35116201639175415,
+          0.3077393174171448,
+          -0.299334853887558,
+          0.3660828471183777,
+          0.27791938185691833,
+          -0.3338202238082886,
+          -0.05430595949292183,
+          -0.3544880747795105,
+          -0.37102335691452026,
+          0.32802796363830566,
+          -0.3591742217540741,
+          0.39533501863479614
+        ]
+      },
+      "targetStopped": {
+        "length": 16,
+        "sum": -1.063996322453022,
+        "abs": 5.009067751467228,
+        "squared": 1.6965568593130294,
+        "nonFinite": 0,
+        "sample": [
+          0.2472839504480362,
+          -0.39145800471305847,
+          -0.1176496297121048,
+          -0.36368903517723083,
+          -0.3686275780200958,
+          0.3012152314186096,
+          -0.29627281427383423,
+          0.39092060923576355,
+          0.2951984405517578,
+          -0.34739452600479126,
+          -0.08516670018434525,
+          -0.34886473417282104,
+          -0.3859040439128876,
+          0.3468233644962311,
+          -0.3315049707889557,
+          0.3910941183567047
+        ]
+      },
+      "targetSettled": {
+        "length": 16,
+        "sum": -1.063996322453022,
+        "abs": 5.009067751467228,
+        "squared": 1.6965568593130294,
+        "nonFinite": 0,
+        "sample": [
+          0.2472839504480362,
+          -0.39145800471305847,
+          -0.1176496297121048,
+          -0.36368903517723083,
+          -0.3686275780200958,
+          0.3012152314186096,
+          -0.29627281427383423,
+          0.39092060923576355,
+          0.2951984405517578,
+          -0.34739452600479126,
+          -0.08516670018434525,
+          -0.34886473417282104,
+          -0.3859040439128876,
+          0.3468233644962311,
+          -0.3315049707889557,
+          0.3910941183567047
+        ]
+      },
+      "scope": "Full production application and constructor, natural worker dispatch and native replies; unchanged 16-value target and committed epoch during the existing three-second production Pause interval. Running target changes also include synchronous model updates; worker application is established by its committed reply counter."
+    },
+    "autosave": {
+      "requests": 87,
+      "coalescedRequests": 77,
+      "flushAttempts": 9,
+      "cancellations": 0,
+      "lastDurationMs": 5.5999999940395355,
+      "totalDurationMs": 49.30000000447035,
+      "maxDurationMs": 8.50000000745058,
+      "lastFlushAt": 20841,
+      "lastOutcome": "persisted",
+      "lastError": "",
+      "lastReason": "deadline",
+      "persistenceVerified": true,
+      "verifiedWrites": 9,
+      "workerFlushes": 9,
+      "fallbackCount": 0,
+      "lastFallbackReason": "",
+      "lastCaptureMs": 2.7999999970197678,
+      "totalCaptureMs": 31.19999999552965,
+      "lastCommitMs": 0,
+      "totalCommitMs": 0,
+      "lastCommitDispatchMs": 1.6999999955296516,
+      "totalCommitDispatchMs": 7.500000007450581,
+      "lastAsyncCommitLatencyMs": 35.79999999701977,
+      "totalAsyncCommitLatencyMs": 258.2000000104308,
+      "lastDispatchMs": 1.1000000014901161,
+      "totalDispatchMs": 10.600000001490116,
+      "lastSerializationMs": 29.299999997019768,
+      "totalSerializationMs": 222.89999997615814,
+      "lastRoundTripMs": 38.399999998509884,
+      "workerMode": "worker",
+      "storageMode": "async-main",
+      "pending": true,
+      "flushing": false,
+      "disposed": false,
+      "inFlightId": null,
+      "phase": null,
+      "epoch": 1,
+      "admissionClosed": false,
+      "draining": false,
+      "disposing": false,
+      "lastDrain": {
+        "status": "cancelled",
+        "settled": true,
+        "epoch": 1,
+        "reason": "startup-hydration"
+      },
+      "deadlineAt": 22882
+    },
+    "sourceChanges": []
+  },
+  "presentationGap": {
+    "baselineMaxMs": 156.60000000149012,
+    "followupMaxMs": 47.100000001490116,
+    "cause": "Unassigned. A single156.6ms baseline presentation gap was not reproduced by the20s startup-trace follow-up. Zero observed longtasks and cumulative autosave counters do not establish cause. Retain as an unresolved performance observation; do not claim no stutter.",
+    "traceInstrumented": true
+  },
+  "nodeAdapterCost": {
+    "runtime": {
+      "node": "v25.8.2",
+      "v8": "14.1.146.11-node.24",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "protocol": {
+      "captureWarmups": 20,
+      "captureMeasurements": 100,
+      "restoreCycles": 20,
+      "restoreWarmups": 0,
+      "quantiles": "nearest-rank",
+      "state": "actual unchanged constructor hub; initialization only, no model steps",
+      "capture": "one retained live hub, no writer mutation, no encoding in timed interval",
+      "restore": "same decoder-issued verified wire handle; each destination freshly allocated outside measured interval; preflight includes detached staging and validation; apply includes destination recheck/readback",
+      "exclusions": "module creation, constructor allocation, payload encode/decode, renderer/browser/worker scheduling, storage and model execution",
+      "scope": "Node-only adapter microbenchmark, not renderer frame-time or FPS evidence"
+    },
+    "counts": {
+      "constructorFields": 105,
+      "tensors": 59,
+      "tensorBytes": 21368,
+      "states": 44,
+      "wireUtf8Bytes": 61980
+    },
+    "timings": {
+      "capture": {
+        "count": 100,
+        "p50Ms": 0.9594000000000023,
+        "p95Ms": 1.1688000000000045,
+        "maxMs": 1.3153999999999968,
+        "meanMs": 0.9887980000000003
+      },
+      "preflight": {
+        "count": 20,
+        "p50Ms": 9.37280000000004,
+        "p95Ms": 10.920899999999989,
+        "maxMs": 12.4041,
+        "meanMs": 9.658739999999995
+      },
+      "apply": {
+        "count": 20,
+        "p50Ms": 1.1562999999999874,
+        "p95Ms": 1.4453999999999496,
+        "maxMs": 1.6633000000000209,
+        "meanMs": 1.2209450000000004
+      },
+      "preflightAndApply": {
+        "count": 20,
+        "p50Ms": 10.526700000000005,
+        "p95Ms": 12.281800000000004,
+        "maxMs": 14.06740000000002,
+        "meanMs": 10.879684999999995
+      }
+    },
+    "memory": {
+      "before": {
+        "rss": 66818048,
+        "heapTotal": 14438400,
+        "heapUsed": 10445528,
+        "external": 2099343,
+        "arrayBuffers": 75436
+      },
+      "afterCapture": {
+        "rss": 72196096,
+        "heapTotal": 19156992,
+        "heapUsed": 11539840,
+        "external": 2178617,
+        "arrayBuffers": 154670
+      },
+      "after": {
+        "rss": 89014272,
+        "heapTotal": 30953472,
+        "heapUsed": 17590128,
+        "external": 4487069,
+        "arrayBuffers": 2463058
+      },
+      "caveat": "Point-in-time process.memoryUsage values; no forced GC or heap isolation. Allocations/GC and JIT tiering may affect timings; deltas are not retained-memory or leak measurements."
+    },
+    "scope": "Node-only adapter timing; no renderer FPS or retained heap claim."
+  },
+  "sourceHashes": {
+    "index.html": "6e88f2e76219f2edea664021faf1e993182115240e765961ca9b13053144526a",
+    "main.js": "7fb00c56ff8c8631ff8b5705134f194a9e95c70f385839a8a48d5fe4926660db",
+    "alife_neural_cyber_engine.js": "ef0b86e3b8fcd41a1e1466e4769176a6b463509a8000aec90490dfcf2244c1df",
+    "scripts/alive-genome-hydration-evidence.cjs": "d960796c2948d170a801791a2ad6adc3667934f9df7f42667fa93fcc70eb2aa1",
+    "scripts/alive-genome-hydration-evidence.test.cjs": "8709a5b46d14a5dc674c39f34fa5109b5783cfb96631e8063385fe9fd06123c6",
+    "scripts/alive-persistence-restart-probe.cjs": "0692e8296fbeecb3978f8d38f25f6adea2ddb922dfe16be319a86d663e139b47",
+    "scripts/alive-persistence-restart-probe.test.cjs": "177c1515e4157e66f831641ed0093b1f2bfa3c5dcea881ee9cf93375a5af677e",
+    "scripts/alive-startup-loader-electron-probe.cjs": "6faf287201eddd8e1ded3b9ed3d31ead6361eff77750ffd2e79f31586a303717",
+    "scripts/smoke.js": "3a7bf586a9baa2ac4686e4aede28c0ac13c72c67cf39d659dead3c2d4c9dff54",
+    "systems/alive-genome-codec.js": "4359f46d9d8dd8f8f2a1005e1d65513fd3ecb646048f8f54bef994afc1bcc6a5",
+    "systems/alive-primary-policy-bootstrap.js": "e283549a3873f1d81043e9093467f09a1a2bc7a3ff237199b98ef505aaa7c3a8",
+    "systems/alive-startup-loader.js": "2a11f7c791aacb5ce50ded1eb1ba34db06cd044c0155403234c83d89de06c65a",
+    "tests/alive-startup-loader.test.cjs": "05e08b67314b5252e84ab367fe12b40a1f74d84659d0f83b075da0076c49e90f",
+    "systems/alive-hub-state.js": "35ed6e58e6c7ecacf187401bd3235173eef32a0faa76388a45767cebb133f66f",
+    "tests/alive-hub-state.test.cjs": "1f497442d1447c05a34797edec8faaa085c779e5423cbcabca31b24c937f5926",
+    "tests/alive-hub-integration.test.cjs": "80fb7565f2a111c7ccc53fe0b471404e65dfe4f488bac8ae801f3d3a87c50e45",
+    "tests/alive-hub-continuation.test.cjs": "2c1a1e7d57858bfc30bd364c6c1a50e99e2dcfd68ec21c8af8eaa01a7827fc9c",
+    "tests/alive-hub-disk-fence.test.cjs": "45b8bc3960733b089c1905a1f632648890d775a9cc859657557ceda84a16555a",
+    "scripts/alive-hub-state-evidence.cjs": "d3b8a54829f4ec8791699f8adf3b7eb1259239cc5d2ae17dc37eb23ea89515df",
+    "scripts/alive-hub-state-evidence.test.cjs": "dd9cc965cb5389d86978d52172a7c36fe96f0f8d405ad46533adfe88b7419c04",
+    "docs/ALIVE_HUB_STATE.md": "d4208640dab0324f73ac05d529d71da8196d9414469902dc99decedcdd197fa0",
+    "docs/ALIVE_LEARNED_STATE_INTEGRATION_PLAN.md": "21d21bab7e7c97ae89bb2e2da19814a2938da736ab01a96c0620e9cf9a5fa90d",
+    "docs/ALIVE_PRIMARY_STATE_STARTUP.md": "4131000fd9cc979eee446f62f610013ac94664ca98a8a7d7faab1ae6932632b0",
+    "scripts/alive-overdrive-probe.cjs": "26243e41169908400ca37567ceaabac450d2004e898ecfcb1b842ee14c6d9cf3"
+  },
+  "rawEvidence": {
+    "localDirectory": "research_notes/hub-state-qualification",
+    "restartReportSha256": "22673c21a7c558e01c23520402ef128db945599e6f002fd14bd2e9cd0791c15a",
+    "performanceReportSha256": "d62f8552cad5e0d84b25f338066050c681ccdc9b8d3af459a25fe9544cccc9ad",
+    "traceReportSha256": "8c12963ee03ec6a679e49e9beba67037be157aeebcfdc86eef8bbb7e32bf91f6",
+    "independentExport": "research_notes/hub-verifier-owned-20261109-v1/manifest.json",
+    "availability": "Raw logs, temporary profiles, screenshots and trace are local ignored evidence, not published download assets."
+  }
+}

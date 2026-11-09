@@ -11,7 +11,9 @@ const { isDeepStrictEqual } = require('node:util');
 const root = path.resolve(__dirname, '..');
 const { readRecord } = require('./alive-genome-durable-evidence.cjs');
 const { capturePauseDiagnostics, assessPauseEvidence } = require('./alive-public-navigation-probe.cjs');
-const { captureTrainerHydration, assessTrainerHydration, captureReplayHydration, assessReplayHydration } = require('./alive-genome-hydration-evidence.cjs');
+const { captureTrainerHydration, assessTrainerHydration, captureReplayHydration, assessReplayHydration,
+  captureHubHydration, assessHubHydration } = require('./alive-genome-hydration-evidence.cjs');
+const { compareHubHydration } = require('./alive-hub-state-evidence.cjs');
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_neural_cyber_engine.js',
@@ -24,6 +26,7 @@ const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_
   'systems/alive-primary-policy-state.js', 'systems/alive-primary-policy-bootstrap.js',
   'systems/alive-trainer-state.js', 'scripts/alive-trainer-state-evidence.cjs',
   'systems/alive-replay-state.js', 'scripts/alive-replay-state-evidence.cjs',
+  'systems/alive-hub-state.js', 'scripts/alive-hub-state-evidence.cjs',
   'systems/alive-learned-state-codec.js', 'systems/alive-learned-state-registry.js',
   'scripts/alive-primary-policy-evidence.cjs', 'scripts/alive-learned-state-wire-evidence.cjs',
   'scripts/alive-model-state-evidence.cjs', 'scripts/alive-persistence-restart-probe.cjs',
@@ -38,19 +41,52 @@ function replaceOnce(source, target, replacement, label) {
   if (count !== 1) throw new Error(`${label} expected one exact location, found ${count}`);
   return source.replace(target, replacement);
 }
-// Replay must be observed before either a private trainer read API or a legacy
-// mutation callback. The returned record owns the direct replay bytes; callback
-// results never stand in for that first observation.
-function capturePausedReplayBoundary(runtime, { captureReplay, captureTrainer, legacySentinels } = {}) {
-  if (typeof captureReplay !== 'function' || typeof captureTrainer !== 'function' || typeof legacySentinels !== 'function') throw new Error('Missing paused replay observation contract');
+// Both raw containers precede private trainer APIs and legacy callbacks. Their
+// initial owned bytes remain the evidence even if a later callback changes them.
+function capturePausedReplayBoundary(runtime, { captureReplay, captureHub, captureTrainer, legacySentinels } = {}) {
+  if (typeof captureReplay !== 'function' || typeof captureHub !== 'function' || typeof captureTrainer !== 'function' || typeof legacySentinels !== 'function') throw new Error('Missing paused replay/hub observation contract');
+  const hubBeforeSentinels = captureHub(runtime);
+  if (hubBeforeSentinels?.ok !== true) throw new Error('Initial paused hub observation failed; no sentinel callback was invoked');
   const replayBeforeSentinels = captureReplay(runtime);
   if (replayBeforeSentinels?.ok !== true) throw new Error('Initial paused replay observation failed; no sentinel callback was invoked');
   legacySentinels(runtime);
+  const hubBeforeFlush = captureHub(runtime);
+  if (hubBeforeFlush?.ok !== true) throw new Error('Hub observation after legacy sentinels failed');
   const replayBeforeFlush = captureReplay(runtime);
   if (replayBeforeFlush?.ok !== true) throw new Error('Replay observation after legacy sentinels failed');
   const trainerBeforeFlush = captureTrainer(runtime);
-  return { replayBeforeSentinels, replayBeforeFlush, trainerBeforeFlush,
-    sentinelScope: 'Four historical paused legacy sentinels only; no replay record, cursor, trainer clock or replay fixture is written' };
+  return { replayBeforeSentinels, replayBeforeFlush, hubBeforeSentinels, hubBeforeFlush, trainerBeforeFlush,
+    sentinelScope: 'Three historical paused actor/world/pellet sentinels only; no hub view/counter, replay record/cursor, trainer clock or replay fixture is written' };
+}
+function applyLegacySentinels(h) {
+  h.W_actor[0] = 0.314159;
+  h.W_world[h.W_world.length - 1] = -0.271828;
+  h.pelletsEatenCount = 98765;
+}
+function captureNaturalHubReplay(runtime, { captureHub, captureReplay } = {}) {
+  if (typeof captureHub !== 'function' || typeof captureReplay !== 'function') throw new Error('Missing natural hub/replay observation contract');
+  const hub = captureHub(runtime);
+  if (hub?.ok !== true) throw new Error('Initial natural hub observation failed');
+  const replay = captureReplay(runtime);
+  if (replay?.ok !== true) throw new Error('Initial natural replay observation failed');
+  return { hub, replay };
+}
+function assessNaturalHubEvolution(before, after) {
+  const result = compareHubHydration(before, after);
+  return { ...result, ok: result?.ok === true && result.equal === false && result.changedBackingBytes > 0,
+    scope: 'Independent direct hub bytes changed during natural scheduled work; no hub weight/counter injection and no next-output equivalence claim' };
+}
+function assessComponentSnapshotBinding(payload) {
+  const fields = ['primaryPolicyState', 'trainerCommittedState', 'replayMemoryState', 'hubMemoryState'];
+  const keys = ['creatureId', 'policyId', 'checkpointId', 'logicalTick', 'modelEpoch', 'capturedAt', 'resumeBoundary'];
+  const missing = fields.filter(field => !payload?.[field]?.snapshot || typeof payload[field].snapshot !== 'object' ||
+    Array.isArray(payload[field].snapshot) || Object.keys(payload[field].snapshot).length !== keys.length || keys.some(key => !Object.hasOwn(payload[field].snapshot, key)));
+  const snapshot = payload?.primaryPolicyState?.snapshot;
+  const mismatches = missing.length ? [] : fields.filter(field => !isDeepStrictEqual(payload[field].snapshot, snapshot));
+  const outerMatches = !missing.length && snapshot.logicalTick === payload.simulationTick && snapshot.policyId === payload.policyCid &&
+    snapshot.checkpointId === payload.checkpointCid && (!Object.hasOwn(payload, 'agentId') || snapshot.creatureId === payload.agentId);
+  return { ok: !missing.length && !mismatches.length && Boolean(outerMatches), missing, mismatches, outerMatches: Boolean(outerMatches),
+    scope: 'All four exact components share seven snapshot fields and the outer tick/policy/checkpoint identity; wire authentication is assessed separately' };
 }
 function assessNaturalReplayPopulation(before, after) {
   const valid = observation => {
@@ -174,8 +210,8 @@ async function runParent() {
   fs.mkdirSync(output, { recursive: true });
   const before = sourceHashes();
   const report = { startedAt: new Date().toISOString(), output, paths, sourceHashes: before, cases: [], runs: [],
-    scope: 'Actual isolated application process restart, exact naturally populated replay container and observed constructor restoration; historical legacy sentinels are separate. Not next-replay-output, power-loss or full-model persistence proof',
-    requestedPhases: ['normal-worker-commit', 'natural-replay-population', 'normal-close', 'two-process-restart', 'constructor-hydration', 'immediate-replay-hydration', 'no-recurring-legacy-write'],
+    scope: 'Actual isolated application process restart, exact naturally evolved hub/replay containers and observed constructor restoration; three historical legacy sentinels are separate. Not next-output, power-loss or full-model persistence proof',
+    requestedPhases: ['normal-worker-commit', 'natural-replay-population', 'natural-hub-evolution', 'normal-close', 'two-process-restart', 'constructor-hydration', 'immediate-replay-hydration', 'immediate-hub-hydration', 'no-recurring-legacy-write'],
     notRun: ['legacy-migration', 'corrupt-bootstrap', 'delayed-bootstrap', 'in-flight-checkpoint-fence', 'write-failure', 'late-acknowledgement'] };
   const reportPath = path.join(output, 'report.json');
   writeJSON(reportPath, report);
@@ -233,8 +269,9 @@ async function runParent() {
       record(`${phase}-verified-normal-close`, shutdown.status === 'persisted-and-drained' && shutdown.persistenceVerified === true && shutdown.drain?.settled === true &&
         shutdown.renderer?.revision === final.header.revision && closeAt >= 0 && closedAt > closeAt && quitAt > closedAt,
         { shutdown, closeAt, closedAt, quitAt });
-      const markersMatch = payload => payload.W_actor?.[0] === 0.31416 && payload.W_world?.at(-1) === -0.27183 && payload.trainableHub?.W_perc_enc?.[0] === 0.4375 && payload.pelletsEatenCount === 98765;
-      record(`${phase}-committed-sentinels`, markersMatch(final.payload), { actor: final.payload.W_actor?.[0], worldTail: final.payload.W_world?.at(-1), perception: final.payload.trainableHub?.W_perc_enc?.[0], pellets: final.payload.pelletsEatenCount });
+      const markersMatch = payload => payload.W_actor?.[0] === 0.31416 && payload.W_world?.at(-1) === -0.27183 && payload.pelletsEatenCount === 98765;
+      record(`${phase}-committed-sentinels`, markersMatch(final.payload), { actor: final.payload.W_actor?.[0], worldTail: final.payload.W_world?.at(-1), pellets: final.payload.pelletsEatenCount,
+        scope: 'Three historical paused actor/world/pellet sentinels; hub state uses naturally evolved exact-byte evidence' });
       if (phase === 'writer') {
         const explicit = commits.find(item => item.result.revision === childReport.flush?.revision && item.ownerId === childReport.flush?.ownerId && item.epoch === childReport.flush?.epoch && item.jobId === childReport.flush?.jobId);
         const explicitPayload = explicit ? JSON.parse(fs.readFileSync(path.join(phaseOutput, explicit.payloadFile), 'utf8')) : null;
@@ -259,6 +296,21 @@ async function runParent() {
         record('exact-replay-component-retained-at-close', replayFinal.ok && replayFinal.count > 0 &&
           isDeepStrictEqual(final.payload.primaryPolicyState?.snapshot, final.payload.replayMemoryState?.snapshot) &&
           isDeepStrictEqual(final.payload.trainerCommittedState?.snapshot, final.payload.replayMemoryState?.snapshot), replayFinal);
+        const hubEvolution = assessNaturalHubEvolution(childReport.hubBeforeNatural, childReport.hubBeforeSentinels);
+        record('natural-hub-evolution', hubEvolution.ok, hubEvolution);
+        const unchangedHub = compareHubHydration(childReport.hubBeforeSentinels, childReport.hubBeforeFlush);
+        record('legacy-sentinels-preserve-natural-hub', unchangedHub.ok && unchangedHub.equal, unchangedHub);
+        const hubFlush = assessHubHydration(explicitPayload?.hubMemoryState, childReport.hubBeforeFlush,
+          { expectedSnapshot: explicitPayload?.primaryPolicyState?.snapshot });
+        record('exact-hub-component-flushed', hubFlush.ok && hubFlush.arraysChecked === 59 && hubFlush.actualNativeViews === 58 &&
+          hubFlush.comparedBytes === 21368 && hubFlush.comparedStates === 44, hubFlush);
+        const hubFinal = assessHubHydration(final.payload.hubMemoryState, childReport.hubBeforeFlush,
+          { expectedSnapshot: final.payload.primaryPolicyState?.snapshot });
+        record('exact-hub-component-retained-at-close', hubFinal.ok && hubFinal.arraysChecked === 59 && hubFinal.actualNativeViews === 58 &&
+          hubFinal.comparedBytes === 21368 && hubFinal.comparedStates === 44, hubFinal);
+        const flushBinding = assessComponentSnapshotBinding(explicitPayload), closeBinding = assessComponentSnapshotBinding(final.payload);
+        record('flush-all-four-components-share-snapshot', flushBinding.ok, flushBinding);
+        record('close-all-four-components-share-snapshot', closeBinding.ok, closeBinding);
         const naturalTrainer = childReport.naturalTrainer;
         record('natural-trainer-commit', naturalTrainer?.committedEpochDelta >= 1 && naturalTrainer?.appliedDelta >= 1 && naturalTrainer?.durationMs >= 11000,
           naturalTrainer ? { committedEpochDelta: naturalTrainer.committedEpochDelta, appliedDelta: naturalTrainer.appliedDelta,
@@ -280,6 +332,10 @@ async function runParent() {
           hydration.replay.elementsDifferent === 0 && hydration.replay.comparedBytes === hydration.replay.count * 160 &&
           hydration.replay.comparedStates === hydration.replay.count + 3,
           hydration.replay);
+        record('immediate-exact-hub-hydration', hydration.hub?.ok === true && hydration.hub.arraysChecked === 59 &&
+          hydration.hub.actualNativeViews === 58 && hydration.hub.comparedBytes === 21368 && hydration.hub.comparedStates === 44, hydration.hub);
+        const readerBinding = assessComponentSnapshotBinding(JSON.parse(priorPayload));
+        record('reader-all-four-components-share-snapshot', readerBinding.ok, readerBinding);
         record('monotonic-durable-revision', final.header.revision > priorRecord.revision, { before: priorRecord.revision, after: final.header.revision });
       }
     }
@@ -359,8 +415,10 @@ async function runChild() {
         writeJSON(path.join(contract.output, 'boot-observation.json'), boot);
         if (contract.phase === 'writer') {
           win.showInactive();
-          report.replayBeforeNatural = await evaluate('(' + captureReplayHydration.toString() + ')(humunculusRuntime)');
-          if (report.replayBeforeNatural?.ok !== true) throw new Error('Initial natural replay observation failed');
+          const containersBeforeNatural = await evaluate('(' + captureNaturalHubReplay.toString() + ')(humunculusRuntime,{' +
+            'captureHub:(' + captureHubHydration.toString() + '),captureReplay:(' + captureReplayHydration.toString() + ')})');
+          report.replayBeforeNatural = containersBeforeNatural.replay;
+          report.hubBeforeNatural = containersBeforeNatural.hub;
           const trainerBefore = await evaluate('(' + captureTrainerHydration.toString() + ')(humunculusRuntime)');
           await evaluate('window.alienAutoNavigateLinks=false; window.startAliveOverdrive(); true');
           const at = performance.now(), start = report.commits.filter(item => item.result?.persistenceVerified).length;
@@ -373,14 +431,18 @@ async function runChild() {
           report.pauseAssessment = assessPauseEvidence(report.pause);
           if (!report.pauseAssessment.ok) throw new Error('Guest authority did not settle before sentinel snapshot: ' + report.pauseAssessment.reasons.join('; '));
           const paused = await evaluate('(' + capturePausedReplayBoundary.toString() + ')(humunculusRuntime,{' +
-            'captureReplay:(' + captureReplayHydration.toString() + '),captureTrainer:(' + captureTrainerHydration.toString() + '),' +
-            'legacySentinels(h){h.W_actor[0]=0.314159;h.W_world[h.W_world.length-1]=-0.271828;h.trainableAlifeNeuralHub.W_perc_enc[0]=0.4375;h.pelletsEatenCount=98765;}})');
+            'captureReplay:(' + captureReplayHydration.toString() + '),captureHub:(' + captureHubHydration.toString() + '),' +
+            'captureTrainer:(' + captureTrainerHydration.toString() + '),legacySentinels:(' + applyLegacySentinels.toString() + ')})');
           report.replayBeforeSentinels = paused.replayBeforeSentinels;
           report.replayBeforeFlush = paused.replayBeforeFlush;
           report.trainerBeforeFlush = paused.trainerBeforeFlush;
+          report.hubBeforeSentinels = paused.hubBeforeSentinels;
+          report.hubBeforeFlush = paused.hubBeforeFlush;
           report.replaySentinelScope = paused.sentinelScope;
           if (!assessNaturalReplayPopulation(report.replayBeforeNatural, report.replayBeforeSentinels).ok) throw new Error('No verified natural nonempty replay population/change before pause');
+          if (!assessNaturalHubEvolution(report.hubBeforeNatural, report.hubBeforeSentinels).ok) throw new Error('No verified natural hub byte evolution before pause');
           if (!isDeepStrictEqual(report.replayBeforeSentinels, report.replayBeforeFlush)) throw new Error('Historical legacy sentinel callback changed replay state');
+          if (!isDeepStrictEqual(report.hubBeforeSentinels, report.hubBeforeFlush)) throw new Error('Historical legacy sentinel callback changed hub state');
           report.flush = await evaluate("Promise.resolve(window.aliveAutosave.flush('independent-durability-proof'))");
           if (report.flush?.persistenceVerified !== true) throw new Error('Explicit production flush was not verified');
           report.workerAfterFlush = await evaluate('window.aliveAutosave.snapshot()');
@@ -404,7 +466,8 @@ async function runChild() {
 }
 
 module.exports = { adaptMain, observeHost, replaceOnce, assertOwned, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit,
-  capturePausedReplayBoundary, assessNaturalReplayPopulation, sourceHashes };
+  capturePausedReplayBoundary, applyLegacySentinels, captureNaturalHubReplay, assessNaturalHubEvolution, assessComponentSnapshotBinding,
+  assessNaturalReplayPopulation, sourceHashes };
 if (isProbeEntry({ electron: process.versions.electron, childContract: process.env.GIGACHAD_PERSISTENCE_PROBE_CHILD,
   entryPath: process.argv[1], isMain: require.main === module }, __filename)) {
   (process.versions.electron ? runChild() : runParent()).catch(error => { console.error(error.stack || error); process.exitCode = 1; });
