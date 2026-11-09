@@ -1,0 +1,300 @@
+{
+  "passNumber": 83,
+  "passSlice": "83/100",
+  "phaseName": "Phase XVI: Generative World Models, Optimal-Transport Flow Matching & Test-Time Training",
+  "moduleId": "alive-ttt-test-time-training-fast-weights",
+  "timestamp": "2026-11-09T23:18:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "frozen_weights_zero_test_time_adaptation_baseline",
+      "label": "Frozen Weights W_fast_0 (Zero Inner-Loop Gradient Descent at Test Time)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "postLossMean": 0.714607,
+          "reductionRatioMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 29017,
+          "postLossMean": 0.722962,
+          "reductionRatioMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 39023,
+          "postLossMean": 0.727671,
+          "reductionRatioMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 49031,
+          "postLossMean": 0.719759,
+          "reductionRatioMean": 0,
+          "compositeScore": 0
+        },
+        {
+          "seed": 59053,
+          "postLossMean": 0.727405,
+          "reductionRatioMean": 0,
+          "compositeScore": 0
+        }
+      ],
+      "aggregate": {
+        "postLossStats": {
+          "mean": 0.7225,
+          "stdDev": 0.0055,
+          "ci95": [
+            0.7157,
+            0.7293
+          ]
+        },
+        "reductionRatioStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "fixed_large_inner_lr_instability_ablation",
+      "label": "Fixed Large Inner-Loop Learning Rate (eta=0.95 Without Token-Dependent Gate b_eta)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "postLossMean": 0.1412,
+          "reductionRatioMean": 0.802143,
+          "compositeScore": 71.1144
+        },
+        {
+          "seed": 29017,
+          "postLossMean": 0.1412,
+          "reductionRatioMean": 0.804521,
+          "compositeScore": 71.2214
+        },
+        {
+          "seed": 39023,
+          "postLossMean": 0.1412,
+          "reductionRatioMean": 0.805526,
+          "compositeScore": 71.2667
+        },
+        {
+          "seed": 49031,
+          "postLossMean": 0.1412,
+          "reductionRatioMean": 0.803567,
+          "compositeScore": 71.1785
+        },
+        {
+          "seed": 59053,
+          "postLossMean": 0.1412,
+          "reductionRatioMean": 0.805343,
+          "compositeScore": 71.2585
+        }
+      ],
+      "aggregate": {
+        "postLossStats": {
+          "mean": 0.1412,
+          "stdDev": 0,
+          "ci95": [
+            0.1412,
+            0.1412
+          ]
+        },
+        "reductionRatioStats": {
+          "mean": 0.8042,
+          "stdDev": 0.0014,
+          "ci95": [
+            0.8025,
+            0.806
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 71.2079,
+          "stdDev": 0.0629,
+          "ci95": [
+            71.1298,
+            71.286
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ttt_without_layernorm_residual_drift_ablation",
+      "label": "TTT-Linear Without Residual LayerNorm Stabilization on Fast-Weight Output",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "postLossMean": 0.095016,
+          "reductionRatioMean": 0.866858,
+          "compositeScore": 79.1068
+        },
+        {
+          "seed": 29017,
+          "postLossMean": 0.095016,
+          "reductionRatioMean": 0.868459,
+          "compositeScore": 79.1789
+        },
+        {
+          "seed": 39023,
+          "postLossMean": 0.095015,
+          "reductionRatioMean": 0.869136,
+          "compositeScore": 79.2095
+        },
+        {
+          "seed": 49031,
+          "postLossMean": 0.095016,
+          "reductionRatioMean": 0.867817,
+          "compositeScore": 79.1499
+        },
+        {
+          "seed": 59053,
+          "postLossMean": 0.095016,
+          "reductionRatioMean": 0.869012,
+          "compositeScore": 79.2037
+        }
+      ],
+      "aggregate": {
+        "postLossStats": {
+          "mean": 0.095,
+          "stdDev": 0,
+          "ci95": [
+            0.095,
+            0.095
+          ]
+        },
+        "reductionRatioStats": {
+          "mean": 0.8683,
+          "stdDev": 0.0009,
+          "ci95": [
+            0.8671,
+            0.8694
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 79.1698,
+          "stdDev": 0.0423,
+          "ci95": [
+            79.1172,
+            79.2223
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ttt_fast_weights_token_adaptive_eta_layernorm",
+      "label": "TTT-Linear/MLP Fast Weights + Token-Adaptive Learning-Rate Bias b_eta + LayerNorm (Pass 83 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "postLossMean": 0.001216,
+          "reductionRatioMean": 0.998296,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "postLossMean": 0.001216,
+          "reductionRatioMean": 0.998317,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "postLossMean": 0.001215,
+          "reductionRatioMean": 0.998327,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "postLossMean": 0.001216,
+          "reductionRatioMean": 0.998308,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "postLossMean": 0.001216,
+          "reductionRatioMean": 0.998323,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "postLossStats": {
+          "mean": 0.0012,
+          "stdDev": 0,
+          "ci95": [
+            0.0012,
+            0.0012
+          ]
+        },
+        "reductionRatioStats": {
+          "mean": 0.9983,
+          "stdDev": 0,
+          "ci95": [
+            0.9983,
+            0.9983
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "ttt_fast_weights_token_adaptive_eta_layernorm",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "postLossStats": {
+      "mean": 0.0012,
+      "stdDev": 0,
+      "ci95": [
+        0.0012,
+        0.0012
+      ]
+    },
+    "reductionRatioStats": {
+      "mean": 0.9983,
+      "stdDev": 0,
+      "ci95": [
+        0.9983,
+        0.9983
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 100,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
