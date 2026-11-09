@@ -541,6 +541,37 @@ test('runTorCircuits renders 5-seed Tor ControlPort stream attribution and NEWNY
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runOnionV3Verifier renders 5-seed RFC 7686 and Tor v3 .onion cryptographic verification in section 19', async () => {
+  const { window, dom } = load();
+  window.AliveOnionV3Verifier = {
+    run: async () => ({
+      summary: {
+        fullBeatChecksumOnlySeeds: 5,
+        fullBeatRegexOnlySeeds: 5,
+        zeroFalsePositiveSeeds: 5,
+        zeroRfc7686LeakSeeds: 5,
+        pairedDeltas: {
+          fullVsChecksumOnlySecurityGain: { mean: 44.0 },
+          fullVsRegexOnlySecurityGain: { mean: 88.0 }
+        },
+        byVerifier: {
+          'clearnet-dns-passthrough': { securityScore: { mean: 0 }, validAcceptancePct: { mean: 100 }, adversarialRejectionPct: { mean: 0 }, falsePositives: { mean: 12 } },
+          'regex-length-56-only': { securityScore: { mean: 12.0 }, validAcceptancePct: { mean: 100 }, adversarialRejectionPct: { mean: 33.3 }, falsePositives: { mean: 8 } },
+          'checksum-without-descriptor-sig': { securityScore: { mean: 56.0 }, validAcceptancePct: { mean: 100 }, adversarialRejectionPct: { mean: 66.7 }, falsePositives: { mean: 4 } },
+          'full-rfc7686-v3-onion-verifier': { securityScore: { mean: 100.0 }, validAcceptancePct: { mean: 100 }, adversarialRejectionPct: { mean: 100 }, falsePositives: { mean: 0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runOnionV3Verifier();
+  assert.equal(report.summary.fullBeatChecksumOnlySeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full vs checksum-only +44.0 (5/5)')), 'Onion v3 verifier summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-rfc7686-v3-onion-')), 'Onion v3 verifier rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

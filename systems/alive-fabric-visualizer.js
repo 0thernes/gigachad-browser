@@ -311,6 +311,7 @@
   let latestReleaseAudit = null, releaseAuditBusy = false;
   let latestTorHybridMesh = null, torHybridMeshBusy = false;
   let latestTorCircuits = null, torCircuitsBusy = false;
+  let latestOnionV3 = null, onionV3Busy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -450,6 +451,19 @@
       return latestTorCircuits;
     } finally {
       torCircuitsBusy = false;
+    }
+  }
+  async function runOnionV3Verifier() {
+    const runner = root.AliveOnionV3Verifier;
+    if (onionV3Busy || typeof runner?.run !== 'function') return latestOnionV3;
+    onionV3Busy = true;
+    try {
+      latestOnionV3 = await runner.run();
+      root.__aliveLatestOnionV3 = latestOnionV3;
+      draw();
+      return latestOnionV3;
+    } finally {
+      onionV3Busy = false;
     }
   }
 
@@ -1045,6 +1059,50 @@
     ctx.fillText('18 streams/seed · 650 CIRC/STREAM ControlPort framing · /16 & ASN 3-hop Guard/Middle/Exit verification · SIGNAL NEWNYM', 8, height - 6);
   }
 
+  // ---------- 19. Pass 13 RFC 7686 & Tor v3 .onion cryptographic verifier ---
+  function drawOnionV3Verifier(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestOnionV3 || root.__aliveLatestOnionV3;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byVerifier) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(onionV3Busy ? 'Running 5-seed RFC 7686 & Tor v3 .onion cryptographic verifier suite…' : 'Click "Run .onion v3" above to evaluate 56-char Base32 Ed25519 pubkey, SHA3-256 checksum & HSDir sig across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const gChk = s.pairedDeltas?.fullVsChecksumOnlySecurityGain?.mean || 0;
+    const gRgx = s.pairedDeltas?.fullVsRegexOnlySecurityGain?.mean || 0;
+    ctx.fillText(`5 seeds · full vs checksum-only +${gChk.toFixed(1)} (${s.fullBeatChecksumOnlySeeds}/5) · vs regex-only +${gRgx.toFixed(1)} (${s.fullBeatRegexOnlySeeds}/5) · 0 false pos (${s.zeroFalsePositiveSeeds}/5) · 0 DNS leaks (${s.zeroRfc7686LeakSeeds}/5)`, 8, 12);
+
+    const modes = ['clearnet-dns-passthrough', 'regex-length-56-only', 'checksum-without-descriptor-sig', 'full-rfc7686-v3-onion-verifier'];
+    const colors = {
+      'clearnet-dns-passthrough': '#f43f5e',
+      'regex-length-56-only': '#f59e0b',
+      'checksum-without-descriptor-sig': '#38bdf8',
+      'full-rfc7686-v3-onion-verifier': '#34d399'
+    };
+    const barW = Math.max(80, width - 470);
+    modes.forEach((mode, idx) => {
+      const entry = s.byVerifier[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const sec = entry.securityScore?.mean || 0;
+      const val = entry.validAcceptancePct?.mean || 0;
+      const rej = entry.adversarialRejectionPct?.mean || 0;
+      const fp = entry.falsePositives?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, sec / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`sec=${sec.toFixed(1)} validAcc=${val.toFixed(0)}% advRej=${rej.toFixed(0)}% falsePos=${fp.toFixed(0)}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('20 candidates/seed (8 valid v3, 4 bad SHA3-256 checksum, 4 deprecated v2, 4 forged HSDir Ed25519 descriptor)', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1100,13 +1158,16 @@
     const torCircBtn = doc.createElement('button'); torCircBtn.type = 'button'; torCircBtn.textContent = 'Run Tor circuits';
     torCircBtn.title = 'Run 5-seed Tor ControlPort stream attribution, NEWNYM rotation and 3-hop path diversity evaluation';
     torCircBtn.addEventListener('click', () => { runTorCircuits(); });
+    const onionV3Btn = doc.createElement('button'); onionV3Btn.type = 'button'; onionV3Btn.textContent = 'Run .onion v3';
+    onionV3Btn.title = 'Run 5-seed RFC 7686 and Tor v3 .onion cryptographic verification evaluation';
+    onionV3Btn.addEventListener('click', () => { runOnionV3Verifier(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1116,7 +1177,7 @@
       colonyCanvas = canvas('alive-fabric-colony-fitness', 190), provenanceCanvas = canvas('alive-fabric-provenance', 190),
       faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190), sustainedPerfCanvas = canvas('alive-fabric-sustained-perf', 190),
       releaseAuditCanvas = canvas('alive-fabric-release-audit', 190), torMeshCanvas = canvas('alive-fabric-tor-mesh', 190),
-      torCircuitsCanvas = canvas('alive-fabric-tor-circuits', 190);
+      torCircuitsCanvas = canvas('alive-fabric-tor-circuits', 190), onionV3Canvas = canvas('alive-fabric-onion-v3', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1137,7 +1198,8 @@
       section('15 · Sustained 60Hz performance, memory bounds, visualizer overhead & qualification (5 seeds)', sustainedPerfCanvas),
       section('16 · Integrated Phase I release audit — Passes 1–9 & 8 PDF Gates frozen SHA-256 manifest', releaseAuditCanvas),
       section('17 · Tor Hybrid Synergy Mesh — IsolateSOCKSAuth, FPD partitions & zero-leak policy (5 seeds)', torMeshCanvas),
-      section('18 · Tor ControlPort — stream attribution, NEWNYM rotation & 3-hop path diversity (5 seeds)', torCircuitsCanvas));
+      section('18 · Tor ControlPort — stream attribution, NEWNYM rotation & 3-hop path diversity (5 seeds)', torCircuitsCanvas),
+      section('19 · RFC 7686 & Tor v3 .onion cryptographic verifier — Ed25519 + SHA3-256 + HSDir sig (5 seeds)', onionV3Canvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1154,7 +1216,8 @@
       () => drawSustainedPerf(sustainedPerfCanvas),
       () => drawReleaseAudit(releaseAuditCanvas),
       () => drawTorHybridMesh(torMeshCanvas),
-      () => drawTorCircuits(torCircuitsCanvas));
+      () => drawTorCircuits(torCircuitsCanvas),
+      () => drawOnionV3Verifier(onionV3Canvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1197,6 +1260,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

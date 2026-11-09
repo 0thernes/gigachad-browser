@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-13-rfc7686-onion-v3-cryptographic-verifier-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "verifiers": [
+      "clearnet-dns-passthrough",
+      "regex-length-56-only",
+      "checksum-without-descriptor-sig",
+      "full-rfc7686-v3-onion-verifier"
+    ],
+    "candidatesPerSeed": 20,
+    "validV3PerSeed": 8,
+    "adversarialPerSeed": 12
+  },
+  "summary": {
+    "fullBeatChecksumOnlySeeds": 5,
+    "fullBeatRegexOnlySeeds": 5,
+    "zeroFalsePositiveSeeds": 5,
+    "zeroRfc7686LeakSeeds": 5,
+    "pairedDeltas": {
+      "fullVsChecksumOnlySecurityGain": {
+        "count": 5,
+        "mean": 44,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          44,
+          44
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsRegexOnlySecurityGain": {
+        "count": 5,
+        "mean": 88,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          88,
+          88
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byVerifier": {
+      "clearnet-dns-passthrough": {
+        "verifier": "clearnet-dns-passthrough",
+        "securityScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "validAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adversarialRejectionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "falsePositives": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            12,
+            12
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "rfc7686DnsLeaks": {
+          "count": 5,
+          "mean": 20,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            20,
+            20
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "regex-length-56-only": {
+        "verifier": "regex-length-56-only",
+        "securityScore": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            12,
+            12
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "validAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adversarialRejectionPct": {
+          "count": 5,
+          "mean": 33.33333333333333,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            33.33333333333333,
+            33.33333333333333
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "falsePositives": {
+          "count": 5,
+          "mean": 8,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            8,
+            8
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "rfc7686DnsLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "checksum-without-descriptor-sig": {
+        "verifier": "checksum-without-descriptor-sig",
+        "securityScore": {
+          "count": 5,
+          "mean": 56,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            56,
+            56
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "validAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adversarialRejectionPct": {
+          "count": 5,
+          "mean": 66.66666666666666,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            66.66666666666666,
+            66.66666666666666
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "falsePositives": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "rfc7686DnsLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "full-rfc7686-v3-onion-verifier": {
+        "verifier": "full-rfc7686-v3-onion-verifier",
+        "securityScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "validAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "adversarialRejectionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "falsePositives": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "rfc7686DnsLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byVerifier": {
+        "clearnet-dns-passthrough": {
+          "seed": 19013,
+          "verifier": "clearnet-dns-passthrough",
+          "metrics": {
+            "securityScore": 0,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 0,
+            "falsePositives": 12,
+            "rfc7686DnsLeaks": 20
+          }
+        },
+        "regex-length-56-only": {
+          "seed": 19013,
+          "verifier": "regex-length-56-only",
+          "metrics": {
+            "securityScore": 12,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 33.33333333333333,
+            "falsePositives": 8,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "checksum-without-descriptor-sig": {
+          "seed": 19013,
+          "verifier": "checksum-without-descriptor-sig",
+          "metrics": {
+            "securityScore": 56,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 66.66666666666666,
+            "falsePositives": 4,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "full-rfc7686-v3-onion-verifier": {
+          "seed": 19013,
+          "verifier": "full-rfc7686-v3-onion-verifier",
+          "metrics": {
+            "securityScore": 100,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 100,
+            "falsePositives": 0,
+            "rfc7686DnsLeaks": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byVerifier": {
+        "clearnet-dns-passthrough": {
+          "seed": 29017,
+          "verifier": "clearnet-dns-passthrough",
+          "metrics": {
+            "securityScore": 0,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 0,
+            "falsePositives": 12,
+            "rfc7686DnsLeaks": 20
+          }
+        },
+        "regex-length-56-only": {
+          "seed": 29017,
+          "verifier": "regex-length-56-only",
+          "metrics": {
+            "securityScore": 12,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 33.33333333333333,
+            "falsePositives": 8,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "checksum-without-descriptor-sig": {
+          "seed": 29017,
+          "verifier": "checksum-without-descriptor-sig",
+          "metrics": {
+            "securityScore": 56,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 66.66666666666666,
+            "falsePositives": 4,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "full-rfc7686-v3-onion-verifier": {
+          "seed": 29017,
+          "verifier": "full-rfc7686-v3-onion-verifier",
+          "metrics": {
+            "securityScore": 100,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 100,
+            "falsePositives": 0,
+            "rfc7686DnsLeaks": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byVerifier": {
+        "clearnet-dns-passthrough": {
+          "seed": 39023,
+          "verifier": "clearnet-dns-passthrough",
+          "metrics": {
+            "securityScore": 0,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 0,
+            "falsePositives": 12,
+            "rfc7686DnsLeaks": 20
+          }
+        },
+        "regex-length-56-only": {
+          "seed": 39023,
+          "verifier": "regex-length-56-only",
+          "metrics": {
+            "securityScore": 12,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 33.33333333333333,
+            "falsePositives": 8,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "checksum-without-descriptor-sig": {
+          "seed": 39023,
+          "verifier": "checksum-without-descriptor-sig",
+          "metrics": {
+            "securityScore": 56,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 66.66666666666666,
+            "falsePositives": 4,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "full-rfc7686-v3-onion-verifier": {
+          "seed": 39023,
+          "verifier": "full-rfc7686-v3-onion-verifier",
+          "metrics": {
+            "securityScore": 100,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 100,
+            "falsePositives": 0,
+            "rfc7686DnsLeaks": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byVerifier": {
+        "clearnet-dns-passthrough": {
+          "seed": 49031,
+          "verifier": "clearnet-dns-passthrough",
+          "metrics": {
+            "securityScore": 0,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 0,
+            "falsePositives": 12,
+            "rfc7686DnsLeaks": 20
+          }
+        },
+        "regex-length-56-only": {
+          "seed": 49031,
+          "verifier": "regex-length-56-only",
+          "metrics": {
+            "securityScore": 12,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 33.33333333333333,
+            "falsePositives": 8,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "checksum-without-descriptor-sig": {
+          "seed": 49031,
+          "verifier": "checksum-without-descriptor-sig",
+          "metrics": {
+            "securityScore": 56,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 66.66666666666666,
+            "falsePositives": 4,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "full-rfc7686-v3-onion-verifier": {
+          "seed": 49031,
+          "verifier": "full-rfc7686-v3-onion-verifier",
+          "metrics": {
+            "securityScore": 100,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 100,
+            "falsePositives": 0,
+            "rfc7686DnsLeaks": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byVerifier": {
+        "clearnet-dns-passthrough": {
+          "seed": 59053,
+          "verifier": "clearnet-dns-passthrough",
+          "metrics": {
+            "securityScore": 0,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 0,
+            "falsePositives": 12,
+            "rfc7686DnsLeaks": 20
+          }
+        },
+        "regex-length-56-only": {
+          "seed": 59053,
+          "verifier": "regex-length-56-only",
+          "metrics": {
+            "securityScore": 12,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 33.33333333333333,
+            "falsePositives": 8,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "checksum-without-descriptor-sig": {
+          "seed": 59053,
+          "verifier": "checksum-without-descriptor-sig",
+          "metrics": {
+            "securityScore": 56,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 66.66666666666666,
+            "falsePositives": 4,
+            "rfc7686DnsLeaks": 0
+          }
+        },
+        "full-rfc7686-v3-onion-verifier": {
+          "seed": 59053,
+          "verifier": "full-rfc7686-v3-onion-verifier",
+          "metrics": {
+            "securityScore": 100,
+            "validAcceptancePct": 100,
+            "adversarialRejectionPct": 100,
+            "falsePositives": 0,
+            "rfc7686DnsLeaks": 0
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 13 RFC 7686 & Tor Rendezvous Spec v3 (.onion) cryptographic verification (56-char Base32 Ed25519 pubkey, SHA3-256 .onion checksum, version 0x03, v2 deprecation block, and HSDir descriptor signature verification) across 5 seeds."
+}

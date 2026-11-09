@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · RFC 7686 & Tor Rendezvous v3 (.onion) cryptographic verifier pass 13
+
+- Added the 5-seed RFC 7686 and Tor Rendezvous Spec v3 (`rend-spec-v3.txt` §6) `.onion` cryptographic codec and verifier ([`systems/alive-onion-v3-verifier.js`](systems/alive-onion-v3-verifier.js), [`scripts/alive-onion-v3-verifier.cjs`](scripts/alive-onion-v3-verifier.cjs)) comparing `clearnet-dns-passthrough`, `regex-length-56-only`, `checksum-without-descriptor-sig`, and `full-rfc7686-v3-onion-verifier` across 20 `.onion` candidates per seed.
+- Verified on `5/5` seeds that `full-rfc7686-v3-onion-verifier` (`56`-char Base32 `Ed25519` pubkey + `SHA3-256(".onion checksum" || PUBKEY || 0x03)` + `VERSION == 0x03` + HSDir `Ed25519` descriptor signature check) achieves `100.0%` valid v3 acceptance, `100.0%` adversarial rejection (`0` false positives), `0` RFC 7686 DNS leaks, and `100.0` security score.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 19 (`#alive-fabric-onion-v3`, `Run .onion v3` button, and `runOnionV3Verifier()`).
+- Added [Pass 13 report](docs/ALIVE_PASS_13_REPORT.md), [JSON report](docs/reports/alive-onion-v3-verifier-2026-11-09.json), [SVG chart](docs/reports/alive-onion-v3-verifier-2026-11-09.svg) and unit tests (`tests/alive-onion-v3-verifier.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Tor ControlPort protocol, stream attribution, NEWNYM & path diversity pass 12
 
 - Added the 5-seed Tor ControlPort protocol parser, stream-to-circuit attribution, `SIGNAL NEWNYM` clean-slate rotation, and 3-hop Guard/Middle/Exit `/16` subnet + ASN path diversity governor ([`systems/alive-tor-circuit-controller.js`](systems/alive-tor-circuit-controller.js), [`scripts/alive-tor-circuit-controller.cjs`](scripts/alive-tor-circuit-controller.cjs)) comparing `unmonitored-blind-socks`, `passive-controlport-observer`, `newnym-without-path-diversity`, and `full-controlport-circuit-governor`.

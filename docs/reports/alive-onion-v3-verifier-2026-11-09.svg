@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="390" viewBox="0 0 980 390">
+<rect width="100%" height="100%" fill="#05090f"/>
+<text x="20" y="28" fill="#67e8f9" font-family="Consolas, monospace" font-size="14" font-weight="bold">ALIVE Pass 13 — RFC 7686 &amp; Tor Rendezvous v3 (.onion) Cryptographic Verifier (5 Seeds)</text>
+<text x="20" y="48" fill="#cbd5e1" font-family="Consolas, monospace" font-size="11">full vs checksum-only +44.00 (5/5) · vs regex-only +88.00 (5/5) · 0 false positives (5/5) · 0 RFC 7686 DNS leaks (5/5)</text>
+<text x="235" y="92" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">clearnet-dns-passthrough</text>
+<rect x="245" y="76" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="79" width="2.0" height="18" fill="#f43f5e"/>
+<text x="593" y="91" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">sec=0.00 [0.00, 0.00] · validAcc=100.0% · advRej=0.0% · falsePos=12</text>
+<text x="245" y="116" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">rfc7686DnsLeaks=20 · 56-char Base32 Ed25519 + SHA3-256(&quot;.onion checksum&quot;||PUBKEY||0x03)</text>
+<text x="235" y="158" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">regex-length-56-only</text>
+<rect x="245" y="142" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="145" width="40.8" height="18" fill="#f59e0b"/>
+<text x="593" y="157" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">sec=12.00 [12.00, 12.00] · validAcc=100.0% · advRej=33.3% · falsePos=8</text>
+<text x="245" y="182" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">rfc7686DnsLeaks=0 · 56-char Base32 Ed25519 + SHA3-256(&quot;.onion checksum&quot;||PUBKEY||0x03)</text>
+<text x="235" y="224" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">checksum-without-descriptor-sig</text>
+<rect x="245" y="208" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="211" width="190.4" height="18" fill="#38bdf8"/>
+<text x="593" y="223" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">sec=56.00 [56.00, 56.00] · validAcc=100.0% · advRej=66.7% · falsePos=4</text>
+<text x="245" y="248" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">rfc7686DnsLeaks=0 · 56-char Base32 Ed25519 + SHA3-256(&quot;.onion checksum&quot;||PUBKEY||0x03)</text>
+<text x="235" y="290" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">full-rfc7686-v3-onion-verifier</text>
+<rect x="245" y="274" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="277" width="340.0" height="18" fill="#34d399"/>
+<text x="593" y="289" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">sec=100.00 [100.00, 100.00] · validAcc=100.0% · advRej=100.0% · falsePos=0</text>
+<text x="245" y="314" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">rfc7686DnsLeaks=0 · 56-char Base32 Ed25519 + SHA3-256(&quot;.onion checksum&quot;||PUBKEY||0x03)</text>
+<text x="20" y="374" fill="#64748b" font-family="Consolas, monospace" font-size="10">Seeds: 19013, 29017, 39023, 49031, 59053 · 20 candidates/seed (8 valid v3, 4 bad SHA3-256 checksum, 4 deprecated v2, 4 forged HSDir Ed25519 descriptor)</text>
+</svg>
