@@ -1,0 +1,501 @@
+{
+  "pass": 26,
+  "title": "Corvid (Crow + Raven) Episodic Tool-Making, Multi-Hop Counterfactual Causal Graph Construction (do(X)) & Deceptive-Bait Rejection",
+  "generatedAt": "2026-11-09T20:45:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "profiles": [
+    {
+      "id": "associative-reflex-forager",
+      "label": "Associative Reflex Forager (Observational P(Y|X) Only)",
+      "maxToolDepth": 0,
+      "doCalculusBackdoor": false,
+      "theoryOfMindCacheGuard": false,
+      "simpsonsParadoxDeconfounder": false
+    },
+    {
+      "id": "single-step-tool-no-causal",
+      "label": "Single-Step Tool User (Depth=1, No do(X) Deconfounding)",
+      "maxToolDepth": 1,
+      "doCalculusBackdoor": false,
+      "theoryOfMindCacheGuard": false,
+      "simpsonsParadoxDeconfounder": false
+    },
+    {
+      "id": "causal-raven-no-crow-toolsmith",
+      "label": "Causal Raven Only (do(X) Backdoor, Depth=1 Tool)",
+      "maxToolDepth": 1,
+      "doCalculusBackdoor": true,
+      "theoryOfMindCacheGuard": false,
+      "simpsonsParadoxDeconfounder": true
+    },
+    {
+      "id": "corvid-crow-raven-causal-toolsmith",
+      "label": "Full Corvid Guild (Crow Depth-3 Toolsmith + Raven do(X) + ToM Guard)",
+      "maxToolDepth": 3,
+      "doCalculusBackdoor": true,
+      "theoryOfMindCacheGuard": true,
+      "simpsonsParadoxDeconfounder": true
+    }
+  ],
+  "seedRuns": [
+    {
+      "seed": 19013,
+      "challengeCount": 24,
+      "byProfile": {
+        "associative-reflex-forager": {
+          "profileId": "associative-reflex-forager",
+          "label": "Associative Reflex Forager (Observational P(Y|X) Only)",
+          "metaToolSynthesisSuccessPct": 0,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4752,
+          "corvidEpistemologyCompositeScore": 0
+        },
+        "single-step-tool-no-causal": {
+          "profileId": "single-step-tool-no-causal",
+          "label": "Single-Step Tool User (Depth=1, No do(X) Deconfounding)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4752,
+          "corvidEpistemologyCompositeScore": 5
+        },
+        "causal-raven-no-crow-toolsmith": {
+          "profileId": "causal-raven-no-crow-toolsmith",
+          "label": "Causal Raven Only (do(X) Backdoor, Depth=1 Tool)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 55
+        },
+        "corvid-crow-raven-causal-toolsmith": {
+          "profileId": "corvid-crow-raven-causal-toolsmith",
+          "label": "Full Corvid Guild (Crow Depth-3 Toolsmith + Raven do(X) + ToM Guard)",
+          "metaToolSynthesisSuccessPct": 100,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 100,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "challengeCount": 24,
+      "byProfile": {
+        "associative-reflex-forager": {
+          "profileId": "associative-reflex-forager",
+          "label": "Associative Reflex Forager (Observational P(Y|X) Only)",
+          "metaToolSynthesisSuccessPct": 0,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4751,
+          "corvidEpistemologyCompositeScore": 0
+        },
+        "single-step-tool-no-causal": {
+          "profileId": "single-step-tool-no-causal",
+          "label": "Single-Step Tool User (Depth=1, No do(X) Deconfounding)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4751,
+          "corvidEpistemologyCompositeScore": 5
+        },
+        "causal-raven-no-crow-toolsmith": {
+          "profileId": "causal-raven-no-crow-toolsmith",
+          "label": "Causal Raven Only (do(X) Backdoor, Depth=1 Tool)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 55
+        },
+        "corvid-crow-raven-causal-toolsmith": {
+          "profileId": "corvid-crow-raven-causal-toolsmith",
+          "label": "Full Corvid Guild (Crow Depth-3 Toolsmith + Raven do(X) + ToM Guard)",
+          "metaToolSynthesisSuccessPct": 100,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 100,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "challengeCount": 24,
+      "byProfile": {
+        "associative-reflex-forager": {
+          "profileId": "associative-reflex-forager",
+          "label": "Associative Reflex Forager (Observational P(Y|X) Only)",
+          "metaToolSynthesisSuccessPct": 0,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4749,
+          "corvidEpistemologyCompositeScore": 0
+        },
+        "single-step-tool-no-causal": {
+          "profileId": "single-step-tool-no-causal",
+          "label": "Single-Step Tool User (Depth=1, No do(X) Deconfounding)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4749,
+          "corvidEpistemologyCompositeScore": 5
+        },
+        "causal-raven-no-crow-toolsmith": {
+          "profileId": "causal-raven-no-crow-toolsmith",
+          "label": "Causal Raven Only (do(X) Backdoor, Depth=1 Tool)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 55
+        },
+        "corvid-crow-raven-causal-toolsmith": {
+          "profileId": "corvid-crow-raven-causal-toolsmith",
+          "label": "Full Corvid Guild (Crow Depth-3 Toolsmith + Raven do(X) + ToM Guard)",
+          "metaToolSynthesisSuccessPct": 100,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 100,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "challengeCount": 24,
+      "byProfile": {
+        "associative-reflex-forager": {
+          "profileId": "associative-reflex-forager",
+          "label": "Associative Reflex Forager (Observational P(Y|X) Only)",
+          "metaToolSynthesisSuccessPct": 0,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.475,
+          "corvidEpistemologyCompositeScore": 0
+        },
+        "single-step-tool-no-causal": {
+          "profileId": "single-step-tool-no-causal",
+          "label": "Single-Step Tool User (Depth=1, No do(X) Deconfounding)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.475,
+          "corvidEpistemologyCompositeScore": 5
+        },
+        "causal-raven-no-crow-toolsmith": {
+          "profileId": "causal-raven-no-crow-toolsmith",
+          "label": "Causal Raven Only (do(X) Backdoor, Depth=1 Tool)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 55
+        },
+        "corvid-crow-raven-causal-toolsmith": {
+          "profileId": "corvid-crow-raven-causal-toolsmith",
+          "label": "Full Corvid Guild (Crow Depth-3 Toolsmith + Raven do(X) + ToM Guard)",
+          "metaToolSynthesisSuccessPct": 100,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 100,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 100
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "challengeCount": 24,
+      "byProfile": {
+        "associative-reflex-forager": {
+          "profileId": "associative-reflex-forager",
+          "label": "Associative Reflex Forager (Observational P(Y|X) Only)",
+          "metaToolSynthesisSuccessPct": 0,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4749,
+          "corvidEpistemologyCompositeScore": 0
+        },
+        "single-step-tool-no-causal": {
+          "profileId": "single-step-tool-no-causal",
+          "label": "Single-Step Tool User (Depth=1, No do(X) Deconfounding)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 0,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 0,
+          "meanAteEstimationError": 0.4749,
+          "corvidEpistemologyCompositeScore": 5
+        },
+        "causal-raven-no-crow-toolsmith": {
+          "profileId": "causal-raven-no-crow-toolsmith",
+          "label": "Causal Raven Only (do(X) Backdoor, Depth=1 Tool)",
+          "metaToolSynthesisSuccessPct": 16.6667,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 0,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 55
+        },
+        "corvid-crow-raven-causal-toolsmith": {
+          "profileId": "corvid-crow-raven-causal-toolsmith",
+          "label": "Full Corvid Guild (Crow Depth-3 Toolsmith + Raven do(X) + ToM Guard)",
+          "metaToolSynthesisSuccessPct": 100,
+          "causalDoCalculusAccuracyPct": 100,
+          "theoryOfMindCacheProtectionPct": 100,
+          "deceptiveBaitRejectionPct": 100,
+          "meanAteEstimationError": 0,
+          "corvidEpistemologyCompositeScore": 100
+        }
+      }
+    }
+  ],
+  "aggregatedByProfile": {
+    "associative-reflex-forager": {
+      "profileId": "associative-reflex-forager",
+      "label": "Associative Reflex Forager (Observational P(Y|X) Only)",
+      "metaToolSynthesisSuccessPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "causalDoCalculusAccuracyPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "theoryOfMindCacheProtectionPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "deceptiveBaitRejectionPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "meanAteEstimationError": {
+        "mean": 0.475,
+        "sd": 0.0001,
+        "se": 0.0001,
+        "ci95HalfWidth": 0.0002,
+        "ci95Lower": 0.4749,
+        "ci95Upper": 0.4752
+      },
+      "corvidEpistemologyCompositeScore": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      }
+    },
+    "single-step-tool-no-causal": {
+      "profileId": "single-step-tool-no-causal",
+      "label": "Single-Step Tool User (Depth=1, No do(X) Deconfounding)",
+      "metaToolSynthesisSuccessPct": {
+        "mean": 16.6667,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 16.6667,
+        "ci95Upper": 16.6667
+      },
+      "causalDoCalculusAccuracyPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "theoryOfMindCacheProtectionPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "deceptiveBaitRejectionPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "meanAteEstimationError": {
+        "mean": 0.475,
+        "sd": 0.0001,
+        "se": 0.0001,
+        "ci95HalfWidth": 0.0002,
+        "ci95Lower": 0.4749,
+        "ci95Upper": 0.4752
+      },
+      "corvidEpistemologyCompositeScore": {
+        "mean": 5,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 5,
+        "ci95Upper": 5
+      }
+    },
+    "causal-raven-no-crow-toolsmith": {
+      "profileId": "causal-raven-no-crow-toolsmith",
+      "label": "Causal Raven Only (do(X) Backdoor, Depth=1 Tool)",
+      "metaToolSynthesisSuccessPct": {
+        "mean": 16.6667,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 16.6667,
+        "ci95Upper": 16.6667
+      },
+      "causalDoCalculusAccuracyPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "theoryOfMindCacheProtectionPct": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "deceptiveBaitRejectionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "meanAteEstimationError": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "corvidEpistemologyCompositeScore": {
+        "mean": 55,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 55,
+        "ci95Upper": 55
+      }
+    },
+    "corvid-crow-raven-causal-toolsmith": {
+      "profileId": "corvid-crow-raven-causal-toolsmith",
+      "label": "Full Corvid Guild (Crow Depth-3 Toolsmith + Raven do(X) + ToM Guard)",
+      "metaToolSynthesisSuccessPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "causalDoCalculusAccuracyPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "theoryOfMindCacheProtectionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "deceptiveBaitRejectionPct": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      },
+      "meanAteEstimationError": {
+        "mean": 0,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 0,
+        "ci95Upper": 0
+      },
+      "corvidEpistemologyCompositeScore": {
+        "mean": 100,
+        "sd": 0,
+        "se": 0,
+        "ci95HalfWidth": 0,
+        "ci95Lower": 100,
+        "ci95Upper": 100
+      }
+    }
+  },
+  "summary": {
+    "winningProfile": "corvid-crow-raven-causal-toolsmith",
+    "allSeedsVerified": true,
+    "fullCorvidScoreMean": 100,
+    "metaToolSynthesisSuccessPctMean": 100,
+    "causalDoCalculusAccuracyPctMean": 100,
+    "theoryOfMindCacheProtectionPctMean": 100,
+    "deceptiveBaitRejectionPctMean": 100,
+    "meanAteEstimationError": 0,
+    "gainVsAssociativeReflex": 100,
+    "gainVsSingleStepTool": 95,
+    "gainVsCausalRavenOnly": 45
+  }
+}

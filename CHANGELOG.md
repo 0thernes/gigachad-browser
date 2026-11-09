@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Corvid (Crow + Raven) episodic tool-making & counterfactual do(X) causal epistemology pass 26
+
+- Added the 5-seed Corvid (`Crow` + `Raven`) Episodic Tool-Making, Multi-Hop Counterfactual Causal Graph Construction ($do(X)$), and Deceptive-Bait Rejection evaluator ([`systems/alive-crow-raven-corvid-epistemology.js`](systems/alive-crow-raven-corvid-epistemology.js), [`scripts/alive-crow-raven-corvid-epistemology.cjs`](scripts/alive-crow-raven-corvid-epistemology.cjs)).
+- Verified on `5/5` seeds across 24 challenges per seed that `corvid-crow-raven-causal-toolsmith` achieves `100.0` composite score (`+100.0` over `associative-reflex-forager`, `+95.0` over `single-step-tool-no-causal`, `+45.0` over `causal-raven-no-crow-toolsmith`), `100.0%` depth-3 meta-tool synthesis, `100.0%` Pearl $do(X)$ backdoor deconfounding (`0.0000` ATE error vs `0.4539` observational bias), `100.0%` Theory-of-Mind cache protection, and `100.0%` Simpson's paradox bait rejection.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 32 (`#alive-fabric-corvid-epistemology`, `Run Corvid` button, and `runCorvidEpistemology()`).
+- Added [Pass 26 report](docs/ALIVE_PASS_26_REPORT.md), [JSON report](docs/reports/alive-crow-raven-corvid-epistemology-2026-11-09.json), [SVG chart](docs/reports/alive-crow-raven-corvid-epistemology-2026-11-09.svg) and unit tests (`tests/alive-crow-raven-corvid-epistemology.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix (D1..D10) pass 25
 
 - Added the 5-seed Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix ([`systems/alive-tor-deepweb-phase4-audit.js`](systems/alive-tor-deepweb-phase4-audit.js), [`scripts/alive-tor-deepweb-phase4-audit.cjs`](scripts/alive-tor-deepweb-phase4-audit.cjs)) auditing Passes 21–24 across `D1-Obfs4-Elligator2-Ntor-Wire-Entropy` through `D10-Multi-Circuit-Equivocation-And-Tamper-Quarantine`.

@@ -324,6 +324,7 @@
   let latestTorWfPad = null, torWfPadBusy = false;
   let latestOnionMerkle = null, onionMerkleBusy = false;
   let latestPhase4Audit = null, phase4AuditBusy = false;
+  let latestCorvid = null, corvidBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -632,6 +633,19 @@
       return latestPhase4Audit;
     } finally {
       phase4AuditBusy = false;
+    }
+  }
+  async function runCorvidEpistemology() {
+    const runner = root.AliveCrowRavenCorvidEpistemology;
+    if (corvidBusy || typeof runner?.run !== 'function') return latestCorvid;
+    corvidBusy = true;
+    try {
+      latestCorvid = await runner.run();
+      root.__aliveLatestCorvid = latestCorvid;
+      draw();
+      return latestCorvid;
+    } finally {
+      corvidBusy = false;
     }
   }
 
@@ -1755,6 +1769,48 @@
     ctx.fillText('D1..D10: obfs4/Snowflake PTs · Equi-X PoW & x25519 Auth · WTF-PAD/RegulaTor WF Defense · Signed Merkle-DAG Ledger', 8, height - 6);
   }
 
+  // ---------- 32. Pass 26 Corvid (Crow + Raven) Causal Epistemology ---------
+  function drawCorvidEpistemology(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestCorvid || root.__aliveLatestCorvid;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(corvidBusy ? 'Running 5-seed Corvid (Crow + Raven) Epistemology suite…' : 'Click "Run Corvid" above to evaluate Depth-3 Crow Meta-Tools & Raven do(X) Causal Inference across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · Corvid Crow+Raven score=${(s.fullCorvidScoreMean || 0).toFixed(1)} · vs reflex +${(s.gainVsAssociativeReflex || 0).toFixed(1)} · vs Raven-only +${(s.gainVsCausalRavenOnly || 0).toFixed(1)} · ATE err=${(s.meanAteEstimationError || 0).toFixed(4)}`, 8, 12);
+    const modes = ['associative-reflex-forager', 'single-step-tool-no-causal', 'causal-raven-no-crow-toolsmith', 'corvid-crow-raven-causal-toolsmith'];
+    const colors = {
+      'associative-reflex-forager': '#f43f5e',
+      'single-step-tool-no-causal': '#f59e0b',
+      'causal-raven-no-crow-toolsmith': '#38bdf8',
+      'corvid-crow-raven-causal-toolsmith': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.corvidEpistemologyCompositeScore?.mean || 0;
+      const tls = entry.metaToolSynthesisSuccessPct?.mean || 0;
+      const dox = entry.causalDoCalculusAccuracyPct?.mean || 0;
+      const tom = entry.theoryOfMindCacheProtectionPct?.mean || 0;
+      const btr = entry.deceptiveBaitRejectionPct?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} tool3=${tls.toFixed(0)}% do(X)=${dox.toFixed(0)}% ToM=${tom.toFixed(0)}% baitRej=${btr.toFixed(0)}%`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('24 challenges/seed (6 depth-3 meta-tool synthesis, 6 Pearl do(X) backdoor graphs, 6 ToM cache guard, 6 Simpson paradox bait)', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1849,13 +1905,16 @@
     const phase4AuditBtn = doc.createElement('button'); phase4AuditBtn.type = 'button'; phase4AuditBtn.textContent = 'Run Phase IV Audit';
     phase4AuditBtn.title = 'Run 5-seed Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix (D1..D10)';
     phase4AuditBtn.addEventListener('click', () => { runPhase4DeepWebAudit(); });
+    const corvidBtn = doc.createElement('button'); corvidBtn.type = 'button'; corvidBtn.textContent = 'Run Corvid';
+    corvidBtn.title = 'Run 5-seed Corvid (Crow + Raven) Episodic Tool-Making & Counterfactual do(X) Causal Graph evaluation';
+    corvidBtn.addEventListener('click', () => { runCorvidEpistemology(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1871,7 +1930,8 @@
       stigmergicMeshCanvas = canvas('alive-fabric-stigmergic-mesh', 190), swarmForagingCanvas = canvas('alive-fabric-swarm-foraging', 190),
       omegaAuditCanvas = canvas('alive-fabric-omega-audit', 190), torPtCanvas = canvas('alive-fabric-tor-pt', 190),
       onionPowCanvas = canvas('alive-fabric-onion-pow', 190), torWfPadCanvas = canvas('alive-fabric-tor-wf-padding', 190),
-      onionMerkleCanvas = canvas('alive-fabric-onion-merkle', 190), phase4AuditCanvas = canvas('alive-fabric-phase4-audit', 190);
+      onionMerkleCanvas = canvas('alive-fabric-onion-merkle', 190), phase4AuditCanvas = canvas('alive-fabric-phase4-audit', 190),
+      corvidCanvas = canvas('alive-fabric-corvid-epistemology', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1905,7 +1965,8 @@
       section('28 · Onion v3 Equi-X PoW & x25519 Client Authorization Descriptor Decryption (5 seeds)', onionPowCanvas),
       section('29 · Website Fingerprinting (WF) Defense & Circuit Padding Machines — WTF-PAD + RegulaTor (5 seeds)', torWfPadCanvas),
       section('30 · Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger (5 seeds)', onionMerkleCanvas),
-      section('31 · Phase IV Deep-Web Acceptance Matrix (D1..D10) & Cryptographic SHA-256 Freeze (5 seeds)', phase4AuditCanvas));
+      section('31 · Phase IV Deep-Web Acceptance Matrix (D1..D10) & Cryptographic SHA-256 Freeze (5 seeds)', phase4AuditCanvas),
+      section('32 · Corvid (Crow + Raven) Episodic Tool-Making & Counterfactual do(X) Causal Graphs (5 seeds)', corvidCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1935,7 +1996,8 @@
       () => drawOnionPowClientAuth(onionPowCanvas),
       () => drawTorWfPadding(torWfPadCanvas),
       () => drawOnionMerkleLedger(onionMerkleCanvas),
-      () => drawPhase4DeepWebAudit(phase4AuditCanvas));
+      () => drawPhase4DeepWebAudit(phase4AuditCanvas),
+      () => drawCorvidEpistemology(corvidCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1978,6 +2040,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

@@ -79,7 +79,7 @@ validation conditions and remaining work.
 
 | Pass | Intended focus | Status |
 | --- | --- | --- |
-| 26 | Corvid (`Crow` + `Raven`) Episodic Tool-Making, Multi-Hop Counterfactual Causal Graph Construction ($do(X)$) & Deceptive-Bait Rejection | Planned (Pass 26) |
+| 26 | Corvid (`Crow` + `Raven`) Episodic Tool-Making, Multi-Hop Counterfactual Causal Graph Construction ($do(X)$) & Deceptive-Bait Rejection | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_26_REPORT.md), [Corvid JSON](reports/alive-crow-raven-corvid-epistemology-2026-11-09.json), [Corvid SVG](reports/alive-crow-raven-corvid-epistemology-2026-11-09.svg) |
 | 27 | Locust Solitaria-to-Gregaria Phase Polyphenism, Density-Dependent Frontier Wavefront Expansion & Adaptive Trophic Backoff | Planned (Pass 27) |
 | 28 | Fish-School Lateral-Line Hydrodynamic Coupling, Kuramoto Phase Synchronization & Sub-Tick Anomaly Evasion Wave | Planned (Pass 28) |
 | 29 | Symbiotic Cross-Guild Co-Evolution, Shapley Counterfactual Credit Assignment & Pareto Archive Speciation Across `Raven` + `Locust` + `Fish` Lineages | Planned (Pass 29) |

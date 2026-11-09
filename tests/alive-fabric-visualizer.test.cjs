@@ -919,6 +919,32 @@ test('runPhase4DeepWebAudit renders 10-row Phase IV Deep-Web Acceptance Matrix (
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runCorvidEpistemology renders 5-seed Corvid (Crow + Raven) Episodic Tool-Making & do(X) Causal Graphs in section 32', async () => {
+  const { window, dom } = load();
+  window.AliveCrowRavenCorvidEpistemology = {
+    run: async () => ({
+      summary: {
+        fullCorvidScoreMean: 100.0,
+        gainVsAssociativeReflex: 100.0,
+        gainVsCausalRavenOnly: 45.0,
+        meanAteEstimationError: 0.0
+      },
+      aggregatedByProfile: {
+        'associative-reflex-forager': { corvidEpistemologyCompositeScore: { mean: 0 }, metaToolSynthesisSuccessPct: { mean: 0 }, causalDoCalculusAccuracyPct: { mean: 0 }, theoryOfMindCacheProtectionPct: { mean: 0 }, deceptiveBaitRejectionPct: { mean: 0 } },
+        'single-step-tool-no-causal': { corvidEpistemologyCompositeScore: { mean: 5.0 }, metaToolSynthesisSuccessPct: { mean: 16.7 }, causalDoCalculusAccuracyPct: { mean: 0 }, theoryOfMindCacheProtectionPct: { mean: 0 }, deceptiveBaitRejectionPct: { mean: 0 } },
+        'causal-raven-no-crow-toolsmith': { corvidEpistemologyCompositeScore: { mean: 55.0 }, metaToolSynthesisSuccessPct: { mean: 16.7 }, causalDoCalculusAccuracyPct: { mean: 100 }, theoryOfMindCacheProtectionPct: { mean: 0 }, deceptiveBaitRejectionPct: { mean: 100 } },
+        'corvid-crow-raven-causal-toolsmith': { corvidEpistemologyCompositeScore: { mean: 100.0 }, metaToolSynthesisSuccessPct: { mean: 100 }, causalDoCalculusAccuracyPct: { mean: 100 }, theoryOfMindCacheProtectionPct: { mean: 100 }, deceptiveBaitRejectionPct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runCorvidEpistemology();
+  assert.equal(report.summary.fullCorvidScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Corvid Crow+Raven score=100.0')), 'Corvid Epistemology summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('corvid-crow-raven-caus')), 'Corvid Epistemology rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 
