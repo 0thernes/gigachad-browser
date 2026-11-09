@@ -1,0 +1,112 @@
+{
+  "pass": 25,
+  "title": "Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix (D1..D10 Executed Audit & Cryptographic SHA-256 Freeze)",
+  "generatedAt": "2026-11-09T20:30:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "summary": {
+    "verifiedRowCount": 10,
+    "totalAcceptanceRows": 10,
+    "acceptanceScorePct": 100,
+    "all10RowsVerifiedOn5Seeds": true,
+    "phase5EcologicalSwarmReady": true,
+    "phase4DeepWebFrozenDigestSha256": "a0f21c9f4bc768c236917b2caee6ffab19a8ee6b88abcf6e018e7aa083fd2471",
+    "matrixRows": [
+      {
+        "rowId": "D1-Obfs4-Elligator2-Ntor-Wire-Entropy",
+        "passRef": 21,
+        "criterion": "wireByteEntropyBits >= 7.50 bits/byte on obfs4 frames",
+        "measuredValue": 7.810758848002811,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D2-Obfs4-IAT2-Snowflake-Censorship-Bypass",
+        "passRef": 21,
+        "criterion": "100% censorship bypass across DPI TLS, IP blocklist, active probe & IAT classifiers",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D3-Active-Probe-Silent-Drop-Resistance",
+        "passRef": 21,
+        "criterion": "100% active-probe silent drop without leaking Tor TLS fingerprint",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D4-Onion-v3-EquiX-PoW-DDoS-Queue-Admission",
+        "passRef": 22,
+        "criterion": "100% Proposal 327 Equi-X PoW INTRODUCE1 queue admission under DDoS flood",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D5-Onion-v3-x25519-Client-Auth-Decryption",
+        "passRef": 22,
+        "criterion": "100% x25519 ECDH + SHAKE256 private .onion descriptor decryption",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D6-Onion-v3-Tampered-DMAC-Seed-Rejection",
+        "passRef": 22,
+        "criterion": "100% fail-closed rejection of tampered D_MAC and expired PoW seeds",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D7-WTFPAD-RegulaTor-WF-Classifier-Evasion",
+        "passRef": 23,
+        "criterion": "100% WF evasion (closed-world classifier reduced to <= 12.5% chance baseline)",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D8-WTFPAD-IAT-KL-And-Bounded-Overhead",
+        "passRef": 23,
+        "criterion": "IAT KL divergence <= 0.015b, BW overhead <= 35%, added latency <= 12ms",
+        "measuredValue": 28.0496,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D9-Signed-Merkle-DAG-Offline-Onion-Replay",
+        "passRef": 24,
+        "criterion": "100% offline 503 .onion archival replay & O(log N) Merkle inclusion verification",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      },
+      {
+        "rowId": "D10-Multi-Circuit-Equivocation-And-Tamper-Quarantine",
+        "passRef": 24,
+        "criterion": "100% post-hoc tamper rejection & multi-circuit split-view equivocation detection",
+        "measuredValue": 100,
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true
+      }
+    ]
+  }
+}

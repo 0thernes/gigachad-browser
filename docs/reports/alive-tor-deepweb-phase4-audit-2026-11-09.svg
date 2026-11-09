@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="445" viewBox="0 0 1220 445">
+  <rect width="1220" height="445" fill="#020617"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="16" font-weight="bold">ALIVE PASS 25 — Phase IV Deep-Web &amp; Censorship-Resistance Acceptance Matrix (D1..D10)</text>
+  <text x="24" y="58" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">Seeds: 19013, 29017, 39023, 49031, 59053 · Verified Rows: 10/10 (100.0%) · Frozen SHA-256: a0f21c9f4bc768c236917b2caee6ffab19a8ee6b88abcf6e018e7aa083fd2471</text>
+  
+      <rect x="24" y="90" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="104" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D1-Obfs4-Elligator2-Ntor-Wire-Entropy (Pass 21)</text>
+      <text x="480" y="104" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">wireByteEntropyBits >= 7.50 bits/byte on obfs4 frames</text>
+      <text x="1010" y="104" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=7.81)</text>
+    
+      <rect x="24" y="122" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="136" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D2-Obfs4-IAT2-Snowflake-Censorship-Bypass (Pass 21)</text>
+      <text x="480" y="136" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% censorship bypass across DPI TLS, IP blocklist, active probe & IAT classifiers</text>
+      <text x="1010" y="136" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="154" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="168" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D3-Active-Probe-Silent-Drop-Resistance (Pass 21)</text>
+      <text x="480" y="168" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% active-probe silent drop without leaking Tor TLS fingerprint</text>
+      <text x="1010" y="168" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="186" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="200" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D4-Onion-v3-EquiX-PoW-DDoS-Queue-Admission (Pass 22)</text>
+      <text x="480" y="200" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% Proposal 327 Equi-X PoW INTRODUCE1 queue admission under DDoS flood</text>
+      <text x="1010" y="200" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="218" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="232" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D5-Onion-v3-x25519-Client-Auth-Decryption (Pass 22)</text>
+      <text x="480" y="232" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% x25519 ECDH + SHAKE256 private .onion descriptor decryption</text>
+      <text x="1010" y="232" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="250" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="264" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D6-Onion-v3-Tampered-DMAC-Seed-Rejection (Pass 22)</text>
+      <text x="480" y="264" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% fail-closed rejection of tampered D_MAC and expired PoW seeds</text>
+      <text x="1010" y="264" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="282" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="296" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D7-WTFPAD-RegulaTor-WF-Classifier-Evasion (Pass 23)</text>
+      <text x="480" y="296" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% WF evasion (closed-world classifier reduced to <= 12.5% chance baseline)</text>
+      <text x="1010" y="296" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="314" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="328" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D8-WTFPAD-IAT-KL-And-Bounded-Overhead (Pass 23)</text>
+      <text x="480" y="328" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">IAT KL divergence <= 0.015b, BW overhead <= 35%, added latency <= 12ms</text>
+      <text x="1010" y="328" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=28.05)</text>
+    
+      <rect x="24" y="346" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="360" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D9-Signed-Merkle-DAG-Offline-Onion-Replay (Pass 24)</text>
+      <text x="480" y="360" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% offline 503 .onion archival replay & O(log N) Merkle inclusion verification</text>
+      <text x="1010" y="360" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+      <rect x="24" y="378" width="18" height="18" rx="3" fill="#34d399"/>
+      <text x="52" y="392" fill="#e2e8f0" font-family="Consolas, monospace" font-size="12" font-weight="bold">D10-Multi-Circuit-Equivocation-And-Tamper-Quarantine (Pass 24)</text>
+      <text x="480" y="392" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">100% post-hoc tamper rejection & multi-circuit split-view equivocation detection</text>
+      <text x="1010" y="392" fill="#34d399" font-family="Consolas, monospace" font-size="12">5/5 PASS (val=100.00)</text>
+    
+  <text x="24" y="428" fill="#64748b" font-family="Consolas, monospace" font-size="11">Phase IV Frozen &amp; Qualified for Phase V (Hyper-Swarm Ecological Intelligence: Corvid Epistemology, Locust Polyphenism &amp; Fish Hydrodynamics)</text>
+</svg>

@@ -887,6 +887,38 @@ test('runOnionMerkleLedger renders 5-seed Signed Merkle-DAG Citation & Archival 
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runPhase4DeepWebAudit renders 10-row Phase IV Deep-Web Acceptance Matrix (D1..D10) in section 31', async () => {
+  const { window, dom } = load();
+  window.AliveTorDeepWebPhase4Audit = {
+    run: async () => ({
+      summary: {
+        verifiedRowCount: 10,
+        totalAcceptanceRows: 10,
+        phase5EcologicalSwarmReady: true,
+        phase4DeepWebFrozenDigestSha256: '1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
+        matrixRows: [
+          { rowId: 'D1-Obfs4-Elligator2-Ntor-Wire-Entropy', passRef: 21, passedSeeds: 5, verified: true },
+          { rowId: 'D2-Obfs4-IAT2-Snowflake-Censorship-Bypass', passRef: 21, passedSeeds: 5, verified: true },
+          { rowId: 'D3-Active-Probe-Silent-Drop-Resistance', passRef: 21, passedSeeds: 5, verified: true },
+          { rowId: 'D4-Onion-v3-EquiX-PoW-DDoS-Queue-Admission', passRef: 22, passedSeeds: 5, verified: true },
+          { rowId: 'D5-Onion-v3-x25519-Client-Auth-Decryption', passRef: 22, passedSeeds: 5, verified: true },
+          { rowId: 'D6-Onion-v3-Tampered-DMAC-Seed-Rejection', passRef: 22, passedSeeds: 5, verified: true },
+          { rowId: 'D7-WTFPAD-RegulaTor-WF-Classifier-Evasion', passRef: 23, passedSeeds: 5, verified: true },
+          { rowId: 'D8-WTFPAD-IAT-KL-And-Bounded-Overhead', passRef: 23, passedSeeds: 5, verified: true },
+          { rowId: 'D9-Signed-Merkle-DAG-Offline-Onion-Replay', passRef: 24, passedSeeds: 5, verified: true },
+          { rowId: 'D10-Multi-Circuit-Equivocation-And-Tamper-Quarantine', passRef: 24, passedSeeds: 5, verified: true }
+        ]
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runPhase4DeepWebAudit();
+  assert.equal(report.summary.verifiedRowCount, 10);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Phase IV Rows 10/10 PASS')), 'Phase IV Audit summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('D1-Obfs4-Elligator2-Ntor-Wir')), 'Phase IV Audit rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
 
 
 

@@ -323,6 +323,7 @@
   let latestOnionPow = null, onionPowBusy = false;
   let latestTorWfPad = null, torWfPadBusy = false;
   let latestOnionMerkle = null, onionMerkleBusy = false;
+  let latestPhase4Audit = null, phase4AuditBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -618,6 +619,19 @@
       return latestOnionMerkle;
     } finally {
       onionMerkleBusy = false;
+    }
+  }
+  async function runPhase4DeepWebAudit() {
+    const runner = root.AliveTorDeepWebPhase4Audit;
+    if (phase4AuditBusy || typeof runner?.run !== 'function') return latestPhase4Audit;
+    phase4AuditBusy = true;
+    try {
+      latestPhase4Audit = await runner.run();
+      root.__aliveLatestPhase4Audit = latestPhase4Audit;
+      draw();
+      return latestPhase4Audit;
+    } finally {
+      phase4AuditBusy = false;
     }
   }
 
@@ -1713,6 +1727,34 @@
     ctx.fillText('24 archival scenarios/seed (6 live .onion/clearnet, 6 offline 503 .onion replay, 6 bit-flip tamper, 6 split-view equivocation)', 8, height - 6);
   }
 
+  // ---------- 31. Pass 25 Phase IV Deep-Web Acceptance Matrix (D1..D10) -----
+  function drawPhase4DeepWebAudit(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestPhase4Audit || root.__aliveLatestPhase4Audit;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.matrixRows) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(phase4AuditBusy ? 'Running 5-seed Phase IV Deep-Web Acceptance Matrix (D1..D10)…' : 'Click "Run Phase IV Audit" above to verify D1..D10 across Passes 21–24 and freeze the Phase IV SHA-256.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const shaShort = String(s.phase4DeepWebFrozenDigestSha256 || '').slice(0, 16);
+    ctx.fillText(`5 seeds · Phase IV Rows ${s.verifiedRowCount}/${s.totalAcceptanceRows} PASS · SHA256=${shaShort}… · Phase V Swarm Ready: ${s.phase5EcologicalSwarmReady}`, 8, 12);
+    const colW = Math.floor((width - 24) / 2);
+    s.matrixRows.slice(0, 10).forEach((row, idx) => {
+      const col = idx < 5 ? 0 : 1;
+      const r = idx % 5;
+      const x = 10 + col * colW;
+      const y = 26 + r * 28;
+      ctx.fillStyle = row.verified ? '#34d399' : '#f43f5e';
+      ctx.fillRect(x, y, 10, 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`${row.rowId.slice(0, 28)} (P${row.passRef}) ${row.passedSeeds}/5`, x + 16, y + 9);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('D1..D10: obfs4/Snowflake PTs · Equi-X PoW & x25519 Auth · WTF-PAD/RegulaTor WF Defense · Signed Merkle-DAG Ledger', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -1804,13 +1846,16 @@
     const onionMerkleBtn = doc.createElement('button'); onionMerkleBtn.type = 'button'; onionMerkleBtn.textContent = 'Run Merkle Ledger';
     onionMerkleBtn.title = 'Run 5-seed Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger evaluation';
     onionMerkleBtn.addEventListener('click', () => { runOnionMerkleLedger(); });
+    const phase4AuditBtn = doc.createElement('button'); phase4AuditBtn.type = 'button'; phase4AuditBtn.textContent = 'Run Phase IV Audit';
+    phase4AuditBtn.title = 'Run 5-seed Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix (D1..D10)';
+    phase4AuditBtn.addEventListener('click', () => { runPhase4DeepWebAudit(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -1826,7 +1871,7 @@
       stigmergicMeshCanvas = canvas('alive-fabric-stigmergic-mesh', 190), swarmForagingCanvas = canvas('alive-fabric-swarm-foraging', 190),
       omegaAuditCanvas = canvas('alive-fabric-omega-audit', 190), torPtCanvas = canvas('alive-fabric-tor-pt', 190),
       onionPowCanvas = canvas('alive-fabric-onion-pow', 190), torWfPadCanvas = canvas('alive-fabric-tor-wf-padding', 190),
-      onionMerkleCanvas = canvas('alive-fabric-onion-merkle', 190);
+      onionMerkleCanvas = canvas('alive-fabric-onion-merkle', 190), phase4AuditCanvas = canvas('alive-fabric-phase4-audit', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1859,7 +1904,8 @@
       section('27 · Tor Pluggable Transports — obfs4 Elligator2, iat-mode=2 & Snowflake fallback (5 seeds)', torPtCanvas),
       section('28 · Onion v3 Equi-X PoW & x25519 Client Authorization Descriptor Decryption (5 seeds)', onionPowCanvas),
       section('29 · Website Fingerprinting (WF) Defense & Circuit Padding Machines — WTF-PAD + RegulaTor (5 seeds)', torWfPadCanvas),
-      section('30 · Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger (5 seeds)', onionMerkleCanvas));
+      section('30 · Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger (5 seeds)', onionMerkleCanvas),
+      section('31 · Phase IV Deep-Web Acceptance Matrix (D1..D10) & Cryptographic SHA-256 Freeze (5 seeds)', phase4AuditCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1888,7 +1934,8 @@
       () => drawTorPluggableTransports(torPtCanvas),
       () => drawOnionPowClientAuth(onionPowCanvas),
       () => drawTorWfPadding(torWfPadCanvas),
-      () => drawOnionMerkleLedger(onionMerkleCanvas));
+      () => drawOnionMerkleLedger(onionMerkleCanvas),
+      () => drawPhase4DeepWebAudit(phase4AuditCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1931,6 +1978,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

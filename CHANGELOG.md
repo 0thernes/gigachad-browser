@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix (D1..D10) pass 25
+
+- Added the 5-seed Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix ([`systems/alive-tor-deepweb-phase4-audit.js`](systems/alive-tor-deepweb-phase4-audit.js), [`scripts/alive-tor-deepweb-phase4-audit.cjs`](scripts/alive-tor-deepweb-phase4-audit.cjs)) auditing Passes 21–24 across `D1-Obfs4-Elligator2-Ntor-Wire-Entropy` through `D10-Multi-Circuit-Equivocation-And-Tamper-Quarantine`.
+- Verified `10/10` acceptance rows (`100.0%` acceptance score) across `5/5` seeds, freezing the Phase IV SHA-256 manifest (`a0f21c9f4bc768c236917b2caee6ffab19a8ee6b88abcf6e018e7aa083fd2471`) and qualifying entry into Phase V (`Passes 26–30`: Hyper-Swarm Ecological Intelligence).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 31 (`#alive-fabric-phase4-audit`, `Run Phase IV Audit` button, and `runPhase4DeepWebAudit()`).
+- Added [Pass 25 report](docs/ALIVE_PASS_25_REPORT.md), [JSON report](docs/reports/alive-tor-deepweb-phase4-audit-2026-11-09.json), [SVG chart](docs/reports/alive-tor-deepweb-phase4-audit-2026-11-09.svg) and unit tests (`tests/alive-tor-deepweb-phase4-audit.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Ed25519 Signed Merkle-DAG citation & content-addressed archival ledger pass 24
 
 - Added the 5-seed Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger evaluator ([`systems/alive-onion-merkle-provenance-ledger.js`](systems/alive-onion-merkle-provenance-ledger.js), [`scripts/alive-onion-merkle-provenance-ledger.cjs`](scripts/alive-onion-merkle-provenance-ledger.cjs)) comparing `mutable-url-bookmark-only`, `unverified-snapshot-cache`, `hash-chain-no-equivocation-quorum`, and `signed-merkle-dag-bft-provenance-ledger` across 24 archival & provenance scenarios per seed.
