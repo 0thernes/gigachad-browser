@@ -1,0 +1,360 @@
+{
+  "passNumber": 97,
+  "passSlice": "97/100",
+  "phaseName": "Phase XIX: Mechanistic Interpretability (SAE), Formal Verification (IBP/CROWN), Conformal Calibration & 100-Pass Grand Omega Crown",
+  "moduleId": "alive-ibp-crown-formal-bound-verifier",
+  "timestamp": "2026-11-09T23:32:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "unverified_empirical_pgd_only_baseline",
+      "label": "Empirical PGD Sampling Only Without Certified Lower/Upper Interval Bounds",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "violationsMean": 4,
+          "marginMean": 1.238789,
+          "certAccMean": 0.771637,
+          "compositeScore": 63.4267
+        },
+        {
+          "seed": 29017,
+          "violationsMean": 4,
+          "marginMean": 1.238789,
+          "certAccMean": 0.771637,
+          "compositeScore": 63.4267
+        },
+        {
+          "seed": 39023,
+          "violationsMean": 4,
+          "marginMean": 1.238789,
+          "certAccMean": 0.771637,
+          "compositeScore": 63.4267
+        },
+        {
+          "seed": 49031,
+          "violationsMean": 4,
+          "marginMean": 1.238789,
+          "certAccMean": 0.771637,
+          "compositeScore": 63.4267
+        },
+        {
+          "seed": 59053,
+          "violationsMean": 4,
+          "marginMean": 1.238789,
+          "certAccMean": 0.771637,
+          "compositeScore": 63.4267
+        }
+      ],
+      "aggregate": {
+        "violationsStats": {
+          "mean": 4,
+          "stdDev": 0,
+          "ci95": [
+            4,
+            4
+          ]
+        },
+        "marginStats": {
+          "mean": 1.2388,
+          "stdDev": 0,
+          "ci95": [
+            1.2388,
+            1.2388
+          ]
+        },
+        "certAccStats": {
+          "mean": 0.7716,
+          "stdDev": 0,
+          "ci95": [
+            0.7716,
+            0.7716
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 63.4267,
+          "stdDev": 0,
+          "ci95": [
+            63.4267,
+            63.4267
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "naive_ibp_only_loose_interval_bloating_ablation",
+      "label": "Pure Interval Bound Propagation (IBP) Without CROWN Linear Chord Relaxation",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "violationsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "marginStats": {
+          "mean": 1.6551,
+          "stdDev": 0,
+          "ci95": [
+            1.6551,
+            1.6551
+          ]
+        },
+        "certAccStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "crown_fixed_zero_lower_slope_ablation",
+      "label": "CROWN Linear Bound Propagation With Fixed Zero Lower Slope on Unstable ReLUs",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "violationsMean": 0,
+          "marginMean": 1.655131,
+          "certAccMean": 1,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "violationsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "marginStats": {
+          "mean": 1.6551,
+          "stdDev": 0,
+          "ci95": [
+            1.6551,
+            1.6551
+          ]
+        },
+        "certAccStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ibp_plus_alpha_crown_adaptive_chord_verifier",
+      "label": "Hybrid IBP + alpha-CROWN Adaptive Linear Relaxation Formal Verifier (Pass 97 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "violationsMean": 0,
+          "marginMean": 1.705572,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "violationsMean": 0,
+          "marginMean": 1.705572,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "violationsMean": 0,
+          "marginMean": 1.705572,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "violationsMean": 0,
+          "marginMean": 1.705572,
+          "certAccMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "violationsMean": 0,
+          "marginMean": 1.705572,
+          "certAccMean": 1,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "violationsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "marginStats": {
+          "mean": 1.7056,
+          "stdDev": 0,
+          "ci95": [
+            1.7056,
+            1.7056
+          ]
+        },
+        "certAccStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "ibp_plus_alpha_crown_adaptive_chord_verifier",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "violationsStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "marginStats": {
+      "mean": 1.7056,
+      "stdDev": 0,
+      "ci95": [
+        1.7056,
+        1.7056
+      ]
+    },
+    "certAccStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 36.5733,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}

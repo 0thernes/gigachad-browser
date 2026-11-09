@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="320" viewBox="0 0 820 320">
+  <rect width="820" height="320" fill="#0f172a" />
+  <text x="24" y="34" fill="#38bdf8" font-family="monospace" font-size="16" font-weight="bold">ALIVE Pass 97 (97/100) — alive-ibp-crown-formal-bound-verifier</text>
+  <text x="24" y="54" fill="#94a3b8" font-family="monospace" font-size="12">Winner: ibp_plus_alpha_crown_adaptive_chord_verifier | Score: 100 | t=999</text>
+  
+      <text x="24" y="78" fill="#e2e8f0" font-family="monospace" font-size="12">unverified_empirical_pgd_only_baseline</text>
+      <rect x="24" y="86" width="304" height="18" rx="4" fill="#6366f1" />
+      <text x="336" y="99" fill="#f8fafc" font-family="monospace" font-size="12">63.43 (95% CI [63.4267, 63.4267])</text>
+
+      <text x="24" y="130" fill="#e2e8f0" font-family="monospace" font-size="12">naive_ibp_only_loose_interval_bloating_ablation</text>
+      <rect x="24" y="138" width="480" height="18" rx="4" fill="#6366f1" />
+      <text x="512" y="151" fill="#f8fafc" font-family="monospace" font-size="12">100.00 (95% CI [100, 100])</text>
+
+      <text x="24" y="182" fill="#e2e8f0" font-family="monospace" font-size="12">crown_fixed_zero_lower_slope_ablation</text>
+      <rect x="24" y="190" width="480" height="18" rx="4" fill="#6366f1" />
+      <text x="512" y="203" fill="#f8fafc" font-family="monospace" font-size="12">100.00 (95% CI [100, 100])</text>
+
+      <text x="24" y="234" fill="#e2e8f0" font-family="monospace" font-size="12">ibp_plus_alpha_crown_adaptive_chord_verifier</text>
+      <rect x="24" y="242" width="480" height="18" rx="4" fill="#10b981" />
+      <text x="512" y="255" fill="#f8fafc" font-family="monospace" font-size="12">100.00 (95% CI [100, 100])</text>
+</svg>
