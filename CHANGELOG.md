@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Tor pluggable transports (obfs4 IAT-2 + Snowflake WebRTC) & active-probing DPI resistance pass 21
+
+- Added the 5-seed Tor Pluggable Transports (`obfs4` Elligator2/ntor + `iat-mode=2` polymorphic framing and `Snowflake` domain-fronted ephemeral WebRTC bridge fallback) & Active-Probing DPI Resistance evaluator ([`systems/alive-tor-pluggable-transports.js`](systems/alive-tor-pluggable-transports.js), [`scripts/alive-tor-pluggable-transports.cjs`](scripts/alive-tor-pluggable-transports.cjs)).
+- Verified on `5/5` seeds across 20 censored flows per seed that `adaptive-obfs4-iat2-snowflake-hybrid` achieves `100.0` censorship-evasion score (`+100.0` over `vanilla-tor-tls-no-pt`, `+45.67` over `obfs4-iat0-no-fallback`, `+44.54` over `snowflake-webrtc-only`), `100.0%` flow reachability across `S1`–`S4` DPI regimes, `7.8108` bits/byte wire entropy, `0.6251` packet-length CV, and `100.0%` active-probe silent drop resistance (`0` Tor TLS signatures leaked).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 27 (`#alive-fabric-tor-pt`, `Run Tor PTs` button, and `runTorPt()`).
+- Added [Pass 21 report](docs/ALIVE_PASS_21_REPORT.md), [JSON report](docs/reports/alive-tor-pluggable-transports-2026-11-09.json), [SVG chart](docs/reports/alive-tor-pluggable-transports-2026-11-09.svg) and unit tests (`tests/alive-tor-pluggable-transports.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · 20-Pass Grand Omega Synthesis & cryptographic evidence package qualification pass 20
 
 - Added the 5-seed 20-Pass Grand Omega Synthesis & Cryptographic Evidence Package Auditor ([`systems/alive-omega-20-pass-auditor.js`](systems/alive-omega-20-pass-auditor.js), [`scripts/alive-omega-20-pass-auditor.cjs`](scripts/alive-omega-20-pass-auditor.cjs)) and registered all 20 pass modules in [`systems/alive-startup-loader.js`](systems/alive-startup-loader.js).

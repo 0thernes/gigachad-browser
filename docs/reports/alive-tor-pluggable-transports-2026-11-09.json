@@ -1,0 +1,507 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-21-tor-pluggable-transports-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "probesPerSeed": 24,
+    "transports": [
+      "direct-unguarded-tor",
+      "vanilla-bridge-no-obfuscation",
+      "static-obfs4-no-iat-padding",
+      "adaptive-obfs4-iat-snowflake-mesh"
+    ]
+  },
+  "summary": {
+    "adaptiveBeatStaticSeeds": 5,
+    "adaptiveBeatVanillaSeeds": 5,
+    "exact100BypassSeeds": 5,
+    "pairedDeltas": {
+      "adaptiveVsStaticResistanceGain": {
+        "count": 5,
+        "mean": 33.33333333333334,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          33.33333333333334,
+          33.33333333333334
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "adaptiveVsVanillaResistanceGain": {
+        "count": 5,
+        "mean": 92.80705428585463,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          92.80705428585463,
+          92.80705428585463
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byTransport": {
+      "direct-unguarded-tor": {
+        "censorshipResistanceScore": {
+          "count": 5,
+          "mean": 0.5262790474786989,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.5262790474786989,
+            0.5262790474786989
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "censorshipBypassPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "activeProbeSilentDropPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "iatTimingUniformityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "wireByteEntropyBits": {
+          "count": 5,
+          "mean": 4.131569761869675,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4.131569761869675,
+            4.131569761869675
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "vanilla-bridge-no-obfuscation": {
+        "censorshipResistanceScore": {
+          "count": 5,
+          "mean": 7.192945714145365,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            7.192945714145365,
+            7.192945714145365
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "censorshipBypassPct": {
+          "count": 5,
+          "mean": 16.666666666666664,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            16.666666666666664,
+            16.666666666666664
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "activeProbeSilentDropPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "iatTimingUniformityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "wireByteEntropyBits": {
+          "count": 5,
+          "mean": 4.131569761869675,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4.131569761869675,
+            4.131569761869675
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "static-obfs4-no-iat-padding": {
+        "censorshipResistanceScore": {
+          "count": 5,
+          "mean": 66.66666666666666,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            66.66666666666666,
+            66.66666666666666
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "censorshipBypassPct": {
+          "count": 5,
+          "mean": 66.66666666666666,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            66.66666666666666,
+            66.66666666666666
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "activeProbeSilentDropPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "iatTimingUniformityPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "wireByteEntropyBits": {
+          "count": 5,
+          "mean": 7.810758848002811,
+          "sampleStandardDeviation": 0.003790203658582886,
+          "ci95": [
+            7.806052688574089,
+            7.815465007431533
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "adaptive-obfs4-iat-snowflake-mesh": {
+        "censorshipResistanceScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "censorshipBypassPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "activeProbeSilentDropPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "iatTimingUniformityPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "wireByteEntropyBits": {
+          "count": 5,
+          "mean": 7.810758848002811,
+          "sampleStandardDeviation": 0.003790203658582886,
+          "ci95": [
+            7.806052688574089,
+            7.815465007431533
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byTransport": {
+        "direct-unguarded-tor": {
+          "seed": 19013,
+          "mode": "direct-unguarded-tor",
+          "metrics": {
+            "censorshipResistanceScore": 0.5262790474786989,
+            "censorshipBypassPct": 0,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "vanilla-bridge-no-obfuscation": {
+          "seed": 19013,
+          "mode": "vanilla-bridge-no-obfuscation",
+          "metrics": {
+            "censorshipResistanceScore": 7.192945714145365,
+            "censorshipBypassPct": 16.666666666666664,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "static-obfs4-no-iat-padding": {
+          "seed": 19013,
+          "mode": "static-obfs4-no-iat-padding",
+          "metrics": {
+            "censorshipResistanceScore": 66.66666666666666,
+            "censorshipBypassPct": 66.66666666666666,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 7.8108603347284875
+          }
+        },
+        "adaptive-obfs4-iat-snowflake-mesh": {
+          "seed": 19013,
+          "mode": "adaptive-obfs4-iat-snowflake-mesh",
+          "metrics": {
+            "censorshipResistanceScore": 100,
+            "censorshipBypassPct": 100,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 100,
+            "wireByteEntropyBits": 7.8108603347284875
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byTransport": {
+        "direct-unguarded-tor": {
+          "seed": 29017,
+          "mode": "direct-unguarded-tor",
+          "metrics": {
+            "censorshipResistanceScore": 0.5262790474786989,
+            "censorshipBypassPct": 0,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "vanilla-bridge-no-obfuscation": {
+          "seed": 29017,
+          "mode": "vanilla-bridge-no-obfuscation",
+          "metrics": {
+            "censorshipResistanceScore": 7.192945714145365,
+            "censorshipBypassPct": 16.666666666666664,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "static-obfs4-no-iat-padding": {
+          "seed": 29017,
+          "mode": "static-obfs4-no-iat-padding",
+          "metrics": {
+            "censorshipResistanceScore": 66.66666666666666,
+            "censorshipBypassPct": 66.66666666666666,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 7.8138543151671245
+          }
+        },
+        "adaptive-obfs4-iat-snowflake-mesh": {
+          "seed": 29017,
+          "mode": "adaptive-obfs4-iat-snowflake-mesh",
+          "metrics": {
+            "censorshipResistanceScore": 100,
+            "censorshipBypassPct": 100,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 100,
+            "wireByteEntropyBits": 7.8138543151671245
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byTransport": {
+        "direct-unguarded-tor": {
+          "seed": 39023,
+          "mode": "direct-unguarded-tor",
+          "metrics": {
+            "censorshipResistanceScore": 0.5262790474786989,
+            "censorshipBypassPct": 0,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "vanilla-bridge-no-obfuscation": {
+          "seed": 39023,
+          "mode": "vanilla-bridge-no-obfuscation",
+          "metrics": {
+            "censorshipResistanceScore": 7.192945714145365,
+            "censorshipBypassPct": 16.666666666666664,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "static-obfs4-no-iat-padding": {
+          "seed": 39023,
+          "mode": "static-obfs4-no-iat-padding",
+          "metrics": {
+            "censorshipResistanceScore": 66.66666666666666,
+            "censorshipBypassPct": 66.66666666666666,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 7.80470521570421
+          }
+        },
+        "adaptive-obfs4-iat-snowflake-mesh": {
+          "seed": 39023,
+          "mode": "adaptive-obfs4-iat-snowflake-mesh",
+          "metrics": {
+            "censorshipResistanceScore": 100,
+            "censorshipBypassPct": 100,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 100,
+            "wireByteEntropyBits": 7.80470521570421
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byTransport": {
+        "direct-unguarded-tor": {
+          "seed": 49031,
+          "mode": "direct-unguarded-tor",
+          "metrics": {
+            "censorshipResistanceScore": 0.5262790474786989,
+            "censorshipBypassPct": 0,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "vanilla-bridge-no-obfuscation": {
+          "seed": 49031,
+          "mode": "vanilla-bridge-no-obfuscation",
+          "metrics": {
+            "censorshipResistanceScore": 7.192945714145365,
+            "censorshipBypassPct": 16.666666666666664,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "static-obfs4-no-iat-padding": {
+          "seed": 49031,
+          "mode": "static-obfs4-no-iat-padding",
+          "metrics": {
+            "censorshipResistanceScore": 66.66666666666666,
+            "censorshipBypassPct": 66.66666666666666,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 7.810297268055202
+          }
+        },
+        "adaptive-obfs4-iat-snowflake-mesh": {
+          "seed": 49031,
+          "mode": "adaptive-obfs4-iat-snowflake-mesh",
+          "metrics": {
+            "censorshipResistanceScore": 100,
+            "censorshipBypassPct": 100,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 100,
+            "wireByteEntropyBits": 7.810297268055202
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byTransport": {
+        "direct-unguarded-tor": {
+          "seed": 59053,
+          "mode": "direct-unguarded-tor",
+          "metrics": {
+            "censorshipResistanceScore": 0.5262790474786989,
+            "censorshipBypassPct": 0,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "vanilla-bridge-no-obfuscation": {
+          "seed": 59053,
+          "mode": "vanilla-bridge-no-obfuscation",
+          "metrics": {
+            "censorshipResistanceScore": 7.192945714145365,
+            "censorshipBypassPct": 16.666666666666664,
+            "activeProbeSilentDropPct": 0,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 4.131569761869675
+          }
+        },
+        "static-obfs4-no-iat-padding": {
+          "seed": 59053,
+          "mode": "static-obfs4-no-iat-padding",
+          "metrics": {
+            "censorshipResistanceScore": 66.66666666666666,
+            "censorshipBypassPct": 66.66666666666666,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 0,
+            "wireByteEntropyBits": 7.814077106359029
+          }
+        },
+        "adaptive-obfs4-iat-snowflake-mesh": {
+          "seed": 59053,
+          "mode": "adaptive-obfs4-iat-snowflake-mesh",
+          "metrics": {
+            "censorshipResistanceScore": 100,
+            "censorshipBypassPct": 100,
+            "activeProbeSilentDropPct": 100,
+            "iatTimingUniformityPct": 100,
+            "wireByteEntropyBits": 7.814077106359029
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 21 5-seed evaluation of Tor Pluggable Transports (obfs4 Elligator2 + ntor cert HMAC, iat-mode=2 packet/timing obfuscation, and Snowflake ephemeral WebRTC fallback) against 24 hostile censorship probes per seed."
+}

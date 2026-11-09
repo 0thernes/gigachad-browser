@@ -64,3 +64,43 @@ Every phase should retain live visual evidence: what each entity observed,
 computed, learned, delegated, wrote, attempted and completed, including failed
 or unavailable operations. The report for each pass records the exact commit,
 validation conditions and remaining work.
+
+## Phase IV: Deep Onion Rendezvous, Pluggable Transports, Traffic-Analysis Defense & Cryptographic Provenance (Passes 21–25)
+
+| Pass | Intended focus | Status |
+| --- | --- | --- |
+| 21 | Pluggable Transports (`obfs4` IAT-2 Polymorphic Framing + `Snowflake` Ephemeral WebRTC/Domain-Fronting Bridge Fallback) & Active-Probing DPI Resistance | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_21_REPORT.md), [PT JSON](reports/alive-tor-pluggable-transports-2026-11-09.json), [PT SVG](reports/alive-tor-pluggable-transports-2026-11-09.svg) |
+| 22 | Tor v3 `.onion` Equi-X Proof-of-Work (`rend-spec-v3` §3.4 / Proposal 327) & `x25519` Client Authorization Descriptor Decryption | Planned (Pass 22) |
+| 23 | Website Fingerprinting (`WF`) Defense & Circuit Padding Machines (Adaptive WTF-PAD / RegulaTor Burst Shaping & Inter-Arrival Time Masking) | Planned (Pass 23) |
+| 24 | Ed25519 Signed Merkle-DAG Citation & Content-Addressed Archival Ledger across Ephemeral `.onion` & Clearnet Sources | Planned (Pass 24) |
+| 25 | Phase IV Deep-Web & Censorship-Resistance Acceptance Matrix (`D1`–`D10` Executed Audit & Cryptographic SHA-256 Freeze) | Planned (Pass 25) |
+
+## Phase V: Hyper-Swarm Ecological Intelligence — Corvid Epistemology, Locust Phase Polyphenism & Fish Hydrodynamics (Passes 26–30)
+
+| Pass | Intended focus | Status |
+| --- | --- | --- |
+| 26 | Corvid (`Crow` + `Raven`) Episodic Tool-Making, Multi-Hop Counterfactual Causal Graph Construction ($do(X)$) & Deceptive-Bait Rejection | Planned (Pass 26) |
+| 27 | Locust Solitaria-to-Gregaria Phase Polyphenism, Density-Dependent Frontier Wavefront Expansion & Adaptive Trophic Backoff | Planned (Pass 27) |
+| 28 | Fish-School Lateral-Line Hydrodynamic Coupling, Kuramoto Phase Synchronization & Sub-Tick Anomaly Evasion Wave | Planned (Pass 28) |
+| 29 | Symbiotic Cross-Guild Co-Evolution, Shapley Counterfactual Credit Assignment & Pareto Archive Speciation Across `Raven` + `Locust` + `Fish` Lineages | Planned (Pass 29) |
+| 30 | Phase V Hyper-Swarm Ecological Intelligence Acceptance Matrix (`E1`–`E10` Executed Audit & Cryptographic SHA-256 Freeze) | Planned (Pass 30) |
+
+## Phase VI: Neuro-Symbolic Program Synthesis, Active Inference Free-Energy & Hyperbolic Knowledge Geometry (Passes 31–35)
+
+| Pass | Intended focus | Status |
+| --- | --- | --- |
+| 31 | Variational Free-Energy Minimization ($\mathcal{F}$) & Epistemic-Pragmatic Expected Free Energy ($\mathcal{G}(\pi)$) Planner | Planned (Pass 31) |
+| 32 | Hyperbolic Poincaré Ball ($\mathbb{B}^d_c$) Hierarchical Ontology & Deep Citation Tree Embedding Engine | Planned (Pass 32) |
+| 33 | Neuro-Symbolic DOM/API Extractor Program Synthesis & SMT-Style Invariant Verification | Planned (Pass 33) |
+| 34 | Dynamic Mixed-Precision Tensor Quantization (`FP64`/`FP32`/`BF16`/`INT8`/`INT4`/`NF4`/`Binary`) & Spectral Error-Feedback Compensation | Planned (Pass 34) |
+| 35 | Phase VI Neuro-Symbolic & Active Inference Acceptance Matrix (`N1`–`N10` Executed Audit & Cryptographic SHA-256 Freeze) | Planned (Pass 35) |
+
+## Phase VII: Adversarial Immunity, Long-Horizon Autonomous Missions & 40-Pass Grand Omega Qualification (Passes 36–40)
+
+| Pass | Intended focus | Status |
+| --- | --- | --- |
+| 36 | Adversarial Indirect Prompt-Injection, Hidden-DOM Cloaking & Cross-Origin Exfiltration Immunity Shield | Planned (Pass 36) |
+| 37 | Long-Horizon Multi-Day Checkpointable Autonomous Research Mission Runner with Subgoal Decomposition & Deadlock Recovery | Planned (Pass 37) |
+| 38 | Self-Healing Runtime Watchdog, Deterministic State Rollback, Corrupt-Adapter Quarantine & Zero-Data-Loss Recovery | Planned (Pass 38) |
+| 39 | Full-Stack End-to-End Hybrid Synergy Benchmark (36 Faculties + 14 Brains + Tor v3 Pluggable Mesh + 3-Guild Co-Evolving Swarms + Active Inference + Adversarial Shield) | Planned (Pass 39) |
+| 40 | 40-Pass Grand Omega Synthesis & Cryptographic Evidence Package Qualification (Cross-Auditing All 40 Passes, Phases I–VII, All SHA-256 Manifests & Startup Loader Registration) | Planned (Pass 40) |

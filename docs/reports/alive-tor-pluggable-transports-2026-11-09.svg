@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="330" viewBox="0 0 980 330">
+  <rect width="980" height="330" fill="#05090f"/>
+  <text x="24" y="32" fill="#67e8f9" font-family="Consolas,monospace" font-size="15" font-weight="bold">ALIVE Pass 21 — Tor Pluggable Transports: obfs4 Elligator2, iat-mode=2 &amp; Snowflake (5 Seeds)</text>
+  <text x="24" y="54" fill="#e2e8f0" font-family="Consolas,monospace" font-size="12">Adaptive vs Static-obfs4: +33.33 (5/5) · vs Vanilla Bridge: +92.81 (5/5) · 100% Bypass: 5/5</text>
+  <text x="24" y="72" fill="#94a3b8" font-family="Consolas,monospace" font-size="11">24 Censorship Probes/Seed (6 DPI TLS, 6 IP Blocklist, 6 Active-Probing Censor Replay, 6 IAT Burst Classifier)</text>
+  
+    <text x="230" y="114" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">direct-unguarded-tor</text>
+    <rect x="242" y="96" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="98" width="2" height="22" rx="2" fill="#f43f5e"/>
+    <text x="614" y="114" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">res=0.5 bypass=0.0% probeDrop=0% iat=0% ent=4.13b/B</text>
+    <text x="230" y="164" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">vanilla-bridge-no-obfuscation</text>
+    <rect x="242" y="146" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="148" width="26" height="22" rx="2" fill="#f59e0b"/>
+    <text x="614" y="164" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">res=7.2 bypass=16.7% probeDrop=0% iat=0% ent=4.13b/B</text>
+    <text x="230" y="214" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">static-obfs4-no-iat-padding</text>
+    <rect x="242" y="196" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="198" width="240" height="22" rx="2" fill="#38bdf8"/>
+    <text x="614" y="214" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">res=66.7 bypass=66.7% probeDrop=100% iat=0% ent=7.81b/B</text>
+    <text x="230" y="264" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">adaptive-obfs4-iat-snowflake-mesh</text>
+    <rect x="242" y="246" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="248" width="360" height="22" rx="2" fill="#34d399"/>
+    <text x="614" y="264" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">res=100.0 bypass=100.0% probeDrop=100% iat=100% ent=7.81b/B</text>
+  <text x="24" y="312" fill="#64748b" font-family="Consolas,monospace" font-size="11">Seeds: 19013, 29017, 39023, 49031, 59053 · Elligator2 25519 uniform representative · HMAC-SHA256 ntor cert · Snowflake WebRTC fallback</text>
+</svg>

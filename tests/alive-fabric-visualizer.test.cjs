@@ -781,6 +781,36 @@ test('runOmegaAudit renders 5-seed 20-Pass Grand Omega Synthesis & Cryptographic
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runTorPluggableTransports renders 5-seed Tor Pluggable Transports (obfs4/snowflake) metrics in section 27', async () => {
+  const { window, dom } = load();
+  window.AliveTorPluggableTransports = {
+    run: async () => ({
+      summary: {
+        adaptiveBeatStaticSeeds: 5,
+        adaptiveBeatVanillaSeeds: 5,
+        exact100BypassSeeds: 5,
+        pairedDeltas: {
+          adaptiveVsStaticResistanceGain: { mean: 25.0 },
+          adaptiveVsVanillaResistanceGain: { mean: 91.7 }
+        },
+        byTransport: {
+          'direct-unguarded-tor': { censorshipResistanceScore: { mean: 0 }, censorshipBypassPct: { mean: 0 }, activeProbeSilentDropPct: { mean: 0 }, wireByteEntropyBits: { mean: 4.1 } },
+          'vanilla-bridge-no-obfuscation': { censorshipResistanceScore: { mean: 8.3 }, censorshipBypassPct: { mean: 20.8 }, activeProbeSilentDropPct: { mean: 0 }, wireByteEntropyBits: { mean: 4.1 } },
+          'static-obfs4-no-iat-padding': { censorshipResistanceScore: { mean: 75.0 }, censorshipBypassPct: { mean: 62.5 }, activeProbeSilentDropPct: { mean: 100 }, wireByteEntropyBits: { mean: 7.98 } },
+          'adaptive-obfs4-iat-snowflake-mesh': { censorshipResistanceScore: { mean: 100.0 }, censorshipBypassPct: { mean: 100 }, activeProbeSilentDropPct: { mean: 100 }, wireByteEntropyBits: { mean: 7.98 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runTorPluggableTransports();
+  assert.equal(report.summary.adaptiveBeatStaticSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · adaptive PT vs static-obfs4 +25.0 (5/5)')), 'Tor PT summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('adaptive-obfs4-iat-sno')), 'Tor PT rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 
