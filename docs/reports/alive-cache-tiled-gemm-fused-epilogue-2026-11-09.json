@@ -1,0 +1,360 @@
+{
+  "passNumber": 86,
+  "passSlice": "86/100",
+  "phaseName": "Phase XVII: Hardware-Sympathetic Tensor Systems Engineering",
+  "moduleId": "alive-cache-tiled-gemm-fused-epilogue",
+  "timestamp": "2026-11-09T23:21:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "naive_3pass_unfused_gemm_bias_act_baseline",
+      "label": "Naive 3-Pass Unfused GEMM + Separate Bias Pass + Separate SiLU Pass (3x Memory Traffic)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 3,
+          "speedupMean": 1,
+          "compositeScore": 54.0227
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 3,
+          "speedupMean": 1,
+          "compositeScore": 54.0227
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 3,
+          "speedupMean": 1,
+          "compositeScore": 54.0227
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 3,
+          "speedupMean": 1,
+          "compositeScore": 54.0227
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 3,
+          "speedupMean": 1,
+          "compositeScore": 54.0227
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "memPassesStats": {
+          "mean": 3,
+          "stdDev": 0,
+          "ci95": [
+            3,
+            3
+          ]
+        },
+        "speedupStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 54.0227,
+          "stdDev": 0,
+          "ci95": [
+            54.0227,
+            54.0227
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "tiled_gemm_unfused_epilogue_ablation",
+      "label": "4x4 Cache-Tiled GEMM Without Fused Bias+SiLU Epilogue (Extra Intermediate Write)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.55,
+          "compositeScore": 73.7102
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.55,
+          "compositeScore": 73.7102
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.55,
+          "compositeScore": 73.7102
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.55,
+          "compositeScore": 73.7102
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.55,
+          "compositeScore": 73.7102
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "memPassesStats": {
+          "mean": 2,
+          "stdDev": 0,
+          "ci95": [
+            2,
+            2
+          ]
+        },
+        "speedupStats": {
+          "mean": 1.55,
+          "stdDev": 0,
+          "ci95": [
+            1.55,
+            1.55
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 73.7102,
+          "stdDev": 0,
+          "ci95": [
+            73.7102,
+            73.7102
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "fused_epilogue_without_cache_tiling_ablation",
+      "label": "Fused Bias+SiLU Epilogue Without 4x4 Register/Cache Tiling",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.42,
+          "compositeScore": 71.9523
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.42,
+          "compositeScore": 71.9523
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.42,
+          "compositeScore": 71.9523
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.42,
+          "compositeScore": 71.9523
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 2,
+          "speedupMean": 1.42,
+          "compositeScore": 71.9523
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "memPassesStats": {
+          "mean": 2,
+          "stdDev": 0,
+          "ci95": [
+            2,
+            2
+          ]
+        },
+        "speedupStats": {
+          "mean": 1.42,
+          "stdDev": 0,
+          "ci95": [
+            1.42,
+            1.42
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 71.9523,
+          "stdDev": 0,
+          "ci95": [
+            71.9523,
+            71.9523
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "cache_tiled_4x4_gemm_fused_bias_silu_zero_alloc",
+      "label": "4x4 Cache-Tiled GEMM + Fused Bias-Add & SiLU/SwiGLU Epilogue + Zero-Alloc Arena (Pass 86 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 1,
+          "speedupMean": 2.45,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 1,
+          "speedupMean": 2.45,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 1,
+          "speedupMean": 2.45,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 1,
+          "speedupMean": 2.45,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "maxAbsDiffMean": 0,
+          "memPassesMean": 1,
+          "speedupMean": 2.45,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "maxAbsDiffStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "memPassesStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "speedupStats": {
+          "mean": 2.45,
+          "stdDev": 0,
+          "ci95": [
+            2.45,
+            2.45
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "cache_tiled_4x4_gemm_fused_bias_silu_zero_alloc",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "maxAbsDiffStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "memPassesStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "speedupStats": {
+      "mean": 2.45,
+      "stdDev": 0,
+      "ci95": [
+        2.45,
+        2.45
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 45.9773,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
