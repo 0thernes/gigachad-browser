@@ -21,6 +21,9 @@ const DEFAULTS = {
   llamaPort: 11434,
   llamaContext: 8192,
   llamaGpuLayers: 99,
+  torAutoStart: false,
+  torPath: '',
+  torSocksPort: 9050,
   ytdlpPath: '',
   piiFirewall: true,
   allowCloudImages: false,
@@ -251,6 +254,8 @@ function loadConfig(options = {}) {
   cfg.llamaContext = asPort(cfg.llamaContext, DEFAULTS.llamaContext);
   cfg.autoStartSidecar = asBool(cfg.autoStartSidecar, true);
   cfg.llamaAutoStart = asBool(cfg.llamaAutoStart, false);
+  cfg.torAutoStart = asBool(cfg.torAutoStart, false);
+  cfg.torSocksPort = asPort(cfg.torSocksPort, 9050);
   cfg.piiFirewall = asBool(cfg.piiFirewall, true);
   cfg.allowCloudImages = asBool(cfg.allowCloudImages, false);
   cfg.stealthCloak = asBool(cfg.stealthCloak, false);
@@ -271,6 +276,9 @@ function loadConfig(options = {}) {
   set('elevenLabsKey', env.ELEVENLABS_API_KEY);
   set('llamaServerPath', env.GIGACHAD_LLAMA_SERVER);
   set('llamaModelPath', env.GIGACHAD_LLAMA_MODEL);
+  set('torPath', env.GIGACHAD_TOR_PATH);
+  if (env.GIGACHAD_TOR_AUTOSTART != null) cfg.torAutoStart = asBool(env.GIGACHAD_TOR_AUTOSTART, false);
+  if (env.GIGACHAD_TOR_SOCKS_PORT) cfg.torSocksPort = asPort(env.GIGACHAD_TOR_SOCKS_PORT, 9050);
   set('ytdlpPath', env.GIGACHAD_YTDLP);
   if (env.GIGACHAD_ALLOW_CLOUD_IMAGES != null && env.GIGACHAD_ALLOW_CLOUD_IMAGES !== '') {
     cfg.allowCloudImages = asBool(env.GIGACHAD_ALLOW_CLOUD_IMAGES, false);
@@ -318,7 +326,7 @@ const EDITABLE_KEYS = [
   'llmBaseUrl', 'llmApiKey', 'localModel', 'omniModel',
   'openRouterBaseUrl', 'openRouterModel', 'openRouterKey', 'elevenLabsKey',
   'llamaAutoStart', 'llamaServerPath', 'llamaModelPath', 'llamaPort',
-  'llamaContext', 'llamaGpuLayers', 'ytdlpPath', 'piiFirewall', 'allowCloudImages', 'stealthCloak'
+  'llamaContext', 'llamaGpuLayers', 'torAutoStart', 'torPath', 'torSocksPort', 'ytdlpPath', 'piiFirewall', 'allowCloudImages', 'stealthCloak'
 ];
 
 function saveUserConfig(partial, options = {}) {

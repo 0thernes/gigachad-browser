@@ -35,6 +35,132 @@
 (function (globalScope) {
   'use strict';
 
+  const assetHydration = globalScope.AliveAssetHydration ||
+    (typeof require === 'function' ? require('./alive-asset-hydration.js') : null);
+  const siblingAssetRequests = new WeakMap();
+  function readBoundedAsset(fs, filename, maximum) {
+    const fd = fs.openSync(filename, 'r');
+    try {
+      const size = fs.fstatSync(fd).size;
+      if (!Number.isSafeInteger(size) || size < 0 || size > maximum) throw new Error('Asset exceeds read bound');
+      const bytes = Buffer.alloc(size); let offset = 0;
+      while (offset < size) {
+        const count = fs.readSync(fd, bytes, offset, size - offset, null);
+        if (!count) throw new Error('Asset changed during read');
+        offset += count;
+      }
+      if (fs.readSync(fd, Buffer.alloc(1), 0, 1, null)) throw new Error('Asset grew during read');
+      return bytes;
+    } finally { fs.closeSync(fd); }
+  }
+
+  // Execution receipts belong to the actual engine instance, not restored or
+  // constructor-seeded hub counters. They add no enumerable checkpoint state.
+  const computedPrecisionKernels = new WeakSet();
+  const computedMambaStates = new WeakSet();
+
+  // Worker authority and clocks are private host state, never restored from
+  // editable telemetry. The semantic committed epoch needs future catalog wiring.
+  const workerTrainers = new WeakMap();
+  const trainerViewPrototype = Object.getPrototypeOf(Float32Array.prototype);
+  const trainerIntrinsics = Object.freeze({
+    type: Object.getOwnPropertyDescriptor(trainerViewPrototype, Symbol.toStringTag).get,
+    length: Object.getOwnPropertyDescriptor(trainerViewPrototype, 'length').get,
+    buffer: Object.getOwnPropertyDescriptor(trainerViewPrototype, 'buffer').get,
+    offset: Object.getOwnPropertyDescriptor(trainerViewPrototype, 'byteOffset').get,
+    bytes: Object.getOwnPropertyDescriptor(trainerViewPrototype, 'byteLength').get,
+    bufferBytes: Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'byteLength').get,
+    resizable: Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'resizable')?.get,
+    set: trainerViewPrototype.set
+  });
+  const trainerInteger = value => Number.isSafeInteger(value) && value >= 0 && !Object.is(value, -0);
+  function trainerState(target) {
+    let state = workerTrainers.get(target);
+    if (!state) {
+      state = { generation: 0, nextJobId: 0, committedEpoch: 0, phase: 'idle', admitted: false,
+        worker: null, url: null, pending: null, timeoutMs: 5000, submitted: 0, applied: 0,
+        discarded: 0, rejectedReplies: 0, rejectedInputs: 0, busySkips: 0, faults: 0,
+        timeouts: 0, workersCreated: 0, lastReplayGradNorm: null, lastError: '', lastRejectedReason: '' };
+      workerTrainers.set(target, state);
+    }
+    return state;
+  }
+  function trainerSnapshot(state) {
+    return Object.freeze({ active: state.admitted && Boolean(state.worker),
+      phase: state.pending ? 'training' : state.phase, generation: state.generation,
+      committedEpoch: state.committedEpoch, workerEpochsCompleted: state.committedEpoch,
+      lastReplayGradNorm: state.lastReplayGradNorm, pendingJobId: state.pending?.jobId ?? null,
+      pendingTargetEpoch: state.pending?.targetEpoch ?? null, timeoutMs: state.timeoutMs,
+      submitted: state.submitted, applied: state.applied, discarded: state.discarded,
+      rejectedReplies: state.rejectedReplies, rejectedInputs: state.rejectedInputs,
+      busySkips: state.busySkips, faults: state.faults, timeouts: state.timeouts,
+      workersCreated: state.workersCreated, lastError: state.lastError, lastRejectedReason: state.lastRejectedReason,
+      semanticClockPersisted: false, scope: 'Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog' });
+  }
+  function publishTrainer(target, state) {
+    const snapshot = trainerSnapshot(state);
+    target.workerTrainerStatus = snapshot;
+    return snapshot;
+  }
+  function retireTrainer(target, state, phase, reason) {
+    state.admitted = false;
+    if (state.generation < Number.MAX_SAFE_INTEGER) state.generation++;
+    if (state.pending) {
+      clearTimeout(state.pending.timer);
+      state.pending = null; state.discarded++;
+    }
+    const worker = state.worker, url = state.url;
+    state.worker = null; state.url = null; target._worker = null;
+    if (worker) {
+      worker.onmessage = worker.onerror = worker.onmessageerror = null;
+      try { worker.terminate(); } catch (_) { /* Admission is already revoked. */ }
+    }
+    if (url) { try { URL.revokeObjectURL(url); } catch (_) {} }
+    state.phase = phase; state.lastError = reason;
+    return publishTrainer(target, state);
+  }
+  function trainerTarget(target) {
+    const field = Object.getOwnPropertyDescriptor(target, 'W_hyper_u');
+    if (!field || !Object.prototype.hasOwnProperty.call(field, 'value')) throw new TypeError('Trainer target must be an own data field');
+    const view = field.value, type = trainerIntrinsics.type.call(view), length = trainerIntrinsics.length.call(view);
+    if (type !== 'Float32Array' || length !== 16) throw new TypeError('Trainer target requires exactly 16 Float32 values');
+    const buffer = trainerIntrinsics.buffer.call(view), offset = trainerIntrinsics.offset.call(view), bytes = trainerIntrinsics.bytes.call(view);
+    const capacity = trainerIntrinsics.bufferBytes.call(buffer); // Reject shared backing.
+    if (bytes !== 64 || capacity < offset + bytes || trainerIntrinsics.resizable?.call(buffer)) throw new TypeError('Trainer target requires fixed attached backing');
+    for (let i = 0; i < 16; i++) if (!Number.isFinite(view[i])) throw new TypeError('Trainer target contains nonfinite values');
+    return { view, buffer, offset, bytes, capacity };
+  }
+  function trainerInput(input) {
+    let values;
+    if (Array.isArray(input) && Object.getPrototypeOf(input) === Array.prototype) {
+      if (input.length !== 16 || Object.getOwnPropertyNames(input).length !== 17 || Object.getOwnPropertySymbols(input).length) throw new TypeError('Trainer input requires exactly 16 values');
+      values = [];
+      for (let i = 0; i < 16; i++) {
+        const field = Object.getOwnPropertyDescriptor(input, String(i));
+        if (!field || !Object.prototype.hasOwnProperty.call(field, 'value')) throw new TypeError('Trainer input must be dense data');
+        values.push(field.value);
+      }
+    } else {
+      if (!ArrayBuffer.isView(input) || !['Float32Array', 'Float64Array'].includes(trainerIntrinsics.type.call(input)) || trainerIntrinsics.length.call(input) !== 16) throw new TypeError('Trainer input requires exactly 16 numbers');
+      const buffer = trainerIntrinsics.buffer.call(input);
+      trainerIntrinsics.bufferBytes.call(buffer);
+      if (trainerIntrinsics.resizable?.call(buffer)) throw new TypeError('Trainer input backing must be fixed');
+      values = new Array(16);
+      for (let i = 0; i < 16; i++) values[i] = input[i];
+    }
+    if (values.some(value => typeof value !== 'number' || !Number.isFinite(value))) throw new TypeError('Trainer input must be finite');
+    return values;
+  }
+  function trainerMessage(value) {
+    if (!value || typeof value !== 'object' || ![Object.prototype, null].includes(Object.getPrototypeOf(value)) || Object.getOwnPropertySymbols(value).length) throw new TypeError('Invalid trainer reply');
+    const fields = Object.getOwnPropertyDescriptors(value), result = Object.create(null);
+    for (const key of Object.keys(fields)) {
+      if (!Object.prototype.hasOwnProperty.call(fields[key], 'value')) throw new TypeError('Trainer reply must contain data');
+      result[key] = fields[key].value;
+    }
+    return result;
+  }
+
   function finiteClamped(val, fallback = 0.0, minVal = -1e6, maxVal = 1e6) {
     const n = Number(val);
     if (!Number.isFinite(n)) return fallback;
@@ -164,7 +290,7 @@
       this.workerTrainerStatus = {
         active: false,
         workerEpochsCompleted: 0,
-        lastReplayGradNorm: 0.084
+        lastReplayGradNorm: null
       };
       this.webgpuStatus = {
         probed: false,
@@ -315,6 +441,7 @@
     }
 
     _stepMultiPrecisionHybridKernels(z16, tick) {
+      computedPrecisionKernels.delete(this);
       // 1. IEEE-754 fp16 pack/unpack roundtrip on 16-D latent state
       let fp16ErrSum = 0;
       for (let i = 0; i < 16; i++) {
@@ -417,52 +544,172 @@
         ternaryBitNetZeroMulOut0: Number(ternaryOut0.toFixed(4)),
         hdcHammingSimilarityPct: Number(((hammingMatches / 256) * 100).toFixed(1))
       };
+      computedPrecisionKernels.add(this);
+    }
+
+    precisionExecutionEvidence() {
+      return { kernelsCompleted: computedPrecisionKernels.has(this), mambaCompleted: computedMambaStates.has(this) };
     }
 
     _initOffThreadWorkerTrainer() {
+      return this.resumeWorkerTrainer();
+    }
+
+    workerTrainerSnapshot() { return trainerSnapshot(trainerState(this)); }
+
+    suspendWorkerTrainer(reason = 'paused') {
+      const state = trainerState(this);
+      if (state.phase === 'disposed') return trainerSnapshot(state);
+      return retireTrainer(this, state, 'suspended', String(reason).slice(0, 160));
+    }
+
+    disposeWorkerTrainer(reason = 'disposed') {
+      const state = trainerState(this);
+      if (state.phase === 'disposed') return trainerSnapshot(state);
+      return retireTrainer(this, state, 'disposed', String(reason).slice(0, 160));
+    }
+
+    resumeWorkerTrainer(options = {}) {
+      const state = trainerState(this);
+      const rejected = reason => ({ status: 'blocked', reason, ...trainerSnapshot(state) });
+      if (state.phase === 'disposed') return rejected('Trainer was disposed');
+      if (globalScope.__alivePersistenceClosing || globalScope.__aliveCheckpointRestore) return rejected('Model mutation admission is closed');
+      let epoch, timeoutMs;
       try {
-        if (typeof Worker === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined') return;
+        const data = trainerMessage(options);
+        if (Object.keys(data).some(key => !['committedEpoch', 'expectedGeneration', 'timeoutMs'].includes(key))) throw new TypeError('Unknown trainer resume option');
+        if (data.expectedGeneration !== undefined && (!trainerInteger(data.expectedGeneration) || data.expectedGeneration !== state.generation)) throw new TypeError('Trainer generation changed');
+        epoch = data.committedEpoch === undefined ? state.committedEpoch : data.committedEpoch;
+        timeoutMs = data.timeoutMs === undefined ? state.timeoutMs : data.timeoutMs;
+        if (!trainerInteger(epoch) || epoch >= Number.MAX_SAFE_INTEGER || !Number.isInteger(timeoutMs) || timeoutMs < 50 || timeoutMs > 30000) throw new TypeError('Invalid trainer epoch or timeout');
+      } catch (error) { return rejected(String(error.message || error)); }
+      if (state.admitted || state.worker || state.pending) {
+        if (epoch === state.committedEpoch && timeoutMs === state.timeoutMs) return { status: 'ready', ...trainerSnapshot(state) };
+        return rejected('Suspend the trainer before changing its semantic clock');
+      }
+      if (state.generation >= Number.MAX_SAFE_INTEGER) return rejected('Trainer generation exhausted');
+      state.generation++; state.committedEpoch = epoch; state.timeoutMs = timeoutMs; state.lastError = '';
+      if (typeof Worker === 'undefined' || typeof Blob === 'undefined' || typeof URL === 'undefined' || typeof URL.createObjectURL !== 'function') {
+        state.phase = 'unavailable'; publishTrainer(this, state);
+        return { status: 'unavailable', ...trainerSnapshot(state) };
+      }
+      try {
+        // The host supplies the next committed semantic epoch. Discarded work
+        // cannot advance a hidden worker clock or alter the resumed equation.
         const workerCode = `
-          let epochs = 0;
           self.onmessage = function(e) {
             const data = e.data || {};
-            if (data.cmd === 'train_shard') {
-              epochs++;
-              const z = data.latent16 || [];
+            const validId = v => Number.isSafeInteger(v) && v > 0;
+            if (data.cmd === 'train_shard' && validId(data.generation) && validId(data.jobId) && validId(data.targetEpoch) &&
+                Array.isArray(data.latent16) && data.latent16.length === 16 && Object.keys(data.latent16).length === 16 &&
+                data.latent16.every(v => typeof v === 'number' && Number.isFinite(v))) {
+              const z = data.latent16;
               const deltas = new Float32Array(16);
               let gradNormSq = 0;
               for (let i = 0; i < 16; i++) {
                 const v = Number(z[i] || 0);
-                const target = Math.tanh(v * 0.92 + Math.sin(epochs * 0.3 + i) * 0.15);
+                const target = Math.tanh(v * 0.92 + Math.sin(data.targetEpoch * 0.3 + i) * 0.15);
                 const g = (v - target) * 0.05;
                 deltas[i] = -g;
                 gradNormSq += g * g;
               }
+              const gradNorm = Number(Math.sqrt(gradNormSq).toFixed(5));
+              const ok = Number.isFinite(gradNorm) && deltas.every(Number.isFinite);
               self.postMessage({
-                ok: true,
-                epochs,
-                gradNorm: Number(Math.sqrt(gradNormSq).toFixed(5)),
-                deltas: Array.from(deltas)
+                ok, generation: data.generation, jobId: data.jobId, targetEpoch: data.targetEpoch,
+                gradNorm, deltas: Array.from(deltas)
               });
             }
           };
         `;
         const blob = new Blob([workerCode], { type: 'application/javascript' });
-        this._worker = new Worker(URL.createObjectURL(blob));
-        this.workerTrainerStatus.active = true;
-        this._worker.onmessage = (ev) => {
-          const res = ev.data || {};
-          if (res.ok) {
-            this.workerTrainerStatus.workerEpochsCompleted = res.epochs;
-            this.workerTrainerStatus.lastReplayGradNorm = res.gradNorm;
-            if (Array.isArray(res.deltas)) {
-              for (let i = 0; i < Math.min(16, res.deltas.length); i++) {
-                this.W_hyper_u[i] = Math.max(-1.5, Math.min(1.5, this.W_hyper_u[i] + res.deltas[i]));
-              }
-            }
-          }
+        state.url = URL.createObjectURL(blob);
+        const worker = new Worker(state.url), generation = state.generation;
+        state.worker = worker; this._worker = worker; state.workersCreated++;
+        state.admitted = true; state.phase = 'ready';
+        const rejectReply = reason => {
+          state.rejectedReplies++; state.lastRejectedReason = String(reason).slice(0, 160);
+          publishTrainer(this, state);
         };
-      } catch (_) {}
+        const fault = reason => {
+          if (state.worker !== worker || state.generation !== generation) return;
+          state.faults++; retireTrainer(this, state, 'faulted', String(reason).slice(0, 160));
+        };
+        worker.onmessage = ev => {
+          if (state.worker !== worker || state.generation !== generation || !state.admitted ||
+              globalScope.__alivePersistenceClosing || globalScope.__aliveCheckpointRestore) {
+            rejectReply('Reply belongs to an unavailable worker or model generation'); return;
+          }
+          let res;
+          try { res = trainerMessage(ev.data); }
+          catch (error) { rejectReply(error.message); fault('Malformed worker reply'); return; }
+          const job = state.pending;
+          if (!job || res.generation !== generation || res.jobId !== job.jobId || res.targetEpoch !== job.targetEpoch || job.worker !== worker) {
+            rejectReply('Reply has no matching pending job'); return;
+          }
+          try {
+            if (Object.keys(res).length !== 6 || Object.keys(res).some(key => !['ok', 'generation', 'jobId', 'targetEpoch', 'gradNorm', 'deltas'].includes(key)) ||
+                res.ok !== true || typeof res.gradNorm !== 'number' || !Number.isFinite(res.gradNorm) || res.gradNorm < 0) throw new TypeError('Worker reported an invalid result');
+            const deltas = trainerInput(res.deltas), now = trainerTarget(this), expected = job.target;
+            if (now.view !== expected.view || now.buffer !== expected.buffer || now.offset !== expected.offset || now.bytes !== expected.bytes || now.capacity !== expected.capacity) throw new TypeError('Trainer target identity or backing changed');
+            if (job.targetEpoch !== state.committedEpoch + 1) throw new TypeError('Trainer semantic epoch changed');
+            const delta32 = new Float32Array(deltas), next = new Float32Array(16);
+            for (let i = 0; i < 16; i++) {
+              if (!Number.isFinite(delta32[i])) throw new TypeError('Trainer delta exceeds Float32 range');
+              next[i] = Math.max(-1.5, Math.min(1.5, now.view[i] + delta32[i]));
+              if (!Number.isFinite(next[i])) throw new TypeError('Trainer result is nonfinite');
+            }
+            // Every lane and identity has passed; no user-overridable .set and
+            // no await separates this single write from its committed clock.
+            trainerIntrinsics.set.call(now.view, next);
+            clearTimeout(job.timer); state.pending = null;
+            state.committedEpoch = job.targetEpoch; state.applied++; state.lastReplayGradNorm = res.gradNorm;
+            publishTrainer(this, state);
+          } catch (error) { rejectReply(error.message); fault(error.message); }
+        };
+        worker.onerror = event => { event?.preventDefault?.(); fault(event?.message || 'Trainer worker error'); };
+        worker.onmessageerror = () => fault('Trainer worker message could not be decoded');
+        publishTrainer(this, state);
+        return { status: 'ready', ...trainerSnapshot(state) };
+      } catch (error) {
+        state.faults++;
+        return { status: 'failed', ...retireTrainer(this, state, 'faulted', String(error.message || error).slice(0, 160)) };
+      }
+    }
+
+    dispatchWorkerTrainer(latent16) {
+      const state = trainerState(this);
+      if (!state.admitted || !state.worker || globalScope.__alivePersistenceClosing || globalScope.__aliveCheckpointRestore) {
+        return { status: 'blocked', reason: 'Trainer admission is closed' };
+      }
+      if (state.pending) {
+        state.busySkips++; publishTrainer(this, state);
+        return { status: 'busy', jobId: state.pending.jobId };
+      }
+      let input, target;
+      try {
+        input = trainerInput(latent16); target = trainerTarget(this);
+        if (state.nextJobId >= Number.MAX_SAFE_INTEGER || state.committedEpoch >= Number.MAX_SAFE_INTEGER) throw new TypeError('Trainer job or epoch exhausted');
+      } catch (error) {
+        state.rejectedInputs++; state.lastRejectedReason = String(error.message || error).slice(0, 160); publishTrainer(this, state);
+        return { status: 'rejected', reason: state.lastRejectedReason };
+      }
+      const worker = state.worker, job = { generation: state.generation, jobId: ++state.nextJobId,
+        targetEpoch: state.committedEpoch + 1, target, worker, timer: null };
+      state.pending = job;
+      try {
+        job.timer = setTimeout(() => {
+          if (state.pending !== job || state.worker !== worker || state.generation !== job.generation) return;
+          state.timeouts++; state.faults++;
+          retireTrainer(this, state, 'faulted', 'Trainer job timed out; explicit resume is required');
+        }, state.timeoutMs);
+        worker.postMessage({ cmd: 'train_shard', generation: job.generation, jobId: job.jobId, targetEpoch: job.targetEpoch, latent16: input });
+        state.submitted++; publishTrainer(this, state);
+        return { status: 'submitted', generation: job.generation, jobId: job.jobId, targetEpoch: job.targetEpoch };
+      } catch (error) {
+        state.faults++; retireTrainer(this, state, 'faulted', String(error.message || error).slice(0, 160));
+        return { status: 'failed', reason: state.lastError };
+      }
     }
 
     _probeWebGpuHardware() {
@@ -483,6 +730,8 @@
      * Step all 25 Bleeding-Edge Neural & Cyber-Browser capabilities at 60Hz
      */
     step60Hz(runtime, tick = 0, frameCount = 0) {
+      computedPrecisionKernels.delete(this);
+      computedMambaStates.delete(this);
       this.stepCount++;
       const wm = runtime && runtime.continuousWorldModel;
       const hub = runtime && runtime.trainableAlifeNeuralHub;
@@ -538,6 +787,7 @@
         this.mambaSelectiveState16[i] = finiteClamped(A_bar * this.mambaSelectiveState16[i] + deltaT * z[i], 0.0, -10.0, 10.0);
       }
       this.mambaMeanDelta = Number((deltaSum / 16).toFixed(4));
+      computedMambaStates.add(this);
 
       // 3. Optimal-Transport Conditional Flow Matching (OT-CFM straight-line vector field v_θ(x_t, t) ≈ x_1 - x_0)
       const tFlow = (safeFrame % 20) / 20;
@@ -697,14 +947,7 @@
       }
 
       // Dispatch off-main-thread WebWorker shard training every 30 frames (0.5s)
-      if (this._worker && frameCount % 30 === 0) {
-        try {
-          this._worker.postMessage({
-            cmd: 'train_shard',
-            latent16: Array.from(z.subarray(0, 16))
-          });
-        } catch (_) {}
-      }
+      if (frameCount % 30 === 0) this.dispatchWorkerTrainer(z.subarray(0, 16));
 
       // Sync binary .gchad checkpoint to disk every 360 frames (~6 seconds) via Electron IPC
       if (frameCount > 0 && frameCount % 360 === 15) {
@@ -1461,33 +1704,40 @@
       }
     }
 
-    _applyCelegansCompactGraph(stats) {
-      if (!stats || !stats.totalEdges) return;
-      this.celegansLoaded = true;
-      this.celegansTotalEdges = stats.totalEdges;
-      this.celegansUniqueNeurons = stats.uniqueNeurons || 302;
-      this.celegansChemicalEdges = stats.chemicalEdges || 6393;
-      this.celegansGapJunctionEdges = stats.gapJunctionEdges || 986;
-      if (Array.isArray(stats.topHubs) && stats.topHubs.length > 0) {
-        for (let i = 0; i < Math.min(64, stats.topHubs.length); i++) {
-          const hubEntry = stats.topHubs[i];
-          if (hubEntry && typeof hubEntry.name === 'string') {
-            this.celegansHubNames64[i] = hubEntry.name;
-          }
-        }
+    _applyCelegansCompactGraph(stats, request, provenance, expectedFederation, isCurrent) {
+      if (!assetHydration) return false;
+      const checkFederation = arguments.length >= 4;
+      if (checkFederation && this.multiverse10Pantheon !== expectedFederation) return false;
+      const admitted = () => {
+        try { return !isCurrent || isCurrent() === true; } catch (_) { return false; }
+      };
+      if (!admitted()) return false;
+      const lease = request === undefined
+        ? assetHydration.begin(this, assetHydration.GRAPH, { sourceKey: 'direct-graph' }) : request;
+      if (!lease) return false;
+      const publish = candidate => Boolean(candidate &&
+        admitted() &&
+        (!checkFederation || this.multiverse10Pantheon === expectedFederation) &&
+        assetHydration.commit(candidate, this).ok);
+      if (typeof require === 'function' && typeof assetHydration.prepareGraphSync === 'function') {
+        return publish(assetHydration.prepareGraphSync(lease, this, stats, provenance));
       }
-      if (Array.isArray(stats.compactEdges) && stats.compactEdges.length > 0) {
-        const count = Math.min(512, stats.compactEdges.length);
-        this.celegansActiveEdgeCount = count;
-        for (let e = 0; e < count; e++) {
-          const edge = stats.compactEdges[e];
-          if (!Array.isArray(edge) || edge.length < 3) continue;
-          this.celegansEdgeSrc512[e] = edge[0] & 63;
-          this.celegansEdgeDst512[e] = edge[1] & 63;
-          this.celegansEdgeWeight512[e] = Math.max(-127, Math.min(127, edge[2] | 0));
-          this.celegansEdgeType512[e] = edge[3] ? 1 : 0;
-        }
-      }
+      return assetHydration.prepareGraph(lease, this, stats, provenance).then(publish);
+    }
+
+    beginAssetHydration(options = {}) {
+      if (!assetHydration) return null;
+      const sourceKey = options.sourceKey || 'ported-brains-bridge';
+      if (options.isCurrent !== undefined && typeof options.isCurrent !== 'function') return null;
+      const parentIsCurrent = options.isCurrent;
+      const federation = this.multiverse10Pantheon;
+      const isCurrent = () => (!parentIsCurrent || parentIsCurrent() === true) && this.multiverse10Pantheon === federation;
+      const graph = assetHydration.begin(this, assetHydration.GRAPH, { sourceKey });
+      const federationRequest = federation && typeof federation.beginAssetHydration === 'function'
+        ? federation.beginAssetHydration({ sourceKey, isCurrent }) : null;
+      const handle = Object.freeze({ kind: 'sibling-asset-request' });
+      siblingAssetRequests.set(handle, { target: this, graph, federation, federationRequest, isCurrent });
+      return handle;
     }
 
     _initPortedBrainsFromNodeOrIpc() {
@@ -1498,13 +1748,17 @@
           const path = require('path');
           const rootDir = path.resolve(__dirname, '..');
           const wasmPath = path.join(rootDir, 'brains', 'cqm-xylos', 'cqm_kernels.wasm');
-          if (fs.existsSync(wasmPath)) {
-            const buf = fs.readFileSync(wasmPath);
+          if (!this.cqmWasmLoaded && fs.existsSync(wasmPath)) {
+            const buf = readBoundedAsset(fs, wasmPath, 8 * 1024 * 1024);
             this._instantiateCqmWasmFromBuffer(buf);
           }
           const csvPath = path.join(rootDir, 'brains', 'asmodensius-v40', 'celegans_herm_full_edgelist.csv');
           if (fs.existsSync(csvPath)) {
-            const lines = fs.readFileSync(csvPath, 'utf8').split(/\r?\n/);
+            const sourceBytes = readBoundedAsset(fs, csvPath, 2 * 1024 * 1024);
+            const sourceDigest = require('node:crypto').createHash('sha256').update(sourceBytes).digest('hex');
+            const lease = assetHydration && assetHydration.begin(this, assetHydration.GRAPH,
+              { sourceKey: 'node-celegans-csv', expectedSourceDigest: sourceDigest });
+            const lines = sourceBytes.toString('utf8').split(/\r?\n/);
             const degMap = new Map();
             const rawEdges = [];
             let chem = 0, gap = 0;
@@ -1536,7 +1790,9 @@
               gapJunctionEdges: gap,
               topHubs: topHubs.map(([name, weightedDeg]) => ({ name, weightedDeg })),
               compactEdges
-            });
+            }, lease, { sourceDigest, sourceByteLength: sourceBytes.byteLength,
+              sourcePath: 'brains/asmodensius-v40/celegans_herm_full_edgelist.csv',
+              sourceMode: 'node-csv-v1', sourceDigestObserved: true });
           }
         }
       } catch (_) {}
@@ -1545,8 +1801,10 @@
       try {
         const bridge = globalScope.gigachad || globalScope.gigachadBridge;
         if (!this.cqmWasmLoaded && bridge && typeof bridge.invoke === 'function') {
+          const request = this.beginAssetHydration({ sourceKey: 'ported-brains-bridge',
+            isCurrent: () => globalScope.__alivePersistenceClosing !== true });
           bridge.invoke('ported-brains-bridge').then((res) => {
-            this.hydrateFromBridgePayload(res);
+            return this.hydrateFromBridgePayload(res, request);
           }).catch(() => {});
         }
       } catch (_) {}
@@ -1556,11 +1814,21 @@
      * Hydrate CQM-Xylos Zig 0.17.0 WebAssembly binary, C. elegans 7,379-synapse connectome,
      * and Tsotchke `chaos_emb.f32` chaotic attractor embeddings from an Electron IPC payload.
      */
-    hydrateFromBridgePayload(res) {
-      if (!res || typeof res !== 'object') return false;
+    hydrateFromBridgePayload(res, request) {
+      if (!res || typeof res !== 'object' || !assetHydration) return false;
+      const handle = request === undefined ? this.beginAssetHydration() : request;
+      const owned = handle && siblingAssetRequests.get(handle);
+      if (!owned || owned.target !== this || owned.federation !== this.multiverse10Pantheon) return false;
+      siblingAssetRequests.delete(handle);
+      try { if (!owned.isCurrent()) return false; } catch (_) { return false; }
+      if (!owned.graph || assetHydration.isCurrent(owned.graph, this) !== true ||
+          (owned.federation && (typeof owned.federation.isAssetHydrationCurrent !== 'function' ||
+            owned.federation.isAssetHydrationCurrent(owned.federationRequest) !== true))) return false;
       let hydrated = false;
+      const results = [];
       try {
-        if (typeof res.wasmBase64 === 'string' && res.wasmBase64.length > 64) {
+        if (!this.cqmWasmLoaded && typeof res.wasmBase64 === 'string' &&
+            res.wasmBase64.length > 64 && res.wasmBase64.length <= 8 * 1024 * 1024) {
           let bytes = null;
           if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
             const buf = Buffer.from(res.wasmBase64, 'base64');
@@ -1576,16 +1844,18 @@
           }
         }
         if (res.celegansStats) {
-          this._applyCelegansCompactGraph(res.celegansStats);
-          hydrated = true;
+          results.push(this._applyCelegansCompactGraph(res.celegansStats, owned.graph,
+            res.assetProvenance && res.assetProvenance.celegans, owned.federation, owned.isCurrent));
         }
-        if (this.multiverse10Pantheon && typeof this.multiverse10Pantheon.hydrateFromBridgePayload === 'function') {
-          if (this.multiverse10Pantheon.hydrateFromBridgePayload(res)) {
-            hydrated = true;
-          }
+        if (owned.federation && typeof owned.federation.hydrateFromBridgePayload === 'function') {
+          results.push(owned.federation.hydrateFromBridgePayload(res, owned.federationRequest));
         }
       } catch (_) {}
-      return hydrated;
+      if (results.some(value => value && typeof value.then === 'function')) {
+        return Promise.all(results.map(value => Promise.resolve(value).catch(() => false)))
+          .then(values => hydrated || values.some(Boolean));
+      }
+      return hydrated || results.some(Boolean);
     }
 
     /**

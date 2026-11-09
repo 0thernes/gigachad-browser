@@ -20,5 +20,8 @@
   "ytdlpPath": "",
   "piiFirewall": true,
   "allowCloudImages": false,
-  "stealthCloak": false
+  "stealthCloak": false,
+  "torAutoStart": false,
+  "torPath": "",
+  "torSocksPort": 9050
 }

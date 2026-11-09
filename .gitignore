@@ -1,6 +1,13 @@
 node_modules/
 config.json
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.snapshot
 *.log
 dist/
 out/
@@ -15,3 +22,15 @@ venv/
 GigachadMedia/
 tracker-blocklist.local.txt
 tracker-allowlist.local.txt
+# Local research captures include browser profiles, document extracts and traces.
+# Publish synthetic test data from tests/fixtures instead.
+research_notes/
+/GIGACHAD_Browser_Deep_Dive_Guide.pdf
+# Superseded local diagnostic; the opt-in portable probe is alive-live-onion-probe.cjs.
+/scripts/probe_live_tor.cjs
+
+# Generated verification artifacts that must not be committed:
+# full source-tree snapshots duplicate git history, and raw compositor traces
+# exceed GitHub's 100 MB per-file limit. Summaries and reports remain tracked.
+research_notes/**/source-snapshot*/
+research_notes/**/compositor-trace.json

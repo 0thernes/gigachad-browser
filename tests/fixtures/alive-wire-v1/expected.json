@@ -1,0 +1,206 @@
+{
+  "scope": "Synthetic interchange fixture; expected bytes read independently using Node Buffer from source views, not decoded using production codec",
+  "tensorCount": 11,
+  "tensors": [
+    {
+      "id": "model.Int8Array",
+      "dtype": "Int8Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Int8Array"
+          ]
+        }
+      ],
+      "hex": "fd13"
+    },
+    {
+      "id": "model.Uint8Array",
+      "dtype": "Uint8Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint8Array"
+          ]
+        }
+      ],
+      "hex": "fd13"
+    },
+    {
+      "id": "model.Uint8ClampedArray",
+      "dtype": "Uint8ClampedArray",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint8ClampedArray"
+          ]
+        }
+      ],
+      "hex": "0013"
+    },
+    {
+      "id": "model.Int16Array",
+      "dtype": "Int16Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Int16Array"
+          ]
+        }
+      ],
+      "hex": "fdff1300"
+    },
+    {
+      "id": "model.Uint16Array",
+      "dtype": "Uint16Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint16Array"
+          ]
+        }
+      ],
+      "hex": "fdff1300"
+    },
+    {
+      "id": "model.Int32Array",
+      "dtype": "Int32Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Int32Array"
+          ]
+        }
+      ],
+      "hex": "fdffffff13000000"
+    },
+    {
+      "id": "model.Uint32Array",
+      "dtype": "Uint32Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint32Array"
+          ]
+        }
+      ],
+      "hex": "fdffffff13000000"
+    },
+    {
+      "id": "model.Float32Array",
+      "dtype": "Float32Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Float32Array"
+          ]
+        },
+        {
+          "root": "model",
+          "keys": [
+            "aliasFloat32"
+          ]
+        }
+      ],
+      "hex": "000000800000003b"
+    },
+    {
+      "id": "model.Float64Array",
+      "dtype": "Float64Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Float64Array"
+          ]
+        }
+      ],
+      "hex": "0000000000000080000000000000603f"
+    },
+    {
+      "id": "model.BigInt64Array",
+      "dtype": "BigInt64Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "BigInt64Array"
+          ]
+        }
+      ],
+      "hex": "0000000000000080ffffffffffffff7f"
+    },
+    {
+      "id": "model.BigUint64Array",
+      "dtype": "BigUint64Array",
+      "dimensions": [
+        2
+      ],
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "BigUint64Array"
+          ]
+        }
+      ],
+      "hex": "0000000000000000ffffffffffffffff"
+    }
+  ],
+  "states": {
+    "model.bias": {
+      "type": "f64",
+      "littleEndianHex": "0000000000000080"
+    },
+    "model.step": {
+      "type": "i53",
+      "value": 42
+    },
+    "model.word": {
+      "type": "bigint",
+      "signed": false,
+      "bits": 64,
+      "littleEndianHex": "ffffffffffffffff"
+    }
+  },
+  "payloadBytes": 5493,
+  "sha256": "a07140d8a8fe2787e94960d4ad21bb0dcfd8a8699b05327c314fa8ced33a2cb5"
+}

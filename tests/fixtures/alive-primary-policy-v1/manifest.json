@@ -1,0 +1,57 @@
+{
+  "schema": "gigachad.synthetic-test-fixtures.v1",
+  "classification": "public-synthetic-fixture",
+  "scope": "Six finite Float32 primary-policy views, eight alias paths, six separate backings, and their fixed independent expected catalog. Synthetic edge values include negative zero and a subnormal; frozen baselines intentionally differ from live weights.",
+  "transfer": "Exact byte copies; no encoding, newline or JSON reformatting of fixture contents.",
+  "exclusions": "No user profile, runtime genome, application source extracts or unrelated research notes copied.",
+  "files": [
+    {
+      "file": "payload.json",
+      "byteLength": 7065,
+      "sha256": "30ddc567deb4f6846a44a3eebdf5f9fe2b01f0d722bcb9519c2fe320ba70f1b4",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/primary-policy-fixture-v1/payload.json"
+    },
+    {
+      "file": "W_actor.bin",
+      "byteLength": 320,
+      "sha256": "bbe15869f37e8fd0402bf6b0dad9269ce7a6a97f0dba63c118221cea96c242b9",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/primary-policy-fixture-v1/W_actor.bin"
+    },
+    {
+      "file": "W_metamorph.bin",
+      "byteLength": 120,
+      "sha256": "a6eac0e463b4a254ade6d0c1ce8d36a7894d8ec19f7435bf88c3456a51610959",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/primary-policy-fixture-v1/W_metamorph.bin"
+    },
+    {
+      "file": "W_critic.bin",
+      "byteLength": 64,
+      "sha256": "2087a5dbc1327f9aa7d47d3fe0c37cc499a6b37a89ead2f6cdee448096a36a0d",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/primary-policy-fixture-v1/W_critic.bin"
+    },
+    {
+      "file": "W_world.bin",
+      "byteLength": 1024,
+      "sha256": "a018ee8f6d46ea8ef6238bf8099106186a6e0acde3deef88bf7e9063ea3e0dd9",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/primary-policy-fixture-v1/W_world.bin"
+    },
+    {
+      "file": "W_actor_frozen.bin",
+      "byteLength": 320,
+      "sha256": "bdfd691f4803c81b7f2dd4501630b40317050bebd1103e2c91b3795c6638abe3",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/primary-policy-fixture-v1/W_actor_frozen.bin"
+    },
+    {
+      "file": "W_world_frozen.bin",
+      "byteLength": 1024,
+      "sha256": "b4d18a17d57f7a6ada0337f8de8bbd02b9c67389ce32225931c1ad7a817232b9",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/primary-policy-fixture-v1/W_world_frozen.bin"
+    },
+    {
+      "file": "expected-catalog.json",
+      "byteLength": 7527,
+      "sha256": "8bed358e5ec1b729a7e78efbdd245020289246c95f798e7cd92845a37afc6242",
+      "sourcePath": "research_notes/alive-overdrive-verification/learned-state-continuity/primary-policy-expected-catalog-v1-20261109.json"
+    }
+  ]
+}

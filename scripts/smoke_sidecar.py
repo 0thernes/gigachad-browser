@@ -270,7 +270,10 @@ def main():
             "text": "Tor v3 hidden service Ed25519 SHA3-256 checksum IPFS Merkle DAG cryptography zero-knowledge"
         })
         assert status == 200 and ddw["ok"] is True and ddw["tor_v3_onion_address"].endswith(".onion") and len(ddw["tor_v3_onion_address"]) == 62, ddw
-        assert ddw["ipfs_merkle_cid_v1"].startswith("bafybei") and len(ddw["circuit_hops"]) == 3, ddw
+        assert ddw["ipfs_merkle_cid_v1"] is None and ddw["circuit_hops"] == [], ddw
+        assert ddw["network_observed"] is False and ddw["neural"] is False, ddw
+        status, empty_ddw = request("POST", "/deep_dark_web_intel", {"url": "https://example.com", "text": "ordinary page"})
+        assert status == 200 and empty_ddw["tor_v3_onion_address"] is None and empty_ddw["verified_page_onions"] == [], empty_ddw
         assert_honest(ddw, "/deep_dark_web_intel")
 
         status_413, body_413 = request("POST", "/classify", {"text": "A" * 2_050_000})

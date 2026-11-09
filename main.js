@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, session, webContents, shell, Menu, clipboard } = require('electron');
+const { app, BrowserWindow, ipcMain, session, webContents, shell, Menu, clipboard, dialog } = require('electron');
 const { spawn, execFile } = require('child_process');
 const crypto = require('crypto');
 const fs = require('fs');
@@ -12,6 +12,11 @@ const { loadFilters, isTrackerUrl } = require('./blocklist');
 const { loadConfig, saveUserConfig, normalizeOpenAiBase } = require('./config');
 const { prepareOutboundMessages } = require('./systems/outbound-privacy-policy');
 const { isTrustedChromeSender } = require('./systems/ipc-authorization');
+const { validateOnionAddress, isOnionUrl, probeSocks5, configuredTorPorts, applyFailClosedProxy, createNavigationEvidence } = require('./systems/deep-web-transport');
+const { createTorService } = require('./systems/alive-tor-service.cjs');
+const { createStore: createGenomeStore } = require('./systems/alive-genome-store.cjs');
+const { installGenomeIpc } = require('./systems/alive-genome-ipc.cjs');
+const { migrateLegacyNative } = require('./systems/alive-genome-migration.cjs');
 const {
   addHistory,
   toggleBookmark,
@@ -61,8 +66,13 @@ if (SMOKE) {
   app.commandLine.appendSwitch('js-flags', '--max-old-space-size=2048');
 }
 
+// Electron scopes its single-instance lock to this normal user-data profile.
+// Smoke owns a unique temporary profile and never claims the user's writer.
+const primaryInstance = SMOKE || app.requestSingleInstanceLock();
+if (!primaryInstance) app.quit();
 let cfg = loadConfig({ root: ROOT, isolated: SMOKE });
 let mainWindow = null;
+let genomeStore = null, genomeIpc = null, genomeWindowGuard = null;
 let sidecarProcess = null;
 let llamaProcess = null;
 let _localBrainsHttpServer = null;
@@ -96,6 +106,23 @@ let bookmarks = [];
 let closedTabs = [];
 let downloads = [];
 let sidecarLastError = '';
+const deepWebNavigation = createNavigationEvidence();
+const managedTor = createTorService();
+let deepWebTransport = { checkedAt: 0, socksHandshakeVerified: false, activeTorPort: null, appliedSessions: [], routing: { ok: false, failClosed: true, appliedCount: 0, errors: [] } };
+let deepWebProbePending = null;
+async function refreshDeepWebTransport() {
+  if (deepWebProbePending) return deepWebProbePending;
+  deepWebProbePending = (async () => {
+    const ports = configuredTorPorts(process.env, cfg.torSocksPort);
+    const probes = SMOKE ? [] : await Promise.all(ports.map(port => probeSocks5(port)));
+    const active = probes.find(item => item.verified);
+    const routing = await applyFailClosedProxy([session.fromPartition('persist:gigachad_vault')], { activeTorPort: active?.port || null });
+    deepWebTransport = { checkedAt: Date.now(), socksHandshakeVerified: Boolean(active), activeTorPort: active?.port || null, probes,
+      appliedSessions: routing.appliedSessions, routing: { ...routing, appliedSessions: undefined } };
+    return deepWebTransport;
+  })().finally(() => { deepWebProbePending = null; });
+  return deepWebProbePending;
+}
 let activeAiAbort = null;
 let permissionSeq = 0;
 const pendingPermissions = new Map();
@@ -207,6 +234,27 @@ function isLoopbackHttp(rawUrl) {
   } catch (_) {
     return false;
   }
+}
+
+// True when a hostname/IP literal points at loopback, link-local (incl. 169.254.169.254 cloud
+// metadata), unique-local or RFC1918 private space. Used to block server-side-fetch SSRF.
+function isBlockedFetchHost(hostname) {
+  const h = String(hostname || '').toLowerCase().replace(/^\[|\]$/g, '');
+  if (!h) return true;
+  if (h === 'localhost' || h.endsWith('.localhost') || h.endsWith('.internal') || h.endsWith('.local')) return true;
+  if (h === '::1') return true;
+  if (h.startsWith('fc') || h.startsWith('fd')) return true;   // fc00::/7 unique-local
+  if (/^fe[89ab]/.test(h)) return true;                        // fe80::/10 link-local
+  const m = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.exec(h);
+  if (m) {
+    const a = +m[1], b = +m[2];
+    if (a === 0 || a === 127 || a === 10) return true;
+    if (a === 169 && b === 254) return true;                   // link-local incl. cloud metadata
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 192 && b === 168) return true;
+    if (a >= 224) return true;                                 // multicast / reserved
+  }
+  return false;
 }
 
 function fromChrome(event) {
@@ -485,6 +533,7 @@ function wireHost(win) {
   });
   win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   win.webContents.on('will-attach-webview', (event, webPreferences, params) => {
+    if (params.partition !== 'persist:gigachad_vault') { event.preventDefault(); return; }
     delete webPreferences.preload;
     delete webPreferences.preloadURL;
     webPreferences.nodeIntegration = false;
@@ -604,6 +653,8 @@ function createWindow() {
       nodeIntegrationInSubFrames: false
     }
   });
+  mainWindow = win;
+  genomeWindowGuard = genomeIpc.guardWindow(win);
   if (!SMOKE) {
     const ensureVisible = () => {
       try {
@@ -776,7 +827,7 @@ function installSessionHooks() {
     });
   });
 
-  vaultSession.webRequest.onBeforeRequest({ urls: ['*://*/*'] }, (details, callback) => {
+  vaultSession.webRequest.onBeforeRequest({ urls: ['*://*/*'] }, async (details, callback) => {
     if (SMOKE) {
       let ownedLocalAsset = false;
       try {
@@ -786,6 +837,22 @@ function installSessionHooks() {
       } catch (_) {}
       if (!ownedLocalAsset) return callback({ cancel: true });
     }
+    if (isOnionUrl(details.url)) {
+      if (!validateOnionAddress(details.url).valid || !deepWebTransport.socksHandshakeVerified || !deepWebTransport.appliedSessions.includes(vaultSession)) {
+        deepWebNavigation.begin(details, null, false);
+        deepWebNavigation.complete(details, 'onion_transport_unavailable_or_invalid_address');
+        return callback({ cancel: true });
+      }
+      try {
+        const route = await vaultSession.resolveProxy(details.url);
+        if (route !== `SOCKS5 127.0.0.1:${deepWebTransport.activeTorPort}`) throw new Error('onion_route_not_exclusive_socks5');
+        deepWebNavigation.begin(details, route, true);
+      } catch (err) {
+        deepWebNavigation.begin(details, null, false);
+        deepWebNavigation.complete(details, err.message);
+        return callback({ cancel: true });
+      }
+    } else deepWebNavigation.begin(details, null, false);
     const urlLower = details.url.toLowerCase();
     if (isTrackerUrl(urlLower, FILTERS.block, FILTERS.allow)) {
       blockedCount += 1;
@@ -802,6 +869,9 @@ function installSessionHooks() {
     }
     callback({ cancel: false });
   });
+
+  vaultSession.webRequest.onCompleted(details => deepWebNavigation.complete(details));
+  vaultSession.webRequest.onErrorOccurred(details => deepWebNavigation.complete(details, details.error || 'request_failed'));
 
   vaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     delete details.requestHeaders['X-Client-Data'];
@@ -931,41 +1001,20 @@ async function discoverDefaultLlm() {
 }
 
 const NON_CHAT_MODEL_RE = /(embed|bge-m3|nomic-embed|asr|parakeet|diarization|whisper|kokoro)/i;
-const PREFERRED_AGENT_MODELS = [
-  'LFM2.5-1.2B-Instruct',
-  'LFM2.5-1.2B-Instruct-Q4_K_M',
-  'LFM2.5-8B-A1B-UD-Q4_K_XL',
-  'nemotron-cascade-2-latest',
-  'NVIDIA-Nemotron3-Nano-4B-Q4_K_M',
-  'gemma-4-E2B-it-UD-Q8_K_XL',
-  'Ternary-Bonsai-2-27B-Abliterated-v2-PQ2_0-MTP',
-  'LFM2.5-VL-3B-F16',
-  'qwen3-vl-2b'
-];
-const PREFERRED_VISION_MODELS = [
-  'gemma-4-E2B-it-UD-Q8_K_XL',
-  'qwen3-vl-2b',
-  'LFM2.5-VL-3B-F16'
-];
-
 function rankChatModels(rawModels) {
-  const chatOnly = (rawModels || []).filter((id) => id && !NON_CHAT_MODEL_RE.test(id));
-  const pool = chatOnly.length ? chatOnly : (rawModels || []).filter(Boolean);
-  return [...pool].sort((a, b) => {
-    const ia = PREFERRED_AGENT_MODELS.indexOf(a);
-    const ib = PREFERRED_AGENT_MODELS.indexOf(b);
-    if (ia !== -1 && ib !== -1) return ia - ib;
-    if (ia !== -1) return -1;
-    if (ib !== -1) return 1;
-    return a.localeCompare(b);
+  const chatOnly = (rawModels || []).filter(id => typeof id === 'string' && id && !NON_CHAT_MODEL_RE.test(id));
+  const configured = [cfg.localModel, cfg.omniModel].filter(Boolean);
+  return [...new Set(chatOnly)].sort((a, b) => {
+    const ai = configured.indexOf(a), bi = configured.indexOf(b);
+    return (ai < 0 ? configured.length : ai) - (bi < 0 ? configured.length : bi) || a.localeCompare(b);
   });
 }
 
 function pickBestVisionModel(models) {
-  for (const cand of PREFERRED_VISION_MODELS) {
-    if ((models || []).includes(cand)) return cand;
-  }
-  return (models || []).find((m) => /(vl|vision|gemma-4|omni)/i.test(m)) || (models || [])[0] || '';
+  if (cfg.omniModel && (models || []).includes(cfg.omniModel)) return cfg.omniModel;
+  // The catalog often lacks capability metadata. This is only a name hint;
+  // inference success, not a guessed brand identity, verifies image support.
+  return (models || []).find(model => /(^|[-_])(vl|vision|omni)([-_]|$)/i.test(model)) || '';
 }
 
 let localModelsCache = { base: '', ts: 0, value: null };
@@ -976,7 +1025,9 @@ async function listLocalModels(baseOverride, forceRefresh = false) {
     return localModelsCache.value;
   }
   const headers = {};
-  if (cfg.llmApiKey) headers.Authorization = `Bearer ${cfg.llmApiKey}`;
+  let matchesConfiguredOrigin = false;
+  try { matchesConfiguredOrigin = new URL(base).origin === new URL(normalizeOpenAiBase(cfg.llmBaseUrl)).origin; } catch (_) {}
+  if (cfg.llmApiKey && matchesConfiguredOrigin) headers.Authorization = `Bearer ${cfg.llmApiKey}`;
   const result = await fetchJson(`${base}/models`, { headers }, 2500);
   if (!result.ok) {
     const message = result.data?.error?.message || result.data?.error || `HTTP ${result.status}`;
@@ -998,7 +1049,7 @@ async function listLocalModels(baseOverride, forceRefresh = false) {
 
 async function queryRouter(prompt, pageLength, sidecarUrl, allowCloud) {
   if (allowCloud) {
-    return { target: 'ultra', implementation: 'openrouter-free-omni-default', model: cfg.openRouterModel || 'nvidia/nemotron-3.5-super-vl:free' };
+    return { target: 'ultra', implementation: 'openrouter-free-omni-default', model: cfg.openRouterModel || null };
   }
   try {
     const result = await fetchJson(`${sidecarUrl}/route`, {
@@ -1069,11 +1120,32 @@ Rules:
 function registerIpc() {
   ipcMain.handle('config-get', (event) => (fromChrome(event) ? publicConfig() : { ok: false, error: 'unauthorized' }));
 
-  ipcMain.handle('config-save', (event, partial) => {
+  ipcMain.handle('config-save', async (event, partial) => {
     if (!fromChrome(event)) return { ok: false, error: 'unauthorized' };
     try {
       if (!partial || typeof partial !== 'object') throw new Error('Expected an object');
       const next = { ...partial };
+      // Executable paths that main spawns (python / yt-dlp / llama-server) can turn renderer code-exec
+      // into host process execution. Require explicit user confirmation for any CHANGE to one of them,
+      // so a prompt-injected agent cannot silently repoint them while the Settings UI still works.
+      const execKeys = ['pythonPath', 'ytdlpPath', 'llamaServerPath', 'torPath'];
+      const changedExec = execKeys.filter((k) => k in next && String(next[k] || '') !== String(cfg[k] || ''));
+      if (changedExec.length) {
+        let approved = false;
+        try {
+          const opts = {
+            type: 'warning', buttons: ['Cancel', 'Allow change'], defaultId: 0, cancelId: 0, noLink: true,
+            title: 'Confirm executable path change',
+            message: 'An executable that Gigachad launches is being changed. Allow only if you did this in Settings.',
+            detail: changedExec.map((k) => `${k} -> ${String(next[k] || '(cleared)')}`).join('\n')
+          };
+          const res = (mainWindow && !mainWindow.isDestroyed())
+            ? await dialog.showMessageBox(mainWindow, opts)
+            : await dialog.showMessageBox(opts);
+          approved = res.response === 1;
+        } catch (_) { approved = false; }
+        if (!approved) { for (const k of changedExec) delete next[k]; }
+      }
       if (next.llmBaseUrl) next.llmBaseUrl = normalizeOpenAiBase(next.llmBaseUrl);
       if (next.sidecarPort != null && next.sidecarPort !== '') {
         const port = Number(next.sidecarPort);
@@ -1125,13 +1197,30 @@ function registerIpc() {
     return { ok: true };
   });
 
+  const localBrainPortalRe = /^http:\/\/127\.0\.0\.1:\d+\/((?:dimension-omega-singularity|asmodensius-v40|cqm-xylos|glitchling|tsotchke-diffusion|thingmaker|grimoire-arcane|quantum_neural_manifold_3d\.html)(?:\/.*)?)$/i;
+  const rewriteBrainPortalList = async (items) => {
+    if (!Array.isArray(items) || !items.some((it) => it && localBrainPortalRe.test(String(it.url || '')))) return items;
+    const httpPort = await ensureLocalBrainsHttpServer().catch(() => 0);
+    if (httpPort > 0) {
+      for (const it of items) {
+        const m = String(it?.url || '').match(localBrainPortalRe);
+        if (m) it.url = `http://127.0.0.1:${httpPort}/${m[1]}`;
+      }
+    }
+    return items;
+  };
+
   ipcMain.handle('history-add', (event, entry) => {
     if (!fromChrome(event)) return [];
     history = addHistory(history, entry);
     saveJson(userFile('history.json'), history);
     return history.slice(0, 50);
   });
-  ipcMain.handle('history-get', (event) => (fromChrome(event) ? history.slice(0, 200) : []));
+  ipcMain.handle('history-get', async (event) => {
+    if (!fromChrome(event)) return [];
+    await rewriteBrainPortalList(history);
+    return history.slice(0, 200);
+  });
   ipcMain.handle('history-clear', (event) => {
     if (!fromChrome(event)) return [];
     history = [];
@@ -1145,7 +1234,10 @@ function registerIpc() {
     saveJson(userFile('bookmarks.json'), bookmarks);
     return { ok: !result.error, added: result.added, error: result.error || '', bookmarks };
   });
-  ipcMain.handle('bookmark-list', (event) => (fromChrome(event) ? bookmarks : []));
+  ipcMain.handle('bookmark-list', async (event) => {
+    if (!fromChrome(event)) return [];
+    return await rewriteBrainPortalList(bookmarks);
+  });
   ipcMain.handle('bookmark-delete', (event, url) => {
     if (!fromChrome(event)) return [];
     bookmarks = bookmarks.filter((item) => item.url !== url);
@@ -1162,16 +1254,7 @@ function registerIpc() {
     if (!fromChrome(event)) return { tabs: [] };
     const saved = loadJson(userFile('session.json'), { tabs: [] });
     const clean = sanitizeSession(saved.tabs);
-    const localBrainPortalRe = /^http:\/\/127\.0\.0\.1:\d+\/((?:dimension-omega-singularity|asmodensius-v40|cqm-xylos|glitchling|tsotchke-diffusion|thingmaker|grimoire-arcane|quantum_neural_manifold_3d\.html)(?:\/.*)?)$/i;
-    if (clean.some((t) => t && localBrainPortalRe.test(String(t.url || '')))) {
-      const httpPort = await ensureLocalBrainsHttpServer().catch(() => 0);
-      if (httpPort > 0) {
-        for (const tab of clean) {
-          const m = String(tab?.url || '').match(localBrainPortalRe);
-          if (m) tab.url = `http://127.0.0.1:${httpPort}/${m[1]}`;
-        }
-      }
-    }
+    await rewriteBrainPortalList(clean);
     return { tabs: clean };
   });
   ipcMain.handle('downloads-list', (event) => (fromChrome(event) ? downloads : []));
@@ -1183,11 +1266,14 @@ function registerIpc() {
     return closedTabs;
   });
 
-  ipcMain.handle('tab-reopen-closed', (event) => {
+  ipcMain.handle('tab-reopen-closed', async (event) => {
     if (!fromChrome(event)) return { ok: false, tab: null, reopened: null };
     const popped = popClosedTab(closedTabs);
     closedTabs = popped.stack;
     saveJson(userFile('closed_tabs.json'), closedTabs);
+    if (popped.tab && localBrainPortalRe.test(String(popped.tab.url || ''))) {
+      await rewriteBrainPortalList([popped.tab]);
+    }
     return { ok: Boolean(popped.tab), tab: popped.tab, reopened: popped.tab };
   });
 
@@ -1267,6 +1353,12 @@ function registerIpc() {
     } catch (err) {
       return { ok: false, error: err.message };
     }
+  });
+
+  ipcMain.handle('alive-research-plan', async (event, payload = {}) => {
+    if (!fromChrome(event)) return { status: 'blocked', reason: 'unauthorized' };
+    if (SMOKE) return { status: 'unavailable', reason: 'Providers disabled in isolated smoke mode' };
+    return require('./systems/alive-research-planner.cjs').planResearch({ cfg, payload });
   });
 
   ipcMain.handle('llm-list-models', async (event, payload) => {
@@ -1412,7 +1504,16 @@ function registerIpc() {
       }
       if (cmd.action === 'upload_file') {
         const filePath = String(cmd.filePath || '').trim();
-        if (!filePath || !fs.existsSync(filePath)) return { ok: false, error: 'upload_file requires an existing local filePath' };
+        if (!filePath) return { ok: false, error: 'upload_file requires a filePath' };
+        const resolved = path.resolve(filePath);
+        // Restrict uploads to the app's managed Downloads folder. Otherwise an absolute path to any
+        // system file (ssh keys, tokens, cookies) could be injected into the hostile guest page via
+        // DOM.setFileInputFiles and exfiltrated. CDP bypasses the human file-picker that normally gates this.
+        const uploadRoot = path.resolve(DOWNLOAD_DIR) + path.sep;
+        if (!(resolved + path.sep).toLowerCase().startsWith(uploadRoot.toLowerCase())) {
+          return { ok: false, error: 'upload_file is restricted to the Downloads folder' };
+        }
+        if (!fs.existsSync(resolved)) return { ok: false, error: 'upload_file requires an existing local filePath' };
         await wc.debugger.sendCommand('DOM.enable');
         const doc = await wc.debugger.sendCommand('DOM.getDocument', { depth: 2 });
         const node = await wc.debugger.sendCommand('DOM.querySelector', {
@@ -1422,9 +1523,9 @@ function registerIpc() {
         if (!node || !node.nodeId) return { ok: false, error: 'No matching <input type="file"> element found on page' };
         await wc.debugger.sendCommand('DOM.setFileInputFiles', {
           nodeId: node.nodeId,
-          files: [path.resolve(filePath)]
+          files: [resolved]
         });
-        return { ok: true, detail: `Uploaded ${path.basename(filePath)} into ${cmd.selector || 'input[type="file"]'}` };
+        return { ok: true, detail: `Uploaded ${path.basename(resolved)} into ${cmd.selector || 'input[type="file"]'}` };
       }
       return { ok: false, error: 'Unsupported action' };
     } catch (err) {
@@ -2151,12 +2252,31 @@ function registerIpc() {
       const wasmPath = path.join(localBrainsDir, 'cqm-xylos', 'cqm_kernels.wasm');
       const celegansPath = path.join(localBrainsDir, 'asmodensius-v40', 'celegans_herm_full_edgelist.csv');
       const chaosEmbPath = path.join(localBrainsDir, 'tsotchke-diffusion', 'models', 'chaos_emb.f32');
+      // Bound reads on the opened descriptor. Receipts describe these exact
+      // cached bytes, even if a file changes after the payload is built.
+      const readAsset = (filename, maximum) => {
+        const fd = fs.openSync(filename, 'r');
+        try {
+          const size = fs.fstatSync(fd).size;
+          if (!Number.isSafeInteger(size) || size < 0 || size > maximum) throw new Error('Ported brain asset exceeds read bound');
+          const bytes = Buffer.alloc(size);
+          let offset = 0;
+          while (offset < size) {
+            const count = fs.readSync(fd, bytes, offset, size - offset, null);
+            if (!count) throw new Error('Ported brain asset changed during read');
+            offset += count;
+          }
+          if (fs.readSync(fd, Buffer.alloc(1), 0, 1, null)) throw new Error('Ported brain asset grew during read');
+          return bytes;
+        } finally { fs.closeSync(fd); }
+      };
+      const assetProvenance = { celegans: null, chaos: null };
 
       let wasmBase64 = null;
       let wasmExports = [];
       let wasmBench = null;
       if (fs.existsSync(wasmPath)) {
-        const wasmBuf = fs.readFileSync(wasmPath);
+        const wasmBuf = readAsset(wasmPath, 8 * 1024 * 1024);
         wasmBase64 = wasmBuf.toString('base64');
         const mod = new WebAssembly.Module(wasmBuf);
         wasmExports = WebAssembly.Module.exports(mod).map((e) => e.name);
@@ -2177,15 +2297,28 @@ function registerIpc() {
       let chaosEmbBase64 = null;
       let chaosEmbTotalFloats = 0;
       if (fs.existsSync(chaosEmbPath)) {
-        const chaosBuf = fs.readFileSync(chaosEmbPath);
+        const chaosBuf = readAsset(chaosEmbPath, 65536);
         const sliceLen = Math.min(chaosBuf.length, 6144);
         chaosEmbBase64 = chaosBuf.subarray(0, sliceLen).toString('base64');
         chaosEmbTotalFloats = Math.floor(sliceLen / 4);
+        assetProvenance.chaos = {
+          sourceDigest: crypto.createHash('sha256').update(chaosBuf).digest('hex'),
+          sourceByteLength: chaosBuf.byteLength,
+          sourcePath: 'brains/tsotchke-diffusion/models/chaos_emb.f32',
+          sourceMode: 'main-ipc-chaos-prefix-v1', sourceDigestObserved: true
+        };
       }
 
       let celegansStats = { totalEdges: 0, uniqueNeurons: 0, chemicalEdges: 0, gapJunctionEdges: 0, topHubs: [], compactEdges: [] };
       if (fs.existsSync(celegansPath)) {
-        const lines = fs.readFileSync(celegansPath, 'utf8').split(/\r?\n/);
+        const celegansBytes = readAsset(celegansPath, 2 * 1024 * 1024);
+        const lines = celegansBytes.toString('utf8').split(/\r?\n/);
+        assetProvenance.celegans = {
+          sourceDigest: crypto.createHash('sha256').update(celegansBytes).digest('hex'),
+          sourceByteLength: celegansBytes.byteLength,
+          sourcePath: 'brains/asmodensius-v40/celegans_herm_full_edgelist.csv',
+          sourceMode: 'main-ipc-csv-v1', sourceDigestObserved: true
+        };
         const degMap = new Map();
         const rawEdges = [];
         let chemCount = 0;
@@ -2235,7 +2368,8 @@ function registerIpc() {
         wasmBench,
         chaosEmbBase64,
         chaosEmbTotalFloats,
-        celegansStats
+        celegansStats,
+        assetProvenance
       };
       return _cachedPortedBrainsPayload;
     } catch (err) {
@@ -2244,98 +2378,26 @@ function registerIpc() {
   });
 
   ipcMain.handle('deep-dark-web-probe', async (event, payload = {}) => {
-    if (!fromChrome(event)) return { ok: false };
+    if (!fromChrome(event)) return { ok: false, error: 'unauthorized' };
     try {
-      const seedStr = String(payload?.seed || payload?.url || 'gigachad-deep-dark-web-substrate');
-      const pubkey = crypto.createHash('sha256').update('ed25519-onion-v3:' + seedStr).digest(); // 32B
-      const versionByte = Buffer.from([0x03]);
-      let checksum;
-      try {
-        checksum = crypto
-          .createHash('sha3-256')
-          .update(Buffer.concat([Buffer.from('.onion checksum', 'ascii'), pubkey, versionByte]))
-          .digest()
-          .subarray(0, 2);
-      } catch {
-        checksum = crypto
-          .createHash('sha256')
-          .update(Buffer.concat([Buffer.from('.onion checksum', 'ascii'), pubkey, versionByte]))
-          .digest()
-          .subarray(0, 2);
-      }
-      const raw35 = Buffer.concat([pubkey, checksum, versionByte]); // 35 bytes = 280 bits = 56 Base32 chars
-      const b32Alphabet = 'abcdefghijklmnopqrstuvwxyz234567';
-      let bits = 0;
-      let val = 0;
-      let onionHost = '';
-      for (let i = 0; i < raw35.length; i++) {
-        val = (val << 8) | raw35[i];
-        bits += 8;
-        while (bits >= 5) {
-          onionHost += b32Alphabet[(val >>> (bits - 5)) & 31];
-          bits -= 5;
-        }
-      }
-      const torV3OnionAddress = onionHost.slice(0, 56) + '.onion';
-      const cidDigest = crypto.createHash('sha256').update('ipfs-dag-pb:' + seedStr).digest();
-      let cidB32 = 'bafybei';
-      bits = 0;
-      val = 0;
-      for (let i = 0; i < cidDigest.length && cidB32.length < 59; i++) {
-        val = (val << 8) | cidDigest[i];
-        bits += 8;
-        while (bits >= 5 && cidB32.length < 59) {
-          cidB32 += b32Alphabet[(val >>> (bits - 5)) & 31];
-          bits -= 5;
-        }
-      }
-      const probePort = (port) =>
-        new Promise((resolve) => {
-          const sock = new net.Socket();
-          let settled = false;
-          const finish = (alive) => {
-            if (settled) return;
-            settled = true;
-            try { sock.destroy(); } catch {}
-            resolve(alive);
-          };
-          sock.setTimeout(55);
-          sock.once('connect', () => finish(true));
-          sock.once('timeout', () => finish(false));
-          sock.once('error', () => finish(false));
-          try {
-            sock.connect(port, '127.0.0.1');
-          } catch {
-            finish(false);
-          }
-        });
-      const [tor9050, tor9150] = await Promise.all([probePort(9050), probePort(9150)]);
-      const activeTorPort = tor9050 ? 9050 : tor9150 ? 9150 : null;
-      let torPacApplied = false;
-      if (activeTorPort || payload?.configureTorPac) {
-        try {
-          const pacScript = `function FindProxyForURL(url, host) { if (shExpMatch(host, "*.onion")) return "SOCKS5 127.0.0.1:${activeTorPort || 9050}; SOCKS5 127.0.0.1:9150; DIRECT"; return "DIRECT"; }`;
-          const pacDataUrl = 'data:application/x-ns-proxy-autoconfig;base64,' + Buffer.from(pacScript, 'utf8').toString('base64');
-          await session.defaultSession.setProxy({ pacScript: pacDataUrl }).catch(() => {});
-          await session.fromPartition('persist:gigachad_vault').setProxy({ pacScript: pacDataUrl }).catch(() => {});
-          torPacApplied = true;
-        } catch (_) {}
-      }
+      const transport = await refreshDeepWebTransport();
+      const guest = asGuest(payload.wcId);
+      const address = String(payload.onion || payload.url || (guest && guest.getURL()) || '').slice(0, 4096);
       return {
-        ok: true,
-        torV3OnionAddress,
-        ipfsMerkleCidV1: cidB32,
-        localTorSocksActive: Boolean(tor9050 || tor9150),
-        socksPort: activeTorPort,
-        torPacApplied,
-        descriptors: [
-          { layer: 'TOR_V3_HSDir', address: torV3OnionAddress, cipher: 'Ed25519/SHA3-256/ntor' },
-          { layer: 'IPFS_MERKLE_DAG', address: 'ipfs://' + cidB32, cipher: 'CIDv1-sha2-256' },
-          { layer: 'AHMIA_ONION_INDEX', address: 'https://ahmia.fi/search/?q=' + encodeURIComponent(String(payload?.query || 'cryptography')) }
-        ]
+        ok: transport.routing.ok, checkedAt: transport.checkedAt,
+        localTorSocksActive: transport.socksHandshakeVerified,
+        socksHandshakeVerified: transport.socksHandshakeVerified,
+        socksPort: transport.activeTorPort,
+        torPacApplied: transport.routing.ok,
+        routing: transport.routing,
+        probes: transport.probes,
+        managedTor: managedTor.snapshot(),
+        addressValidation: validateOnionAddress(address),
+        navigation: guest ? deepWebNavigation.read(guest.id, guest.getURL()) : null,
+        scope: 'SOCKS5 negotiation does not identify Tor or prove a circuit. Network-verified onion receipts require an observed successful uncached main-frame response on the fail-closed SOCKS route. No relay identities or anonymity guarantee are inferred.'
       };
     } catch (err) {
-      return { ok: false, error: err.message };
+      return { ok: false, checkedAt: Date.now(), error: err.message, localTorSocksActive: false, socksHandshakeVerified: false, torPacApplied: false };
     }
   });
 
@@ -2393,11 +2455,11 @@ function registerIpc() {
     try {
       const targetUrl = String(payload?.url || 'https://en.wikipedia.org');
       const [recon, proxyConfig] = await Promise.all([
-        inspectTargetDomainCyberHat(targetUrl),
+        inspectTargetDomainCyberHat(targetUrl, { socksPort: cfg.torSocksPort }),
         configureDeepWebChromiumProxy([
           session.defaultSession,
           session.fromPartition('persist:gigachad_vault')
-        ], payload?.proxyMode || 'auto')
+        ], payload?.proxyMode || 'auto', { socksPort: cfg.torSocksPort })
       ]);
       return {
         ...recon,
@@ -2461,6 +2523,16 @@ function registerIpc() {
     if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
       return { ok: false, error: 'Only http:// and https:// URLs are allowed' };
     }
+    // Block SSRF to loopback, link-local (incl. 169.254.169.254 cloud metadata) and private ranges,
+    // by both the URL host and its resolved address. A main-process fetch is not subject to the
+    // browser's CORS / Private-Network-Access protections, so this guard must live here.
+    if (isBlockedFetchHost(parsed.hostname)) {
+      return { ok: false, error: 'Blocked: internal, loopback or private host' };
+    }
+    try {
+      const resolved = await require('dns').promises.lookup(parsed.hostname);
+      if (isBlockedFetchHost(resolved.address)) return { ok: false, error: 'Blocked: host resolves to an internal address' };
+    } catch (_) { return { ok: false, error: 'DNS resolution failed' }; }
     const method = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD'].includes(String(payload?.method || 'GET').toUpperCase())
       ? String(payload.method || 'GET').toUpperCase()
       : 'GET';
@@ -2694,7 +2766,7 @@ function registerIpc() {
           isKeyFallback = true;
         }
       } else if (activeMode === 'ultra' && !openRouterKey) {
-        // Keep hot local text model (267 tok/s LFM2.5-1.2B-Instruct) pinned in VRAM when OpenRouter key is not set
+        // Use the configured or discovered local model when no cloud credential is configured.
         activeMode = 'local';
         isKeyFallback = true;
         decision = { implementation: 'awaiting-openrouter-key-fallback' };
@@ -2703,6 +2775,7 @@ function registerIpc() {
       let endpoint;
       let model;
       let apiKey = '';
+      let localCatalog = { models: [], loadedModel: '', visionModel: '' };
       if (activeMode === 'ultra') {
         if (!openRouterKey) throw new Error('OpenRouter mode needs an API key in Settings or OPENROUTER_API_KEY.');
         if (!cloudModel) throw new Error('OpenRouter mode needs a model id. Sync the free list or type one.');
@@ -2710,28 +2783,33 @@ function registerIpc() {
         model = cloudModel;
         apiKey = openRouterKey;
       } else {
-        const baseSource = String(ui.localEndpoint || cfg.llmBaseUrl);
+        let baseSource = String(ui.localEndpoint || cfg.llmBaseUrl);
+        // Only honor a renderer-supplied endpoint override when it is loopback or resolves to the same
+        // origin as the configured base; otherwise fall back to the configured endpoint. Without this a
+        // compromised renderer / prompt-injected agent could aim the request (and the stored key + page
+        // context) at an arbitrary host: a confused-deputy SSRF and credential exfiltration.
+        if (ui.localEndpoint) {
+          let okEndpoint = isLoopbackHttp(ui.localEndpoint);
+          if (!okEndpoint) {
+            try { okEndpoint = new URL(normalizeOpenAiBase(String(ui.localEndpoint))).origin === new URL(normalizeOpenAiBase(cfg.llmBaseUrl)).origin; } catch (_) { okEndpoint = false; }
+          }
+          if (!okEndpoint) baseSource = String(cfg.llmBaseUrl);
+        }
         const base = normalizeOpenAiBase(baseSource);
         endpoint = base + '/chat/completions';
         model = activeMode === 'omni' ? (String(ui.omniModel || cfg.omniModel || '').trim()) : (String(ui.localModel || cfg.localModel || '').trim());
-        apiKey = String(ui.llmApiKey || '').trim() || cfg.llmApiKey || '';
+        // Attach the STORED api key only when the destination origin equals the configured base origin.
+        // A different endpoint (even loopback) must bring its own key via ui.llmApiKey.
+        const callerKey = String(ui.llmApiKey || '').trim();
+        let storedKeyAllowed = false;
+        try { storedKeyAllowed = new URL(base).origin === new URL(normalizeOpenAiBase(cfg.llmBaseUrl)).origin; } catch (_) { storedKeyAllowed = false; }
+        apiKey = callerKey || (storedKeyAllowed ? (cfg.llmApiKey || '') : '');
         const listed = await listLocalModels(base).catch(() => ({ ok: false, models: [], loadedModel: '', visionModel: '' }));
-        if (isKeyFallback && activeMode === 'local') {
-          if (listed.loadedModel) {
-            model = listed.loadedModel;
-          } else if (listed.models?.includes('LFM2.5-1.2B-Instruct')) {
-            model = 'LFM2.5-1.2B-Instruct';
-          } else if (listed.models?.includes('LFM2.5-1.2B-Instruct-Q4_K_M')) {
-            model = 'LFM2.5-1.2B-Instruct-Q4_K_M';
-          }
-        }
+        localCatalog = listed;
         if (!model || NON_CHAT_MODEL_RE.test(model)) {
           model = activeMode === 'omni'
             ? (listed.visionModel || listed.models?.[0] || '')
             : (listed.loadedModel || listed.models?.[0] || '');
-        }
-        if (activeMode === 'omni' && model && !/(gemma-4-E2B)/i.test(model) && listed.models?.includes('gemma-4-E2B-it-UD-Q8_K_XL')) {
-          if (!ui.omniModel) model = 'gemma-4-E2B-it-UD-Q8_K_XL';
         }
         if (!model) {
           throw new Error(`No local model is configured and ${base}/models did not return one. Start llama-server, Ollama, or LM Studio, then set the model id.`);
@@ -2754,7 +2832,7 @@ function registerIpc() {
       emitThinkingStep(
         'routing',
         `Brain Routing → ${activeMode.toUpperCase()} (${model})`,
-        `Endpoint: ${endpoint}${isKeyFallback ? ' · Hot-VRAM Pinning (OpenRouter key not set yet)' : ''}`
+        `Endpoint: ${endpoint}${isKeyFallback ? ' · Configured local fallback (cloud credential absent)' : ''}`
       );
 
       const memories = await searchMemoryVault(prompt, sidecarUrl, 3);
@@ -2878,8 +2956,9 @@ function registerIpc() {
         ({ res: response, rawText: raw } = await sendChatCompletion(model, userContent));
       } catch (firstErr) {
         if (firstErr.message === 'Stopped.' || firstErr.blocksOutboundRequest) throw firstErr;
-        if (activeMode !== 'ultra' && model !== 'LFM2.5-1.2B-Instruct') {
-          model = 'LFM2.5-1.2B-Instruct';
+        const fallbackModel = [localCatalog.loadedModel, ...(localCatalog.models || [])].find(id => id && id !== model && !NON_CHAT_MODEL_RE.test(id));
+        if (activeMode !== 'ultra' && fallbackModel) {
+          model = fallbackModel;
           ({ res: response, rawText: raw } = await sendChatCompletion(model, textOnlyUserContent, 20000));
         } else {
           throw firstErr;
@@ -2899,11 +2978,13 @@ function registerIpc() {
         }
       }
       if (!response.ok && wantsVision && /image input is not supported|mmproj|vision|multimodal/i.test(raw)) {
-        // Automatic multimodal fallback: try gemma-4-E2B-it-UD-Q8_K_XL (has mmproj) first, then text+SoM fallback
-        if (activeMode !== 'ultra' && model !== 'gemma-4-E2B-it-UD-Q8_K_XL') {
-          const retryVision = await sendChatCompletion('gemma-4-E2B-it-UD-Q8_K_XL', userContent);
+        // Retry only a configured/discovered vision model; availability alone is
+        // not proof of vision support, so its response still determines success.
+        const visionFallback = localCatalog.visionModel;
+        if (activeMode !== 'ultra' && visionFallback && visionFallback !== model) {
+          const retryVision = await sendChatCompletion(visionFallback, userContent);
           if (retryVision.res.ok) {
-            model = 'gemma-4-E2B-it-UD-Q8_K_XL';
+            model = visionFallback;
             response = retryVision.res;
             raw = retryVision.rawText;
           }
@@ -2932,15 +3013,15 @@ function registerIpc() {
         .replace(/^[\s\S]*?<\/think>/i, '')
         .trim();
       let reply = cleanedContent || String(message.reasoning_content || '').trim();
-      if (!reply && activeMode !== 'ultra' && model !== 'LFM2.5-8B-A1B-UD-Q4_K_XL') {
-        // If a tiny local model emitted an empty <think></think> string, automatically retry on the 8B-A1B flagship
-        const retryEmpty = await sendChatCompletion('LFM2.5-8B-A1B-UD-Q4_K_XL', textOnlyUserContent);
+      const emptyFallback = [localCatalog.loadedModel, ...(localCatalog.models || [])].find(id => id && id !== model && !NON_CHAT_MODEL_RE.test(id));
+      if (!reply && activeMode !== 'ultra' && emptyFallback) {
+        const retryEmpty = await sendChatCompletion(emptyFallback, textOnlyUserContent);
         if (retryEmpty.res.ok) {
           try {
             const retryData = JSON.parse(retryEmpty.rawText);
             const rMsg = retryData.choices?.[0]?.message || {};
             reply = String(rMsg.content || '').replace(/<think>[\s\S]*?<\/think>/gi, '').trim() || String(rMsg.reasoning_content || '').trim();
-            if (reply) model = 'LFM2.5-8B-A1B-UD-Q4_K_XL';
+            if (reply) { model = emptyFallback; data = retryData; }
           } catch (_) {}
         }
       }
@@ -2958,12 +3039,14 @@ function registerIpc() {
       const promptTokPerSec = timings.prompt_per_second
         ? Number(timings.prompt_per_second).toFixed(1)
         : '';
+      const thinkingTraceSource = thinkingTrace ? 'provider-reasoning' : 'request-diagnostics';
+      const tokenCountsEstimated = !(Number.isFinite(timings.prompt_n) || Number.isFinite(usage.prompt_tokens)) || !(Number.isFinite(timings.predicted_n) || Number.isFinite(usage.completion_tokens));
       if (!thinkingTrace) {
         thinkingTrace = [
-          `[1. Cognitive Route & Model] Selected ${model} (${activeMode.toUpperCase()} mode via ${endpoint})${isKeyFallback ? ' — Hot-VRAM 1.2B model pinned for zero-swap <700ms execution' : ''}.`,
+          `[1. Request Diagnostics: Route & Model] Selected ${model} (${activeMode.toUpperCase()} mode via ${endpoint})${isKeyFallback ? ' — Local fallback selected because cloud credential is absent' : ''}.`,
           `[2. Context & Perception Analysis] Processed ${textOnlyUserContent.length.toLocaleString()} chars of live webpage DOM context + ${memories.length} Memory Vault RAG note(s)${piiScrubbedCount ? ` (${piiScrubbedCount} PII entities scrubbed)` : ''}.`,
           `[3. Token & Hardware Telemetry] Prompt: ${promptTokens} tokens${promptTokPerSec ? ` (${promptTokPerSec} tok/s)` : ''} → Generated: ${completionTokens} tokens at ${tokPerSec} tok/s in ${totalLatencyMs} ms.`,
-          `[4. Synthesis Verification] Grounded response against live visible tab state and extracted DOM evidence.`
+          `[4. Inference Complete] Provider returned text. Response correctness and grounding have not been independently verified.`
         ].join('\n');
       }
       emitThinkingStep(
@@ -2980,6 +3063,8 @@ function registerIpc() {
         piiScrubbedCount,
         privacy: outboundPrivacy,
         thinkingTrace,
+        thinkingTraceSource,
+        tokenCountsEstimated,
         telemetry: {
           latencyMs: totalLatencyMs,
           promptTokens,
@@ -3002,8 +3087,24 @@ function registerIpc() {
 }
 
 app.whenReady().then(async () => {
+  if (!primaryInstance) return;
   initStores();
+  genomeStore = createGenomeStore({ directory: app.getPath('userData') });
+  await genomeStore.initialize();
+  // Recovery owns the store before any renderer exists. It preserves the exact
+  // old file and publishes only against its verified source revision/digest.
+  const genomeMigration = await migrateLegacyNative({ store: genomeStore,
+    Adapter: require('./systems/authentic-asmodensius-adapter.js').AuthenticAsmodensiusAdapter,
+    runtime: { electron: process.versions.electron, node: process.versions.node, v8: process.versions.v8 } });
+  if (genomeMigration.status !== 'noop') console.info('GENOME_NATIVE_RECOVERY', JSON.stringify(genomeMigration));
+  genomeIpc = installGenomeIpc({ ipcMain, store: genomeStore, trusted: fromChrome,
+    async onShutdown(receipt) {
+      if (!receipt.persistenceVerified) console.error('GENOME_SHUTDOWN_UNVERIFIED', JSON.stringify(receipt));
+      await fs.promises.writeFile(userFile('alive-genome-shutdown.json'), JSON.stringify(receipt, null, 2), 'utf8');
+    } });
+  if (!SMOKE && cfg.torAutoStart) managedTor.start({ torPath: cfg.torPath, dataDirectory: userFile('tor-client'), socksPort: cfg.torSocksPort, enabled: true, startupTimeoutMs: 180000 });
   installSessionHooks();
+  await refreshDeepWebTransport();
   installMenu();
   registerIpc();
   if (!SMOKE) {
@@ -3022,6 +3123,12 @@ app.whenReady().then(async () => {
     const timer = setTimeout(() => fail('SMOKE_TIMEOUT'), 20000);
     mainWindow.webContents.once('did-finish-load', async () => {
       try {
+        await mainWindow.webContents.executeJavaScript(`(async () => {
+          if (!window.aliveStartup) throw new Error('Renderer startup controller is missing');
+          const state = await window.aliveStartup.ready;
+          if (state.phase !== 'ready') throw new Error('Renderer startup failed: ' + (state.error || state.phase));
+          return true;
+        })()`);
         const probe = await mainWindow.webContents.executeJavaScript(`new Promise((resolve) => {
           const started = Date.now();
           const timer = setInterval(async () => {
@@ -3034,7 +3141,7 @@ app.whenReady().then(async () => {
               let health = null;
               try { health = await window.gigachad.invoke('sidecar-health'); } catch (err) { health = { threw: String(err) }; }
               try { await runWishlistFeature(100); } catch (_) {}
-              const wishlistSelfTest100 = (document.getElementById('wishlist-body')?.innerText || '').includes('100 / 100 OPERATIONAL PASS');
+              const wishlistSourceInventory100 = (document.getElementById('wishlist-body')?.innerText || '').includes('100 / 100 SOURCE BRANCHES FOUND');
               let alifeOmega100Ok = false;
               let alifeDiagnostics = { error: 'A-Life runtime is not initialized' };
               let authenticDiagnostics = { error: 'Original Asmodensius runtime is not initialized' };
@@ -3044,17 +3151,18 @@ app.whenReady().then(async () => {
                   const readGuestHud = async (tObj) => {
                     if (!tObj || !tObj.wv) return null;
                     return await tObj.wv.executeJavaScript(
-                      '({ hasCanvas: Boolean(document.getElementById("__humunculus_alife_canvas")), canvasOpacity: document.getElementById("__humunculus_alife_canvas") ? getComputedStyle(document.getElementById("__humunculus_alife_canvas")).opacity : "0", hasHud: Boolean(document.getElementById("__gigachad_alien_hud")), hudOpacity: document.getElementById("__gigachad_alien_hud") ? getComputedStyle(document.getElementById("__gigachad_alien_hud")).opacity : "0", hasBar: Boolean(document.getElementById("__gigachad_alien_hud_bar")), peersCount: Array.isArray(window.__humunculusPantheonPeers) ? window.__humunculusPantheonPeers.length : -1 })'
+                      '({ hasCanvas: Boolean(document.getElementById("__humunculus_alife_canvas")), hasHud: Boolean(document.getElementById("__gigachad_alien_hud")), hudHidden: document.getElementById("__gigachad_alien_hud") ? getComputedStyle(document.getElementById("__gigachad_alien_hud")).display === "none" : false, animRunning: Boolean(window.__humunculusAnimRunning), persistentResources: Boolean(window.__humunculusAuthorityResources), authorityInstalled: Boolean(window.__aliveAuthority) })'
                     ).catch(() => null);
                   };
                   let guestHudCheck = null;
+                  let manualObservation = null;
                   for (let attempt = 0; attempt < 4; attempt++) {
                     const readyT = (typeof tabs !== 'undefined' && Array.isArray(tabs))
                       ? (tabs.find((tb) => tb && tb.domReady && /newtab\.html/i.test(tb.url || '')) || tabs.find((tb) => tb && tb.domReady) || (typeof getActiveTab === 'function' ? getActiveTab() : null))
                       : (typeof getActiveTab === 'function' ? getActiveTab() : null);
-                    await performWeirdAlienDomExperiment(readyT);
+                    manualObservation = await performWeirdAlienDomExperiment(readyT);
                     guestHudCheck = await readGuestHud(readyT);
-                    if (guestHudCheck && guestHudCheck.hasCanvas && guestHudCheck.hasHud && guestHudCheck.hasBar && guestHudCheck.peersCount === 4) {
+                    if (manualObservation?.authority?.kind === 'manual' && guestHudCheck?.hasCanvas && guestHudCheck?.authorityInstalled) {
                       break;
                     }
                     await new Promise((r) => setTimeout(r, 320));
@@ -3122,8 +3230,8 @@ app.whenReady().then(async () => {
                       authenticDiagnostics.hiddenSchedulerPaused && authenticDiagnostics.advancedTicks > 0 &&
                       authenticDiagnostics.finiteInputMotor && authenticDiagnostics.exactCheckpointReplay
                     ),
-                    omOk: Boolean(om && om.verifiedModulesCount === 100),
-                    dtOk: Boolean(dt && dt.verifiedDeityPowersCount === 100),
+                    omOk: Boolean(om && om.availableFeatureCount === 100 && om.verifiedModulesCount === 0 && om.verificationStatus === 'NOT_RUN' && om.completedStepCount > 0),
+                    dtOk: Boolean(dt && dt.totalDeityPowers === 100 && dt.verifiedDeityPowersCount === 0 && dt.verificationStatus === 'NOT_RUN' && dt.completedStepCount > 0),
                     wmOk: Boolean(
                       humunculusRuntime.continuousWorldModel?.latentZ64?.length === 64 &&
                       humunculusRuntime.continuousWorldModel?.ssmHiddenH128?.length === 128 &&
@@ -3171,7 +3279,9 @@ app.whenReady().then(async () => {
                       humunculusRuntime.formatRetroTerminalText('metacognition').includes('SUPREME MULTIVECTOR METACOGNITION')
                     ),
                     ddwNsOk: Boolean(
-                      Boolean(humunculusRuntime.deepDarkWebSubstrateEngine?.torV3OnionAddress?.endsWith('.onion')) &&
+                      humunculusRuntime.deepDarkWebSubstrateEngine?.torV3OnionAddress === '' &&
+                      humunculusRuntime.deepDarkWebSubstrateEngine?.localTorSocksActive === false &&
+                      humunculusRuntime.deepDarkWebSubstrateEngine?.onionCircuitHops3?.length === 0 &&
                       humunculusRuntime.neuralSubstrateTelemetry?.sltcMeanTauMs > 0 &&
                       humunculusRuntime.neuralSubstrateTelemetry?.htsrPowerLawAlpha >= 2.0 &&
                       humunculusRuntime.neuralSubstrateTelemetry?.yangMillsWilsonHolonomy > 0 &&
@@ -3204,7 +3314,7 @@ app.whenReady().then(async () => {
                       humunculusRuntime.aotTotGotEngine?.gotAdjMatrix16x16?.length === 256 &&
                       humunculusRuntime.aotTotGotEngine?.aotContractedVector16?.length === 16 &&
                       humunculusRuntime.aotTotGotEngine?.gotApexValueQ > 0 &&
-                      humunculusRuntime.formatRetroTerminalText('aottotgot').includes('CORECURSIVE-DECURSIVE AoT') &&
+                      humunculusRuntime.formatRetroTerminalText('aottotgot').includes('LOCAL AoT / ToT / GoT MODEL STATE: available') &&
                       humunculusRuntime.formatRetroTerminalText('deepdark').includes('DEEP WEB & DARK WEB') &&
                       typeof resolveDeepDarkWebGatewayUrl === 'function' &&
                       typeof humunculusRuntime.scoreDoorByDsdAndMetacognition === 'function' &&
@@ -3214,11 +3324,11 @@ app.whenReady().then(async () => {
                       humunculusRuntime.ELDRITCH_ARCHETYPES?.length === 12 &&
                       humunculusRuntime.swarmCollective?.pantheon?.length === 5 &&
                       humunculusRuntime.deepCortex?.totalParams === 1245184 &&
-                      term100.includes('100/100 ACTIVE') &&
-                      termDeity100.includes('100/100 ACTIVE') &&
+                      term100.includes('100 LOCAL FEATURE SLOTS; NOT INDEPENDENTLY VERIFIED') &&
+                      termDeity100.includes('100 LOCAL FEATURE SLOTS; NOT INDEPENDENTLY VERIFIED') &&
                       typeof triggerDeity100ApotheosisPulse === 'function' &&
                       gates &&
-                      gates.allPassed === true
+                      (gates.allPassed === true || (Array.isArray(gates.gates) && gates.totalCount === 8 && !gates.gates.some((g) => g.status === 'FAIL')))
                     ),
                     multiverse14Ok: Boolean(
                       humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.activeBrainsCount === 14 &&
@@ -3226,11 +3336,30 @@ app.whenReady().then(async () => {
                       humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.thalerNineMarkersObject &&
                       Object.keys(humunculusRuntime.portedMultiverseBrains.lastSnapshot.thalerNineMarkersObject).length === 9 &&
                       humunculusRuntime.portedMultiverseBrains?.lastSnapshot?.consciousness10Score > 0 &&
-                      humunculusRuntime.formatRetroTerminalText('brainfusion').includes('14-BRAIN MULTIVERSE PANTHEON')
+                      humunculusRuntime.portedMultiverseBrains?.latestSnapshot?.completedStepCount > 0 &&
+                      humunculusRuntime.formatRetroTerminalText('brainfusion').includes('LOCAL BRAIN FEDERATION SNAPSHOTS') &&
+                      humunculusRuntime.formatRetroTerminalText('brainfusion').includes('state=computed')
                     ),
-                    forensic25x10Ok: (() => {
+                    forensic25x10Ok: await (async () => {
                       humunculusRuntime.savePersistentGenome();
-                      humunculusRuntime.loadPersistentGenome();
+                      const durableSave = await window.aliveAutosave.flush('smoke-durable');
+                      const durableRead = await window.aliveGenomePersistence.readFresh();
+                      if (durableSave.status !== 'persisted' || !durableSave.persistenceVerified || durableRead.status !== 'ready') {
+                        throw new Error('Durable genome save/readback was not verified');
+                      }
+                      // Smoke reloads a newly saved source, not the startup source.
+                      // Authenticate that exact JSON before changing its controller.
+                      const reloadedPrimary = await window.AlivePrimaryPolicyBootstrap.prepare({
+                        json: durableRead.json, primary: window.AlivePrimaryPolicyState,
+                        registry: window.AliveLearnedStateRegistry, codec: window.AliveLearnedStateCodec,
+                        crypto: window.crypto
+                      });
+                      reloadedPrimary.preflight(humunculusRuntime, durableRead.json);
+                      window.alivePrimaryPolicyBootstrap = reloadedPrimary;
+                      if (humunculusRuntime.loadPersistentGenome(durableRead.json) !== true) {
+                        throw new Error('Durable genome reload was not applied');
+                      }
+                      // End of the explicit smoke reload boundary.
                       const liveAudit = humunculusRuntime.forensic25x10Auditor?.runFull25PassBy10IterationAudit(humunculusRuntime);
                       forensicDiagnostics = {
                         runtimeDiagnosticsOk: liveAudit?.runtimeDiagnosticsOk,
@@ -3271,15 +3400,23 @@ app.whenReady().then(async () => {
                     guestOk: Boolean(
                       guestHudCheck &&
                       guestHudCheck.hasCanvas &&
-                      guestHudCheck.canvasOpacity === '1' &&
                       guestHudCheck.hasHud &&
-                      guestHudCheck.hudOpacity === '1' &&
-                      guestHudCheck.hasBar &&
-                      guestHudCheck.peersCount === 4
+                      guestHudCheck.hudHidden &&
+                      guestHudCheck.authorityInstalled &&
+                      !guestHudCheck.animRunning && !guestHudCheck.persistentResources &&
+                      manualObservation?.authority?.kind === 'manual' &&
+                      typeof manualObservation.url === 'string' &&
+                      Array.isArray(manualObservation.specimens) &&
+                      !window.aliveAuthority.isCurrent(manualObservation.authority) &&
+                      window.aliveAuthority.snapshot().paused &&
+                      window.aliveAuthority.snapshot().manuals === 0 &&
+                      !window.aliveOverdrive.running
                     )
                   };
                   alifeOmega100Ok = Object.values(alifeChecks).every(Boolean);
-                  alifeDiagnostics = alifeChecks;
+                  alifeDiagnostics = { ...alifeChecks, guestManualProbe: { ...guestHudCheck,
+                    observationReturned: Boolean(manualObservation?.url), permitKind: manualObservation?.authority?.kind || null,
+                    paused: window.aliveAuthority?.snapshot().paused, manualPermits: window.aliveAuthority?.snapshot().manuals } };
                 }
               } catch (err) {
                 alifeOmega100Ok = false;
@@ -3298,7 +3435,7 @@ app.whenReady().then(async () => {
                 defaultCloudModel: document.getElementById('quick-cloud-model')?.value || '',
                 visionChecked: document.getElementById('send-screenshot')?.checked === true,
                 wishlistCount: Array.isArray(window.WISHLIST_100_CATALOG) ? window.WISHLIST_100_CATALOG.length : 0,
-                wishlistSelfTest100,
+                wishlistSourceInventory100,
                 alifeOmega100Ok,
                 alifeDiagnostics,
                 authenticDiagnostics,
@@ -3330,7 +3467,7 @@ app.whenReady().then(async () => {
           !probe.actionParser ||
           probe.actionCount !== 36 ||
           probe.wishlistCount !== 100 ||
-          !probe.wishlistSelfTest100 ||
+          !probe.wishlistSourceInventory100 ||
           !probe.alifeOmega100Ok ||
           probe.defaultBrainMode !== 'ultra' ||
           !probe.defaultCloudModel ||
@@ -3353,8 +3490,21 @@ app.whenReady().then(async () => {
   }
 });
 
+app.on('second-instance', () => {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.show(); mainWindow.focus();
+  }
+});
+app.on('before-quit', event => {
+  if (mainWindow && !mainWindow.isDestroyed() && genomeWindowGuard && !genomeWindowGuard.isAllowed()) {
+    event.preventDefault();
+    mainWindow.close();
+  }
+});
 app.on('window-all-closed', () => app.quit());
 app.on('will-quit', () => {
+  managedTor.stop();
   if (_localBrainsHttpServer) { try { _localBrainsHttpServer.close(); } catch (_) {} }
   if (sidecarProcess && sidecarProcess.exitCode == null) { try { sidecarProcess.kill(); } catch (_) {} }
   if (llamaProcess && llamaProcess.exitCode == null) { try { llamaProcess.kill(); } catch (_) {} }

@@ -98,7 +98,9 @@
     constructor() {
       this.wasmKernel = compileInMemoryWasmNeuralKernel();
       this.unprecedented25Catalog = UNPRECEDENTED_25_CATALOG;
-      this.verified25Count = 25;
+      this.availableFeatureCount = UNPRECEDENTED_25_CATALOG.length;
+      this.verified25Count = 0;
+      this.featureVerificationStatus = 'NOT_RUN';
 
       // 3A. Selective State-Space Mamba-ZOH Discretization (Input-dependent Δ_t, Ā_t, B̄_t over 16 channels)
       this.W_mamba_delta16 = Float32Array.from({ length: 16 * 16 }, (_, i) => (((i * 2654435761 + 17) >>> 0) / 4294967296 - 0.5) * 0.32);
@@ -735,16 +737,22 @@
         const packedFloat32 = new Float32Array(4608);
         packedFloat32.set(dc.W_enc1.subarray(0, 512), 0);
         packedFloat32.set(dc.W_rssm_rec.subarray(0, 512), 512);
-        if (dc.W_actor_out && dc.W_actor_out.length >= 512) {
+        if (dc.W_actor && dc.W_actor.length > 0 && dc.W_actor_out && dc.W_actor_out !== dc.W_actor && dc.W_actor_out.length >= 512) {
+          const actorLen = Math.min(256, dc.W_actor.length);
+          packedFloat32.set(dc.W_actor.subarray(0, actorLen), 1024);
+          packedFloat32.set(dc.W_actor_out.subarray(0, 512 - actorLen), 1024 + actorLen);
+        } else if (dc.W_actor_out && dc.W_actor_out.length >= 512) {
           packedFloat32.set(dc.W_actor_out.subarray(0, 512), 1024);
-        }
-        if (dc.W_actor && dc.W_actor.length > 0) {
+        } else if (dc.W_actor && dc.W_actor.length > 0) {
           packedFloat32.set(dc.W_actor.subarray(0, Math.min(512, dc.W_actor.length)), 1024);
         }
-        if (dc.W_critic_out && dc.W_critic_out.length >= 64) {
+        if (dc.W_critic && dc.W_critic.length > 0 && dc.W_critic_out && dc.W_critic_out !== dc.W_critic && dc.W_critic_out.length >= 64) {
+          const criticLen = Math.min(32, dc.W_critic.length);
+          packedFloat32.set(dc.W_critic.subarray(0, criticLen), 1536);
+          packedFloat32.set(dc.W_critic_out.subarray(0, 64 - criticLen), 1536 + criticLen);
+        } else if (dc.W_critic_out && dc.W_critic_out.length >= 64) {
           packedFloat32.set(dc.W_critic_out.subarray(0, 64), 1536);
-        }
-        if (dc.W_critic && dc.W_critic.length > 0) {
+        } else if (dc.W_critic && dc.W_critic.length > 0) {
           packedFloat32.set(dc.W_critic.subarray(0, Math.min(64, dc.W_critic.length)), 1536);
         }
         packedFloat32.set(dc.W_body_genome.subarray(0, 448), 1600);
@@ -772,7 +780,7 @@
           weightsBase64: b64Weights,
           meta: {
             totalParams: dc.totalParams || 1245184,
-            totalBackpropStepsTrained: hub.totalBackpropStepsTrained || 1,
+            totalBackpropStepsTrained: hub.totalBackpropStepsTrained || 0,
             perceptionLossMse: hub.perceptionLossMse,
             worldDynamicsLossMse: hub.worldDynamicsLossMse,
             jepaMultiHorizonLoss: this.jepaMultiHorizonLoss,
@@ -786,7 +794,7 @@
           this.diskCheckpointStatus.binaryBytesSaved = res.byteLength || uint8View.byteLength;
           this.diskCheckpointStatus.sha256Prefix = res.sha256Prefix || this.diskCheckpointStatus.sha256Prefix;
           this.cyberHatMaster.goldHatMerkleRoot = this.diskCheckpointStatus.sha256Prefix;
-          hub.persistentWeightCheckpointsSaved = (hub.persistentWeightCheckpointsSaved || 1) + 1;
+          hub.persistentWeightCheckpointsSaved = (hub.persistentWeightCheckpointsSaved || 0) + 1;
         }
         return res;
       } catch (_) {
@@ -801,6 +809,22 @@
       if (!runtime || !runtime.deepCortex || !runtime.trainableAlifeNeuralHub || !ipcBridge || typeof ipcBridge.invoke !== 'function') {
         return false;
       }
+      if (globalScope.__alivePersistenceClosing) return false;
+      const dcAtRequest = runtime.deepCortex, hubAtRequest = runtime.trainableAlifeNeuralHub;
+      const restoreGeneration = runtime.persistentGenomeRestore?.generation || 0;
+      const tickAtRequest = runtime.simulationTick, stepsAtRequest = hubAtRequest.totalBackpropStepsTrained;
+      // This legacy binary is an optional bootstrap source, not a later writer
+      // entitled to replace a canonical restore or learning completed in flight.
+      // Snapshot only the bounded prefixes that the binary loader can overwrite.
+      const targets = [
+        [dcAtRequest, 'W_enc1', 512], [dcAtRequest, 'W_rssm_rec', 512],
+        [dcAtRequest, 'W_actor', 512], [dcAtRequest, 'W_actor_out', 512],
+        [dcAtRequest, 'W_critic', 64], [dcAtRequest, 'W_critic_out', 64], [dcAtRequest, 'W_body_genome', 448],
+        ...['W_perc_enc', 'W_dyn1', 'W_diff1', 'W_gen1', 'W_disc1', 'W_icm_inv'].map(key => [hubAtRequest, key, 256]),
+        [this, 'W_mamba_delta16', 256], [this, 'W_jepa_online', 256], [this, 'W_jepa_target_ema', 256],
+        [this.aotTotGotEngine, 'W_aot_contract', 256], [this.aotTotGotEngine, 'W_got_gnn1', 256]
+      ].filter(([owner, key]) => owner?.[key] instanceof Float32Array || owner?.[key] instanceof Float64Array)
+        .map(([owner, key, count]) => ({ owner, key, value: owner[key], before: owner[key].slice(0, count) }));
       try {
         const res = await ipcBridge.invoke('alife-neural-weights-sync', { action: 'load' });
         if (!res || !res.ok || !res.weightsBase64 || typeof atob !== 'function') return false;
@@ -809,22 +833,50 @@
         const uint8 = new Uint8Array(binStr.length);
         for (let i = 0; i < binStr.length; i++) uint8[i] = binStr.charCodeAt(i);
         const f32 = new Float32Array(uint8.buffer, 0, 4096);
+        const usedFloats = new Float32Array(uint8.buffer, 0, binStr.length >= 4608 * 4 && this.aotTotGotEngine ? 4608 : 4096);
+        if (usedFloats.some(value => !Number.isFinite(value))) {
+          this.diskCheckpointStatus.loadStatus = 'invalid-binary'; return false;
+        }
+        this.diskCheckpointStatus.assetAvailable = true;
+        this.diskCheckpointStatus.binaryBytesSaved = res.byteLength || uint8.byteLength;
+        this.diskCheckpointStatus.sha256Prefix = res.sha256Prefix || this.diskCheckpointStatus.sha256Prefix;
+        const restoredPrimary = runtime.persistentGenomeRestore?.primaryPolicy;
+        const persisted = runtime.persistentGenomeRestore?.restoredTensorCount > 0 ||
+          (restoredPrimary?.readbackVerified === true && restoredPrimary.tensorCount === 6);
+        const changed = runtime.deepCortex !== dcAtRequest || runtime.trainableAlifeNeuralHub !== hubAtRequest ||
+          (runtime.persistentGenomeRestore?.generation || 0) !== restoreGeneration ||
+          runtime.simulationTick !== tickAtRequest || hubAtRequest.totalBackpropStepsTrained !== stepsAtRequest ||
+          targets.some(target => target.owner[target.key] !== target.value ||
+            target.before.some((value, index) => !Object.is(value, target.value[index])));
+        if (globalScope.__alivePersistenceClosing || persisted || changed) {
+          this.diskCheckpointStatus.loadedFromDisk = false;
+          this.diskCheckpointStatus.loadStatus = 'available-not-applied';
+          this.diskCheckpointStatus.skipReason = globalScope.__alivePersistenceClosing ? 'persistence-closing'
+            : persisted ? 'persisted-genome-precedence' : 'model-changed-during-load';
+          return false;
+        }
 
         const dc = runtime.deepCortex;
         const hub = runtime.trainableAlifeNeuralHub;
         dc.W_enc1.set(f32.subarray(0, Math.min(512, dc.W_enc1.length)), 0);
         dc.W_rssm_rec.set(f32.subarray(512, 512 + Math.min(512, dc.W_rssm_rec.length)), 0);
-        if (dc.W_actor && dc.W_actor.length > 0) {
+        if (dc.W_actor && dc.W_actor.length > 0 && dc.W_actor_out && dc.W_actor_out !== dc.W_actor && dc.W_actor_out.length >= 512) {
+          const actorLen = Math.min(256, dc.W_actor.length);
+          dc.W_actor.set(f32.subarray(1024, 1024 + actorLen), 0);
+          dc.W_actor_out.set(f32.subarray(1024 + actorLen, 1536), 0);
+        } else if (dc.W_actor_out && dc.W_actor_out.length >= 512) {
+          dc.W_actor_out.set(f32.subarray(1024, 1536), 0);
+        } else if (dc.W_actor && dc.W_actor.length > 0) {
           dc.W_actor.set(f32.subarray(1024, 1024 + Math.min(512, dc.W_actor.length)), 0);
         }
-        if (dc.W_actor_out && dc.W_actor_out !== dc.W_actor && dc.W_actor_out.length >= 512) {
-          dc.W_actor_out.set(f32.subarray(1024, 1536), 0);
-        }
-        if (dc.W_critic && dc.W_critic.length > 0) {
-          dc.W_critic.set(f32.subarray(1536, 1536 + Math.min(64, dc.W_critic.length)), 0);
-        }
-        if (dc.W_critic_out && dc.W_critic_out !== dc.W_critic && dc.W_critic_out.length >= 64) {
+        if (dc.W_critic && dc.W_critic.length > 0 && dc.W_critic_out && dc.W_critic_out !== dc.W_critic && dc.W_critic_out.length >= 64) {
+          const criticLen = Math.min(32, dc.W_critic.length);
+          dc.W_critic.set(f32.subarray(1536, 1536 + criticLen), 0);
+          dc.W_critic_out.set(f32.subarray(1536 + criticLen, 1600), 0);
+        } else if (dc.W_critic_out && dc.W_critic_out.length >= 64) {
           dc.W_critic_out.set(f32.subarray(1536, 1600), 0);
+        } else if (dc.W_critic && dc.W_critic.length > 0) {
+          dc.W_critic.set(f32.subarray(1536, 1536 + Math.min(64, dc.W_critic.length)), 0);
         }
         dc.W_body_genome.set(f32.subarray(1600, 1600 + Math.min(448, dc.W_body_genome.length)), 0);
         hub.W_perc_enc.set(f32.subarray(2048, 2304), 0);
@@ -843,6 +895,8 @@
         }
 
         this.diskCheckpointStatus.loadedFromDisk = true;
+        this.diskCheckpointStatus.loadStatus = 'applied';
+        this.diskCheckpointStatus.skipReason = '';
         this.diskCheckpointStatus.binaryBytesSaved = res.byteLength || uint8.byteLength;
         this.diskCheckpointStatus.sha256Prefix = res.sha256Prefix || this.diskCheckpointStatus.sha256Prefix;
         if (res.meta && typeof res.meta.totalBackpropStepsTrained === 'number') {

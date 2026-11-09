@@ -615,8 +615,19 @@ function build100PassDefinitions(ctx) {
       domain: 'DOM-07',
       aspect: 'Full-Stack',
       title: 'Set-of-Mark (SoM) Interactive Element Grounding (__gigachad_som)',
-      check: () => indexHtml.includes('async function buildSoMContext(wv, keepBadges = false)') && indexHtml.includes('__gigachad_som'),
-      detail: 'Numbers up to 75 visible interactive elements with [Mark #N] coordinates and captures viewport screenshot'
+      check: () => {
+        const start = indexHtml.indexOf('async function buildSoMContext(');
+        const previewStart = indexHtml.indexOf('async function previewSoM(');
+        if (start < 0 || previewStart <= start) return false;
+        const build = indexHtml.slice(start, previewStart);
+        const preview = indexHtml.slice(previewStart, indexHtml.indexOf('async function synthesizeAllTabs(', previewStart));
+        return build.includes('AliveGuestExecution.run(wv,') && build.includes("tag: 'som'") &&
+          build.includes('signal: options.signal') && build.includes('__gigachad_som') &&
+          build.includes('markMap[id] = { x: cx, y: cy') && build.includes('lastMarkMap = data.markMap') &&
+          build.includes('wv.capturePage()') && preview.includes('options.signal?.aborted') &&
+          preview.includes('buildSoMContext(t.wv, true, false, options)');
+      },
+      detail: 'Source inspection: SoM uses the bounded guest helper, forwards cancellation, produces mark coordinates, and retains optional screenshot capture'
     },
     {
       pass: 65,
@@ -1367,6 +1378,7 @@ function run25ForensicPassesAnd10Iterations() {
 if (require.main === module) {
   const rep = run100PassAudit();
   console.log(JSON.stringify({
+    disclaimer: 'STATIC source/metadata/fixture diagnostics only. A PASS means the expected code patterns are PRESENT in the files, not that the runtime works, the UI renders, or behavior is correct — these checks would still pass against a completely broken app. releaseVerified=false; this is not release certification and does not replace behavioral tests.',
     ok: rep.ok,
     grade: rep.grade,
     releaseVerified: rep.releaseVerified,

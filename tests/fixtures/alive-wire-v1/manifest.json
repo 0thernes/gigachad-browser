@@ -1,0 +1,27 @@
+{
+  "schema": "gigachad.synthetic-test-fixtures.v1",
+  "classification": "public-synthetic-fixture",
+  "scope": "Synthetic public wire payload with eleven typed-view representations, declared aliases and three scalar states; independent expected bytes and descriptor definition. This is format coverage, not runtime registry completeness.",
+  "transfer": "Exact byte copies; no encoding, newline or JSON reformatting of fixture contents.",
+  "exclusions": "No user profile, runtime genome, application source extracts or unrelated research notes copied.",
+  "files": [
+    {
+      "file": "payload.json",
+      "byteLength": 5493,
+      "sha256": "a07140d8a8fe2787e94960d4ad21bb0dcfd8a8699b05327c314fa8ced33a2cb5",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/wire-fixture-v1/payload.json"
+    },
+    {
+      "file": "expected.json",
+      "byteLength": 3817,
+      "sha256": "4f6011ec51824cd3381c2e6f72287739106cc693b9d452aa7a27ea6eefbc79e4",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/wire-fixture-v1/expected.json"
+    },
+    {
+      "file": "expected-definition.json",
+      "byteLength": 13873,
+      "sha256": "17683f365269baed0a0b3849fde66ea128b7295dc521329359035347082ec0cd",
+      "sourcePath": "research_notes/alive-autonomy-audit-2026-11-08/learned-state-foundation-2026-11-09/wire-fixture-v1/expected-definition.json"
+    }
+  ]
+}

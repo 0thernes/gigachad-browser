@@ -1,0 +1,661 @@
+{
+  "descriptorDefinition": {
+    "registryVersion": 1,
+    "components": [
+      {
+        "id": "model",
+        "schemaVersion": 1,
+        "implementationDigest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true
+      }
+    ],
+    "tensors": [
+      {
+        "id": "model.BigInt64Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "BigInt64Array"
+            ]
+          }
+        ],
+        "dtype": "BigInt64Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "BigInt64Array",
+        "backingOffset": 0,
+        "backingByteLength": 16,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.BigUint64Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "BigUint64Array"
+            ]
+          }
+        ],
+        "dtype": "BigUint64Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "BigUint64Array",
+        "backingOffset": 0,
+        "backingByteLength": 16,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Float32Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Float32Array"
+            ]
+          },
+          {
+            "root": "model",
+            "keys": [
+              "aliasFloat32"
+            ]
+          }
+        ],
+        "dtype": "Float32Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Float32Array",
+        "backingOffset": 0,
+        "backingByteLength": 8,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Float64Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Float64Array"
+            ]
+          }
+        ],
+        "dtype": "Float64Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Float64Array",
+        "backingOffset": 0,
+        "backingByteLength": 16,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Int16Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Int16Array"
+            ]
+          }
+        ],
+        "dtype": "Int16Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Int16Array",
+        "backingOffset": 0,
+        "backingByteLength": 4,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Int32Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Int32Array"
+            ]
+          }
+        ],
+        "dtype": "Int32Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Int32Array",
+        "backingOffset": 0,
+        "backingByteLength": 8,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Int8Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Int8Array"
+            ]
+          }
+        ],
+        "dtype": "Int8Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Int8Array",
+        "backingOffset": 0,
+        "backingByteLength": 2,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Uint16Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Uint16Array"
+            ]
+          }
+        ],
+        "dtype": "Uint16Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Uint16Array",
+        "backingOffset": 0,
+        "backingByteLength": 4,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Uint32Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Uint32Array"
+            ]
+          }
+        ],
+        "dtype": "Uint32Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Uint32Array",
+        "backingOffset": 0,
+        "backingByteLength": 8,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Uint8Array",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Uint8Array"
+            ]
+          }
+        ],
+        "dtype": "Uint8Array",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Uint8Array",
+        "backingOffset": 0,
+        "backingByteLength": 2,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "model.Uint8ClampedArray",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "Uint8ClampedArray"
+            ]
+          }
+        ],
+        "dtype": "Uint8ClampedArray",
+        "dimensions": [
+          2
+        ],
+        "backingGroup": "Uint8ClampedArray",
+        "backingOffset": 0,
+        "backingByteLength": 2,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      }
+    ],
+    "states": [
+      {
+        "id": "model.bias",
+        "componentId": "model",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "bias"
+            ]
+          }
+        ],
+        "schemaVersion": 1,
+        "required": true,
+        "schema": {
+          "type": "f64"
+        }
+      },
+      {
+        "id": "model.step",
+        "componentId": "model",
+        "role": "optimizer",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "step"
+            ]
+          }
+        ],
+        "schemaVersion": 1,
+        "required": true,
+        "schema": {
+          "type": "i53",
+          "min": 0,
+          "max": 100000
+        }
+      },
+      {
+        "id": "model.word",
+        "componentId": "model",
+        "role": "random",
+        "paths": [
+          {
+            "root": "model",
+            "keys": [
+              "word"
+            ]
+          }
+        ],
+        "schemaVersion": 1,
+        "required": true,
+        "schema": {
+          "type": "bigint",
+          "signed": false,
+          "bits": 64
+        }
+      }
+    ],
+    "families": [],
+    "resumeRules": [
+      {
+        "id": "authority",
+        "action": "reset",
+        "reason": "Fresh browser authority",
+        "version": 1
+      }
+    ]
+  },
+  "architecture": {
+    "registryVersion": 1,
+    "fingerprint": "9d4270b2faeeea73743083a31e7b9d28308846e49fb1538fdc4a5e2b4be36307",
+    "components": [
+      {
+        "id": "model",
+        "schemaVersion": 1,
+        "implementationDigest": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true
+      }
+    ]
+  },
+  "tensors": [
+    {
+      "id": "model.BigInt64Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "BigInt64Array"
+          ]
+        }
+      ],
+      "dtype": "BigInt64Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 16,
+      "byteOrder": "LE",
+      "backingGroup": "BigInt64Array",
+      "backingOffset": 0,
+      "backingByteLength": 16
+    },
+    {
+      "id": "model.BigUint64Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "BigUint64Array"
+          ]
+        }
+      ],
+      "dtype": "BigUint64Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 16,
+      "byteOrder": "LE",
+      "backingGroup": "BigUint64Array",
+      "backingOffset": 0,
+      "backingByteLength": 16
+    },
+    {
+      "id": "model.Float32Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Float32Array"
+          ]
+        },
+        {
+          "root": "model",
+          "keys": [
+            "aliasFloat32"
+          ]
+        }
+      ],
+      "dtype": "Float32Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 8,
+      "byteOrder": "LE",
+      "backingGroup": "Float32Array",
+      "backingOffset": 0,
+      "backingByteLength": 8
+    },
+    {
+      "id": "model.Float64Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Float64Array"
+          ]
+        }
+      ],
+      "dtype": "Float64Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 16,
+      "byteOrder": "LE",
+      "backingGroup": "Float64Array",
+      "backingOffset": 0,
+      "backingByteLength": 16
+    },
+    {
+      "id": "model.Int16Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Int16Array"
+          ]
+        }
+      ],
+      "dtype": "Int16Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 4,
+      "byteOrder": "LE",
+      "backingGroup": "Int16Array",
+      "backingOffset": 0,
+      "backingByteLength": 4
+    },
+    {
+      "id": "model.Int32Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Int32Array"
+          ]
+        }
+      ],
+      "dtype": "Int32Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 8,
+      "byteOrder": "LE",
+      "backingGroup": "Int32Array",
+      "backingOffset": 0,
+      "backingByteLength": 8
+    },
+    {
+      "id": "model.Int8Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Int8Array"
+          ]
+        }
+      ],
+      "dtype": "Int8Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 2,
+      "byteOrder": "LE",
+      "backingGroup": "Int8Array",
+      "backingOffset": 0,
+      "backingByteLength": 2
+    },
+    {
+      "id": "model.Uint16Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint16Array"
+          ]
+        }
+      ],
+      "dtype": "Uint16Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 4,
+      "byteOrder": "LE",
+      "backingGroup": "Uint16Array",
+      "backingOffset": 0,
+      "backingByteLength": 4
+    },
+    {
+      "id": "model.Uint32Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint32Array"
+          ]
+        }
+      ],
+      "dtype": "Uint32Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 8,
+      "byteOrder": "LE",
+      "backingGroup": "Uint32Array",
+      "backingOffset": 0,
+      "backingByteLength": 8
+    },
+    {
+      "id": "model.Uint8Array",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint8Array"
+          ]
+        }
+      ],
+      "dtype": "Uint8Array",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 2,
+      "byteOrder": "LE",
+      "backingGroup": "Uint8Array",
+      "backingOffset": 0,
+      "backingByteLength": 2
+    },
+    {
+      "id": "model.Uint8ClampedArray",
+      "componentId": "model",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "model",
+          "keys": [
+            "Uint8ClampedArray"
+          ]
+        }
+      ],
+      "dtype": "Uint8ClampedArray",
+      "dimensions": [
+        2
+      ],
+      "length": 2,
+      "byteLength": 2,
+      "byteOrder": "LE",
+      "backingGroup": "Uint8ClampedArray",
+      "backingOffset": 0,
+      "backingByteLength": 2
+    }
+  ],
+  "states": [
+    {
+      "id": "model.bias",
+      "componentId": "model",
+      "role": "parameter",
+      "valueType": "f64",
+      "schemaVersion": 1,
+      "required": true
+    },
+    {
+      "id": "model.step",
+      "componentId": "model",
+      "role": "optimizer",
+      "valueType": "i53",
+      "schemaVersion": 1,
+      "required": true
+    },
+    {
+      "id": "model.word",
+      "componentId": "model",
+      "role": "random",
+      "valueType": "bigint",
+      "schemaVersion": 1,
+      "required": true
+    }
+  ],
+  "resumeRules": [
+    {
+      "id": "authority",
+      "action": "reset",
+      "reason": "Fresh browser authority",
+      "version": 1
+    }
+  ]
+}

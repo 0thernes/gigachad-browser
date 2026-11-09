@@ -22,6 +22,7 @@ const indexHtml = readFile('index.html');
 const newtabHtml = readFile('pages/newtab.html');
 const preloadJs = readFile('preload.js');
 const mainJs = readFile('main.js');
+const genomeIpcJs = readFile('systems/alive-genome-ipc.cjs');
 const sidecarPy = readFile('laya_sidecar.py');
 
 function verifyInlineScripts(htmlContent, label) {
@@ -63,7 +64,7 @@ const preloadEventChannels = new Set(
 );
 
 const mainHandledChannels = new Set(
-  [...mainJs.matchAll(/ipcMain\.handle\(\s*['"]([^'"]+)['"]/g)].map((m) => m[1])
+  [...(mainJs + '\n' + genomeIpcJs).matchAll(/ipcMain\.handle\(\s*['"]([^'"]+)['"]/g)].map((m) => m[1])
 );
 
 for (const ch of invokeInIndex) {
@@ -250,7 +251,8 @@ assert.strictEqual(enterpriseArchKebab.Forensic25Pass10IterationAuditor, enterpr
 
 const pantheonTest = new PortedMultiverseBrainsFederation();
 assert.strictEqual(pantheonTest.brainsCatalog10.length, 14, `Expected 14 ported multiverse brains, got ${pantheonTest.brainsCatalog10.length}`);
-assert.strictEqual(pantheonTest.latestSnapshot.activeBrainsCount, 14, 'Expected activeBrainsCount === 14');
+assert.strictEqual(pantheonTest.latestSnapshot.activeBrainsCount, 0, 'Initialized brain objects are not evidence of completed execution');
+assert.strictEqual(pantheonTest.latestSnapshot.stateOrigin, 'initialized');
 assert.strictEqual(pantheonTest.latestSnapshot.totalPantheonBrainsCount, 14, 'Expected totalPantheonBrainsCount === 14');
 assert.strictEqual(pantheonTest.brain9ThalerDabus.ablationResults.passedAllAblations, true, 'Expected Brain 9 Thaler DABUS 4 honest ablation gates to pass');
 assert.strictEqual(Object.keys(pantheonTest.brain9ThalerDabus.nineMarkers).length, 9, 'Expected all 9 Thaler constitutive markers');

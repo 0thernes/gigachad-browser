@@ -1,0 +1,74 @@
+      savePersistentGenome() {
+        try {
+          const payload = {
+            authorityEpoch: this.authorityEpoch,
+            simulationTick: this.simulationTick,
+            policyCid: this.policyCid,
+            checkpointCid: this.checkpointCid,
+            bodyRecipe: this.bodyRecipe,
+            W_actor: Array.from(this.W_actor).map((v) => Number(v.toFixed(5))),
+            W_metamorph: Array.from(this.W_metamorph).map((v) => Number(v.toFixed(5))),
+            W_critic: Array.from(this.W_critic).map((v) => Number(v.toFixed(5))),
+            W_world: Array.from(this.W_world).map((v) => Number(v.toFixed(5))),
+            offspringColony: this.offspringColony.slice(0, 4),
+            episodicMemory: this.episodicMemory.slice(-30),
+            semanticMemory: this.semanticMemory,
+            proceduralMemory: this.proceduralMemory,
+            handoffLedger: this.handoffLedger.slice(-16),
+            dreamReplaysCount: this.dreamReplaysCount,
+            pelletsEatenCount: this.pelletsEatenCount,
+            horizontalTransfersCount: this.horizontalTransfersCount,
+            personality: this.personality,
+            emotionState: this.emotionState,
+            morphogenesis: this.morphogenesis,
+            cognitiveCortex: this.cognitiveCortex,
+            visitedUrls: Array.from(this.visitedUrlTabooSet).slice(-160),
+            clickedAnchors: Array.from(this.clickedAnchorTabooSet).slice(-160),
+            swarmFormation: this.swarmCollective.formationMode,
+            sovereignStats: {
+              commandsExecutedCount: this.sovereignMaster.commandsExecutedCount,
+              vaultEngramsCrystallized: this.sovereignMaster.vaultEngramsCrystallized,
+              bookmarksAutonomouslyPinned: this.sovereignMaster.bookmarksAutonomouslyPinned,
+              maxsmartDossiersSynthesized: this.sovereignMaster.maxsmartDossiersSynthesized,
+              vibeCssMutationsCount: this.sovereignMaster.vibeCssMutationsCount,
+              emergentQueriesInjected: this.sovereignMaster.emergentQueriesInjected
+            },
+            causalPropositions: this.causalGraph.propositions.slice(-48),
+            trainableHub: this.trainableAlifeNeuralHub ? {
+              W_perc_enc: Array.from(this.trainableAlifeNeuralHub.W_perc_enc).map((v) => Number(v.toFixed(4))),
+              W_perc_dec: Array.from(this.trainableAlifeNeuralHub.W_perc_dec).map((v) => Number(v.toFixed(4))),
+              W_dyn1: Array.from(this.trainableAlifeNeuralHub.W_dyn1).map((v) => Number(v.toFixed(4))),
+              W_dyn2: Array.from(this.trainableAlifeNeuralHub.W_dyn2).map((v) => Number(v.toFixed(4))),
+              W_diff1: Array.from(this.trainableAlifeNeuralHub.W_diff1).map((v) => Number(v.toFixed(4))),
+              W_diff2: Array.from(this.trainableAlifeNeuralHub.W_diff2).map((v) => Number(v.toFixed(4))),
+              W_gen1: Array.from(this.trainableAlifeNeuralHub.W_gen1).map((v) => Number(v.toFixed(4))),
+              W_gen2: Array.from(this.trainableAlifeNeuralHub.W_gen2).map((v) => Number(v.toFixed(4))),
+              W_disc1: Array.from(this.trainableAlifeNeuralHub.W_disc1).map((v) => Number(v.toFixed(4))),
+              W_disc2: Array.from(this.trainableAlifeNeuralHub.W_disc2).map((v) => Number(v.toFixed(4))),
+              W_aware16: Array.from(this.trainableAlifeNeuralHub.W_aware16).map((v) => Number(v.toFixed(4))),
+              totalBackpropStepsTrained: this.trainableAlifeNeuralHub.totalBackpropStepsTrained,
+              ideasSynthesizedCount: this.trainableAlifeNeuralHub.ideasSynthesizedCount,
+              dreamConsolidationSteps: this.trainableAlifeNeuralHub.dreamConsolidationSteps
+            } : null,
+            sltcLearned: this.deepWebAndSltcConnectomeEngine ? {
+              sltcWeights64: Array.from(this.deepWebAndSltcConnectomeEngine.sltcWeights64).map((v) => Number(v.toFixed(4))),
+              sltcRecWeights64: Array.from(this.deepWebAndSltcConnectomeEngine.sltcRecWeights64).map((v) => Number(v.toFixed(4))),
+              sltcBias64: Array.from(this.deepWebAndSltcConnectomeEngine.sltcBias64).map((v) => Number(v.toFixed(4)))
+            } : null,
+            aotTotGotLearned: (this.aotTotGotEngine && this.aotTotGotEngine.W_aot_contractor) ? {
+              W_aot_contractor: Array.from(this.aotTotGotEngine.W_aot_contractor).map((v) => Number(v.toFixed(4))),
+              W_tot_branch4x16x16: Array.from(this.aotTotGotEngine.W_tot_branch4x16x16).map((v) => Number(v.toFixed(4))),
+              W_got_attn: Array.from(this.aotTotGotEngine.W_got_attn).map((v) => Number(v.toFixed(4)))
+            } : null,
+            portedPantheonLearned: (this.portedMultiverseBrains && typeof this.portedMultiverseBrains.exportLearnedState === 'function')
+              ? this.portedMultiverseBrains.exportLearnedState()
+              : null,
+            authenticAsmodensius: this.authenticAsmodensius ? this.authenticAsmodensius.exportState() : null,
+            savedAt: new Date().toISOString()
+          };
+          localStorage.setItem('humunculus_persistent_genome_v1', JSON.stringify(payload));
+        } catch (error) {
+          if (this.authenticAsmodensius) this.authenticAsmodensius.lastError = `Checkpoint save failed: ${error.message}`;
+          console.warn('Persistent genome save failed; previous stored checkpoint retained:', error.message);
+        }
+      }

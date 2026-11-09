@@ -134,11 +134,12 @@ function harness(options = {}) {
 
   // Execute the actual quit callback with an owned server and child processes.
   const quitSource = source.slice(source.indexOf("app.on('will-quit',"));
-  let serverClosed = false, childrenKilled = 0;
-  const quitContext = { _localBrainsHttpServer: { close: () => { serverClosed = true; } }, sidecarProcess: { exitCode: null, kill: () => childrenKilled++ }, llamaProcess: { exitCode: null, kill: () => childrenKilled++ }, app: { on: (_event, fn) => fn() } };
+  let serverClosed = false, childrenKilled = 0, torStopped = 0;
+  const quitContext = { managedTor: { stop: () => torStopped++ }, _localBrainsHttpServer: { close: () => { serverClosed = true; } }, sidecarProcess: { exitCode: null, kill: () => childrenKilled++ }, llamaProcess: { exitCode: null, kill: () => childrenKilled++ }, app: { on: (_event, fn) => fn() } };
   vm.runInNewContext(quitSource, quitContext);
   assert.equal(serverClosed, true);
   assert.equal(childrenKilled, 2);
+  assert.equal(torStopped, 1);
   const registerStart = source.indexOf('function registerIpc()');
   assert(source.indexOf('let _localBrainsHttpServer = null;') < registerStart, 'quit-owned server is declared in module scope');
 

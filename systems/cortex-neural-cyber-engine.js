@@ -6,6 +6,7 @@ const net = require('net');
 const dns = require('dns');
 const tls = require('tls');
 const crypto = require('crypto');
+const { probeSocks5, configuredTorPorts, buildFailClosedPac, applyFailClosedProxy } = require('./deep-web-transport');
 
 /**
  * GIGACHAD BROWSER — EXTERNAL BINARY NEURAL WEIGHTS & MULTI-HAT CYBER/DEEP-WEB ENGINE
@@ -43,73 +44,35 @@ function probeLocalPort(port, host = '127.0.0.1', timeoutMs = 65) {
   });
 }
 
-async function detectDeepWebLocalDaemons() {
-  const [torDaemon9050, torBrowser9150, i2pHttp4444, ipfsKubo8080, ipfsApi5001] = await Promise.all([
-    probeLocalPort(9050),
-    probeLocalPort(9150),
-    probeLocalPort(4444),
-    probeLocalPort(8080),
-    probeLocalPort(5001)
+async function detectDeepWebLocalDaemons({ env = process.env, socksPort } = {}) {
+  const [torProbes, i2pHttp4444, ipfsKubo8080, ipfsApi5001] = await Promise.all([
+    Promise.all(configuredTorPorts(env, socksPort).map(port => probeSocks5(port))),
+    probeLocalPort(4444), probeLocalPort(8080), probeLocalPort(5001)
   ]);
-  const activeTorPort = torDaemon9050 ? 9050 : (torBrowser9150 ? 9150 : null);
+  const activeTorPort = torProbes.find(probe => probe.verified)?.port || null;
   return {
-    torDaemon9050,
-    torBrowser9150,
-    activeTorPort,
-    localTorActive: Boolean(activeTorPort),
-    i2pHttp4444,
-    ipfsKubo8080,
-    ipfsApi5001,
+    torDaemon9050: torProbes.some(probe => probe.port === 9050 && probe.verified),
+    torBrowser9150: torProbes.some(probe => probe.port === 9150 && probe.verified),
+    activeTorPort, localTorActive: Boolean(activeTorPort), socksHandshakeVerified: Boolean(activeTorPort),
+    i2pHttp4444, ipfsKubo8080, ipfsApi5001, probes: torProbes,
+    scope: 'SOCKS5 greeting verified; daemon identity and Tor circuit unknown. Other ports only report TCP availability.',
     timestamp: new Date().toISOString()
   };
 }
 
 function buildChromiumDeepWebPacScript(daemonStatus = {}) {
-  const torPort = daemonStatus.activeTorPort || 9050;
-  const torAvailable = Boolean(daemonStatus.localTorActive);
-  const i2pAvailable = Boolean(daemonStatus.i2pHttp4444);
-  return `
-function FindProxyForURL(url, host) {
-  var lowerHost = (host || '').toLowerCase();
-  if (shExpMatch(lowerHost, "*.onion") || lowerHost === "onion") {
-    ${torAvailable ? `return "SOCKS5 127.0.0.1:${torPort}; SOCKS 127.0.0.1:${torPort}; DIRECT";` : `return "DIRECT";`}
-  }
-  if (shExpMatch(lowerHost, "*.i2p")) {
-    ${i2pAvailable ? `return "PROXY 127.0.0.1:4444; DIRECT";` : `return "DIRECT";`}
-  }
-  return "DIRECT";
-}
-`.trim();
+  return buildFailClosedPac(daemonStatus);
 }
 
-async function configureDeepWebChromiumProxy(sessions = [], forceMode = 'auto') {
-  const status = await detectDeepWebLocalDaemons();
-  const pacScript = buildChromiumDeepWebPacScript(status);
-  const dataUrl = 'data:application/x-ns-proxy-autoconfig;base64,' + Buffer.from(pacScript, 'utf8').toString('base64');
-  const appliedSessions = [];
-  for (const sess of sessions) {
-    if (!sess || typeof sess.setProxy !== 'function') continue;
-    try {
-      if (forceMode === 'tor_all' && status.activeTorPort) {
-        await sess.setProxy({ proxyRules: `socks5://127.0.0.1:${status.activeTorPort}` });
-      } else if (status.localTorActive || status.i2pHttp4444) {
-        await sess.setProxy({ pacScript: dataUrl });
-      } else {
-        await sess.setProxy({ mode: 'system' });
-      }
-      appliedSessions.push(true);
-    } catch (_) {
-      appliedSessions.push(false);
-    }
-  }
+async function configureDeepWebChromiumProxy(sessions = [], forceMode = 'auto', options = {}) {
+  const status = await detectDeepWebLocalDaemons(options);
+  const result = await applyFailClosedProxy(sessions, status, forceMode);
   return {
-    ok: true,
-    mode: forceMode,
-    daemonStatus: status,
-    pacAppliedCount: appliedSessions.filter(Boolean).length,
-    routingSummary: status.localTorActive
-      ? `NATIVE_TOR_SOCKS5 (127.0.0.1:${status.activeTorPort})`
-      : 'HYBRID_HTTPS_ONION_IPFS_GATEWAY (No local Tor daemon on 9050/9150)'
+    ...result, appliedSessions: undefined, mode: forceMode, daemonStatus: status,
+    pacAppliedCount: result.appliedCount,
+    routingSummary: result.ok && status.localTorActive
+      ? `SOCKS5_NEGOTIATED (127.0.0.1:${status.activeTorPort}); onion reachability requires a loaded document`
+      : 'ONION_UNAVAILABLE; direct and gateway fallback disabled'
   };
 }
 
@@ -233,7 +196,7 @@ function loadBinaryCortexWeights(filePath) {
 /**
  * Multi-Hat Cyber Master Inspector (White/Blue TLS & Security Headers + Grey/OSINT DNS)
  */
-async function inspectTargetDomainCyberHat(targetUrl = 'https://en.wikipedia.org') {
+async function inspectTargetDomainCyberHat(targetUrl = 'https://en.wikipedia.org', options = {}) {
   let parsed;
   try {
     parsed = new URL(targetUrl);
@@ -242,6 +205,9 @@ async function inspectTargetDomainCyberHat(targetUrl = 'https://en.wikipedia.org
   }
   const hostname = parsed.hostname || 'en.wikipedia.org';
   const isHttps = parsed.protocol === 'https:';
+  if (/(^|\.)(onion|i2p)\.?$/i.test(hostname)) {
+    return { ok: false, hostname, scope: 'Public DNS/TLS inspector excludes onion and I2P destinations. Use browser SOCKS transport evidence.', dnsRecords: null, tlsInfo: { inspected: false }, networkSensoryVector8: [] };
+  }
 
   // 1. Grey/OSINT Hat: Non-blocking DNS Resolution (A, AAAA, TXT, MX, NS)
   const dnsPromise = (async () => {
@@ -308,7 +274,7 @@ async function inspectTargetDomainCyberHat(targetUrl = 'https://en.wikipedia.org
   const [dnsRecords, tlsInfo, daemons] = await Promise.all([
     dnsPromise,
     tlsPromise,
-    detectDeepWebLocalDaemons()
+    detectDeepWebLocalDaemons(options)
   ]);
 
   // Compute deterministic cryptographic entropy vector [8] from real network artifacts

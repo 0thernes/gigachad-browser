@@ -1,0 +1,529 @@
+{
+  "schema": "gigachad.release-qualification.v1",
+  "date": "2026-11-09",
+  "scope": "Measured local Windows qualification of the recorded Git-index candidate. Publication metadata and this evidence record may be added afterward; runtime source must remain identical. This record does not claim sentience, omniscience, full model continuity or completion of the eight scientific research gates.",
+  "candidate": {
+    "tree": "79d5b2a0faae9dc561b27fbea7d3c42203ed453b",
+    "sourceFiles": 2148,
+    "sourceRosterSHA256": "b7212452c02ab8dfe82938c52eb498590dbe46edf419a520367bd8c8bebedaf6",
+    "runtimeSourceSHA256": {
+      "index.html": "c1960fc381ef1dc76e101842ec2a63d38fc905206d39187006931265b44a96d5",
+      "main.js": "569027e664320d50b0f21193562d75b66b6cf5b6a535b0f89ac73534a8fa702e",
+      "preload.js": "0321f2fccb2ac35c7c01e9d5a256821871debb34f72f4e7b0418ab3ddbfe39db",
+      "config.js": "9488045b40aea332e40c6fe95124ea78f8488b07c3b2c366ee6cf4bbf72b4043",
+      "alife_neural_cyber_engine.js": "dca1184a06bcc8616e382e841ceed3c5182004e34c11109a811601f5d7976855",
+      "scripts/alive-overdrive-probe.cjs": "5081a30da26f1ec0a6c167505058344efb0a4dd97f6625902c5f8fa54ac4cdf9",
+      "scripts/alive-public-navigation-probe.cjs": "5c7334fd8f8c3f1828a69d944235b0808bc7837f5995e8f8d5c1e612b9dfc01b",
+      "systems/cortex-neural-cyber-engine.js": "357045fc9825b8f718f3e0e741cbb8b646ba37a6ebbe30fc4a03cb229b3026bd",
+      "systems/alive-overdrive-runtime.js": "6c692b411679e96af9ef42f460fad0c1c0d5052550e037bd304e4c495ad26c93",
+      "systems/alive-overdrive-adapters.js": "84100eced5fb26eea486548698428a2ed4fa10bb72104352e9cd4fcb2d160e6f",
+      "systems/alive-checkpoints.js": "fe6f74c7f464c168b2bda5d652294ebc497df5136cab3306ccf11ab4b9e8f4e5",
+      "systems/alive-guest-execution.js": "822b78dde36389e0928ba0c4c1ccf271e33b9471c2675955d093c2a665e92b09",
+      "systems/alive-authority.js": "c6cf55146fa267e4da75d04814deee7bd6c77283b57ae1f1c6cfe5e24f8cf9c4",
+      "systems/alive-neural-coupling.js": "7f859b453e9e6168559497ccfc82edd71e6127b65d537f4f18643f33ac754571",
+      "systems/alive-autosave.js": "b5265c98aebe75911ee7c4a20431ea434b6b04de886f4a05b47d2ce762ff7a14",
+      "systems/alive-genome-codec.js": "1b386d81ae9b5483be39bf6b75ac2cc5e77263ed5f367719285d247b2aad3c2a",
+      "systems/authentic-asmodensius-adapter.js": "5453dc6f66c636f57d22399c6c7dbaed02ef8a10495b3e9dbd84087ea1f45c9d",
+      "systems/generated/authentic-asmodensius.js": "b2bdd297bb14c7e16c4ccfa3e692ff43b5cb9d6b162a4f033071c445b7fbc3cb",
+      "systems/ported-multiverse-brains.js": "688fa48a897107d9cea733315c4bb3d21e6140b381c601fd076750901136ab55",
+      "systems/alife-learning-evidence.js": "46cbfb7bcb119edfce3f530fdd10d93782411cebcd3e910dd2f49a188b612802",
+      "systems/alive-workspace-ui.js": "e81845d708c9b82a81b83528b68e7779c43b76bfe5a0ab209d2682302177b1fb",
+      "assets/alive-workspace.css": "28945df77b00435fd51e0a3058bbf5e107fab09ce6bdd1409f4e355823b1f4b7",
+      "scripts/alive-specialist-fusion-evidence.cjs": "98d6071e4a12f113066c10c81ba453c2836d4d566e589b05f7507a06425ce082",
+      "scripts/alive-navigation-cache-probe.cjs": "b79d8922938163288795946dedd2aef9246012f26e67afcea1df34f8a047d285",
+      "scripts/alive-genome-durable-evidence.cjs": "b7ae6b1db722db105c9454ffd80cfeb725fce69824fff50ea2494a0d27f7fba1",
+      "scripts/alive-split-habitat-probe.cjs": "c8a51c71689d137489ad8cda1869ff32f27f4b98a902dfe483d998704da166cb",
+      "systems/alive-page-exploration.js": "e0c5f7a55ec7063c4a571f3425270dc7e0d2336ea97fcb27a35ca1a6b9dd634e",
+      "systems/alive-habitat.js": "6b27e22939c77009811d5eef23b7223e1a2551639e8390d04849a0b512fbfe93",
+      "systems/deep-web-transport.js": "121735334fde6196d66a7a5059e460dd6f27a9f6dbf3da059f4128f89b12d0f9",
+      "systems/sha3-256.cjs": "83850872e9bcc2f505a31bf4607dddc23558f65950843576c069094f46ce726d",
+      "systems/alive-specialist-fusion.js": "eacbe9f6031012e38e33681aa5db95e4513b91c5ab178949c5c250f1f4ec175b",
+      "systems/alive-research-planner.cjs": "8be37ece6b1c44837711f1b1a1a9f0776c1d5f55ca2d538e336436a3c458fa4a",
+      "systems/alive-research-policy.js": "70fd0e900839c1f7420c06b02f6e397b921ba182dec082669117f6aff25a9eeb",
+      "systems/alive-tor-service.cjs": "651ebb6a1798b10e4dce3ae66070777a962457c06adac132cb8a07203b9933c1",
+      "systems/alive-genome-store.cjs": "1238c8c26527112f58598e8383c4291b3f075a0173fba00ce2ce7fd0f79767f0",
+      "systems/alive-genome-ipc.cjs": "556df4187960206dd0176ea82599292c2b3a739fd92bc1290880e24bc158c618",
+      "systems/alive-genome-persistence.js": "42799a2e323a84d7628050d932131719b8d44df1d4040c7138f941fd3f67180e"
+    },
+    "immutableAcrossAllPhases": true
+  },
+  "environment": {
+    "platform": "win32",
+    "architecture": "x64",
+    "hostNode": "24.22.2",
+    "electron": "45.2.3",
+    "embeddedNode": "24.22.2",
+    "v8": "15.6.75.27-electron.0",
+    "ciNodeMajor": 24,
+    "declaredNodeMinimum": "22.12.0"
+  },
+  "node": {
+    "ok": true,
+    "startedAt": "2026-11-09T11:30:35.213Z",
+    "completedAt": "2026-11-09T11:31:06.007Z",
+    "exitCode": 0,
+    "sourceChanges": [],
+    "indexUnchanged": true,
+    "tests": 989,
+    "passed": 989,
+    "failed": 0,
+    "skipped": 0
+  },
+  "smoke": {
+    "ok": true,
+    "startedAt": "2026-11-09T11:31:06.080Z",
+    "completedAt": "2026-11-09T11:31:33.842Z",
+    "exitCode": 0,
+    "sourceChanges": [],
+    "indexUnchanged": true,
+    "nodeTests": 766,
+    "pythonTests": 6,
+    "actualElectronStartup": true,
+    "sha3ActualElectron": true
+  },
+  "integrated": {
+    "ok": true,
+    "startedAt": "2026-11-09T11:31:33.913Z",
+    "completedAt": "2026-11-09T11:34:35.441Z",
+    "exitCode": 0,
+    "sourceChanges": [],
+    "indexUnchanged": true,
+    "requiredFailures": [],
+    "measurementDurationMs": 60012.699999999255,
+    "presentation": {
+      "averageFps": 59.50407163817066,
+      "samples": 3570,
+      "p50Ms": 16.699999999254942,
+      "p95Ms": 17.899999998509884,
+      "p99Ms": 24.699999999254942,
+      "maxMs": 49.899999998509884
+    },
+    "rendererErrors": 0,
+    "longTasks": 0,
+    "localLearning": {
+      "backpropEvents": 1237,
+      "stdpEvents": 312832,
+      "coupling": {
+        "sources": 24,
+        "steps": 1237,
+        "feedbackUpdates": 63,
+        "trainableParameters": 408
+      },
+      "weightDeltas": {
+        "actor": {
+          "sum": 1.139133762102574,
+          "squared": 0.059086420072100854,
+          "nonFinite": 0
+        },
+        "critic": {
+          "sum": -0.5480923822324257,
+          "squared": 3.846557735740926,
+          "nonFinite": 0
+        },
+        "world": {
+          "sum": 5.282709489227273,
+          "squared": 1.3678960882076723,
+          "nonFinite": 0
+        },
+        "perception": {
+          "sum": -0.05194905027747154,
+          "squared": 3.937601671891934,
+          "nonFinite": 0
+        },
+        "couplingWeights": {
+          "sum": 0.01120225340127945,
+          "squared": 0.0022547861686668114,
+          "nonFinite": 0
+        },
+        "couplingGateLogits": {
+          "sum": 0.0010210014388576383,
+          "squared": 6.080768081820938e-8,
+          "nonFinite": 0
+        }
+      },
+      "scope": "Finite measured local-controller tensor changes and update events; not evidence of language-model fine-tuning or general intelligence."
+    },
+    "pause": {
+      "newRuns": 0,
+      "newBackprop": 0,
+      "newSimulationTicks": 0
+    },
+    "checkpointRestore": {
+      "matched": true,
+      "couplingMatched": true,
+      "scope": "model tensors plus body and policy identity; not an exact replay of every runtime scalar"
+    },
+    "authority": {
+      "ok": true,
+      "cases": [
+        {
+          "id": "selected-tab-ack",
+          "passed": true
+        },
+        {
+          "id": "auxiliary-grant",
+          "passed": true
+        },
+        {
+          "id": "retained-callback-revoked",
+          "passed": true
+        },
+        {
+          "id": "stale-token-rejected",
+          "passed": true
+        },
+        {
+          "id": "a-b-a-delayed-result",
+          "passed": true
+        },
+        {
+          "id": "same-url-document-replacement",
+          "passed": true
+        },
+        {
+          "id": "paused-manual-permit",
+          "passed": true
+        }
+      ]
+    },
+    "navigationCache": {
+      "ok": true,
+      "cases": [
+        {
+          "id": "initial-ready",
+          "passed": true
+        },
+        {
+          "id": "same-document-fragment",
+          "passed": true
+        },
+        {
+          "id": "same-url-reload",
+          "passed": true
+        }
+      ]
+    },
+    "splitHabitat": {
+      "ok": true,
+      "reasons": [],
+      "requiredCases": [
+        "ratio-25",
+        "ratio-50",
+        "ratio-75",
+        "secondary-cache-invalidated",
+        "secondary-observation-rebound",
+        "pause-stops-exploration",
+        "no-runtime-errors"
+      ],
+      "cases": [
+        {
+          "id": "ratio-25",
+          "passed": true
+        },
+        {
+          "id": "ratio-50",
+          "passed": true
+        },
+        {
+          "id": "ratio-75",
+          "passed": true
+        },
+        {
+          "id": "secondary-cache-invalidated",
+          "passed": true
+        },
+        {
+          "id": "secondary-observation-rebound",
+          "passed": true
+        },
+        {
+          "id": "pause-stops-exploration",
+          "passed": true
+        },
+        {
+          "id": "no-runtime-errors",
+          "passed": true
+        }
+      ]
+    },
+    "specialistFusion": {
+      "ok": true,
+      "sourceCount": 5,
+      "changedAxes": [
+        0,
+        1
+      ]
+    }
+  },
+  "publicNavigation": {
+    "ok": true,
+    "configuredWindowMs": 105000,
+    "measuredDurationMs": 103660.39999999851,
+    "confirmedArrivalCount": 10,
+    "uniqueArrivalHosts": 10,
+    "arrivals": [
+      {
+        "url": "https://arxiv.org/abs/0803.1087",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://www.connectedpapers.com/about",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://www.litmaps.com/",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/5954675/",
+        "statusCode": 202,
+        "fromCache": false
+      },
+      {
+        "url": "https://info.arxiv.org/help/subscribe.html",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://pespmc1.vub.ac.be/MATHME.html",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://direct.mit.edu/artl/article-abstract/6/4/363/2354/Open-Problems-in-Artificial-Life?redirectedFrom=fulltext",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://www.instagram.com/mitpress/",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://alife.org/",
+        "statusCode": 200,
+        "fromCache": false
+      },
+      {
+        "url": "https://biotacast.org/",
+        "statusCode": 200,
+        "fromCache": false
+      }
+    ],
+    "maxTabs": 4,
+    "researchLearning": {
+      "expectedShapes": {
+        "inputWeights": 192,
+        "hiddenBias": 12,
+        "outputWeights": 12,
+        "outputBias": 1
+      },
+      "finiteShapes": true,
+      "changedTensors": [
+        "inputWeights",
+        "hiddenBias",
+        "outputWeights",
+        "outputBias"
+      ],
+      "countersExcludedFromTensorChange": true,
+      "modelUpdateDelta": 14
+    },
+    "presentation": {
+      "averageFps": 59.04858557366254,
+      "samples": 6120,
+      "p50Ms": 16.699999999254942,
+      "p95Ms": 20.800000000745058,
+      "p99Ms": 29.900000002235174,
+      "maxMs": 88.10000000149012
+    },
+    "finalPauseProved": true,
+    "networkGateClosed": true,
+    "providerCoverage": false,
+    "torCoverage": false,
+    "scope": "Fresh temporary profile; production research policy; bounded public GET/HEAD navigation. Every counted arrival requires committed/current document authority and an uncached successful main-frame response. Navigation success is not a content-quality or unseen-task score."
+  },
+  "actualWorker": {
+    "ok": true,
+    "electron": "45.2.3",
+    "sourceSHA256": {
+      "systems/alife-25-bleeding-edge-models.js": "c6155433208fbe07d6f1f1e4b6f94ca5bc36a7359ef921e1a535bf306990d1b7",
+      "scripts/alive-worker-trainer-electron-probe.cjs": "cf4fabc8b2fe69cabd80000087a74c03c01154099199c684d4b793245c54a204"
+    },
+    "hostChecks": 9,
+    "nativeChecks": 33,
+    "nativeResults": 7,
+    "committedUpdates": 4,
+    "discardedUpdates": 3,
+    "semanticClockPersisted": false,
+    "scope": "Actual production methods and native Blob Worker. Held callback release is a transport fixture, not native post-terminate delivery."
+  },
+  "fullApplicationWorker": {
+    "ok": true,
+    "tree": "66b67489bda533a5c9b577ef7e7a75134af2f893",
+    "onlyChangedSourceSinceIntegratedRun": [
+      "scripts/alive-overdrive-probe.cjs"
+    ],
+    "sourceChanges": [],
+    "cases": [
+      {
+        "id": "full-app-worker-applied",
+        "passed": true
+      },
+      {
+        "id": "finite-target-changed-while-running",
+        "passed": true
+      },
+      {
+        "id": "pause-retired-worker",
+        "passed": true
+      },
+      {
+        "id": "pause-kept-target-and-clock-unchanged",
+        "passed": true
+      },
+      {
+        "id": "no-worker-faults-or-timeouts",
+        "passed": true
+      }
+    ],
+    "initial": {
+      "active": false,
+      "phase": "suspended",
+      "generation": 4,
+      "committedEpoch": 0,
+      "workerEpochsCompleted": 0,
+      "lastReplayGradNorm": null,
+      "pendingJobId": null,
+      "pendingTargetEpoch": null,
+      "timeoutMs": 5000,
+      "submitted": 0,
+      "applied": 0,
+      "discarded": 0,
+      "rejectedReplies": 0,
+      "rejectedInputs": 0,
+      "busySkips": 0,
+      "faults": 0,
+      "timeouts": 0,
+      "workersCreated": 1,
+      "lastError": "paused",
+      "lastRejectedReason": "",
+      "semanticClockPersisted": false,
+      "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+    },
+    "running": {
+      "active": true,
+      "phase": "ready",
+      "generation": 7,
+      "committedEpoch": 8,
+      "workerEpochsCompleted": 8,
+      "lastReplayGradNorm": 0.02191,
+      "pendingJobId": null,
+      "pendingTargetEpoch": null,
+      "timeoutMs": 5000,
+      "submitted": 8,
+      "applied": 8,
+      "discarded": 0,
+      "rejectedReplies": 0,
+      "rejectedInputs": 0,
+      "busySkips": 0,
+      "faults": 0,
+      "timeouts": 0,
+      "workersCreated": 2,
+      "lastError": "",
+      "lastRejectedReason": "",
+      "semanticClockPersisted": false,
+      "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+    },
+    "stopped": {
+      "active": false,
+      "phase": "suspended",
+      "generation": 11,
+      "committedEpoch": 8,
+      "workerEpochsCompleted": 8,
+      "lastReplayGradNorm": 0.02191,
+      "pendingJobId": null,
+      "pendingTargetEpoch": null,
+      "timeoutMs": 5000,
+      "submitted": 8,
+      "applied": 8,
+      "discarded": 0,
+      "rejectedReplies": 0,
+      "rejectedInputs": 0,
+      "busySkips": 0,
+      "faults": 0,
+      "timeouts": 0,
+      "workersCreated": 2,
+      "lastError": "paused",
+      "lastRejectedReason": "",
+      "semanticClockPersisted": false,
+      "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+    },
+    "settled": {
+      "active": false,
+      "phase": "suspended",
+      "generation": 11,
+      "committedEpoch": 8,
+      "workerEpochsCompleted": 8,
+      "lastReplayGradNorm": 0.02191,
+      "pendingJobId": null,
+      "pendingTargetEpoch": null,
+      "timeoutMs": 5000,
+      "submitted": 8,
+      "applied": 8,
+      "discarded": 0,
+      "rejectedReplies": 0,
+      "rejectedInputs": 0,
+      "busySkips": 0,
+      "faults": 0,
+      "timeouts": 0,
+      "workersCreated": 2,
+      "lastError": "paused",
+      "lastRejectedReason": "",
+      "semanticClockPersisted": false,
+      "scope": "Generation-fenced local worker updates; committed epoch is not yet in the durable full-state catalog"
+    },
+    "scope": "Full production application and constructor, natural worker dispatch and native replies; unchanged 16-value target and committed epoch during the existing three-second production Pause interval. Running target changes also include synchronous model updates; worker application is established by its committed reply counter."
+  },
+  "persistenceScope": {
+    "exactPrimaryViews": 6,
+    "exactPrimaryValues": 718,
+    "exactPrimaryBytes": 2872,
+    "cortexAliases": 2,
+    "authenticNativeEnvelope": true,
+    "fullLearnedStateCatalogQualified": false,
+    "crossComponentAtomicRestoreQualified": false
+  },
+  "qualificationHistory": {
+    "legacyOfflinePortal": "Unsuccessful and incompatible with the current public research policy. Its loopback fixture is intentionally excluded; the public navigation proof above replaces this qualification mode, without converting that failure into a pass.",
+    "smokeBootstrap": "An earlier smoke-only self-reload omitted asynchronous primary preparation; repaired with real-fragment regressions and requalified.",
+    "sourceAnnotation": "Production badges and Zalgo decoration could inflate link text beyond discovery limits; fixed with bounded authored-text observation and regressions before this candidate."
+  },
+  "distribution": {
+    "format": "unsigned Windows x64 portable directory",
+    "builder": "npm run build:portable",
+    "manifest": "portable-manifest.json in the generated directory",
+    "packagedSmokeEvidence": "Retained locally alongside the distribution; separate from this pre-packaging source qualification record.",
+    "externalDependencies": [
+      "Python 3.11+ for the sidecar",
+      "Configured model services/weights for language-model inference",
+      "Tor for onion transport"
+    ]
+  },
+  "boundaries": {
+    "normalProfile": "The existing normal browser session was not restarted or migrated by this qualification.",
+    "scientificGates": "All eight proposed Humunculus scientific gates remain unqualified.",
+    "modelTraining": "Local controller/ranker learning is measured; configured language-model weights are not fine-tuned by browser research.",
+    "priorNetworkEvidence": "Earlier local-model and Tor/onion runs remain source- and network-condition-specific; this public browsing phase does not requalify them.",
+    "notClaimed": [
+      "sentience",
+      "omniscience",
+      "omnipotence",
+      "physical quantum execution",
+      "biological FlyWire equivalence",
+      "complete durable state for every model"
+    ]
+  }
+}

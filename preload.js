@@ -35,6 +35,11 @@ const ALLOWED_INVOKE = new Set([
   'config-get',
   'config-save',
   'llm-list-models',
+  'alive-research-plan',
+  'alive-genome-commit',
+  'alive-genome-fence',
+  'alive-genome-read',
+  'alive-genome-close-result',
   'sidecar-health',
   'ai-cancel',
   'history-add',
@@ -70,9 +75,17 @@ const ALLOWED_INVOKE = new Set([
   'ported-brains-bridge'
 ]);
 
-const ALLOWED_ON = new Set(['adblock-tick', 'open-url', 'command', 'permission-request', 'download-update', 'context-action', 'openrouter-oauth-complete', 'ai-thinking-step']);
+const ALLOWED_ON = new Set(['adblock-tick', 'open-url', 'command', 'permission-request', 'download-update', 'context-action', 'openrouter-oauth-complete', 'ai-thinking-step', 'alive-genome-close-request']);
+
+let genomeBootstrap;
+try {
+  genomeBootstrap = ipcRenderer.sendSync('alive-genome-bootstrap');
+} catch (error) {
+  genomeBootstrap = { status: 'error', json: null, writeAllowed: false, error: String(error.message || error) };
+}
 
 const gigachadBridgeApi = {
+  genomeBootstrap,
   invoke(channel, ...args) {
     if (!ALLOWED_INVOKE.has(channel)) {
       return Promise.reject(new Error('IPC channel is not exposed: ' + channel));

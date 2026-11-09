@@ -34,6 +34,7 @@ _embed_error = None
 _ner_model = None
 _ner_error = None
 _kokoro = None
+_kokoro_model_id = None
 _kokoro_error = None
 
 
@@ -82,7 +83,8 @@ def embed_status() -> dict:
         return {
             "live": False,
             "implementation": "sentence-transformers",
-            "model": model_id,
+            "model": None,
+            "requested_model": model_id,
             "neural": False,
             "error": _embed_error or "model was not loaded",
         }
@@ -104,7 +106,8 @@ def ner_status() -> dict:
         return {
             "live": False,
             "implementation": "gliner",
-            "model": model_id,
+            "model": None,
+            "requested_model": model_id,
             "neural": False,
             "error": _ner_error or "model was not loaded",
         }
@@ -120,30 +123,17 @@ def ner_status() -> dict:
 def tts_status() -> dict:
     if TEST_MODE:
         return {"live": False, "implementation": "none", "model": None, "neural": False, "note": "TTS disabled in isolated smoke mode."}
-    kokoro_ok = _try_import("kokoro") and _try_import("soundfile")
-    if kokoro_ok:
-        return {
-            "live": True,
-            "implementation": "kokoro",
-            "model": "kokoro",
-            "neural": True,
-            "note": "Weights load on the first /tts call.",
-        }
+    model_id = os.environ.get("GIGACHAD_KOKORO_MODEL", "").strip()
+    voice = os.environ.get("GIGACHAD_KOKORO_VOICE", "").strip()
+    if _kokoro is not None:
+        return {"live": True, "implementation": "kokoro", "model": _kokoro_model_id, "neural": True, "loaded": True}
     if sys.platform == "win32":
-        return {
-            "live": True,
-            "implementation": "windows-sapi",
-            "model": None,
-            "neural": False,
-            "note": "Windows Speech API. Not a neural voice model.",
-        }
-    return {
-        "live": False,
-        "implementation": "none",
-        "model": None,
-        "neural": False,
-        "note": "No TTS library imported. The browser falls back to speechSynthesis.",
-    }
+        return {"live": True, "implementation": "windows-sapi", "model": None, "neural": False,
+                "requested_model": model_id or None, "neural_configured": bool(model_id and voice),
+                "note": "Windows Speech API. Configured optional neural TTS loads only on a synthesis request."}
+    return {"live": False, "implementation": "none", "model": None, "neural": False,
+            "requested_model": model_id or None, "neural_configured": bool(model_id and voice),
+            "note": "No loaded voice. Configured neural TTS loads on a synthesis request."}
 
 
 def build_health() -> dict:
@@ -174,7 +164,7 @@ def build_health() -> dict:
             "agent_planner": {"live": True, "implementation": "mission-decomposer", "model": None, "neural": False},
             "decursive_dedup": {"live": True, "implementation": "simhash64-merkle-bwt-quotient", "model": None, "neural": False},
             "metacognition_quantum": {"live": True, "implementation": "clifford-cl40-omnigradient-quantum-bio", "model": None, "neural": False},
-            "deep_dark_web_intel": {"live": True, "implementation": "rfc7686-onion-v3-sha3-ipfs-cidv1-sltc-ssm", "model": None, "neural": False},
+            "deep_dark_web_intel": {"live": True, "implementation": "observed-onion-v3-checksum-validator", "model": None, "neural": False},
             "tts": tts_status(),
             "reflex_dom": {"live": True, "implementation": "pattern-scorer", "model": None, "neural": False},
             "yt_dlp": {"live": _try_import("yt_dlp"), "implementation": "python-module", "model": None, "neural": False},
@@ -212,7 +202,7 @@ def embed_texts(texts: list[str]) -> dict:
     model_id = os.environ.get("GIGACHAD_EMBED_MODEL", "").strip()
     if model_id:
         if _embedder is None:
-            return {"error": _embed_error or f"Could not load embedding model {model_id}", "implementation": "sentence-transformers", "model": model_id, "neural": False}
+            return {"error": _embed_error or f"Could not load embedding model {model_id}", "implementation": "sentence-transformers", "model": None, "requested_model": model_id, "neural": False}
         vectors = _embedder.encode(texts, normalize_embeddings=True)
         rows = [[round(float(x), 5) for x in row] for row in vectors]
         return {"implementation": "sentence-transformers", "model": model_id, "neural": True, "dim": len(rows[0]) if rows else 0, "embeddings": rows}
@@ -373,7 +363,7 @@ def evaluate_ner_pii(payload: dict) -> dict:
     started = time.perf_counter()
     model_id = os.environ.get("GIGACHAD_NER_MODEL", "").strip()
     if model_id and _ner_model is None:
-        return {"error": _ner_error or f"Could not load NER model {model_id}", "implementation": "gliner", "model": model_id, "neural": False}
+        return {"error": _ner_error or f"Could not load NER model {model_id}", "implementation": "gliner", "model": None, "requested_model": model_id, "neural": False}
     text = payload.get("text") or ""
     if not isinstance(text, str):
         return {"error": "PII text must be a string", "implementation": "regex", "neural": False}
@@ -407,7 +397,7 @@ def evaluate_ner_pii(payload: dict) -> dict:
             neural = True
             model = model_id
         except Exception as exc:
-            return {"error": f"NER model failed: {exc}", "implementation": "gliner", "model": model_id, "neural": False}
+            return {"error": f"NER model failed: {exc}", "implementation": "gliner", "model": None, "requested_model": model_id, "neural": False}
     else:
         implementation = "regex"
         neural = False
@@ -664,20 +654,28 @@ def evaluate_extract_structured(payload: dict) -> dict:
 
 
 def _wav_b64_from_kokoro(text: str) -> dict | None:
-    global _kokoro, _kokoro_error
+    global _kokoro, _kokoro_model_id, _kokoro_error
+    model_id = os.environ.get("GIGACHAD_KOKORO_MODEL", "").strip()
+    voice = os.environ.get("GIGACHAD_KOKORO_VOICE", "").strip()
+    if not model_id or not voice:
+        return None
     if not (_try_import("kokoro") and _try_import("soundfile")):
         return None
     try:
         import soundfile as sf
         from kokoro import KPipeline
-
         if _kokoro is None:
-            _kokoro = KPipeline(lang_code="a")
-        for _gs, _ps, audio in _kokoro(text, voice="af_heart", speed=1.0):
-            buf = io.BytesIO()
-            sf.write(buf, audio, 24000, format="WAV")
+            _kokoro = KPipeline(lang_code=os.environ.get("GIGACHAD_KOKORO_LANGUAGE", "a"), repo_id=model_id)
+            _kokoro_model_id = model_id
+        buf = io.BytesIO()
+        frames = 0
+        with sf.SoundFile(buf, mode="w", samplerate=24000, channels=1, format="WAV") as output:
+            for _gs, _ps, audio in _kokoro(text, voice=voice, speed=1.0):
+                output.write(audio)
+                frames += len(audio)
+        if frames:
             encoded = base64.b64encode(buf.getvalue()).decode("ascii")
-            return {"audio_base64": f"data:audio/wav;base64,{encoded}", "engine": "kokoro", "implementation": "kokoro", "model": "kokoro", "neural": True}
+            return {"audio_base64": f"data:audio/wav;base64,{encoded}", "engine": "kokoro", "implementation": "kokoro", "model": _kokoro_model_id, "neural": True}
     except Exception as exc:
         _kokoro_error = str(exc)
     return None
@@ -686,13 +684,18 @@ def _wav_b64_from_kokoro(text: str) -> dict | None:
 def _wav_b64_from_sapi(text: str) -> dict | None:
     if sys.platform != "win32":
         return None
-    safe = text.replace("'", "''")
+    # Pass the text as base64 and decode it inside PowerShell so nothing in the untrusted
+    # text can break out of the string literal. ASCII quote-doubling is NOT safe here:
+    # PowerShell treats several Unicode code points (U+2018/U+2019/U+201A/U+201B) as single-
+    # quote delimiters, so a crafted payload could otherwise close the literal and inject commands.
+    text_b64 = base64.b64encode((text or "").encode("utf-8")).decode("ascii")
     script = (
         "Add-Type -AssemblyName System.Speech; "
         "$s = New-Object System.Speech.Synthesis.SpeechSynthesizer; "
         "$ms = New-Object System.IO.MemoryStream; "
         "$s.SetOutputToWaveStream($ms); "
-        f"$s.Speak('{safe}'); "
+        f"$t = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('{text_b64}')); "
+        "$s.Speak($t); "
         "[Convert]::ToBase64String($ms.ToArray())"
     )
     try:
@@ -1323,63 +1326,28 @@ def evaluate_metacognition_quantum(payload: dict) -> dict:
 
 
 def evaluate_deep_dark_web_intel(payload: dict) -> dict:
-    """RFC-7686 Tor v3 .onion address verification & generation + IPFS CIDv1 Merkle DAG + Deep/Dark Web epistemic classification."""
-    import base64
-
+    """Validate observed onion v3 address checksums; this endpoint never opens a circuit."""
     started = time.perf_counter()
     text = str(payload.get("text") or payload.get("prompt") or "")[:16000]
-    url = str(payload.get("url") or "")
-    seed = f"{url}|{text[:512]}|gigachad-onion-v3-substrate".encode("utf-8", errors="ignore")
-
-    # 1. RFC-7686 Tor v3 .onion address: base32(PUBKEY_32B || SHA3_256(".onion checksum" || PUBKEY_32B || 0x03)[:2] || 0x03)
-    pubkey_32 = hashlib.sha256(b"ed25519-hsdir:" + seed).digest()
-    version_byte = b"\x03"
-    checksum_2 = hashlib.sha3_256(b".onion checksum" + pubkey_32 + version_byte).digest()[:2]
-    onion_raw_35 = pubkey_32 + checksum_2 + version_byte
-    tor_v3_onion = base64.b32encode(onion_raw_35).decode("ascii").lower() + ".onion"
-
-    # 2. Verify any .onion v3 addresses present in text or url
-    found_onions = re.findall(r"\b([a-z2-7]{56})\.onion\b", (url + " " + text).lower())
-    verified_onions = []
-    for candidate in found_onions[:8]:
-        try:
-            raw = base64.b32decode(candidate.upper().encode("ascii"))
-            if len(raw) == 35 and raw[34:35] == b"\x03":
-                pk = raw[:32]
-                chk = hashlib.sha3_256(b".onion checksum" + pk + b"\x03").digest()[:2]
-                verified_onions.append({"address": candidate + ".onion", "rfc7686_valid": chk == raw[32:34]})
-        except Exception:
-            pass
-
-    # 3. IPFS CIDv1 Merkle root & I2P .b32.i2p garlic hash
-    cid_digest = hashlib.sha256(b"ipfs-cidv1-dag-pb:" + seed).digest()
-    ipfs_cid_v1 = "bafybei" + base64.b32encode(cid_digest).decode("ascii").lower().rstrip("=")[:52]
-    i2p_digest = hashlib.sha256(b"i2p-garlic-b32:" + seed).digest()
-    i2p_b32 = base64.b32encode(i2p_digest).decode("ascii").lower().rstrip("=")[:52] + ".b32.i2p"
-
-    # 4. Deep-Web / Dark-Web epistemic density & sLTC/SSM coupling score
-    lower_blob = (url + " " + text).lower()
-    deep_markers = sum(1 for k in ("onion", "tor", "ipfs", "merkle", "arxiv", "cryptography", "zero-knowledge", "cipher", "wayback", "HiddenService", "ed25519", "sha3") if k.lower() in lower_blob)
-    epistemic_novelty = round(min(0.999, 0.72 + 0.035 * deep_markers + 0.08 * (checksum_2[0] / 255.0)), 4)
-
+    url = str(payload.get("url") or "")[:4096]
+    found = re.findall(r"\b([a-z2-7]{56})\.onion\b", (url + " " + text).lower())
+    verified = []
+    for candidate in dict.fromkeys(found):
+        if len(verified) >= 32:
+            break
+        raw = base64.b32decode(candidate.upper().encode("ascii"))
+        expected = hashlib.sha3_256(b".onion checksum" + raw[:32] + b"\x03").digest()[:2]
+        valid = len(raw) == 35 and raw[34] == 3 and expected == raw[32:34]
+        verified.append({"address": candidate + ".onion", "rfc7686_valid": valid,
+                         "checksum_valid": valid, "reachability": "not_checked"})
+    valid_addresses = [item["address"] for item in verified if item["checksum_valid"]]
     return {
-        "ok": True,
-        "implementation": "rfc7686-onion-v3-sha3-ipfs-cidv1-sltc-ssm",
-        "tor_v3_onion_address": tor_v3_onion,
-        "tor_v3_rfc7686_checksum_hex": checksum_2.hex(),
-        "verified_page_onions": verified_onions,
-        "ipfs_merkle_cid_v1": ipfs_cid_v1,
-        "i2p_garlic_b32": i2p_b32,
-        "epistemic_novelty_score": epistemic_novelty,
-        "perelman_w_entropy": round(2.05 + 0.35 * (epistemic_novelty * 0.5), 4),
-        "ryu_takayanagi_entropy": round(3.15 + 0.42 * epistemic_novelty, 4),
-        "hodge_harmonic_pct": round(92.4 + 5.8 * epistemic_novelty, 2),
-        "poincare_min_geodesic": round(1.18 + 0.45 * epistemic_novelty, 4),
-        "circuit_hops": [
-            {"hop": 1, "role": "GUARD_ENTRY", "cipher": "Curve25519-ntor-SHA3"},
-            {"hop": 2, "role": "MIDDLE_MIX", "cipher": "ChaCha20-Poly1305"},
-            {"hop": 3, "role": "RENDEZVOUS_HSDir", "cipher": "Ed25519-Blind-Subcredential"},
-        ],
+        "ok": True, "implementation": "observed-onion-v3-checksum-validator", "model": None, "neural": False,
+        "tor_v3_onion_address": valid_addresses[0] if valid_addresses else None,
+        "verified_page_onions": verified,
+        "ipfs_merkle_cid_v1": None, "i2p_garlic_b32": None,
+        "circuit_hops": [], "network_observed": False,
+        "scope": "Checksums validate address encoding only. No onion service, IPFS object, I2P destination, circuit, entropy, or reachability is generated or inferred.",
         "latency_ms": round((time.perf_counter() - started) * 1000, 2),
     }
 
@@ -1458,7 +1426,31 @@ class SidecarHandler(BaseHTTPRequestHandler):
             return None
         return data
 
+    def _guard(self) -> bool:
+        # Block drive-by requests from visited web pages. The app's own file:// renderer sends
+        # Origin "null" (or none) and Node callers send no Origin; any real web origin (e.g. a page
+        # in a <webview>) is rejected. Also require a loopback Host header (DNS-rebinding defense).
+        origin = (self.headers.get("Origin") or "").strip()
+        if origin and origin.lower() != "null":
+            m = re.match(r"^https?://([^/:]+)", origin, re.I)
+            host = (m.group(1) if m else "").lower().strip("[]")
+            if host not in {"127.0.0.1", "localhost", "::1"}:
+                self._send({"error": "Forbidden origin"}, 403)
+                return False
+        raw_host = (self.headers.get("Host") or "").strip().lower()
+        if raw_host:
+            if raw_host.startswith("["):
+                h = raw_host[1:raw_host.find("]")] if "]" in raw_host else raw_host
+            else:
+                h = raw_host.split(":", 1)[0]
+            if h not in {"127.0.0.1", "localhost", "::1"}:
+                self._send({"error": "Forbidden host"}, 403)
+                return False
+        return True
+
     def do_GET(self):
+        if not self._guard():
+            return
         path = self.path.split("?", 1)[0].rstrip("/") or "/"
         if path in {"/", "/health"}:
             self._send(build_health())
@@ -1466,6 +1458,8 @@ class SidecarHandler(BaseHTTPRequestHandler):
             self._send({"error": "Not found", "path": path}, 404)
 
     def do_POST(self):
+        if not self._guard():
+            return
         body = self._read_json()
         if body is None:
             return

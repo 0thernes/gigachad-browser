@@ -7,8 +7,11 @@
  *   - `brains/cqm-xylos/`                (Cosmogonic Quantum Mechalogodrom + Zig 0.17.0 `cqm_kernels.wasm`)
  *   - `brains/dimension-omega-singularity/` (Dimension-Omega v2.1 3D Riemannian Singularity Manifold)
  *
- * Every ported brain is 100% OPERATIONAL, FUNCTIONAL, and TRAINABLE ONLINE at 60Hz (zero frozen weights,
- * resolving CQM self-audits #104, #106, #107, #108, #120, #121, #179, #181, #185, #187 and Glitchling §9.13).
+ * These are local numerical ports with distinct mutable states and update rules.
+ * Completed execution is reported separately from initialization. Some modules
+ * update learned weights; others integrate numerical dynamics. A 60Hz method name
+ * is not a measured cadence, universal online training, or independent validation
+ * of donor-project claims. See docs/ALIVE_SOURCE_AUDIT.md for the reviewed scope.
  *
  * LICENSE NOTICE:
  *   Download and Personal Use Only. Commercial use, modification, editing, derivative works,
@@ -16,6 +19,50 @@
  */
 (function (globalScope) {
   'use strict';
+
+  const commonJSAssets = typeof module === 'object' && module.exports && typeof require === 'function';
+  let nativeAssetHydration = null;
+  if (commonJSAssets) {
+    try { nativeAssetHydration = require('./alive-asset-hydration.js'); } catch (_) {}
+  }
+  const chaosFreshTargets = new WeakSet();
+  const chaosHydrationBundles = new WeakMap();
+  const MAX_CHAOS_SOURCE_BYTES = 65536;
+  const assetHydration = () => nativeAssetHydration || globalScope.AliveAssetHydration;
+  const failedChaosHydration = () => commonJSAssets ? false : Promise.resolve(false);
+  function captureChaosBundle(target, federation, options = {}) {
+    const guard = assetHydration();
+    if (!guard || typeof guard.begin !== 'function' || !target) return null;
+    try {
+      const isCurrent = options.isCurrent;
+      if (isCurrent !== undefined && typeof isCurrent !== 'function') return null;
+      const handle = guard.begin(target, guard.CHAOS, {
+        sourceKey: options.sourceKey || 'ported-brains-bridge',
+        ...(options.expectedSourceDigest === undefined ? {} : { expectedSourceDigest: options.expectedSourceDigest })
+      });
+      if (!handle) return null;
+      const bundle = Object.freeze({});
+      chaosHydrationBundles.set(bundle, { target, federation, guard, handle, isCurrent, consumed: false, provenance: undefined });
+      return bundle;
+    } catch (_) { return null; }
+  }
+  function currentChaosTarget(record) {
+    if (!record) return null;
+    try {
+      // Trusted application ownership predicate, never a callback from payload
+      // data. Generic commit still performs its own final byte/identity checks.
+      if (record.isCurrent && record.isCurrent() !== true) return null;
+      return !record.federation || record.federation.brain11TsotchkeDale === record.target ? record.target : null;
+    } catch (_) { return null; }
+  }
+  function copyChaosProvenance(value) {
+    if (!value || typeof value !== 'object') return undefined;
+    const copy = {};
+    for (const key of ['sourceDigest', 'sourceByteLength', 'sourcePath', 'sourceMode', 'sourceDigestObserved']) {
+      if (Object.prototype.hasOwnProperty.call(value, key)) copy[key] = value[key];
+    }
+    return copy;
+  }
 
   function finiteClamped(val, fallback, minVal = -10.0, maxVal = 10.0) {
     const n = Number(val);
@@ -50,9 +97,10 @@
   class Heterogeneous7TierPrecisionArena {
     constructor() {
       this.byteCapacity = 131072; // 128 KB contiguous arena
-      const BackingBuffer = typeof SharedArrayBuffer !== 'undefined' ? SharedArrayBuffer : ArrayBuffer;
-      this.backingBuffer = new BackingBuffer(this.byteCapacity);
-      this.isSharedMemory = typeof SharedArrayBuffer !== 'undefined' && (this.backingBuffer instanceof SharedArrayBuffer);
+      // These views have one renderer owner; no worker shares this arena.
+      // Fixed backing permits coherent exact capture in that renderer turn.
+      this.backingBuffer = new ArrayBuffer(this.byteCapacity);
+      this.isSharedMemory = false;
 
       // Byte-aligned views across the 128 KB arena (zero overlap, 64-byte cache-line aligned)
       this.f64QuantumAndRls = new Float64Array(this.backingBuffer, 0, 2048);          // 16,384 B (bytes 0..16383)
@@ -584,7 +632,7 @@
    * BRAIN 3: CQM SuperMind 5-Stage Creativity Engine (`brains/cqm-xylos/src/sim/super-mind.ts`)
    *   - 5-Stage Cognitive Loop: `PERCEIVE -> IMAGINE -> REASON -> FEEL -> ACT`
    *   - `IMAGITRON × PERCEPTOR` 5×5 = 25 Thought Variants + 30 `AoT` Organ-Nets + 6-Qubit `QuantumMind`
-   *   - Eshkol Reverse-Mode Automatic Differentiation (`adTape`) updating organ weights online
+   *   - Local hand-written chain-rule updates of organ weights (no external Eshkol runtime)
    */
   class CqmSuperMind5StageEngine {
     constructor(arena) {
@@ -631,7 +679,7 @@
       this.winningVariantIdx = bestIdx;
       this.winningThoughtScore = Number(bestScore.toFixed(4));
 
-      // Stage 5 (ACT + Eshkol Reverse-Mode AD Tape Plasticity): Backpropagate TD/Free-Energy gradient into 30 Organ-Nets
+      // Stage 5: local hand-written chain-rule update, not an external Eshkol AD tape.
       let gradNormSq = 0;
       const winOrgOff = (bestIdx * 6) * 8;
       for (let k = 0; k < 8; k++) {
@@ -1401,6 +1449,7 @@
       ];
       this.chaosEmb12x128 = new Float32Array(1536); // 6,144 bytes (12 * 128 floats)
       this.loadedBinaryChaosEmb = false;
+      chaosFreshTargets.add(this);
       this._loadChaosEmbFromDiskOrSeed();
 
       // Dale's Law 16x16 Synaptic Matrix: first 80% (13 channels) strictly Excitatory (+1), final 20% (3 channels) Inhibitory (-1)
@@ -1437,37 +1486,52 @@
     }
 
     _loadChaosEmbFromDiskOrSeed() {
+      // Only the allocating constructor may seed fallback values. Reinvoking
+      // this method after learning/restore must never replace those bytes.
+      if (!chaosFreshTargets.has(this)) return false;
+      chaosFreshTargets.delete(this);
+      const guard = assetHydration();
+      let handle = null;
+      try { handle = guard?.begin(this, guard.CHAOS, { sourceKey: 'node-chaos-file' }); } catch (_) {}
       for (let i = 0; i < 1536; i++) {
         this.chaosEmb12x128[i] = Math.sin((i + 1) * 0.70710678) * 0.65;
       }
-      if (typeof require === 'function') {
+      if (commonJSAssets && handle && typeof guard.prepareChaosSync === 'function') {
+        let fd = null;
         try {
           const fs = require('fs');
           const path = require('path');
           const embPath = path.join(__dirname, '..', 'brains', 'tsotchke-diffusion', 'models', 'chaos_emb.f32');
-          if (fs.existsSync(embPath)) {
-            const buf = fs.readFileSync(embPath);
-            if (buf.byteLength >= 6144) {
-              const f32 = new Float32Array(buf.buffer, buf.byteOffset, 1536);
-              let finiteCount = 0;
-              for (let i = 0; i < 1536; i++) {
-                if (Number.isFinite(f32[i]) && Math.abs(f32[i]) <= 100.0) finiteCount++;
-              }
-              if (finiteCount >= 1500) {
-                for (let i = 0; i < 1536; i++) {
-                  const fallback = Math.sin((i + 1) * 0.70710678) * 0.65;
-                  this.chaosEmb12x128[i] = finiteClamped(f32[i], fallback, -20.0, 20.0);
-                }
-                this.loadedBinaryChaosEmb = true;
-              }
-            }
+          fd = fs.openSync(embPath, 'r');
+          const stat = fs.fstatSync(fd);
+          if (!stat.isFile() || !Number.isSafeInteger(stat.size) || stat.size < 6144 || stat.size > MAX_CHAOS_SOURCE_BYTES) return false;
+          const buf = Buffer.alloc(stat.size + 1);
+          let read = 0;
+          while (read < buf.length) {
+            const count = fs.readSync(fd, buf, read, buf.length - read, null);
+            if (!count) break;
+            read += count;
           }
-        } catch (_) {}
+          if (read !== stat.size) return false;
+          const bytes = buf.subarray(0, read);
+          const provenance = { sourceDigest: require('crypto').createHash('sha256').update(bytes).digest('hex'),
+            sourceByteLength: bytes.length, sourcePath: 'brains/tsotchke-diffusion/models/chaos_emb.f32',
+            sourceMode: 'node-file-read', sourceDigestObserved: true };
+          const candidate = guard.prepareChaosSync(handle, this, bytes, provenance);
+          return Boolean(candidate && guard.commit(candidate, this).ok === true);
+        } catch (_) { return false; }
+        finally { if (fd !== null) { try { require('fs').closeSync(fd); } catch (_) {} } }
       }
+      return false;
     }
 
-    hydrateChaosEmbFromBase64(base64Str) {
-      if (typeof base64Str !== 'string' || base64Str.length < 100) return false;
+    hydrateChaosEmbFromBase64(base64Str, bundle) {
+      const captured = arguments.length < 2 ? captureChaosBundle(this, null) : bundle;
+      const record = captured && chaosHydrationBundles.get(captured);
+      if (!record || record.consumed || currentChaosTarget(record) !== this) return failedChaosHydration();
+      record.consumed = true;
+      if (typeof base64Str !== 'string' || base64Str.length < 8192 || base64Str.length > Math.ceil(MAX_CHAOS_SOURCE_BYTES / 3) * 4 ||
+          base64Str.length % 4 !== 0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(base64Str)) return failedChaosHydration();
       try {
         let bytes = null;
         if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
@@ -1478,23 +1542,15 @@
           bytes = new Uint8Array(bin.length);
           for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
         }
-        if (bytes && bytes.byteLength >= 6144) {
-          const aligned = bytes.slice(0, 6144);
-          const f32 = new Float32Array(aligned.buffer, aligned.byteOffset, 1536);
-          let finiteCount = 0;
-          for (let i = 0; i < 1536; i++) {
-            if (Number.isFinite(f32[i]) && Math.abs(f32[i]) <= 100.0) finiteCount++;
-          }
-          if (finiteCount < 1500) return false;
-          for (let i = 0; i < 1536; i++) {
-            const fallback = Math.sin((i + 1) * 0.70710678) * 0.65;
-            this.chaosEmb12x128[i] = finiteClamped(f32[i], fallback, -20.0, 20.0);
-          }
-          this.loadedBinaryChaosEmb = true;
-          return true;
+        if (!bytes || bytes.byteLength < 6144 || bytes.byteLength > MAX_CHAOS_SOURCE_BYTES || currentChaosTarget(record) !== this) return failedChaosHydration();
+        const finish = candidate => Boolean(candidate && currentChaosTarget(record) === this &&
+          record.guard.commit(candidate, currentChaosTarget(record)).ok === true);
+        if (commonJSAssets) {
+          if (typeof record.guard.prepareChaosSync !== 'function') return false;
+          return finish(record.guard.prepareChaosSync(record.handle, this, bytes, record.provenance));
         }
-      } catch (_) {}
-      return false;
+        return Promise.resolve(record.guard.prepareChaos(record.handle, this, bytes, record.provenance)).then(finish).catch(() => false);
+      } catch (_) { return failedChaosHydration(); }
     }
 
     step60Hz(z16, rewardDelta, lr) {
@@ -1614,6 +1670,7 @@
       this.evaporationFraction = 0.25;
       this.lemireSeedSample = this.arena.sampleChaosEntropySeedSpace(0);
       this.plasticUpdatesCount = 0;
+      this.numericalUpdatesCount = 0;
     }
 
     step60Hz(z16, rewardDelta, lr) {
@@ -1656,7 +1713,8 @@
 
       // Step Lemire 128-Bit Unbiased Multiply-Shift on Tier-2 BigUint64Array
       this.lemireSeedSample = this.arena.sampleChaosEntropySeedSpace(Math.floor(this.evaporationFraction * 512));
-      this.plasticUpdatesCount += 12;
+      // These are recomputed numerical features, not trained model weights.
+      this.numericalUpdatesCount += 12;
 
       return {
         rPlus: this.rOuterPlus,
@@ -1784,6 +1842,7 @@
   class PortedMultiverseBrainsFederation {
     constructor() {
       this.stepCount = 0;
+      this.completedStepCount = 0;
       this.precisionArena = new Heterogeneous7TierPrecisionArena();
 
       // Instantiate all Ported Multiverse Brains & Corpora
@@ -1805,24 +1864,24 @@
       this.brainsCatalog10 = [
         { id: 1, key: 'ASMODENSIUS_C001', repo: 'brains/asmodensius-v40', desc: '272-Neuron 14-Region CNS+ENS + Q3 Fubini-Study QGT + RLS + Kalman + HPA Affect' },
         { id: 2, key: 'GLITCHLING_RESILIENCE', repo: 'brains/glitchling', desc: '4-Flaw Resilience + 100×5 Area Matrix (500 Attrs) + 189 Flaw Events + Cerebellar + Stochastic Int8' },
-        { id: 3, key: 'CQM_SUPERMIND', repo: 'brains/cqm-xylos/src/sim/super-mind.ts', desc: '5-Stage PERCEIVE->IMAGINE->REASON->FEEL->ACT + 25 Variants + Eshkol Reverse-Mode AD' },
+        { id: 3, key: 'CQM_SUPERMIND', repo: 'brains/cqm-xylos/src/sim/super-mind.ts', desc: '5-stage local numerical feature model + hand-written organ-weight gradients' },
         { id: 4, key: 'APEX_HYDRA_11', repo: 'brains/cqm-xylos/src/sim/ai/apex-brain.ts', desc: '11 Incompatible Organs + Live Tangent-Map Lyapunov λ_1 + Gödel Fixed-Point Residual' },
         { id: 5, key: 'XENOMIMIC_SCHRODINGER', repo: 'brains/cqm-xylos/src/sim/ai/xenomimic-brain.ts', desc: 'Unitary Crank-Nicolson 1D Schrödinger Wavepacket (f64) + Bell Singlet + Online 6->8->5 MLP' },
-        { id: 6, key: 'XYLOS_MANIFOLD_48', repo: 'brains/cqm-xylos/src/sim/ai/xylos-mind.ts', desc: '48-Foci / 192-Edge Recurrent Manifold + Eshkol GWT Softmax Broadcast + Residual Calibration' },
+        { id: 6, key: 'XYLOS_MANIFOLD_48', repo: 'brains/cqm-xylos/src/sim/ai/xylos-mind.ts', desc: '48-foci / 192-edge recurrent model + local softmax broadcast + residual calibration' },
         { id: 7, key: 'MECHALOGODROM_TITAN', repo: 'brains/cqm-xylos/src/sim/ai/mechalogodrom-brain.ts', desc: '10 Shell-Geometry Variant Sub-Brains + 10 Diff-Geom Invariants + Bi-Poo Exponential STDP' },
         { id: 8, key: 'GLYPH_PANTHEON_25K', repo: 'brains/cqm-xylos/src/sim/ai/glyph-brain.ts', desc: '25,000-Param Pantheon Glyph Brain + 32×32 IEEE-754 FP16 Fast-Weight Oja Hebbian Overlay' },
         { id: 9, key: 'THALER_DABUS_CUSP', repo: 'brains/stephen-thaler-corpus', desc: 'US Patent 5,659,666 & 7,454,388 + All 9 Constitutive Markers + 4 Honest Ablations + Cusp Ξ' },
         { id: 10, key: 'GRAPHMIND_CELEGANS_GOAP', repo: 'brains/cqm-xylos/src/sim/graph-mind.ts', desc: 'Empirical C. elegans (302N/7,379S) + Louvain Modularity Q + Bitwise GOAP Action Planner' },
         { id: 11, key: 'TSOTCHKE_DALE_STP_DDIM', repo: 'brains/tsotchke-diffusion', desc: 'Dale 80/20 E:I Sign Law + Tsodyks-Markram STP + 3-Step LIFGate + chaos_emb.f32 DDIM CFG' },
         { id: 12, key: 'KERR_NEWMAN_PAGE_LEMIRE', repo: 'brains/black-hole-simulation-lab + brains/corpora + brains/chaos-entropy', desc: 'Kerr-Newman Horizon r_± + Photon Sphere r_ph + Leaver QNM + S_BH + Unitary Page Curve + Lemire 128-Bit u64' },
-        { id: 13, key: 'CONSCIOUSNESS_CONSORTIUM_10', repo: 'brains/consciousness-researchers', desc: '10-Researcher Consciousness Consortium (Seth, Damasio, Koch, Langton, Tononi, McFadden, Friston, Graziano, Dehaene, Metzinger)' },
+        { id: 13, key: 'CONSCIOUSNESS_CONSORTIUM_10', repo: 'brains/consciousness-researchers', desc: 'Ten local feature projections named after research themes; no consciousness measurement' },
         { id: 14, key: 'THINGMAKER_GRIMOIRE_ARCANE', repo: 'brains/thingmaker + brains/grimoire-arcane', desc: 'Procedural Voxel Morphogenesis + Arcane Graph/Tree/Atom of Thought Ley-Line Weaver' }
       ];
 
       this.councilConsensusMotor2D = new Float32Array([0.14, -0.09]);
       this.totalOnlinePlasticUpdates = 0;
       this.federationHeadline =
-        '14-BRAIN MULTIVERSE PANTHEON LIVE · 7-Tier Mixed-Precision Arena (128 KB) · 14/14 Brains Training Online at 60Hz';
+        '14 local numerical models initialized · 7 precision families (128 KB) · awaiting first completed step';
       this.latestSnapshot = this._buildTelemetrySnapshot();
       this.lastSnapshot = this.latestSnapshot;
     }
@@ -1830,10 +1889,15 @@
     _buildTelemetrySnapshot() {
       return {
         stepCount: this.stepCount,
-        activeBrainsCount: 14,
+        completedStepCount: this.completedStepCount,
+        activeBrainsCount: this.completedStepCount > 0 ? 14 : 0,
         totalPantheonBrainsCount: 14,
         precisionTiersCount: 7,
         totalOnlinePlasticUpdates: this.totalOnlinePlasticUpdates,
+        onlineUpdateCounterScope: 'Legacy learning-rule update attempts; not verified distinct weight changes or held-out improvement',
+        numericalFeatureUpdates: this.brain12BlackHolePage.numericalUpdatesCount,
+        implementationScope: 'Local JavaScript numerical models; names do not establish external backends, scientific validation, or measured 60 Hz cadence',
+        stateOrigin: this.completedStepCount > 0 ? 'computed' : 'initialized',
         glitchlingFlawEventsCount: this.brain2Glitchling.realVizEventsCount,
         thalerNineMarkersObject: this.brain9ThalerDabus.nineMarkers,
         thalerAblationsObject: this.brain9ThalerDabus.ablationResults,
@@ -1855,6 +1919,7 @@
           realVizEventsCount: this.brain2Glitchling.realVizEventsCount
         },
         cqmSuperMind: {
+          gradientImplementation: 'local hand-written chain rule; external Eshkol not used',
           winningVariantIdx: this.brain3CqmSuperMind.winningVariantIdx,
           winningScore: this.brain3CqmSuperMind.winningThoughtScore,
           adGradNorm: this.brain3CqmSuperMind.eshkolAdTapeGradNorm
@@ -1905,6 +1970,8 @@
           lemireGlyphIdx: this.brain12BlackHolePage.lemireSeedSample.glyphIdx
         },
         consciousnessConsortium: {
+          measurementScope: 'Heuristic feature projections; not IIT Phi or evidence of consciousness',
+          stateOrigin: this.completedStepCount > 0 ? 'computed' : 'initialized',
           consensusIndex: this.brain13ConsciousnessConsortium.consortiumConsensusIndex,
           tononiPhi: this.brain13ConsciousnessConsortium.metrics10.tononiIntegratedPhi,
           langtonLambda: this.brain13ConsciousnessConsortium.metrics10.langtonEdgeOfChaosLambda
@@ -1919,19 +1986,34 @@
     /**
      * Hydrate binary assets (such as `chaos_emb.f32` base64) received over Electron IPC (`ported-brains-bridge`)
      */
-    hydrateFromBridgePayload(payload) {
-      if (!payload || typeof payload !== 'object') return false;
-      let updated = false;
-      if (typeof payload.chaosEmbBase64 === 'string' && payload.chaosEmbBase64.length > 100) {
-        if (this.brain11TsotchkeDale.hydrateChaosEmbFromBase64(payload.chaosEmbBase64)) {
-          updated = true;
-        }
-      }
-      if (updated) {
-        this.latestSnapshot = this._buildTelemetrySnapshot();
-        this.lastSnapshot = this.latestSnapshot;
-      }
-      return updated;
+    beginAssetHydration(options = {}) {
+      return captureChaosBundle(this.brain11TsotchkeDale, this, options);
+    }
+
+    isAssetHydrationCurrent(bundle) {
+      const record = bundle && chaosHydrationBundles.get(bundle);
+      if (!record || record.federation !== this || record.consumed) return false;
+      const target = currentChaosTarget(record);
+      return Boolean(target && target === this.brain11TsotchkeDale &&
+        typeof record.guard.isCurrent === 'function' && record.guard.isCurrent(record.handle, target) === true);
+    }
+
+    hydrateFromBridgePayload(payload, bundle) {
+      if (!payload || typeof payload !== 'object') return failedChaosHydration();
+      const captured = arguments.length < 2 ? this.beginAssetHydration() : bundle;
+      const record = captured && chaosHydrationBundles.get(captured);
+      if (!record || record.federation !== this || record.consumed || currentChaosTarget(record) !== this.brain11TsotchkeDale) return failedChaosHydration();
+      try {
+        record.provenance = copyChaosProvenance(payload.assetProvenance?.chaos);
+        const result = record.target.hydrateChaosEmbFromBase64(payload.chaosEmbBase64, captured);
+        const finish = updated => {
+          if (updated !== true || currentChaosTarget(record) !== this.brain11TsotchkeDale) return false;
+          this.latestSnapshot = this._buildTelemetrySnapshot();
+          this.lastSnapshot = this.latestSnapshot;
+          return true;
+        };
+        return result && typeof result.then === 'function' ? result.then(finish).catch(() => false) : finish(result);
+      } catch (_) { return failedChaosHydration(); }
     }
 
     /**
@@ -2162,6 +2244,7 @@
       const r12 = this.brain12BlackHolePage.step60Hz(z16, rewardDelta, lr);
       const r13 = this.brain13ConsciousnessConsortium.step60Hz(z16, rewardDelta, lr);
       const r14 = this.brain14ThingmakerGrimoire.step60Hz(z16, rewardDelta, lr);
+      this.completedStepCount++;
 
       this.totalOnlinePlasticUpdates =
         this.brain1Asmodensius.plasticUpdatesCount +
@@ -2200,7 +2283,7 @@
         `14-BRAIN PANTHEON · Asmodensius[272N·RLS=${r1.rlsMse}] × Glitchling[Cerebellar=${r2.efferenceMismatchMse}·bestSite=${r2.bestSiteFrac}·SR_i8=${this.brain2Glitchling.stochasticInt8NonZeroUpdates}] × ` +
         `Apex[λ1=${r4.lyapunovLambda1}·Gödel=${r4.godelResidual}] × Xeno[‖ψ‖=${r5.wavepacketNorm}] × Xylos[GWT#${r6.winningGwtGroup}] × ` +
         `Mech[${r7.dominantShellName}] × Glyph[FP16=${r8.fastWeightEnergy}] × DABUS[9/9·Ξ=${r9.cuspXi}] × GOAP[${r10.goapPlan}] × ` +
-        `Tsotchke[${r11.chaosFamily}·DaleE/I=${r11.daleEiRatio}] × BH[S_BH=${r12.sBH}] × Consortium[Φ=${r13.tononiPhi}] × Grimoire[Ley=${r14.leyLineConductance}]`;
+        `Tsotchke[${r11.chaosFamily}·DaleE/I=${r11.daleEiRatio}] × BH[S_BH=${r12.sBH}] × Consortium[feature projection=${r13.tononiPhi}] × Grimoire[Ley=${r14.leyLineConductance}]`;
 
       return this;
     }

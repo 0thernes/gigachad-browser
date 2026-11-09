@@ -1,11 +1,15 @@
-# GIGACHAD Browser — Sovereign AI & 60Hz 14-Brain Multiverse Pantheon Embodied A-Life Browser
+# GIGACHAD Browser — Autonomous Research and Embodied Neural Runtime
 
 > **⚠️ LICENSE NOTICE — PROPRIETARY DOWNLOAD-AND-USE-ONLY LICENSE (ALL RIGHTS RESERVED)**
 > Governed by [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md).
 > **GIGACHAD BROWSER is made available for personal download and local execution ONLY.**
 > **Commercial use, modification, editing, derivative works, redistribution of modified copies, or claiming authorship/ownership as your own are STRICTLY PROHIBITED.**
 
-A self-contained Electron 42 sovereign AI and 60Hz zero-LLM embodied artificial-life (A-Life) browser for Windows 11. Tabs are sandboxed `<webview>` guests, a Python sidecar on `127.0.0.1:8000` serves page tools, and an in-browser **14-Brain Multiverse Pantheon & Connectome Runtime** (`Humunculus × Asmodensius-v40 × Glitchling × CQM-Xylos Zig Wasm × Apex Hydra × Xenomimic × Xylos Manifold × Mechalogodrom Titan × Glyph 25K × Thaler DABUS × Empirical C. elegans Connectome × Tsotchke DDIM × Kerr-Newman Black Hole Lab × 10-Researcher Consciousness Consortium × Thingmaker/Grimoire × Dimension-Ω`) runs at 60Hz (`1,245,184` cortex parameters, `262,144` connectome synapses, `7,379` empirical *C. elegans* edges, `18` compiled Zig 0.17.0 WebAssembly kernels, and a **7-Tier Heterogeneous Precision Tensor Arena** beyond `Float32Array`) directly across the browser viewport and chrome.
+An Electron 45.2.3 browser for Windows 11 with a visible creature in both split panes, local numerical controllers, measured learning updates, adaptive page exploration, optional configured language-model research, and managed Tor transport. Tabs use sandboxed `<webview>` guests; a Python sidecar serves optional page tools. Rendering, model updates, research, training and persistence have separate bounded schedules.
+
+The runtime connects fourteen compact brain adapters, the original Asmodensius organism, a local cortex/connectome, simulated organs and mixed-precision numerical state. Historical names such as “superintelligence,” “soul,” “omniscience” and “Deity” label controls or simulations; they are not demonstrated consciousness, general intelligence, physical quantum computation or biological equivalence. Allocated parameter counts, running counters and checklist totals are not independent quality benchmarks. The configured language model supplies proposals; browsing does not fine-tune its weights.
+
+See the [November 9 release record](docs/RELEASE_2026-11-09.md), [complete capability trace](docs/ALIVE_ENGINEERING_PLAN_2026-11-09.md), [runtime contract](docs/ALIVE_OVERDRIVE.md), and [exact primary-state startup](docs/ALIVE_PRIMARY_STATE_STARTUP.md) for implemented behavior, validation and remaining scope. Full-model persistence and the eight proposed Humunculus research gates remain unqualified.
 
 ### Flagship Documentation & Audit Suite
 - 👉 **[`BIBLE.md`](BIBLE.md)** & **[`GLOSSARY.md`](GLOSSARY.md)** & **[`INDEX.md`](INDEX.md)** — Master Bible, Glossary, Index & Notations
@@ -21,7 +25,7 @@ A self-contained Electron 42 sovereign AI and 60Hz zero-LLM embodied artificial-
 ## Core Architectural Pillars
 
 ### 1. 7-Tier Heterogeneous Precision Tensor Arena (Beyond `Float32Array`)
-Implemented in [`systems/ported-multiverse-brains.js`](systems/ported-multiverse-brains.js) (`Heterogeneous7TierPrecisionArena`, `131,072`-byte contiguous `SharedArrayBuffer`) and [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js) (`multiPrecisionBuffer64K`, `65,536`-byte `ArrayBuffer`):
+Implemented in [`systems/ported-multiverse-brains.js`](systems/ported-multiverse-brains.js) (`Heterogeneous7TierPrecisionArena`, `131,072`-byte fixed `ArrayBuffer`) and [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js) (`multiPrecisionBuffer64K`, `65,536`-byte `ArrayBuffer`). These renderer-owned buffers retain their typed-view offsets and aliases; worker messages carry separately validated values:
 1. **`Float64Array` (`f64`, IEEE-754 64-bit Double Precision):** Unitary Crank-Nicolson 1D Schrödinger wavepacket $\psi(x,t)$, stiff conductance-based `sLTC` ODE integrators ($\tau_{\text{eff}}(t)$), Fubini-Study Quantum Geometric Tensor $g_{\mu\nu}$, Recursive Least Squares (`RLS`) covariance $P_t$, `MinSR` sample-space Cholesky natural-gradient solver, and exact DBSP bilinear $\Delta(AB)$ updates.
 2. **`BigInt64Array` (`i64`) & `BigUint64Array` (`u64`):** Exact Cyclotomic integer ring $\mathbb{Z}[\zeta_8] = \mathbb{Z}[x]/(x^4 + 1)$ arithmetic (`cqm_eshkol_cyclotomic8_mul`) with zero floating-point drift, Lemire 128-bit unbiased multiply-shift entropy sampling, and 64-bit SWAR Kanerva Hyperdimensional Computing (`HDC`) bitboards.
 3. **`Int32Array` (`i32`) & `Uint32Array` (`u32`):** Compressed Sparse Row (`CSR`) graph pointers, Tarjan Union-Find disjoint-set forests (`gotUnionFindParent21`), and 256-bit `SimHash` / `POPCNT` Hamming similarity.
@@ -31,7 +35,7 @@ Implemented in [`systems/ported-multiverse-brains.js`](systems/ported-multiverse
 7. **`Float32Array` + Zig 0.17.0 WebAssembly (`cqm_kernels.wasm`):** Fast SIMD vector lanes coupled with 18 native Zig Wasm exports and the in-memory JIT FMA Wasm kernel (`0x0061736d`).
 
 ### 2. Self-Contained 14-Brain Multiverse Pantheon (`brains/` + `PortedMultiverseBrainsFederation`)
-All sibling brain repositories are ported line-for-line inside [`brains/`](brains/) and wired with **100% online plasticity** at 60Hz via [`systems/ported-multiverse-brains.js`](systems/ported-multiverse-brains.js) and [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js):
+Donor sources are retained inside [`brains/`](brains/). Fourteen numerical adapters are connected through [`systems/ported-multiverse-brains.js`](systems/ported-multiverse-brains.js) and [`systems/alife-25-bleeding-edge-models.js`](systems/alife-25-bleeding-edge-models.js); their compact implementations do not establish full execution of every donor architecture. The separately generated authentic Asmodensius bundle executes the original organism and has exact continuation tests. The following names describe the adapters' numerical mechanisms, with availability and completed computations reported separately:
 - **Brain #1 (`AsmodensiusCreature001FullBrain`):** 272-Neuron 14-Region CNS+ENS + Larkum 2-compartment NMDA plateaus + TRN Global Workspace Ignition + `Q3` Fubini-Study `QGT` + `Float64Array` `RLS` covariance $P_t$ + Kalman `Kal` + AgRP/POMC allostasis.
 - **Brain #2 (`GlitchlingResilienceCerbellarBrain`):** 4-Flaw somatic/cognitive perturbation recovery (`scramble`, `leaky`, `backwards`, `misfire`) + 100×5 Area Matrix (`500` attributes) + `189` real 3D flaw events + fixed selectable `bestSiteFrac` + Marr-Albus cerebellar efference-copy motor un-mirroring + Gated-DeltaNet $S_t$ + Bernoulli Stochastic `Int8` Rounding.
 - **Brain #3 (`CqmSuperMind5StageEngine`):** 5-stage `PERCEIVE -> IMAGINE -> REASON -> FEEL -> ACT` creativity loop + 25 thought variants + 30 `AoT` organ-nets + Eshkol reverse-mode AD tape.
@@ -56,11 +60,11 @@ All sibling brain repositories are ported line-for-line inside [`brains/`](brain
 
 - **1.24M FP32 Parameter Cortex (`HumunculusTokenlessRuntime`)**:
   - `semanticMatrix` (`4096 × 256` = `1,048,576` floats), `liquidWeights` (`256 × 256` = `65,536` floats), `kanSplineCoeffs` (`256 × 128` = `32,768` floats), `hypergraph Incidence` (`512 × 64` = `32,768` floats), and `holographicMemory` (`240 × 256` = `60,928` floats).
-  - Mathematical invariants computed every cognitive step: Expected Free Energy $G(\pi)$, Integrated Information $\Phi_{\text{IIT}}$, Gödel Self-Referential Consistency $\mathcal{G}$, Fisher Information Metric $\mathcal{I}_F(\theta)$, Wasserstein-2 Belief Transport $W_2(\mu,\nu)$, Strange Attractor Lyapunov $\lambda_{\max}$, and Dimensional Deity Omnipotence Index $\Psi_{\text{DEITY}}$.
-- **60Hz Viewport Habitat Canvas (`#alife-viewport-canvas`) & Floating Bio-Monitor HUD (`#alife-floating-hud`)**:
+  - Local numerical features use historical names including free energy, integrated information, consistency, information geometry, transport, attractor dynamics and Deity index. These approximations are not formal proofs, calibrated consciousness measures or omnipotence measurements.
+- **Viewport Habitat Canvas (`#alife-viewport-canvas`) and optional Bio-Monitor (`#alife-floating-hud`)**:
   - Live rendered **4D Rotating Tesseract (Hypercube) 16-Vertex / 32-Edge Soma Projection** around the Sovereign entity (`ASMODENIUS-Ω`) with 12-Tentacle Inverse Kinematics, Gray-Scott RD bioluminescent skin, and 8 orbital sensory eyes.
   - **5-Caste Embodied Swarm Pantheon**: Sovereign (`α`), Harvester (`β`), Sentinel (`γ`), Weaver (`δ`), and Disruptor (`ε`) moving across live DOM element anchors, spinning Pheromone & Causal Silk Tethers, and exchanging 8-symbol Evolutionary Protolanguage glyphs (`Δ ∇ ◊ Ψ Φ Ω Σ Λ`).
-  - **Top-Right Concept-Constellation Mini-Map** and **Bottom-Center 5-Caste Multitasking · Observe · Think · Feel Matrix Bar**.
+  - The concept mini-map, diagnostic matrix and repeated analytics strips are optional; the default workspace keeps the webpage prominent.
 - **100 Next-Dimension A-Life Modules (`OMEGA-100`)**:
   - 100 active mathematical & biological organs across 10 capability strata: Non-Riemannian Finsler/p-Adic Geometry, Open-Ended Autopoietic Metabolism, Morphogenetic Gray-Scott & Cahn-Hilliard Fields, Quantum/Tensor Network Cognition, Browser-Fucker DOM/CDP Omniscience, Collective Swarm Civilization, Active Inference & Phenomenology, Cryptographic Genome Ledger, Bio-Acoustic Somatic Resonance, and Transfinite Ordinal & Category-Theoretic Reflection.
 - **100 Supreme Dimensional Deity & Browser-Manipulation Powers (`DEITY-100`)**:
@@ -68,16 +72,16 @@ All sibling brain repositories are ported line-for-line inside [`brains/`](brain
   - **Live Browser Chrome & Guest DOM Telekinesis**:
     - **5-Caste Tab Sigil Branding** (`α`..`ε` caste glyphs branded onto `#tabs-scroll .tab`).
     - **Omnibox Telepathic Whisper Stream** (live inner monologue & invariants streamed to `#urlbar` placeholder).
-    - **Autonomous Kanban Theorem Card Inscription** (`#k-col-done` & `#new-kanban-input` populated with formal theorems).
+    - **Autonomous Kanban conjecture cards** (`#k-col-done` and `#new-kanban-input` receive explicitly unverified heuristic hypotheses).
     - **Page Tools Knowledge Graph Canvas (`#kg-canvas`) & Semantic Query (`#rerank-query-input`) Auto-Synthesis**.
     - **SRE Cockpit (`#sre-body`) Super-Alien Observableness Stream**.
     - **Guest DOM MutationObserver Nerve Ending, Network TTFB Baroreceptor, V8 Heap Proprioception, Selection Telekinesis (`window.getSelection()`), 3D Perspective Gravitational Lensing, and 1-Click `🌀 Warp DOM` (`toggleWebpageDomRealityWarp()`)**.
 - **500-Point SOP & 100-Pass Master Verification Suite (`npm run smoke`)**:
-  - Automated verification across ERM (Enterprise Risk Management), ERD (Entity-Relationship Diagram), ERP (Enterprise Resource Planning), 500-Point SOP Checklist (`500/500`), 100-Pass Deep Verification (`100/100`), and live Headless Electron + Sidecar Master Audit (`alifeOmega100Ok: true`).
+  - Automated source/metadata checks, numerical regression tests and isolated Electron/sidecar checks. Checklist metadata availability is reported separately from independently verified points; a named 500-point checklist does not mean 500 scientific claims passed.
 
 ## Run on Windows
 
-1. Install [Node.js 20+](https://nodejs.org/) and Python 3.11 or newer, and enable **Add python.exe to PATH** (or install the `py` launcher).
+1. Install [Node.js 24](https://nodejs.org/) (recommended; minimum 22.12.0) and Python 3.11 or newer, and enable **Add python.exe to PATH** (or install the `py` launcher).
 2. Unzip or clone this folder.
 3. Optional: copy `config.example.json` to `config.json` and set `llmBaseUrl`, `localModel`, and, if you use it, `openRouterKey`. You can use `.env` instead. See `.env.example`. Do not commit `config.json` or `.env`.
 4. Double-click `LAUNCH_BROWSER.bat`, or in a terminal:
@@ -95,6 +99,7 @@ Check the install:
 
 ```bat
 npm run smoke
+npm run test:all
 ```
 
 ## Local model
@@ -182,16 +187,23 @@ The previous tree booted Electron with `nodeIntegration` and a hardcoded Python 
 On a Windows machine, from this folder:
 
 ```bat
-npm install
-npm install --save-dev electron-builder
-npx electron-builder --win zip
+npm ci
+npm run test:all
+npm run smoke
+npm run build:portable
 ```
 
-The zip target does not need a code-signing certificate. This environment does not produce the Windows executable. `npm start` remains the supported way to run it.
+The portable builder uses the pinned installed Electron distribution and the
+Git-index source list, verifies copied bytes, and writes a new directory under
+`dist/` containing `GIGACHAD.exe`, application sources and a build
+manifest. Commit or stage intended source changes before building. It refuses
+existing output directories and omits local configuration, credentials, profiles
+and research captures. The executable is unsigned. Python 3.11+ and optional
+model/Tor services remain external prerequisites; they are not bundled.
 
 ## Still on you
 
-- A GPU and a GGUF or an Ollama/LM Studio model, if you want the agent to do more than return an error.
+- A configured compatible local or remote language-model service for model-generated research proposals. Local numerical controllers operate independently of that service.
 - `ffmpeg` if you extract mp3 with `yt-dlp`.
 - Disk and VRAM for any Hugging Face model you opt into. This repo will not pull those weights for you.
 - The tracker list is still short. Add a host to `tracker-blocklist.local.txt`, or exempt one with `@@host` in that file or a line in `tracker-allowlist.local.txt`, then restart.

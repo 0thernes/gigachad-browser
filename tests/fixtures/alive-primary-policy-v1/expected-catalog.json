@@ -1,0 +1,354 @@
+{
+  "descriptorDefinition": {
+    "registryVersion": 1,
+    "components": [
+      {
+        "id": "primary-policy-tensors",
+        "schemaVersion": 1,
+        "implementationDigest": "32e975a5bf7554047e1c624ba606ba26d0a04b3fafd111fc3071e7c9cec90e2c",
+        "present": true
+      }
+    ],
+    "tensors": [
+      {
+        "id": "W_actor",
+        "componentId": "primary-policy-tensors",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "h",
+            "keys": [
+              "W_actor"
+            ]
+          },
+          {
+            "root": "h",
+            "keys": [
+              "deepCortex",
+              "W_actor"
+            ]
+          }
+        ],
+        "dtype": "Float32Array",
+        "dimensions": [
+          5,
+          16
+        ],
+        "backingGroup": "W_actor",
+        "backingOffset": 0,
+        "backingByteLength": 320,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "W_actor_frozen",
+        "componentId": "primary-policy-tensors",
+        "role": "frozen-baseline",
+        "paths": [
+          {
+            "root": "h",
+            "keys": [
+              "W_actor_frozen"
+            ]
+          }
+        ],
+        "dtype": "Float32Array",
+        "dimensions": [
+          5,
+          16
+        ],
+        "backingGroup": "W_actor_frozen",
+        "backingOffset": 0,
+        "backingByteLength": 320,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "W_critic",
+        "componentId": "primary-policy-tensors",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "h",
+            "keys": [
+              "W_critic"
+            ]
+          },
+          {
+            "root": "h",
+            "keys": [
+              "deepCortex",
+              "W_critic"
+            ]
+          }
+        ],
+        "dtype": "Float32Array",
+        "dimensions": [
+          16
+        ],
+        "backingGroup": "W_critic",
+        "backingOffset": 0,
+        "backingByteLength": 64,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "W_metamorph",
+        "componentId": "primary-policy-tensors",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "h",
+            "keys": [
+              "W_metamorph"
+            ]
+          }
+        ],
+        "dtype": "Float32Array",
+        "dimensions": [
+          5,
+          6
+        ],
+        "backingGroup": "W_metamorph",
+        "backingOffset": 0,
+        "backingByteLength": 120,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "W_world",
+        "componentId": "primary-policy-tensors",
+        "role": "parameter",
+        "paths": [
+          {
+            "root": "h",
+            "keys": [
+              "W_world"
+            ]
+          }
+        ],
+        "dtype": "Float32Array",
+        "dimensions": [
+          16,
+          16
+        ],
+        "backingGroup": "W_world",
+        "backingOffset": 0,
+        "backingByteLength": 1024,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      },
+      {
+        "id": "W_world_frozen",
+        "componentId": "primary-policy-tensors",
+        "role": "frozen-baseline",
+        "paths": [
+          {
+            "root": "h",
+            "keys": [
+              "W_world_frozen"
+            ]
+          }
+        ],
+        "dtype": "Float32Array",
+        "dimensions": [
+          16,
+          16
+        ],
+        "backingGroup": "W_world_frozen",
+        "backingOffset": 0,
+        "backingByteLength": 1024,
+        "policy": {
+          "format": "native",
+          "finite": true
+        }
+      }
+    ],
+    "states": [],
+    "families": [],
+    "resumeRules": []
+  },
+  "architecture": {
+    "registryVersion": 1,
+    "fingerprint": "7ae0ef95ce0a5709d994dd20578979f0135813f4fea572271d6297517743ee68",
+    "components": [
+      {
+        "id": "primary-policy-tensors",
+        "schemaVersion": 1,
+        "implementationDigest": "32e975a5bf7554047e1c624ba606ba26d0a04b3fafd111fc3071e7c9cec90e2c",
+        "present": true
+      }
+    ]
+  },
+  "tensors": [
+    {
+      "id": "W_actor",
+      "componentId": "primary-policy-tensors",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "h",
+          "keys": [
+            "W_actor"
+          ]
+        },
+        {
+          "root": "h",
+          "keys": [
+            "deepCortex",
+            "W_actor"
+          ]
+        }
+      ],
+      "dtype": "Float32Array",
+      "dimensions": [
+        5,
+        16
+      ],
+      "length": 80,
+      "byteLength": 320,
+      "byteOrder": "LE",
+      "backingGroup": "W_actor",
+      "backingOffset": 0,
+      "backingByteLength": 320
+    },
+    {
+      "id": "W_actor_frozen",
+      "componentId": "primary-policy-tensors",
+      "role": "frozen-baseline",
+      "paths": [
+        {
+          "root": "h",
+          "keys": [
+            "W_actor_frozen"
+          ]
+        }
+      ],
+      "dtype": "Float32Array",
+      "dimensions": [
+        5,
+        16
+      ],
+      "length": 80,
+      "byteLength": 320,
+      "byteOrder": "LE",
+      "backingGroup": "W_actor_frozen",
+      "backingOffset": 0,
+      "backingByteLength": 320
+    },
+    {
+      "id": "W_critic",
+      "componentId": "primary-policy-tensors",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "h",
+          "keys": [
+            "W_critic"
+          ]
+        },
+        {
+          "root": "h",
+          "keys": [
+            "deepCortex",
+            "W_critic"
+          ]
+        }
+      ],
+      "dtype": "Float32Array",
+      "dimensions": [
+        16
+      ],
+      "length": 16,
+      "byteLength": 64,
+      "byteOrder": "LE",
+      "backingGroup": "W_critic",
+      "backingOffset": 0,
+      "backingByteLength": 64
+    },
+    {
+      "id": "W_metamorph",
+      "componentId": "primary-policy-tensors",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "h",
+          "keys": [
+            "W_metamorph"
+          ]
+        }
+      ],
+      "dtype": "Float32Array",
+      "dimensions": [
+        5,
+        6
+      ],
+      "length": 30,
+      "byteLength": 120,
+      "byteOrder": "LE",
+      "backingGroup": "W_metamorph",
+      "backingOffset": 0,
+      "backingByteLength": 120
+    },
+    {
+      "id": "W_world",
+      "componentId": "primary-policy-tensors",
+      "role": "parameter",
+      "paths": [
+        {
+          "root": "h",
+          "keys": [
+            "W_world"
+          ]
+        }
+      ],
+      "dtype": "Float32Array",
+      "dimensions": [
+        16,
+        16
+      ],
+      "length": 256,
+      "byteLength": 1024,
+      "byteOrder": "LE",
+      "backingGroup": "W_world",
+      "backingOffset": 0,
+      "backingByteLength": 1024
+    },
+    {
+      "id": "W_world_frozen",
+      "componentId": "primary-policy-tensors",
+      "role": "frozen-baseline",
+      "paths": [
+        {
+          "root": "h",
+          "keys": [
+            "W_world_frozen"
+          ]
+        }
+      ],
+      "dtype": "Float32Array",
+      "dimensions": [
+        16,
+        16
+      ],
+      "length": 256,
+      "byteLength": 1024,
+      "byteOrder": "LE",
+      "backingGroup": "W_world_frozen",
+      "backingOffset": 0,
+      "backingByteLength": 1024
+    }
+  ],
+  "states": [],
+  "resumeRules": []
+}
