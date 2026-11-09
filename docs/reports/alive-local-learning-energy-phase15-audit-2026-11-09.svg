@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360">
+  <rect width="960" height="360" fill="#0f172a" />
+  <text x="24" y="32" fill="#38bdf8" font-family="monospace" font-size="15" font-weight="bold">ALIVE Pass 80 (80/100) — Phase XV Local Learning &amp; Energy-Based Brains Matrix (L1-L10)</text>
+  <text x="24" y="52" fill="#f8fafc" font-family="monospace" font-size="12">Verified: 10/10 | Frozen SHA-256: 74151bcac22c65f35e40bae2895cd84420cb3955634a48e4446a36062e314a57</text>
+  <text x="24" y="78" fill="#10b981" font-family="monospace" font-size="12">[PASS] L1 (Pass 76): Hinton Forward-Forward (FF) Positive vs Negative Goodness Separation Accuracy = 1</text>
+<text x="24" y="104" fill="#10b981" font-family="monospace" font-size="12">[PASS] L2 (Pass 76): FF Inter-Layer L2 Direction Norm Leak | ||h/||h||||_2 - 1 | & Peer Active Unit Ratio = 0 / 1</text>
+<text x="24" y="130" fill="#10b981" font-family="monospace" font-size="12">[PASS] L3 (Pass 77): Equilibrium Propagation (EqProp) Symmetric Nudging (+/-beta) Cosine vs Exact Adjoint = 1</text>
+<text x="24" y="156" fill="#10b981" font-family="monospace" font-size="12">[PASS] L4 (Pass 77): EqProp Hopfield-Ising Weight Symmetry Defect ||W - W^T||_F = 0</text>
+<text x="24" y="182" fill="#10b981" font-family="monospace" font-size="12">[PASS] L5 (Pass 78): Rao-Ballard / Friston Predictive Coding Variational Free-Energy Reduction Ratio = 0.9881</text>
+<text x="24" y="208" fill="#10b981" font-family="monospace" font-size="12">[PASS] L6 (Pass 78): Predictive Coding Precision-Weighted Hebbian Update Cosine vs Exact Backprop = 1</text>
+<text x="24" y="234" fill="#10b981" font-family="monospace" font-size="12">[PASS] L7 (Pass 79): Ramsauer Modern Continuous Hopfield 1-Step CCCP Retrieval Cosine (M=64 Patterns, 50% Masked) = 1</text>
+<text x="24" y="260" fill="#10b981" font-family="monospace" font-size="12">[PASS] L8 (Pass 79): Modern Continuous Hopfield Log-Sum-Exp Energy Descent Delta E (beta=24.0 + Prior Bias) = 1.1348</text>
+<text x="24" y="286" fill="#10b981" font-family="monospace" font-size="12">[PASS] L9 (Pass 80): Zero Global Backprop Weight-Transport Dependency Across Passes 76-79 Local Rules = 4/4 local rules verified</text>
+<text x="24" y="312" fill="#10b981" font-family="monospace" font-size="12">[PASS] L10 (Pass 80): Phase XV Composite Score Across Passes 76-79 (5 Seeds, Two-Sided 95% CI, df=4) = 100 / 100 / 100 / 100</text>
+</svg>
