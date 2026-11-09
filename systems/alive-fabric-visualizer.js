@@ -337,6 +337,7 @@
   let latestAdversarialShield = null, adversarialShieldBusy = false;
   let latestLongHorizonMission = null, longHorizonMissionBusy = false;
   let latestSelfHealing = null, selfHealingBusy = false;
+  let latestFullStackSynergy = null, fullStackSynergyBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -814,6 +815,19 @@
       return latestSelfHealing;
     } finally {
       selfHealingBusy = false;
+    }
+  }
+  async function runFullStackSynergy() {
+    const runner = root.AliveFullStackHybridSynergyBenchmark;
+    if (fullStackSynergyBusy || typeof runner?.run !== 'function') return latestFullStackSynergy;
+    fullStackSynergyBusy = true;
+    try {
+      latestFullStackSynergy = await runner.run();
+      root.__aliveLatestFullStackSynergy = latestFullStackSynergy;
+      draw();
+      return latestFullStackSynergy;
+    } finally {
+      fullStackSynergyBusy = false;
     }
   }
 
@@ -2456,6 +2470,48 @@
     ctx.fillText('24 Byzantine faults/seed: NaN/Inf + Frobenius explosion + CRC bitrot quarantine + CoW shadow rollback + micro-journal replay', 8, height - 6);
   }
 
+  // ---------- 45. Pass 39 Full-Stack End-to-End Hybrid Synergy Benchmark ----
+  function drawFullStackSynergy(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestFullStackSynergy || root.__aliveLatestFullStackSynergy;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(fullStackSynergyBusy ? 'Running 5-seed Full-Stack End-to-End Hybrid Synergy Benchmark…' : 'Click "Run Full-Stack" above to evaluate 36 Faculties + 14 Brains + Tor + Swarms + VFE/CEGIS + Shield across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · Full-Stack Omega Synergy score=${(s.fullSynergyScoreMean || 0).toFixed(1)} · E2E=${(s.endToEndMissionSuccessPctMean || 0).toFixed(0)}% · lat=${(s.meanPipelineLatencyMs || 0).toFixed(2)}ms · vs single +${(s.gainVsClearnetSingle || 0).toFixed(1)}`, 8, 12);
+    const modes = ['clearnet-single-agent-unshielded', 'tor-swarm-without-neurosymbolic-or-shield', 'neurosymbolic-active-inf-without-watchdog-wal', 'full-stack-omega-hybrid-synergy-fabric'];
+    const colors = {
+      'clearnet-single-agent-unshielded': '#f43f5e',
+      'tor-swarm-without-neurosymbolic-or-shield': '#f59e0b',
+      'neurosymbolic-active-inf-without-watchdog-wal': '#38bdf8',
+      'full-stack-omega-hybrid-synergy-fabric': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.compositeSynergyScore?.mean || 0;
+      const e2e = entry.endToEndMissionSuccessPct?.mean || 0;
+      const rch = entry.torSwarmReachabilityPct?.mean || 0;
+      const nsc = entry.neurosymbolicCausalAccuracyPct?.mean || 0;
+      const sec = entry.securityByzantineImmunityPct?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} e2e=${e2e.toFixed(0)}% torSwm=${rch.toFixed(0)}% neuro=${nsc.toFixed(0)}% sec=${sec.toFixed(0)}%`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('24 E2E missions/seed: 36 Faculties · 14 Brains · 7 Precision · Tor v3 PT+PoW+WF · 3-Guild Swarms · VFE/Poincaré/CEGIS · Shield+CoW', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -2589,13 +2645,16 @@
     const selfHealBtn = doc.createElement('button'); selfHealBtn.type = 'button'; selfHealBtn.textContent = 'Run Self-Heal';
     selfHealBtn.title = 'Run 5-seed Self-Healing Runtime Watchdog, CoW Rollback & Corrupt-Adapter Quarantine evaluation';
     selfHealBtn.addEventListener('click', () => { runSelfHealingWatchdog(); });
+    const fullStackBtn = doc.createElement('button'); fullStackBtn.type = 'button'; fullStackBtn.textContent = 'Run Full-Stack';
+    fullStackBtn.title = 'Run 5-seed Full-Stack End-to-End Hybrid Synergy Benchmark (36 Faculties + 14 Brains + Tor + Swarms + Active Inf + Shield)';
+    fullStackBtn.addEventListener('click', () => { runFullStackSynergy(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, fullStackBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, fullStackBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -2618,7 +2677,7 @@
       hyperbolicCanvas = canvas('alive-fabric-hyperbolic-poincare', 190), neurosymCanvas = canvas('alive-fabric-neurosymbolic-synth', 190),
       mixedPrecCanvas = canvas('alive-fabric-mixed-precision', 190), phase6AuditCanvas = canvas('alive-fabric-phase6-audit', 190),
       advShieldCanvas = canvas('alive-fabric-adversarial-shield', 190), missionCanvas = canvas('alive-fabric-mission-runner', 190),
-      selfHealCanvas = canvas('alive-fabric-self-healing', 190);
+      selfHealCanvas = canvas('alive-fabric-self-healing', 190), fullStackCanvas = canvas('alive-fabric-fullstack-synergy', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -2665,7 +2724,8 @@
       section('41 · Phase VI Neuro-Symbolic Acceptance Matrix (N1..N10) & Cryptographic SHA-256 Freeze (5 seeds)', phase6AuditCanvas),
       section('42 · Adversarial Indirect Prompt-Injection, Cloaked-DOM & Exfiltration Shield (5 seeds)', advShieldCanvas),
       section('43 · Long-Horizon Checkpointable Autonomous Research Mission Runner (5 seeds)', missionCanvas),
-      section('44 · Self-Healing Runtime Watchdog, CoW Rollback & Corrupt-Adapter Quarantine (5 seeds)', selfHealCanvas));
+      section('44 · Self-Healing Runtime Watchdog, CoW Rollback & Corrupt-Adapter Quarantine (5 seeds)', selfHealCanvas),
+      section('45 · Full-Stack End-to-End Hybrid Synergy Benchmark — 36 Faculties · 14 Brains · Tor · Swarms · VFE/CEGIS (5 seeds)', fullStackCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -2708,7 +2768,8 @@
       () => drawPhase6NeurosymbolicAudit(phase6AuditCanvas),
       () => drawAdversarialDomShield(advShieldCanvas),
       () => drawLongHorizonMission(missionCanvas),
-      () => drawSelfHealingWatchdog(selfHealCanvas));
+      () => drawSelfHealingWatchdog(selfHealCanvas),
+      () => drawFullStackSynergy(fullStackCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -2751,6 +2812,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, runNeurosymbolicSynth, runMixedPrecisionQuantizer, runPhase6NeurosymbolicAudit, runAdversarialDomShield, runLongHorizonMission, runSelfHealingWatchdog, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, runNeurosymbolicSynth, runMixedPrecisionQuantizer, runPhase6NeurosymbolicAudit, runAdversarialDomShield, runLongHorizonMission, runSelfHealingWatchdog, runFullStackSynergy, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

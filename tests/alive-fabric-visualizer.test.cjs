@@ -1267,6 +1267,33 @@ test('runSelfHealingWatchdog renders 5-seed Self-Healing Byzantine Watchdog & Co
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runFullStackSynergy renders 5-seed Full-Stack End-to-End Hybrid Synergy Benchmark in section 45', async () => {
+  const { window, dom } = load();
+  window.AliveFullStackHybridSynergyBenchmark = {
+    run: async () => ({
+      summary: {
+        fullSynergyScoreMean: 100.0,
+        endToEndMissionSuccessPctMean: 100.0,
+        meanPipelineLatencyMs: 12.01,
+        gainVsClearnetSingle: 100.0
+      },
+      aggregatedByProfile: {
+        'clearnet-single-agent-unshielded': { compositeSynergyScore: { mean: 0 }, endToEndMissionSuccessPct: { mean: 0 }, torSwarmReachabilityPct: { mean: 0 }, neurosymbolicCausalAccuracyPct: { mean: 0 }, securityByzantineImmunityPct: { mean: 0 } },
+        'tor-swarm-without-neurosymbolic-or-shield': { compositeSynergyScore: { mean: 20.0 }, endToEndMissionSuccessPct: { mean: 0 }, torSwarmReachabilityPct: { mean: 100 }, neurosymbolicCausalAccuracyPct: { mean: 0 }, securityByzantineImmunityPct: { mean: 0 } },
+        'neurosymbolic-active-inf-without-watchdog-wal': { compositeSynergyScore: { mean: 63.33 }, endToEndMissionSuccessPct: { mean: 33.33 }, torSwarmReachabilityPct: { mean: 100 }, neurosymbolicCausalAccuracyPct: { mean: 100 }, securityByzantineImmunityPct: { mean: 33.33 } },
+        'full-stack-omega-hybrid-synergy-fabric': { compositeSynergyScore: { mean: 100.0 }, endToEndMissionSuccessPct: { mean: 100 }, torSwarmReachabilityPct: { mean: 100 }, neurosymbolicCausalAccuracyPct: { mean: 100 }, securityByzantineImmunityPct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runFullStackSynergy();
+  assert.equal(report.summary.fullSynergyScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Full-Stack Omega Synergy score=100.0')), 'Full-Stack Synergy summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-stack-omega-hybri')), 'Full-Stack Synergy rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

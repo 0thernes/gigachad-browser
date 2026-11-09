@@ -1,0 +1,970 @@
+{
+  "passId": "ALIVE-PASS-39-FULL-STACK-HYBRID-SYNERGY-BENCHMARK",
+  "phase": "Phase VII — Adversarial Immunity, Long-Horizon Autonomous Missions & 40-Pass Grand Omega Qualification",
+  "generatedAt": "2026-11-09T20:59:26.063Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "tCritical95Df4": 2.7764451051977987,
+  "facultyCount": 36,
+  "brainCount": 14,
+  "precisionTierCount": 7,
+  "profileSummaries": [
+    {
+      "profileId": "clearnet-single-agent-unshielded",
+      "label": "Clearnet Single-Agent Baseline (No Tor Mesh / No Swarm / No Shields)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 0
+        }
+      ]
+    },
+    {
+      "profileId": "tor-swarm-without-neurosymbolic-or-shield",
+      "label": "Tor v3 Mesh + 3-Guild Swarm Only (No Active Inf / CEGIS / Taint Shield)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 20,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 20,
+        "ci95High": 20,
+        "min": 20,
+        "max": 20
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 20
+        }
+      ]
+    },
+    {
+      "profileId": "neurosymbolic-active-inf-without-watchdog-wal",
+      "label": "Tor + Swarm + Active Inf + CEGIS + Shield (No WAL / No CoW Watchdog)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 33.3333,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 33.3333,
+        "ci95High": 33.3333,
+        "min": 33.3333,
+        "max": 33.3333
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 33.3333,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 33.3333,
+        "ci95High": 33.3333,
+        "min": 33.3333,
+        "max": 33.3333
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 63.3333,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 63.3333,
+        "ci95High": 63.3333,
+        "min": 63.3333,
+        "max": 63.3333
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 63.3333
+        }
+      ]
+    },
+    {
+      "profileId": "full-stack-omega-hybrid-synergy-fabric",
+      "label": "Full-Stack Omega Hybrid Synergy (36 Faculties · 14 Brains · Tor · Swarm · VFE/CEGIS · Shield/CoW)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "clearnet-single-agent-unshielded": {
+      "profileId": "clearnet-single-agent-unshielded",
+      "label": "Clearnet Single-Agent Baseline (No Tor Mesh / No Swarm / No Shields)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 0
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 0,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 0
+        }
+      ]
+    },
+    "tor-swarm-without-neurosymbolic-or-shield": {
+      "profileId": "tor-swarm-without-neurosymbolic-or-shield",
+      "label": "Tor v3 Mesh + 3-Guild Swarm Only (No Active Inf / CEGIS / Taint Shield)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 20,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 20,
+        "ci95High": 20,
+        "min": 20,
+        "max": 20
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 20
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 0,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 0,
+          "securityByzantineImmunityPct": 0,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 20
+        }
+      ]
+    },
+    "neurosymbolic-active-inf-without-watchdog-wal": {
+      "profileId": "neurosymbolic-active-inf-without-watchdog-wal",
+      "label": "Tor + Swarm + Active Inf + CEGIS + Shield (No WAL / No CoW Watchdog)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 33.3333,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 33.3333,
+        "ci95High": 33.3333,
+        "min": 33.3333,
+        "max": 33.3333
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 33.3333,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 33.3333,
+        "ci95High": 33.3333,
+        "min": 33.3333,
+        "max": 33.3333
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 63.3333,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 63.3333,
+        "ci95High": 63.3333,
+        "min": 63.3333,
+        "max": 63.3333
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 63.3333
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 33.3333,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 33.3333,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 63.3333
+        }
+      ]
+    },
+    "full-stack-omega-hybrid-synergy-fabric": {
+      "profileId": "full-stack-omega-hybrid-synergy-fabric",
+      "label": "Full-Stack Omega Hybrid Synergy (36 Faculties · 14 Brains · Tor · Swarm · VFE/CEGIS · Shield/CoW)",
+      "endToEndMissionSuccessPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "torSwarmReachabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "neurosymbolicCausalAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "securityByzantineImmunityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "meanPipelineLatencyMs": {
+        "count": 5,
+        "mean": 11.9892,
+        "stdDev": 0.1333,
+        "stdError": 0.0596,
+        "ci95HalfWidth": 0.1656,
+        "ci95Low": 11.8236,
+        "ci95High": 12.1548,
+        "min": 11.805,
+        "max": 12.1247
+      },
+      "compositeSynergyScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 11.9136,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 29017,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 11.805,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 39023,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 11.9993,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 49031,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 12.1247,
+          "compositeSynergyScore": 100
+        },
+        {
+          "seed": 59053,
+          "endToEndMissionSuccessPct": 100,
+          "torSwarmReachabilityPct": 100,
+          "neurosymbolicCausalAccuracyPct": 100,
+          "securityByzantineImmunityPct": 100,
+          "meanPipelineLatencyMs": 12.1033,
+          "compositeSynergyScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "full-stack-omega-hybrid-synergy-fabric",
+    "allSeedsVerified": true,
+    "fullSynergyScoreMean": 100,
+    "endToEndMissionSuccessPctMean": 100,
+    "torSwarmReachabilityPctMean": 100,
+    "neurosymbolicCausalAccuracyPctMean": 100,
+    "securityByzantineImmunityPctMean": 100,
+    "meanPipelineLatencyMs": 11.9892,
+    "gainVsClearnetSingle": 100,
+    "gainVsTorSwarmOnly": 80,
+    "gainVsNoWatchdogWal": 36.6667
+  }
+}
