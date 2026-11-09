@@ -1,0 +1,645 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-19-swarm-wild-foraging-benchmark-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "graphNodesPerSeed": 36,
+    "corroboratedTargetNodes": 24,
+    "domains": [
+      {
+        "fpd": "arxiv.org",
+        "isOnion": false
+      },
+      {
+        "fpd": "semanticscholar.org",
+        "isOnion": false
+      },
+      {
+        "fpd": "europepmc.org",
+        "isOnion": false
+      },
+      {
+        "fpd": "duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion",
+        "isOnion": true
+      },
+      {
+        "fpd": "propub3r6espa33w76f7726v52g2x2h6k2v6w3r5z7m2n4b5v6c7d8ad.onion",
+        "isOnion": true
+      },
+      {
+        "fpd": "nytimesn7cgmftshazwhfgzm37qxb44r64ytbb2dj3x62d2lljsciiyd.onion",
+        "isOnion": true
+      }
+    ],
+    "topologies": [
+      "solitary-single-agent",
+      "uncoordinated-flock-15",
+      "centralized-fifo-queue-15",
+      "stigmergic-tor-hybrid-synergy-swarm"
+    ]
+  },
+  "summary": {
+    "hybridBeatFifoSeeds": 5,
+    "hybridBeatSolitarySeeds": 5,
+    "hybridBeatFlockSeeds": 5,
+    "exact100DiscoverySeeds": 5,
+    "pairedDeltas": {
+      "hybridVsFifoForagingGain": {
+        "count": 5,
+        "mean": 60.25,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          60.25,
+          60.25
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "hybridVsSolitaryForagingGain": {
+        "count": 5,
+        "mean": 28.125,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          28.125,
+          28.125
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "hybridVsFlockForagingGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byTopology": {
+      "solitary-single-agent": {
+        "wildForagingScore": {
+          "count": 5,
+          "mean": 71.875,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            71.875,
+            71.875
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "corroboratedDiscoveryPct": {
+          "count": 5,
+          "mean": 37.5,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            37.5,
+            37.5
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimsPer100Requests": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "onionCircuitIsolationPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "honeypotContaminationCount": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "throttled429Count": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "uncoordinated-flock-15": {
+        "wildForagingScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "corroboratedDiscoveryPct": {
+          "count": 5,
+          "mean": 50,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            50,
+            50
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimsPer100Requests": {
+          "count": 5,
+          "mean": 13.333333333333334,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            13.333333333333334,
+            13.333333333333334
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "onionCircuitIsolationPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "honeypotContaminationCount": {
+          "count": 5,
+          "mean": 6,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            6,
+            6
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "throttled429Count": {
+          "count": 5,
+          "mean": 54,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            54,
+            54
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "centralized-fifo-queue-15": {
+        "wildForagingScore": {
+          "count": 5,
+          "mean": 39.75,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            39.75,
+            39.75
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "corroboratedDiscoveryPct": {
+          "count": 5,
+          "mean": 75,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            75,
+            75
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimsPer100Requests": {
+          "count": 5,
+          "mean": 69.23076923076923,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            69.23076923076923,
+            69.23076923076923
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "onionCircuitIsolationPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "honeypotContaminationCount": {
+          "count": 5,
+          "mean": 3,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            3,
+            3
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "throttled429Count": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "stigmergic-tor-hybrid-synergy-swarm": {
+        "wildForagingScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "corroboratedDiscoveryPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "verifiedClaimsPer100Requests": {
+          "count": 5,
+          "mean": 66.66666666666666,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            66.66666666666666,
+            66.66666666666666
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "onionCircuitIsolationPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "honeypotContaminationCount": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "throttled429Count": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byTopology": {
+        "solitary-single-agent": {
+          "seed": 19013,
+          "topology": "solitary-single-agent",
+          "metrics": {
+            "wildForagingScore": 71.875,
+            "corroboratedDiscoveryPct": 37.5,
+            "verifiedClaimsPer100Requests": 100,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 9,
+            "totalNetworkRequests": 9
+          }
+        },
+        "uncoordinated-flock-15": {
+          "seed": 19013,
+          "topology": "uncoordinated-flock-15",
+          "metrics": {
+            "wildForagingScore": 0,
+            "corroboratedDiscoveryPct": 50,
+            "verifiedClaimsPer100Requests": 13.333333333333334,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 6,
+            "throttled429Count": 54,
+            "discoveredTruthNodes": 12,
+            "totalNetworkRequests": 90
+          }
+        },
+        "centralized-fifo-queue-15": {
+          "seed": 19013,
+          "topology": "centralized-fifo-queue-15",
+          "metrics": {
+            "wildForagingScore": 39.75,
+            "corroboratedDiscoveryPct": 75,
+            "verifiedClaimsPer100Requests": 69.23076923076923,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 3,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 18,
+            "totalNetworkRequests": 26
+          }
+        },
+        "stigmergic-tor-hybrid-synergy-swarm": {
+          "seed": 19013,
+          "topology": "stigmergic-tor-hybrid-synergy-swarm",
+          "metrics": {
+            "wildForagingScore": 100,
+            "corroboratedDiscoveryPct": 100,
+            "verifiedClaimsPer100Requests": 66.66666666666666,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 24,
+            "totalNetworkRequests": 36
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byTopology": {
+        "solitary-single-agent": {
+          "seed": 29017,
+          "topology": "solitary-single-agent",
+          "metrics": {
+            "wildForagingScore": 71.875,
+            "corroboratedDiscoveryPct": 37.5,
+            "verifiedClaimsPer100Requests": 100,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 9,
+            "totalNetworkRequests": 9
+          }
+        },
+        "uncoordinated-flock-15": {
+          "seed": 29017,
+          "topology": "uncoordinated-flock-15",
+          "metrics": {
+            "wildForagingScore": 0,
+            "corroboratedDiscoveryPct": 50,
+            "verifiedClaimsPer100Requests": 13.333333333333334,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 6,
+            "throttled429Count": 54,
+            "discoveredTruthNodes": 12,
+            "totalNetworkRequests": 90
+          }
+        },
+        "centralized-fifo-queue-15": {
+          "seed": 29017,
+          "topology": "centralized-fifo-queue-15",
+          "metrics": {
+            "wildForagingScore": 39.75,
+            "corroboratedDiscoveryPct": 75,
+            "verifiedClaimsPer100Requests": 69.23076923076923,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 3,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 18,
+            "totalNetworkRequests": 26
+          }
+        },
+        "stigmergic-tor-hybrid-synergy-swarm": {
+          "seed": 29017,
+          "topology": "stigmergic-tor-hybrid-synergy-swarm",
+          "metrics": {
+            "wildForagingScore": 100,
+            "corroboratedDiscoveryPct": 100,
+            "verifiedClaimsPer100Requests": 66.66666666666666,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 24,
+            "totalNetworkRequests": 36
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byTopology": {
+        "solitary-single-agent": {
+          "seed": 39023,
+          "topology": "solitary-single-agent",
+          "metrics": {
+            "wildForagingScore": 71.875,
+            "corroboratedDiscoveryPct": 37.5,
+            "verifiedClaimsPer100Requests": 100,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 9,
+            "totalNetworkRequests": 9
+          }
+        },
+        "uncoordinated-flock-15": {
+          "seed": 39023,
+          "topology": "uncoordinated-flock-15",
+          "metrics": {
+            "wildForagingScore": 0,
+            "corroboratedDiscoveryPct": 50,
+            "verifiedClaimsPer100Requests": 13.333333333333334,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 6,
+            "throttled429Count": 54,
+            "discoveredTruthNodes": 12,
+            "totalNetworkRequests": 90
+          }
+        },
+        "centralized-fifo-queue-15": {
+          "seed": 39023,
+          "topology": "centralized-fifo-queue-15",
+          "metrics": {
+            "wildForagingScore": 39.75,
+            "corroboratedDiscoveryPct": 75,
+            "verifiedClaimsPer100Requests": 69.23076923076923,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 3,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 18,
+            "totalNetworkRequests": 26
+          }
+        },
+        "stigmergic-tor-hybrid-synergy-swarm": {
+          "seed": 39023,
+          "topology": "stigmergic-tor-hybrid-synergy-swarm",
+          "metrics": {
+            "wildForagingScore": 100,
+            "corroboratedDiscoveryPct": 100,
+            "verifiedClaimsPer100Requests": 66.66666666666666,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 24,
+            "totalNetworkRequests": 36
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byTopology": {
+        "solitary-single-agent": {
+          "seed": 49031,
+          "topology": "solitary-single-agent",
+          "metrics": {
+            "wildForagingScore": 71.875,
+            "corroboratedDiscoveryPct": 37.5,
+            "verifiedClaimsPer100Requests": 100,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 9,
+            "totalNetworkRequests": 9
+          }
+        },
+        "uncoordinated-flock-15": {
+          "seed": 49031,
+          "topology": "uncoordinated-flock-15",
+          "metrics": {
+            "wildForagingScore": 0,
+            "corroboratedDiscoveryPct": 50,
+            "verifiedClaimsPer100Requests": 13.333333333333334,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 6,
+            "throttled429Count": 54,
+            "discoveredTruthNodes": 12,
+            "totalNetworkRequests": 90
+          }
+        },
+        "centralized-fifo-queue-15": {
+          "seed": 49031,
+          "topology": "centralized-fifo-queue-15",
+          "metrics": {
+            "wildForagingScore": 39.75,
+            "corroboratedDiscoveryPct": 75,
+            "verifiedClaimsPer100Requests": 69.23076923076923,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 3,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 18,
+            "totalNetworkRequests": 26
+          }
+        },
+        "stigmergic-tor-hybrid-synergy-swarm": {
+          "seed": 49031,
+          "topology": "stigmergic-tor-hybrid-synergy-swarm",
+          "metrics": {
+            "wildForagingScore": 100,
+            "corroboratedDiscoveryPct": 100,
+            "verifiedClaimsPer100Requests": 66.66666666666666,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 24,
+            "totalNetworkRequests": 36
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byTopology": {
+        "solitary-single-agent": {
+          "seed": 59053,
+          "topology": "solitary-single-agent",
+          "metrics": {
+            "wildForagingScore": 71.875,
+            "corroboratedDiscoveryPct": 37.5,
+            "verifiedClaimsPer100Requests": 100,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 9,
+            "totalNetworkRequests": 9
+          }
+        },
+        "uncoordinated-flock-15": {
+          "seed": 59053,
+          "topology": "uncoordinated-flock-15",
+          "metrics": {
+            "wildForagingScore": 0,
+            "corroboratedDiscoveryPct": 50,
+            "verifiedClaimsPer100Requests": 13.333333333333334,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 6,
+            "throttled429Count": 54,
+            "discoveredTruthNodes": 12,
+            "totalNetworkRequests": 90
+          }
+        },
+        "centralized-fifo-queue-15": {
+          "seed": 59053,
+          "topology": "centralized-fifo-queue-15",
+          "metrics": {
+            "wildForagingScore": 39.75,
+            "corroboratedDiscoveryPct": 75,
+            "verifiedClaimsPer100Requests": 69.23076923076923,
+            "onionCircuitIsolationPct": 0,
+            "honeypotContaminationCount": 3,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 18,
+            "totalNetworkRequests": 26
+          }
+        },
+        "stigmergic-tor-hybrid-synergy-swarm": {
+          "seed": 59053,
+          "topology": "stigmergic-tor-hybrid-synergy-swarm",
+          "metrics": {
+            "wildForagingScore": 100,
+            "corroboratedDiscoveryPct": 100,
+            "verifiedClaimsPer100Requests": 66.66666666666666,
+            "onionCircuitIsolationPct": 100,
+            "honeypotContaminationCount": 0,
+            "throttled429Count": 0,
+            "discoveredTruthNodes": 24,
+            "totalNetworkRequests": 36
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 19 5-seed Multi-Guild Swarm Exploration Benchmark across 36-node Clearnet + v3 .onion topologies (comparing Solitary, Uncoordinated Flock, Centralized FIFO Queue, and Stigmergic Tor Hybrid Synergy Swarm)."
+}

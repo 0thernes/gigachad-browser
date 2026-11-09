@@ -724,6 +724,37 @@ test('runStigmergicMesh renders 5-seed Stigmergic Pheromone Knowledge Graph and 
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runSwarmForaging renders 5-seed Wild Clearnet + .onion Multi-Guild Foraging Benchmark metrics in section 25', async () => {
+  const { window, dom } = load();
+  window.AliveSwarmWildForagingBenchmark = {
+    run: async () => ({
+      summary: {
+        hybridBeatFifoSeeds: 5,
+        hybridBeatSolitarySeeds: 5,
+        hybridBeatFlockSeeds: 5,
+        exact100DiscoverySeeds: 5,
+        pairedDeltas: {
+          hybridVsFifoForagingGain: { mean: 69.2 },
+          hybridVsSolitaryForagingGain: { mean: 36.3 }
+        },
+        byTopology: {
+          'uncoordinated-flock-15': { wildForagingScore: { mean: 0 }, corroboratedDiscoveryPct: { mean: 50 }, onionCircuitIsolationPct: { mean: 0 }, honeypotContaminationCount: { mean: 6 } },
+          'centralized-fifo-queue-15': { wildForagingScore: { mean: 30.8 }, corroboratedDiscoveryPct: { mean: 75 }, onionCircuitIsolationPct: { mean: 0 }, honeypotContaminationCount: { mean: 3 } },
+          'solitary-single-agent': { wildForagingScore: { mean: 63.75 }, corroboratedDiscoveryPct: { mean: 37.5 }, onionCircuitIsolationPct: { mean: 100 }, honeypotContaminationCount: { mean: 0 } },
+          'stigmergic-tor-hybrid-synergy-swarm': { wildForagingScore: { mean: 100.0 }, corroboratedDiscoveryPct: { mean: 100 }, onionCircuitIsolationPct: { mean: 100 }, honeypotContaminationCount: { mean: 0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runSwarmForaging();
+  assert.equal(report.summary.hybridBeatFifoSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · hybrid vs FIFO +69.2 (5/5)')), 'Swarm foraging summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('stigmergic-tor-hybrid-')), 'Swarm foraging rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

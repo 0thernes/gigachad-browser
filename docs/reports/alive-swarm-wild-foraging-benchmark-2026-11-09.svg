@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="330" viewBox="0 0 980 330">
+  <rect width="980" height="330" fill="#05090f"/>
+  <text x="24" y="32" fill="#67e8f9" font-family="Consolas,monospace" font-size="15" font-weight="bold">ALIVE Pass 19 — Wild Clearnet + .onion Multi-Guild Foraging Benchmark (5 Seeds)</text>
+  <text x="24" y="54" fill="#e2e8f0" font-family="Consolas,monospace" font-size="12">Hybrid vs FIFO: +60.25 (5/5) · vs Solitary: +28.13 (5/5) · 100% Discovery &amp; 0 Honeypots: 5/5</text>
+  <text x="24" y="72" fill="#94a3b8" font-family="Consolas,monospace" font-size="11">36 Multi-Hop Nodes/Seed (24 Corroborated Truth, 6 Low-Yield Noise, 6 Honeypot Disinfo) · 3 Clearnet + 3 v3 .onion FPDs</text>
+  
+    <text x="230" y="114" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">uncoordinated-flock-15</text>
+    <rect x="242" y="96" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="98" width="2" height="22" rx="2" fill="#f43f5e"/>
+    <text x="614" y="114" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">score=0.0 disc=50.0% onionIso=0% eff=13.3 honey=6</text>
+    <text x="230" y="164" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">centralized-fifo-queue-15</text>
+    <rect x="242" y="146" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="148" width="143" height="22" rx="2" fill="#f59e0b"/>
+    <text x="614" y="164" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">score=39.8 disc=75.0% onionIso=0% eff=69.2 honey=3</text>
+    <text x="230" y="214" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">solitary-single-agent</text>
+    <rect x="242" y="196" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="198" width="259" height="22" rx="2" fill="#38bdf8"/>
+    <text x="614" y="214" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">score=71.9 disc=37.5% onionIso=100% eff=100.0 honey=0</text>
+    <text x="230" y="264" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">stigmergic-tor-hybrid-synergy-swarm</text>
+    <rect x="242" y="246" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="248" width="360" height="22" rx="2" fill="#34d399"/>
+    <text x="614" y="264" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">score=100.0 disc=100.0% onionIso=100% eff=66.7 honey=0</text>
+  <text x="24" y="312" fill="#64748b" font-family="Consolas,monospace" font-size="11">Seeds: 19013, 29017, 39023, 49031, 59053 · Locust + Raven + Fish + Tor FPD IsolateSOCKSAuth + Token-Bucket Governor + 2f+1 BFT Quorum</text>
+</svg>

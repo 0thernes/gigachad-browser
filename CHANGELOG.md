@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Wild clearnet + .onion multi-guild foraging benchmark pass 19
+
+- Added the 5-seed Multi-Guild Swarm Exploration Benchmark across 36-node Clearnet + RFC 7686 v3 `.onion` topologies ([`systems/alive-swarm-wild-foraging-benchmark.js`](systems/alive-swarm-wild-foraging-benchmark.js), [`scripts/alive-swarm-wild-foraging-benchmark.cjs`](scripts/alive-swarm-wild-foraging-benchmark.cjs)) comparing `solitary-single-agent`, `uncoordinated-flock-15`, `centralized-fifo-queue-15`, and `stigmergic-tor-hybrid-synergy-swarm`.
+- Verified on `5/5` seeds that `stigmergic-tor-hybrid-synergy-swarm` achieves `100.0` wild foraging score (`+60.25` over `centralized-fifo-queue-15`, `+28.13` over `solitary-single-agent`, `+100.0` over `uncoordinated-flock-15`), `100.0%` corroborated truth discovery across depths `1..4`, `100.0%` `.onion` FPD circuit isolation, `0` rate-limit `429` throttles, and `0` honeypot contaminations.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 25 (`#alive-fabric-swarm-foraging`, `Run wild foraging` button, and `runSwarmForaging()`).
+- Added [Pass 19 report](docs/ALIVE_PASS_19_REPORT.md), [JSON report](docs/reports/alive-swarm-wild-foraging-benchmark-2026-11-09.json), [SVG chart](docs/reports/alive-swarm-wild-foraging-benchmark-2026-11-09.svg) and unit tests (`tests/alive-swarm-wild-foraging-benchmark.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Stigmergic pheromone knowledge graph, frontier deduplication & BFT consensus pass 18
 
 - Added the 5-seed Stigmergic Pheromone Knowledge Graph, Canonical SHA-256 Frontier Deduplicator, and $2f+1$ Byzantine-Fault-Tolerant (`BFT`) `Fish-School-Consensus` quorum ([`systems/alive-swarm-stigmergic-mesh.js`](systems/alive-swarm-stigmergic-mesh.js), [`scripts/alive-swarm-stigmergic-mesh.cjs`](scripts/alive-swarm-stigmergic-mesh.cjs)) comparing `isolated-no-pheromone-no-bft`, `dedup-only-no-pheromone-no-bft`, `pheromone-without-bft-quorum`, and `full-stigmergic-bft-consensus-mesh` across 24 knowledge-graph nodes per seed.
