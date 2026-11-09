@@ -13,6 +13,13 @@ exact 64-byte weight view, private epoch and timeout to paired canonical startup
 and saving. Its isolated two-process qualification is recorded separately; it
 does not complete the broader catalog or change the historical counts below.
 
+The subsequent [replay component](ALIVE_REPLAY_STATE.md) implements detached
+staging of the dense experience ring, exact occupied Float32 records and surprise
+scores, and its write cursor. It is integrated with the paired canonical startup
+and serializer. Its qualification is separate from the historical catalog and
+from the previously released primary/trainer receipts; the full catalog remains
+incomplete.
+
 ## Evidence and the remaining coverage boundary
 
 The inputs are `research_notes/alive-overdrive-verification/learned-state-continuity/candidate-coverage-v3.json`, `SHARED_ARENA_BOUNDARY.md`, `STARTUP_HYDRATION_AUDIT.md`, the implementation/protocol/edge-review documents in that directory, and the current owning sources named below. The candidate catalog explicitly is not a certified registry. Its 648 constructor views are historical observations, not a fixed mature roster, learned-parameter count or proof of learning quality.
@@ -87,7 +94,7 @@ For full startup: construct components without stepping/training/publishing; est
 | --- | --- | --- |
 | Primary policy | The six views above | Full continuation also needs world history, clocks, observation boundary and downstream models. |
 | Deep cortex/connectome/world model | Learned matrices, frozen references, recurrent state, STDP traces, memory banks and optimizer arrays | Freeze actual multidimensional layouts and scalar cursors; include `hopfieldWritePtr`; do not infer learning from allocation names. |
-| Trainable hub | Learned weights and scalar biases `b_disc2`, `b_aware`; Adam moments; plasticity LR; backprop/dream clocks; retained TD history | Fixed nonshared backing is implemented; full arena state, replay staging and exact scalar ranges remain to be cataloged. Existing rounded export is not an exact-state source. |
+| Trainable hub | Learned weights and scalar biases `b_disc2`, `b_aware`; Adam moments; plasticity LR; backprop/dream clocks; retained TD history | Fixed nonshared backing and detached replay staging are implemented; full arena state and exact scalar ranges remain to be cataloged. Existing rounded export is not an exact-state source. |
 | Mesh/DSD/morphology | Retained dynamics, neuromodulators/viscera, simulation phase, memory rings/cursors, morphology state | Audit reconstructed literal/topology arrays and RNG-dependent initialization separately. Preserve chiral parity as recurrent state. |
 | Frontier and reasoning | JEPA/Mamba/reasoning weights, recurrent state, scalar value biases and counters | Canonical precedence over optional binary loading; preserve actual engine aliases instead of double counting linked instances. |
 | Bleeding-edge/sibling/federation | Their declared matrices, recurrent arrays, precision arenas, PRNG state and numerical clocks | Trainer generation/clock, asset ownership, Wasm resource boundary, mixed HDC reconstruction and fresh execution receipts. |
@@ -117,6 +124,12 @@ epoch, rebase the next target coherently, and explicitly discard old pending wor
 The existing autosave `cancelAndDrain` is a physical storage fence, not a trainer fence. Hold both independently. After the final await, recheck model generation, root/view identities, alias topology and writable own-data slots immediately before the synchronous transaction. Serializer completion from an older generation must not publish over a restored model; retain the existing owner/epoch/job receipt checks and physical commit settlement.
 
 ## Replay requires detached staged allocation
+
+The component staging below is now implemented in `alive-replay-state.js` with
+dense occupancy, detached publication, exact wire validation, and next-replay
+numerical tests. The source audit found no retained asynchronous ring/record
+references outside the owning synchronous update. Full-model transaction and
+continuation requirements remain broader than this implemented component.
 
 The live hub starts with `replayRing32: []`, writes a newly allocated record at `replayWritePtr & 31`, advances the pointer modulo 32, and samples existing records by greatest surprise. Each occupied record contains `z16: Float32Array(16)`, `a8: Float32Array(8)`, `zNext16: Float32Array(16)` and a finite `surprise`. The full capacity adds at most 96 views and 5,120 raw bytes. Occupancy is runtime data, not architecture identity.
 

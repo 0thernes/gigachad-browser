@@ -189,12 +189,13 @@ for (const [name, prepare, errorText, failStorage] of [
   }
 });
 
-test('actual payload capture owns paired primary and committed trainer state with one snapshot identity', async () => {
+test('actual payload capture owns primary, committed trainer and replay state with one snapshot identity', async () => {
   const { webcrypto } = require('node:crypto');
   const learned = require('../systems/alive-learned-state-codec.js');
   const registry = require('../systems/alive-learned-state-registry.js');
   const primary = require('../systems/alive-primary-policy-state.js');
   const trainer = require('../systems/alive-trainer-state.js');
+  const replay = require('../systems/alive-replay-state.js');
   const bootstrap = require('../systems/alive-primary-policy-bootstrap.js');
   const { BleedEdge25AlifeEngine: Engine } = require('../systems/alife-25-bleeding-edge-models.js');
   const h = runtime();
@@ -214,7 +215,11 @@ test('actual payload capture owns paired primary and committed trainer state wit
   engine.commitCommittedTrainerRestore(engine.prepareCommittedTrainerRestore(committed, { expectedGeneration: engine.workerTrainerSnapshot().generation }));
   const originalBytes = Buffer.from(engine.W_hyper_u.buffer).toString('hex');
   const originalTrainer = engine.workerTrainerSnapshot();
-  const controller = await bootstrap.prepare({ primary, trainer, registry, codec: learned, crypto: webcrypto, json: null });
+  Object.assign(h.trainableAlifeNeuralHub, { replayRing32: [{ z16: new Float32Array(16).fill(.125),
+    a8: new Float32Array(8).fill(.25), zNext16: new Float32Array(16).fill(.375), surprise: -0 }], replayWritePtr: 1 });
+  new Uint32Array(h.trainableAlifeNeuralHub.replayRing32[0].z16.buffer).set([0x80000000, 1]);
+  const replayBytes = Buffer.from(h.trainableAlifeNeuralHub.replayRing32[0].z16.buffer).toString('hex');
+  const controller = await bootstrap.prepare({ primary, trainer, replay, registry, codec: learned, crypto: webcrypto, json: null });
   const f = harness(h);
   f.context.window.alivePrimaryPolicyBootstrap = controller;
   const payload = h.capturePersistentGenomePayload();
@@ -222,12 +227,22 @@ test('actual payload capture owns paired primary and committed trainer state wit
   assert.deepEqual(engine.workerTrainerSnapshot(), originalTrainer, 'ordinary capture must not suspend, dispatch or discard trainer work');
   // The exact component captures already own bytes before any encoder is called.
   h.W_actor.fill(3); engine.W_hyper_u.fill(4);
+  h.trainableAlifeNeuralHub.replayRing32[0].z16.fill(5);
+  h.trainableAlifeNeuralHub.replayRing32 = []; h.trainableAlifeNeuralHub.replayWritePtr = 0;
   // Match autosave's structured-clone boundary from the VM-owned payload.
   const json = await codec.encodeAsync(structuredClone(payload), { learnedCodec: learned, crypto: webcrypto });
   const parsed = JSON.parse(json);
   const p = learned.verifiedCopy(await learned.decode(JSON.stringify(parsed.primaryPolicyState), { crypto: webcrypto }));
   const t = learned.verifiedCopy(await learned.decode(JSON.stringify(parsed.trainerCommittedState), { crypto: webcrypto }));
+  const replayDecoded = await learned.decode(JSON.stringify(parsed.replayMemoryState), { crypto: webcrypto });
+  const r = learned.verifiedCopy(replayDecoded);
   assert.deepEqual(p.snapshot, t.snapshot);
+  assert.deepEqual(p.snapshot, r.snapshot);
+  assert.equal(Buffer.from(r.tensors.find(row => row.id === 'replay/0/z16').bytes).toString('hex'), replayBytes);
+  assert.equal(Object.is(learned.untagValue(r.stateValues['replay/0/surprise']), -0), true);
+  const replayAdapter = await replay.create({ registry, codec: learned, crypto: webcrypto });
+  assert.equal(replayAdapter.validate(replayDecoded).count, 1);
+  assert.equal(replayAdapter.validate(replayDecoded).cursor, 1);
   assert.equal(p.snapshot.logicalTick, 654);
   assert.equal(t.snapshot.creatureId, 'payload-creature');
   assert.equal(Buffer.from(t.tensors[0].bytes).toString('hex'), originalBytes);

@@ -61,7 +61,7 @@ function fixture(options = {}) {
     aliveGenomePersistence:{initialJSON(storage,key){events.push('read');assert.equal(key,'humunculus_persistent_genome_v1');return options.json??'{"simulationTick":9}';},
       snapshot(){return {...state};},markApplied(success,details){events.push('blocked');assert.equal(success,false);assert.equal(details.hadJSON,true);state.applicationFailed=true;state.writeAllowed=false;},
       async fence({epoch}){events.push('fence');fenced++;state.epoch=epoch;return options.fence || {settled:true,ownerId:state.ownerId,epoch};}},
-    AlivePrimaryPolicyState:{},AliveTrainerState:{create(){}},AliveLearnedStateRegistry:{},AliveLearnedStateCodec:{}};
+    AlivePrimaryPolicyState:{},AliveTrainerState:{create(){}},AliveReplayState:{create(){}},AliveLearnedStateRegistry:{},AliveLearnedStateCodec:{}};
   win.window=win;context=vm.createContext(win);
   const prepare=options.prepare || (async args=>{events.push('prepare');assert.equal(args.json,options.json??'{"simulationTick":9}');return primary();});
   win.AlivePrimaryPolicyBootstrap={prepare};
@@ -90,15 +90,16 @@ test('digest delay holds all main execution and uses captured trusted source aft
   wait.resolve(primary());await f.loadAll();assert.equal((await f.loader.ready).phase,'ready');assert.equal(f.win.bootValue,42);
 });
 
-test('forwards the exact trainer, primary, registry, codec, crypto and canonical JSON to preparation',async()=>{
+test('forwards primary, trainer, replay, registry, codec, crypto and canonical JSON to preparation',async()=>{
   for(const useGlobalPrepare of [false,true]){
     let received;
     const prepared=primary(),f=fixture({useGlobalPrepare,json:'{"simulationTick":17}',prepare:async args=>{received=args;return prepared;}});
     f.loader.start();await tick();
-    assert.deepEqual(Object.keys(received).sort(),['codec','crypto','json','primary','registry','trainer']);
+    assert.deepEqual(Object.keys(received).sort(),['codec','crypto','json','primary','registry','replay','trainer']);
     assert.equal(received.json,'{"simulationTick":17}');
     assert.equal(received.primary,f.win.AlivePrimaryPolicyState);
     assert.equal(received.trainer,f.win.AliveTrainerState);
+    assert.equal(received.replay,f.win.AliveReplayState);
     assert.equal(received.registry,f.win.AliveLearnedStateRegistry);
     assert.equal(received.codec,f.win.AliveLearnedStateCodec);
     assert.equal(received.crypto,f.win.crypto);
@@ -108,11 +109,11 @@ test('forwards the exact trainer, primary, registry, codec, crypto and canonical
   }
 });
 
-test('missing or non-callable trainer dependency blocks before prepare, main and postmodules',async()=>{
-  for(const trainer of [undefined,null,{}, {create:false}]){
+test('missing or non-callable trainer or replay dependency blocks before prepare, main and postmodules',async()=>{
+  for(const dependency of ['AliveTrainerState','AliveReplayState']) for(const value of [undefined,null,{}, {create:false}]){
     let prepareCalls=0;
     const f=fixture({prepare:async()=>{prepareCalls++;return primary();}});
-    f.win.AliveTrainerState=trainer;
+    f.win[dependency]=value;
     const result=await f.loader.start();
     assert.equal(result.phase,'failed');assert.equal(prepareCalls,0);
     assert.equal(f.win.mainRuns,undefined);assert.equal(f.pending.length,0);

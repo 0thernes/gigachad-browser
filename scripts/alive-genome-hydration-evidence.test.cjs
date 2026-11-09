@@ -5,7 +5,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const codec = require('../systems/alive-genome-codec.js');
-const { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration, captureTrainerHydration, assessTrainerHydration } = require('./alive-genome-hydration-evidence.cjs');
+const { captureGenomeHydration, captureGenomeInitialState, assessGenomeHydration, captureTrainerHydration, assessTrainerHydration,
+  captureReplayHydration, assessReplayHydration } = require('./alive-genome-hydration-evidence.cjs');
 const index = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 const HUB = ['W_perc_enc', 'W_perc_dec', 'W_dyn1', 'W_dyn2', 'W_diff1', 'W_diff2', 'W_gen1', 'W_gen2', 'W_disc1', 'W_disc2', 'W_aware16'];
 const SLTC = ['sltcWeights64', 'sltcRecWeights64', 'sltcBias64'];
@@ -50,7 +51,7 @@ function hydrate(input = payload(), { federation = null, authentic = null, initi
     deepWebAndSltcConnectomeEngine: weights(SLTC), aotTotGotEngine: weights(AOT),
     portedMultiverseBrains: federation, authenticAsmodensius: authentic,
     updateMorphologyVector() { this.morphologyUpdated = true; } };
-  const context = vm.createContext({ runtime, window: { AliveGenomeCodec: codec }, btoa, ArrayBuffer, DataView, Uint8Array, Uint16Array,
+  const context = vm.createContext({ runtime, window: { AliveGenomeCodec: codec }, btoa, Object, Array, Float32Array, ArrayBuffer, DataView, Uint8Array, Uint16Array,
     localStorage: { getItem: () => raw }, console: { warn() {} } });
   runtime.loadPersistentGenome = method('loadPersistentGenome', context);
   runtime.capturePersistentGenomePayload = method('capturePersistentGenomePayload', context);
@@ -407,4 +408,198 @@ test('standalone trainer observer rejects target getters, shared backing, absent
   assert.equal(assessTrainerHydration(f.saved.trainerCommittedState, null).ok, false);
   const observed = { ...f.snapshot.trainerEvidence, weightsBase64: f.snapshot.trainerEvidence.weightsBase64 + '\n' };
   assert.equal(assessTrainerHydration(f.saved.trainerCommittedState, observed).ok, false);
+});
+
+// Build the saved replay wire from independent catalog metadata and original
+// fixture buffers. No production replay adapter/codec/importer supplies its
+// expected bytes, occupied order, Float64 priorities or cursor.
+function exactReplayHydration(count = 3, cursor = count === 32 ? 13 : count) {
+  const f = exactTrainerHydration(), { createHash } = require('node:crypto');
+  const catalog = require('./alive-replay-state-evidence.cjs').createExpectedReplayCatalog(count);
+  const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+  const ring = Array.from({ length: count }, (_, slot) => {
+    const vector = (length, offset) => Float32Array.from({ length }, (_, i) => (slot * 41 + offset + i) / 128);
+    const record = { z16: vector(16, 1), a8: vector(8, 18), zNext16: vector(16, 26), surprise: slot === 0 ? -0 : slot / 7 };
+    if (slot === 0) new Uint32Array(record.z16.buffer).set([0x80000000, 1, 0x80000001]);
+    return record;
+  });
+  f.runtime.trainableAlifeNeuralHub.replayRing32 = ring;
+  f.runtime.trainableAlifeNeuralHub.replayWritePtr = cursor;
+  const chunks = [], tensorManifest = []; let blobOffset = 0;
+  for (const row of catalog.tensors) {
+    const match = /^replay\/(\d+)\/(z16|a8|zNext16)$/.exec(row.id);
+    assert.ok(match, 'independent replay tensor ID is recognized');
+    const bytes = Buffer.from(ring[Number(match[1])][match[2]].buffer);
+    tensorManifest.push({ ...row, blobOffset, sha256: sha(bytes) }); chunks.push(bytes); blobOffset += bytes.length;
+  }
+  const i53 = value => ({ $type: 'i53', value });
+  const stateValues = { count: i53(count), cursor: i53(cursor), indices: { $type: 'array', items: Array.from({ length: count }, (_, i) => i53(i)) } };
+  for (let slot = 0; slot < count; slot++) {
+    const bytes = Buffer.alloc(8); bytes.writeDoubleLE(ring[slot].surprise);
+    stateValues[`replay/${slot}/surprise`] = { $type: 'f64', hex: bytes.toString('hex') };
+  }
+  const bytes = Buffer.concat(chunks);
+  f.saved.replayMemoryState = { schema: 'gigachad.learned-state.v1', architecture: catalog.architecture,
+    snapshot: { ...f.saved.primaryPolicyState.snapshot }, tensorManifest,
+    tensorBlob: { encoding: 'base64', byteLength: bytes.length, sha256: sha(bytes), data: bytes.toString('base64') },
+    stateManifest: catalog.states, stateValues, resumeRules: catalog.resumeRules };
+  f.context.window.alivePrimaryPolicyBootstrap.captureComponents = () => ({ primary: { fixtureOnly: true }, trainer: { fixtureOnly: true }, replay: { fixtureOnly: true } });
+  f.raw = JSON.stringify(f.saved); f.snapshot = f.recapture(); f.replayRing = ring;
+  return f;
+}
+
+test('empty, partial and full replay rings compare independently and omit only the pending diagnostic wrapper', () => {
+  for (const [count, cursor] of [[0, 0], [3, 3], [32, 0], [32, 17], [32, 31]]) {
+    const f = exactReplayHydration(count, cursor), result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
+    assert.equal(result.ok, true, JSON.stringify(result));
+    assert.equal(result.replay.ok, true); assert.equal(result.replay.count, count); assert.equal(result.replay.cursor, cursor);
+    assert.equal(result.replay.arraysChecked, count * 3); assert.equal(result.replay.elementsChecked, count * 40);
+    assert.equal(f.snapshot.replayEvidence.entries.length, count); assert.equal(f.snapshot.replayEvidence.tensorBytes, count * 160);
+    assert.equal(f.snapshot.replayCaptureError, null); assert.equal(f.snapshot.replayDiagnosticOmitted, true);
+    assert.equal(Object.hasOwn(JSON.parse(f.snapshot.encodedJSON), 'replayMemoryState'), false);
+    assert.equal(f.runtime.capturePersistentGenomePayload().replayMemoryState.__alive_genome_replay_state_v1__, true);
+    assert.equal(result.arraysChecked, 24 + count * 3); assert.equal(result.elementsChecked, 819 + count * 40);
+    if (count) assert.equal(f.snapshot.replayEvidence.entries[0].surpriseHex, '0000000000000080', 'negative zero priority survives serializable observation');
+    assert.doesNotMatch(JSON.stringify(result), /z16Hex|a8Hex|zNext16Hex|surpriseHex|"data":/, 'assessment remains metadata only');
+  }
+});
+
+test('replay payload bits, priority bits, occupied order and full insertion cursor cannot be replaced by matching exports', () => {
+  for (const mutate of [
+    f => { new Uint8Array(f.replayRing[0].z16.buffer)[9] ^= 1; },
+    f => { f.replayRing[0].surprise = 0; },
+    f => { [f.replayRing[0], f.replayRing[1]] = [f.replayRing[1], f.replayRing[0]]; },
+    f => { f.runtime.trainableAlifeNeuralHub.replayWritePtr = 14; }
+  ]) {
+    const f = exactReplayHydration(32, 13); mutate(f);
+    const result = assessGenomeHydration(f.raw, f.recapture(), { initialState: f.initialState });
+    assert.equal(result.ok, false, mutate.toString()); assert.equal(result.replay.ok, false);
+    assert.ok(result.differences.some(row => row.path.startsWith('replay.')));
+  }
+});
+
+function installReplayMutation(f, phase, mutation) {
+  let calls = 0;
+  const run = () => { calls++; mutation(); };
+  if (phase === 'trainer-capture' || phase === 'trainer-snapshot') {
+    const key = phase === 'trainer-capture' ? 'captureCommittedTrainerState' : 'workerTrainerSnapshot';
+    const original = f.engine[key];
+    f.engine[key] = function (...args) { run(); return original.apply(this, args); };
+  } else if (phase === 'metadata') {
+    const original = f.runtime.bodyRecipe;
+    f.runtime.bodyRecipe = { toJSON() { run(); return original; } };
+  } else {
+    const original = f.runtime.capturePersistentGenomePayload.bind(f.runtime);
+    f.runtime.capturePersistentGenomePayload = () => { run(); return original(); };
+  }
+  return () => calls;
+}
+
+test('replay bytes are owned before trainer APIs, metadata serialization and production export can heal them', () => {
+  for (const phase of ['trainer-capture', 'trainer-snapshot', 'metadata', 'export']) {
+    const f = exactReplayHydration(), view = f.replayRing[0].z16;
+    const original = new Uint8Array(view.buffer).slice(); new Uint8Array(view.buffer)[9] ^= 1;
+    const wrong = Buffer.from(view.buffer).toString('hex');
+    const calls = installReplayMutation(f, phase, () => new Uint8Array(view.buffer).set(original));
+    const observed = f.recapture();
+    assert.ok(calls() > 0, phase + ' callback actually ran');
+    assert.deepEqual(new Uint8Array(view.buffer), original, phase + ' repaired the live record');
+    assert.equal(observed.replayEvidence.entries[0].z16Hex, wrong, phase + ' cannot replace the first observation');
+    const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+    assert.equal(result.ok, false, phase); assert.equal(result.replay.ok, false);
+  }
+});
+
+test('later callback mutations cannot contaminate an initially correct owned replay observation', () => {
+  for (const phase of ['trainer-capture', 'trainer-snapshot', 'metadata', 'export']) {
+    const f = exactReplayHydration(), original = f.snapshot.replayEvidence.entries[0].zNext16Hex;
+    const calls = installReplayMutation(f, phase, () => { f.replayRing[0].zNext16.fill(9); f.replayRing[0].surprise = 99; });
+    const observed = f.recapture();
+    assert.ok(calls() > 0); assert.equal(f.replayRing[0].zNext16[0], 9);
+    assert.equal(observed.replayEvidence.entries[0].zNext16Hex, original);
+    assert.equal(observed.replayEvidence.entries[0].surpriseHex, '0000000000000080');
+    const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+    assert.equal(result.ok, true, JSON.stringify({ phase, result }));
+  }
+});
+
+test('first replay observation failures remain failures after trainer or exporter repairs the ring', () => {
+  for (const phase of ['trainer-capture', 'metadata', 'export']) {
+    const f = exactReplayHydration(), original = f.replayRing[1];
+    delete f.replayRing[1];
+    const calls = installReplayMutation(f, phase, () => { f.replayRing[1] = original; });
+    const observed = f.recapture();
+    assert.ok(calls() > 0); assert.equal(f.replayRing[1], original);
+    assert.equal(observed.replayEvidence.ok, false); assert.equal(typeof observed.replayCaptureError, 'string');
+    assert.match(observed.errors.join(';'), /Initial replay capture failed/);
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+    // Even a later exporter omitting the field cannot turn the initial error
+    // into success for a saved record that explicitly requires exact replay.
+    observed.errors = []; observed.encodedJSON = '{}';
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+  }
+});
+
+test('replay requires both exact peers and shared seven-field metadata bound to the outer saved identity', () => {
+  for (const mutate of [
+    saved => { delete saved.primaryPolicyState; }, saved => { delete saved.trainerCommittedState; },
+    saved => { saved.replayMemoryState.snapshot.creatureId = 'other-creature'; },
+    saved => { saved.replayMemoryState.snapshot.policyId = 'other-policy'; },
+    saved => { saved.replayMemoryState.snapshot.checkpointId = 'other-checkpoint'; },
+    saved => { saved.replayMemoryState.snapshot.logicalTick++; },
+    saved => { saved.replayMemoryState.snapshot.modelEpoch++; },
+    saved => { saved.replayMemoryState.snapshot.capturedAt = '2026-11-10T00:00:00.000Z'; },
+    saved => { saved.replayMemoryState.snapshot.resumeBoundary = 'invalid-boundary'; },
+    saved => { saved.agentId = 'other-outer-creature'; }
+  ]) {
+    const f = exactReplayHydration(); mutate(f.saved);
+    assert.equal(assessGenomeHydration(JSON.stringify(f.saved), f.snapshot, { initialState: f.initialState }).ok, false, mutate.toString());
+  }
+});
+
+test('malformed replay pending wrappers, sealed wires and missing direct observations fail closed', () => {
+  const f = exactReplayHydration(), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime);
+  let getterCalls = 0;
+  for (const wrapper of [null, {}, { __alive_genome_replay_state_v1__: false, captured: {} },
+    { __alive_genome_replay_state_v1__: true, captured: null },
+    { __alive_genome_replay_state_v1__: true, captured: {}, extra: true },
+    Object.defineProperty({ captured: {} }, '__alive_genome_replay_state_v1__', { enumerable: true, get() { getterCalls++; return true; } }),
+    Object.defineProperty({ __alive_genome_replay_state_v1__: true }, 'captured', { enumerable: true, get() { getterCalls++; return {}; } }),
+    { schema: 'gigachad.learned-state.v1', tensorBlob: {} }]) {
+    f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), replayMemoryState: wrapper });
+    const observed = f.recapture(); assert.ok(observed.errors.length);
+    assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, false);
+  }
+  assert.equal(getterCalls, 0);
+  assert.equal(assessReplayHydration(f.saved.replayMemoryState, null).ok, false);
+  const invalid = structuredClone(f.saved.replayMemoryState); invalid.tensorBlob.sha256 = '0'.repeat(64);
+  assert.equal(assessReplayHydration(invalid, f.snapshot.replayEvidence).ok, false);
+  const absent = { ...f.snapshot, replayEvidence: null, replayCaptureError: null };
+  assert.equal(assessGenomeHydration(f.raw, absent, { initialState: f.initialState }).ok, false);
+});
+
+test('retained sealed replay diagnostics are independently checked instead of trusted as an exporter projection', () => {
+  const f = exactReplayHydration(), exporter = f.runtime.capturePersistentGenomePayload.bind(f.runtime);
+  // An intentionally permissive diagnostic encoder isolates the assessor's
+  // boundary: expected bytes still come from the pre-callback raw observation.
+  f.context.window.AliveGenomeCodec = { ...codec, encode: payload => JSON.stringify(payload) };
+  f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), replayMemoryState: f.saved.replayMemoryState });
+  let observed = f.recapture();
+  assert.equal(observed.replayDiagnosticOmitted, false);
+  assert.equal(assessGenomeHydration(f.raw, observed, { initialState: f.initialState }).ok, true);
+  const invalid = structuredClone(f.saved.replayMemoryState); invalid.tensorBlob.sha256 = '0'.repeat(64);
+  f.runtime.capturePersistentGenomePayload = () => ({ ...exporter(), replayMemoryState: invalid });
+  observed = f.recapture(); assert.deepEqual(observed.errors, []);
+  const result = assessGenomeHydration(f.raw, observed, { initialState: f.initialState });
+  assert.equal(result.ok, false);
+  assert.ok(result.differences.some(row => row.path === 'replayMemoryState.exportDiagnostic'));
+});
+
+test('legacy snapshots without a replay component remain compatible despite unavailable replay observation', () => {
+  const f = hydrate();
+  assert.equal(f.snapshot.replayEvidence.ok, false); assert.equal(typeof f.snapshot.replayCaptureError, 'string');
+  assert.deepEqual(f.snapshot.errors, []);
+  const result = assessGenomeHydration(f.raw, f.snapshot, { initialState: f.initialState });
+  assert.equal(result.ok, true); assert.equal(result.replay, null);
+  assert.equal(captureReplayHydration(f.runtime).ok, false);
 });

@@ -1,4 +1,4 @@
-/* Legacy genome formatting plus optional exact primary/trainer worker encoding. */
+/* Legacy genome formatting plus optional exact component worker encoding. */
 (function (root, factory) {
   const api = factory(root);
   if (typeof module === 'object' && module.exports) module.exports = api;
@@ -28,6 +28,7 @@
   const authenticMarker = '__alive_genome_authentic_state_v1__';
   const primaryMarker = '__alive_genome_primary_state_v1__';
   const trainerMarker = '__alive_genome_trainer_state_v1__';
+  const replayMarker = '__alive_genome_replay_state_v1__';
   const authenticSchema = 'gigachad.authentic-asmodensius.state.v1';
   const authenticLimit = 8 * 1024 * 1024;
   function numericArray(values, digits) {
@@ -38,6 +39,12 @@
   }
   function primaryState(captured) { return { [primaryMarker]: true, captured }; }
   function trainerState(captured) { return { [trainerMarker]: true, captured }; }
+  function replayState(captured) { return { [replayMarker]: true, captured }; }
+  function replayField(payload) {
+    const field = payload && typeof payload === 'object' && Object.getOwnPropertyDescriptor(payload, 'replayMemoryState');
+    if (field && !Object.prototype.hasOwnProperty.call(field, 'value')) throw new TypeError('Replay memory state must be an own data field');
+    return field;
+  }
   function trainerField(payload) {
     const field = payload && typeof payload === 'object' && Object.getOwnPropertyDescriptor(payload, 'trainerCommittedState');
     if (field && !Object.prototype.hasOwnProperty.call(field, 'value')) throw new TypeError('Trainer committed state must be an own data field');
@@ -46,7 +53,7 @@
   function hasAsyncState(payload) {
     // Presence, not marker truthiness: malformed reserved trainer data must
     // never escape through the legacy serialization path.
-    return !!trainerField(payload) || hasPrimaryState(payload);
+    return !!replayField(payload) || !!trainerField(payload) || hasPrimaryState(payload);
   }
   function hasPrimaryState(payload) {
     const field = payload && typeof payload === 'object' && Object.getOwnPropertyDescriptor(payload, 'primaryPolicyState');
@@ -92,10 +99,12 @@
     return { schema: authenticSchema, sourceDigest, checksum: hash.toString(16).padStart(8, '0'), payload };
   }
   function encode(payload) {
+    if (replayField(payload)) throw new TypeError('Replay memory state requires asynchronous component encoding');
     if (trainerField(payload)) throw new TypeError('Trainer committed state requires paired asynchronous encoding');
     return JSON.stringify(payload, (_key, value) => {
       if (value && value[primaryMarker] === true) throw new TypeError('Pending primary policy state requires asynchronous encoding');
       if (value && value[trainerMarker] === true) throw new TypeError('Pending trainer committed state requires asynchronous encoding');
+      if (value && value[replayMarker] === true) throw new TypeError('Pending replay memory state requires asynchronous encoding');
       if (value && value[marker] === true) {
         // Keep the original per-number rounding semantics, including NaN,
         // infinity, negative zero, and toFixed's range/type errors.
@@ -120,12 +129,12 @@
         descriptors[marker].value !== true) throw new TypeError('Invalid ' + label.toLowerCase() + ' marker');
     return descriptors.captured.value;
   }
-  function checkPairedSnapshot(primary, trainer, legacyJSON) {
+  function checkPairedSnapshot(primary, trainer, legacyJSON, label = 'trainer') {
     // These records come from the codec's owned results, never the live inputs
     // retained by the caller. Different components have different architectures.
     const keys = ['creatureId', 'policyId', 'checkpointId', 'logicalTick', 'modelEpoch', 'capturedAt', 'resumeBoundary'];
     if (!primary?.snapshot || !trainer?.snapshot || keys.some(key => primary.snapshot[key] !== trainer.snapshot[key])) {
-      throw new TypeError('Primary and trainer snapshot metadata disagree');
+      throw new TypeError('Primary and ' + label + ' snapshot metadata disagree');
     }
     const snapshot = primary.snapshot, outer = JSON.parse(legacyJSON);
     if (!Number.isSafeInteger(outer.simulationTick) || Object.is(outer.simulationTick, -0) || outer.simulationTick < 0 ||
@@ -142,6 +151,9 @@
     const captured = pendingCapture(fields.primaryPolicyState, primaryMarker, 'Primary policy state');
     const paired = Object.prototype.hasOwnProperty.call(fields, 'trainerCommittedState');
     const trainer = paired ? pendingCapture(fields.trainerCommittedState, trainerMarker, 'Trainer committed state') : null;
+    const withReplay = Object.prototype.hasOwnProperty.call(fields, 'replayMemoryState');
+    if (withReplay && !paired) throw new TypeError('Replay memory state requires both primary and trainer state');
+    const replay = withReplay ? pendingCapture(fields.replayMemoryState, replayMarker, 'Replay memory state') : null;
     // Root replacement could reintroduce the omitted field (and duplicate the
     // appended key). Ordinary legacy encode retains its previous toJSON rules.
     if (fields.toJSON && (!Object.prototype.hasOwnProperty.call(fields.toJSON, 'value') || typeof fields.toJSON.value === 'function')) {
@@ -149,7 +161,7 @@
     }
     const legacy = {};
     for (const key of Reflect.ownKeys(fields)) {
-      if (key === 'primaryPolicyState' || key === 'trainerCommittedState') continue;
+      if (key === 'primaryPolicyState' || key === 'trainerCommittedState' || key === 'replayMemoryState') continue;
       // Capture the normal JSON behavior now. Never retain a live legacy graph
       // across the first WebCrypto await; descriptors keep getters synchronous.
       Object.defineProperty(legacy, key, fields[key]);
@@ -159,27 +171,30 @@
     const learned = options.learnedCodec || root?.AliveLearnedStateCodec;
     if (!learned || typeof learned.seal !== 'function') throw new Error('Exact learned-state codec is unavailable');
     const sealOptions = { crypto: options.crypto, signal: options.signal };
-    let wire, trainerWire;
+    let wire, trainerWire, replayWire;
     if (paired) {
-      // Start both seals in this turn: each synchronously owns every input byte
+      // Start all component seals in this turn: each synchronously owns every input byte
       // before its first hash await. A failed sibling cannot finish the physical
       // encoding/drain promise while the other hash remains in progress.
       const start = input => { try { return Promise.resolve(learned.seal(input, sealOptions)); } catch (error) { return Promise.reject(error); } };
-      const primarySeal = start(captured), trainerSeal = start(trainer);
-      const results = await Promise.allSettled([primarySeal, trainerSeal]);
+      const seals = [start(captured), start(trainer)];
+      if (withReplay) seals.push(start(replay));
+      const results = await Promise.allSettled(seals);
       if (options.signal?.aborted) throw new Error('Genome encoding cancelled');
       for (const result of results) if (result.status === 'rejected') throw result.reason;
       wire = results[0].value; trainerWire = results[1].value;
       checkPairedSnapshot(wire, trainerWire, legacyJSON);
+      if (withReplay) { replayWire = results[2].value; checkPairedSnapshot(wire, replayWire, legacyJSON, 'replay'); }
     } else {
       // Preserve the existing primary-only contract and legacy formatting.
       wire = await learned.seal(captured, sealOptions);
     }
     if (options.signal?.aborted) throw new Error('Genome encoding cancelled');
     const json = legacyJSON.slice(0, -1) + (legacyJSON === '{}' ? '' : ',') + '"primaryPolicyState":' + JSON.stringify(wire) +
-      (paired ? ',"trainerCommittedState":' + JSON.stringify(trainerWire) : '') + '}';
+      (paired ? ',"trainerCommittedState":' + JSON.stringify(trainerWire) : '') +
+      (withReplay ? ',"replayMemoryState":' + JSON.stringify(replayWire) : '') + '}';
     if (json.length > 32 * 1024 * 1024 || new TextEncoder().encode(json).byteLength > 32 * 1024 * 1024) throw new RangeError('Combined genome exceeds the 32 MiB payload bound');
     return json;
   }
-  return { numericArray, authenticState, primaryState, trainerState, hasPrimaryState, hasAsyncState, formatAuthenticState, assertIsolatedSnapshot, encode, encodeAsync };
+  return { numericArray, authenticState, primaryState, trainerState, replayState, hasPrimaryState, hasAsyncState, formatAuthenticState, assertIsolatedSnapshot, encode, encodeAsync };
 });

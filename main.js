@@ -3352,20 +3352,25 @@ app.whenReady().then(async () => {
                       const reloadedPrimary = await window.AlivePrimaryPolicyBootstrap.prepare({
                         json: durableRead.json, primary: window.AlivePrimaryPolicyState,
                         trainer: window.AliveTrainerState,
+                        replay: window.AliveReplayState,
                         registry: window.AliveLearnedStateRegistry, codec: window.AliveLearnedStateCodec,
                         crypto: window.crypto
                       });
                       let durableGenomeValidation;
                       if (Object.prototype.hasOwnProperty.call(JSON.parse(durableRead.json), 'trainerCommittedState')) {
                         // Paired hydration is an unpublished-startup boundary,
-                        // not an atomic live reload. Preparation validates both
-                        // detached components; a two-process probe tests restore.
+                        // not an atomic live reload. Preparation validates all
+                        // declared detached components; a two-process probe tests restore.
                         if (reloadedPrimary.snapshot(humunculusRuntime).trainerPrepared !== true) {
                           throw new Error('Durable trainer component was not prepared');
                         }
+                        const replayPresent = Object.prototype.hasOwnProperty.call(JSON.parse(durableRead.json), 'replayMemoryState');
+                        const replayPrepared = reloadedPrimary.snapshot(humunculusRuntime).replayPrepared === true;
+                        if (replayPresent && !replayPrepared) throw new Error('Durable replay component was not prepared');
                         durableGenomeValidation = { prepared: true, trainerPrepared: true,
+                          replayPrepared,
                           application: 'startup-only-not-reloaded',
-                          scope: 'Both saved components validated before activation; this smoke run did not restore them into the live model' };
+                          scope: 'Declared saved components validated before activation; this smoke run did not restore them into the live model' };
                       } else {
                         reloadedPrimary.preflight(humunculusRuntime, durableRead.json);
                         window.alivePrimaryPolicyBootstrap = reloadedPrimary;

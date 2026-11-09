@@ -11,7 +11,7 @@ const { isDeepStrictEqual } = require('node:util');
 const root = path.resolve(__dirname, '..');
 const { readRecord } = require('./alive-genome-durable-evidence.cjs');
 const { capturePauseDiagnostics, assessPauseEvidence } = require('./alive-public-navigation-probe.cjs');
-const { captureTrainerHydration, assessTrainerHydration } = require('./alive-genome-hydration-evidence.cjs');
+const { captureTrainerHydration, assessTrainerHydration, captureReplayHydration, assessReplayHydration } = require('./alive-genome-hydration-evidence.cjs');
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_neural_cyber_engine.js',
@@ -23,6 +23,7 @@ const sourcePaths = ['index.html', 'main.js', 'preload.js', 'config.js', 'alife_
   'systems/alive-asset-hydration.js', 'systems/alive-startup-loader.js',
   'systems/alive-primary-policy-state.js', 'systems/alive-primary-policy-bootstrap.js',
   'systems/alive-trainer-state.js', 'scripts/alive-trainer-state-evidence.cjs',
+  'systems/alive-replay-state.js', 'scripts/alive-replay-state-evidence.cjs',
   'systems/alive-learned-state-codec.js', 'systems/alive-learned-state-registry.js',
   'scripts/alive-primary-policy-evidence.cjs', 'scripts/alive-learned-state-wire-evidence.cjs',
   'scripts/alive-model-state-evidence.cjs', 'scripts/alive-persistence-restart-probe.cjs',
@@ -36,6 +37,51 @@ function replaceOnce(source, target, replacement, label) {
   const count = source.split(target).length - 1;
   if (count !== 1) throw new Error(`${label} expected one exact location, found ${count}`);
   return source.replace(target, replacement);
+}
+// Replay must be observed before either a private trainer read API or a legacy
+// mutation callback. The returned record owns the direct replay bytes; callback
+// results never stand in for that first observation.
+function capturePausedReplayBoundary(runtime, { captureReplay, captureTrainer, legacySentinels } = {}) {
+  if (typeof captureReplay !== 'function' || typeof captureTrainer !== 'function' || typeof legacySentinels !== 'function') throw new Error('Missing paused replay observation contract');
+  const replayBeforeSentinels = captureReplay(runtime);
+  if (replayBeforeSentinels?.ok !== true) throw new Error('Initial paused replay observation failed; no sentinel callback was invoked');
+  legacySentinels(runtime);
+  const replayBeforeFlush = captureReplay(runtime);
+  if (replayBeforeFlush?.ok !== true) throw new Error('Replay observation after legacy sentinels failed');
+  const trainerBeforeFlush = captureTrainer(runtime);
+  return { replayBeforeSentinels, replayBeforeFlush, trainerBeforeFlush,
+    sentinelScope: 'Four historical paused legacy sentinels only; no replay record, cursor, trainer clock or replay fixture is written' };
+}
+function assessNaturalReplayPopulation(before, after) {
+  const valid = observation => {
+    if (observation?.schema !== 'gigachad.replay-hydration-evidence.v1' || observation.ok !== true || observation.byteOrder !== 'LE' ||
+        !Number.isSafeInteger(observation.count) || Object.is(observation.count, -0) || observation.count < 0 || observation.count > 32 ||
+        !Number.isSafeInteger(observation.cursor) || Object.is(observation.cursor, -0) || observation.cursor < 0 || observation.cursor > 31 ||
+        observation.count < 32 && observation.cursor !== observation.count || observation.tensorBytes !== observation.count * 160 ||
+        !Array.isArray(observation.entries) || observation.entries.length !== observation.count) return false;
+    for (let slot = 0; slot < observation.count; slot++) {
+      const record = observation.entries[slot];
+      if (record?.slot !== slot) return false;
+      for (const [key, width] of [['z16Hex', 64], ['a8Hex', 32], ['zNext16Hex', 64], ['surpriseHex', 8]]) {
+        const value = record[key];
+        if (typeof value !== 'string' || value.length !== width * 2 || !/^[0-9a-f]+$/.test(value)) return false;
+        const bytes = Buffer.from(value, 'hex');
+        if (key === 'surpriseHex') { if (!Number.isFinite(bytes.readDoubleLE(0))) return false; }
+        else for (let offset = 0; offset < width; offset += 4) if (!Number.isFinite(bytes.readFloatLE(offset))) return false;
+      }
+    }
+    return true;
+  };
+  const beforeValid = valid(before), afterValid = valid(after);
+  const populated = afterValid && after.count > 0;
+  const changed = beforeValid && afterValid && !isDeepStrictEqual(
+    { count: before.count, cursor: before.cursor, entries: before.entries },
+    { count: after.count, cursor: after.cursor, entries: after.entries });
+  return { ok: Boolean(beforeValid && populated && changed), beforeValid, afterValid, populated, changed,
+    beforeCount: beforeValid ? before.count : null, count: afterValid ? after.count : null,
+    beforeCursor: beforeValid ? before.cursor : null, cursor: afterValid ? after.cursor : null,
+    tensorBytes: afterValid ? after.tensorBytes : null,
+    scope: 'Observed bounded replay population/change during natural application training; no replay injection and no claim of next-update equivalence' };
 }
 // Serializable read-only observation. The real startup loader remains the sole
 // owner of activation; waiting for it must never call boot/start a second time.
@@ -128,8 +174,8 @@ async function runParent() {
   fs.mkdirSync(output, { recursive: true });
   const before = sourceHashes();
   const report = { startedAt: new Date().toISOString(), output, paths, sourceHashes: before, cases: [], runs: [],
-    scope: 'Actual isolated application process restart and observed constructor restoration; not power-loss or full-model persistence proof',
-    requestedPhases: ['normal-worker-commit', 'normal-close', 'two-process-restart', 'constructor-hydration', 'no-recurring-legacy-write'],
+    scope: 'Actual isolated application process restart, exact naturally populated replay container and observed constructor restoration; historical legacy sentinels are separate. Not next-replay-output, power-loss or full-model persistence proof',
+    requestedPhases: ['normal-worker-commit', 'natural-replay-population', 'normal-close', 'two-process-restart', 'constructor-hydration', 'immediate-replay-hydration', 'no-recurring-legacy-write'],
     notRun: ['legacy-migration', 'corrupt-bootstrap', 'delayed-bootstrap', 'in-flight-checkpoint-fence', 'write-failure', 'late-acknowledgement'] };
   const reportPath = path.join(output, 'report.json');
   writeJSON(reportPath, report);
@@ -199,6 +245,20 @@ async function runParent() {
           isDeepStrictEqual(explicitPayload.primaryPolicyState.snapshot, explicitPayload.trainerCommittedState?.snapshot), trainerFlush);
         const trainerFinal = assessTrainerHydration(final.payload.trainerCommittedState, childReport.trainerBeforeFlush, { requireInactive: true });
         record('exact-trainer-component-retained-at-close', trainerFinal.ok, trainerFinal);
+        const replayPopulation = assessNaturalReplayPopulation(childReport.replayBeforeNatural, childReport.replayBeforeSentinels);
+        record('natural-replay-population', replayPopulation.ok, replayPopulation);
+        record('legacy-sentinels-preserve-natural-replay', childReport.replayBeforeSentinels?.ok === true &&
+          isDeepStrictEqual(childReport.replayBeforeSentinels, childReport.replayBeforeFlush),
+          { count: childReport.replayBeforeFlush?.count, cursor: childReport.replayBeforeFlush?.cursor,
+            scope: childReport.replaySentinelScope });
+        const replayFlush = assessReplayHydration(explicitPayload?.replayMemoryState, childReport.replayBeforeFlush);
+        record('exact-replay-component-flushed', replayFlush.ok && replayFlush.count > 0 &&
+          isDeepStrictEqual(explicitPayload?.primaryPolicyState?.snapshot, explicitPayload?.replayMemoryState?.snapshot) &&
+          isDeepStrictEqual(explicitPayload?.trainerCommittedState?.snapshot, explicitPayload?.replayMemoryState?.snapshot), replayFlush);
+        const replayFinal = assessReplayHydration(final.payload.replayMemoryState, childReport.replayBeforeFlush);
+        record('exact-replay-component-retained-at-close', replayFinal.ok && replayFinal.count > 0 &&
+          isDeepStrictEqual(final.payload.primaryPolicyState?.snapshot, final.payload.replayMemoryState?.snapshot) &&
+          isDeepStrictEqual(final.payload.trainerCommittedState?.snapshot, final.payload.replayMemoryState?.snapshot), replayFinal);
         const naturalTrainer = childReport.naturalTrainer;
         record('natural-trainer-commit', naturalTrainer?.committedEpochDelta >= 1 && naturalTrainer?.appliedDelta >= 1 && naturalTrainer?.durationMs >= 11000,
           naturalTrainer ? { committedEpochDelta: naturalTrainer.committedEpochDelta, appliedDelta: naturalTrainer.appliedDelta,
@@ -215,6 +275,11 @@ async function runParent() {
         record('actual-constructor-hydration', hydration.ok, hydration);
         record('immediate-exact-trainer-hydration', hydration.trainer?.ok === true && hydration.trainer?.inactive === true &&
           hydration.trainer?.comparedBytes === 64 && hydration.trainer?.comparedStates === 2, hydration.trainer);
+        record('immediate-exact-replay-hydration', hydration.replay?.ok === true && hydration.replay.count > 0 &&
+          hydration.replay.arraysChecked === hydration.replay.count * 3 && hydration.replay.elementsChecked === hydration.replay.count * 40 &&
+          hydration.replay.elementsDifferent === 0 && hydration.replay.comparedBytes === hydration.replay.count * 160 &&
+          hydration.replay.comparedStates === hydration.replay.count + 3,
+          hydration.replay);
         record('monotonic-durable-revision', final.header.revision > priorRecord.revision, { before: priorRecord.revision, after: final.header.revision });
       }
     }
@@ -294,6 +359,8 @@ async function runChild() {
         writeJSON(path.join(contract.output, 'boot-observation.json'), boot);
         if (contract.phase === 'writer') {
           win.showInactive();
+          report.replayBeforeNatural = await evaluate('(' + captureReplayHydration.toString() + ')(humunculusRuntime)');
+          if (report.replayBeforeNatural?.ok !== true) throw new Error('Initial natural replay observation failed');
           const trainerBefore = await evaluate('(' + captureTrainerHydration.toString() + ')(humunculusRuntime)');
           await evaluate('window.alienAutoNavigateLinks=false; window.startAliveOverdrive(); true');
           const at = performance.now(), start = report.commits.filter(item => item.result?.persistenceVerified).length;
@@ -305,8 +372,15 @@ async function runChild() {
           report.pause = await evaluate('(' + capturePauseDiagnostics.toString() + ')({label:"persistence-sentinel-pause"})');
           report.pauseAssessment = assessPauseEvidence(report.pause);
           if (!report.pauseAssessment.ok) throw new Error('Guest authority did not settle before sentinel snapshot: ' + report.pauseAssessment.reasons.join('; '));
-          await evaluate(`(()=>{const h=humunculusRuntime;h.W_actor[0]=0.314159;h.W_world[h.W_world.length-1]=-0.271828;h.trainableAlifeNeuralHub.W_perc_enc[0]=0.4375;h.pelletsEatenCount=98765;return true;})()`);
-          report.trainerBeforeFlush = await evaluate('(' + captureTrainerHydration.toString() + ')(humunculusRuntime)');
+          const paused = await evaluate('(' + capturePausedReplayBoundary.toString() + ')(humunculusRuntime,{' +
+            'captureReplay:(' + captureReplayHydration.toString() + '),captureTrainer:(' + captureTrainerHydration.toString() + '),' +
+            'legacySentinels(h){h.W_actor[0]=0.314159;h.W_world[h.W_world.length-1]=-0.271828;h.trainableAlifeNeuralHub.W_perc_enc[0]=0.4375;h.pelletsEatenCount=98765;}})');
+          report.replayBeforeSentinels = paused.replayBeforeSentinels;
+          report.replayBeforeFlush = paused.replayBeforeFlush;
+          report.trainerBeforeFlush = paused.trainerBeforeFlush;
+          report.replaySentinelScope = paused.sentinelScope;
+          if (!assessNaturalReplayPopulation(report.replayBeforeNatural, report.replayBeforeSentinels).ok) throw new Error('No verified natural nonempty replay population/change before pause');
+          if (!isDeepStrictEqual(report.replayBeforeSentinels, report.replayBeforeFlush)) throw new Error('Historical legacy sentinel callback changed replay state');
           report.flush = await evaluate("Promise.resolve(window.aliveAutosave.flush('independent-durability-proof'))");
           if (report.flush?.persistenceVerified !== true) throw new Error('Explicit production flush was not verified');
           report.workerAfterFlush = await evaluate('window.aliveAutosave.snapshot()');
@@ -329,7 +403,8 @@ async function runChild() {
   compiled._compile(adapted, filename);
 }
 
-module.exports = { adaptMain, observeHost, replaceOnce, assertOwned, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit };
+module.exports = { adaptMain, observeHost, replaceOnce, assertOwned, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit,
+  capturePausedReplayBoundary, assessNaturalReplayPopulation, sourceHashes };
 if (isProbeEntry({ electron: process.versions.electron, childContract: process.env.GIGACHAD_PERSISTENCE_PROBE_CHILD,
   entryPath: process.argv[1], isMain: require.main === module }, __filename)) {
   (process.versions.electron ? runChild() : runParent()).catch(error => { console.error(error.stack || error); process.exitCode = 1; });

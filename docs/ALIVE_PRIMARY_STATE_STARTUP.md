@@ -128,9 +128,17 @@ validated state envelope and prepared-import API; legacy native recovery retains
 its explicit reconstructed-affinity provenance. Neither that envelope nor the
 primary wire alone establishes complete application continuation.
 
+Separate subsequent components retain the [committed trainer's exact weights
+and private epoch](ALIVE_TRAINER_STATE.md) and the [dense replay memory and
+insertion cursor](ALIVE_REPLAY_STATE.md). Their explicit component contracts and
+qualification scopes do not expand the six-tensor primary wire's own coverage.
+
 The independent candidate catalog records proposed dispositions for 648 observed
 constructor views, not a certified mature-state registry. Lazy allocations,
 private closures, aliases and non-tensor fields still need explicit ownership.
-The complete integration also requires a common no-learning restore boundary,
-durable semantic worker clocks, staged replay allocation and an atomic
-cross-component transaction with verified rejection or rollback.
+The complete integration still requires the remaining components' semantic
+clocks and state, a common no-learning restore boundary across the entire model,
+and a cross-component transaction with verified rejection or rollback. The
+implemented trainer clock and detached replay publication cover their declared
+components; unexpected failure after another component writes still closes
+startup and reports partial application instead of claiming global rollback.

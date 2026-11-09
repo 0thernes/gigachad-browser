@@ -4,7 +4,81 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
-const { adaptMain, observeHost, replaceOnce, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit } = require('./alive-persistence-restart-probe.cjs');
+const { adaptMain, observeHost, replaceOnce, isProbeEntry, waitForRendererStartup, waitForNaturalTrainerCommit,
+  capturePausedReplayBoundary, assessNaturalReplayPopulation, sourceHashes } = require('./alive-persistence-restart-probe.cjs');
+
+function replayObservation(count = 1, cursor = count < 32 ? count : 0, seed = 0) {
+  const tensor = (length, offset) => {
+    const bytes = Buffer.alloc(length * 4);
+    for (let i = 0; i < length; i++) bytes.writeFloatLE((i + offset + seed) / 32, i * 4);
+    return bytes.toString('hex');
+  };
+  return { schema: 'gigachad.replay-hydration-evidence.v1', ok: true, byteOrder: 'LE', count, cursor, tensorBytes: count * 160,
+    entries: Array.from({ length: count }, (_, slot) => {
+      const surprise = Buffer.alloc(8); surprise.writeDoubleLE(slot === 0 ? -0 : slot / 64);
+      return { slot, z16Hex: tensor(16, slot), a8Hex: tensor(8, slot + 1), zNext16Hex: tensor(16, slot + 2), surpriseHex: surprise.toString('hex') };
+    }) };
+}
+
+test('paused writer captures replay before callbacks and retains both direct observations separately', () => {
+  const trace = [], runtime = { marker: 0 }, raw = replayObservation(), copied = value => JSON.parse(JSON.stringify(value));
+  const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
+  const result = observe(runtime, {
+    captureReplay(h) { assert.equal(h, runtime); trace.push('direct-replay'); return copied(raw); },
+    legacySentinels(h) { trace.push('historical-sentinels'); h.marker = 1; },
+    captureTrainer(h) { trace.push('trainer-read'); assert.equal(h.marker, 1); raw.entries[0].z16Hex = '00'.repeat(64); return { epoch: 7 }; }
+  });
+  assert.deepEqual(trace, ['direct-replay', 'historical-sentinels', 'direct-replay', 'trainer-read']);
+  assert.deepEqual(result.replayBeforeSentinels, replayObservation()); assert.deepEqual(result.replayBeforeFlush, replayObservation());
+  assert.notEqual(result.replayBeforeSentinels, result.replayBeforeFlush);
+  assert.match(result.sentinelScope, /no replay record, cursor, trainer clock/);
+});
+
+test('a failed first raw replay observation prevents healing callbacks or observation retry', () => {
+  let attempts = 0, callbacks = 0;
+  const observe = vm.runInNewContext('(' + capturePausedReplayBoundary.toString() + ')');
+  assert.throws(() => observe({}, {
+    captureReplay() { attempts++; return attempts === 1 ? { ok: false, reason: 'malformed ring' } : replayObservation(); },
+    legacySentinels() { callbacks++; }, captureTrainer() { callbacks++; }
+  }), /Initial paused replay observation failed/);
+  assert.equal(attempts, 1); assert.equal(callbacks, 0);
+  assert.throws(() => observe({}, { captureReplay() { throw new Error('Must not run incomplete contract'); } }), /Missing paused replay/);
+});
+
+test('natural replay assessment requires nonempty changed physical state and never accepts display-only progress', () => {
+  const empty = replayObservation(0), partial = replayObservation(2), full = replayObservation(32, 7);
+  assert.equal(assessNaturalReplayPopulation(empty, partial).ok, true);
+  assert.equal(assessNaturalReplayPopulation(full, replayObservation(32, 8)).ok, true);
+  assert.equal(assessNaturalReplayPopulation(full, replayObservation(32, 7, 1)).ok, true);
+  assert.equal(assessNaturalReplayPopulation(empty, empty).ok, false);
+  assert.equal(assessNaturalReplayPopulation(partial, { ...partial, observedAt: 99 }).ok, false);
+  const result = assessNaturalReplayPopulation(empty, partial);
+  assert.equal(result.count, 2); assert.equal(result.tensorBytes, 320); assert.equal(result.beforeCount, 0);
+  assert.equal(Object.hasOwn(result, 'entries'), false); assert.match(result.scope, /no claim of next-update equivalence/);
+});
+
+test('natural population rejects invalid bounds, holes, order, malformed bytes and nonfinite surprises', () => {
+  const before = replayObservation(0);
+  for (const change of [
+    observation => { observation.ok = false; }, observation => { observation.count = 33; },
+    observation => { observation.count = -0; }, observation => { observation.cursor = -0; },
+    observation => { observation.cursor = 0; }, observation => { observation.tensorBytes = 0; },
+    observation => { delete observation.entries[0]; }, observation => { observation.entries[0].slot = 1; },
+    observation => { observation.entries[0].z16Hex = 'gg'.repeat(64); },
+    observation => { observation.entries[0].a8Hex = '0000807f' + '00'.repeat(28); },
+    observation => { observation.entries[0].surpriseHex = '000000000000f87f'; }
+  ]) {
+    const after = replayObservation(1); change(after);
+    assert.equal(assessNaturalReplayPopulation(before, after).ok, false);
+  }
+  assert.equal(assessNaturalReplayPopulation({ ok: false }, replayObservation()).ok, false);
+});
+
+test('proof source hashes include replay production and independent oracle dependencies', () => {
+  const hashes = sourceHashes();
+  for (const name of ['systems/alive-replay-state.js', 'scripts/alive-replay-state-evidence.cjs',
+    'scripts/alive-genome-hydration-evidence.cjs', 'scripts/alive-persistence-restart-probe.cjs']) assert.match(hashes[name] || '', /^[0-9a-f]{64}$/, name);
+});
 
 test('startup observation waits for the real barrier without invoking activation', async () => {
   let resolve, starts = 0;

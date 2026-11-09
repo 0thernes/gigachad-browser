@@ -2185,6 +2185,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
   <script src="systems/alive-learned-state-registry.js"></script>
   <script src="systems/alive-primary-policy-state.js"></script>
   <script src="systems/alive-trainer-state.js"></script>
+  <script src="systems/alive-replay-state.js"></script>
   <script src="systems/alive-primary-policy-bootstrap.js"></script>
   <script src="alife_neural_cyber_engine.js"></script>
   <script src="systems/alive-asset-hydration.js"></script>
@@ -16215,7 +16216,8 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             persistence?.markApplied(false, { hadJSON: true }); return false;
           }
           hasExact = Object.prototype.hasOwnProperty.call(data, 'primaryPolicyState') ||
-            Object.prototype.hasOwnProperty.call(data, 'trainerCommittedState');
+            Object.prototype.hasOwnProperty.call(data, 'trainerCommittedState') ||
+            Object.prototype.hasOwnProperty.call(data, 'replayMemoryState');
           if (hasExact && !window.alivePrimaryPolicyBootstrap) throw new Error('Exact component bootstrap is unavailable');
           // Paired restore belongs only to the unpublished constructor during
           // ordered startup. A live reload has no cross-component rollback yet.
@@ -16460,6 +16462,7 @@ Ask any question about the active tab, use the quick prompts below, or enable <s
             const exact = window.alivePrimaryPolicyBootstrap.captureComponents(this);
             payload.primaryPolicyState = window.AliveGenomeCodec.primaryState(exact.primary);
             if (exact.trainer) payload.trainerCommittedState = window.AliveGenomeCodec.trainerState(exact.trainer);
+            if (exact.replay) payload.replayMemoryState = window.AliveGenomeCodec.replayState(exact.replay);
           }
           return payload;
       }

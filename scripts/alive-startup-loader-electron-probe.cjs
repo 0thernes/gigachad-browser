@@ -83,10 +83,12 @@ function browserSetup(nonce, phase) {
     async fence(request) { state.fenceCalls++; epoch = request.epoch; state.events.push('fence'); return { settled: true, ownerId: 'isolated-startup-fixture', epoch }; }
   };
   window.AlivePrimaryPolicyState = {}; window.AliveTrainerState = { create() {} };
+  window.AliveReplayState = { create() {} };
   window.AliveLearnedStateRegistry = {}; window.AliveLearnedStateCodec = {};
   window.AlivePrimaryPolicyBootstrap = { async prepare(args) {
     state.preparationDependenciesForwarded = args?.json === null && args.primary === window.AlivePrimaryPolicyState &&
       args.trainer === window.AliveTrainerState && typeof args.trainer.create === 'function' &&
+      args.replay === window.AliveReplayState && typeof args.replay.create === 'function' &&
       args.registry === window.AliveLearnedStateRegistry && args.codec === window.AliveLearnedStateCodec && args.crypto === window.crypto;
     if (!state.preparationDependenciesForwarded) throw Error('Startup dependency forwarding mismatch');
     state.events.push('prepare'); return Object.freeze({ preflight() {}, apply() {}, capture() {}, captureComponents() {}, snapshot() {} });

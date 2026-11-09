@@ -1,0 +1,244 @@
+{
+  "schema": "gigachad.replay-qualification.v1",
+  "baseCommit": "639cdecb2d74db6369d47f4277e41566f8840d78",
+  "qualifiedTree": "ffa6f3c9ae6df8fc14355305556b8e0067eaf1bd",
+  "qualificationScope": "Isolated base plus integrated replay changes; unrelated concurrent model/cloud edits excluded. One evidence document added after qualification. No complete application-state or consciousness claim.",
+  "node": {
+    "passed": 1238,
+    "failed": 0
+  },
+  "smoke": {
+    "passed": true,
+    "pythonTests": 6,
+    "electron": "45.2.3",
+    "embeddedNode": "24.22.2",
+    "replayPrepared": true,
+    "liveReloadPerformed": false
+  },
+  "restart": {
+    "passed": true,
+    "cases": [
+      {
+        "id": "writer-child-report-present",
+        "ok": true
+      },
+      {
+        "id": "writer-process",
+        "ok": true
+      },
+      {
+        "id": "writer-source-stability",
+        "ok": true
+      },
+      {
+        "id": "writer-all-commits-settled",
+        "ok": true
+      },
+      {
+        "id": "writer-latest-acknowledged-revision",
+        "ok": true
+      },
+      {
+        "id": "writer-verified-normal-close",
+        "ok": true
+      },
+      {
+        "id": "writer-committed-sentinels",
+        "ok": true
+      },
+      {
+        "id": "explicit-worker-flush",
+        "ok": true
+      },
+      {
+        "id": "exact-trainer-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-trainer-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "natural-replay-population",
+        "ok": true
+      },
+      {
+        "id": "legacy-sentinels-preserve-natural-replay",
+        "ok": true
+      },
+      {
+        "id": "exact-replay-component-flushed",
+        "ok": true
+      },
+      {
+        "id": "exact-replay-component-retained-at-close",
+        "ok": true
+      },
+      {
+        "id": "natural-trainer-commit",
+        "ok": true
+      },
+      {
+        "id": "no-recurring-legacy-write",
+        "ok": true
+      },
+      {
+        "id": "reader-child-report-present",
+        "ok": true
+      },
+      {
+        "id": "reader-process",
+        "ok": true
+      },
+      {
+        "id": "reader-source-stability",
+        "ok": true
+      },
+      {
+        "id": "reader-all-commits-settled",
+        "ok": true
+      },
+      {
+        "id": "reader-latest-acknowledged-revision",
+        "ok": true
+      },
+      {
+        "id": "reader-verified-normal-close",
+        "ok": true
+      },
+      {
+        "id": "reader-committed-sentinels",
+        "ok": true
+      },
+      {
+        "id": "distinct-processes",
+        "ok": true
+      },
+      {
+        "id": "canonical-bootstrap",
+        "ok": true
+      },
+      {
+        "id": "actual-constructor-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-trainer-hydration",
+        "ok": true
+      },
+      {
+        "id": "immediate-exact-replay-hydration",
+        "ok": true
+      },
+      {
+        "id": "monotonic-durable-revision",
+        "ok": true
+      }
+    ],
+    "processes": [
+      {
+        "phase": "writer",
+        "pid": 67512,
+        "exitCode": 0,
+        "elapsedMs": 12340,
+        "stderr": "(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.\nError occurred in handler for 'GUEST_VIEW_MANAGER_CALL': [Error: Render frame was disposed before the request completed]\n"
+      },
+      {
+        "phase": "reader",
+        "pid": 42052,
+        "exitCode": 0,
+        "elapsedMs": 2069,
+        "stderr": "(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.\n"
+      }
+    ],
+    "replay": {
+      "count": 32,
+      "cursor": 29,
+      "arraysChecked": 96,
+      "elementsChecked": 1280,
+      "elementsDifferent": 0,
+      "comparedBytes": 5120,
+      "comparedStates": 35,
+      "snapshotMatched": true,
+      "payloadSHA256": "218c604cb210dea64ba5e417f3c302fdad99cdd12842ed124ce193c83229e488",
+      "architecture": "31300355fd4f232bdd8860e4375f8e887a462da0d044a5bbbacee5ce50c8647e"
+    },
+    "changedSources": []
+  },
+  "performance": {
+    "passed": true,
+    "durationMs": 60011.800000000745,
+    "averageFps": 59.82156842487569,
+    "fullPresentation": {
+      "samples": 3589,
+      "p50Ms": 16.699999999254942,
+      "p95Ms": 19.300000000745058,
+      "p99Ms": 25.200000002980232,
+      "maxMs": 62.400000002235174
+    },
+    "rendererErrors": 0,
+    "longTasks": 0,
+    "backpropDelta": 1308,
+    "stdpDelta": 511040,
+    "workerApplied": 43,
+    "workerFaults": 0,
+    "workerTimeouts": 0,
+    "runsAfterStop": 0,
+    "backpropAfterStop": 0,
+    "simulationTicksAfterStop": 0,
+    "conditions": "Visible nonfocusable input-isolated 1440x902 offline fixture, GPU enabled, inspectors closed, network providers disabled, Auto-Hop off. One initial DOM experiment and Start invocation; no sweep or cadence acceleration. Not a public-web benchmark or universal no-stutter guarantee.",
+    "changedSources": []
+  },
+  "sourceHashes": {
+    "docs/ALIVE_REPLAY_STATE.md": "f842646d40c667e45a738603159638bac300771d86eeb224eb862bc13d72311f",
+    "docs/ALIVE_LEARNED_STATE_INTEGRATION_PLAN.md": "aad1fcbf00f4c8afebe70384a8ba79a165490e5f9c7e473efee16e500da2afbb",
+    "docs/ALIVE_PRIMARY_STATE_STARTUP.md": "8a2a20b51e61d32513d37a24a53f2572ce79debf4a8cba9219022ded9c02cd36",
+    "index.html": "f8048dbc2657a91a9ccbd11f0c01dd3440cb9f225ef252737b787fcb839f4860",
+    "main.js": "47621684a65358542c5ac320cc0e12c712ef11f9c7ad687650ccc8c71ba6b09e",
+    "systems/alive-replay-state.js": "d59a34acb06599cd385e2550581641ba74d76b10a7efef529a176a60bda09a49",
+    "systems/alive-genome-codec.js": "0d5f14d75aaaccc3ad55cf0ff5015440baefa2d552df3ff68d08371049d66e94",
+    "systems/alive-primary-policy-bootstrap.js": "264b04de963bf5fa58d10e30bdacc57c342eb63d19d1d516d027fe95faf1dbd7",
+    "systems/alive-startup-loader.js": "3186479353ab6fff2bf5ba2fd0ffa46efbea91cf0990f8bbac37ac73baed0dfb",
+    "tests/alive-replay-state.test.cjs": "b73754aa0ecd0aa3f8909e5e1d2d17606b769465b17cac4ec4b6269c07182a6f",
+    "tests/alive-replay-continuation.test.cjs": "4b06c3d724deb6c910a79fee4aafe213e9c18329570f779beed57e336784a6c3",
+    "tests/alive-replay-integration.test.cjs": "b14ff8f11ea449a105ba53af976e1f4b091d5887f7e055081eba3d8a28e7d29c",
+    "tests/alive-startup-loader.test.cjs": "f8d40669ee0dca82d918a3ad97aa031c84171dd1986a0acba8de02ba3d1920dc",
+    "tests/alive-genome-payload.test.cjs": "2a9318c6c2a2e9818007ede628925099c3a7472fe30ce91518353e00c3ac09c8",
+    "scripts/alive-replay-state-evidence.cjs": "b35c941ae6ca807a2c419ad6d5ad6b7754b97a9ab791cb5b89b36b2cb7ae6607",
+    "scripts/alive-replay-state-evidence.test.cjs": "c2db8afc65b28701c5d517ffe20a93f1d549a99a2c54bd75edb4e47c48b160a7",
+    "scripts/alive-genome-hydration-evidence.cjs": "66496128870728a9f38b548b72ff7987e1d8af68dec2d6a366f102b3e1c7a4e9",
+    "scripts/alive-genome-hydration-evidence.test.cjs": "a4f088fa07de6d77051a8be8e1066d4b93eb44494e4611811369f7188d45f692",
+    "scripts/alive-persistence-restart-probe.cjs": "67563abf80f370f9c090dcf3eb5cf2fb0b0bf511ece76a28493ce93e47f1eda7",
+    "scripts/alive-persistence-restart-probe.test.cjs": "1054d650b4f7a166364d51ed0b8e4b3dbb99b15a194dfc58d7e8d632f1a7ab34",
+    "scripts/alive-startup-loader-electron-probe.cjs": "d482fbc2a0ef7dd8d86b02c69692eb5ca439548890f35fc8bb3e0397b7647fc2",
+    "scripts/smoke.js": "4373ad840807b10e102ea51916e8482c34ad77cbcfa4ede4b155a8306ceb2d3b"
+  },
+  "localArtifacts": [
+    {
+      "path": "research_notes/replay-state-qualification/node-tests.txt",
+      "sha256": "18c1bc8c01e2ed63700c334da8f840dfa14ec099d2fd6fdb13f5830d0f5f1160",
+      "publiclyIncluded": false
+    },
+    {
+      "path": "research_notes/replay-state-qualification/smoke.txt",
+      "sha256": "f1fd6c34492ebe800af6cd22e936655e9791c2990f4358d719865faaa6a01380",
+      "publiclyIncluded": false
+    },
+    {
+      "path": "research_notes/replay-state-qualification/restart/report.json",
+      "sha256": "82ffe1439a86b651c99e56feebccc91e83e90087857a53277dc057b552cac9b5",
+      "publiclyIncluded": false
+    },
+    {
+      "path": "research_notes/replay-state-qualification/performance/report.json",
+      "sha256": "b02f602c3624272bf1e1074e6e712ba6ca7656b223dd4ecf3d645c604db9f601",
+      "publiclyIncluded": false
+    }
+  ],
+  "notEstablished": [
+    "Full-model persistence or next-output equivalence without matching omitted state",
+    "Public browsing or Tor service performance",
+    "Power-loss recovery",
+    "Consciousness, omniscience, or universal capability"
+  ]
+}
