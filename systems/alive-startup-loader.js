@@ -30,7 +30,31 @@
     'systems/alive-synaptic-fabric.js',
     'systems/alive-unseen-task-benchmark.js',
     'systems/alive-architecture-ablations.js',
-    'systems/alive-fabric-visualizer.js'
+    'systems/alive-restart-equivalence.js',
+    'systems/alive-continual-morphology-transfer.js',
+    'systems/alive-colony-population-fitness.js',
+    'systems/alive-research-provenance-evaluator.js',
+    'systems/alive-browser-fault-recovery.js',
+    'systems/alive-sustained-performance-qualifier.js',
+    'systems/alive-integrated-release-audit.js',
+    'systems/alive-tor-hybrid-mesh.js',
+    'systems/alive-tor-circuit-controller.js',
+    'systems/alive-onion-v3-verifier.js',
+    'systems/alive-tor-fingerprint-shield.js',
+    'systems/alive-tor-acceptance-matrix.js',
+    'systems/alive-hyper-swarm-coordinator.js',
+    'systems/alive-swarm-budget-governor.js',
+    'systems/alive-swarm-stigmergic-mesh.js',
+    'systems/alive-swarm-wild-foraging-benchmark.js',
+    'systems/alive-omega-20-pass-auditor.js',
+    'systems/alive-fabric-visualizer.js',
+    'systems/gigachad-missions.js',
+    'systems/gigachad-brain-lab.js',
+    'systems/gigachad-experiments.js',
+    'systems/gigachad-research-map.js',
+    'systems/gigachad-modes.js',
+    'systems/gigachad-studio-host.js',
+    'systems/gigachad-studio.js'
   ]);
   const message = error => String(error?.message || error || 'Startup failed').slice(0, 300);
 

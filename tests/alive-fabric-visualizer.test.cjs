@@ -754,6 +754,34 @@ test('runSwarmForaging renders 5-seed Wild Clearnet + .onion Multi-Guild Foragin
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runOmegaAudit renders 5-seed 20-Pass Grand Omega Synthesis & Cryptographic Evidence Package Qualification in section 26', async () => {
+  const { window, dom } = load();
+  window.AliveOmega20PassAuditor = {
+    run: async () => ({
+      summary: {
+        verifiedPassesCount: 20,
+        totalPasses: 20,
+        promotedPdfGatesCount: 8,
+        verifiedTorAcceptanceRowsCount: 10,
+        verifiedSwarmPillarsCount: 5,
+        omegaGrandManifestSha256: 'f0e1d2c3b4a5968778695a4b3c2d1e0ff0e1d2c3b4a5968778695a4b3c2d1e0f',
+        phaseLedger: [
+          { phaseId: 'Phase-I-ALIVE-Creature-8-Gates', passesRange: 'Passes 1–10', verifiedPasses: 10, totalPasses: 10, keyMilestone: '8/8 PDF Gates promoted', verified: true },
+          { phaseId: 'Phase-II-Tor-Hybrid-Synergy-Mesh', passesRange: 'Passes 11–15', verifiedPasses: 5, totalPasses: 5, keyMilestone: '10/10 Tor rows (T1..T10) PASS', verified: true },
+          { phaseId: 'Phase-III-Multi-Guild-Hyper-Swarms', passesRange: 'Passes 16–20', verifiedPasses: 5, totalPasses: 5, keyMilestone: '5/5 Swarm pillars (S1..S5) PASS', verified: true }
+        ]
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runOmegaAudit();
+  assert.equal(report.summary.verifiedPassesCount, 20);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Passes 20/20 · PDF Gates 8/8 · Tor Rows 10/10 · Swarm Pillars 5/5')), 'Omega audit summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('Phase-I-ALIVE-Creature-8')), 'Omega audit phase rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

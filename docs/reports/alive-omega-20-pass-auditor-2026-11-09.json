@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-20-omega-20-pass-grand-auditor-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "totalPasses": 20,
+    "totalPdfGates": 8,
+    "totalTorAcceptanceRows": 10,
+    "totalSwarmPillars": 5
+  },
+  "summary": {
+    "verifiedPassesCount": 20,
+    "totalPasses": 20,
+    "all20PassesVerified": true,
+    "promotedPdfGatesCount": 8,
+    "verifiedTorAcceptanceRowsCount": 10,
+    "verifiedSwarmPillarsCount": 5,
+    "phase1ManifestSha256": "820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41",
+    "phase2ManifestSha256": "0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942",
+    "phase3SwarmManifestSha256": "3ca45c2f0fe8196f5ea94a0d6b4921fe2e9b91d50a994174a007ec93e73cced7",
+    "omegaGrandManifestSha256": "6a122850551a94dd3c4f72f4323f7505d3a5001a2c52dc2f90284c3928c9febe",
+    "omegaQualificationScore": {
+      "count": 5,
+      "mean": 100,
+      "sampleStandardDeviation": 0,
+      "ci95": [
+        100,
+        100
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "phaseLedger": [
+      {
+        "phaseId": "Phase-I-ALIVE-Creature-8-Gates",
+        "passesRange": "Passes 1–10",
+        "verifiedPasses": 10,
+        "totalPasses": 10,
+        "keyMilestone": "8/8 PDF Gates promoted",
+        "manifestSha256": "820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41",
+        "verified": true
+      },
+      {
+        "phaseId": "Phase-II-Tor-Hybrid-Synergy-Mesh",
+        "passesRange": "Passes 11–15",
+        "verifiedPasses": 5,
+        "totalPasses": 5,
+        "keyMilestone": "10/10 Tor rows (T1..T10) PASS",
+        "manifestSha256": "0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942",
+        "verified": true
+      },
+      {
+        "phaseId": "Phase-III-Multi-Guild-Hyper-Swarms",
+        "passesRange": "Passes 16–20",
+        "verifiedPasses": 5,
+        "totalPasses": 5,
+        "keyMilestone": "5/5 Swarm pillars (S1..S5) PASS",
+        "manifestSha256": "3ca45c2f0fe8196f5ea94a0d6b4921fe2e9b91d50a994174a007ec93e73cced7",
+        "verified": true
+      }
+    ],
+    "swarmPillars": [
+      {
+        "pillarId": "S1-TriGuild-Identity-Ownership",
+        "passRef": 16,
+        "passedSeeds": 5,
+        "measuredValue": "100.0 syn / JSD=1.585b",
+        "verified": true,
+        "evidenceDigestSha256": "58dfe80fa69ae15ce6a2078a9c6bf877966cc13cf4ba2584fb2c4a6e7ab5c39b"
+      },
+      {
+        "pillarId": "S2-TokenBucket-Domain-Governor",
+        "passRef": 17,
+        "passedSeeds": 5,
+        "measuredValue": "0 viol / 0 kill-leaks",
+        "verified": true,
+        "evidenceDigestSha256": "713f5a77db926515ba4dcb4c9b3ba682fa8b3f4d7f4e396767afa1688b4c5f9a"
+      },
+      {
+        "pillarId": "S3-Stigmergic-Pheromone-Dedup",
+        "passRef": 18,
+        "passedSeeds": 5,
+        "measuredValue": "0 dupes / 0 trap followups",
+        "verified": true,
+        "evidenceDigestSha256": "dca263d99aa37cde0688003bb14c05c4fe337d12d0ca068c7a7c93c0f366fa49"
+      },
+      {
+        "pillarId": "S4-Fish-School-2fPlus1-BFT",
+        "passRef": 18,
+        "passedSeeds": 5,
+        "measuredValue": "100% BFT poison rejection",
+        "verified": true,
+        "evidenceDigestSha256": "ffb5953fbeb7122a57bfb87adb2660495f07b19f4a50348428541e7394f15f1d"
+      },
+      {
+        "pillarId": "S5-Wild-Clearnet-Onion-Foraging",
+        "passRef": 19,
+        "passedSeeds": 5,
+        "measuredValue": "100% truth / 100% .onion iso",
+        "verified": true,
+        "evidenceDigestSha256": "274dea7513e44ffa640c9e267095a002c34263d55219009a401204e4fdbd45a3"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "passesVerified": 20,
+      "pdfGatesPromoted": 8,
+      "torRowsVerified": 10,
+      "swarmPillarsVerified": 5,
+      "omegaQualificationScore": 100,
+      "seedOmegaDigestSha256": "44eeb14052fc9b3a1f7e2cb0044d0a33147f09328847084e124e93cca3751320"
+    },
+    {
+      "seed": 29017,
+      "passesVerified": 20,
+      "pdfGatesPromoted": 8,
+      "torRowsVerified": 10,
+      "swarmPillarsVerified": 5,
+      "omegaQualificationScore": 100,
+      "seedOmegaDigestSha256": "cb5c9bf27c24bb35a219eabfb4cdc4b76871968112ba44587052c28ff510894f"
+    },
+    {
+      "seed": 39023,
+      "passesVerified": 20,
+      "pdfGatesPromoted": 8,
+      "torRowsVerified": 10,
+      "swarmPillarsVerified": 5,
+      "omegaQualificationScore": 100,
+      "seedOmegaDigestSha256": "133f031ee6cef966730d03300db05b4545573b664ef3eb78dbcf770d1feef343"
+    },
+    {
+      "seed": 49031,
+      "passesVerified": 20,
+      "pdfGatesPromoted": 8,
+      "torRowsVerified": 10,
+      "swarmPillarsVerified": 5,
+      "omegaQualificationScore": 100,
+      "seedOmegaDigestSha256": "15184d34b2a640a9745efe457a0a5bf9bc2839fa60aa0ba79446124f3665e07c"
+    },
+    {
+      "seed": 59053,
+      "passesVerified": 20,
+      "pdfGatesPromoted": 8,
+      "torRowsVerified": 10,
+      "swarmPillarsVerified": 5,
+      "omegaQualificationScore": 100,
+      "seedOmegaDigestSha256": "61055ae1707a97049a2f8c188986f8d4e6faf496f16ff10a555cb7c2a45a55d5"
+    }
+  ],
+  "scope": "Pass 20 Grand Synthesis & Cryptographic Evidence Package Qualification cross-auditing all 20 Passes (Phase I ALIVE Creature & 8 PDF Gates, Phase II Tor Hybrid Synergy Mesh T1..T10, Phase III Multi-Guild Exploration Swarms S1..S5) across 5 seeds."
+}
