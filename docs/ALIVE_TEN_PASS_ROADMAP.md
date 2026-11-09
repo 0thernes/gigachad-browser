@@ -9,7 +9,7 @@ push. A commit alone does not mark an experiment successful.
 | --- | --- | --- |
 | 1 | Continuous faculties, actual tensor/synapse participation, shared Ghost research/writing, visual evidence, independent learning seeds | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_01_REPORT.md), [validation](verification/continuous-cognition-2026-11-09.json) |
 | 2 | Measure useful behavior on frozen unseen research/navigation tasks; compare heuristic, frozen and learning controllers | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_02_REPORT.md), [benchmark JSON](reports/alive-unseen-task-benchmark-2026-11-09.json), [benchmark SVG](reports/alive-unseen-task-benchmark-2026-11-09.svg) |
-| 3 | Architecture ablations across every brain family, reasoning structure and precision route | Proposed |
+| 3 | Architecture ablations across every brain family, reasoning structure and precision route | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_03_REPORT.md), [ablations JSON](reports/alive-architecture-ablations-2026-11-09.json), [ablations SVG](reports/alive-architecture-ablations-2026-11-09.svg) |
 | 4 | Complete declared optimizer, recurrent, replay, RNG and curriculum state contracts; restart equivalence | Proposed |
 | 5 | Long-duration learning/retention, morphology transfer and five-seed uncertainty across distinct tasks | Proposed |
 | 6 | Creature colony differentiation, role assignment, shared versus independent state, resource limits and population fitness | Proposed |

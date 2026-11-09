@@ -352,3 +352,35 @@ test('observed outcome feedback trains both computed Omega gates and projection 
     assert.notEqual(h.aliveCouplingGateLogits[22 + source], initialGates[source]);
   }
 });
+
+test('setAblatedSources and clearAblations deterministically zero only ablated streams while preserving contribution norms on active streams', () => {
+  const base = run(fixture());
+  const ablated = fixture();
+  AliveNeuralCoupling.install(ablated, ablated.mesh);
+  ablated.stepOmega100OmniscienceEngine();
+  ablated.aliveNeuralCoupling.setAblatedSources(['brain1Asmodensius', 'precision-f64']);
+  ablated.stepTrainableAlifeNeuralHub60Hz();
+
+  const baseSnap = base.aliveNeuralCoupling.snapshot();
+  const ablatedSnap = ablated.aliveNeuralCoupling.snapshot();
+  assert.equal(baseSnap.ablatedCount, 0);
+  assert.equal(ablatedSnap.ablatedCount, 2);
+
+  const b1Base = baseSnap.sources.find(s => s.id === 'brain1Asmodensius');
+  const b1Abl = ablatedSnap.sources.find(s => s.id === 'brain1Asmodensius');
+  const b2Abl = ablatedSnap.sources.find(s => s.id === 'brain2Glitchling');
+  assert.equal(b1Base.diagnosticallyAblated, false);
+  assert(b1Base.contributionNorm > 0);
+  assert.equal(b1Abl.diagnosticallyAblated, true);
+  assert.equal(b1Abl.contributionNorm, 0);
+  assert.equal(b2Abl.diagnosticallyAblated, false);
+  assert(b2Abl.contributionNorm > 0);
+  assert(differs(base.hubInputSeen, ablated.hubInputSeen));
+
+  ablated.aliveNeuralCoupling.clearAblations();
+  ablated.stepOmega100OmniscienceEngine();
+  ablated.stepTrainableAlifeNeuralHub60Hz();
+  const restoredSnap = ablated.aliveNeuralCoupling.snapshot();
+  assert.equal(restoredSnap.ablatedCount, 0);
+  assert(restoredSnap.sources.find(s => s.id === 'brain1Asmodensius').contributionNorm > 0);
+});

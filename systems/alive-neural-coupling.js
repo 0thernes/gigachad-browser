@@ -59,6 +59,8 @@
     const eligibility = new Float32Array(COUNT * DIM);
     const gates = new Float32Array(COUNT);
     const present = new Uint8Array(COUNT);
+    const ablated = new Uint8Array(COUNT);
+    const sourceNorms = new Float32Array(COUNT);
     const input = new Float32Array(DIM);
     const previousObservation = new Float32Array(DIM);
     // [steps, feedback updates, last error, last transition, has feedback baseline,
@@ -238,6 +240,7 @@
       }
       sampleOmega();
       input.fill(0);
+      sourceNorms.fill(0);
       let available = 0;
       for (let s = 0; s < COUNT; s++) {
         gateLogits[s] = clamp(finite(gateLogits[s]), -3, 3);
@@ -254,17 +257,35 @@
         }
         available++;
         gates[s] = 0.15 + 0.7 / (1 + Math.exp(-gateLogits[s]));
+        let sq = 0;
         for (let j = 0; j < DIM; j++) {
           const k = s * DIM + j;
           weights[k] = clamp(finite(weights[k]), -0.4, 0.4);
           eligibility[k] = finite(eligibility[k]) * 0.9 + features[k] * 0.1;
-          input[j] += gates[s] * weights[k] * features[k];
+          const contrib = gates[s] * weights[k] * features[k];
+          sq += contrib * contrib;
+          if (!ablated[s]) input[j] += contrib;
         }
+        sourceNorms[s] = ablated[s] ? 0 : Math.sqrt(sq);
       }
       const divisor = Math.sqrt(Math.max(1, available));
       for (let j = 0; j < DIM; j++) input[j] = Math.tanh(input[j] / divisor);
       counters[6] = available;
       return input;
+    }
+    function setAblatedSources(targets = []) {
+      ablated.fill(0);
+      const list = Array.isArray(targets) || targets instanceof Set ? Array.from(targets) : [targets];
+      let count = 0;
+      for (const item of list) {
+        const idx = typeof item === 'number' && Number.isInteger(item) ? item : SOURCE_IDS.indexOf(String(item));
+        if (idx >= 0 && idx < COUNT && !ablated[idx]) { ablated[idx] = 1; count++; }
+      }
+      return count;
+    }
+    function clearAblations() {
+      ablated.fill(0);
+      return 0;
     }
     function feedback(predictionError, transitionId) {
       if (!Number.isFinite(predictionError) || predictionError < 0 || !Number.isSafeInteger(transitionId) || transitionId < 0) return false;
@@ -281,7 +302,7 @@
       counters[2] = predictionError; counters[3] = transitionId; counters[4] = 1; counters[7] = reward;
       if (!eligible) return false;
       for (let s = 0; s < COUNT; s++) {
-        if (!present[s]) continue;
+        if (!present[s] || ablated[s]) continue;
         let activity = 0;
         for (let j = 0; j < DIM; j++) {
           const k = s * DIM + j, trace = clamp(finite(eligibility[k]), -1, 1);
@@ -322,11 +343,15 @@
     };
     const api = Object.freeze({
       feedback,
+      setAblatedSources,
+      clearAblations,
       snapshot() {
         return { steps: counters[0], feedbackUpdates: counters[1], sourceCount: counters[6],
+          ablatedCount: ablated.reduce((a, b) => a + b, 0),
           lastPredictionError: counters[4] ? counters[2] : null, lastReward: counters[7], feedbackEpoch,
           rejectedNonfiniteValues: counters[5], trainableParameters: weights.length + gateLogits.length,
-          sources: SOURCE_IDS.map((id, index) => ({ id, source: SOURCE_PATHS[index], available: Boolean(present[index]), gate: gates[index] })),
+          sources: SOURCE_IDS.map((id, index) => ({ id, source: SOURCE_PATHS[index], available: Boolean(present[index]), gate: gates[index],
+            diagnosticallyAblated: Boolean(ablated[index]), contributionNorm: sourceNorms[index] })),
           scope: 'Local model state and numerical precision kernels influence hub sensory input, latent state and motor thrust; reward-modulated gates use observed prediction-error change, not proven causal credit or external backend capability.' };
       }
     });

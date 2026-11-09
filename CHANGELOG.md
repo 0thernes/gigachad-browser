@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Architecture ablations pass 3
+
+- Extended [`systems/alive-neural-coupling.js`](systems/alive-neural-coupling.js) with runtime source ablation (`setAblatedSources`, `clearAblations`), `ablatedCount`, `diagnosticallyAblated` flags, and per-stream L2 `contributionNorm` telemetry across all 24 coupled streams (`14 brains + 7 precision routes + Ising-56 + Omega Lorenz + Omega Izhikevich`).
+- Added the 38-condition, 5-seed architecture ablation suite ([`systems/alive-architecture-ablations.js`](systems/alive-architecture-ablations.js), [`scripts/alive-architecture-ablations.cjs`](scripts/alive-architecture-ablations.cjs)) verifying non-zero causal impact on 5/5 seeds across all 14 brain families, 7 precision routes, 3 scale strata, 5 specialist fusion readouts, AoT/ToT/GoT reasoning components, and Synaptic Fabric pathways.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 9 (`#alive-fabric-ablations`, `Run ablations` button, and `runAblations()`) and added `systems/alive-architecture-ablations.js` to [`systems/alive-startup-loader.js`](systems/alive-startup-loader.js).
+- Added [Pass 3 report](docs/ALIVE_PASS_03_REPORT.md), [JSON report](docs/reports/alive-architecture-ablations-2026-11-09.json), [SVG chart](docs/reports/alive-architecture-ablations-2026-11-09.svg) and unit tests (`tests/alive-architecture-ablations.test.cjs`, `tests/alive-neural-coupling.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Unseen research/navigation benchmark & colony lenses pass 2
 
 - Added the five-seed unseen research and navigation task benchmark ([`systems/alive-unseen-task-benchmark.js`](systems/alive-unseen-task-benchmark.js), [`scripts/alive-unseen-task-benchmark.cjs`](scripts/alive-unseen-task-benchmark.cjs)) comparing `heuristic`, `frozen`, `learning` and `fabric-coupled` controllers on disjoint multi-domain holdout and retention task graphs using the production `AliveResearchPolicy`, `AliveCognitiveFaculties` and `AliveSynapticFabric` modules.

@@ -1,0 +1,3033 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-03-architecture-ablations-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "liveRuntimeModified": false,
+    "brainCount": 14,
+    "precisionCount": 7,
+    "strataCount": 3,
+    "specialistCount": 5,
+    "reasoningComponents": [
+      "AoT-contractor",
+      "ToT-puct-tree",
+      "GoT-dag-pagerank",
+      "all-aot-tot-got"
+    ],
+    "totalConditions": 38
+  },
+  "summary": {
+    "all14BrainsCausalOn5Seeds": true,
+    "all7PrecisionRoutesCausalOn5Seeds": true,
+    "all3StrataCausalOn5Seeds": true,
+    "all5SpecialistsCausalOn5Seeds": true,
+    "allReasoningComponentsCausalOn5Seeds": true,
+    "all14BrainsGroupDelta": {
+      "count": 5,
+      "mean": 0.00747158538998603,
+      "sampleStandardDeviation": 0.00011927359951353419,
+      "ci95": [
+        0.0073234876555339,
+        0.00761968312443816
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "all7PrecisionGroupDelta": {
+      "count": 5,
+      "mean": 0.0050481871468465705,
+      "sampleStandardDeviation": 0.00009528139746201089,
+      "ci95": [
+        0.004929879665919448,
+        0.005166494627773693
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "allReasoningGroupMarginLoss": {
+      "count": 5,
+      "mean": 1.9583872489118952,
+      "sampleStandardDeviation": 0.0403791948570489,
+      "ci95": [
+        1.908249856381443,
+        2.0085246414423477
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "fabricPathwayHoldoutLoss": {
+      "count": 5,
+      "mean": 6.109500000000002,
+      "sampleStandardDeviation": 1.3449734546636973,
+      "ci95": [
+        4.439494882804343,
+        7.7795051171956615
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "rankerPlasticityHoldoutLoss": {
+      "count": 5,
+      "mean": 13.338,
+      "sampleStandardDeviation": 1.2590772290650005,
+      "ci95": [
+        11.774649133711831,
+        14.901350866288167
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    }
+  },
+  "brains": {
+    "brain1Asmodensius": {
+      "id": "brain1Asmodensius",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0006839808340839805,
+        "sampleStandardDeviation": 0.00006681916806168174,
+        "ci95": [
+          0.0006010138787118633,
+          0.0007669477894560977
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00019949187303431709,
+        "sampleStandardDeviation": 0.000019488124583397984,
+        "ci95": [
+          0.00017529417034660202,
+          0.00022368957572203215
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00007622494522025079,
+        "sampleStandardDeviation": 0.000028014334699852282,
+        "ci95": [
+          0.000041440554389813695,
+          0.0001110093360506879
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.027960022911429405,
+        "sampleStandardDeviation": 0.0027409819858752534,
+        "ci95": [
+          0.02455664425984304,
+          0.03136340156301577
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain2Glitchling": {
+      "id": "brain2Glitchling",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.00015669682844524606,
+        "sampleStandardDeviation": 0.00002113526647825067,
+        "ci95": [
+          0.0001304539289667593,
+          0.0001829397279237328
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0000457057213793613,
+        "sampleStandardDeviation": 0.000006155856652270997,
+        "ci95": [
+          0.000038062215796133244,
+          0.000053349226962589355
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000014313481636056357,
+        "sampleStandardDeviation": 0.0000027416895119850626,
+        "ci95": [
+          0.00001090922447477165,
+          0.000017717738797341064
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.006402693130075932,
+        "sampleStandardDeviation": 0.000863728638888507,
+        "ci95": [
+          0.005330232374950531,
+          0.007475153885201332
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain3CqmSuperMind": {
+      "id": "brain3CqmSuperMind",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0012400338496263875,
+        "sampleStandardDeviation": 0.00003812590998815971,
+        "ci95": [
+          0.001192694279795332,
+          0.0012873734194574428
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0003616733149286785,
+        "sampleStandardDeviation": 0.000011112482124635192,
+        "ci95": [
+          0.00034787534594383606,
+          0.0003754712839135209
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00014780643547418587,
+        "sampleStandardDeviation": 0.00001241980741642121,
+        "ci95": [
+          0.00013238520774059152,
+          0.00016322766320778023
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.05068391039967537,
+        "sampleStandardDeviation": 0.0015650642354045035,
+        "ci95": [
+          0.04874062648369729,
+          0.05262719431565344
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain4ApexHydra": {
+      "id": "brain4ApexHydra",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0020335623100436804,
+        "sampleStandardDeviation": 0.00006359258998688458,
+        "ci95": [
+          0.0019546016805044326,
+          0.0021125229395829283
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0005931182124310926,
+        "sampleStandardDeviation": 0.000018546797551357918,
+        "ci95": [
+          0.0005700893216295977,
+          0.0006161471032325875
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00019106405261586662,
+        "sampleStandardDeviation": 0.000011997828162665766,
+        "ci95": [
+          0.0001761667813296493,
+          0.00020596132390208395
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.08306890130043029,
+        "sampleStandardDeviation": 0.0026008140975284175,
+        "ci95": [
+          0.07983956406950844,
+          0.08629823853135214
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain5Xenomimic": {
+      "id": "brain5Xenomimic",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0010675955017949408,
+        "sampleStandardDeviation": 0.000054406247289881606,
+        "ci95": [
+          0.0010000412232577236,
+          0.001135149780332158
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00031137538378003175,
+        "sampleStandardDeviation": 0.000015867635615367233,
+        "ci95": [
+          0.0002916731118998144,
+          0.0003310776556602491
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00009116257615707144,
+        "sampleStandardDeviation": 0.00002856649524321793,
+        "ci95": [
+          0.000055692587458708586,
+          0.0001266325648554343
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.04362890496850014,
+        "sampleStandardDeviation": 0.0022277164415397455,
+        "ci95": [
+          0.04086282966483363,
+          0.046394980272166646
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain6XylosManifold": {
+      "id": "brain6XylosManifold",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0006586174432062164,
+        "sampleStandardDeviation": 0.000044458011912286804,
+        "ci95": [
+          0.0006034155303830157,
+          0.0007138193560294172
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0001920966864423754,
+        "sampleStandardDeviation": 0.000012965528289376202,
+        "ci95": [
+          0.0001759978567477645,
+          0.0002081955161369863
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000041187893773522664,
+        "sampleStandardDeviation": 0.000016079573645361687,
+        "ci95": [
+          0.00002122246607161096,
+          0.00006115332147543437
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.026905772835016252,
+        "sampleStandardDeviation": 0.0018192559537100533,
+        "ci95": [
+          0.02464686821377662,
+          0.029164677456255884
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain7Mechalogodrom": {
+      "id": "brain7Mechalogodrom",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0018501986434141082,
+        "sampleStandardDeviation": 0.00010756934573591078,
+        "ci95": [
+          0.0017166336595034939,
+          0.0019837636273247225
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0005396378710666881,
+        "sampleStandardDeviation": 0.000031377478196288775,
+        "ci95": [
+          0.0005006775860359327,
+          0.0005785981560974435
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00015344170826594777,
+        "sampleStandardDeviation": 0.00002190387225332307,
+        "ci95": [
+          0.0001262444586677421,
+          0.00018063895786415345
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.0755715474486351,
+        "sampleStandardDeviation": 0.004398293254826543,
+        "ci95": [
+          0.07011034506057452,
+          0.08103274983669569
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain8GlyphPantheon": {
+      "id": "brain8GlyphPantheon",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.00010190700573476993,
+        "sampleStandardDeviation": 0.000040076849645543524,
+        "ci95": [
+          0.00005214502436847316,
+          0.0001516689871010667
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00002971928438059145,
+        "sampleStandardDeviation": 0.000011695248433429831,
+        "ci95": [
+          0.00001519771545075263,
+          0.000044240853310430274
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00001083369023494787,
+        "sampleStandardDeviation": 0.000003244274129019222,
+        "ci95": [
+          0.00000680539184864082,
+          0.000014861988621254919
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.004164329916238785,
+        "sampleStandardDeviation": 0.0016367762113029152,
+        "ci95": [
+          0.0021320038215475946,
+          0.006196656010929976
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain9ThalerDabus": {
+      "id": "brain9ThalerDabus",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0003053923170656114,
+        "sampleStandardDeviation": 0.00002750722203150932,
+        "ci95": [
+          0.00027123758977848876,
+          0.000339547044352734
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00008906972996832014,
+        "sampleStandardDeviation": 0.000008022782123724332,
+        "ci95": [
+          0.00007910813023985887,
+          0.0000990313296967814
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000028731816631818063,
+        "sampleStandardDeviation": 0.00000723338034744056,
+        "ci95": [
+          0.00001975038866908647,
+          0.000037713244594549655
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.012479608319699765,
+        "sampleStandardDeviation": 0.0011267397058866968,
+        "ci95": [
+          0.011080576191553553,
+          0.013878640447845977
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain10GraphCrystal": {
+      "id": "brain10GraphCrystal",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.00014651361959017514,
+        "sampleStandardDeviation": 0.00007824325550046515,
+        "ci95": [
+          0.00004936178613298875,
+          0.00024366545304736154
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00004273357892411089,
+        "sampleStandardDeviation": 0.000022822532177271007,
+        "ci95": [
+          0.000014395662371746465,
+          0.00007107149547647532
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000012290296106624062,
+        "sampleStandardDeviation": 0.000006633511339571351,
+        "ci95": [
+          0.000004053703894601875,
+          0.000020526888318646248
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.005984722031280398,
+        "sampleStandardDeviation": 0.0031962358712559996,
+        "ci95": [
+          0.0020160710201743747,
+          0.009953373042386422
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain11TsotchkeDale": {
+      "id": "brain11TsotchkeDale",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0005096413012727575,
+        "sampleStandardDeviation": 0.0001336253212866891,
+        "ci95": [
+          0.0003437235505826643,
+          0.0006755590519628507
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0001486430330064188,
+        "sampleStandardDeviation": 0.00003897224602826955,
+        "ci95": [
+          0.0001002525981839768,
+          0.00019703346782886082
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00010080993850404949,
+        "sampleStandardDeviation": 0.00002850772001738041,
+        "ci95": [
+          0.00006541292888759538,
+          0.0001362069481205036
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.02086220942437649,
+        "sampleStandardDeviation": 0.005474315341704108,
+        "ci95": [
+          0.014064949149767948,
+          0.02765946969898503
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain12BlackHolePage": {
+      "id": "brain12BlackHolePage",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0018946437855465893,
+        "sampleStandardDeviation": 0.000016776613598813818,
+        "ci95": [
+          0.0018738128684291663,
+          0.0019154747026640122
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0005526031003997892,
+        "sampleStandardDeviation": 0.000004888533303611482,
+        "ci95": [
+          0.0005465331845926747,
+          0.0005586730162069037
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00010872090846141822,
+        "sampleStandardDeviation": 0.0000020542157452890843,
+        "ci95": [
+          0.00010617026272594944,
+          0.000111271554196887
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.07739274054765702,
+        "sampleStandardDeviation": 0.0006851180908926713,
+        "ci95": [
+          0.0765420540796775,
+          0.07824342701563654
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain13ConsciousnessConsortium": {
+      "id": "brain13ConsciousnessConsortium",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.00015898011043215637,
+        "sampleStandardDeviation": 0.00005515189705854724,
+        "ci95": [
+          0.00009049998542191806,
+          0.00022746023544239466
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0000463650817637953,
+        "sampleStandardDeviation": 0.0000160907736034399,
+        "ci95": [
+          0.000026385747477156487,
+          0.00006634441605043411
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000016070972582699002,
+        "sampleStandardDeviation": 0.0000066010296406947525,
+        "ci95": [
+          0.000007874711726772383,
+          0.00002426723343862562
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.00649523357860744,
+        "sampleStandardDeviation": 0.0022529524080078258,
+        "ci95": [
+          0.00369782368391764,
+          0.009292643473297241
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "brain14ThingmakerGrimoire": {
+      "id": "brain14ThingmakerGrimoire",
+      "tier": "brains",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.00012445863927582106,
+        "sampleStandardDeviation": 0.00004643527685278832,
+        "ci95": [
+          0.00006680162776108911,
+          0.000182115650790553
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.000036298380292221044,
+        "sampleStandardDeviation": 0.000013539111102135005,
+        "ci95": [
+          0.00001948735346901909,
+          0.000053109407115422994
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000006856022498403241,
+        "sampleStandardDeviation": 0.0000019042184748034927,
+        "ci95": [
+          0.0000044916229735252575,
+          0.000009220422023281225
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.00508388108573854,
+        "sampleStandardDeviation": 0.0018960846648580132,
+        "ci95": [
+          0.0027295810198380904,
+          0.007438181151638989
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "all-14-brains": {
+      "id": "all-14-brains",
+      "tier": "brains",
+      "sourcesAblated": 14,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.00747158538998603,
+        "sampleStandardDeviation": 0.00011927359951353419,
+        "ci95": [
+          0.0073234876555339,
+          0.00761968312443816
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0021792118821134417,
+        "sampleStandardDeviation": 0.00003478785434767274,
+        "ci95": [
+          0.00213601705579518,
+          0.002222406708431703
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.0008603208074117206,
+        "sampleStandardDeviation": 0.000051769983987781425,
+        "ci95": [
+          0.000796039882106507,
+          0.0009246017327169343
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.44668447789736093,
+        "sampleStandardDeviation": 0.008513164890468716,
+        "ci95": [
+          0.43611398754209363,
+          0.45725496825262824
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    }
+  },
+  "precision": {
+    "precision-f64": {
+      "id": "precision-f64",
+      "tier": "precision",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.00046418651695092803,
+        "sampleStandardDeviation": 0.0001653554524673059,
+        "ci95": [
+          0.00025887060471558015,
+          0.0006695024291862759
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00013538973643187525,
+        "sampleStandardDeviation": 0.00004823130736763354,
+        "ci95": [
+          0.00007550265848718462,
+          0.0001952768143765659
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00009603971181866981,
+        "sampleStandardDeviation": 0.000034694662219931916,
+        "ci95": [
+          0.00005296059881033998,
+          0.00013911882482699965
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.019004368223249912,
+        "sampleStandardDeviation": 0.006768412477216653,
+        "ci95": [
+          0.010600274125296825,
+          0.027408462321203
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "precision-i64": {
+      "id": "precision-i64",
+      "tier": "precision",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0010438713741171756,
+        "sampleStandardDeviation": 0.00007558069217121716,
+        "ci95": [
+          0.0009500255496888541,
+          0.0011377171985454972
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0003044637624159428,
+        "sampleStandardDeviation": 0.000022044481905454765,
+        "ci95": [
+          0.00027709192287488527,
+          0.00033183560195700036
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00008111091198364053,
+        "sampleStandardDeviation": 0.000005858136986826374,
+        "ci95": [
+          0.00007383707419055233,
+          0.00008838474977672873
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.04264765307307243,
+        "sampleStandardDeviation": 0.003088575676115313,
+        "ci95": [
+          0.03881267985031219,
+          0.04648262629583267
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "precision-u32": {
+      "id": "precision-u32",
+      "tier": "precision",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0024353693817180935,
+        "sampleStandardDeviation": 0.000014304867731916488,
+        "ci95": [
+          0.002417607542456306,
+          0.002453131220979881
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.000710313246939448,
+        "sampleStandardDeviation": 0.000004173703172445086,
+        "ci95": [
+          0.0007051309099710341,
+          0.000715495583907862
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00016526545730602996,
+        "sampleStandardDeviation": 6.289174053484775e-7,
+        "ci95": [
+          0.00016448455320596504,
+          0.00016604636140609487
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.09946686923503875,
+        "sampleStandardDeviation": 0.0005872554445729347,
+        "ci95": [
+          0.09873769529176339,
+          0.10019604317831411
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "precision-fp16": {
+      "id": "precision-fp16",
+      "tier": "precision",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0012871941016956107,
+        "sampleStandardDeviation": 0.000009495504952424461,
+        "ci95": [
+          0.0012754038750514196,
+          0.0012989843283398017
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00037542860337520144,
+        "sampleStandardDeviation": 0.0000027673258387263584,
+        "ci95": [
+          0.0003719925145099559,
+          0.000378864692240447
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00016516497930060418,
+        "sampleStandardDeviation": 8.496791986236862e-7,
+        "ci95": [
+          0.00016410996322965054,
+          0.00016621999537155783
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.05261544063687325,
+        "sampleStandardDeviation": 0.0003935655812297083,
+        "ci95": [
+          0.05212676442372818,
+          0.05310411685001832
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "precision-int8": {
+      "id": "precision-int8",
+      "tier": "precision",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.000367316437828789,
+        "sampleStandardDeviation": 0.00006438752592084547,
+        "ci95": [
+          0.00028736876495946337,
+          0.0004472641106981146
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0001071320311181805,
+        "sampleStandardDeviation": 0.000018779702992344656,
+        "ci95": [
+          0.0000838139500156266,
+          0.00013045011222073441
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00005008911321952504,
+        "sampleStandardDeviation": 0.000019898976426811125,
+        "ci95": [
+          0.000025381270589248236,
+          0.00007479695584980184
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.015020053274929524,
+        "sampleStandardDeviation": 0.0026412016874547703,
+        "ci95": [
+          0.011740568227621899,
+          0.018299538322237147
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "precision-ternary": {
+      "id": "precision-ternary",
+      "tier": "precision",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0008313115026491316,
+        "sampleStandardDeviation": 0.00012993499695787992,
+        "ci95": [
+          0.0006699758948198162,
+          0.000992647110478447
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0002424597396560513,
+        "sampleStandardDeviation": 0.00003790028769179092,
+        "ci95": [
+          0.00019540031690758918,
+          0.0002895191624045134
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000054764914901901654,
+        "sampleStandardDeviation": 0.000017155409452066935,
+        "ci95": [
+          0.00003346366061082554,
+          0.00007606616919297777
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.03396465294063091,
+        "sampleStandardDeviation": 0.005314459449573919,
+        "ci95": [
+          0.02736587997218117,
+          0.04056342590908065
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "precision-f32": {
+      "id": "precision-f32",
+      "tier": "precision",
+      "sourcesAblated": 1,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0007000633724261177,
+        "sampleStandardDeviation": 0.00009657197996126012,
+        "ci95": [
+          0.0005801534216729655,
+          0.00081997332317927
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00020418429384074318,
+        "sampleStandardDeviation": 0.00002816991904587936,
+        "ci95": [
+          0.0001692067195291602,
+          0.00023916186815232617
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00010654990939143504,
+        "sampleStandardDeviation": 0.000028779910934291838,
+        "ci95": [
+          0.00007081493011281393,
+          0.00014228488867005614
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.028628193959593772,
+        "sampleStandardDeviation": 0.003960946663218731,
+        "ci95": [
+          0.023710029089069735,
+          0.033546358830117806
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "all-7-precision": {
+      "id": "all-7-precision",
+      "tier": "precision",
+      "sourcesAblated": 7,
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0050481871468465705,
+        "sampleStandardDeviation": 0.00009528139746201089,
+        "ci95": [
+          0.004929879665919448,
+          0.005166494627773693
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0014723823393189997,
+        "sampleStandardDeviation": 0.00002778809671856161,
+        "ci95": [
+          0.0014378788600449576,
+          0.0015068858185930418
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.0006042534682695062,
+        "sampleStandardDeviation": 0.0000352402114107467,
+        "ci95": [
+          0.0005604969664716925,
+          0.0006480099700673199
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.2913472313433886,
+        "sampleStandardDeviation": 0.007717869628339021,
+        "ci95": [
+          0.2817642304830497,
+          0.30093023220372744
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    }
+  },
+  "strataAndSpecialists": {
+    "micro-ising": {
+      "id": "micro-ising",
+      "tier": "strata",
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0021907457893836466,
+        "sampleStandardDeviation": 0.00024136606046340408,
+        "ci95": [
+          0.0018910502417179642,
+          0.002490441337049329
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.0006389706505147599,
+        "sampleStandardDeviation": 0.00007039445954137992,
+        "ci95": [
+          0.0005515643844292168,
+          0.000726376916600303
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00018664939169527327,
+        "sampleStandardDeviation": 0.00006985745846936396,
+        "ci95": [
+          0.00009990990050784926,
+          0.0002733888828826973
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.0894950807094574,
+        "sampleStandardDeviation": 0.009866443368642876,
+        "ci95": [
+          0.07724427318829725,
+          0.10174588823061755
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "omega-lorenz": {
+      "id": "omega-lorenz",
+      "tier": "strata",
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0014514962188448752,
+        "sampleStandardDeviation": 0.000030499140931020862,
+        "ci95": [
+          0.0014136265335746836,
+          0.0014893659041150668
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00042335671150531897,
+        "sampleStandardDeviation": 0.00000889750370966374,
+        "ci95": [
+          0.00041230900147514506,
+          0.00043440442153549287
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.000018622111998497288,
+        "sampleStandardDeviation": 9.350681151320372e-7,
+        "ci95": [
+          0.000017461071584069582,
+          0.000019783152412924993
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.05928067415952683,
+        "sampleStandardDeviation": 0.0012476974292724857,
+        "ci95": [
+          0.057731453180947793,
+          0.06082989513810586
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "omega-izhikevich": {
+      "id": "omega-izhikevich",
+      "tier": "strata",
+      "sensoryDeltaL2": {
+        "count": 5,
+        "mean": 0.0010780307510602082,
+        "sampleStandardDeviation": 0.00010835584519991738,
+        "ci95": [
+          0.0009434891990805303,
+          0.001212572303039886
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "latentDeltaL2": {
+        "count": 5,
+        "mean": 0.00031442959717066976,
+        "sampleStandardDeviation": 0.00003160036315450844,
+        "ci95": [
+          0.00027519256391155184,
+          0.0003536666304297877
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "motorDeltaL2": {
+        "count": 5,
+        "mean": 0.00009475779608584246,
+        "sampleStandardDeviation": 0.000007229096036332029,
+        "ci95": [
+          0.00008578168779797143,
+          0.00010373390437371348
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "contributionNorm": {
+        "count": 5,
+        "mean": 0.04403800144791603,
+        "sampleStandardDeviation": 0.004427914298942601,
+        "ci95": [
+          0.03854001967578733,
+          0.04953598322004473
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "NMDA_sLTC_Sheet": {
+      "id": "NMDA_sLTC_Sheet",
+      "tier": "specialist-fusion",
+      "residualDeltaL2": {
+        "count": 5,
+        "mean": 0.0017046442262200292,
+        "sampleStandardDeviation": 0.0001641361138791548,
+        "ci95": [
+          0.001500842322811209,
+          0.0019084461296288494
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "gate": {
+        "count": 5,
+        "mean": 0.22714681440443213,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          0.22714681440443213,
+          0.22714681440443213
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "Dreamer_WorldModel": {
+      "id": "Dreamer_WorldModel",
+      "tier": "specialist-fusion",
+      "residualDeltaL2": {
+        "count": 5,
+        "mean": 0.00043547536551745555,
+        "sampleStandardDeviation": 0.0001269944477715577,
+        "ci95": [
+          0.00027779093174774383,
+          0.0005931597992871673
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "gate": {
+        "count": 5,
+        "mean": 0.21052631578947373,
+        "sampleStandardDeviation": 3.1031676915590914e-17,
+        "ci95": [
+          0.2105263157894737,
+          0.21052631578947376
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "FlyWire_Connectome": {
+      "id": "FlyWire_Connectome",
+      "tier": "specialist-fusion",
+      "residualDeltaL2": {
+        "count": 5,
+        "mean": 0.00897859797388377,
+        "sampleStandardDeviation": 0.000492558730896298,
+        "ci95": [
+          0.0083670055307289,
+          0.00959019041703864
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "gate": {
+        "count": 5,
+        "mean": 0.19667590027700832,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          0.19667590027700832,
+          0.19667590027700832
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "QGTL_Grover_Q3": {
+      "id": "QGTL_Grover_Q3",
+      "tier": "specialist-fusion",
+      "residualDeltaL2": {
+        "count": 5,
+        "mean": 0.001624745522075127,
+        "sampleStandardDeviation": 0.00010713110756025771,
+        "ci95": [
+          0.0014917246827298597,
+          0.0017577663614203943
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "gate": {
+        "count": 5,
+        "mean": 0.18836565096952912,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          0.18836565096952912,
+          0.18836565096952912
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "Allostatic_AgRP": {
+      "id": "Allostatic_AgRP",
+      "tier": "specialist-fusion",
+      "residualDeltaL2": {
+        "count": 5,
+        "mean": 0.0016201996240589364,
+        "sampleStandardDeviation": 0.00015152718267995554,
+        "ci95": [
+          0.0014320537765759903,
+          0.0018083454715418824
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "gate": {
+        "count": 5,
+        "mean": 0.1772853185595568,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          0.1772853185595568,
+          0.1772853185595568
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    }
+  },
+  "reasoning": {
+    "AoT-contractor": {
+      "id": "AoT-contractor",
+      "tier": "reasoning",
+      "marginLoss": {
+        "count": 5,
+        "mean": 0.19973379568196842,
+        "sampleStandardDeviation": 0.007075536481118602,
+        "ci95": [
+          0.19094835676538607,
+          0.20851923459855076
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "accuracyDrop": {
+        "count": 5,
+        "mean": 0,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          0,
+          0
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "ToT-puct-tree": {
+      "id": "ToT-puct-tree",
+      "tier": "reasoning",
+      "marginLoss": {
+        "count": 5,
+        "mean": 0.7885736888051034,
+        "sampleStandardDeviation": 0.022527451723585865,
+        "ci95": [
+          0.7606021630286535,
+          0.8165452145815533
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "accuracyDrop": {
+        "count": 5,
+        "mean": 0,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          0,
+          0
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "GoT-dag-pagerank": {
+      "id": "GoT-dag-pagerank",
+      "tier": "reasoning",
+      "marginLoss": {
+        "count": 5,
+        "mean": 0.9700797644248234,
+        "sampleStandardDeviation": 0.042653040959852784,
+        "ci95": [
+          0.9171190190510635,
+          1.023040509798583
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "accuracyDrop": {
+        "count": 5,
+        "mean": 0.2,
+        "sampleStandardDeviation": 0.11180339887498948,
+        "ci95": [
+          0.06117774474011009,
+          0.33882225525988996
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "all-aot-tot-got": {
+      "id": "all-aot-tot-got",
+      "tier": "reasoning",
+      "marginLoss": {
+        "count": 5,
+        "mean": 1.9583872489118952,
+        "sampleStandardDeviation": 0.0403791948570489,
+        "ci95": [
+          1.908249856381443,
+          2.0085246414423477
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "accuracyDrop": {
+        "count": 5,
+        "mean": 1,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          1,
+          1
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    }
+  },
+  "fabricPathways": {
+    "ghost-swarm-role-coupling": {
+      "id": "ghost-swarm-role-coupling",
+      "tier": "fabric-pathway",
+      "holdoutRewardLossWhenAblated": {
+        "count": 5,
+        "mean": 6.109500000000002,
+        "sampleStandardDeviation": 1.3449734546636973,
+        "ci95": [
+          4.439494882804343,
+          7.7795051171956615
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "online-ranker-plasticity": {
+      "id": "online-ranker-plasticity",
+      "tier": "fabric-pathway",
+      "holdoutRewardLossWhenAblated": {
+        "count": 5,
+        "mean": 13.338,
+        "sampleStandardDeviation": 1.2590772290650005,
+        "ci95": [
+          11.774649133711831,
+          14.901350866288167
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    },
+    "full-fabric-plus-plasticity": {
+      "id": "full-fabric-plus-plasticity",
+      "tier": "fabric-pathway",
+      "holdoutRewardLossWhenAblated": {
+        "count": 5,
+        "mean": 19.4475,
+        "sampleStandardDeviation": 0.1844756081437333,
+        "ci95": [
+          19.218443278821184,
+          19.67655672117882
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "nonZeroSeeds": 5
+    }
+  },
+  "ablations": {
+    "brains": {
+      "brain1Asmodensius": {
+        "id": "brain1Asmodensius",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0006839808340839805,
+          "sampleStandardDeviation": 0.00006681916806168174,
+          "ci95": [
+            0.0006010138787118633,
+            0.0007669477894560977
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00019949187303431709,
+          "sampleStandardDeviation": 0.000019488124583397984,
+          "ci95": [
+            0.00017529417034660202,
+            0.00022368957572203215
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00007622494522025079,
+          "sampleStandardDeviation": 0.000028014334699852282,
+          "ci95": [
+            0.000041440554389813695,
+            0.0001110093360506879
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.027960022911429405,
+          "sampleStandardDeviation": 0.0027409819858752534,
+          "ci95": [
+            0.02455664425984304,
+            0.03136340156301577
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain2Glitchling": {
+        "id": "brain2Glitchling",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.00015669682844524606,
+          "sampleStandardDeviation": 0.00002113526647825067,
+          "ci95": [
+            0.0001304539289667593,
+            0.0001829397279237328
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0000457057213793613,
+          "sampleStandardDeviation": 0.000006155856652270997,
+          "ci95": [
+            0.000038062215796133244,
+            0.000053349226962589355
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000014313481636056357,
+          "sampleStandardDeviation": 0.0000027416895119850626,
+          "ci95": [
+            0.00001090922447477165,
+            0.000017717738797341064
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.006402693130075932,
+          "sampleStandardDeviation": 0.000863728638888507,
+          "ci95": [
+            0.005330232374950531,
+            0.007475153885201332
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain3CqmSuperMind": {
+        "id": "brain3CqmSuperMind",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0012400338496263875,
+          "sampleStandardDeviation": 0.00003812590998815971,
+          "ci95": [
+            0.001192694279795332,
+            0.0012873734194574428
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0003616733149286785,
+          "sampleStandardDeviation": 0.000011112482124635192,
+          "ci95": [
+            0.00034787534594383606,
+            0.0003754712839135209
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00014780643547418587,
+          "sampleStandardDeviation": 0.00001241980741642121,
+          "ci95": [
+            0.00013238520774059152,
+            0.00016322766320778023
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.05068391039967537,
+          "sampleStandardDeviation": 0.0015650642354045035,
+          "ci95": [
+            0.04874062648369729,
+            0.05262719431565344
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain4ApexHydra": {
+        "id": "brain4ApexHydra",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0020335623100436804,
+          "sampleStandardDeviation": 0.00006359258998688458,
+          "ci95": [
+            0.0019546016805044326,
+            0.0021125229395829283
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0005931182124310926,
+          "sampleStandardDeviation": 0.000018546797551357918,
+          "ci95": [
+            0.0005700893216295977,
+            0.0006161471032325875
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00019106405261586662,
+          "sampleStandardDeviation": 0.000011997828162665766,
+          "ci95": [
+            0.0001761667813296493,
+            0.00020596132390208395
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.08306890130043029,
+          "sampleStandardDeviation": 0.0026008140975284175,
+          "ci95": [
+            0.07983956406950844,
+            0.08629823853135214
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain5Xenomimic": {
+        "id": "brain5Xenomimic",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0010675955017949408,
+          "sampleStandardDeviation": 0.000054406247289881606,
+          "ci95": [
+            0.0010000412232577236,
+            0.001135149780332158
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00031137538378003175,
+          "sampleStandardDeviation": 0.000015867635615367233,
+          "ci95": [
+            0.0002916731118998144,
+            0.0003310776556602491
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00009116257615707144,
+          "sampleStandardDeviation": 0.00002856649524321793,
+          "ci95": [
+            0.000055692587458708586,
+            0.0001266325648554343
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.04362890496850014,
+          "sampleStandardDeviation": 0.0022277164415397455,
+          "ci95": [
+            0.04086282966483363,
+            0.046394980272166646
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain6XylosManifold": {
+        "id": "brain6XylosManifold",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0006586174432062164,
+          "sampleStandardDeviation": 0.000044458011912286804,
+          "ci95": [
+            0.0006034155303830157,
+            0.0007138193560294172
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0001920966864423754,
+          "sampleStandardDeviation": 0.000012965528289376202,
+          "ci95": [
+            0.0001759978567477645,
+            0.0002081955161369863
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000041187893773522664,
+          "sampleStandardDeviation": 0.000016079573645361687,
+          "ci95": [
+            0.00002122246607161096,
+            0.00006115332147543437
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.026905772835016252,
+          "sampleStandardDeviation": 0.0018192559537100533,
+          "ci95": [
+            0.02464686821377662,
+            0.029164677456255884
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain7Mechalogodrom": {
+        "id": "brain7Mechalogodrom",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0018501986434141082,
+          "sampleStandardDeviation": 0.00010756934573591078,
+          "ci95": [
+            0.0017166336595034939,
+            0.0019837636273247225
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0005396378710666881,
+          "sampleStandardDeviation": 0.000031377478196288775,
+          "ci95": [
+            0.0005006775860359327,
+            0.0005785981560974435
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00015344170826594777,
+          "sampleStandardDeviation": 0.00002190387225332307,
+          "ci95": [
+            0.0001262444586677421,
+            0.00018063895786415345
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.0755715474486351,
+          "sampleStandardDeviation": 0.004398293254826543,
+          "ci95": [
+            0.07011034506057452,
+            0.08103274983669569
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain8GlyphPantheon": {
+        "id": "brain8GlyphPantheon",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.00010190700573476993,
+          "sampleStandardDeviation": 0.000040076849645543524,
+          "ci95": [
+            0.00005214502436847316,
+            0.0001516689871010667
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00002971928438059145,
+          "sampleStandardDeviation": 0.000011695248433429831,
+          "ci95": [
+            0.00001519771545075263,
+            0.000044240853310430274
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00001083369023494787,
+          "sampleStandardDeviation": 0.000003244274129019222,
+          "ci95": [
+            0.00000680539184864082,
+            0.000014861988621254919
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.004164329916238785,
+          "sampleStandardDeviation": 0.0016367762113029152,
+          "ci95": [
+            0.0021320038215475946,
+            0.006196656010929976
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain9ThalerDabus": {
+        "id": "brain9ThalerDabus",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0003053923170656114,
+          "sampleStandardDeviation": 0.00002750722203150932,
+          "ci95": [
+            0.00027123758977848876,
+            0.000339547044352734
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00008906972996832014,
+          "sampleStandardDeviation": 0.000008022782123724332,
+          "ci95": [
+            0.00007910813023985887,
+            0.0000990313296967814
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000028731816631818063,
+          "sampleStandardDeviation": 0.00000723338034744056,
+          "ci95": [
+            0.00001975038866908647,
+            0.000037713244594549655
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.012479608319699765,
+          "sampleStandardDeviation": 0.0011267397058866968,
+          "ci95": [
+            0.011080576191553553,
+            0.013878640447845977
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain10GraphCrystal": {
+        "id": "brain10GraphCrystal",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.00014651361959017514,
+          "sampleStandardDeviation": 0.00007824325550046515,
+          "ci95": [
+            0.00004936178613298875,
+            0.00024366545304736154
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00004273357892411089,
+          "sampleStandardDeviation": 0.000022822532177271007,
+          "ci95": [
+            0.000014395662371746465,
+            0.00007107149547647532
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000012290296106624062,
+          "sampleStandardDeviation": 0.000006633511339571351,
+          "ci95": [
+            0.000004053703894601875,
+            0.000020526888318646248
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.005984722031280398,
+          "sampleStandardDeviation": 0.0031962358712559996,
+          "ci95": [
+            0.0020160710201743747,
+            0.009953373042386422
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain11TsotchkeDale": {
+        "id": "brain11TsotchkeDale",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0005096413012727575,
+          "sampleStandardDeviation": 0.0001336253212866891,
+          "ci95": [
+            0.0003437235505826643,
+            0.0006755590519628507
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0001486430330064188,
+          "sampleStandardDeviation": 0.00003897224602826955,
+          "ci95": [
+            0.0001002525981839768,
+            0.00019703346782886082
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00010080993850404949,
+          "sampleStandardDeviation": 0.00002850772001738041,
+          "ci95": [
+            0.00006541292888759538,
+            0.0001362069481205036
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.02086220942437649,
+          "sampleStandardDeviation": 0.005474315341704108,
+          "ci95": [
+            0.014064949149767948,
+            0.02765946969898503
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain12BlackHolePage": {
+        "id": "brain12BlackHolePage",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0018946437855465893,
+          "sampleStandardDeviation": 0.000016776613598813818,
+          "ci95": [
+            0.0018738128684291663,
+            0.0019154747026640122
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0005526031003997892,
+          "sampleStandardDeviation": 0.000004888533303611482,
+          "ci95": [
+            0.0005465331845926747,
+            0.0005586730162069037
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00010872090846141822,
+          "sampleStandardDeviation": 0.0000020542157452890843,
+          "ci95": [
+            0.00010617026272594944,
+            0.000111271554196887
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.07739274054765702,
+          "sampleStandardDeviation": 0.0006851180908926713,
+          "ci95": [
+            0.0765420540796775,
+            0.07824342701563654
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain13ConsciousnessConsortium": {
+        "id": "brain13ConsciousnessConsortium",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.00015898011043215637,
+          "sampleStandardDeviation": 0.00005515189705854724,
+          "ci95": [
+            0.00009049998542191806,
+            0.00022746023544239466
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0000463650817637953,
+          "sampleStandardDeviation": 0.0000160907736034399,
+          "ci95": [
+            0.000026385747477156487,
+            0.00006634441605043411
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000016070972582699002,
+          "sampleStandardDeviation": 0.0000066010296406947525,
+          "ci95": [
+            0.000007874711726772383,
+            0.00002426723343862562
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.00649523357860744,
+          "sampleStandardDeviation": 0.0022529524080078258,
+          "ci95": [
+            0.00369782368391764,
+            0.009292643473297241
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "brain14ThingmakerGrimoire": {
+        "id": "brain14ThingmakerGrimoire",
+        "tier": "brains",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.00012445863927582106,
+          "sampleStandardDeviation": 0.00004643527685278832,
+          "ci95": [
+            0.00006680162776108911,
+            0.000182115650790553
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.000036298380292221044,
+          "sampleStandardDeviation": 0.000013539111102135005,
+          "ci95": [
+            0.00001948735346901909,
+            0.000053109407115422994
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000006856022498403241,
+          "sampleStandardDeviation": 0.0000019042184748034927,
+          "ci95": [
+            0.0000044916229735252575,
+            0.000009220422023281225
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.00508388108573854,
+          "sampleStandardDeviation": 0.0018960846648580132,
+          "ci95": [
+            0.0027295810198380904,
+            0.007438181151638989
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "all-14-brains": {
+        "id": "all-14-brains",
+        "tier": "brains",
+        "sourcesAblated": 14,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.00747158538998603,
+          "sampleStandardDeviation": 0.00011927359951353419,
+          "ci95": [
+            0.0073234876555339,
+            0.00761968312443816
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0021792118821134417,
+          "sampleStandardDeviation": 0.00003478785434767274,
+          "ci95": [
+            0.00213601705579518,
+            0.002222406708431703
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.0008603208074117206,
+          "sampleStandardDeviation": 0.000051769983987781425,
+          "ci95": [
+            0.000796039882106507,
+            0.0009246017327169343
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.44668447789736093,
+          "sampleStandardDeviation": 0.008513164890468716,
+          "ci95": [
+            0.43611398754209363,
+            0.45725496825262824
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      }
+    },
+    "precision": {
+      "precision-f64": {
+        "id": "precision-f64",
+        "tier": "precision",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.00046418651695092803,
+          "sampleStandardDeviation": 0.0001653554524673059,
+          "ci95": [
+            0.00025887060471558015,
+            0.0006695024291862759
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00013538973643187525,
+          "sampleStandardDeviation": 0.00004823130736763354,
+          "ci95": [
+            0.00007550265848718462,
+            0.0001952768143765659
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00009603971181866981,
+          "sampleStandardDeviation": 0.000034694662219931916,
+          "ci95": [
+            0.00005296059881033998,
+            0.00013911882482699965
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.019004368223249912,
+          "sampleStandardDeviation": 0.006768412477216653,
+          "ci95": [
+            0.010600274125296825,
+            0.027408462321203
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "precision-i64": {
+        "id": "precision-i64",
+        "tier": "precision",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0010438713741171756,
+          "sampleStandardDeviation": 0.00007558069217121716,
+          "ci95": [
+            0.0009500255496888541,
+            0.0011377171985454972
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0003044637624159428,
+          "sampleStandardDeviation": 0.000022044481905454765,
+          "ci95": [
+            0.00027709192287488527,
+            0.00033183560195700036
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00008111091198364053,
+          "sampleStandardDeviation": 0.000005858136986826374,
+          "ci95": [
+            0.00007383707419055233,
+            0.00008838474977672873
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.04264765307307243,
+          "sampleStandardDeviation": 0.003088575676115313,
+          "ci95": [
+            0.03881267985031219,
+            0.04648262629583267
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "precision-u32": {
+        "id": "precision-u32",
+        "tier": "precision",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0024353693817180935,
+          "sampleStandardDeviation": 0.000014304867731916488,
+          "ci95": [
+            0.002417607542456306,
+            0.002453131220979881
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.000710313246939448,
+          "sampleStandardDeviation": 0.000004173703172445086,
+          "ci95": [
+            0.0007051309099710341,
+            0.000715495583907862
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00016526545730602996,
+          "sampleStandardDeviation": 6.289174053484775e-7,
+          "ci95": [
+            0.00016448455320596504,
+            0.00016604636140609487
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.09946686923503875,
+          "sampleStandardDeviation": 0.0005872554445729347,
+          "ci95": [
+            0.09873769529176339,
+            0.10019604317831411
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "precision-fp16": {
+        "id": "precision-fp16",
+        "tier": "precision",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0012871941016956107,
+          "sampleStandardDeviation": 0.000009495504952424461,
+          "ci95": [
+            0.0012754038750514196,
+            0.0012989843283398017
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00037542860337520144,
+          "sampleStandardDeviation": 0.0000027673258387263584,
+          "ci95": [
+            0.0003719925145099559,
+            0.000378864692240447
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00016516497930060418,
+          "sampleStandardDeviation": 8.496791986236862e-7,
+          "ci95": [
+            0.00016410996322965054,
+            0.00016621999537155783
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.05261544063687325,
+          "sampleStandardDeviation": 0.0003935655812297083,
+          "ci95": [
+            0.05212676442372818,
+            0.05310411685001832
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "precision-int8": {
+        "id": "precision-int8",
+        "tier": "precision",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.000367316437828789,
+          "sampleStandardDeviation": 0.00006438752592084547,
+          "ci95": [
+            0.00028736876495946337,
+            0.0004472641106981146
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0001071320311181805,
+          "sampleStandardDeviation": 0.000018779702992344656,
+          "ci95": [
+            0.0000838139500156266,
+            0.00013045011222073441
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00005008911321952504,
+          "sampleStandardDeviation": 0.000019898976426811125,
+          "ci95": [
+            0.000025381270589248236,
+            0.00007479695584980184
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.015020053274929524,
+          "sampleStandardDeviation": 0.0026412016874547703,
+          "ci95": [
+            0.011740568227621899,
+            0.018299538322237147
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "precision-ternary": {
+        "id": "precision-ternary",
+        "tier": "precision",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0008313115026491316,
+          "sampleStandardDeviation": 0.00012993499695787992,
+          "ci95": [
+            0.0006699758948198162,
+            0.000992647110478447
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0002424597396560513,
+          "sampleStandardDeviation": 0.00003790028769179092,
+          "ci95": [
+            0.00019540031690758918,
+            0.0002895191624045134
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000054764914901901654,
+          "sampleStandardDeviation": 0.000017155409452066935,
+          "ci95": [
+            0.00003346366061082554,
+            0.00007606616919297777
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.03396465294063091,
+          "sampleStandardDeviation": 0.005314459449573919,
+          "ci95": [
+            0.02736587997218117,
+            0.04056342590908065
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "precision-f32": {
+        "id": "precision-f32",
+        "tier": "precision",
+        "sourcesAblated": 1,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0007000633724261177,
+          "sampleStandardDeviation": 0.00009657197996126012,
+          "ci95": [
+            0.0005801534216729655,
+            0.00081997332317927
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00020418429384074318,
+          "sampleStandardDeviation": 0.00002816991904587936,
+          "ci95": [
+            0.0001692067195291602,
+            0.00023916186815232617
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00010654990939143504,
+          "sampleStandardDeviation": 0.000028779910934291838,
+          "ci95": [
+            0.00007081493011281393,
+            0.00014228488867005614
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.028628193959593772,
+          "sampleStandardDeviation": 0.003960946663218731,
+          "ci95": [
+            0.023710029089069735,
+            0.033546358830117806
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "all-7-precision": {
+        "id": "all-7-precision",
+        "tier": "precision",
+        "sourcesAblated": 7,
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0050481871468465705,
+          "sampleStandardDeviation": 0.00009528139746201089,
+          "ci95": [
+            0.004929879665919448,
+            0.005166494627773693
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0014723823393189997,
+          "sampleStandardDeviation": 0.00002778809671856161,
+          "ci95": [
+            0.0014378788600449576,
+            0.0015068858185930418
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.0006042534682695062,
+          "sampleStandardDeviation": 0.0000352402114107467,
+          "ci95": [
+            0.0005604969664716925,
+            0.0006480099700673199
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.2913472313433886,
+          "sampleStandardDeviation": 0.007717869628339021,
+          "ci95": [
+            0.2817642304830497,
+            0.30093023220372744
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      }
+    },
+    "strataAndSpecialists": {
+      "micro-ising": {
+        "id": "micro-ising",
+        "tier": "strata",
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0021907457893836466,
+          "sampleStandardDeviation": 0.00024136606046340408,
+          "ci95": [
+            0.0018910502417179642,
+            0.002490441337049329
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.0006389706505147599,
+          "sampleStandardDeviation": 0.00007039445954137992,
+          "ci95": [
+            0.0005515643844292168,
+            0.000726376916600303
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00018664939169527327,
+          "sampleStandardDeviation": 0.00006985745846936396,
+          "ci95": [
+            0.00009990990050784926,
+            0.0002733888828826973
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.0894950807094574,
+          "sampleStandardDeviation": 0.009866443368642876,
+          "ci95": [
+            0.07724427318829725,
+            0.10174588823061755
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "omega-lorenz": {
+        "id": "omega-lorenz",
+        "tier": "strata",
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0014514962188448752,
+          "sampleStandardDeviation": 0.000030499140931020862,
+          "ci95": [
+            0.0014136265335746836,
+            0.0014893659041150668
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00042335671150531897,
+          "sampleStandardDeviation": 0.00000889750370966374,
+          "ci95": [
+            0.00041230900147514506,
+            0.00043440442153549287
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.000018622111998497288,
+          "sampleStandardDeviation": 9.350681151320372e-7,
+          "ci95": [
+            0.000017461071584069582,
+            0.000019783152412924993
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.05928067415952683,
+          "sampleStandardDeviation": 0.0012476974292724857,
+          "ci95": [
+            0.057731453180947793,
+            0.06082989513810586
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "omega-izhikevich": {
+        "id": "omega-izhikevich",
+        "tier": "strata",
+        "sensoryDeltaL2": {
+          "count": 5,
+          "mean": 0.0010780307510602082,
+          "sampleStandardDeviation": 0.00010835584519991738,
+          "ci95": [
+            0.0009434891990805303,
+            0.001212572303039886
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "latentDeltaL2": {
+          "count": 5,
+          "mean": 0.00031442959717066976,
+          "sampleStandardDeviation": 0.00003160036315450844,
+          "ci95": [
+            0.00027519256391155184,
+            0.0003536666304297877
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorDeltaL2": {
+          "count": 5,
+          "mean": 0.00009475779608584246,
+          "sampleStandardDeviation": 0.000007229096036332029,
+          "ci95": [
+            0.00008578168779797143,
+            0.00010373390437371348
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "contributionNorm": {
+          "count": 5,
+          "mean": 0.04403800144791603,
+          "sampleStandardDeviation": 0.004427914298942601,
+          "ci95": [
+            0.03854001967578733,
+            0.04953598322004473
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "NMDA_sLTC_Sheet": {
+        "id": "NMDA_sLTC_Sheet",
+        "tier": "specialist-fusion",
+        "residualDeltaL2": {
+          "count": 5,
+          "mean": 0.0017046442262200292,
+          "sampleStandardDeviation": 0.0001641361138791548,
+          "ci95": [
+            0.001500842322811209,
+            0.0019084461296288494
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "gate": {
+          "count": 5,
+          "mean": 0.22714681440443213,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.22714681440443213,
+            0.22714681440443213
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "Dreamer_WorldModel": {
+        "id": "Dreamer_WorldModel",
+        "tier": "specialist-fusion",
+        "residualDeltaL2": {
+          "count": 5,
+          "mean": 0.00043547536551745555,
+          "sampleStandardDeviation": 0.0001269944477715577,
+          "ci95": [
+            0.00027779093174774383,
+            0.0005931597992871673
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "gate": {
+          "count": 5,
+          "mean": 0.21052631578947373,
+          "sampleStandardDeviation": 3.1031676915590914e-17,
+          "ci95": [
+            0.2105263157894737,
+            0.21052631578947376
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "FlyWire_Connectome": {
+        "id": "FlyWire_Connectome",
+        "tier": "specialist-fusion",
+        "residualDeltaL2": {
+          "count": 5,
+          "mean": 0.00897859797388377,
+          "sampleStandardDeviation": 0.000492558730896298,
+          "ci95": [
+            0.0083670055307289,
+            0.00959019041703864
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "gate": {
+          "count": 5,
+          "mean": 0.19667590027700832,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.19667590027700832,
+            0.19667590027700832
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "QGTL_Grover_Q3": {
+        "id": "QGTL_Grover_Q3",
+        "tier": "specialist-fusion",
+        "residualDeltaL2": {
+          "count": 5,
+          "mean": 0.001624745522075127,
+          "sampleStandardDeviation": 0.00010713110756025771,
+          "ci95": [
+            0.0014917246827298597,
+            0.0017577663614203943
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "gate": {
+          "count": 5,
+          "mean": 0.18836565096952912,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.18836565096952912,
+            0.18836565096952912
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "Allostatic_AgRP": {
+        "id": "Allostatic_AgRP",
+        "tier": "specialist-fusion",
+        "residualDeltaL2": {
+          "count": 5,
+          "mean": 0.0016201996240589364,
+          "sampleStandardDeviation": 0.00015152718267995554,
+          "ci95": [
+            0.0014320537765759903,
+            0.0018083454715418824
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "gate": {
+          "count": 5,
+          "mean": 0.1772853185595568,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0.1772853185595568,
+            0.1772853185595568
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      }
+    },
+    "reasoning": {
+      "AoT-contractor": {
+        "id": "AoT-contractor",
+        "tier": "reasoning",
+        "marginLoss": {
+          "count": 5,
+          "mean": 0.19973379568196842,
+          "sampleStandardDeviation": 0.007075536481118602,
+          "ci95": [
+            0.19094835676538607,
+            0.20851923459855076
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "accuracyDrop": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "ToT-puct-tree": {
+        "id": "ToT-puct-tree",
+        "tier": "reasoning",
+        "marginLoss": {
+          "count": 5,
+          "mean": 0.7885736888051034,
+          "sampleStandardDeviation": 0.022527451723585865,
+          "ci95": [
+            0.7606021630286535,
+            0.8165452145815533
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "accuracyDrop": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "GoT-dag-pagerank": {
+        "id": "GoT-dag-pagerank",
+        "tier": "reasoning",
+        "marginLoss": {
+          "count": 5,
+          "mean": 0.9700797644248234,
+          "sampleStandardDeviation": 0.042653040959852784,
+          "ci95": [
+            0.9171190190510635,
+            1.023040509798583
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "accuracyDrop": {
+          "count": 5,
+          "mean": 0.2,
+          "sampleStandardDeviation": 0.11180339887498948,
+          "ci95": [
+            0.06117774474011009,
+            0.33882225525988996
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "all-aot-tot-got": {
+        "id": "all-aot-tot-got",
+        "tier": "reasoning",
+        "marginLoss": {
+          "count": 5,
+          "mean": 1.9583872489118952,
+          "sampleStandardDeviation": 0.0403791948570489,
+          "ci95": [
+            1.908249856381443,
+            2.0085246414423477
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "accuracyDrop": {
+          "count": 5,
+          "mean": 1,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1,
+            1
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      }
+    },
+    "fabricPathways": {
+      "ghost-swarm-role-coupling": {
+        "id": "ghost-swarm-role-coupling",
+        "tier": "fabric-pathway",
+        "holdoutRewardLossWhenAblated": {
+          "count": 5,
+          "mean": 6.109500000000002,
+          "sampleStandardDeviation": 1.3449734546636973,
+          "ci95": [
+            4.439494882804343,
+            7.7795051171956615
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "online-ranker-plasticity": {
+        "id": "online-ranker-plasticity",
+        "tier": "fabric-pathway",
+        "holdoutRewardLossWhenAblated": {
+          "count": 5,
+          "mean": 13.338,
+          "sampleStandardDeviation": 1.2590772290650005,
+          "ci95": [
+            11.774649133711831,
+            14.901350866288167
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      },
+      "full-fabric-plus-plasticity": {
+        "id": "full-fabric-plus-plasticity",
+        "tier": "fabric-pathway",
+        "holdoutRewardLossWhenAblated": {
+          "count": 5,
+          "mean": 19.4475,
+          "sampleStandardDeviation": 0.1844756081437333,
+          "ci95": [
+            19.218443278821184,
+            19.67655672117882
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "nonZeroSeeds": 5
+      }
+    }
+  },
+  "scope": "Pass 3 architecture ablations across all 14 brain families, 7 precision routes, 3 scale strata, 5 specialist readouts, AoT/ToT/GoT reasoning terms and Synaptic Fabric pathways across five independent seeds. Measures exact in-process sensory, latent, motor, ranking-margin and unseen-task holdout deltas when each component is ablated."
+}

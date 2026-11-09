@@ -192,3 +192,42 @@ test('runBenchmark renders 5-seed unseen holdout metrics and colony role lenses 
   assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('Colony specialized role lenses (2)')), 'colony lenses drawn');
   window.aliveFabricVisualizer.destroy();
 });
+
+test('runAblations renders 38-condition 5-seed architecture ablation deltas in section 9', async () => {
+  const { window, dom } = load();
+  window.AliveArchitectureAblations = {
+    run: async () => ({
+      summary: {
+        all14BrainsGroupDelta: { mean: 0.00747 },
+        all7PrecisionGroupDelta: { mean: 0.00505 },
+        allReasoningGroupMarginLoss: { mean: 1.9584 }
+      },
+      ablations: {
+        brains: {
+          brain1Asmodensius: { id: 'brain1Asmodensius', sensoryDeltaL2: { mean: 0.00062 }, nonZeroSeeds: 5 },
+          'all-14-brains': { id: 'all-14-brains', sensoryDeltaL2: { mean: 0.00747 }, nonZeroSeeds: 5 }
+        },
+        precision: {
+          'precision-f64': { id: 'precision-f64', tier: 'precision', sensoryDeltaL2: { mean: 0.00051 }, nonZeroSeeds: 5 },
+          'all-7-precision': { id: 'all-7-precision', tier: 'precision', sensoryDeltaL2: { mean: 0.00505 }, nonZeroSeeds: 5 }
+        },
+        strataAndSpecialists: {
+          'micro-ising': { id: 'micro-ising', tier: 'strata', sensoryDeltaL2: { mean: 0.00048 }, nonZeroSeeds: 5 },
+          NMDA_sLTC_Sheet: { id: 'NMDA_sLTC_Sheet', tier: 'specialist-fusion', residualDeltaL2: { mean: 0.142 }, nonZeroSeeds: 5 }
+        },
+        reasoning: {
+          'AoT-contractor': { id: 'AoT-contractor', marginLoss: { mean: 0.42 }, nonZeroSeeds: 5 },
+          'all-aot-tot-got': { id: 'all-aot-tot-got', marginLoss: { mean: 1.9584 }, nonZeroSeeds: 5 }
+        },
+        fabricPathways: {
+          'ghost-swarm-role-coupling': { id: 'ghost-swarm-role-coupling', holdoutRewardLossWhenAblated: { mean: 6.11 }, nonZeroSeeds: 5 }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runAblations();
+  assert.equal(report.summary.all14BrainsGroupDelta.mean, 0.00747);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('38 conditions × 5 seeds')), 'ablations summary drawn');
+  window.aliveFabricVisualizer.destroy();
+});
