@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-49-SCHEDULE-FREE-PRIMAL-DUAL-AVERAGER",
+  "phase": "Phase IX — Second-Order & Matrix-Preconditioned Weight-and-Bias Optimizers",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "fixed-step-lr-without-schedule-or-averaging",
+      "label": "Fixed Step LR Without Decay Schedule or Primal-Dual Averaging",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 30.5031,
+        "stdDev": 0.2362,
+        "min": 30.3051,
+        "max": 30.8069,
+        "ci95": {
+          "low": 30.2098,
+          "high": 30.7964,
+          "halfWidth": 0.2933
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 34.5212,
+        "stdDev": 0.3563,
+        "min": 34.141,
+        "max": 35.0002,
+        "ci95": {
+          "low": 34.0789,
+          "high": 34.9636,
+          "halfWidth": 0.4423
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 28.4855,
+        "stdDev": 0.1191,
+        "min": 28.3298,
+        "max": 28.6538,
+        "ci95": {
+          "low": 28.3377,
+          "high": 28.6333,
+          "halfWidth": 0.1478
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 30.1976,
+        "stdDev": 0.1698,
+        "min": 29.9608,
+        "max": 30.3895,
+        "ci95": {
+          "low": 29.9867,
+          "high": 30.4084,
+          "halfWidth": 0.2108
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 30.8069,
+          "biasDriftSuppressionPct": 35.0002,
+          "horizonAgnosticConvergencePct": 28.3298,
+          "compositeScheduleFreeScore": 29.9608
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 30.3544,
+          "biasDriftSuppressionPct": 34.2674,
+          "horizonAgnosticConvergencePct": 28.5305,
+          "compositeScheduleFreeScore": 30.3201
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 30.3393,
+          "biasDriftSuppressionPct": 34.4296,
+          "horizonAgnosticConvergencePct": 28.6538,
+          "compositeScheduleFreeScore": 30.2056
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 30.3051,
+          "biasDriftSuppressionPct": 34.141,
+          "horizonAgnosticConvergencePct": 28.4718,
+          "compositeScheduleFreeScore": 30.3895
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 30.7098,
+          "biasDriftSuppressionPct": 34.7679,
+          "horizonAgnosticConvergencePct": 28.4417,
+          "compositeScheduleFreeScore": 30.1118
+        }
+      ]
+    },
+    {
+      "profileId": "cosine-annealing-requiring-known-horizon-T",
+      "label": "Cosine Annealing (Fails When Horizon T Is Extended)",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 56.0025,
+        "stdDev": 0.1889,
+        "min": 55.8441,
+        "max": 56.2455,
+        "ci95": {
+          "low": 55.7679,
+          "high": 56.2371,
+          "halfWidth": 0.2346
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 70.017,
+        "stdDev": 0.285,
+        "min": 69.7128,
+        "max": 70.4002,
+        "ci95": {
+          "low": 69.6631,
+          "high": 70.3709,
+          "halfWidth": 0.3539
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 49.9884,
+        "stdDev": 0.0953,
+        "min": 49.8638,
+        "max": 50.1231,
+        "ci95": {
+          "low": 49.8701,
+          "high": 50.1067,
+          "halfWidth": 0.1183
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 57.943,
+        "stdDev": 0.1415,
+        "min": 57.7456,
+        "max": 58.1029,
+        "ci95": {
+          "low": 57.7672,
+          "high": 58.1187,
+          "halfWidth": 0.1757
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 56.2455,
+          "biasDriftSuppressionPct": 70.4002,
+          "horizonAgnosticConvergencePct": 49.8638,
+          "compositeScheduleFreeScore": 57.7456
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 55.8835,
+          "biasDriftSuppressionPct": 69.8139,
+          "horizonAgnosticConvergencePct": 50.0244,
+          "compositeScheduleFreeScore": 58.0451
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 55.8715,
+          "biasDriftSuppressionPct": 69.9437,
+          "horizonAgnosticConvergencePct": 50.1231,
+          "compositeScheduleFreeScore": 57.9497
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 55.8441,
+          "biasDriftSuppressionPct": 69.7128,
+          "horizonAgnosticConvergencePct": 49.9775,
+          "compositeScheduleFreeScore": 58.1029
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 56.1678,
+          "biasDriftSuppressionPct": 70.2143,
+          "horizonAgnosticConvergencePct": 49.9533,
+          "compositeScheduleFreeScore": 57.8715
+        }
+      ]
+    },
+    {
+      "profileId": "naive-ema-post-hoc-weight-averaging",
+      "label": "Post-Hoc EMA Weight Averaging Without Primal Gradient Evaluation",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 77.5019,
+        "stdDev": 0.1417,
+        "min": 77.3831,
+        "max": 77.6841,
+        "ci95": {
+          "low": 77.3259,
+          "high": 77.6778,
+          "halfWidth": 0.176
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 79.5127,
+        "stdDev": 0.2137,
+        "min": 79.2846,
+        "max": 79.8001,
+        "ci95": {
+          "low": 79.2473,
+          "high": 79.7781,
+          "halfWidth": 0.2654
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 81.4913,
+        "stdDev": 0.0714,
+        "min": 81.3979,
+        "max": 81.5923,
+        "ci95": {
+          "low": 81.4026,
+          "high": 81.58,
+          "halfWidth": 0.0887
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 79.0184,
+        "stdDev": 0.1132,
+        "min": 78.8605,
+        "max": 79.1463,
+        "ci95": {
+          "low": 78.8778,
+          "high": 79.1589,
+          "halfWidth": 0.1406
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 77.6841,
+          "biasDriftSuppressionPct": 79.8001,
+          "horizonAgnosticConvergencePct": 81.3979,
+          "compositeScheduleFreeScore": 78.8605
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 77.4126,
+          "biasDriftSuppressionPct": 79.3604,
+          "horizonAgnosticConvergencePct": 81.5183,
+          "compositeScheduleFreeScore": 79.1001
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 77.4036,
+          "biasDriftSuppressionPct": 79.4578,
+          "horizonAgnosticConvergencePct": 81.5923,
+          "compositeScheduleFreeScore": 79.0237
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 77.3831,
+          "biasDriftSuppressionPct": 79.2846,
+          "horizonAgnosticConvergencePct": 81.4831,
+          "compositeScheduleFreeScore": 79.1463
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 77.6259,
+          "biasDriftSuppressionPct": 79.6607,
+          "horizonAgnosticConvergencePct": 81.465,
+          "compositeScheduleFreeScore": 78.9612
+        }
+      ]
+    },
+    {
+      "profileId": "schedule-free-primal-dual-gradient-centralized",
+      "label": "Schedule-Free Primal-Dual Interpolation (y_t = (1-beta)z_t + beta*x_t) + Gradient Centralization",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "fixed-step-lr-without-schedule-or-averaging": {
+      "profileId": "fixed-step-lr-without-schedule-or-averaging",
+      "label": "Fixed Step LR Without Decay Schedule or Primal-Dual Averaging",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 30.5031,
+        "stdDev": 0.2362,
+        "min": 30.3051,
+        "max": 30.8069,
+        "ci95": {
+          "low": 30.2098,
+          "high": 30.7964,
+          "halfWidth": 0.2933
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 34.5212,
+        "stdDev": 0.3563,
+        "min": 34.141,
+        "max": 35.0002,
+        "ci95": {
+          "low": 34.0789,
+          "high": 34.9636,
+          "halfWidth": 0.4423
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 28.4855,
+        "stdDev": 0.1191,
+        "min": 28.3298,
+        "max": 28.6538,
+        "ci95": {
+          "low": 28.3377,
+          "high": 28.6333,
+          "halfWidth": 0.1478
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 30.1976,
+        "stdDev": 0.1698,
+        "min": 29.9608,
+        "max": 30.3895,
+        "ci95": {
+          "low": 29.9867,
+          "high": 30.4084,
+          "halfWidth": 0.2108
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 30.8069,
+          "biasDriftSuppressionPct": 35.0002,
+          "horizonAgnosticConvergencePct": 28.3298,
+          "compositeScheduleFreeScore": 29.9608
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 30.3544,
+          "biasDriftSuppressionPct": 34.2674,
+          "horizonAgnosticConvergencePct": 28.5305,
+          "compositeScheduleFreeScore": 30.3201
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 30.3393,
+          "biasDriftSuppressionPct": 34.4296,
+          "horizonAgnosticConvergencePct": 28.6538,
+          "compositeScheduleFreeScore": 30.2056
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 30.3051,
+          "biasDriftSuppressionPct": 34.141,
+          "horizonAgnosticConvergencePct": 28.4718,
+          "compositeScheduleFreeScore": 30.3895
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 30.7098,
+          "biasDriftSuppressionPct": 34.7679,
+          "horizonAgnosticConvergencePct": 28.4417,
+          "compositeScheduleFreeScore": 30.1118
+        }
+      ]
+    },
+    "cosine-annealing-requiring-known-horizon-T": {
+      "profileId": "cosine-annealing-requiring-known-horizon-T",
+      "label": "Cosine Annealing (Fails When Horizon T Is Extended)",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 56.0025,
+        "stdDev": 0.1889,
+        "min": 55.8441,
+        "max": 56.2455,
+        "ci95": {
+          "low": 55.7679,
+          "high": 56.2371,
+          "halfWidth": 0.2346
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 70.017,
+        "stdDev": 0.285,
+        "min": 69.7128,
+        "max": 70.4002,
+        "ci95": {
+          "low": 69.6631,
+          "high": 70.3709,
+          "halfWidth": 0.3539
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 49.9884,
+        "stdDev": 0.0953,
+        "min": 49.8638,
+        "max": 50.1231,
+        "ci95": {
+          "low": 49.8701,
+          "high": 50.1067,
+          "halfWidth": 0.1183
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 57.943,
+        "stdDev": 0.1415,
+        "min": 57.7456,
+        "max": 58.1029,
+        "ci95": {
+          "low": 57.7672,
+          "high": 58.1187,
+          "halfWidth": 0.1757
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 56.2455,
+          "biasDriftSuppressionPct": 70.4002,
+          "horizonAgnosticConvergencePct": 49.8638,
+          "compositeScheduleFreeScore": 57.7456
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 55.8835,
+          "biasDriftSuppressionPct": 69.8139,
+          "horizonAgnosticConvergencePct": 50.0244,
+          "compositeScheduleFreeScore": 58.0451
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 55.8715,
+          "biasDriftSuppressionPct": 69.9437,
+          "horizonAgnosticConvergencePct": 50.1231,
+          "compositeScheduleFreeScore": 57.9497
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 55.8441,
+          "biasDriftSuppressionPct": 69.7128,
+          "horizonAgnosticConvergencePct": 49.9775,
+          "compositeScheduleFreeScore": 58.1029
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 56.1678,
+          "biasDriftSuppressionPct": 70.2143,
+          "horizonAgnosticConvergencePct": 49.9533,
+          "compositeScheduleFreeScore": 57.8715
+        }
+      ]
+    },
+    "naive-ema-post-hoc-weight-averaging": {
+      "profileId": "naive-ema-post-hoc-weight-averaging",
+      "label": "Post-Hoc EMA Weight Averaging Without Primal Gradient Evaluation",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 77.5019,
+        "stdDev": 0.1417,
+        "min": 77.3831,
+        "max": 77.6841,
+        "ci95": {
+          "low": 77.3259,
+          "high": 77.6778,
+          "halfWidth": 0.176
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 79.5127,
+        "stdDev": 0.2137,
+        "min": 79.2846,
+        "max": 79.8001,
+        "ci95": {
+          "low": 79.2473,
+          "high": 79.7781,
+          "halfWidth": 0.2654
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 81.4913,
+        "stdDev": 0.0714,
+        "min": 81.3979,
+        "max": 81.5923,
+        "ci95": {
+          "low": 81.4026,
+          "high": 81.58,
+          "halfWidth": 0.0887
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 79.0184,
+        "stdDev": 0.1132,
+        "min": 78.8605,
+        "max": 79.1463,
+        "ci95": {
+          "low": 78.8778,
+          "high": 79.1589,
+          "halfWidth": 0.1406
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 77.6841,
+          "biasDriftSuppressionPct": 79.8001,
+          "horizonAgnosticConvergencePct": 81.3979,
+          "compositeScheduleFreeScore": 78.8605
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 77.4126,
+          "biasDriftSuppressionPct": 79.3604,
+          "horizonAgnosticConvergencePct": 81.5183,
+          "compositeScheduleFreeScore": 79.1001
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 77.4036,
+          "biasDriftSuppressionPct": 79.4578,
+          "horizonAgnosticConvergencePct": 81.5923,
+          "compositeScheduleFreeScore": 79.0237
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 77.3831,
+          "biasDriftSuppressionPct": 79.2846,
+          "horizonAgnosticConvergencePct": 81.4831,
+          "compositeScheduleFreeScore": 79.1463
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 77.6259,
+          "biasDriftSuppressionPct": 79.6607,
+          "horizonAgnosticConvergencePct": 81.465,
+          "compositeScheduleFreeScore": 78.9612
+        }
+      ]
+    },
+    "schedule-free-primal-dual-gradient-centralized": {
+      "profileId": "schedule-free-primal-dual-gradient-centralized",
+      "label": "Schedule-Free Primal-Dual Interpolation (y_t = (1-beta)z_t + beta*x_t) + Gradient Centralization",
+      "anytimeStoppingOptimalityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "biasDriftSuppressionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "horizonAgnosticConvergencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeScheduleFreeScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 29017,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 39023,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 49031,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        },
+        {
+          "seed": 59053,
+          "anytimeStoppingOptimalityPct": 100,
+          "biasDriftSuppressionPct": 100,
+          "horizonAgnosticConvergencePct": 100,
+          "compositeScheduleFreeScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "schedule-free-primal-dual-gradient-centralized",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "anytimeStoppingOptimalityPctMean": 100,
+    "biasDriftSuppressionPctMean": 100,
+    "horizonAgnosticConvergencePctMean": 100,
+    "gainVsBaseline": 69.8024
+  }
+}
