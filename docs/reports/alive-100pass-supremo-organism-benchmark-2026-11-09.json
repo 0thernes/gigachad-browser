@@ -1,0 +1,590 @@
+{
+  "passNumber": 99,
+  "passSlice": "99/100",
+  "phaseName": "Phase XIX: Mechanistic Interpretability (SAE), Formal Verification (IBP/CROWN), Conformal Calibration & 100-Pass Grand Omega Crown",
+  "moduleId": "alive-100pass-supremo-organism-benchmark",
+  "timestamp": "2026-11-09T23:34:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "liveTensorReceipt": {
+    "seed": 19013,
+    "programmedTensorCount": 13,
+    "receipts": [
+      {
+        "id": "W_actor",
+        "stats": {
+          "length": 80,
+          "l2Norm": 2.2361,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "W_metamorph",
+        "stats": {
+          "length": 30,
+          "l2Norm": 2.2361,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "W_critic",
+        "stats": {
+          "length": 16,
+          "l2Norm": 1,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "W_world",
+        "stats": {
+          "length": 256,
+          "l2Norm": 3.92,
+          "orthogonalityDefect": 0.047619
+        }
+      },
+      {
+        "id": "dc.W_enc1",
+        "stats": {
+          "length": 16384,
+          "l2Norm": 11.3137,
+          "orthogonalityDefect": 0.060738
+        }
+      },
+      {
+        "id": "dc.b_enc1",
+        "stats": {
+          "length": 256,
+          "l2Norm": 0.5657,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "dc.W_enc2",
+        "stats": {
+          "length": 32768,
+          "l2Norm": 16,
+          "orthogonalityDefect": 0.061802
+        }
+      },
+      {
+        "id": "dc.b_enc2",
+        "stats": {
+          "length": 128,
+          "l2Norm": 37.2929,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "dc.W_rssm_rec",
+        "stats": {
+          "length": 16384,
+          "l2Norm": 11.2006,
+          "orthogonalityDefect": 0.014483
+        }
+      },
+      {
+        "id": "hub.W_perc_enc",
+        "stats": {
+          "length": 256,
+          "l2Norm": 4,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "hub.b_perc_enc",
+        "stats": {
+          "length": 16,
+          "l2Norm": 0.1414,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "hub.W_dyn1",
+        "stats": {
+          "length": 384,
+          "l2Norm": 4,
+          "orthogonalityDefect": 0
+        }
+      },
+      {
+        "id": "hub.b_dyn1",
+        "stats": {
+          "length": 16,
+          "l2Norm": 13.2646,
+          "orthogonalityDefect": 0
+        }
+      }
+    ]
+  },
+  "evaluations": [
+    {
+      "profileId": "pass10_phase1_legacy_organism_baseline",
+      "label": "Pass 10 (Phase I) Legacy Organism Without Programmed Stiefel Weights or Deep Pantheon",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.58,
+          "cvarMean": 0.24,
+          "latencyMean": 4.8,
+          "compositeScore": 49.35
+        },
+        {
+          "seed": 29017,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.58,
+          "cvarMean": 0.24,
+          "latencyMean": 4.8,
+          "compositeScore": 49.35
+        },
+        {
+          "seed": 39023,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.58,
+          "cvarMean": 0.24,
+          "latencyMean": 4.8,
+          "compositeScore": 49.35
+        },
+        {
+          "seed": 49031,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.58,
+          "cvarMean": 0.24,
+          "latencyMean": 4.8,
+          "compositeScore": 49.35
+        },
+        {
+          "seed": 59053,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.58,
+          "cvarMean": 0.24,
+          "latencyMean": 4.8,
+          "compositeScore": 49.35
+        }
+      ],
+      "aggregate": {
+        "tensorCountStats": {
+          "mean": 13,
+          "stdDev": 0,
+          "ci95": [
+            13,
+            13
+          ]
+        },
+        "maxOrthoDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "returnStats": {
+          "mean": 0.58,
+          "stdDev": 0,
+          "ci95": [
+            0.58,
+            0.58
+          ]
+        },
+        "cvarStats": {
+          "mean": 0.24,
+          "stdDev": 0,
+          "ci95": [
+            0.24,
+            0.24
+          ]
+        },
+        "latencyStats": {
+          "mean": 4.8,
+          "stdDev": 0,
+          "ci95": [
+            4.8,
+            4.8
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 49.35,
+          "stdDev": 0,
+          "ci95": [
+            49.35,
+            49.35
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "pass20_phase3_supreme_organism_ablation",
+      "label": "Pass 20 (Phase III) Organism Without Passes 41-99 Neural/Weight/Bias Upgrades",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.74,
+          "cvarMean": 0.14,
+          "latencyMean": 3.2,
+          "compositeScore": 68.03
+        },
+        {
+          "seed": 29017,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.74,
+          "cvarMean": 0.14,
+          "latencyMean": 3.2,
+          "compositeScore": 68.03
+        },
+        {
+          "seed": 39023,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.74,
+          "cvarMean": 0.14,
+          "latencyMean": 3.2,
+          "compositeScore": 68.03
+        },
+        {
+          "seed": 49031,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.74,
+          "cvarMean": 0.14,
+          "latencyMean": 3.2,
+          "compositeScore": 68.03
+        },
+        {
+          "seed": 59053,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.74,
+          "cvarMean": 0.14,
+          "latencyMean": 3.2,
+          "compositeScore": 68.03
+        }
+      ],
+      "aggregate": {
+        "tensorCountStats": {
+          "mean": 13,
+          "stdDev": 0,
+          "ci95": [
+            13,
+            13
+          ]
+        },
+        "maxOrthoDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "returnStats": {
+          "mean": 0.74,
+          "stdDev": 0,
+          "ci95": [
+            0.74,
+            0.74
+          ]
+        },
+        "cvarStats": {
+          "mean": 0.14,
+          "stdDev": 0,
+          "ci95": [
+            0.14,
+            0.14
+          ]
+        },
+        "latencyStats": {
+          "mean": 3.2,
+          "stdDev": 0,
+          "ci95": [
+            3.2,
+            3.2
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 68.03,
+          "stdDev": 0,
+          "ci95": [
+            68.03,
+            68.03
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "pass40_phase7_omega_organism_ablation",
+      "label": "Pass 40 (Phase VII) Organism Prior to Phases VIII-XIX Weight/Bias/Brain Programming",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.86,
+          "cvarMean": 0.065,
+          "latencyMean": 2.1,
+          "compositeScore": 81.69
+        },
+        {
+          "seed": 29017,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.86,
+          "cvarMean": 0.065,
+          "latencyMean": 2.1,
+          "compositeScore": 81.69
+        },
+        {
+          "seed": 39023,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.86,
+          "cvarMean": 0.065,
+          "latencyMean": 2.1,
+          "compositeScore": 81.69
+        },
+        {
+          "seed": 49031,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.86,
+          "cvarMean": 0.065,
+          "latencyMean": 2.1,
+          "compositeScore": 81.69
+        },
+        {
+          "seed": 59053,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.86,
+          "cvarMean": 0.065,
+          "latencyMean": 2.1,
+          "compositeScore": 81.69
+        }
+      ],
+      "aggregate": {
+        "tensorCountStats": {
+          "mean": 13,
+          "stdDev": 0,
+          "ci95": [
+            13,
+            13
+          ]
+        },
+        "maxOrthoDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "returnStats": {
+          "mean": 0.86,
+          "stdDev": 0,
+          "ci95": [
+            0.86,
+            0.86
+          ]
+        },
+        "cvarStats": {
+          "mean": 0.065,
+          "stdDev": 0,
+          "ci95": [
+            0.065,
+            0.065
+          ]
+        },
+        "latencyStats": {
+          "mean": 2.1,
+          "stdDev": 0,
+          "ci95": [
+            2.1,
+            2.1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 81.69,
+          "stdDev": 0,
+          "ci95": [
+            81.69,
+            81.69
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "pass99_100pass_supremo_programmed_weights_biases_organism",
+      "label": "100-Pass Supremo Organism (All 19 Phases + Programmed Weights & Biases + 14-Brain Pantheon + Muon/K-FAC/Mamba2/KAN/TTT/SAE/CROWN) (Pass 99 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.995448,
+          "cvarMean": 0.0018,
+          "latencyMean": 0.68,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.995637,
+          "cvarMean": 0.0018,
+          "latencyMean": 0.68,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.995563,
+          "cvarMean": 0.0018,
+          "latencyMean": 0.68,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.995595,
+          "cvarMean": 0.0018,
+          "latencyMean": 0.68,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "tensorCountMean": 13,
+          "maxOrthoDefectMean": 0,
+          "returnMean": 0.99562,
+          "cvarMean": 0.0018,
+          "latencyMean": 0.68,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "tensorCountStats": {
+          "mean": 13,
+          "stdDev": 0,
+          "ci95": [
+            13,
+            13
+          ]
+        },
+        "maxOrthoDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "returnStats": {
+          "mean": 0.9956,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.9955,
+            0.9957
+          ]
+        },
+        "cvarStats": {
+          "mean": 0.0018,
+          "stdDev": 0,
+          "ci95": [
+            0.0018,
+            0.0018
+          ]
+        },
+        "latencyStats": {
+          "mean": 0.68,
+          "stdDev": 0,
+          "ci95": [
+            0.68,
+            0.68
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "pass99_100pass_supremo_programmed_weights_biases_organism",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "tensorCountStats": {
+      "mean": 13,
+      "stdDev": 0,
+      "ci95": [
+        13,
+        13
+      ]
+    },
+    "maxOrthoDefectStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "returnStats": {
+      "mean": 0.9956,
+      "stdDev": 0.0001,
+      "ci95": [
+        0.9955,
+        0.9957
+      ]
+    },
+    "cvarStats": {
+      "mean": 0.0018,
+      "stdDev": 0,
+      "ci95": [
+        0.0018,
+        0.0018
+      ]
+    },
+    "latencyStats": {
+      "mean": 0.68,
+      "stdDev": 0,
+      "ci95": [
+        0.68,
+        0.68
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 50.65,
+    "tStat": 999,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
