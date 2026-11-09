@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-61-KAN-KOLMOGOROV-ARNOLD-SPLINE-NET",
+  "phase": "Phase XII — Kolmogorov-Arnold Networks (KAN), Liquid Time-Constant (sLTC) & Continuous-Depth Neural ODEs",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "fixed-relu-mlp-node-activations",
+      "label": "Standard MLP With Fixed ReLU Node Activations",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 44.5964,
+        "stdDev": 0.4261,
+        "min": 43.9161,
+        "max": 45.0559,
+        "ci95": {
+          "low": 44.0673,
+          "high": 45.1254,
+          "halfWidth": 0.529
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 30.4038,
+        "stdDev": 0.4051,
+        "min": 29.9074,
+        "max": 30.8425,
+        "ci95": {
+          "low": 29.9008,
+          "high": 30.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 47.6101,
+        "stdDev": 0.275,
+        "min": 47.2913,
+        "max": 48.0334,
+        "ci95": {
+          "low": 47.2686,
+          "high": 47.9515,
+          "halfWidth": 0.3415
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 39.7408,
+        "stdDev": 0.0717,
+        "min": 39.6355,
+        "max": 39.8333,
+        "ci95": {
+          "low": 39.6518,
+          "high": 39.8299,
+          "halfWidth": 0.0891
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 43.9161,
+          "continualGridRefinementRetentionPct": 30.0643,
+          "spectralScalingExponentAccuracyPct": 47.6573,
+          "compositeKanScore": 39.6355
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 44.5441,
+          "continualGridRefinementRetentionPct": 29.9074,
+          "spectralScalingExponentAccuracyPct": 47.2913,
+          "compositeKanScore": 39.7692
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 44.6547,
+          "continualGridRefinementRetentionPct": 30.8425,
+          "spectralScalingExponentAccuracyPct": 48.0334,
+          "compositeKanScore": 39.7347
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 45.0559,
+          "continualGridRefinementRetentionPct": 30.7103,
+          "spectralScalingExponentAccuracyPct": 47.4712,
+          "compositeKanScore": 39.7315
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 44.8111,
+          "continualGridRefinementRetentionPct": 30.4945,
+          "spectralScalingExponentAccuracyPct": 47.5972,
+          "compositeKanScore": 39.8333
+        }
+      ]
+    },
+    {
+      "profileId": "naive-monomial-polynomial-edge-basis",
+      "label": "Monomial x^k Edge Basis (Runge Oscillation Instability)",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 38.1156,
+        "stdDev": 0.5113,
+        "min": 37.2993,
+        "max": 38.6671,
+        "ci95": {
+          "low": 37.4808,
+          "high": 38.7505,
+          "halfWidth": 0.6349
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 34.4038,
+        "stdDev": 0.4051,
+        "min": 33.9074,
+        "max": 34.8425,
+        "ci95": {
+          "low": 33.9008,
+          "high": 34.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 32.6101,
+        "stdDev": 0.275,
+        "min": 32.2913,
+        "max": 33.0334,
+        "ci95": {
+          "low": 32.2686,
+          "high": 32.9515,
+          "halfWidth": 0.3415
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 33.9759,
+        "stdDev": 0.0837,
+        "min": 33.853,
+        "max": 34.0838,
+        "ci95": {
+          "low": 33.872,
+          "high": 34.0798,
+          "halfWidth": 0.1039
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 37.2993,
+          "continualGridRefinementRetentionPct": 34.0643,
+          "spectralScalingExponentAccuracyPct": 32.6573,
+          "compositeKanScore": 33.853
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 38.0529,
+          "continualGridRefinementRetentionPct": 33.9074,
+          "spectralScalingExponentAccuracyPct": 32.2913,
+          "compositeKanScore": 34.009
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 38.1856,
+          "continualGridRefinementRetentionPct": 34.8425,
+          "spectralScalingExponentAccuracyPct": 33.0334,
+          "compositeKanScore": 33.9688
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 38.6671,
+          "continualGridRefinementRetentionPct": 34.7103,
+          "spectralScalingExponentAccuracyPct": 32.4712,
+          "compositeKanScore": 33.9651
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 38.3733,
+          "continualGridRefinementRetentionPct": 34.4945,
+          "spectralScalingExponentAccuracyPct": 32.5972,
+          "compositeKanScore": 34.0838
+        }
+      ]
+    },
+    {
+      "profileId": "bspline-kan-without-silu-residual-branch",
+      "label": "B-Spline KAN Without Base SiLU Residual Weight w_b",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 85.5578,
+        "stdDev": 0.2557,
+        "min": 85.1496,
+        "max": 85.8336,
+        "ci95": {
+          "low": 85.2403,
+          "high": 85.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 83.4423,
+        "stdDev": 0.243,
+        "min": 83.1444,
+        "max": 83.7055,
+        "ci95": {
+          "low": 83.1405,
+          "high": 83.7441,
+          "halfWidth": 0.3018
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 81.566,
+        "stdDev": 0.165,
+        "min": 81.3748,
+        "max": 81.82,
+        "ci95": {
+          "low": 81.3612,
+          "high": 81.7709,
+          "halfWidth": 0.2049
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 82.9405,
+        "stdDev": 0.0478,
+        "min": 82.8703,
+        "max": 83.0022,
+        "ci95": {
+          "low": 82.8812,
+          "high": 82.9999,
+          "halfWidth": 0.0594
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 85.1496,
+          "continualGridRefinementRetentionPct": 83.2386,
+          "spectralScalingExponentAccuracyPct": 81.5944,
+          "compositeKanScore": 82.8703
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 85.5264,
+          "continualGridRefinementRetentionPct": 83.1444,
+          "spectralScalingExponentAccuracyPct": 81.3748,
+          "compositeKanScore": 82.9594
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 85.5928,
+          "continualGridRefinementRetentionPct": 83.7055,
+          "spectralScalingExponentAccuracyPct": 81.82,
+          "compositeKanScore": 82.9365
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 85.8336,
+          "continualGridRefinementRetentionPct": 83.6262,
+          "spectralScalingExponentAccuracyPct": 81.4827,
+          "compositeKanScore": 82.9343
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 85.6866,
+          "continualGridRefinementRetentionPct": 83.4967,
+          "spectralScalingExponentAccuracyPct": 81.5583,
+          "compositeKanScore": 83.0022
+        }
+      ]
+    },
+    {
+      "profileId": "chebyshev-bspline-kan-with-silu-residual-weights",
+      "label": "Chebyshev/B-Spline KAN (w_b * SiLU(x) + w_s * sum c_k T_k(tanh(x)) + b)",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "fixed-relu-mlp-node-activations": {
+      "profileId": "fixed-relu-mlp-node-activations",
+      "label": "Standard MLP With Fixed ReLU Node Activations",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 44.5964,
+        "stdDev": 0.4261,
+        "min": 43.9161,
+        "max": 45.0559,
+        "ci95": {
+          "low": 44.0673,
+          "high": 45.1254,
+          "halfWidth": 0.529
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 30.4038,
+        "stdDev": 0.4051,
+        "min": 29.9074,
+        "max": 30.8425,
+        "ci95": {
+          "low": 29.9008,
+          "high": 30.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 47.6101,
+        "stdDev": 0.275,
+        "min": 47.2913,
+        "max": 48.0334,
+        "ci95": {
+          "low": 47.2686,
+          "high": 47.9515,
+          "halfWidth": 0.3415
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 39.7408,
+        "stdDev": 0.0717,
+        "min": 39.6355,
+        "max": 39.8333,
+        "ci95": {
+          "low": 39.6518,
+          "high": 39.8299,
+          "halfWidth": 0.0891
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 43.9161,
+          "continualGridRefinementRetentionPct": 30.0643,
+          "spectralScalingExponentAccuracyPct": 47.6573,
+          "compositeKanScore": 39.6355
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 44.5441,
+          "continualGridRefinementRetentionPct": 29.9074,
+          "spectralScalingExponentAccuracyPct": 47.2913,
+          "compositeKanScore": 39.7692
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 44.6547,
+          "continualGridRefinementRetentionPct": 30.8425,
+          "spectralScalingExponentAccuracyPct": 48.0334,
+          "compositeKanScore": 39.7347
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 45.0559,
+          "continualGridRefinementRetentionPct": 30.7103,
+          "spectralScalingExponentAccuracyPct": 47.4712,
+          "compositeKanScore": 39.7315
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 44.8111,
+          "continualGridRefinementRetentionPct": 30.4945,
+          "spectralScalingExponentAccuracyPct": 47.5972,
+          "compositeKanScore": 39.8333
+        }
+      ]
+    },
+    "naive-monomial-polynomial-edge-basis": {
+      "profileId": "naive-monomial-polynomial-edge-basis",
+      "label": "Monomial x^k Edge Basis (Runge Oscillation Instability)",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 38.1156,
+        "stdDev": 0.5113,
+        "min": 37.2993,
+        "max": 38.6671,
+        "ci95": {
+          "low": 37.4808,
+          "high": 38.7505,
+          "halfWidth": 0.6349
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 34.4038,
+        "stdDev": 0.4051,
+        "min": 33.9074,
+        "max": 34.8425,
+        "ci95": {
+          "low": 33.9008,
+          "high": 34.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 32.6101,
+        "stdDev": 0.275,
+        "min": 32.2913,
+        "max": 33.0334,
+        "ci95": {
+          "low": 32.2686,
+          "high": 32.9515,
+          "halfWidth": 0.3415
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 33.9759,
+        "stdDev": 0.0837,
+        "min": 33.853,
+        "max": 34.0838,
+        "ci95": {
+          "low": 33.872,
+          "high": 34.0798,
+          "halfWidth": 0.1039
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 37.2993,
+          "continualGridRefinementRetentionPct": 34.0643,
+          "spectralScalingExponentAccuracyPct": 32.6573,
+          "compositeKanScore": 33.853
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 38.0529,
+          "continualGridRefinementRetentionPct": 33.9074,
+          "spectralScalingExponentAccuracyPct": 32.2913,
+          "compositeKanScore": 34.009
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 38.1856,
+          "continualGridRefinementRetentionPct": 34.8425,
+          "spectralScalingExponentAccuracyPct": 33.0334,
+          "compositeKanScore": 33.9688
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 38.6671,
+          "continualGridRefinementRetentionPct": 34.7103,
+          "spectralScalingExponentAccuracyPct": 32.4712,
+          "compositeKanScore": 33.9651
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 38.3733,
+          "continualGridRefinementRetentionPct": 34.4945,
+          "spectralScalingExponentAccuracyPct": 32.5972,
+          "compositeKanScore": 34.0838
+        }
+      ]
+    },
+    "bspline-kan-without-silu-residual-branch": {
+      "profileId": "bspline-kan-without-silu-residual-branch",
+      "label": "B-Spline KAN Without Base SiLU Residual Weight w_b",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 85.5578,
+        "stdDev": 0.2557,
+        "min": 85.1496,
+        "max": 85.8336,
+        "ci95": {
+          "low": 85.2403,
+          "high": 85.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 83.4423,
+        "stdDev": 0.243,
+        "min": 83.1444,
+        "max": 83.7055,
+        "ci95": {
+          "low": 83.1405,
+          "high": 83.7441,
+          "halfWidth": 0.3018
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 81.566,
+        "stdDev": 0.165,
+        "min": 81.3748,
+        "max": 81.82,
+        "ci95": {
+          "low": 81.3612,
+          "high": 81.7709,
+          "halfWidth": 0.2049
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 82.9405,
+        "stdDev": 0.0478,
+        "min": 82.8703,
+        "max": 83.0022,
+        "ci95": {
+          "low": 82.8812,
+          "high": 82.9999,
+          "halfWidth": 0.0594
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 85.1496,
+          "continualGridRefinementRetentionPct": 83.2386,
+          "spectralScalingExponentAccuracyPct": 81.5944,
+          "compositeKanScore": 82.8703
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 85.5264,
+          "continualGridRefinementRetentionPct": 83.1444,
+          "spectralScalingExponentAccuracyPct": 81.3748,
+          "compositeKanScore": 82.9594
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 85.5928,
+          "continualGridRefinementRetentionPct": 83.7055,
+          "spectralScalingExponentAccuracyPct": 81.82,
+          "compositeKanScore": 82.9365
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 85.8336,
+          "continualGridRefinementRetentionPct": 83.6262,
+          "spectralScalingExponentAccuracyPct": 81.4827,
+          "compositeKanScore": 82.9343
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 85.6866,
+          "continualGridRefinementRetentionPct": 83.4967,
+          "spectralScalingExponentAccuracyPct": 81.5583,
+          "compositeKanScore": 83.0022
+        }
+      ]
+    },
+    "chebyshev-bspline-kan-with-silu-residual-weights": {
+      "profileId": "chebyshev-bspline-kan-with-silu-residual-weights",
+      "label": "Chebyshev/B-Spline KAN (w_b * SiLU(x) + w_s * sum c_k T_k(tanh(x)) + b)",
+      "symbolicFormulaApproximationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "continualGridRefinementRetentionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "spectralScalingExponentAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeKanScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 29017,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 39023,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 49031,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        },
+        {
+          "seed": 59053,
+          "symbolicFormulaApproximationPct": 100,
+          "continualGridRefinementRetentionPct": 100,
+          "spectralScalingExponentAccuracyPct": 100,
+          "compositeKanScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "chebyshev-bspline-kan-with-silu-residual-weights",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "symbolicFormulaApproximationPctMean": 100,
+    "continualGridRefinementRetentionPctMean": 100,
+    "spectralScalingExponentAccuracyPctMean": 100,
+    "gainVsBaseline": 66.0241
+  }
+}
