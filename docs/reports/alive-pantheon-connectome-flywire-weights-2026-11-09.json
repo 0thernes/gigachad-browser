@@ -1,0 +1,420 @@
+{
+  "passNumber": 71,
+  "passSlice": "71/100",
+  "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+  "moduleId": "alive-pantheon-connectome-flywire-weights",
+  "timestamp": "2026-11-09T23:02:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "unconstrained_random_brains_1to4_baseline",
+      "label": "Unconstrained Random Gaussian Brains 1-4 (No Dale Law / No Ring Attractor)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 5.772003,
+          "ca3RecallCosineMean": 0.84,
+          "compositeScore": 57.6089
+        },
+        {
+          "seed": 29017,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 4.788733,
+          "ca3RecallCosineMean": 0.84,
+          "compositeScore": 58.5528
+        },
+        {
+          "seed": 39023,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 5.996811,
+          "ca3RecallCosineMean": 0.84,
+          "compositeScore": 57.3931
+        },
+        {
+          "seed": 49031,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 8.890098,
+          "ca3RecallCosineMean": 0.84,
+          "compositeScore": 54.6155
+        },
+        {
+          "seed": 59053,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 6.728973,
+          "ca3RecallCosineMean": 0.84,
+          "compositeScore": 56.6902
+        }
+      ],
+      "aggregate": {
+        "dalesViolationsStats": {
+          "mean": 16,
+          "stdDev": 0,
+          "ci95": [
+            16,
+            16
+          ]
+        },
+        "gapSymmetryErrorStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "angularErrorDegStats": {
+          "mean": 6.4353,
+          "stdDev": 1.5375,
+          "ci95": [
+            4.5263,
+            8.3444
+          ]
+        },
+        "ca3RecallCosineStats": {
+          "mean": 0.84,
+          "stdDev": 0,
+          "ci95": [
+            0.84,
+            0.84
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 56.9721,
+          "stdDev": 1.476,
+          "ci95": [
+            55.1394,
+            58.8048
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "connectome_only_no_ring_attractor_ablation",
+      "label": "C. elegans Connectome Only (No FlyWire Cosine Ring Attractor)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 7.075049,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 95.608
+        },
+        {
+          "seed": 29017,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 6.166417,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 96.4802
+        },
+        {
+          "seed": 39023,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 6.763683,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 95.9069
+        },
+        {
+          "seed": 49031,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 6.508658,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 96.1517
+        },
+        {
+          "seed": 59053,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 7.349883,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 95.3441
+        }
+      ],
+      "aggregate": {
+        "dalesViolationsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "gapSymmetryErrorStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "angularErrorDegStats": {
+          "mean": 6.7727,
+          "stdDev": 0.4642,
+          "ci95": [
+            6.1964,
+            7.3491
+          ]
+        },
+        "ca3RecallCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 95.8982,
+          "stdDev": 0.4456,
+          "ci95": [
+            95.3449,
+            96.4515
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "unsigned_synapses_no_dales_law_ablation",
+      "label": "Unsigned Synapses Without Dale's Law Excitatory/Inhibitory Sign Mask",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 70
+        },
+        {
+          "seed": 29017,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 70
+        },
+        {
+          "seed": 39023,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 70
+        },
+        {
+          "seed": 49031,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 70
+        },
+        {
+          "seed": 59053,
+          "dalesViolationsMean": 16,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 70
+        }
+      ],
+      "aggregate": {
+        "dalesViolationsStats": {
+          "mean": 16,
+          "stdDev": 0,
+          "ci95": [
+            16,
+            16
+          ]
+        },
+        "gapSymmetryErrorStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "angularErrorDegStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "ca3RecallCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 70,
+          "stdDev": 0,
+          "ci95": [
+            70,
+            70
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "programmed_connectome_flywire_ca3_dales_law_brains_1to4",
+      "label": "Programmed Connectome + FlyWire Ring Attractor + CA3-CA1 Theta + Dale's Law (Pass 71 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "dalesViolationsMean": 0,
+          "gapSymmetryErrorMean": 0,
+          "angularErrorDegMean": 0,
+          "ca3RecallCosineMean": 1,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "dalesViolationsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "gapSymmetryErrorStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "angularErrorDegStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "ca3RecallCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "programmed_connectome_flywire_ca3_dales_law_brains_1to4",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "dalesViolationsStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "gapSymmetryErrorStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "angularErrorDegStats": {
+      "mean": 0,
+      "stdDev": 0,
+      "ci95": [
+        0,
+        0
+      ]
+    },
+    "ca3RecallCosineStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 43.0279,
+    "tStat": 65.1848,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
