@@ -308,6 +308,7 @@
   let latestProvenanceEval = null, provenanceEvalBusy = false;
   let latestFaultRecovery = null, faultRecoveryBusy = false;
   let latestSustainedPerf = null, sustainedPerfBusy = false;
+  let latestReleaseAudit = null, releaseAuditBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -408,6 +409,19 @@
       return latestSustainedPerf;
     } finally {
       sustainedPerfBusy = false;
+    }
+  }
+  async function runReleaseAudit() {
+    const runner = root.AliveIntegratedReleaseAudit;
+    if (releaseAuditBusy || typeof runner?.run !== 'function') return latestReleaseAudit;
+    releaseAuditBusy = true;
+    try {
+      latestReleaseAudit = await runner.run();
+      root.__aliveLatestReleaseAudit = latestReleaseAudit;
+      draw();
+      return latestReleaseAudit;
+    } finally {
+      releaseAuditBusy = false;
     }
   }
 
@@ -879,6 +893,41 @@
     ctx.fillText('240 ticks/seed (16.67ms 60Hz budget) · memΔ=post-warmup ring growth · hidDraw=draws while panel hidden', 8, height - 6);
   }
 
+  // ---------- 16. Pass 10 integrated Phase I release audit & 8 PDF Gates ----
+  function drawReleaseAudit(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestReleaseAudit || root.__aliveLatestReleaseAudit;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.gateAudits) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(releaseAuditBusy ? 'Running 5-seed Phase I integrated release audit (Passes 1–9 + 8 PDF Gates)…' : 'Click "Run audit" above to cross-verify Passes 1–9, all 8 PDF Gates (G1..G8), and freeze the Phase I SHA-256 manifest.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const shaShort = String(s.phase1FrozenDigestSha256 || '').slice(0, 16);
+    ctx.fillText(`5 seeds · Passes ${s.verifiedPassCount}/${s.totalAuditedPasses} verified · PDF Gates ${s.verifiedGateCount}/${s.totalPdfGates} promoted · Phase II Tor Mesh Ready: ${s.phase2TorMeshReady} · SHA-256=${shaShort}…`, 8, 12);
+
+    const gates = s.gateAudits || [];
+    const colW = Math.floor((width - 24) / 2);
+    gates.forEach((g, idx) => {
+      const col = idx < 4 ? 0 : 1;
+      const row = idx % 4;
+      const x = 8 + col * (colW + 8);
+      const y = 28 + row * 36;
+      const barW = Math.max(60, colW - 220);
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'left';
+      ctx.fillText(g.gateId.slice(0, 22), x, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(x + 145, y, barW, 16);
+      ctx.fillStyle = g.verified ? '#34d399' : '#f43f5e';
+      ctx.fillRect(x + 145, y + 2, barW * (g.passedSeeds / 5), 12);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(`${g.passedSeeds}/5 P${g.passRef} ${g.verified ? 'PASS' : 'FAIL'}`, x + 150 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('Phase I 10-pass creature integration frozen · 36 faculties · 24 neural streams · 8/8 PDF Gates promoted', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -925,13 +974,16 @@
     const perfBtn = doc.createElement('button'); perfBtn.type = 'button'; perfBtn.textContent = 'Run perf';
     perfBtn.title = 'Run 5-seed sustained 60Hz performance, memory ring-buffer bounds and visualizer overhead qualification';
     perfBtn.addEventListener('click', () => { runSustainedPerf(); });
+    const auditBtn = doc.createElement('button'); auditBtn.type = 'button'; auditBtn.textContent = 'Run audit';
+    auditBtn.title = 'Run 5-seed Phase I integrated release audit across Passes 1–9 and all 8 PDF Gates';
+    auditBtn.addEventListener('click', () => { runReleaseAudit(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -939,7 +991,8 @@
       benchmarkCanvas = canvas('alive-fabric-benchmark', 210), ablationsCanvas = canvas('alive-fabric-ablations', 280),
       restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200),
       colonyCanvas = canvas('alive-fabric-colony-fitness', 190), provenanceCanvas = canvas('alive-fabric-provenance', 190),
-      faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190), sustainedPerfCanvas = canvas('alive-fabric-sustained-perf', 190);
+      faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190), sustainedPerfCanvas = canvas('alive-fabric-sustained-perf', 190),
+      releaseAuditCanvas = canvas('alive-fabric-release-audit', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -957,7 +1010,8 @@
       section('12 · Colony differentiation, role assignment, state separation & population fitness (5 seeds)', colonyCanvas),
       section('13 · Research provenance, contradiction tracking & source-grounded writing (5 seeds)', provenanceCanvas),
       section('14 · Browser tools, navigation, developer workflows & fault recovery (5 seeds)', faultRecoveryCanvas),
-      section('15 · Sustained 60Hz performance, memory bounds, visualizer overhead & qualification (5 seeds)', sustainedPerfCanvas));
+      section('15 · Sustained 60Hz performance, memory bounds, visualizer overhead & qualification (5 seeds)', sustainedPerfCanvas),
+      section('16 · Integrated Phase I release audit — Passes 1–9 & 8 PDF Gates frozen SHA-256 manifest', releaseAuditCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -971,7 +1025,8 @@
       () => drawColonyFitness(colonyCanvas),
       () => drawProvenanceEval(provenanceCanvas),
       () => drawFaultRecovery(faultRecoveryCanvas),
-      () => drawSustainedPerf(sustainedPerfCanvas));
+      () => drawSustainedPerf(sustainedPerfCanvas),
+      () => drawReleaseAudit(releaseAuditCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1014,6 +1069,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

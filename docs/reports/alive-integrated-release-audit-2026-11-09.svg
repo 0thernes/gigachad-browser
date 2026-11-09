@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430">
+<rect width="100%" height="100%" fill="#05090f"/>
+<text x="20" y="28" fill="#67e8f9" font-family="Consolas, monospace" font-size="14" font-weight="bold">ALIVE Pass 10 — Integrated Phase I Release Audit &amp; 8 PDF Gates Frozen Manifest (5 Seeds)</text>
+<text x="20" y="48" fill="#cbd5e1" font-family="Consolas, monospace" font-size="11">Passes 9/9 verified (5/5 seeds) · PDF Gates 8/8 promoted · Phase II Tor Mesh Ready: true · SHA-256: 820789b8bc108dbd3a53733a…</text>
+<text x="275" y="89" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G1-Continuous-36-Faculties</text>
+<rect x="285" y="74" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="77" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="89" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 1 · SHA-256=7bc16a9d40b6bb9d… · PROMOTED</text>
+<text x="275" y="129" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G2-Unseen-Holdout-Generalization</text>
+<rect x="285" y="114" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="117" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="129" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 2 · SHA-256=bc6c4239cd07ef58… · PROMOTED</text>
+<text x="275" y="169" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G3-38-Condition-Causal-Ablations</text>
+<rect x="285" y="154" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="157" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="169" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 3 · SHA-256=0c84c734bca830eb… · PROMOTED</text>
+<text x="275" y="209" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G4-Bit-Exact-Restart-Equivalence</text>
+<rect x="285" y="194" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="197" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="209" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 4 · SHA-256=bc5dac16eb702288… · PROMOTED</text>
+<text x="275" y="249" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G5-Continual-Morphology-Transfer</text>
+<rect x="285" y="234" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="237" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="249" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 5 · SHA-256=b84ffb0ee47b6686… · PROMOTED</text>
+<text x="275" y="289" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G6-Colony-Role-Differentiation</text>
+<rect x="285" y="274" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="277" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="289" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 6 · SHA-256=0bf9bfdd1d09c5a1… · PROMOTED</text>
+<text x="275" y="329" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G7-Grounded-Provenance-Synthesis</text>
+<rect x="285" y="314" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="317" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="329" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 7 · SHA-256=9699a2cbc5765e5f… · PROMOTED</text>
+<text x="275" y="369" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">G8-Fault-Recovery-60Hz-Qualification</text>
+<rect x="285" y="354" width="280" height="22" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="285" y="357" width="280.0" height="16" fill="#34d399"/>
+<text x="575" y="369" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">5/5 seeds · Pass 9 · SHA-256=00f71da4e7ebd18e… · PROMOTED</text>
+<text x="20" y="414" fill="#64748b" font-family="Consolas, monospace" font-size="10">Seeds: 19013, 29017, 39023, 49031, 59053 · 36 Faculties · 24 Neural Streams · Phase I Frozen Digest: 820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41</text>
+</svg>

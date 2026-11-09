@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-10-integrated-phase1-release-audit-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "auditedPasses": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "pdfGatesCount": 8,
+    "facultiesVerified": 36,
+    "coupledStreamsVerified": 24
+  },
+  "summary": {
+    "verifiedPassCount": 9,
+    "totalAuditedPasses": 9,
+    "verifiedGateCount": 8,
+    "totalPdfGates": 8,
+    "allPassesVerifiedOn5Seeds": true,
+    "all8PdfGatesPromoted": true,
+    "phase2TorMeshReady": true,
+    "phase1FrozenDigestSha256": "820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41",
+    "auditScore": {
+      "count": 5,
+      "mean": 100,
+      "sampleStandardDeviation": 0,
+      "ci95": [
+        100,
+        100
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "passAudits": [
+      {
+        "pass": 1,
+        "id": "pass-01-continuous-cognition-synaptic-fabric",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "registeredFaculties",
+        "primaryMetricMean": 36,
+        "secondaryMetricLabel": "plasticSynapseEdges",
+        "secondaryMetricMean": 52,
+        "verified": true
+      },
+      {
+        "pass": 2,
+        "id": "pass-02-unseen-task-benchmark",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "fabricUnseenHoldoutReward",
+        "primaryMetricMean": 14.520000000000005,
+        "secondaryMetricLabel": "learningVsFrozenDelta",
+        "secondaryMetricMean": 13.338,
+        "verified": true
+      },
+      {
+        "pass": 3,
+        "id": "pass-03-architecture-ablations-38-conditions",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "all14BrainsDeltaL2",
+        "primaryMetricMean": 0.00747158538998603,
+        "secondaryMetricLabel": "allReasoningMarginLoss",
+        "secondaryMetricMean": 1.9583872489118952,
+        "verified": true
+      },
+      {
+        "pass": 4,
+        "id": "pass-04-state-contracts-restart-equivalence",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "fullRestoreStateL2Drift",
+        "primaryMetricMean": 0,
+        "secondaryMetricLabel": "necessaryDomainsCount",
+        "secondaryMetricMean": 6,
+        "verified": true
+      },
+      {
+        "pass": 5,
+        "id": "pass-05-continual-learning-morphology-transfer",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "priorTaskRetentionPct",
+        "primaryMetricMean": 95.38869272731183,
+        "secondaryMetricLabel": "unseenMorphHoldoutReturn",
+        "secondaryMetricMean": 0.6516112339150981,
+        "verified": true
+      },
+      {
+        "pass": 6,
+        "id": "pass-06-colony-role-differentiation-fitness",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "differentiatedPopulationFitness",
+        "primaryMetricMean": 6.191908322289953,
+        "secondaryMetricLabel": "nicheCoveragePct",
+        "secondaryMetricMean": 100,
+        "verified": true
+      },
+      {
+        "pass": 7,
+        "id": "pass-07-research-provenance-contradiction-writing",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "provenanceCompositeScore",
+        "primaryMetricMean": 99.71665020483678,
+        "secondaryMetricLabel": "contradictionRecallPct",
+        "secondaryMetricMean": 100,
+        "verified": true
+      },
+      {
+        "pass": 8,
+        "id": "pass-08-browser-fault-recovery-idempotent-dom",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "faultTolerantReliabilityScore",
+        "primaryMetricMean": 100,
+        "secondaryMetricLabel": "faultRecoveryPct",
+        "secondaryMetricMean": 100,
+        "verified": true
+      },
+      {
+        "pass": 9,
+        "id": "pass-09-sustained-60hz-performance-qualification",
+        "passedSeeds": 5,
+        "primaryMetricLabel": "sustainedP99TickMs",
+        "primaryMetricMean": 5.239700101011456,
+        "secondaryMetricLabel": "qualificationScore",
+        "secondaryMetricMean": 100,
+        "verified": true
+      }
+    ],
+    "gateAudits": [
+      {
+        "gateId": "G1-Continuous-36-Faculties",
+        "passRef": 1,
+        "description": "All 36 faculties & 24 neural streams wired with non-zero coverage",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "7bc16a9d40b6bb9dce72b4e0e80d8b46ed0535cc77caffbfa1eaf3564a5b1fc7"
+      },
+      {
+        "gateId": "G2-Unseen-Holdout-Generalization",
+        "passRef": 2,
+        "description": "Learning & Fabric-coupled controllers beat frozen baseline on 5/5 unseen holdout seeds",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "bc6c4239cd07ef58bef5ce580c9198cddcd0ff46f338f8ca38690d97d9acd086"
+      },
+      {
+        "gateId": "G3-38-Condition-Causal-Ablations",
+        "passRef": 3,
+        "description": "All 14 brains, 7 precision tiers, AoT/ToT/GoT & specialists show non-zero causal delta on 5/5 seeds",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "0c84c734bca830ebf2d1d66989a0828a71eaaa2c0529a575ee5e388e3e54bff1"
+      },
+      {
+        "gateId": "G4-Bit-Exact-Restart-Equivalence",
+        "passRef": 4,
+        "description": "6-domain checkpoint/restore achieves 0.0 L2 drift & exact SHA-256 match on 5/5 seeds",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "bc5dac16eb702288d0110b027dd08748ccf6a3529daaeaa2dcb25a71e9f9cc69"
+      },
+      {
+        "gateId": "G5-Continual-Morphology-Transfer",
+        "passRef": 5,
+        "description": "4-phase continual retention >95% & positive unseen Morph E transfer on 5/5 seeds",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "b84ffb0ee47b668618953ba177014c698a7c818e1b014dbaf01c5a53b8e0cc69"
+      },
+      {
+        "gateId": "G6-Colony-Role-Differentiation",
+        "passRef": 6,
+        "description": "5-role differentiated colony beats solitary & clone regimes with strict state separation on 5/5 seeds",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "0bf9bfdd1d09c5a1c98bb7f9647930b61f457d409901d3f289fc1754515c897d"
+      },
+      {
+        "gateId": "G7-Grounded-Provenance-Synthesis",
+        "passRef": 7,
+        "description": "100% contradiction recall, 100% grounded claim precision & 0% hallucination on 5/5 seeds",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "9699a2cbc5765e5f72399a79d0ba14fc481585a721b0b69f3fb25f7401cbd509"
+      },
+      {
+        "gateId": "G8-Fault-Recovery-60Hz-Qualification",
+        "passRef": 9,
+        "description": "100% browser fault recovery, 0 duplicate Warp DOM, and p99 <= 16.67ms 60Hz compliance on 5/5 seeds",
+        "passedSeeds": 5,
+        "verified": true,
+        "evidenceDigestSha256": "00f71da4e7ebd18e05290606d876b64c2fddafc76ffc6fe4aa7fcdf8fbd1f5a7"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "passesVerified": 9,
+      "gatesVerified": 8,
+      "auditScore": 100,
+      "seedManifestSha256": "24fc1187d4c63dc95135aa56f8f2eefb4a5dcbbcce6cae101ed4ed5b90bb2e07"
+    },
+    {
+      "seed": 29017,
+      "passesVerified": 9,
+      "gatesVerified": 8,
+      "auditScore": 100,
+      "seedManifestSha256": "6f16282e34574fa409d5fbc1cdbbba97a55268ac78b80a96b47999b2e178e360"
+    },
+    {
+      "seed": 39023,
+      "passesVerified": 9,
+      "gatesVerified": 8,
+      "auditScore": 100,
+      "seedManifestSha256": "1c5fb5ddac8044d2c9307956554934dcc4c6783392a632f73c996884d6870080"
+    },
+    {
+      "seed": 49031,
+      "passesVerified": 9,
+      "gatesVerified": 8,
+      "auditScore": 100,
+      "seedManifestSha256": "fc01d6b5fcdbd9a36acccb63223f2c8c9d5277bd1c21751576267ea6bb0b2b66"
+    },
+    {
+      "seed": 59053,
+      "passesVerified": 9,
+      "gatesVerified": 8,
+      "auditScore": 100,
+      "seedManifestSha256": "30ad9a142ec1eebcc81660a599e828b01d0750090fd4517ced676b1555ac2f9c"
+    }
+  ],
+  "scope": "Pass 10 integrated release audit across Passes 1–9 and all 8 Scientific PDF Gates (G1..G8), freezing the SHA-256 Phase I evidence manifest and qualifying entry into Phase II (Passes 11–15 Tor Hybrid Synergy Mesh)."
+}

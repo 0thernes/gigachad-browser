@@ -448,6 +448,39 @@ test('runSustainedPerf renders 5-seed 60Hz latency, memory bounds and hidden ove
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runReleaseAudit renders 5-seed Phase I integrated release audit and 8 PDF Gates in section 16', async () => {
+  const { window, dom } = load();
+  window.AliveIntegratedReleaseAudit = {
+    run: async () => ({
+      summary: {
+        verifiedPassCount: 9,
+        totalAuditedPasses: 9,
+        verifiedGateCount: 8,
+        totalPdfGates: 8,
+        phase2TorMeshReady: true,
+        phase1FrozenDigestSha256: 'a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90',
+        gateAudits: [
+          { gateId: 'G1-Continuous-36-Faculties', passRef: 1, passedSeeds: 5, verified: true },
+          { gateId: 'G2-Unseen-Holdout-Generalization', passRef: 2, passedSeeds: 5, verified: true },
+          { gateId: 'G3-38-Condition-Causal-Ablations', passRef: 3, passedSeeds: 5, verified: true },
+          { gateId: 'G4-Bit-Exact-Restart-Equivalence', passRef: 4, passedSeeds: 5, verified: true },
+          { gateId: 'G5-Continual-Morphology-Transfer', passRef: 5, passedSeeds: 5, verified: true },
+          { gateId: 'G6-Colony-Role-Differentiation', passRef: 6, passedSeeds: 5, verified: true },
+          { gateId: 'G7-Grounded-Provenance-Synthesis', passRef: 7, passedSeeds: 5, verified: true },
+          { gateId: 'G8-Fault-Recovery-60Hz-Qualification', passRef: 9, passedSeeds: 5, verified: true }
+        ]
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runReleaseAudit();
+  assert.equal(report.summary.verifiedGateCount, 8);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('Passes 9/9 verified · PDF Gates 8/8 promoted')), 'release audit summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('G1-Continuous-36-Facul')), 'release audit gate rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 
