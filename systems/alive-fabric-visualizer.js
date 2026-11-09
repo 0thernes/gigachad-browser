@@ -304,6 +304,7 @@
   let latestAblations = null, ablationsBusy = false;
   let latestRestartEq = null, restartEqBusy = false;
   let latestContinualTransfer = null, continualTransferBusy = false;
+  let latestColonyFitness = null, colonyFitnessBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -352,6 +353,19 @@
       return latestContinualTransfer;
     } finally {
       continualTransferBusy = false;
+    }
+  }
+  async function runColonyFitness() {
+    const runner = root.AliveColonyPopulationFitness;
+    if (colonyFitnessBusy || typeof runner?.run !== 'function') return latestColonyFitness;
+    colonyFitnessBusy = true;
+    try {
+      latestColonyFitness = await runner.run();
+      root.__aliveLatestColonyFitness = latestColonyFitness;
+      draw();
+      return latestColonyFitness;
+    } finally {
+      colonyFitnessBusy = false;
     }
   }
 
@@ -644,6 +658,50 @@
     ctx.fillText('left: 4-task final return, prior-task retention %, forgetting & unseen Morph E · right: Phase 1→4 trajectory', 8, height - 6);
   }
 
+  // ---------- 12. Pass 6 colony differentiation, state separation & fitness --
+  function drawColonyFitness(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestColonyFitness || root.__aliveLatestColonyFitness;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byRegime) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(colonyFitnessBusy ? 'Running 5-seed colony differentiation & population fitness suite…' : 'Click "Run colony" above to evaluate colony role differentiation, state separation & population fitness across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const gSol = s.pairedDeltas?.diffVsSolitaryFitnessGain?.mean || 0;
+    const gCln = s.pairedDeltas?.diffVsCloneFitnessGain?.mean || 0;
+    ctx.fillText(`5 seeds · diff vs solitary +${gSol.toFixed(2)} (${s.diffBeatSolitarySeeds}/5) · diff vs clone +${gCln.toFixed(2)} (${s.diffBeatCloneSeeds}/5) · state separation: ${s.allStateAuditsPassed}`, 8, 12);
+
+    const regimes = ['solitary-host', 'undifferentiated-clone-colony', 'unbounded-greedy-colony', 'differentiated-role-colony'];
+    const colors = {
+      'solitary-host': '#64748b',
+      'undifferentiated-clone-colony': '#f59e0b',
+      'unbounded-greedy-colony': '#f43f5e',
+      'differentiated-role-colony': '#34d399'
+    };
+    const barW = Math.max(80, width - 420);
+    regimes.forEach((reg, idx) => {
+      const entry = s.byRegime[reg];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const fit = entry.populationFitness?.mean || 0;
+      const cov = entry.nicheCoveragePct?.mean || 0;
+      const col = entry.collisionPenaltyTotal?.mean || 0;
+      const stv = entry.starvationEvents?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(reg.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[reg] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, fit / 6.8)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`fit=${fit.toFixed(2)} cov=${cov.toFixed(0)}% col=${col.toFixed(1)} stv=${stv.toFixed(0)} N=${entry.populationSize} roles=${entry.uniqueRolesAssigned}`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('matched 5-substep/tick compute budget · cov=niche coverage · col=collision penalty · stv=ATP starvation events', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -678,19 +736,23 @@
     const continualBtn = doc.createElement('button'); continualBtn.type = 'button'; continualBtn.textContent = 'Run continual';
     continualBtn.title = 'Run 5-seed 4-phase continual learning, distinct-task retention and morphology transfer suite';
     continualBtn.addEventListener('click', () => { runContinualTransfer(); });
+    const colonyBtn = doc.createElement('button'); colonyBtn.type = 'button'; colonyBtn.textContent = 'Run colony';
+    colonyBtn.title = 'Run 5-seed colony differentiation, state separation and population fitness suite';
+    colonyBtn.addEventListener('click', () => { runColonyFitness(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
       utility = canvas('alive-fabric-utility', 300), runtimeSeries = canvas('alive-fabric-series', 240), substrate = canvas('alive-fabric-substrate', 260),
       benchmarkCanvas = canvas('alive-fabric-benchmark', 210), ablationsCanvas = canvas('alive-fabric-ablations', 280),
-      restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200);
+      restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200),
+      colonyCanvas = canvas('alive-fabric-colony-fitness', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -704,7 +766,8 @@
       section('8 · Unseen task benchmark (5 seeds) & colony role lenses', benchmarkCanvas),
       section('9 · Architecture ablations — 14 brains × 7 precision × AoT/ToT/GoT × specialists', ablationsCanvas),
       section('10 · State contracts & restart equivalence — optimizer · recurrent · replay · RNG · curriculum · fabric', restartEqCanvas),
-      section('11 · Continual learning, distinct-task retention & morphology transfer (5 seeds)', continualCanvas));
+      section('11 · Continual learning, distinct-task retention & morphology transfer (5 seeds)', continualCanvas),
+      section('12 · Colony differentiation, role assignment, state separation & population fitness (5 seeds)', colonyCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -714,7 +777,8 @@
       () => drawBenchmark(benchmarkCanvas),
       () => drawAblations(ablationsCanvas),
       () => drawRestartEquivalence(restartEqCanvas),
-      () => drawContinualTransfer(continualCanvas));
+      () => drawContinualTransfer(continualCanvas),
+      () => drawColonyFitness(colonyCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -757,6 +821,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

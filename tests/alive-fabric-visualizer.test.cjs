@@ -327,4 +327,35 @@ test('runContinualTransfer renders 5-seed 4-phase continual retention and morpho
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runColonyFitness renders 5-seed colony differentiation, state separation and population fitness in section 12', async () => {
+  const { window, dom } = load();
+  window.AliveColonyPopulationFitness = {
+    run: async () => ({
+      summary: {
+        diffBeatSolitarySeeds: 5,
+        diffBeatCloneSeeds: 5,
+        diffBeatGreedySeeds: 5,
+        allStateAuditsPassed: true,
+        pairedDeltas: {
+          diffVsSolitaryFitnessGain: { mean: 3.79 },
+          diffVsCloneFitnessGain: { mean: 1.68 }
+        },
+        byRegime: {
+          'solitary-host': { populationSize: 1, uniqueRolesAssigned: 1, populationFitness: { mean: 2.40 }, nicheCoveragePct: { mean: 2.8 }, collisionPenaltyTotal: { mean: 0 }, starvationEvents: { mean: 0 } },
+          'undifferentiated-clone-colony': { populationSize: 5, uniqueRolesAssigned: 1, populationFitness: { mean: 4.51 }, nicheCoveragePct: { mean: 92.0 }, collisionPenaltyTotal: { mean: 8.04 }, starvationEvents: { mean: 0 } },
+          'unbounded-greedy-colony': { populationSize: 5, uniqueRolesAssigned: 1, populationFitness: { mean: 2.58 }, nicheCoveragePct: { mean: 55.2 }, collisionPenaltyTotal: { mean: 6.24 }, starvationEvents: { mean: 78 } },
+          'differentiated-role-colony': { populationSize: 5, uniqueRolesAssigned: 5, populationFitness: { mean: 6.19 }, nicheCoveragePct: { mean: 100.0 }, collisionPenaltyTotal: { mean: 0 }, starvationEvents: { mean: 0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runColonyFitness();
+  assert.equal(report.summary.diffBeatSolitarySeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · diff vs solitary +3.79 (5/5)')), 'colony fitness summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('differentiated-role-co')), 'colony regime rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 

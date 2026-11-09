@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Creature colony differentiation, state separation & population fitness pass 6
+
+- Added the 5-seed creature colony differentiation, role assignment, state separation, and population fitness suite ([`systems/alive-colony-population-fitness.js`](systems/alive-colony-population-fitness.js), [`scripts/alive-colony-population-fitness.cjs`](scripts/alive-colony-population-fitness.cjs)) evaluating `solitary-host`, `undifferentiated-clone-colony`, `unbounded-greedy-colony`, and `differentiated-role-colony` under an identical 200-substep compute budget and bounded `maxPopulation = 5` / `totalAtpBudgetPerTick = 2.50` limits.
+- Verified on `5/5` seeds that `differentiated-role-colony` (`5` distinct `COLONY_LENSES` roles + `Formation` spatial deconfliction + `Feed` homeostatic ATP allocation) achieves `100.0%` niche coverage, `0.0` collision penalty, `0` starvation events, and `6.1919 ± 0.0423` fitness (`+3.7921` over `solitary-host`, `+1.6843` over `undifferentiated-clone-colony`, `+3.6122` over `unbounded-greedy-colony`).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 12 (`#alive-fabric-colony-fitness`, `Run colony` button, and `runColonyFitness()`).
+- Added [Pass 6 report](docs/ALIVE_PASS_06_REPORT.md), [JSON report](docs/reports/alive-colony-population-fitness-2026-11-09.json), [SVG chart](docs/reports/alive-colony-population-fitness-2026-11-09.svg) and unit tests (`tests/alive-colony-population-fitness.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Continual learning, distinct-task retention & morphology transfer pass 5
 
 - Added the 5-seed, 4-phase continual learning, distinct-task retention, and body morphology transfer suite ([`systems/alive-continual-morphology-transfer.js`](systems/alive-continual-morphology-transfer.js), [`scripts/alive-continual-morphology-transfer.cjs`](scripts/alive-continual-morphology-transfer.cjs)) evaluating `frozen-baseline`, `naive-continual`, `metamorph-transfer-only`, and `full-continual-living` across 4 distinct tasks (`T1..T4`), 4 body morphologies (`biped-scanner`, `octo-crawler`, `arachnid-weaver`, `eldritch-tentacle-swarm`), and an unseen 5th holdout morphology (`hexapod-strider-holdout`).

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="520" viewBox="0 0 1180 520">
+  <rect width="100%" height="100%" fill="#060c14" />
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="16" font-weight="700">PASS 6 · CREATURE COLONY DIFFERENTIATION, ROLE ASSIGNMENT, STATE SEPARATION &amp; POPULATION FITNESS (5 SEEDS)</text>
+  <text x="24" y="54" fill="#94a3b8" font-family="Consolas, monospace" font-size="11">Seeds: [19013, 29017, 39023, 49031, 59053] · Matched Compute: 200 substeps/seed · Diff vs Solitary: +3.79 (5/5) · Diff vs Clone: +1.68 (5/5) · State Separation: 5/5</text>
+  <text x="24" y="86" fill="#34d399" font-family="Consolas, monospace" font-size="13" font-weight="700">1 · Population Fitness &amp; Resource Metrics Across 4 Regimes (Mean ± 95% CI)</text>
+  <rect x="24" y="98" width="600" height="380" fill="#0b1520" stroke="#1e293b" rx="4" />
+  <text x="242" y="138" text-anchor="end" fill="#64748b" font-family="Consolas, monospace" font-size="11" font-weight="700">solitary-host</text>
+  <text x="242" y="154" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">N=1 · uniqueRoles=1 · stateAudit=5/5</text>
+  <rect x="252" y="126" width="220" height="20" fill="#0f1b26" rx="2" />
+  <rect x="252" y="128" width="78" height="16" fill="#64748b" rx="2" />
+  <text x="480" y="140" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">fit=2.40 ±0.01</text>
+  <text x="252" y="162" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">nicheCov=2.8% · collisions=0.00 · starvation=0</text>
+  <text x="242" y="222" text-anchor="end" fill="#f59e0b" font-family="Consolas, monospace" font-size="11" font-weight="700">undifferentiated-clone-colony</text>
+  <text x="242" y="238" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">N=5 · uniqueRoles=1 · stateAudit=5/5</text>
+  <rect x="252" y="210" width="220" height="20" fill="#0f1b26" rx="2" />
+  <rect x="252" y="212" width="146" height="16" fill="#f59e0b" rx="2" />
+  <text x="480" y="224" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">fit=4.51 ±0.07</text>
+  <text x="252" y="246" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">nicheCov=92.0% · collisions=8.04 · starvation=0</text>
+  <text x="242" y="306" text-anchor="end" fill="#f43f5e" font-family="Consolas, monospace" font-size="11" font-weight="700">unbounded-greedy-colony</text>
+  <text x="242" y="322" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">N=5 · uniqueRoles=1 · stateAudit=5/5</text>
+  <rect x="252" y="294" width="220" height="20" fill="#0f1b26" rx="2" />
+  <rect x="252" y="296" width="83" height="16" fill="#f43f5e" rx="2" />
+  <text x="480" y="308" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">fit=2.58 ±0.06</text>
+  <text x="252" y="330" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">nicheCov=55.2% · collisions=6.24 · starvation=78</text>
+  <text x="242" y="390" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="11" font-weight="700">differentiated-role-colony</text>
+  <text x="242" y="406" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">N=5 · uniqueRoles=5 · stateAudit=5/5</text>
+  <rect x="252" y="378" width="220" height="20" fill="#0f1b26" rx="2" />
+  <rect x="252" y="380" width="200" height="16" fill="#34d399" rx="2" />
+  <text x="480" y="392" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">fit=6.19 ±0.04</text>
+  <text x="252" y="414" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">nicheCov=100.0% · collisions=0.00 · starvation=0</text>
+  <text x="648" y="86" fill="#38bdf8" font-family="Consolas, monospace" font-size="13" font-weight="700">2 · Shared Controller vs Per-Entity Independent State &amp; 5 Colony Roles</text>
+  <rect x="648" y="98" width="508" height="380" fill="#0b1520" stroke="#1e293b" rx="4" />
+  <text x="664" y="126" fill="#67e8f9" font-family="Consolas, monospace" font-size="11" font-weight="700">Shared Controller State (2,212 bytes across colony):</text>
+  <text x="664" y="146" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">• W_actor[5,16] (320 B) + W_world[16,16] (1,024 B) + ResearchRanker[217] (868 B)</text>
+  <text x="664" y="166" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">• Non-enumerable reference; verified 0 genome/checkpoint serialization leaks</text>
+  <text x="664" y="198" fill="#34d399" font-family="Consolas, monospace" font-size="11" font-weight="700">Per-Entity Independent State (224 bytes × 5 entities = 1,120 B):</text>
+  <text x="664" y="218" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">• morphVec[6] (24 B) + W_metamorph[5,6] (120 B) + roleFilter16[16] (64 B) + pos2D (16 B)</text>
+  <text x="664" y="238" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">• Verified distinct ArrayBuffer instances for every entity on 5/5 seeds</text>
+  <text x="664" y="274" fill="#f59e0b" font-family="Consolas, monospace" font-size="11" font-weight="700">5 Differentiated Colony Roles (COLONY_LENSES):</text>
+  <rect x="664" y="286" width="476" height="24" fill="#0f1b26" rx="2" />
+  <text x="674" y="302" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">[0] mechanism       Architecture &amp; Mechanisms    sector=(-1.2, -1.1)</text>
+  <rect x="664" y="318" width="476" height="24" fill="#0f1b26" rx="2" />
+  <text x="674" y="334" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">[1] implementation  Code &amp; Implementation        sector=(1.2, -1.0)</text>
+  <rect x="664" y="350" width="476" height="24" fill="#0f1b26" rx="2" />
+  <text x="674" y="366" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">[2] verification    Evidence &amp; Counterexamples   sector=(1.4, 1.1)</text>
+  <rect x="664" y="382" width="476" height="24" fill="#0f1b26" rx="2" />
+  <text x="674" y="398" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">[3] topology        Connectome &amp; Memory Topology sector=(-0.2, 1.5)</text>
+  <rect x="664" y="414" width="476" height="24" fill="#0f1b26" rx="2" />
+  <text x="674" y="430" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">[4] frontier        Frontier &amp; Anomaly Foraging  sector=(-1.4, 0.4)</text>
+  <text x="24" y="502" fill="#64748b" font-family="Consolas, monospace" font-size="10">Generated by scripts/alive-colony-population-fitness.cjs · Deterministic 5-seed evaluation of Procreate/Mitosis, Formation, Feed &amp; COLONY_LENSES differentiation.</text>
+</svg>
