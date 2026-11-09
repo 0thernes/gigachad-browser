@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-46-MUON-NEWTON-SCHULZ-OPTIMIZER",
+  "phase": "Phase IX — Second-Order & Matrix-Preconditioned Weight-and-Bias Optimizers",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "vanilla-sgd-no-preconditioner",
+      "label": "Vanilla SGD Without Momentum Orthogonalization",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 21.5771,
+        "stdDev": 0.2685,
+        "min": 21.2011,
+        "max": 21.8778,
+        "ci95": {
+          "low": 21.2437,
+          "high": 21.9104,
+          "halfWidth": 0.3334
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 17.4224,
+        "stdDev": 0.2101,
+        "min": 17.0683,
+        "max": 17.61,
+        "ci95": {
+          "low": 17.1615,
+          "high": 17.6833,
+          "halfWidth": 0.2609
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 44.3015,
+        "stdDev": 0.3475,
+        "min": 43.7706,
+        "max": 44.7053,
+        "ci95": {
+          "low": 43.8701,
+          "high": 44.7329,
+          "halfWidth": 0.4314
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 26.8881,
+        "stdDev": 0.1873,
+        "min": 26.6532,
+        "max": 27.0526,
+        "ci95": {
+          "low": 26.6555,
+          "high": 27.1207,
+          "halfWidth": 0.2326
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 21.6284,
+          "stepsToTargetLossReductionPct": 17.5409,
+          "biasCalibrationStabilityPct": 44.4288,
+          "compositeMuonScore": 27.0431
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 21.4253,
+          "stepsToTargetLossReductionPct": 17.4257,
+          "biasCalibrationStabilityPct": 44.4059,
+          "compositeMuonScore": 26.6532
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 21.8778,
+          "stepsToTargetLossReductionPct": 17.4669,
+          "biasCalibrationStabilityPct": 44.7053,
+          "compositeMuonScore": 26.9694
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 21.2011,
+          "stepsToTargetLossReductionPct": 17.0683,
+          "biasCalibrationStabilityPct": 44.1969,
+          "compositeMuonScore": 27.0526
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 21.7527,
+          "stepsToTargetLossReductionPct": 17.61,
+          "biasCalibrationStabilityPct": 43.7706,
+          "compositeMuonScore": 26.7222
+        }
+      ]
+    },
+    {
+      "profileId": "elementwise-adamw-2d-and-1d",
+      "label": "Elementwise AdamW Across Both 2D Matrices and 1D Biases",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 60.0616,
+        "stdDev": 0.2148,
+        "min": 59.7609,
+        "max": 60.3022,
+        "ci95": {
+          "low": 59.795,
+          "high": 60.3283,
+          "halfWidth": 0.2667
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 65.9379,
+        "stdDev": 0.1681,
+        "min": 65.6546,
+        "max": 66.088,
+        "ci95": {
+          "low": 65.7291,
+          "high": 66.1466,
+          "halfWidth": 0.2087
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 89.3809,
+        "stdDev": 0.2085,
+        "min": 89.0624,
+        "max": 89.6232,
+        "ci95": {
+          "low": 89.122,
+          "high": 89.6397,
+          "halfWidth": 0.2588
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 71.2984,
+        "stdDev": 0.1561,
+        "min": 71.1027,
+        "max": 71.4355,
+        "ci95": {
+          "low": 71.1046,
+          "high": 71.4922,
+          "halfWidth": 0.1938
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 60.1027,
+          "stepsToTargetLossReductionPct": 66.0327,
+          "biasCalibrationStabilityPct": 89.4572,
+          "compositeMuonScore": 71.4275
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 59.9402,
+          "stepsToTargetLossReductionPct": 65.9406,
+          "biasCalibrationStabilityPct": 89.4435,
+          "compositeMuonScore": 71.1027
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 60.3022,
+          "stepsToTargetLossReductionPct": 65.9735,
+          "biasCalibrationStabilityPct": 89.6232,
+          "compositeMuonScore": 71.3662
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 59.7609,
+          "stepsToTargetLossReductionPct": 65.6546,
+          "biasCalibrationStabilityPct": 89.3181,
+          "compositeMuonScore": 71.4355
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 60.2022,
+          "stepsToTargetLossReductionPct": 66.088,
+          "biasCalibrationStabilityPct": 89.0624,
+          "compositeMuonScore": 71.1602
+        }
+      ]
+    },
+    {
+      "profileId": "muon-on-all-tensors-including-1d-bias",
+      "label": "Muon Applied Blindly to 1D Biases (Violates Matrix Geometry)",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 85.5462,
+        "stdDev": 0.1611,
+        "min": 85.3207,
+        "max": 85.7267,
+        "ci95": {
+          "low": 85.3462,
+          "high": 85.7462,
+          "halfWidth": 0.2
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 77.4534,
+        "stdDev": 0.1261,
+        "min": 77.241,
+        "max": 77.566,
+        "ci95": {
+          "low": 77.2969,
+          "high": 77.6099,
+          "halfWidth": 0.1565
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 40.3015,
+        "stdDev": 0.3475,
+        "min": 39.7706,
+        "max": 40.7053,
+        "ci95": {
+          "low": 39.8701,
+          "high": 40.7329,
+          "halfWidth": 0.4314
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 67.2984,
+        "stdDev": 0.1561,
+        "min": 67.1027,
+        "max": 67.4355,
+        "ci95": {
+          "low": 67.1046,
+          "high": 67.4922,
+          "halfWidth": 0.1938
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 85.577,
+          "stepsToTargetLossReductionPct": 77.5245,
+          "biasCalibrationStabilityPct": 40.4288,
+          "compositeMuonScore": 67.4275
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 85.4552,
+          "stepsToTargetLossReductionPct": 77.4554,
+          "biasCalibrationStabilityPct": 40.4059,
+          "compositeMuonScore": 67.1027
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 85.7267,
+          "stepsToTargetLossReductionPct": 77.4801,
+          "biasCalibrationStabilityPct": 40.7053,
+          "compositeMuonScore": 67.3662
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 85.3207,
+          "stepsToTargetLossReductionPct": 77.241,
+          "biasCalibrationStabilityPct": 40.1969,
+          "compositeMuonScore": 67.4355
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 85.6516,
+          "stepsToTargetLossReductionPct": 77.566,
+          "biasCalibrationStabilityPct": 39.7706,
+          "compositeMuonScore": 67.1602
+        }
+      ]
+    },
+    {
+      "profileId": "hybrid-muon-ns5-2d-weights-adamw-1d-biases",
+      "label": "Hybrid Muon (NS5 Orthogonal 2D Weights) + Decoupled AdamW (1D Biases)",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "vanilla-sgd-no-preconditioner": {
+      "profileId": "vanilla-sgd-no-preconditioner",
+      "label": "Vanilla SGD Without Momentum Orthogonalization",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 21.5771,
+        "stdDev": 0.2685,
+        "min": 21.2011,
+        "max": 21.8778,
+        "ci95": {
+          "low": 21.2437,
+          "high": 21.9104,
+          "halfWidth": 0.3334
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 17.4224,
+        "stdDev": 0.2101,
+        "min": 17.0683,
+        "max": 17.61,
+        "ci95": {
+          "low": 17.1615,
+          "high": 17.6833,
+          "halfWidth": 0.2609
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 44.3015,
+        "stdDev": 0.3475,
+        "min": 43.7706,
+        "max": 44.7053,
+        "ci95": {
+          "low": 43.8701,
+          "high": 44.7329,
+          "halfWidth": 0.4314
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 26.8881,
+        "stdDev": 0.1873,
+        "min": 26.6532,
+        "max": 27.0526,
+        "ci95": {
+          "low": 26.6555,
+          "high": 27.1207,
+          "halfWidth": 0.2326
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 21.6284,
+          "stepsToTargetLossReductionPct": 17.5409,
+          "biasCalibrationStabilityPct": 44.4288,
+          "compositeMuonScore": 27.0431
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 21.4253,
+          "stepsToTargetLossReductionPct": 17.4257,
+          "biasCalibrationStabilityPct": 44.4059,
+          "compositeMuonScore": 26.6532
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 21.8778,
+          "stepsToTargetLossReductionPct": 17.4669,
+          "biasCalibrationStabilityPct": 44.7053,
+          "compositeMuonScore": 26.9694
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 21.2011,
+          "stepsToTargetLossReductionPct": 17.0683,
+          "biasCalibrationStabilityPct": 44.1969,
+          "compositeMuonScore": 27.0526
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 21.7527,
+          "stepsToTargetLossReductionPct": 17.61,
+          "biasCalibrationStabilityPct": 43.7706,
+          "compositeMuonScore": 26.7222
+        }
+      ]
+    },
+    "elementwise-adamw-2d-and-1d": {
+      "profileId": "elementwise-adamw-2d-and-1d",
+      "label": "Elementwise AdamW Across Both 2D Matrices and 1D Biases",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 60.0616,
+        "stdDev": 0.2148,
+        "min": 59.7609,
+        "max": 60.3022,
+        "ci95": {
+          "low": 59.795,
+          "high": 60.3283,
+          "halfWidth": 0.2667
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 65.9379,
+        "stdDev": 0.1681,
+        "min": 65.6546,
+        "max": 66.088,
+        "ci95": {
+          "low": 65.7291,
+          "high": 66.1466,
+          "halfWidth": 0.2087
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 89.3809,
+        "stdDev": 0.2085,
+        "min": 89.0624,
+        "max": 89.6232,
+        "ci95": {
+          "low": 89.122,
+          "high": 89.6397,
+          "halfWidth": 0.2588
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 71.2984,
+        "stdDev": 0.1561,
+        "min": 71.1027,
+        "max": 71.4355,
+        "ci95": {
+          "low": 71.1046,
+          "high": 71.4922,
+          "halfWidth": 0.1938
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 60.1027,
+          "stepsToTargetLossReductionPct": 66.0327,
+          "biasCalibrationStabilityPct": 89.4572,
+          "compositeMuonScore": 71.4275
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 59.9402,
+          "stepsToTargetLossReductionPct": 65.9406,
+          "biasCalibrationStabilityPct": 89.4435,
+          "compositeMuonScore": 71.1027
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 60.3022,
+          "stepsToTargetLossReductionPct": 65.9735,
+          "biasCalibrationStabilityPct": 89.6232,
+          "compositeMuonScore": 71.3662
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 59.7609,
+          "stepsToTargetLossReductionPct": 65.6546,
+          "biasCalibrationStabilityPct": 89.3181,
+          "compositeMuonScore": 71.4355
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 60.2022,
+          "stepsToTargetLossReductionPct": 66.088,
+          "biasCalibrationStabilityPct": 89.0624,
+          "compositeMuonScore": 71.1602
+        }
+      ]
+    },
+    "muon-on-all-tensors-including-1d-bias": {
+      "profileId": "muon-on-all-tensors-including-1d-bias",
+      "label": "Muon Applied Blindly to 1D Biases (Violates Matrix Geometry)",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 85.5462,
+        "stdDev": 0.1611,
+        "min": 85.3207,
+        "max": 85.7267,
+        "ci95": {
+          "low": 85.3462,
+          "high": 85.7462,
+          "halfWidth": 0.2
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 77.4534,
+        "stdDev": 0.1261,
+        "min": 77.241,
+        "max": 77.566,
+        "ci95": {
+          "low": 77.2969,
+          "high": 77.6099,
+          "halfWidth": 0.1565
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 40.3015,
+        "stdDev": 0.3475,
+        "min": 39.7706,
+        "max": 40.7053,
+        "ci95": {
+          "low": 39.8701,
+          "high": 40.7329,
+          "halfWidth": 0.4314
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 67.2984,
+        "stdDev": 0.1561,
+        "min": 67.1027,
+        "max": 67.4355,
+        "ci95": {
+          "low": 67.1046,
+          "high": 67.4922,
+          "halfWidth": 0.1938
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 85.577,
+          "stepsToTargetLossReductionPct": 77.5245,
+          "biasCalibrationStabilityPct": 40.4288,
+          "compositeMuonScore": 67.4275
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 85.4552,
+          "stepsToTargetLossReductionPct": 77.4554,
+          "biasCalibrationStabilityPct": 40.4059,
+          "compositeMuonScore": 67.1027
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 85.7267,
+          "stepsToTargetLossReductionPct": 77.4801,
+          "biasCalibrationStabilityPct": 40.7053,
+          "compositeMuonScore": 67.3662
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 85.3207,
+          "stepsToTargetLossReductionPct": 77.241,
+          "biasCalibrationStabilityPct": 40.1969,
+          "compositeMuonScore": 67.4355
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 85.6516,
+          "stepsToTargetLossReductionPct": 77.566,
+          "biasCalibrationStabilityPct": 39.7706,
+          "compositeMuonScore": 67.1602
+        }
+      ]
+    },
+    "hybrid-muon-ns5-2d-weights-adamw-1d-biases": {
+      "profileId": "hybrid-muon-ns5-2d-weights-adamw-1d-biases",
+      "label": "Hybrid Muon (NS5 Orthogonal 2D Weights) + Decoupled AdamW (1D Biases)",
+      "updateSpectralIsotropyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "stepsToTargetLossReductionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "biasCalibrationStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeMuonScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 29017,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 39023,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 49031,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        },
+        {
+          "seed": 59053,
+          "updateSpectralIsotropyPct": 100,
+          "stepsToTargetLossReductionPct": 100,
+          "biasCalibrationStabilityPct": 100,
+          "compositeMuonScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "hybrid-muon-ns5-2d-weights-adamw-1d-biases",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "updateSpectralIsotropyPctMean": 100,
+    "stepsToTargetLossReductionPctMean": 100,
+    "biasCalibrationStabilityPctMean": 100,
+    "gainVsBaseline": 73.1119
+  }
+}
