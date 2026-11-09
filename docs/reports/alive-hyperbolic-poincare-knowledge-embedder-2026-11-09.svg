@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="350" viewBox="0 0 1140 350">
+    <rect width="1140" height="350" fill="#020617"/>
+    <text x="24" y="36" fill="#38bdf8" font-family="Consolas, monospace" font-size="18" font-weight="bold">ALIVE Pass 32 — Hyperbolic Poincaré Ball (B^d_c) Hierarchical Knowledge Embedder (5 Seeds)</text>
+    <text x="24" y="62" fill="#94a3b8" font-family="Consolas, monospace" font-size="13">Winner: poincare-riemannian-gyrovector-b8 | Score: 100.00 | Distortion: 0.1284 | MAP@k: 100.0% | vs R^2: +50.91</text>
+    
+      <text x="24" y="113" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">flat-euclidean-low-dim-r2</text>
+      <rect x="330" y="95" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="95" width="206" height="26" rx="4" fill="#f59e0b"/>
+      <text x="762" y="113" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=49.09 | dist=0.888 | MAP=30.3% | safe=100.0%</text>
+    
+      <text x="24" y="167" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">flat-euclidean-matched-dim-r8</text>
+      <rect x="330" y="149" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="149" width="270" height="26" rx="4" fill="#38bdf8"/>
+      <text x="762" y="167" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=64.37 | dist=3206.972 | MAP=81.2% | safe=100.0%</text>
+    
+      <text x="24" y="221" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">unprojected-hyperbolic-boundary-overflow</text>
+      <rect x="330" y="203" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="203" width="137" height="26" rx="4" fill="#f43f5e"/>
+      <text x="762" y="221" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=32.55 | dist=52971.579 | MAP=33.5% | safe=12.5%</text>
+    
+      <text x="24" y="275" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">poincare-riemannian-gyrovector-b8</text>
+      <rect x="330" y="257" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="257" width="420" height="26" rx="4" fill="#34d399"/>
+      <text x="762" y="275" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=100.00 | dist=0.128 | MAP=100.0% | safe=100.0%</text>
+    
+  </svg>

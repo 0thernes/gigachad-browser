@@ -1,0 +1,1269 @@
+{
+  "passId": "ALIVE-PASS-32-HYPERBOLIC-POINCARE-KNOWLEDGE-EMBEDDER",
+  "phase": "Phase VI — Neuro-Symbolic Program Synthesis, Active Inference Free-Energy & Hyperbolic Knowledge Geometry",
+  "generatedAt": "2026-11-09T20:33:25.834Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "tCritical95Df4": 2.7764451051977987,
+  "profileSummaries": [
+    {
+      "profileId": "flat-euclidean-low-dim-r2",
+      "label": "Flat Euclidean Low-Dim (R^2)",
+      "manifold": "euclidean",
+      "dim": 2,
+      "curvatureC": 0,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 0.8881,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.8881,
+        "ci95High": 0.8881,
+        "min": 0.8881,
+        "max": 0.8881
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 30.2908,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 30.2908,
+        "ci95High": 30.2908,
+        "min": 30.2908,
+        "max": 30.2908
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 49.0873,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 49.0873,
+        "ci95High": 49.0873,
+        "min": 49.0873,
+        "max": 49.0873
+      },
+      "seedRuns": [
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 19013
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 29017
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 39023
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 49031
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 59053
+        }
+      ]
+    },
+    {
+      "profileId": "flat-euclidean-matched-dim-r8",
+      "label": "Flat Euclidean Matched-Dim (R^8)",
+      "manifold": "euclidean",
+      "dim": 8,
+      "curvatureC": 0,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 3206.9717,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 3206.9717,
+        "ci95High": 3206.9717,
+        "min": 3206.9717,
+        "max": 3206.9717
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 81.2431,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 81.2431,
+        "ci95High": 81.2431,
+        "min": 81.2431,
+        "max": 81.2431
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 64.3729,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 64.3729,
+        "ci95High": 64.3729,
+        "min": 64.3729,
+        "max": 64.3729
+      },
+      "seedRuns": [
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 19013
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 29017
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 39023
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 49031
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 59053
+        }
+      ]
+    },
+    {
+      "profileId": "unprojected-hyperbolic-boundary-overflow",
+      "label": "Unprojected Hyperbolic (No Riemannian Rescaling / Boundary Overflow)",
+      "manifold": "poincare_unprojected",
+      "dim": 8,
+      "curvatureC": 1,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 52971.5788,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 52971.5788,
+        "ci95High": 52971.5788,
+        "min": 52971.5788,
+        "max": 52971.5788
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 33.4927,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 33.4927,
+        "ci95High": 33.4927,
+        "min": 33.4927,
+        "max": 33.4927
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 12.5,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 12.5,
+        "ci95High": 12.5,
+        "min": 12.5,
+        "max": 12.5
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 32.5478,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 32.5478,
+        "ci95High": 32.5478,
+        "min": 32.5478,
+        "max": 32.5478
+      },
+      "seedRuns": [
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 19013
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 29017
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 39023
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 49031
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 59053
+        }
+      ]
+    },
+    {
+      "profileId": "poincare-riemannian-gyrovector-b8",
+      "label": "Poincaré Ball B^8_c (Riemannian Gyrovector + Sarkar Tree Embedding)",
+      "manifold": "poincare",
+      "dim": 8,
+      "curvatureC": 1,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 0.1284,
+        "stdDev": 0.0013,
+        "stdError": 0.0006,
+        "ci95HalfWidth": 0.0016,
+        "ci95Low": 0.1269,
+        "ci95High": 0.13,
+        "min": 0.1264,
+        "max": 0.1296
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1282,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7416,
+            0.8591
+          ],
+          "compositePoincareScore": 100,
+          "seed": 19013
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1292,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7407,
+            0.8587
+          ],
+          "compositePoincareScore": 100,
+          "seed": 29017
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1296,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7408,
+            0.8585
+          ],
+          "compositePoincareScore": 100,
+          "seed": 39023
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1264,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7405,
+            0.8587
+          ],
+          "compositePoincareScore": 100,
+          "seed": 49031
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1288,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7394,
+            0.8582
+          ],
+          "compositePoincareScore": 100,
+          "seed": 59053
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "flat-euclidean-low-dim-r2": {
+      "profileId": "flat-euclidean-low-dim-r2",
+      "label": "Flat Euclidean Low-Dim (R^2)",
+      "manifold": "euclidean",
+      "dim": 2,
+      "curvatureC": 0,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 0.8881,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0.8881,
+        "ci95High": 0.8881,
+        "min": 0.8881,
+        "max": 0.8881
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 30.2908,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 30.2908,
+        "ci95High": 30.2908,
+        "min": 30.2908,
+        "max": 30.2908
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 49.0873,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 49.0873,
+        "ci95High": 49.0873,
+        "min": 49.0873,
+        "max": 49.0873
+      },
+      "seedRuns": [
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 19013
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 29017
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 39023
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 49031
+        },
+        {
+          "profileId": "flat-euclidean-low-dim-r2",
+          "meanTreeDistortion": 0.8881,
+          "distortionScore": 0,
+          "mapAtKScorePct": 30.2908,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.65,
+            0.8341,
+            1.0306
+          ],
+          "compositePoincareScore": 49.0873,
+          "seed": 59053
+        }
+      ]
+    },
+    "flat-euclidean-matched-dim-r8": {
+      "profileId": "flat-euclidean-matched-dim-r8",
+      "label": "Flat Euclidean Matched-Dim (R^8)",
+      "manifold": "euclidean",
+      "dim": 8,
+      "curvatureC": 0,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 3206.9717,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 3206.9717,
+        "ci95High": 3206.9717,
+        "min": 3206.9717,
+        "max": 3206.9717
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 81.2431,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 81.2431,
+        "ci95High": 81.2431,
+        "min": 81.2431,
+        "max": 81.2431
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 64.3729,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 64.3729,
+        "ci95High": 64.3729,
+        "min": 64.3729,
+        "max": 64.3729
+      },
+      "seedRuns": [
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 19013
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 29017
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 39023
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 49031
+        },
+        {
+          "profileId": "flat-euclidean-matched-dim-r8",
+          "meanTreeDistortion": 3206.9717,
+          "distortionScore": 0,
+          "mapAtKScorePct": 81.2431,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.6774,
+            0.7634,
+            1.053
+          ],
+          "compositePoincareScore": 64.3729,
+          "seed": 59053
+        }
+      ]
+    },
+    "unprojected-hyperbolic-boundary-overflow": {
+      "profileId": "unprojected-hyperbolic-boundary-overflow",
+      "label": "Unprojected Hyperbolic (No Riemannian Rescaling / Boundary Overflow)",
+      "manifold": "poincare_unprojected",
+      "dim": 8,
+      "curvatureC": 1,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 52971.5788,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 52971.5788,
+        "ci95High": 52971.5788,
+        "min": 52971.5788,
+        "max": 52971.5788
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 33.4927,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 33.4927,
+        "ci95High": 33.4927,
+        "min": 33.4927,
+        "max": 33.4927
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 12.5,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 12.5,
+        "ci95High": 12.5,
+        "min": 12.5,
+        "max": 12.5
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 32.5478,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 32.5478,
+        "ci95High": 32.5478,
+        "min": 32.5478,
+        "max": 32.5478
+      },
+      "seedRuns": [
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 19013
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 29017
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 39023
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 49031
+        },
+        {
+          "profileId": "unprojected-hyperbolic-boundary-overflow",
+          "meanTreeDistortion": 52971.5788,
+          "distortionScore": 0,
+          "mapAtKScorePct": 33.4927,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 12.5,
+          "meanNormsByDepth": [
+            0,
+            0.6268,
+            1.0655,
+            1.4433
+          ],
+          "compositePoincareScore": 32.5478,
+          "seed": 59053
+        }
+      ]
+    },
+    "poincare-riemannian-gyrovector-b8": {
+      "profileId": "poincare-riemannian-gyrovector-b8",
+      "label": "Poincaré Ball B^8_c (Riemannian Gyrovector + Sarkar Tree Embedding)",
+      "manifold": "poincare",
+      "dim": 8,
+      "curvatureC": 1,
+      "meanTreeDistortion": {
+        "count": 5,
+        "mean": 0.1284,
+        "stdDev": 0.0013,
+        "stdError": 0.0006,
+        "ci95HalfWidth": 0.0016,
+        "ci95Low": 0.1269,
+        "ci95High": 0.13,
+        "min": 0.1264,
+        "max": 0.1296
+      },
+      "distortionScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "mapAtKScorePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "hierarchyDepthNormSpearmanPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "manifoldBoundarySafetyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositePoincareScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1282,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7416,
+            0.8591
+          ],
+          "compositePoincareScore": 100,
+          "seed": 19013
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1292,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7407,
+            0.8587
+          ],
+          "compositePoincareScore": 100,
+          "seed": 29017
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1296,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7408,
+            0.8585
+          ],
+          "compositePoincareScore": 100,
+          "seed": 39023
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1264,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7405,
+            0.8587
+          ],
+          "compositePoincareScore": 100,
+          "seed": 49031
+        },
+        {
+          "profileId": "poincare-riemannian-gyrovector-b8",
+          "meanTreeDistortion": 0.1288,
+          "distortionScore": 100,
+          "mapAtKScorePct": 100,
+          "hierarchyDepthNormSpearmanPct": 100,
+          "manifoldBoundarySafetyPct": 100,
+          "meanNormsByDepth": [
+            0,
+            0.519,
+            0.7394,
+            0.8582
+          ],
+          "compositePoincareScore": 100,
+          "seed": 59053
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "poincare-riemannian-gyrovector-b8",
+    "allSeedsVerified": true,
+    "poincareCompositeScoreMean": 100,
+    "poincareTreeDistortionMean": 0.1284,
+    "poincareMapAtKPctMean": 100,
+    "poincareDepthSpearmanPctMean": 100,
+    "poincareBoundarySafetyPctMean": 100,
+    "gainVsFlatR2": 50.9127,
+    "gainVsFlatR8": 35.6271,
+    "gainVsUnprojectedHyperbolic": 67.4522
+  }
+}

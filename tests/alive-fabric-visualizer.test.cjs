@@ -1079,6 +1079,33 @@ test('runActiveInference renders 5-seed Variational Free-Energy & EFE Active Inf
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runHyperbolicPoincare renders 5-seed Hyperbolic Poincaré Ball Knowledge Embedder in section 38', async () => {
+  const { window, dom } = load();
+  window.AliveHyperbolicPoincareKnowledgeEmbedder = {
+    run: async () => ({
+      summary: {
+        poincareCompositeScoreMean: 100.0,
+        poincareTreeDistortionMean: 0.082,
+        poincareMapAtKPctMean: 100.0,
+        gainVsFlatR2: 28.4
+      },
+      aggregatedByProfile: {
+        'flat-euclidean-low-dim-r2': { compositePoincareScore: { mean: 71.6 }, meanTreeDistortion: { mean: 0.34 }, mapAtKScorePct: { mean: 58.0 }, hierarchyDepthNormSpearmanPct: { mean: 100 }, manifoldBoundarySafetyPct: { mean: 100 } },
+        'flat-euclidean-matched-dim-r8': { compositePoincareScore: { mean: 88.5 }, meanTreeDistortion: { mean: 0.21 }, mapAtKScorePct: { mean: 84.5 }, hierarchyDepthNormSpearmanPct: { mean: 100 }, manifoldBoundarySafetyPct: { mean: 100 } },
+        'unprojected-hyperbolic-boundary-overflow': { compositePoincareScore: { mean: 48.2 }, meanTreeDistortion: { mean: 0.56 }, mapAtKScorePct: { mean: 54.0 }, hierarchyDepthNormSpearmanPct: { mean: 100 }, manifoldBoundarySafetyPct: { mean: 42.5 } },
+        'poincare-riemannian-gyrovector-b8': { compositePoincareScore: { mean: 100.0 }, meanTreeDistortion: { mean: 0.082 }, mapAtKScorePct: { mean: 100.0 }, hierarchyDepthNormSpearmanPct: { mean: 100 }, manifoldBoundarySafetyPct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runHyperbolicPoincare();
+  assert.equal(report.summary.poincareCompositeScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Poincaré B^8_c score=100.0')), 'Hyperbolic Poincaré summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('poincare-riemannian-gy')), 'Hyperbolic Poincaré rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

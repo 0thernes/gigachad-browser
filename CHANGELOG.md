@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Hyperbolic Poincaré Ball (B^d_c) Hierarchical Ontology & Deep Citation Tree Embedder pass 32
+
+- Added the 5-seed Hyperbolic Poincaré Ball ($\mathbb{B}^d_c$) Hierarchical Ontology & Citation Tree Embedding Engine ([`systems/alive-hyperbolic-poincare-knowledge-embedder.js`](systems/alive-hyperbolic-poincare-knowledge-embedder.js), [`scripts/alive-hyperbolic-poincare-knowledge-embedder.cjs`](scripts/alive-hyperbolic-poincare-knowledge-embedder.cjs)) implementing $\operatorname{arcosh}$ geodesic distance, Möbius gyrovector addition $u \oplus_c v$, $\exp_0^c$/$\log_0^c$ maps, and Riemannian boundary projection.
+- Verified on `5/5` seeds across 40-node ternary hierarchies per seed that `poincare-riemannian-gyrovector-b8` achieves `100.0` composite score (`+50.91` over `flat-euclidean-low-dim-r2`, `+35.63` over `flat-euclidean-matched-dim-r8`, `+67.45` over `unprojected-hyperbolic-boundary-overflow`), `0.1284` mean tree distortion, `100.0%` neighborhood `MAP@k`, `100.0%` depth-norm monotonicity, and `100.0%` manifold boundary safety.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 38 (`#alive-fabric-hyperbolic-poincare`, `Run Poincaré` button, and `runHyperbolicPoincare()`).
+- Added [Pass 32 report](docs/ALIVE_PASS_32_REPORT.md), [JSON report](docs/reports/alive-hyperbolic-poincare-knowledge-embedder-2026-11-09.json), [SVG chart](docs/reports/alive-hyperbolic-poincare-knowledge-embedder-2026-11-09.svg) and unit tests (`tests/alive-hyperbolic-poincare-knowledge-embedder.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Variational Free-Energy (VFE) & Expected Free Energy (EFE) Active Inference Planner pass 31
 
 - Added the 5-seed Karl Friston POMDP Active Inference Planner ([`systems/alive-active-inference-free-energy.js`](systems/alive-active-inference-free-energy.js), [`scripts/alive-active-inference-free-energy.cjs`](scripts/alive-active-inference-free-energy.cjs)) implementing Variational Free-Energy minimization $\mathcal{F}(Q(s), o)$ and Epistemic-Pragmatic Expected Free Energy $\mathcal{G}(\pi)$ policy selection across 24 deceptive/ambiguous POMDP tasks per seed.
