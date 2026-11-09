@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-63-PORT-HAMILTONIAN-SYMPLECTIC-ODE",
+  "phase": "Phase XII — Kolmogorov-Arnold Networks (KAN), Liquid Time-Constant (sLTC) & Continuous-Depth Neural ODEs",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "unconstrained-neural-ode-energy-drift",
+      "label": "Unconstrained Neural ODE (Violates Liouville Phase Volume & Energy)",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 23.3762,
+        "stdDev": 0.2031,
+        "min": 23.1096,
+        "max": 23.5734,
+        "ci95": {
+          "low": 23.124,
+          "high": 23.6283,
+          "halfWidth": 0.2522
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 21.5972,
+        "stdDev": 0.2227,
+        "min": 21.2591,
+        "max": 21.8038,
+        "ci95": {
+          "low": 21.3207,
+          "high": 21.8737,
+          "halfWidth": 0.2765
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 27.6338,
+        "stdDev": 0.2424,
+        "min": 27.3111,
+        "max": 27.9478,
+        "ci95": {
+          "low": 27.3328,
+          "high": 27.9347,
+          "halfWidth": 0.301
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 23.1562,
+        "stdDev": 0.2491,
+        "min": 22.723,
+        "max": 23.3565,
+        "ci95": {
+          "low": 22.847,
+          "high": 23.4655,
+          "halfWidth": 0.3092
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 23.2116,
+          "symplecticPhaseVolumeInvariancePct": 21.4979,
+          "lyapunovAsymptoticStabilityPct": 27.7762,
+          "compositeHamiltonianScore": 23.1956
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 23.5734,
+          "symplecticPhaseVolumeInvariancePct": 21.6635,
+          "lyapunovAsymptoticStabilityPct": 27.6058,
+          "compositeHamiltonianScore": 23.2491
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 23.1096,
+          "symplecticPhaseVolumeInvariancePct": 21.7617,
+          "lyapunovAsymptoticStabilityPct": 27.528,
+          "compositeHamiltonianScore": 23.3565
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 23.4762,
+          "symplecticPhaseVolumeInvariancePct": 21.2591,
+          "lyapunovAsymptoticStabilityPct": 27.9478,
+          "compositeHamiltonianScore": 22.723
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 23.51,
+          "symplecticPhaseVolumeInvariancePct": 21.8038,
+          "lyapunovAsymptoticStabilityPct": 27.3111,
+          "compositeHamiltonianScore": 23.2569
+        }
+      ]
+    },
+    {
+      "profileId": "hamiltonian-rk4-non-symplectic-drift",
+      "label": "Hamiltonian ODE With Non-Symplectic RK4 Integrator",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 69.9009,
+        "stdDev": 0.1625,
+        "min": 69.6877,
+        "max": 70.0587,
+        "ci95": {
+          "low": 69.6992,
+          "high": 70.1026,
+          "halfWidth": 0.2017
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 64.0778,
+        "stdDev": 0.1781,
+        "min": 63.8073,
+        "max": 64.2431,
+        "ci95": {
+          "low": 63.8566,
+          "high": 64.2989,
+          "halfWidth": 0.2212
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 72.107,
+        "stdDev": 0.1939,
+        "min": 71.8489,
+        "max": 72.3583,
+        "ci95": {
+          "low": 71.8663,
+          "high": 72.3478,
+          "halfWidth": 0.2408
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 67.9085,
+        "stdDev": 0.2075,
+        "min": 67.5475,
+        "max": 68.0754,
+        "ci95": {
+          "low": 67.6508,
+          "high": 68.1662,
+          "halfWidth": 0.2577
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 69.7693,
+          "symplecticPhaseVolumeInvariancePct": 63.9983,
+          "lyapunovAsymptoticStabilityPct": 72.221,
+          "compositeHamiltonianScore": 67.9414
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 70.0587,
+          "symplecticPhaseVolumeInvariancePct": 64.1308,
+          "lyapunovAsymptoticStabilityPct": 72.0846,
+          "compositeHamiltonianScore": 67.9859
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 69.6877,
+          "symplecticPhaseVolumeInvariancePct": 64.2093,
+          "lyapunovAsymptoticStabilityPct": 72.0224,
+          "compositeHamiltonianScore": 68.0754
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 69.981,
+          "symplecticPhaseVolumeInvariancePct": 63.8073,
+          "lyapunovAsymptoticStabilityPct": 72.3583,
+          "compositeHamiltonianScore": 67.5475
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 70.008,
+          "symplecticPhaseVolumeInvariancePct": 64.2431,
+          "lyapunovAsymptoticStabilityPct": 71.8489,
+          "compositeHamiltonianScore": 67.9924
+        }
+      ]
+    },
+    {
+      "profileId": "symplectic-without-psd-cholesky-dissipation",
+      "label": "Symplectic Leapfrog Without PSD Cholesky Dissipation R = L_R L_R^T",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 89.4257,
+        "stdDev": 0.1218,
+        "min": 89.2657,
+        "max": 89.544,
+        "ci95": {
+          "low": 89.2744,
+          "high": 89.577,
+          "halfWidth": 0.1513
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 75.5583,
+        "stdDev": 0.1336,
+        "min": 75.3555,
+        "max": 75.6823,
+        "ci95": {
+          "low": 75.3925,
+          "high": 75.7242,
+          "halfWidth": 0.1659
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 88.3835,
+        "stdDev": 0.097,
+        "min": 88.2544,
+        "max": 88.5091,
+        "ci95": {
+          "low": 88.2631,
+          "high": 88.5039,
+          "halfWidth": 0.1204
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 89.327,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.4987,
+          "compositeHamiltonianScore": 88.4405
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 89.544,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.5981,
+          "compositeHamiltonianScore": 88.3723
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 89.2657,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.657,
+          "compositeHamiltonianScore": 88.3412
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 89.4857,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.3555,
+          "compositeHamiltonianScore": 88.5091
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 89.506,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.6823,
+          "compositeHamiltonianScore": 88.2544
+        }
+      ]
+    },
+    {
+      "profileId": "symplectic-stormer-verlet-port-hamiltonian-cholesky",
+      "label": "Symplectic Stormer-Verlet Port-Hamiltonian (J=-J^T, Cholesky M=L_M L_M^T & R=L_R L_R^T)",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "unconstrained-neural-ode-energy-drift": {
+      "profileId": "unconstrained-neural-ode-energy-drift",
+      "label": "Unconstrained Neural ODE (Violates Liouville Phase Volume & Energy)",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 23.3762,
+        "stdDev": 0.2031,
+        "min": 23.1096,
+        "max": 23.5734,
+        "ci95": {
+          "low": 23.124,
+          "high": 23.6283,
+          "halfWidth": 0.2522
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 21.5972,
+        "stdDev": 0.2227,
+        "min": 21.2591,
+        "max": 21.8038,
+        "ci95": {
+          "low": 21.3207,
+          "high": 21.8737,
+          "halfWidth": 0.2765
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 27.6338,
+        "stdDev": 0.2424,
+        "min": 27.3111,
+        "max": 27.9478,
+        "ci95": {
+          "low": 27.3328,
+          "high": 27.9347,
+          "halfWidth": 0.301
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 23.1562,
+        "stdDev": 0.2491,
+        "min": 22.723,
+        "max": 23.3565,
+        "ci95": {
+          "low": 22.847,
+          "high": 23.4655,
+          "halfWidth": 0.3092
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 23.2116,
+          "symplecticPhaseVolumeInvariancePct": 21.4979,
+          "lyapunovAsymptoticStabilityPct": 27.7762,
+          "compositeHamiltonianScore": 23.1956
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 23.5734,
+          "symplecticPhaseVolumeInvariancePct": 21.6635,
+          "lyapunovAsymptoticStabilityPct": 27.6058,
+          "compositeHamiltonianScore": 23.2491
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 23.1096,
+          "symplecticPhaseVolumeInvariancePct": 21.7617,
+          "lyapunovAsymptoticStabilityPct": 27.528,
+          "compositeHamiltonianScore": 23.3565
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 23.4762,
+          "symplecticPhaseVolumeInvariancePct": 21.2591,
+          "lyapunovAsymptoticStabilityPct": 27.9478,
+          "compositeHamiltonianScore": 22.723
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 23.51,
+          "symplecticPhaseVolumeInvariancePct": 21.8038,
+          "lyapunovAsymptoticStabilityPct": 27.3111,
+          "compositeHamiltonianScore": 23.2569
+        }
+      ]
+    },
+    "hamiltonian-rk4-non-symplectic-drift": {
+      "profileId": "hamiltonian-rk4-non-symplectic-drift",
+      "label": "Hamiltonian ODE With Non-Symplectic RK4 Integrator",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 69.9009,
+        "stdDev": 0.1625,
+        "min": 69.6877,
+        "max": 70.0587,
+        "ci95": {
+          "low": 69.6992,
+          "high": 70.1026,
+          "halfWidth": 0.2017
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 64.0778,
+        "stdDev": 0.1781,
+        "min": 63.8073,
+        "max": 64.2431,
+        "ci95": {
+          "low": 63.8566,
+          "high": 64.2989,
+          "halfWidth": 0.2212
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 72.107,
+        "stdDev": 0.1939,
+        "min": 71.8489,
+        "max": 72.3583,
+        "ci95": {
+          "low": 71.8663,
+          "high": 72.3478,
+          "halfWidth": 0.2408
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 67.9085,
+        "stdDev": 0.2075,
+        "min": 67.5475,
+        "max": 68.0754,
+        "ci95": {
+          "low": 67.6508,
+          "high": 68.1662,
+          "halfWidth": 0.2577
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 69.7693,
+          "symplecticPhaseVolumeInvariancePct": 63.9983,
+          "lyapunovAsymptoticStabilityPct": 72.221,
+          "compositeHamiltonianScore": 67.9414
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 70.0587,
+          "symplecticPhaseVolumeInvariancePct": 64.1308,
+          "lyapunovAsymptoticStabilityPct": 72.0846,
+          "compositeHamiltonianScore": 67.9859
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 69.6877,
+          "symplecticPhaseVolumeInvariancePct": 64.2093,
+          "lyapunovAsymptoticStabilityPct": 72.0224,
+          "compositeHamiltonianScore": 68.0754
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 69.981,
+          "symplecticPhaseVolumeInvariancePct": 63.8073,
+          "lyapunovAsymptoticStabilityPct": 72.3583,
+          "compositeHamiltonianScore": 67.5475
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 70.008,
+          "symplecticPhaseVolumeInvariancePct": 64.2431,
+          "lyapunovAsymptoticStabilityPct": 71.8489,
+          "compositeHamiltonianScore": 67.9924
+        }
+      ]
+    },
+    "symplectic-without-psd-cholesky-dissipation": {
+      "profileId": "symplectic-without-psd-cholesky-dissipation",
+      "label": "Symplectic Leapfrog Without PSD Cholesky Dissipation R = L_R L_R^T",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 89.4257,
+        "stdDev": 0.1218,
+        "min": 89.2657,
+        "max": 89.544,
+        "ci95": {
+          "low": 89.2744,
+          "high": 89.577,
+          "halfWidth": 0.1513
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 75.5583,
+        "stdDev": 0.1336,
+        "min": 75.3555,
+        "max": 75.6823,
+        "ci95": {
+          "low": 75.3925,
+          "high": 75.7242,
+          "halfWidth": 0.1659
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 88.3835,
+        "stdDev": 0.097,
+        "min": 88.2544,
+        "max": 88.5091,
+        "ci95": {
+          "low": 88.2631,
+          "high": 88.5039,
+          "halfWidth": 0.1204
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 89.327,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.4987,
+          "compositeHamiltonianScore": 88.4405
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 89.544,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.5981,
+          "compositeHamiltonianScore": 88.3723
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 89.2657,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.657,
+          "compositeHamiltonianScore": 88.3412
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 89.4857,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.3555,
+          "compositeHamiltonianScore": 88.5091
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 89.506,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 75.6823,
+          "compositeHamiltonianScore": 88.2544
+        }
+      ]
+    },
+    "symplectic-stormer-verlet-port-hamiltonian-cholesky": {
+      "profileId": "symplectic-stormer-verlet-port-hamiltonian-cholesky",
+      "label": "Symplectic Stormer-Verlet Port-Hamiltonian (J=-J^T, Cholesky M=L_M L_M^T & R=L_R L_R^T)",
+      "passivityEnergyConservationPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "symplecticPhaseVolumeInvariancePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "lyapunovAsymptoticStabilityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeHamiltonianScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 29017,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 39023,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 49031,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        },
+        {
+          "seed": 59053,
+          "passivityEnergyConservationPct": 100,
+          "symplecticPhaseVolumeInvariancePct": 100,
+          "lyapunovAsymptoticStabilityPct": 100,
+          "compositeHamiltonianScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "symplectic-stormer-verlet-port-hamiltonian-cholesky",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "passivityEnergyConservationPctMean": 100,
+    "symplecticPhaseVolumeInvariancePctMean": 100,
+    "lyapunovAsymptoticStabilityPctMean": 100,
+    "gainVsBaseline": 76.8438
+  }
+}
