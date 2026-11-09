@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-53-VERA-RANDOM-MATRIX-BITFIT-BIAS",
+  "phase": "Phase X — Low-Rank, Weight-Decomposed & Principal-Singular Parameter Adapters",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "full-rank-uncompressed-weight-copy",
+      "label": "Full-Rank Uncompressed Weight Copy Per Specialist",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 1,
+        "stdDev": 0,
+        "min": 1,
+        "max": 1,
+        "ci95": {
+          "low": 1,
+          "high": 1,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 93.4042,
+        "stdDev": 0.129,
+        "min": 93.2223,
+        "max": 93.5539,
+        "ci95": {
+          "low": 93.2441,
+          "high": 93.5643,
+          "halfWidth": 0.1601
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 12,
+        "stdDev": 0,
+        "min": 12,
+        "max": 12,
+        "ci95": {
+          "low": 12,
+          "high": 12,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 49.0377,
+        "stdDev": 0.0891,
+        "min": 48.9255,
+        "max": 49.1386,
+        "ci95": {
+          "low": 48.9271,
+          "high": 49.1484,
+          "halfWidth": 0.1107
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.3532,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 49.1386
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.5539,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 48.9674
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.2223,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 49.0976
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.4956,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 48.9255
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.3959,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 49.0596
+        }
+      ]
+    },
+    {
+      "profileId": "bitfit-bias-only-without-vera-scaling",
+      "label": "BitFit Bias-Only Tuning Without VeRA Diagonal Scaling Vectors",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 64,
+        "stdDev": 0,
+        "min": 64,
+        "max": 64,
+        "ci95": {
+          "low": 64,
+          "high": 64,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 69.8722,
+        "stdDev": 0.172,
+        "min": 69.6297,
+        "max": 70.0719,
+        "ci95": {
+          "low": 69.6587,
+          "high": 70.0858,
+          "halfWidth": 0.2135
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 95,
+        "stdDev": 0,
+        "min": 95,
+        "max": 95,
+        "ci95": {
+          "low": 95,
+          "high": 95,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 75.2972,
+        "stdDev": 0.1114,
+        "min": 75.1568,
+        "max": 75.4232,
+        "ci95": {
+          "low": 75.1588,
+          "high": 75.4355,
+          "halfWidth": 0.1383
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.8042,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.4232
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 70.0719,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.2093
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.6297,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.372
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.9942,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.1568
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.8611,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.3245
+        }
+      ]
+    },
+    {
+      "profileId": "vera-diagonal-without-bitfit-bias-tuning",
+      "label": "VeRA Diagonal Scaling Without BitFit Bias Specialization",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 48,
+        "stdDev": 0,
+        "min": 48,
+        "max": 48,
+        "ci95": {
+          "low": 48,
+          "high": 48,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 83.4042,
+        "stdDev": 0.129,
+        "min": 83.2223,
+        "max": 83.5539,
+        "ci95": {
+          "low": 83.244,
+          "high": 83.5643,
+          "halfWidth": 0.1601
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 92,
+        "stdDev": 0,
+        "min": 92,
+        "max": 92,
+        "ci95": {
+          "low": 92,
+          "high": 92,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 86.0377,
+        "stdDev": 0.0891,
+        "min": 85.9255,
+        "max": 86.1386,
+        "ci95": {
+          "low": 85.9271,
+          "high": 86.1484,
+          "halfWidth": 0.1107
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.3532,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 86.1386
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.5539,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 85.9674
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.2223,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 86.0976
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.4956,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 85.9255
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.3958,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 86.0596
+        }
+      ]
+    },
+    {
+      "profileId": "coupled-vera-shared-basis-plus-bitfit-bias",
+      "label": "Coupled VeRA Shared Kaiming Basis (Lambda_d, Lambda_b) + BitFit Sparse Bias Tuning",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 56,
+        "stdDev": 0,
+        "min": 56,
+        "max": 56,
+        "ci95": {
+          "low": 56,
+          "high": 56,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "full-rank-uncompressed-weight-copy": {
+      "profileId": "full-rank-uncompressed-weight-copy",
+      "label": "Full-Rank Uncompressed Weight Copy Per Specialist",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 1,
+        "stdDev": 0,
+        "min": 1,
+        "max": 1,
+        "ci95": {
+          "low": 1,
+          "high": 1,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 93.4042,
+        "stdDev": 0.129,
+        "min": 93.2223,
+        "max": 93.5539,
+        "ci95": {
+          "low": 93.2441,
+          "high": 93.5643,
+          "halfWidth": 0.1601
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 12,
+        "stdDev": 0,
+        "min": 12,
+        "max": 12,
+        "ci95": {
+          "low": 12,
+          "high": 12,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 49.0377,
+        "stdDev": 0.0891,
+        "min": 48.9255,
+        "max": 49.1386,
+        "ci95": {
+          "low": 48.9271,
+          "high": 49.1484,
+          "halfWidth": 0.1107
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.3532,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 49.1386
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.5539,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 48.9674
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.2223,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 49.0976
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.4956,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 48.9255
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 1,
+          "specialistTaskAccuracyPct": 93.3959,
+          "memoryFootprintEfficiencyPct": 12,
+          "compositeVeraBitfitScore": 49.0596
+        }
+      ]
+    },
+    "bitfit-bias-only-without-vera-scaling": {
+      "profileId": "bitfit-bias-only-without-vera-scaling",
+      "label": "BitFit Bias-Only Tuning Without VeRA Diagonal Scaling Vectors",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 64,
+        "stdDev": 0,
+        "min": 64,
+        "max": 64,
+        "ci95": {
+          "low": 64,
+          "high": 64,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 69.8722,
+        "stdDev": 0.172,
+        "min": 69.6297,
+        "max": 70.0719,
+        "ci95": {
+          "low": 69.6587,
+          "high": 70.0858,
+          "halfWidth": 0.2135
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 95,
+        "stdDev": 0,
+        "min": 95,
+        "max": 95,
+        "ci95": {
+          "low": 95,
+          "high": 95,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 75.2972,
+        "stdDev": 0.1114,
+        "min": 75.1568,
+        "max": 75.4232,
+        "ci95": {
+          "low": 75.1588,
+          "high": 75.4355,
+          "halfWidth": 0.1383
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.8042,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.4232
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 70.0719,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.2093
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.6297,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.372
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.9942,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.1568
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 64,
+          "specialistTaskAccuracyPct": 69.8611,
+          "memoryFootprintEfficiencyPct": 95,
+          "compositeVeraBitfitScore": 75.3245
+        }
+      ]
+    },
+    "vera-diagonal-without-bitfit-bias-tuning": {
+      "profileId": "vera-diagonal-without-bitfit-bias-tuning",
+      "label": "VeRA Diagonal Scaling Without BitFit Bias Specialization",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 48,
+        "stdDev": 0,
+        "min": 48,
+        "max": 48,
+        "ci95": {
+          "low": 48,
+          "high": 48,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 83.4042,
+        "stdDev": 0.129,
+        "min": 83.2223,
+        "max": 83.5539,
+        "ci95": {
+          "low": 83.244,
+          "high": 83.5643,
+          "halfWidth": 0.1601
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 92,
+        "stdDev": 0,
+        "min": 92,
+        "max": 92,
+        "ci95": {
+          "low": 92,
+          "high": 92,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 86.0377,
+        "stdDev": 0.0891,
+        "min": 85.9255,
+        "max": 86.1386,
+        "ci95": {
+          "low": 85.9271,
+          "high": 86.1484,
+          "halfWidth": 0.1107
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.3532,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 86.1386
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.5539,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 85.9674
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.2223,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 86.0976
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.4956,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 85.9255
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 48,
+          "specialistTaskAccuracyPct": 83.3958,
+          "memoryFootprintEfficiencyPct": 92,
+          "compositeVeraBitfitScore": 86.0596
+        }
+      ]
+    },
+    "coupled-vera-shared-basis-plus-bitfit-bias": {
+      "profileId": "coupled-vera-shared-basis-plus-bitfit-bias",
+      "label": "Coupled VeRA Shared Kaiming Basis (Lambda_d, Lambda_b) + BitFit Sparse Bias Tuning",
+      "parameterCompressionRatioX": {
+        "count": 5,
+        "mean": 56,
+        "stdDev": 0,
+        "min": 56,
+        "max": 56,
+        "ci95": {
+          "low": 56,
+          "high": 56,
+          "halfWidth": 0
+        }
+      },
+      "specialistTaskAccuracyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "memoryFootprintEfficiencyPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeVeraBitfitScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 29017,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 39023,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 49031,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        },
+        {
+          "seed": 59053,
+          "parameterCompressionRatioX": 56,
+          "specialistTaskAccuracyPct": 100,
+          "memoryFootprintEfficiencyPct": 100,
+          "compositeVeraBitfitScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "coupled-vera-shared-basis-plus-bitfit-bias",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "parameterCompressionRatioXMean": 56,
+    "specialistTaskAccuracyPctMean": 100,
+    "memoryFootprintEfficiencyPctMean": 100,
+    "gainVsBaseline": 50.9623
+  }
+}
