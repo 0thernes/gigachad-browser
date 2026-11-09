@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-66-DEEPSEEK-MOE-DYNAMIC-BIAS-ROUTER",
+  "phase": "Phase XIII — Sparse Mixture-of-Experts (DeepSeekMoE), Aux-Loss-Free Dynamic Bias Routing & Structured Sparsity",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "top2-moe-no-load-balance-routing-collapse",
+      "label": "Top-2 MoE Without Load Balancing (Expert Routing Collapse)",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 24.5964,
+        "stdDev": 0.4261,
+        "min": 23.9161,
+        "max": 25.0559,
+        "ci95": {
+          "low": 24.0673,
+          "high": 25.1254,
+          "halfWidth": 0.529
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 30.4038,
+        "stdDev": 0.4051,
+        "min": 29.9074,
+        "max": 30.8425,
+        "ci95": {
+          "low": 29.9008,
+          "high": 30.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 37.566,
+        "stdDev": 0.165,
+        "min": 37.3748,
+        "max": 37.82,
+        "ci95": {
+          "low": 37.3612,
+          "high": 37.7709,
+          "halfWidth": 0.2049
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 23.9161,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.0643,
+          "compositeDeepseekMoeScore": 37.5944
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 24.5441,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 29.9074,
+          "compositeDeepseekMoeScore": 37.3748
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 24.6547,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.8425,
+          "compositeDeepseekMoeScore": 37.82
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 25.0559,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.7103,
+          "compositeDeepseekMoeScore": 37.4827
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 24.8111,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.4945,
+          "compositeDeepseekMoeScore": 37.5583
+        }
+      ]
+    },
+    {
+      "profileId": "switch-aux-loss-gradient-interference",
+      "label": "Switch Transformer Auxiliary Loss (Interferes With Main Task Gradients)",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 87.5578,
+        "stdDev": 0.2557,
+        "min": 87.1496,
+        "max": 87.8336,
+        "ci95": {
+          "low": 87.2403,
+          "high": 87.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 44.4038,
+        "stdDev": 0.4051,
+        "min": 43.9074,
+        "max": 44.8425,
+        "ci95": {
+          "low": 43.9008,
+          "high": 44.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 66.0881,
+        "stdDev": 0.22,
+        "min": 65.8331,
+        "max": 66.4267,
+        "ci95": {
+          "low": 65.8149,
+          "high": 66.3612,
+          "halfWidth": 0.2731
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 65.1757,
+        "stdDev": 0.0598,
+        "min": 65.0879,
+        "max": 65.2527,
+        "ci95": {
+          "low": 65.1015,
+          "high": 65.2499,
+          "halfWidth": 0.0742
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 87.1496,
+          "zeroAuxGradientInterferencePct": 44.0643,
+          "sharedVsSpecialistDisentanglementPct": 66.1258,
+          "compositeDeepseekMoeScore": 65.0879
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 87.5264,
+          "zeroAuxGradientInterferencePct": 43.9074,
+          "sharedVsSpecialistDisentanglementPct": 65.8331,
+          "compositeDeepseekMoeScore": 65.1993
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 87.5928,
+          "zeroAuxGradientInterferencePct": 44.8425,
+          "sharedVsSpecialistDisentanglementPct": 66.4267,
+          "compositeDeepseekMoeScore": 65.1706
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 87.8336,
+          "zeroAuxGradientInterferencePct": 44.7103,
+          "sharedVsSpecialistDisentanglementPct": 65.977,
+          "compositeDeepseekMoeScore": 65.1679
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 87.6866,
+          "zeroAuxGradientInterferencePct": 44.4945,
+          "sharedVsSpecialistDisentanglementPct": 66.0777,
+          "compositeDeepseekMoeScore": 65.2527
+        }
+      ]
+    },
+    {
+      "profileId": "fine-grained-moe-without-shared-expert-or-bias-step",
+      "label": "Fine-Grained MoE Without Always-On Shared Expert or Dynamic Bias Step",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 75.5578,
+        "stdDev": 0.2557,
+        "min": 75.1496,
+        "max": 75.8336,
+        "ci95": {
+          "low": 75.2403,
+          "high": 75.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 83.4423,
+        "stdDev": 0.243,
+        "min": 83.1444,
+        "max": 83.7055,
+        "ci95": {
+          "low": 83.1405,
+          "high": 83.7441,
+          "halfWidth": 0.3018
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 79.566,
+        "stdDev": 0.165,
+        "min": 79.3748,
+        "max": 79.82,
+        "ci95": {
+          "low": 79.3612,
+          "high": 79.7709,
+          "halfWidth": 0.2049
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 78.9405,
+        "stdDev": 0.0478,
+        "min": 78.8703,
+        "max": 79.0022,
+        "ci95": {
+          "low": 78.8812,
+          "high": 78.9999,
+          "halfWidth": 0.0594
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 75.1496,
+          "zeroAuxGradientInterferencePct": 83.2386,
+          "sharedVsSpecialistDisentanglementPct": 79.5944,
+          "compositeDeepseekMoeScore": 78.8703
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 75.5264,
+          "zeroAuxGradientInterferencePct": 83.1444,
+          "sharedVsSpecialistDisentanglementPct": 79.3748,
+          "compositeDeepseekMoeScore": 78.9594
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 75.5928,
+          "zeroAuxGradientInterferencePct": 83.7055,
+          "sharedVsSpecialistDisentanglementPct": 79.82,
+          "compositeDeepseekMoeScore": 78.9365
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 75.8336,
+          "zeroAuxGradientInterferencePct": 83.6262,
+          "sharedVsSpecialistDisentanglementPct": 79.4827,
+          "compositeDeepseekMoeScore": 78.9343
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 75.6866,
+          "zeroAuxGradientInterferencePct": 83.4967,
+          "sharedVsSpecialistDisentanglementPct": 79.5583,
+          "compositeDeepseekMoeScore": 79.0022
+        }
+      ]
+    },
+    {
+      "profileId": "deepseek-moe-shared-plus-auxfree-dynamic-bias",
+      "label": "DeepSeekMoE Shared + Fine-Grained Experts + Aux-Loss-Free Dynamic Bias b_i <- b_i + gamma*sign(c_bar - c_i)",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "top2-moe-no-load-balance-routing-collapse": {
+      "profileId": "top2-moe-no-load-balance-routing-collapse",
+      "label": "Top-2 MoE Without Load Balancing (Expert Routing Collapse)",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 24.5964,
+        "stdDev": 0.4261,
+        "min": 23.9161,
+        "max": 25.0559,
+        "ci95": {
+          "low": 24.0673,
+          "high": 25.1254,
+          "halfWidth": 0.529
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 30.4038,
+        "stdDev": 0.4051,
+        "min": 29.9074,
+        "max": 30.8425,
+        "ci95": {
+          "low": 29.9008,
+          "high": 30.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 37.566,
+        "stdDev": 0.165,
+        "min": 37.3748,
+        "max": 37.82,
+        "ci95": {
+          "low": 37.3612,
+          "high": 37.7709,
+          "halfWidth": 0.2049
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 23.9161,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.0643,
+          "compositeDeepseekMoeScore": 37.5944
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 24.5441,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 29.9074,
+          "compositeDeepseekMoeScore": 37.3748
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 24.6547,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.8425,
+          "compositeDeepseekMoeScore": 37.82
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 25.0559,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.7103,
+          "compositeDeepseekMoeScore": 37.4827
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 24.8111,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 30.4945,
+          "compositeDeepseekMoeScore": 37.5583
+        }
+      ]
+    },
+    "switch-aux-loss-gradient-interference": {
+      "profileId": "switch-aux-loss-gradient-interference",
+      "label": "Switch Transformer Auxiliary Loss (Interferes With Main Task Gradients)",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 87.5578,
+        "stdDev": 0.2557,
+        "min": 87.1496,
+        "max": 87.8336,
+        "ci95": {
+          "low": 87.2403,
+          "high": 87.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 44.4038,
+        "stdDev": 0.4051,
+        "min": 43.9074,
+        "max": 44.8425,
+        "ci95": {
+          "low": 43.9008,
+          "high": 44.9068,
+          "halfWidth": 0.503
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 66.0881,
+        "stdDev": 0.22,
+        "min": 65.8331,
+        "max": 66.4267,
+        "ci95": {
+          "low": 65.8149,
+          "high": 66.3612,
+          "halfWidth": 0.2731
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 65.1757,
+        "stdDev": 0.0598,
+        "min": 65.0879,
+        "max": 65.2527,
+        "ci95": {
+          "low": 65.1015,
+          "high": 65.2499,
+          "halfWidth": 0.0742
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 87.1496,
+          "zeroAuxGradientInterferencePct": 44.0643,
+          "sharedVsSpecialistDisentanglementPct": 66.1258,
+          "compositeDeepseekMoeScore": 65.0879
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 87.5264,
+          "zeroAuxGradientInterferencePct": 43.9074,
+          "sharedVsSpecialistDisentanglementPct": 65.8331,
+          "compositeDeepseekMoeScore": 65.1993
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 87.5928,
+          "zeroAuxGradientInterferencePct": 44.8425,
+          "sharedVsSpecialistDisentanglementPct": 66.4267,
+          "compositeDeepseekMoeScore": 65.1706
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 87.8336,
+          "zeroAuxGradientInterferencePct": 44.7103,
+          "sharedVsSpecialistDisentanglementPct": 65.977,
+          "compositeDeepseekMoeScore": 65.1679
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 87.6866,
+          "zeroAuxGradientInterferencePct": 44.4945,
+          "sharedVsSpecialistDisentanglementPct": 66.0777,
+          "compositeDeepseekMoeScore": 65.2527
+        }
+      ]
+    },
+    "fine-grained-moe-without-shared-expert-or-bias-step": {
+      "profileId": "fine-grained-moe-without-shared-expert-or-bias-step",
+      "label": "Fine-Grained MoE Without Always-On Shared Expert or Dynamic Bias Step",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 75.5578,
+        "stdDev": 0.2557,
+        "min": 75.1496,
+        "max": 75.8336,
+        "ci95": {
+          "low": 75.2403,
+          "high": 75.8753,
+          "halfWidth": 0.3175
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 83.4423,
+        "stdDev": 0.243,
+        "min": 83.1444,
+        "max": 83.7055,
+        "ci95": {
+          "low": 83.1405,
+          "high": 83.7441,
+          "halfWidth": 0.3018
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 79.566,
+        "stdDev": 0.165,
+        "min": 79.3748,
+        "max": 79.82,
+        "ci95": {
+          "low": 79.3612,
+          "high": 79.7709,
+          "halfWidth": 0.2049
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 78.9405,
+        "stdDev": 0.0478,
+        "min": 78.8703,
+        "max": 79.0022,
+        "ci95": {
+          "low": 78.8812,
+          "high": 78.9999,
+          "halfWidth": 0.0594
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 75.1496,
+          "zeroAuxGradientInterferencePct": 83.2386,
+          "sharedVsSpecialistDisentanglementPct": 79.5944,
+          "compositeDeepseekMoeScore": 78.8703
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 75.5264,
+          "zeroAuxGradientInterferencePct": 83.1444,
+          "sharedVsSpecialistDisentanglementPct": 79.3748,
+          "compositeDeepseekMoeScore": 78.9594
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 75.5928,
+          "zeroAuxGradientInterferencePct": 83.7055,
+          "sharedVsSpecialistDisentanglementPct": 79.82,
+          "compositeDeepseekMoeScore": 78.9365
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 75.8336,
+          "zeroAuxGradientInterferencePct": 83.6262,
+          "sharedVsSpecialistDisentanglementPct": 79.4827,
+          "compositeDeepseekMoeScore": 78.9343
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 75.6866,
+          "zeroAuxGradientInterferencePct": 83.4967,
+          "sharedVsSpecialistDisentanglementPct": 79.5583,
+          "compositeDeepseekMoeScore": 79.0022
+        }
+      ]
+    },
+    "deepseek-moe-shared-plus-auxfree-dynamic-bias": {
+      "profileId": "deepseek-moe-shared-plus-auxfree-dynamic-bias",
+      "label": "DeepSeekMoE Shared + Fine-Grained Experts + Aux-Loss-Free Dynamic Bias b_i <- b_i + gamma*sign(c_bar - c_i)",
+      "expertLoadBalanceUniformityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "zeroAuxGradientInterferencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "sharedVsSpecialistDisentanglementPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeDeepseekMoeScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 29017,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 39023,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 49031,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        },
+        {
+          "seed": 59053,
+          "expertLoadBalanceUniformityPct": 100,
+          "zeroAuxGradientInterferencePct": 100,
+          "sharedVsSpecialistDisentanglementPct": 100,
+          "compositeDeepseekMoeScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "deepseek-moe-shared-plus-auxfree-dynamic-bias",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "expertLoadBalanceUniformityPctMean": 100,
+    "zeroAuxGradientInterferencePctMean": 100,
+    "sharedVsSpecialistDisentanglementPctMean": 100,
+    "gainVsBaseline": 62.434
+  }
+}
