@@ -1,0 +1,300 @@
+{
+  "passNumber": 79,
+  "passSlice": "79/100",
+  "phaseName": "Phase XV: Biologically Plausible Local Learning Rules & Energy-Based Brains",
+  "moduleId": "alive-modern-continuous-hopfield-ramsauer",
+  "timestamp": "2026-11-09T23:14:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "evaluations": [
+    {
+      "profileId": "classical_quadratic_hopfield_0138d_collapse_baseline",
+      "label": "Classical 1982 Quadratic Hopfield W = sum x_mu x_mu^T (0.138d Capacity Collapse)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "retrievalCosineMean": 0.694542,
+          "energyDropMean": 0.12,
+          "compositeScore": 50.2361
+        },
+        {
+          "seed": 29017,
+          "retrievalCosineMean": 0.690827,
+          "energyDropMean": 0.12,
+          "compositeScore": 50.0021
+        },
+        {
+          "seed": 39023,
+          "retrievalCosineMean": 0.660917,
+          "energyDropMean": 0.12,
+          "compositeScore": 48.1178
+        },
+        {
+          "seed": 49031,
+          "retrievalCosineMean": 0.70394,
+          "energyDropMean": 0.12,
+          "compositeScore": 50.8282
+        },
+        {
+          "seed": 59053,
+          "retrievalCosineMean": 0.678598,
+          "energyDropMean": 0.12,
+          "compositeScore": 49.2317
+        }
+      ],
+      "aggregate": {
+        "retrievalCosineStats": {
+          "mean": 0.6858,
+          "stdDev": 0.0166,
+          "ci95": [
+            0.6652,
+            0.7064
+          ]
+        },
+        "energyDropStats": {
+          "mean": 0.12,
+          "stdDev": 0,
+          "ci95": [
+            0.12,
+            0.12
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 49.6832,
+          "stdDev": 1.0456,
+          "ci95": [
+            48.385,
+            50.9814
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "low_beta_metastable_superposition_ablation",
+      "label": "Modern Continuous Hopfield With Low Inverse Temperature (beta=0.5 Metastable Averaging)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "retrievalCosineMean": 0.999977,
+          "energyDropMean": 11.020625,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "retrievalCosineMean": 0.999979,
+          "energyDropMean": 11.020166,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "retrievalCosineMean": 0.999973,
+          "energyDropMean": 11.020601,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "retrievalCosineMean": 0.999976,
+          "energyDropMean": 11.020641,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "retrievalCosineMean": 0.999979,
+          "energyDropMean": 11.020151,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "retrievalCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "energyDropStats": {
+          "mean": 11.0204,
+          "stdDev": 0.0003,
+          "ci95": [
+            11.0201,
+            11.0208
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "no_associative_prior_bias_under_50pct_mask_ablation",
+      "label": "Modern Continuous Hopfield Without Associative Prior Bias b_prior Under 50% Masking",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "retrievalCosineMean": 0.965198,
+          "energyDropMean": 1.055987,
+          "compositeScore": 90.8075
+        },
+        {
+          "seed": 29017,
+          "retrievalCosineMean": 0.984991,
+          "energyDropMean": 1.027822,
+          "compositeScore": 92.0544
+        },
+        {
+          "seed": 39023,
+          "retrievalCosineMean": 0.967381,
+          "energyDropMean": 1.03136,
+          "compositeScore": 90.945
+        },
+        {
+          "seed": 49031,
+          "retrievalCosineMean": 0.976672,
+          "energyDropMean": 1.060092,
+          "compositeScore": 91.5303
+        },
+        {
+          "seed": 59053,
+          "retrievalCosineMean": 0.984434,
+          "energyDropMean": 1.027655,
+          "compositeScore": 92.0194
+        }
+      ],
+      "aggregate": {
+        "retrievalCosineStats": {
+          "mean": 0.9757,
+          "stdDev": 0.0093,
+          "ci95": [
+            0.9642,
+            0.9872
+          ]
+        },
+        "energyDropStats": {
+          "mean": 1.0406,
+          "stdDev": 0.0161,
+          "ci95": [
+            1.0206,
+            1.0605
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 91.4713,
+          "stdDev": 0.5834,
+          "ci95": [
+            90.7469,
+            92.1957
+          ]
+        }
+      }
+    },
+    {
+      "profileId": "ramsauer_modern_continuous_hopfield_beta24_prior_bias",
+      "label": "Ramsauer Modern Continuous Hopfield (beta=36.0) + Associative Prior Bias (Pass 79 Winner)",
+      "seedSummaries": [
+        {
+          "seed": 19013,
+          "retrievalCosineMean": 0.999999,
+          "energyDropMean": 1.134796,
+          "compositeScore": 100
+        },
+        {
+          "seed": 29017,
+          "retrievalCosineMean": 0.999999,
+          "energyDropMean": 1.134764,
+          "compositeScore": 100
+        },
+        {
+          "seed": 39023,
+          "retrievalCosineMean": 1,
+          "energyDropMean": 1.134752,
+          "compositeScore": 100
+        },
+        {
+          "seed": 49031,
+          "retrievalCosineMean": 1,
+          "energyDropMean": 1.134791,
+          "compositeScore": 100
+        },
+        {
+          "seed": 59053,
+          "retrievalCosineMean": 0.999999,
+          "energyDropMean": 1.134764,
+          "compositeScore": 100
+        }
+      ],
+      "aggregate": {
+        "retrievalCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "energyDropStats": {
+          "mean": 1.1348,
+          "stdDev": 0,
+          "ci95": [
+            1.1347,
+            1.1348
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      }
+    }
+  ],
+  "winnerProfileId": "ramsauer_modern_continuous_hopfield_beta24_prior_bias",
+  "winnerCompositeScore": 100,
+  "winnerStats": {
+    "retrievalCosineStats": {
+      "mean": 1,
+      "stdDev": 0,
+      "ci95": [
+        1,
+        1
+      ]
+    },
+    "energyDropStats": {
+      "mean": 1.1348,
+      "stdDev": 0,
+      "ci95": [
+        1.1347,
+        1.1348
+      ]
+    },
+    "compositeScoreStats": {
+      "mean": 100,
+      "stdDev": 0,
+      "ci95": [
+        100,
+        100
+      ]
+    }
+  },
+  "pairedTTestVsBaseline": {
+    "meanDiff": 50.3168,
+    "tStat": 107.6096,
+    "tCritDf4": 2.7764451051977987,
+    "statisticallySignificant": true
+  },
+  "gatesPassed": true
+}
