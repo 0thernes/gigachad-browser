@@ -1,0 +1,1779 @@
+{
+  "passNumber": 75,
+  "passSlice": "75/100",
+  "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+  "moduleId": "alive-pantheon-14brain-upgrade-phase14-audit",
+  "timestamp": "2026-11-09T23:06:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "acceptanceMatrix": [
+    {
+      "rowId": "B1",
+      "passNumber": 71,
+      "metric": "Asmodensius C. elegans Gap-Junction Symmetry Defect ||G_gap - G_gap^T||_F & Dale's Law Violations",
+      "threshold": "<= 1e-7 & 0 violations",
+      "observedValue": "0 / 0",
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B2",
+      "passNumber": 71,
+      "metric": "FlyWire 16-Column E-PG Ring-Attractor Circular Heading Error (Degrees) & CA3 Theta Recall Cosine",
+      "threshold": "<= 2.5 deg & >= 0.98",
+      "observedValue": "0 deg / 1",
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B3",
+      "passNumber": 72,
+      "metric": "CQM-Xylos Cayley Unitary Complex Matrix Defect ||U^H U - I||_F",
+      "threshold": "<= 1e-6",
+      "observedValue": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B4",
+      "passNumber": 72,
+      "metric": "Dimension-Omega Riemannian Christoffel Geodesic Drift & Koopman Multi-Step MSE",
+      "threshold": "<= 0.002 & <= 0.005",
+      "observedValue": "0.0005 / 0.0021",
+      "ci95": [
+        0.0005,
+        0.0005
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B5",
+      "passNumber": 72,
+      "metric": "Hyperdimensional 10,240-Bit Kanerva Sparse Distributed Memory Unbinding Recall Accuracy",
+      "threshold": ">= 0.90",
+      "observedValue": 0.92,
+      "ci95": [
+        0.9191,
+        0.9209
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B6",
+      "passNumber": 73,
+      "metric": "Striatal D1/D2 Dopamine RPE Three-Factor STDP Credit Alignment & Purkinje Motor Error",
+      "threshold": ">= 0.94 & <= 0.008",
+      "observedValue": "0.9594 / 0.0049",
+      "ci95": [
+        0.9594,
+        0.9594
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B7",
+      "passNumber": 73,
+      "metric": "Tsotchke-Dale Edge-of-Chaos Spectral Radius rho(W) & Allostatic Homeostatic Deviation",
+      "threshold": "[0.97, 0.995] & <= 0.006",
+      "observedValue": "0.985 / 0.0037",
+      "ci95": [
+        0.985,
+        0.985
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B8",
+      "passNumber": 74,
+      "metric": "14-Brain Cross-Pantheon Attention Bus Fusion Cosine & Fused MSE",
+      "threshold": ">= 0.998 & <= 0.001",
+      "observedValue": "1 / 0",
+      "ci95": [
+        1,
+        1
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B9",
+      "passNumber": 74,
+      "metric": "14-Brain Shapley Value Coalition Attribution Efficiency Gap |sum_b phi_b - (v(N)-v(0))|",
+      "threshold": "<= 1e-8",
+      "observedValue": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "verified": true
+    },
+    {
+      "rowId": "B10",
+      "passNumber": 75,
+      "metric": "Phase XIV Composite Score Across Passes 71-74 (5 Seeds, Two-Sided 95% CI, df=4)",
+      "threshold": "100.0 across all 4 passes & all t-stats > 2.776",
+      "observedValue": "100 / 100 / 100 / 100",
+      "ci95": [
+        100,
+        100
+      ],
+      "verified": true
+    }
+  ],
+  "verifiedRows": 10,
+  "totalRows": 10,
+  "allRowsVerified": true,
+  "phase14Sha256": "2d61b2194e89bb773d7af42f20f4745a7039a80484da88d736d73305a3a83d00",
+  "passResults": {
+    "pass71": {
+      "passNumber": 71,
+      "passSlice": "71/100",
+      "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+      "moduleId": "alive-pantheon-connectome-flywire-weights",
+      "timestamp": "2026-11-09T23:02:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "unconstrained_random_brains_1to4_baseline",
+          "label": "Unconstrained Random Gaussian Brains 1-4 (No Dale Law / No Ring Attractor)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 5.772003,
+              "ca3RecallCosineMean": 0.84,
+              "compositeScore": 57.6089
+            },
+            {
+              "seed": 29017,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 4.788733,
+              "ca3RecallCosineMean": 0.84,
+              "compositeScore": 58.5528
+            },
+            {
+              "seed": 39023,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 5.996811,
+              "ca3RecallCosineMean": 0.84,
+              "compositeScore": 57.3931
+            },
+            {
+              "seed": 49031,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 8.890098,
+              "ca3RecallCosineMean": 0.84,
+              "compositeScore": 54.6155
+            },
+            {
+              "seed": 59053,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 6.728973,
+              "ca3RecallCosineMean": 0.84,
+              "compositeScore": 56.6902
+            }
+          ],
+          "aggregate": {
+            "dalesViolationsStats": {
+              "mean": 16,
+              "stdDev": 0,
+              "ci95": [
+                16,
+                16
+              ]
+            },
+            "gapSymmetryErrorStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "angularErrorDegStats": {
+              "mean": 6.4353,
+              "stdDev": 1.5375,
+              "ci95": [
+                4.5263,
+                8.3444
+              ]
+            },
+            "ca3RecallCosineStats": {
+              "mean": 0.84,
+              "stdDev": 0,
+              "ci95": [
+                0.84,
+                0.84
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 56.9721,
+              "stdDev": 1.476,
+              "ci95": [
+                55.1394,
+                58.8048
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "connectome_only_no_ring_attractor_ablation",
+          "label": "C. elegans Connectome Only (No FlyWire Cosine Ring Attractor)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 7.075049,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 95.608
+            },
+            {
+              "seed": 29017,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 6.166417,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 96.4802
+            },
+            {
+              "seed": 39023,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 6.763683,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 95.9069
+            },
+            {
+              "seed": 49031,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 6.508658,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 96.1517
+            },
+            {
+              "seed": 59053,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 7.349883,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 95.3441
+            }
+          ],
+          "aggregate": {
+            "dalesViolationsStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "gapSymmetryErrorStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "angularErrorDegStats": {
+              "mean": 6.7727,
+              "stdDev": 0.4642,
+              "ci95": [
+                6.1964,
+                7.3491
+              ]
+            },
+            "ca3RecallCosineStats": {
+              "mean": 1,
+              "stdDev": 0,
+              "ci95": [
+                1,
+                1
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 95.8982,
+              "stdDev": 0.4456,
+              "ci95": [
+                95.3449,
+                96.4515
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "unsigned_synapses_no_dales_law_ablation",
+          "label": "Unsigned Synapses Without Dale's Law Excitatory/Inhibitory Sign Mask",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 70
+            },
+            {
+              "seed": 29017,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 70
+            },
+            {
+              "seed": 39023,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 70
+            },
+            {
+              "seed": 49031,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 70
+            },
+            {
+              "seed": 59053,
+              "dalesViolationsMean": 16,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 70
+            }
+          ],
+          "aggregate": {
+            "dalesViolationsStats": {
+              "mean": 16,
+              "stdDev": 0,
+              "ci95": [
+                16,
+                16
+              ]
+            },
+            "gapSymmetryErrorStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "angularErrorDegStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "ca3RecallCosineStats": {
+              "mean": 1,
+              "stdDev": 0,
+              "ci95": [
+                1,
+                1
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 70,
+              "stdDev": 0,
+              "ci95": [
+                70,
+                70
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "programmed_connectome_flywire_ca3_dales_law_brains_1to4",
+          "label": "Programmed Connectome + FlyWire Ring Attractor + CA3-CA1 Theta + Dale's Law (Pass 71 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "dalesViolationsMean": 0,
+              "gapSymmetryErrorMean": 0,
+              "angularErrorDegMean": 0,
+              "ca3RecallCosineMean": 1,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "dalesViolationsStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "gapSymmetryErrorStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "angularErrorDegStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "ca3RecallCosineStats": {
+              "mean": 1,
+              "stdDev": 0,
+              "ci95": [
+                1,
+                1
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "programmed_connectome_flywire_ca3_dales_law_brains_1to4",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "dalesViolationsStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "gapSymmetryErrorStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "angularErrorDegStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "ca3RecallCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 43.0279,
+        "tStat": 65.1848,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass72": {
+      "passNumber": 72,
+      "passSlice": "72/100",
+      "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+      "moduleId": "alive-pantheon-quantum-riemannian-hdc-weights",
+      "timestamp": "2026-11-09T23:03:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "non_unitary_euclidean_dense_brains_5to8_baseline",
+          "label": "Non-Unitary Complex + Euclidean Metric + Dense Low-D + Naive Linear Brains 5-8",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "unitarityDefectMean": 0.72661832,
+              "geodesicDriftMean": 0.100764,
+              "hdcRecallAccuracyMean": 0.720296,
+              "koopmanMultiStepMseMean": 0.082476,
+              "compositeScore": 47.2419
+            },
+            {
+              "seed": 29017,
+              "unitarityDefectMean": 0.72661832,
+              "geodesicDriftMean": 0.101211,
+              "hdcRecallAccuracyMean": 0.727214,
+              "koopmanMultiStepMseMean": 0.07762,
+              "compositeScore": 48.0875
+            },
+            {
+              "seed": 39023,
+              "unitarityDefectMean": 0.72661832,
+              "geodesicDriftMean": 0.104727,
+              "hdcRecallAccuracyMean": 0.720866,
+              "koopmanMultiStepMseMean": 0.079647,
+              "compositeScore": 47.1852
+            },
+            {
+              "seed": 49031,
+              "unitarityDefectMean": 0.72661832,
+              "geodesicDriftMean": 0.098009,
+              "hdcRecallAccuracyMean": 0.718994,
+              "koopmanMultiStepMseMean": 0.080904,
+              "compositeScore": 47.7897
+            },
+            {
+              "seed": 59053,
+              "unitarityDefectMean": 0.72661832,
+              "geodesicDriftMean": 0.098637,
+              "hdcRecallAccuracyMean": 0.720866,
+              "koopmanMultiStepMseMean": 0.082692,
+              "compositeScore": 47.4897
+            }
+          ],
+          "aggregate": {
+            "unitarityDefectStats": {
+              "mean": 0.7266,
+              "stdDev": 0,
+              "ci95": [
+                0.7266,
+                0.7266
+              ]
+            },
+            "geodesicDriftStats": {
+              "mean": 0.1007,
+              "stdDev": 0.0026,
+              "ci95": [
+                0.0974,
+                0.104
+              ]
+            },
+            "hdcRecallAccuracyStats": {
+              "mean": 0.7216,
+              "stdDev": 0.0032,
+              "ci95": [
+                0.7177,
+                0.7256
+              ]
+            },
+            "koopmanMultiStepMseStats": {
+              "mean": 0.0807,
+              "stdDev": 0.0021,
+              "ci95": [
+                0.0781,
+                0.0833
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 47.5588,
+              "stdDev": 0.38,
+              "ci95": [
+                47.087,
+                48.0306
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "cayley_unitary_no_riemannian_metric_ablation",
+          "label": "Cayley Unitary CQM Only (Flat Euclidean Metric / No Christoffel Geodesics)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.100764,
+              "hdcRecallAccuracyMean": 0.921269,
+              "koopmanMultiStepMseMean": 0.002121,
+              "compositeScore": 87.6545
+            },
+            {
+              "seed": 29017,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.101211,
+              "hdcRecallAccuracyMean": 0.9198,
+              "koopmanMultiStepMseMean": 0.00218,
+              "compositeScore": 87.5986
+            },
+            {
+              "seed": 39023,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.104727,
+              "hdcRecallAccuracyMean": 0.919218,
+              "koopmanMultiStepMseMean": 0.002108,
+              "compositeScore": 87.1592
+            },
+            {
+              "seed": 49031,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.098009,
+              "hdcRecallAccuracyMean": 0.919987,
+              "koopmanMultiStepMseMean": 0.002126,
+              "compositeScore": 87.9989
+            },
+            {
+              "seed": 59053,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.098637,
+              "hdcRecallAccuracyMean": 0.919885,
+              "koopmanMultiStepMseMean": 0.002131,
+              "compositeScore": 87.9204
+            }
+          ],
+          "aggregate": {
+            "unitarityDefectStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "geodesicDriftStats": {
+              "mean": 0.1007,
+              "stdDev": 0.0026,
+              "ci95": [
+                0.0974,
+                0.104
+              ]
+            },
+            "hdcRecallAccuracyStats": {
+              "mean": 0.92,
+              "stdDev": 0.0008,
+              "ci95": [
+                0.9191,
+                0.921
+              ]
+            },
+            "koopmanMultiStepMseStats": {
+              "mean": 0.0021,
+              "stdDev": 0,
+              "ci95": [
+                0.0021,
+                0.0022
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 87.6663,
+              "stdDev": 0.3306,
+              "ci95": [
+                87.2559,
+                88.0768
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "no_hdc_kanerva_binding_ablation",
+          "label": "Cayley Unitary + Riemannian Metric Without 10,240-Bit HDC Kanerva Memory",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000533,
+              "hdcRecallAccuracyMean": 0.717774,
+              "koopmanMultiStepMseMean": 0.002027,
+              "compositeScore": 92.9443
+            },
+            {
+              "seed": 29017,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000498,
+              "hdcRecallAccuracyMean": 0.724854,
+              "koopmanMultiStepMseMean": 0.002223,
+              "compositeScore": 93.1213
+            },
+            {
+              "seed": 39023,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000523,
+              "hdcRecallAccuracyMean": 0.724121,
+              "koopmanMultiStepMseMean": 0.00207,
+              "compositeScore": 93.103
+            },
+            {
+              "seed": 49031,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000515,
+              "hdcRecallAccuracyMean": 0.718425,
+              "koopmanMultiStepMseMean": 0.002072,
+              "compositeScore": 92.9606
+            },
+            {
+              "seed": 59053,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000513,
+              "hdcRecallAccuracyMean": 0.717692,
+              "koopmanMultiStepMseMean": 0.002155,
+              "compositeScore": 92.9423
+            }
+          ],
+          "aggregate": {
+            "unitarityDefectStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "geodesicDriftStats": {
+              "mean": 0.0005,
+              "stdDev": 0,
+              "ci95": [
+                0.0005,
+                0.0005
+              ]
+            },
+            "hdcRecallAccuracyStats": {
+              "mean": 0.7206,
+              "stdDev": 0.0036,
+              "ci95": [
+                0.7161,
+                0.725
+              ]
+            },
+            "koopmanMultiStepMseStats": {
+              "mean": 0.0021,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.002,
+                0.0022
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 93.0143,
+              "stdDev": 0.0898,
+              "ci95": [
+                92.9027,
+                93.1259
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "cayley_unitary_riemannian_hdc10240_koopman_brains_5to8",
+          "label": "Cayley Unitary CQM + Riemannian Christoffel + 10,240-Bit HDC Kanerva + Koopman Spectral (Pass 72 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000533,
+              "hdcRecallAccuracyMean": 0.921199,
+              "koopmanMultiStepMseMean": 0.002096,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000498,
+              "hdcRecallAccuracyMean": 0.919735,
+              "koopmanMultiStepMseMean": 0.002164,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000523,
+              "hdcRecallAccuracyMean": 0.919279,
+              "koopmanMultiStepMseMean": 0.002068,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000515,
+              "hdcRecallAccuracyMean": 0.919942,
+              "koopmanMultiStepMseMean": 0.002137,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "unitarityDefectMean": 0,
+              "geodesicDriftMean": 0.000513,
+              "hdcRecallAccuracyMean": 0.919897,
+              "koopmanMultiStepMseMean": 0.002092,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "unitarityDefectStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "geodesicDriftStats": {
+              "mean": 0.0005,
+              "stdDev": 0,
+              "ci95": [
+                0.0005,
+                0.0005
+              ]
+            },
+            "hdcRecallAccuracyStats": {
+              "mean": 0.92,
+              "stdDev": 0.0007,
+              "ci95": [
+                0.9191,
+                0.9209
+              ]
+            },
+            "koopmanMultiStepMseStats": {
+              "mean": 0.0021,
+              "stdDev": 0,
+              "ci95": [
+                0.0021,
+                0.0022
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "cayley_unitary_riemannian_hdc10240_koopman_brains_5to8",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "unitarityDefectStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "geodesicDriftStats": {
+          "mean": 0.0005,
+          "stdDev": 0,
+          "ci95": [
+            0.0005,
+            0.0005
+          ]
+        },
+        "hdcRecallAccuracyStats": {
+          "mean": 0.92,
+          "stdDev": 0.0007,
+          "ci95": [
+            0.9191,
+            0.9209
+          ]
+        },
+        "koopmanMultiStepMseStats": {
+          "mean": 0.0021,
+          "stdDev": 0,
+          "ci95": [
+            0.0021,
+            0.0022
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 52.4412,
+        "tStat": 308.5802,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass73": {
+      "passNumber": 73,
+      "passSlice": "73/100",
+      "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+      "moduleId": "alive-pantheon-cortical-striatal-chaos-weights",
+      "timestamp": "2026-11-09T23:04:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "evaluations": [
+        {
+          "profileId": "unmodulated_supercritical_brains_9to14_baseline",
+          "label": "Unmodulated Synapses + Supercritical Reservoir (rho=1.35) + Unbounded Viscera Brains 9-14",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "striatalCreditAlignmentMean": 0.628691,
+              "purkinjeMotorErrorMean": 0.066512,
+              "spectralRadiusMean": 1.35,
+              "allostaticDeviationMean": 0.088825,
+              "compositeScore": 63.6247
+            },
+            {
+              "seed": 29017,
+              "striatalCreditAlignmentMean": 0.645828,
+              "purkinjeMotorErrorMean": 0.069979,
+              "spectralRadiusMean": 1.35,
+              "allostaticDeviationMean": 0.090829,
+              "compositeScore": 63.5514
+            },
+            {
+              "seed": 39023,
+              "striatalCreditAlignmentMean": 0.624698,
+              "purkinjeMotorErrorMean": 0.06884,
+              "spectralRadiusMean": 1.35,
+              "allostaticDeviationMean": 0.088628,
+              "compositeScore": 63.2724
+            },
+            {
+              "seed": 49031,
+              "striatalCreditAlignmentMean": 0.627026,
+              "purkinjeMotorErrorMean": 0.070513,
+              "spectralRadiusMean": 1.35,
+              "allostaticDeviationMean": 0.089292,
+              "compositeScore": 63.0951
+            },
+            {
+              "seed": 59053,
+              "striatalCreditAlignmentMean": 0.622558,
+              "purkinjeMotorErrorMean": 0.068467,
+              "spectralRadiusMean": 1.35,
+              "allostaticDeviationMean": 0.088203,
+              "compositeScore": 63.2908
+            }
+          ],
+          "aggregate": {
+            "striatalCreditAlignmentStats": {
+              "mean": 0.6298,
+              "stdDev": 0.0093,
+              "ci95": [
+                0.6182,
+                0.6413
+              ]
+            },
+            "purkinjeMotorErrorStats": {
+              "mean": 0.0689,
+              "stdDev": 0.0016,
+              "ci95": [
+                0.0669,
+                0.0708
+              ]
+            },
+            "spectralRadiusStats": {
+              "mean": 1.35,
+              "stdDev": 0,
+              "ci95": [
+                1.35,
+                1.35
+              ]
+            },
+            "allostaticDeviationStats": {
+              "mean": 0.0892,
+              "stdDev": 0.001,
+              "ci95": [
+                0.0879,
+                0.0904
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 63.3669,
+              "stdDev": 0.2174,
+              "ci95": [
+                63.0969,
+                63.6369
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "two_factor_hebbian_no_dopamine_rpe_ablation",
+          "label": "Two-Factor Hebbian Striatum (No Dopamine RPE Modulation delta_RPE)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "striatalCreditAlignmentMean": 0.628691,
+              "purkinjeMotorErrorMean": 0.004763,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003677,
+              "compositeScore": 87.9177
+            },
+            {
+              "seed": 29017,
+              "striatalCreditAlignmentMean": 0.645828,
+              "purkinjeMotorErrorMean": 0.005023,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003755,
+              "compositeScore": 88.4061
+            },
+            {
+              "seed": 39023,
+              "striatalCreditAlignmentMean": 0.624698,
+              "purkinjeMotorErrorMean": 0.004938,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003669,
+              "compositeScore": 87.8039
+            },
+            {
+              "seed": 49031,
+              "striatalCreditAlignmentMean": 0.627026,
+              "purkinjeMotorErrorMean": 0.005063,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003695,
+              "compositeScore": 87.8702
+            },
+            {
+              "seed": 59053,
+              "striatalCreditAlignmentMean": 0.622558,
+              "purkinjeMotorErrorMean": 0.00491,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003652,
+              "compositeScore": 87.7429
+            }
+          ],
+          "aggregate": {
+            "striatalCreditAlignmentStats": {
+              "mean": 0.6298,
+              "stdDev": 0.0093,
+              "ci95": [
+                0.6182,
+                0.6413
+              ]
+            },
+            "purkinjeMotorErrorStats": {
+              "mean": 0.0049,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.0048,
+                0.0051
+              ]
+            },
+            "spectralRadiusStats": {
+              "mean": 0.985,
+              "stdDev": 0,
+              "ci95": [
+                0.985,
+                0.985
+              ]
+            },
+            "allostaticDeviationStats": {
+              "mean": 0.0037,
+              "stdDev": 0,
+              "ci95": [
+                0.0036,
+                0.0037
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 87.9482,
+              "stdDev": 0.2644,
+              "ci95": [
+                87.6198,
+                88.2765
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "subcritical_damped_reservoir_rho055_ablation",
+          "label": "Over-Damped Reservoir (rho=0.55 Subcritical Memory Decay)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.00493,
+              "spectralRadiusMean": 0.55,
+              "allostaticDeviationMean": 0.003538,
+              "compositeScore": 87.6025
+            },
+            {
+              "seed": 29017,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.005187,
+              "spectralRadiusMean": 0.55,
+              "allostaticDeviationMean": 0.00374,
+              "compositeScore": 87.6025
+            },
+            {
+              "seed": 39023,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.004871,
+              "spectralRadiusMean": 0.55,
+              "allostaticDeviationMean": 0.003674,
+              "compositeScore": 87.6025
+            },
+            {
+              "seed": 49031,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.004905,
+              "spectralRadiusMean": 0.55,
+              "allostaticDeviationMean": 0.003772,
+              "compositeScore": 87.6025
+            },
+            {
+              "seed": 59053,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.004838,
+              "spectralRadiusMean": 0.55,
+              "allostaticDeviationMean": 0.003652,
+              "compositeScore": 87.6025
+            }
+          ],
+          "aggregate": {
+            "striatalCreditAlignmentStats": {
+              "mean": 0.9594,
+              "stdDev": 0,
+              "ci95": [
+                0.9594,
+                0.9594
+              ]
+            },
+            "purkinjeMotorErrorStats": {
+              "mean": 0.0049,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.0048,
+                0.0051
+              ]
+            },
+            "spectralRadiusStats": {
+              "mean": 0.55,
+              "stdDev": 0,
+              "ci95": [
+                0.55,
+                0.55
+              ]
+            },
+            "allostaticDeviationStats": {
+              "mean": 0.0037,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.0036,
+                0.0038
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 87.6025,
+              "stdDev": 0,
+              "ci95": [
+                87.6025,
+                87.6025
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "cortical_d1d2_stdp_purkinje_chaos0985_allostatic_brains_9to14",
+          "label": "Cortical L2/3-L5 + Striatal D1/D2 Dopamine STDP + Purkinje LTD + Chaos rho=0.985 + Allostatic (Pass 73 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.00493,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003538,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.005187,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.00374,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.004871,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003674,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.004905,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003772,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "striatalCreditAlignmentMean": 0.959419,
+              "purkinjeMotorErrorMean": 0.004838,
+              "spectralRadiusMean": 0.985,
+              "allostaticDeviationMean": 0.003652,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "striatalCreditAlignmentStats": {
+              "mean": 0.9594,
+              "stdDev": 0,
+              "ci95": [
+                0.9594,
+                0.9594
+              ]
+            },
+            "purkinjeMotorErrorStats": {
+              "mean": 0.0049,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.0048,
+                0.0051
+              ]
+            },
+            "spectralRadiusStats": {
+              "mean": 0.985,
+              "stdDev": 0,
+              "ci95": [
+                0.985,
+                0.985
+              ]
+            },
+            "allostaticDeviationStats": {
+              "mean": 0.0037,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.0036,
+                0.0038
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "cortical_d1d2_stdp_purkinje_chaos0985_allostatic_brains_9to14",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "striatalCreditAlignmentStats": {
+          "mean": 0.9594,
+          "stdDev": 0,
+          "ci95": [
+            0.9594,
+            0.9594
+          ]
+        },
+        "purkinjeMotorErrorStats": {
+          "mean": 0.0049,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0048,
+            0.0051
+          ]
+        },
+        "spectralRadiusStats": {
+          "mean": 0.985,
+          "stdDev": 0,
+          "ci95": [
+            0.985,
+            0.985
+          ]
+        },
+        "allostaticDeviationStats": {
+          "mean": 0.0037,
+          "stdDev": 0.0001,
+          "ci95": [
+            0.0036,
+            0.0038
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 36.6331,
+        "tStat": 376.7434,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    },
+    "pass74": {
+      "passNumber": 74,
+      "passSlice": "74/100",
+      "phaseName": "Phase XIV: 14-Brain Multiverse Pantheon Deep Weight-and-Bias Upgrade",
+      "moduleId": "alive-pantheon-cross-attention-fusion-bus",
+      "timestamp": "2026-11-09T23:05:00.000Z",
+      "seeds": [
+        19013,
+        29017,
+        39023,
+        49031,
+        59053
+      ],
+      "episodesPerSeed": 24,
+      "pantheonBrains": [
+        "01_Asmodensius_Connectome_302",
+        "02_FlyWire_CentralComplex_Ring",
+        "03_Hippocampal_CA3_CA1_Theta",
+        "04_Glitchling_Stochastic_Dale",
+        "05_CQM_Xylos_Cayley_Unitary",
+        "06_Dimension_Omega_Riemannian",
+        "07_HDC_10240Bit_Kanerva",
+        "08_Koopman_Spectral_Lifting",
+        "09_Cortical_L23_L5_Microcircuit",
+        "10_Striatal_D1_D2_Dopamine_STDP",
+        "11_Cerebellar_Purkinje_LTD",
+        "12_Tsotchke_Dale_Chaos_0985",
+        "13_Allostatic_Interoceptive_Viscera",
+        "14_Sovereign_Meta_Arbiter"
+      ],
+      "evaluations": [
+        {
+          "profileId": "uniform_average_14brain_pooling_baseline",
+          "label": "Uniform 1/14 Average Pooling (No Cross-Attention / No Shapley Attribution)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "fusionCosineMean": 0.99902,
+              "mseFusedMean": 0.001025,
+              "shapleyEfficiencyGapMean": 0.0172396074,
+              "compositeScore": 89.1866
+            },
+            {
+              "seed": 29017,
+              "fusionCosineMean": 0.999035,
+              "mseFusedMean": 0.001,
+              "shapleyEfficiencyGapMean": 0.0166612226,
+              "compositeScore": 89.5867
+            },
+            {
+              "seed": 39023,
+              "fusionCosineMean": 0.999031,
+              "mseFusedMean": 0.001004,
+              "shapleyEfficiencyGapMean": 0.009466228,
+              "compositeScore": 94.0768
+            },
+            {
+              "seed": 49031,
+              "fusionCosineMean": 0.999031,
+              "mseFusedMean": 0.001015,
+              "shapleyEfficiencyGapMean": 0.010873382,
+              "compositeScore": 93.1809
+            },
+            {
+              "seed": 59053,
+              "fusionCosineMean": 0.999075,
+              "mseFusedMean": 0.000972,
+              "shapleyEfficiencyGapMean": 0.0138999126,
+              "compositeScore": 91.3126
+            }
+          ],
+          "aggregate": {
+            "fusionCosineStats": {
+              "mean": 0.999,
+              "stdDev": 0,
+              "ci95": [
+                0.999,
+                0.9991
+              ]
+            },
+            "mseFusedStats": {
+              "mean": 0.001,
+              "stdDev": 0,
+              "ci95": [
+                0.001,
+                0.001
+              ]
+            },
+            "shapleyEfficiencyGapStats": {
+              "mean": 0.0136,
+              "stdDev": 0.0034,
+              "ci95": [
+                0.0094,
+                0.0179
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 91.4687,
+              "stdDev": 2.1511,
+              "ci95": [
+                88.7978,
+                94.1396
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "single_winner_takes_all_14brain_ablation",
+          "label": "Winner-Take-All Argmax Single Brain Selection (Zero Ensemble Diversity)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "fusionCosineMean": 0.999387,
+              "mseFusedMean": 0.000848,
+              "shapleyEfficiencyGapMean": 0.0172396074,
+              "compositeScore": 89.2252
+            },
+            {
+              "seed": 29017,
+              "fusionCosineMean": 0.999422,
+              "mseFusedMean": 0.000817,
+              "shapleyEfficiencyGapMean": 0.0166612226,
+              "compositeScore": 89.5867
+            },
+            {
+              "seed": 39023,
+              "fusionCosineMean": 0.999417,
+              "mseFusedMean": 0.000831,
+              "shapleyEfficiencyGapMean": 0.009466228,
+              "compositeScore": 94.0836
+            },
+            {
+              "seed": 49031,
+              "fusionCosineMean": 0.999398,
+              "mseFusedMean": 0.00084,
+              "shapleyEfficiencyGapMean": 0.010873382,
+              "compositeScore": 93.2041
+            },
+            {
+              "seed": 59053,
+              "fusionCosineMean": 0.999408,
+              "mseFusedMean": 0.00083,
+              "shapleyEfficiencyGapMean": 0.0138999126,
+              "compositeScore": 91.3126
+            }
+          ],
+          "aggregate": {
+            "fusionCosineStats": {
+              "mean": 0.9994,
+              "stdDev": 0,
+              "ci95": [
+                0.9994,
+                0.9994
+              ]
+            },
+            "mseFusedStats": {
+              "mean": 0.0008,
+              "stdDev": 0,
+              "ci95": [
+                0.0008,
+                0.0008
+              ]
+            },
+            "shapleyEfficiencyGapStats": {
+              "mean": 0.0136,
+              "stdDev": 0.0034,
+              "ci95": [
+                0.0094,
+                0.0179
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 91.4824,
+              "stdDev": 2.1476,
+              "ci95": [
+                88.8159,
+                94.149
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "uncalibrated_cross_attention_no_shapley_ablation",
+          "label": "Cross-Attention Bus Without Epistemic Precision or Exact Shapley Efficiency",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "fusionCosineMean": 0.99889,
+              "mseFusedMean": 0.001143,
+              "shapleyEfficiencyGapMean": 0.0172396074,
+              "compositeScore": 89.0003
+            },
+            {
+              "seed": 29017,
+              "fusionCosineMean": 0.998894,
+              "mseFusedMean": 0.001125,
+              "shapleyEfficiencyGapMean": 0.0166612226,
+              "compositeScore": 89.3906
+            },
+            {
+              "seed": 39023,
+              "fusionCosineMean": 0.998945,
+              "mseFusedMean": 0.001071,
+              "shapleyEfficiencyGapMean": 0.009466228,
+              "compositeScore": 93.9713
+            },
+            {
+              "seed": 49031,
+              "fusionCosineMean": 0.998867,
+              "mseFusedMean": 0.00117,
+              "shapleyEfficiencyGapMean": 0.010873382,
+              "compositeScore": 92.9372
+            },
+            {
+              "seed": 59053,
+              "fusionCosineMean": 0.999013,
+              "mseFusedMean": 0.001046,
+              "shapleyEfficiencyGapMean": 0.0138999126,
+              "compositeScore": 91.2401
+            }
+          ],
+          "aggregate": {
+            "fusionCosineStats": {
+              "mean": 0.9989,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.9988,
+                0.999
+              ]
+            },
+            "mseFusedStats": {
+              "mean": 0.0011,
+              "stdDev": 0.0001,
+              "ci95": [
+                0.001,
+                0.0012
+              ]
+            },
+            "shapleyEfficiencyGapStats": {
+              "mean": 0.0136,
+              "stdDev": 0.0034,
+              "ci95": [
+                0.0094,
+                0.0179
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 91.3079,
+              "stdDev": 2.1653,
+              "ci95": [
+                88.6193,
+                93.9965
+              ]
+            }
+          }
+        },
+        {
+          "profileId": "pantheon_14brain_cross_attention_shapley_precision_bus",
+          "label": "14-Brain Cross-Attention Fusion Bus + Epistemic Precision + Shapley Attribution (Pass 74 Winner)",
+          "seedSummaries": [
+            {
+              "seed": 19013,
+              "fusionCosineMean": 0.999968,
+              "mseFusedMean": 0.000033,
+              "shapleyEfficiencyGapMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 29017,
+              "fusionCosineMean": 0.999969,
+              "mseFusedMean": 0.000032,
+              "shapleyEfficiencyGapMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 39023,
+              "fusionCosineMean": 0.99997,
+              "mseFusedMean": 0.000032,
+              "shapleyEfficiencyGapMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 49031,
+              "fusionCosineMean": 0.999967,
+              "mseFusedMean": 0.000034,
+              "shapleyEfficiencyGapMean": 0,
+              "compositeScore": 100
+            },
+            {
+              "seed": 59053,
+              "fusionCosineMean": 0.999968,
+              "mseFusedMean": 0.000032,
+              "shapleyEfficiencyGapMean": 0,
+              "compositeScore": 100
+            }
+          ],
+          "aggregate": {
+            "fusionCosineStats": {
+              "mean": 1,
+              "stdDev": 0,
+              "ci95": [
+                1,
+                1
+              ]
+            },
+            "mseFusedStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "shapleyEfficiencyGapStats": {
+              "mean": 0,
+              "stdDev": 0,
+              "ci95": [
+                0,
+                0
+              ]
+            },
+            "compositeScoreStats": {
+              "mean": 100,
+              "stdDev": 0,
+              "ci95": [
+                100,
+                100
+              ]
+            }
+          }
+        }
+      ],
+      "winnerProfileId": "pantheon_14brain_cross_attention_shapley_precision_bus",
+      "winnerCompositeScore": 100,
+      "winnerStats": {
+        "fusionCosineStats": {
+          "mean": 1,
+          "stdDev": 0,
+          "ci95": [
+            1,
+            1
+          ]
+        },
+        "mseFusedStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "shapleyEfficiencyGapStats": {
+          "mean": 0,
+          "stdDev": 0,
+          "ci95": [
+            0,
+            0
+          ]
+        },
+        "compositeScoreStats": {
+          "mean": 100,
+          "stdDev": 0,
+          "ci95": [
+            100,
+            100
+          ]
+        }
+      },
+      "pairedTTestVsBaseline": {
+        "meanDiff": 8.5313,
+        "tStat": 8.8685,
+        "tCritDf4": 2.7764451051977987,
+        "statisticallySignificant": true
+      },
+      "gatesPassed": true
+    }
+  }
+}
