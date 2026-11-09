@@ -1,0 +1,838 @@
+{
+  "passId": "ALIVE-PASS-37-AUTONOMOUS-LONG-HORIZON-MISSION-RUNNER",
+  "phase": "Phase VII — Adversarial Immunity, Long-Horizon Autonomous Missions & 40-Pass Grand Omega Qualification",
+  "generatedAt": "2026-11-09T20:52:59.589Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "missionsPerSeed": 24,
+  "tCritical95Df4": 2.7764451051977987,
+  "profileSummaries": [
+    {
+      "profileId": "stateless-linear-chain-no-checkpoint",
+      "label": "Stateless Linear Chain (No Checkpoints / No Deadlock Breaker)",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        }
+      ]
+    },
+    {
+      "profileId": "naive-retry-loop-no-deadlock-detector",
+      "label": "Naive Retry Loop (Checkpoints Only / Hangs on Wait-For Deadlock)",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        }
+      ]
+    },
+    {
+      "profileId": "checkpoint-dag-no-idempotent-wal",
+      "label": "Checkpoint DAG + Deadlock Breaker (No Idempotent WAL Deduplication)",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 80,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 80,
+        "ci95High": 80,
+        "min": 80,
+        "max": 80
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        }
+      ]
+    },
+    {
+      "profileId": "htn-dag-tarjan-idempotent-wal-runner",
+      "label": "HTN Precedence DAG + Tarjan Deadlock Splicer + Idempotent SHA-256 WAL",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "stateless-linear-chain-no-checkpoint": {
+      "profileId": "stateless-linear-chain-no-checkpoint",
+      "label": "Stateless Linear Chain (No Checkpoints / No Deadlock Breaker)",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        }
+      ]
+    },
+    "naive-retry-loop-no-deadlock-detector": {
+      "profileId": "naive-retry-loop-no-deadlock-detector",
+      "label": "Naive Retry Loop (Checkpoints Only / Hangs on Wait-For Deadlock)",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 0,
+          "deadlockRecoveryPct": 0,
+          "crashResumeEquivalencePct": 0,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 0
+        }
+      ]
+    },
+    "checkpoint-dag-no-idempotent-wal": {
+      "profileId": "checkpoint-dag-no-idempotent-wal",
+      "label": "Checkpoint DAG + Deadlock Breaker (No Idempotent WAL Deduplication)",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 0,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 0,
+        "ci95High": 0,
+        "min": 0,
+        "max": 0
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 80,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 80,
+        "ci95High": 80,
+        "min": 80,
+        "max": 80
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 0,
+          "compositeMissionScore": 80
+        }
+      ]
+    },
+    "htn-dag-tarjan-idempotent-wal-runner": {
+      "profileId": "htn-dag-tarjan-idempotent-wal-runner",
+      "label": "HTN Precedence DAG + Tarjan Deadlock Splicer + Idempotent SHA-256 WAL",
+      "missionCompletionPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "deadlockRecoveryPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "crashResumeEquivalencePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "zeroDuplicateSideEffectPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "compositeMissionScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "stdError": 0,
+        "ci95HalfWidth": 0,
+        "ci95Low": 100,
+        "ci95High": 100,
+        "min": 100,
+        "max": 100
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 29017,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 39023,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 49031,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        },
+        {
+          "seed": 59053,
+          "missionCompletionPct": 100,
+          "deadlockRecoveryPct": 100,
+          "crashResumeEquivalencePct": 100,
+          "zeroDuplicateSideEffectPct": 100,
+          "compositeMissionScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "htn-dag-tarjan-idempotent-wal-runner",
+    "allSeedsVerified": true,
+    "fullMissionScoreMean": 100,
+    "missionCompletionPctMean": 100,
+    "deadlockRecoveryPctMean": 100,
+    "crashResumeEquivalencePctMean": 100,
+    "zeroDuplicateSideEffectPctMean": 100,
+    "gainVsStatelessLinear": 100,
+    "gainVsNaiveRetry": 100,
+    "gainVsNoIdempotentWal": 20
+  }
+}

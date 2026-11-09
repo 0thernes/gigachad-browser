@@ -1215,6 +1215,33 @@ test('runAdversarialDomShield renders 5-seed Adversarial Prompt-Injection & Cloa
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runLongHorizonMission renders 5-seed Long-Horizon Checkpointable Mission Runner in section 43', async () => {
+  const { window, dom } = load();
+  window.AliveAutonomousLongHorizonMissionRunner = {
+    run: async () => ({
+      summary: {
+        fullMissionScoreMean: 100.0,
+        missionCompletionPctMean: 100.0,
+        deadlockRecoveryPctMean: 100.0,
+        gainVsStatelessLinear: 100.0
+      },
+      aggregatedByProfile: {
+        'stateless-linear-chain-no-checkpoint': { compositeMissionScore: { mean: 0 }, missionCompletionPct: { mean: 0 }, deadlockRecoveryPct: { mean: 0 }, crashResumeEquivalencePct: { mean: 0 }, zeroDuplicateSideEffectPct: { mean: 0 } },
+        'naive-retry-loop-no-deadlock-detector': { compositeMissionScore: { mean: 0 }, missionCompletionPct: { mean: 0 }, deadlockRecoveryPct: { mean: 0 }, crashResumeEquivalencePct: { mean: 0 }, zeroDuplicateSideEffectPct: { mean: 0 } },
+        'checkpoint-dag-no-idempotent-wal': { compositeMissionScore: { mean: 80.0 }, missionCompletionPct: { mean: 100 }, deadlockRecoveryPct: { mean: 100 }, crashResumeEquivalencePct: { mean: 100 }, zeroDuplicateSideEffectPct: { mean: 0 } },
+        'htn-dag-tarjan-idempotent-wal-runner': { compositeMissionScore: { mean: 100.0 }, missionCompletionPct: { mean: 100 }, deadlockRecoveryPct: { mean: 100 }, crashResumeEquivalencePct: { mean: 100 }, zeroDuplicateSideEffectPct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runLongHorizonMission();
+  assert.equal(report.summary.fullMissionScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · HTN+Tarjan+WAL Mission score=100.0')), 'Long-Horizon Mission summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('htn-dag-tarjan-idempot')), 'Long-Horizon Mission rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

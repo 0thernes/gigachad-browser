@@ -100,7 +100,7 @@ validation conditions and remaining work.
 | Pass | Intended focus | Status |
 | --- | --- | --- |
 | 36 | Adversarial Indirect Prompt-Injection, Hidden-DOM Cloaking & Cross-Origin Exfiltration Immunity Shield | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_36_REPORT.md), [Adv Shield JSON](reports/alive-adversarial-prompt-dom-shield-2026-11-09.json), [Adv Shield SVG](reports/alive-adversarial-prompt-dom-shield-2026-11-09.svg) |
-| 37 | Long-Horizon Multi-Day Checkpointable Autonomous Research Mission Runner with Subgoal Decomposition & Deadlock Recovery | Planned (Pass 37) |
+| 37 | Long-Horizon Multi-Day Checkpointable Autonomous Research Mission Runner with Subgoal Decomposition & Deadlock Recovery | Implemented and locally verified in the containing release commit; [report](ALIVE_PASS_37_REPORT.md), [Mission Runner JSON](reports/alive-autonomous-long-horizon-mission-runner-2026-11-09.json), [Mission Runner SVG](reports/alive-autonomous-long-horizon-mission-runner-2026-11-09.svg) |
 | 38 | Self-Healing Runtime Watchdog, Deterministic State Rollback, Corrupt-Adapter Quarantine & Zero-Data-Loss Recovery | Planned (Pass 38) |
 | 39 | Full-Stack End-to-End Hybrid Synergy Benchmark (36 Faculties + 14 Brains + Tor v3 Pluggable Mesh + 3-Guild Co-Evolving Swarms + Active Inference + Adversarial Shield) | Planned (Pass 39) |
 | 40 | 40-Pass Grand Omega Synthesis & Cryptographic Evidence Package Qualification (Cross-Auditing All 40 Passes, Phases I–VII, All SHA-256 Manifests & Startup Loader Registration) | Planned (Pass 40) |

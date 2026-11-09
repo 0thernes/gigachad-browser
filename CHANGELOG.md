@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Long-Horizon Checkpointable Autonomous Research Mission Runner pass 37
+
+- Added the 5-seed Long-Horizon Checkpointable Autonomous Research Mission Runner ([`systems/alive-autonomous-long-horizon-mission-runner.js`](systems/alive-autonomous-long-horizon-mission-runner.js), [`scripts/alive-autonomous-long-horizon-mission-runner.cjs`](scripts/alive-autonomous-long-horizon-mission-runner.cjs)) implementing Hierarchical Task Network (`HTN`) Precedence DAG decomposition, Tarjan Strongly Connected Components (`SCC`) deadlock splicing, and idempotent SHA-256 Write-Ahead Log (`WAL`) crash-resume equivalence.
+- Verified on `5/5` seeds across 24 long-horizon missions per seed that `htn-dag-tarjan-idempotent-wal-runner` achieves `100.0` composite score (`+100.0` over `stateless-linear-chain-no-checkpoint`, `+100.0` over `naive-retry-loop-no-deadlock-detector`, `+20.0` over `checkpoint-dag-no-idempotent-wal`), `100.0%` mission completion, `100.0%` deadlock recovery, `100.0%` crash-resume state equivalence, and `100.0%` zero duplicate side-effects.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 43 (`#alive-fabric-mission-runner`, `Run Mission` button, and `runLongHorizonMission()`).
+- Added [Pass 37 report](docs/ALIVE_PASS_37_REPORT.md), [JSON report](docs/reports/alive-autonomous-long-horizon-mission-runner-2026-11-09.json), [SVG chart](docs/reports/alive-autonomous-long-horizon-mission-runner-2026-11-09.svg) and unit tests (`tests/alive-autonomous-long-horizon-mission-runner.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Adversarial Indirect Prompt-Injection, Cloaked-DOM & Exfiltration Shield pass 36
 
 - Added the 5-seed Adversarial Indirect Prompt-Injection, Hidden-DOM Cloaking & Cross-Origin Exfiltration Immunity Shield ([`systems/alive-adversarial-prompt-dom-shield.js`](systems/alive-adversarial-prompt-dom-shield.js), [`scripts/alive-adversarial-prompt-dom-shield.cjs`](scripts/alive-adversarial-prompt-dom-shield.cjs)) implementing WCAG relative luminance contrast detection, zero-width Unicode steganography sanitization, Non-Interference Information-Flow Taint Lattice enforcement, and cross-origin Canary exfiltration blocking.

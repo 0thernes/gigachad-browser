@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="350" viewBox="0 0 1180 350">
+    <rect width="1180" height="350" fill="#020617"/>
+    <text x="24" y="36" fill="#38bdf8" font-family="Consolas, monospace" font-size="18" font-weight="bold">ALIVE Pass 37 — Long-Horizon Checkpointable Autonomous Research Mission Runner (5 Seeds)</text>
+    <text x="24" y="62" fill="#94a3b8" font-family="Consolas, monospace" font-size="13">Winner: htn-dag-tarjan-idempotent-wal-runner | Score: 100.00 | Completion: 100.0% | Deadlock Recovery: 100.0% | vs Stateless: +100.00</text>
+    
+      <text x="24" y="113" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">stateless-linear-chain-no-checkpoint</text>
+      <rect x="330" y="95" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="95" width="0" height="26" rx="4" fill="#f43f5e"/>
+      <text x="762" y="113" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=0.00 | done=0.0% | dlkRec=0.0% | noDup=0.0%</text>
+    
+      <text x="24" y="167" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">naive-retry-loop-no-deadlock-detector</text>
+      <rect x="330" y="149" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="149" width="0" height="26" rx="4" fill="#f59e0b"/>
+      <text x="762" y="167" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=0.00 | done=0.0% | dlkRec=0.0% | noDup=0.0%</text>
+    
+      <text x="24" y="221" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">checkpoint-dag-no-idempotent-wal</text>
+      <rect x="330" y="203" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="203" width="336" height="26" rx="4" fill="#38bdf8"/>
+      <text x="762" y="221" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=80.00 | done=100.0% | dlkRec=100.0% | noDup=0.0%</text>
+    
+      <text x="24" y="275" fill="#e2e8f0" font-family="Consolas, monospace" font-size="13">htn-dag-tarjan-idempotent-wal-runner</text>
+      <rect x="330" y="257" width="420" height="26" rx="4" fill="#0f172a" stroke="#1e293b"/>
+      <rect x="330" y="257" width="420" height="26" rx="4" fill="#34d399"/>
+      <text x="762" y="275" fill="#f8fafc" font-family="Consolas, monospace" font-size="12">score=100.00 | done=100.0% | dlkRec=100.0% | noDup=100.0%</text>
+    
+  </svg>
