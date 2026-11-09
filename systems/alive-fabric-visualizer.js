@@ -309,6 +309,7 @@
   let latestFaultRecovery = null, faultRecoveryBusy = false;
   let latestSustainedPerf = null, sustainedPerfBusy = false;
   let latestReleaseAudit = null, releaseAuditBusy = false;
+  let latestTorHybridMesh = null, torHybridMeshBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -422,6 +423,19 @@
       return latestReleaseAudit;
     } finally {
       releaseAuditBusy = false;
+    }
+  }
+  async function runTorHybridMesh() {
+    const runner = root.AliveTorHybridMesh;
+    if (torHybridMeshBusy || typeof runner?.run !== 'function') return latestTorHybridMesh;
+    torHybridMeshBusy = true;
+    try {
+      latestTorHybridMesh = await runner.run();
+      root.__aliveLatestTorHybridMesh = latestTorHybridMesh;
+      draw();
+      return latestTorHybridMesh;
+    } finally {
+      torHybridMeshBusy = false;
     }
   }
 
@@ -928,6 +942,51 @@
     ctx.fillText('Phase I 10-pass creature integration frozen · 36 faculties · 24 neural streams · 8/8 PDF Gates promoted', 8, height - 6);
   }
 
+  // ---------- 17. Pass 11 Tor Hybrid Synergy Mesh session isolation ---------
+  function drawTorHybridMesh(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestTorHybridMesh || root.__aliveLatestTorHybridMesh;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.byArchitecture) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(torHybridMeshBusy ? 'Running 5-seed Tor Hybrid Synergy Mesh session & SOCKS5 isolation suite…' : 'Click "Run Tor mesh" above to verify IsolateSOCKSAuth per-FPD circuits, ephemeral partitions & zero DNS/WebRTC leaks across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const gPrt = s.pairedDeltas?.fullVsPartitionedIsolationGain?.mean || 0;
+    const gNav = s.pairedDeltas?.fullVsNaiveSocksIsolationGain?.mean || 0;
+    ctx.fillText(`5 seeds · full vs partitioned +${gPrt.toFixed(1)} (${s.fullBeatPartitionedSeeds}/5) · vs naive SOCKS +${gNav.toFixed(1)} (${s.fullBeatNaiveSocksSeeds}/5) · 0 leaks (${s.zeroLeakSeeds}/5) · 100% fail-closed (${s.exactFailClosedSeeds}/5)`, 8, 12);
+
+    const modes = ['shared-session-direct', 'naive-socks-proxy-only', 'partitioned-storage-no-socks-auth', 'full-tor-hybrid-synergy-mesh'];
+    const colors = {
+      'shared-session-direct': '#f43f5e',
+      'naive-socks-proxy-only': '#f59e0b',
+      'partitioned-storage-no-socks-auth': '#38bdf8',
+      'full-tor-hybrid-synergy-mesh': '#34d399'
+    };
+    const barW = Math.max(80, width - 470);
+    modes.forEach((mode, idx) => {
+      const entry = s.byArchitecture[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const iso = entry.isolationScore?.mean || 0;
+      const fpd = entry.fpdIsolationPct?.mean || 0;
+      const lks = entry.totalLeaks?.mean || 0;
+      const cir = entry.distinctFpdCircuits?.mean || 0;
+      const fcl = entry.failClosedPct?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, iso / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`iso=${iso.toFixed(1)} fpdIso=${fpd.toFixed(0)}% leaks=${lks.toFixed(0)} circuits=${cir.toFixed(0)} failClosed=${fcl.toFixed(0)}%`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('20 probes/seed across 5 First-Party Domains (.onion + clearnet) · MAP * ~NOTFOUND · disable_non_proxied_udp', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -977,13 +1036,16 @@
     const auditBtn = doc.createElement('button'); auditBtn.type = 'button'; auditBtn.textContent = 'Run audit';
     auditBtn.title = 'Run 5-seed Phase I integrated release audit across Passes 1–9 and all 8 PDF Gates';
     auditBtn.addEventListener('click', () => { runReleaseAudit(); });
+    const torMeshBtn = doc.createElement('button'); torMeshBtn.type = 'button'; torMeshBtn.textContent = 'Run Tor mesh';
+    torMeshBtn.title = 'Run 5-seed Tor Hybrid Synergy Mesh session partition, IsolateSOCKSAuth and zero-leak evaluation';
+    torMeshBtn.addEventListener('click', () => { runTorHybridMesh(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -992,7 +1054,7 @@
       restartEqCanvas = canvas('alive-fabric-restart-eq', 200), continualCanvas = canvas('alive-fabric-continual-transfer', 200),
       colonyCanvas = canvas('alive-fabric-colony-fitness', 190), provenanceCanvas = canvas('alive-fabric-provenance', 190),
       faultRecoveryCanvas = canvas('alive-fabric-fault-recovery', 190), sustainedPerfCanvas = canvas('alive-fabric-sustained-perf', 190),
-      releaseAuditCanvas = canvas('alive-fabric-release-audit', 190);
+      releaseAuditCanvas = canvas('alive-fabric-release-audit', 190), torMeshCanvas = canvas('alive-fabric-tor-mesh', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -1011,7 +1073,8 @@
       section('13 · Research provenance, contradiction tracking & source-grounded writing (5 seeds)', provenanceCanvas),
       section('14 · Browser tools, navigation, developer workflows & fault recovery (5 seeds)', faultRecoveryCanvas),
       section('15 · Sustained 60Hz performance, memory bounds, visualizer overhead & qualification (5 seeds)', sustainedPerfCanvas),
-      section('16 · Integrated Phase I release audit — Passes 1–9 & 8 PDF Gates frozen SHA-256 manifest', releaseAuditCanvas));
+      section('16 · Integrated Phase I release audit — Passes 1–9 & 8 PDF Gates frozen SHA-256 manifest', releaseAuditCanvas),
+      section('17 · Tor Hybrid Synergy Mesh — IsolateSOCKSAuth, FPD partitions & zero-leak policy (5 seeds)', torMeshCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -1026,7 +1089,8 @@
       () => drawProvenanceEval(provenanceCanvas),
       () => drawFaultRecovery(faultRecoveryCanvas),
       () => drawSustainedPerf(sustainedPerfCanvas),
-      () => drawReleaseAudit(releaseAuditCanvas));
+      () => drawReleaseAudit(releaseAuditCanvas),
+      () => drawTorHybridMesh(torMeshCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -1069,6 +1133,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

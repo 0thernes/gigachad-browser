@@ -1,0 +1,813 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-11-tor-hybrid-mesh-session-isolation-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "architectures": [
+      "shared-session-direct",
+      "naive-socks-proxy-only",
+      "partitioned-storage-no-socks-auth",
+      "full-tor-hybrid-synergy-mesh"
+    ],
+    "probesPerSeed": 20,
+    "distinctFirstPartyDomains": 5
+  },
+  "summary": {
+    "fullBeatPartitionedSeeds": 5,
+    "fullBeatNaiveSocksSeeds": 5,
+    "zeroLeakSeeds": 5,
+    "exactFailClosedSeeds": 5,
+    "pairedDeltas": {
+      "fullVsPartitionedIsolationGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsNaiveSocksIsolationGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byArchitecture": {
+      "shared-session-direct": {
+        "architecture": "shared-session-direct",
+        "isolationScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "fpdIsolationPct": {
+          "count": 5,
+          "mean": 15,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            15,
+            15
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "failClosedPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "totalLeaks": {
+          "count": 5,
+          "mean": 61,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            61,
+            61
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dnsLeaks": {
+          "count": 5,
+          "mean": 20,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            20,
+            20
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "webrtcLeaks": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "directIpLeaks": {
+          "count": 5,
+          "mean": 20,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            20,
+            20
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginStorageLeaks": {
+          "count": 5,
+          "mean": 13,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            13,
+            13
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossFpdCircuitCollusions": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctFpdCircuits": {
+          "count": 5,
+          "mean": 1,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1,
+            1
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "naive-socks-proxy-only": {
+        "architecture": "naive-socks-proxy-only",
+        "isolationScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "fpdIsolationPct": {
+          "count": 5,
+          "mean": 15,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            15,
+            15
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "failClosedPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "totalLeaks": {
+          "count": 5,
+          "mean": 45,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            45,
+            45
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dnsLeaks": {
+          "count": 5,
+          "mean": 20,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            20,
+            20
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "webrtcLeaks": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "directIpLeaks": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginStorageLeaks": {
+          "count": 5,
+          "mean": 13,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            13,
+            13
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossFpdCircuitCollusions": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctFpdCircuits": {
+          "count": 5,
+          "mean": 1,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1,
+            1
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "partitioned-storage-no-socks-auth": {
+        "architecture": "partitioned-storage-no-socks-auth",
+        "isolationScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "fpdIsolationPct": {
+          "count": 5,
+          "mean": 80,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            80,
+            80
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "failClosedPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "totalLeaks": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            12,
+            12
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dnsLeaks": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "webrtcLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "directIpLeaks": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginStorageLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossFpdCircuitCollusions": {
+          "count": 5,
+          "mean": 4,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            4,
+            4
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctFpdCircuits": {
+          "count": 5,
+          "mean": 1,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            1,
+            1
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "full-tor-hybrid-synergy-mesh": {
+        "architecture": "full-tor-hybrid-synergy-mesh",
+        "isolationScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "fpdIsolationPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "failClosedPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "totalLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "dnsLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "webrtcLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "directIpLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossOriginStorageLeaks": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "crossFpdCircuitCollusions": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "distinctFpdCircuits": {
+          "count": 5,
+          "mean": 5,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            5,
+            5
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byArchitecture": {
+        "shared-session-direct": {
+          "seed": 19013,
+          "architecture": "shared-session-direct",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 61,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 20,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "naive-socks-proxy-only": {
+          "seed": 19013,
+          "architecture": "naive-socks-proxy-only",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 45,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "partitioned-storage-no-socks-auth": {
+          "seed": 19013,
+          "architecture": "partitioned-storage-no-socks-auth",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 80,
+            "failClosedPct": 0,
+            "totalLeaks": 12,
+            "dnsLeaks": 4,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "full-tor-hybrid-synergy-mesh": {
+          "seed": 19013,
+          "architecture": "full-tor-hybrid-synergy-mesh",
+          "metrics": {
+            "isolationScore": 100,
+            "fpdIsolationPct": 100,
+            "failClosedPct": 100,
+            "totalLeaks": 0,
+            "dnsLeaks": 0,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 0,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 0,
+            "distinctFpdCircuits": 5
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byArchitecture": {
+        "shared-session-direct": {
+          "seed": 29017,
+          "architecture": "shared-session-direct",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 61,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 20,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "naive-socks-proxy-only": {
+          "seed": 29017,
+          "architecture": "naive-socks-proxy-only",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 45,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "partitioned-storage-no-socks-auth": {
+          "seed": 29017,
+          "architecture": "partitioned-storage-no-socks-auth",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 80,
+            "failClosedPct": 0,
+            "totalLeaks": 12,
+            "dnsLeaks": 4,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "full-tor-hybrid-synergy-mesh": {
+          "seed": 29017,
+          "architecture": "full-tor-hybrid-synergy-mesh",
+          "metrics": {
+            "isolationScore": 100,
+            "fpdIsolationPct": 100,
+            "failClosedPct": 100,
+            "totalLeaks": 0,
+            "dnsLeaks": 0,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 0,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 0,
+            "distinctFpdCircuits": 5
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byArchitecture": {
+        "shared-session-direct": {
+          "seed": 39023,
+          "architecture": "shared-session-direct",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 61,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 20,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "naive-socks-proxy-only": {
+          "seed": 39023,
+          "architecture": "naive-socks-proxy-only",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 45,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "partitioned-storage-no-socks-auth": {
+          "seed": 39023,
+          "architecture": "partitioned-storage-no-socks-auth",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 80,
+            "failClosedPct": 0,
+            "totalLeaks": 12,
+            "dnsLeaks": 4,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "full-tor-hybrid-synergy-mesh": {
+          "seed": 39023,
+          "architecture": "full-tor-hybrid-synergy-mesh",
+          "metrics": {
+            "isolationScore": 100,
+            "fpdIsolationPct": 100,
+            "failClosedPct": 100,
+            "totalLeaks": 0,
+            "dnsLeaks": 0,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 0,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 0,
+            "distinctFpdCircuits": 5
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byArchitecture": {
+        "shared-session-direct": {
+          "seed": 49031,
+          "architecture": "shared-session-direct",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 61,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 20,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "naive-socks-proxy-only": {
+          "seed": 49031,
+          "architecture": "naive-socks-proxy-only",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 45,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "partitioned-storage-no-socks-auth": {
+          "seed": 49031,
+          "architecture": "partitioned-storage-no-socks-auth",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 80,
+            "failClosedPct": 0,
+            "totalLeaks": 12,
+            "dnsLeaks": 4,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "full-tor-hybrid-synergy-mesh": {
+          "seed": 49031,
+          "architecture": "full-tor-hybrid-synergy-mesh",
+          "metrics": {
+            "isolationScore": 100,
+            "fpdIsolationPct": 100,
+            "failClosedPct": 100,
+            "totalLeaks": 0,
+            "dnsLeaks": 0,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 0,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 0,
+            "distinctFpdCircuits": 5
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byArchitecture": {
+        "shared-session-direct": {
+          "seed": 59053,
+          "architecture": "shared-session-direct",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 61,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 20,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "naive-socks-proxy-only": {
+          "seed": 59053,
+          "architecture": "naive-socks-proxy-only",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 15,
+            "failClosedPct": 0,
+            "totalLeaks": 45,
+            "dnsLeaks": 20,
+            "webrtcLeaks": 4,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 13,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "partitioned-storage-no-socks-auth": {
+          "seed": 59053,
+          "architecture": "partitioned-storage-no-socks-auth",
+          "metrics": {
+            "isolationScore": 0,
+            "fpdIsolationPct": 80,
+            "failClosedPct": 0,
+            "totalLeaks": 12,
+            "dnsLeaks": 4,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 4,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 4,
+            "distinctFpdCircuits": 1
+          }
+        },
+        "full-tor-hybrid-synergy-mesh": {
+          "seed": 59053,
+          "architecture": "full-tor-hybrid-synergy-mesh",
+          "metrics": {
+            "isolationScore": 100,
+            "fpdIsolationPct": 100,
+            "failClosedPct": 100,
+            "totalLeaks": 0,
+            "dnsLeaks": 0,
+            "webrtcLeaks": 0,
+            "directIpLeaks": 0,
+            "crossOriginStorageLeaks": 0,
+            "crossFpdCircuitCollusions": 0,
+            "distinctFpdCircuits": 5
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 11 Tor Browser / Chromium / Electron Hybrid Process & Session Partition Architecture verifying IsolateSOCKSAuth per-FPD circuit credentials, ephemeral storage partitions, zero DNS/WebRTC leaks, and fail-closed daemon drop protection across 5 seeds."
+}

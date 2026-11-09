@@ -480,6 +480,37 @@ test('runReleaseAudit renders 5-seed Phase I integrated release audit and 8 PDF 
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runTorHybridMesh renders 5-seed Tor Hybrid Synergy Mesh session isolation and zero-leak metrics in section 17', async () => {
+  const { window, dom } = load();
+  window.AliveTorHybridMesh = {
+    run: async () => ({
+      summary: {
+        fullBeatPartitionedSeeds: 5,
+        fullBeatNaiveSocksSeeds: 5,
+        zeroLeakSeeds: 5,
+        exactFailClosedSeeds: 5,
+        pairedDeltas: {
+          fullVsPartitionedIsolationGain: { mean: 68.0 },
+          fullVsNaiveSocksIsolationGain: { mean: 100.0 }
+        },
+        byArchitecture: {
+          'shared-session-direct': { isolationScore: { mean: 0 }, fpdIsolationPct: { mean: 0 }, totalLeaks: { mean: 60 }, distinctFpdCircuits: { mean: 0 }, failClosedPct: { mean: 0 } },
+          'naive-socks-proxy-only': { isolationScore: { mean: 0 }, fpdIsolationPct: { mean: 20 }, totalLeaks: { mean: 48 }, distinctFpdCircuits: { mean: 1 }, failClosedPct: { mean: 0 } },
+          'partitioned-storage-no-socks-auth': { isolationScore: { mean: 32.0 }, fpdIsolationPct: { mean: 80 }, totalLeaks: { mean: 12 }, distinctFpdCircuits: { mean: 1 }, failClosedPct: { mean: 0 } },
+          'full-tor-hybrid-synergy-mesh': { isolationScore: { mean: 100.0 }, fpdIsolationPct: { mean: 100 }, totalLeaks: { mean: 0 }, distinctFpdCircuits: { mean: 5 }, failClosedPct: { mean: 100 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runTorHybridMesh();
+  assert.equal(report.summary.fullBeatPartitionedSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full vs partitioned +68.0 (5/5)')), 'Tor hybrid mesh summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-tor-hybrid-synerg')), 'Tor hybrid mesh architecture rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

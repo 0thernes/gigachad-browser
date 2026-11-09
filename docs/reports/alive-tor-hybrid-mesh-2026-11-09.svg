@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="390" viewBox="0 0 980 390">
+<rect width="100%" height="100%" fill="#05090f"/>
+<text x="20" y="28" fill="#67e8f9" font-family="Consolas, monospace" font-size="14" font-weight="bold">ALIVE Pass 11 — Tor Hybrid Synergy Mesh: IsolateSOCKSAuth, FPD Partitions &amp; Zero-Leak Policy (5 Seeds)</text>
+<text x="20" y="48" fill="#cbd5e1" font-family="Consolas, monospace" font-size="11">full vs partitioned +100.00 (5/5) · vs naive SOCKS +100.00 (5/5) · 0 leaks (5/5) · 100% fail-closed (5/5)</text>
+<text x="235" y="92" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">shared-session-direct</text>
+<rect x="245" y="76" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="79" width="2.0" height="18" fill="#f43f5e"/>
+<text x="593" y="91" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">iso=0.00 [0.00, 0.00] · fpdIso=15.0% · leaks=61 · circuits=1 · failClosed=0.0%</text>
+<text x="245" y="116" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">dnsLeaks=20 · webrtcLeaks=4 · directIpLeaks=20 · storageLeaks=13 · circuitCollusions=4</text>
+<text x="235" y="158" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">naive-socks-proxy-only</text>
+<rect x="245" y="142" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="145" width="2.0" height="18" fill="#f59e0b"/>
+<text x="593" y="157" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">iso=0.00 [0.00, 0.00] · fpdIso=15.0% · leaks=45 · circuits=1 · failClosed=0.0%</text>
+<text x="245" y="182" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">dnsLeaks=20 · webrtcLeaks=4 · directIpLeaks=4 · storageLeaks=13 · circuitCollusions=4</text>
+<text x="235" y="224" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">partitioned-storage-no-socks-auth</text>
+<rect x="245" y="208" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="211" width="2.0" height="18" fill="#38bdf8"/>
+<text x="593" y="223" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">iso=0.00 [0.00, 0.00] · fpdIso=80.0% · leaks=12 · circuits=1 · failClosed=0.0%</text>
+<text x="245" y="248" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">dnsLeaks=4 · webrtcLeaks=0 · directIpLeaks=4 · storageLeaks=0 · circuitCollusions=4</text>
+<text x="235" y="290" fill="#e2e8f0" text-anchor="end" font-family="Consolas, monospace" font-size="11">full-tor-hybrid-synergy-mesh</text>
+<rect x="245" y="274" width="340" height="24" fill="#0f1b26" stroke="#1e293b"/>
+<rect x="245" y="277" width="340.0" height="18" fill="#34d399"/>
+<text x="593" y="289" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11">iso=100.00 [100.00, 100.00] · fpdIso=100.0% · leaks=0 · circuits=5 · failClosed=100.0%</text>
+<text x="245" y="314" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">dnsLeaks=0 · webrtcLeaks=0 · directIpLeaks=0 · storageLeaks=0 · circuitCollusions=0</text>
+<text x="20" y="374" fill="#64748b" font-family="Consolas, monospace" font-size="10">Seeds: 19013, 29017, 39023, 49031, 59053 · 20 probes/seed across 5 First-Party Domains (.onion + clearnet) · MAP * ~NOTFOUND · disable_non_proxied_udp</text>
+</svg>

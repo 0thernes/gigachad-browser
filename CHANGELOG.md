@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Tor Hybrid Synergy Mesh process & session partition architecture pass 11
+
+- Added the 5-seed Chromium / Electron / Tor Browser Hybrid Synergy Mesh session partitioner and `IsolateSOCKSAuth` credential router ([`systems/alive-tor-hybrid-mesh.js`](systems/alive-tor-hybrid-mesh.js), [`scripts/alive-tor-hybrid-mesh.cjs`](scripts/alive-tor-hybrid-mesh.cjs)) comparing `shared-session-direct`, `naive-socks-proxy-only`, `partitioned-storage-no-socks-auth`, and `full-tor-hybrid-synergy-mesh` across 20 security probes per seed.
+- Verified on `5/5` seeds that `full-tor-hybrid-synergy-mesh` achieves `100.0%` First-Party-Domain (`FPD`) isolation (`5` distinct Tor circuits for `5` distinct FPDs), `0` DNS leaks (`MAP * ~NOTFOUND`), `0` WebRTC UDP leaks (`disable_non_proxied_udp`), `0` cross-origin storage leaks, and `100.0%` fail-closed blocking on Tor daemon drop.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 17 (`#alive-fabric-tor-mesh`, `Run Tor mesh` button, and `runTorHybridMesh()`).
+- Added [Pass 11 report](docs/ALIVE_PASS_11_REPORT.md), [JSON report](docs/reports/alive-tor-hybrid-mesh-2026-11-09.json), [SVG chart](docs/reports/alive-tor-hybrid-mesh-2026-11-09.svg) and unit tests (`tests/alive-tor-hybrid-mesh.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Integrated Phase I release audit & 8 PDF Gates evidence freeze pass 10
 
 - Added the 5-seed Phase I integrated release audit ([`systems/alive-integrated-release-audit.js`](systems/alive-integrated-release-audit.js), [`scripts/alive-integrated-release-audit.cjs`](scripts/alive-integrated-release-audit.cjs)) cross-verifying Passes 1 through 9, all 36 faculties, all 24 coupled neural streams, and all 8 Scientific PDF Gates (`G1`–`G8`) with cryptographic `SHA-256` manifest digest (`820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41`).
