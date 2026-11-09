@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Stigmergic pheromone knowledge graph, frontier deduplication & BFT consensus pass 18
+
+- Added the 5-seed Stigmergic Pheromone Knowledge Graph, Canonical SHA-256 Frontier Deduplicator, and $2f+1$ Byzantine-Fault-Tolerant (`BFT`) `Fish-School-Consensus` quorum ([`systems/alive-swarm-stigmergic-mesh.js`](systems/alive-swarm-stigmergic-mesh.js), [`scripts/alive-swarm-stigmergic-mesh.cjs`](scripts/alive-swarm-stigmergic-mesh.cjs)) comparing `isolated-no-pheromone-no-bft`, `dedup-only-no-pheromone-no-bft`, `pheromone-without-bft-quorum`, and `full-stigmergic-bft-consensus-mesh` across 24 knowledge-graph nodes per seed.
+- Verified on `5/5` seeds that `full-stigmergic-bft-consensus-mesh` achieves `100.0` mesh score, `100.0%` corroborated truth acceptance, `100.0%` Byzantine Sybil poison rejection (`0` poisoned claims in graph), `0` duplicate canonical URL fetches, and `0` dead-end trap follow-ups.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 24 (`#alive-fabric-stigmergic-mesh`, `Run stigmergic mesh` button, and `runStigmergicMesh()`).
+- Added [Pass 18 report](docs/ALIVE_PASS_18_REPORT.md), [JSON report](docs/reports/alive-swarm-stigmergic-mesh-2026-11-09.json), [SVG chart](docs/reports/alive-swarm-stigmergic-mesh-2026-11-09.svg) and unit tests (`tests/alive-swarm-stigmergic-mesh.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Public-web & .onion swarm resource governor pass 17
 
 - Added the 5-seed Public-Web & Onion Swarm Resource Governor ([`systems/alive-swarm-budget-governor.js`](systems/alive-swarm-budget-governor.js), [`scripts/alive-swarm-budget-governor.cjs`](scripts/alive-swarm-budget-governor.cjs)) comparing `ungoverned-locust-flood`, `global-cap-no-per-domain-bucket`, `per-domain-bucket-no-killswitch`, and `full-token-bucket-swarm-governor` across 6 target domains (`3` clearnet `maxConcurrent=2`, `3` `.onion` v3 `maxConcurrent=1`) over 40 burst exploration steps per seed.

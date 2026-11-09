@@ -694,6 +694,37 @@ test('runSwarmGovernor renders 5-seed Public-Web & Onion Swarm Resource Governor
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runStigmergicMesh renders 5-seed Stigmergic Pheromone Knowledge Graph and BFT Consensus metrics in section 24', async () => {
+  const { window, dom } = load();
+  window.AliveSwarmStigmergicMesh = {
+    run: async () => ({
+      summary: {
+        fullBeatNoBftSeeds: 5,
+        fullBeatDedupOnlySeeds: 5,
+        zeroByzantinePoisonSeeds: 5,
+        zeroDuplicateFetchSeeds: 5,
+        pairedDeltas: {
+          fullVsNoBftMeshGain: { mean: 83.0 },
+          fullVsDedupOnlyMeshGain: { mean: 98.0 }
+        },
+        byMesh: {
+          'isolated-no-pheromone-no-bft': { stigmergicMeshScore: { mean: 0 }, byzantineRejectionPct: { mean: 0 }, duplicateFrontierFetches: { mean: 24 }, deadEndTrapFollowups: { mean: 12 } },
+          'dedup-only-no-pheromone-no-bft': { stigmergicMeshScore: { mean: 2.0 }, byzantineRejectionPct: { mean: 0 }, duplicateFrontierFetches: { mean: 0 }, deadEndTrapFollowups: { mean: 12 } },
+          'pheromone-without-bft-quorum': { stigmergicMeshScore: { mean: 17.0 }, byzantineRejectionPct: { mean: 0 }, duplicateFrontierFetches: { mean: 0 }, deadEndTrapFollowups: { mean: 0 } },
+          'full-stigmergic-bft-consensus-mesh': { stigmergicMeshScore: { mean: 100.0 }, byzantineRejectionPct: { mean: 100 }, duplicateFrontierFetches: { mean: 0 }, deadEndTrapFollowups: { mean: 0 } }
+        }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runStigmergicMesh();
+  assert.equal(report.summary.fullBeatNoBftSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · full vs no-BFT +83.0 (5/5)')), 'Stigmergic mesh summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-stigmergic-bft-co')), 'Stigmergic mesh rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

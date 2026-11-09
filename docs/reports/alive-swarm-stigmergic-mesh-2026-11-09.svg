@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="330" viewBox="0 0 980 330">
+  <rect width="980" height="330" fill="#05090f"/>
+  <text x="24" y="32" fill="#67e8f9" font-family="Consolas,monospace" font-size="15" font-weight="bold">ALIVE Pass 18 — Stigmergic Pheromone Knowledge Graph &amp; BFT Consensus (5 Seeds)</text>
+  <text x="24" y="54" fill="#e2e8f0" font-family="Consolas,monospace" font-size="12">Full vs No-BFT: +83.00 (5/5) · vs Dedup-Only: +98.00 (5/5) · Zero Poison: 5/5</text>
+  <text x="24" y="72" fill="#94a3b8" font-family="Consolas,monospace" font-size="11">24 Graph Nodes/Seed (12 Truth, 6 Dead-End Traps, 6 Byzantine Sybil Poison) · rho=0.15 Evaporation · 2f+1 Fish Quorum</text>
+  
+    <text x="230" y="114" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">isolated-no-pheromone-no-bft</text>
+    <rect x="242" y="96" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="98" width="2" height="22" rx="2" fill="#f43f5e"/>
+    <text x="614" y="114" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">mesh=0.0 bftRej=0% dup=24 traps=12 poison=6</text>
+    <text x="230" y="164" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">dedup-only-no-pheromone-no-bft</text>
+    <rect x="242" y="146" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="148" width="7" height="22" rx="2" fill="#f59e0b"/>
+    <text x="614" y="164" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">mesh=2.0 bftRej=0% dup=0 traps=12 poison=6</text>
+    <text x="230" y="214" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">pheromone-without-bft-quorum</text>
+    <rect x="242" y="196" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="198" width="61" height="22" rx="2" fill="#38bdf8"/>
+    <text x="614" y="214" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">mesh=17.0 bftRej=0% dup=0 traps=0 poison=6</text>
+    <text x="230" y="264" text-anchor="end" fill="#cbd5e1" font-family="Consolas,monospace" font-size="11">full-stigmergic-bft-consensus-mesh</text>
+    <rect x="242" y="246" width="360" height="26" rx="3" fill="#0f1b26" stroke="#1e293b"/>
+    <rect x="242" y="248" width="360" height="22" rx="2" fill="#34d399"/>
+    <text x="614" y="264" fill="#e2e8f0" font-family="Consolas,monospace" font-size="11">mesh=100.0 bftRej=100% dup=0 traps=0 poison=0</text>
+  <text x="24" y="312" fill="#64748b" font-family="Consolas,monospace" font-size="11">Seeds: 19013, 29017, 39023, 49031, 59053 · Canonical SHA-256 URL deduplication · 0 duplicate fetches &amp; 0 trap followups (5/5)</text>
+</svg>

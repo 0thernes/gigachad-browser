@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-18-swarm-stigmergic-mesh-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "nodesPerSeed": 24,
+    "evaporationRho": 0.15,
+    "bftQuorum": "2f+1=3 of n=5 Fish-School-Consensus entities",
+    "modes": [
+      "isolated-no-pheromone-no-bft",
+      "dedup-only-no-pheromone-no-bft",
+      "pheromone-without-bft-quorum",
+      "full-stigmergic-bft-consensus-mesh"
+    ]
+  },
+  "summary": {
+    "fullBeatNoBftSeeds": 5,
+    "fullBeatDedupOnlySeeds": 5,
+    "zeroByzantinePoisonSeeds": 5,
+    "zeroDuplicateFetchSeeds": 5,
+    "pairedDeltas": {
+      "fullVsNoBftMeshGain": {
+        "count": 5,
+        "mean": 83,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          83,
+          83
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsDedupOnlyMeshGain": {
+        "count": 5,
+        "mean": 98,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          98,
+          98
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      },
+      "fullVsIsolatedMeshGain": {
+        "count": 5,
+        "mean": 100,
+        "sampleStandardDeviation": 0,
+        "ci95": [
+          100,
+          100
+        ],
+        "method": "Two-sided Student t interval across five independent seeds; df=4"
+      }
+    },
+    "byMesh": {
+      "isolated-no-pheromone-no-bft": {
+        "stigmergicMeshScore": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "truthAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "byzantineRejectionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "duplicateFrontierFetches": {
+          "count": 5,
+          "mean": 24,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            24,
+            24
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deadEndTrapFollowups": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            12,
+            12
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "poisonedClaimsInGraph": {
+          "count": 5,
+          "mean": 6,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            6,
+            6
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "dedup-only-no-pheromone-no-bft": {
+        "stigmergicMeshScore": {
+          "count": 5,
+          "mean": 2,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            2,
+            2
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "truthAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "byzantineRejectionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "duplicateFrontierFetches": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deadEndTrapFollowups": {
+          "count": 5,
+          "mean": 12,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            12,
+            12
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "poisonedClaimsInGraph": {
+          "count": 5,
+          "mean": 6,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            6,
+            6
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "pheromone-without-bft-quorum": {
+        "stigmergicMeshScore": {
+          "count": 5,
+          "mean": 17,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            17,
+            17
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "truthAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "byzantineRejectionPct": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "duplicateFrontierFetches": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deadEndTrapFollowups": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "poisonedClaimsInGraph": {
+          "count": 5,
+          "mean": 6,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            6,
+            6
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      },
+      "full-stigmergic-bft-consensus-mesh": {
+        "stigmergicMeshScore": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "truthAcceptancePct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "byzantineRejectionPct": {
+          "count": 5,
+          "mean": 100,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            100,
+            100
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "duplicateFrontierFetches": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "deadEndTrapFollowups": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "poisonedClaimsInGraph": {
+          "count": 5,
+          "mean": 0,
+          "sampleStandardDeviation": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "byMesh": {
+        "isolated-no-pheromone-no-bft": {
+          "seed": 19013,
+          "mode": "isolated-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 0,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 24,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "dedup-only-no-pheromone-no-bft": {
+          "seed": 19013,
+          "mode": "dedup-only-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 2,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "pheromone-without-bft-quorum": {
+          "seed": 19013,
+          "mode": "pheromone-without-bft-quorum",
+          "metrics": {
+            "stigmergicMeshScore": 17,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "full-stigmergic-bft-consensus-mesh": {
+          "seed": 19013,
+          "mode": "full-stigmergic-bft-consensus-mesh",
+          "metrics": {
+            "stigmergicMeshScore": 100,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 100,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "byMesh": {
+        "isolated-no-pheromone-no-bft": {
+          "seed": 29017,
+          "mode": "isolated-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 0,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 24,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "dedup-only-no-pheromone-no-bft": {
+          "seed": 29017,
+          "mode": "dedup-only-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 2,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "pheromone-without-bft-quorum": {
+          "seed": 29017,
+          "mode": "pheromone-without-bft-quorum",
+          "metrics": {
+            "stigmergicMeshScore": 17,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "full-stigmergic-bft-consensus-mesh": {
+          "seed": 29017,
+          "mode": "full-stigmergic-bft-consensus-mesh",
+          "metrics": {
+            "stigmergicMeshScore": 100,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 100,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "byMesh": {
+        "isolated-no-pheromone-no-bft": {
+          "seed": 39023,
+          "mode": "isolated-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 0,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 24,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "dedup-only-no-pheromone-no-bft": {
+          "seed": 39023,
+          "mode": "dedup-only-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 2,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "pheromone-without-bft-quorum": {
+          "seed": 39023,
+          "mode": "pheromone-without-bft-quorum",
+          "metrics": {
+            "stigmergicMeshScore": 17,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "full-stigmergic-bft-consensus-mesh": {
+          "seed": 39023,
+          "mode": "full-stigmergic-bft-consensus-mesh",
+          "metrics": {
+            "stigmergicMeshScore": 100,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 100,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "byMesh": {
+        "isolated-no-pheromone-no-bft": {
+          "seed": 49031,
+          "mode": "isolated-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 0,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 24,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "dedup-only-no-pheromone-no-bft": {
+          "seed": 49031,
+          "mode": "dedup-only-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 2,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "pheromone-without-bft-quorum": {
+          "seed": 49031,
+          "mode": "pheromone-without-bft-quorum",
+          "metrics": {
+            "stigmergicMeshScore": 17,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "full-stigmergic-bft-consensus-mesh": {
+          "seed": 49031,
+          "mode": "full-stigmergic-bft-consensus-mesh",
+          "metrics": {
+            "stigmergicMeshScore": 100,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 100,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 0
+          }
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "byMesh": {
+        "isolated-no-pheromone-no-bft": {
+          "seed": 59053,
+          "mode": "isolated-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 0,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 24,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "dedup-only-no-pheromone-no-bft": {
+          "seed": 59053,
+          "mode": "dedup-only-no-pheromone-no-bft",
+          "metrics": {
+            "stigmergicMeshScore": 2,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 12,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "pheromone-without-bft-quorum": {
+          "seed": 59053,
+          "mode": "pheromone-without-bft-quorum",
+          "metrics": {
+            "stigmergicMeshScore": 17,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 0,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 6
+          }
+        },
+        "full-stigmergic-bft-consensus-mesh": {
+          "seed": 59053,
+          "mode": "full-stigmergic-bft-consensus-mesh",
+          "metrics": {
+            "stigmergicMeshScore": 100,
+            "truthAcceptancePct": 100,
+            "byzantineRejectionPct": 100,
+            "duplicateFrontierFetches": 0,
+            "deadEndTrapFollowups": 0,
+            "poisonedClaimsInGraph": 0
+          }
+        }
+      }
+    }
+  ],
+  "scope": "Pass 18 5-seed evaluation of Learned Inter-Entity Cooperation, Stigmergic Pheromone Knowledge Graph, Canonical SHA-256 Frontier Deduplication, and 2f+1 Byzantine-Fault-Tolerant Fish-School Source Consensus."
+}
