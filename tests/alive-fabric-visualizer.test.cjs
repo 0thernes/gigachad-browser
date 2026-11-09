@@ -231,3 +231,45 @@ test('runAblations renders 38-condition 5-seed architecture ablation deltas in s
   assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('38 conditions × 5 seeds')), 'ablations summary drawn');
   window.aliveFabricVisualizer.destroy();
 });
+
+test('runRestartEquivalence renders 5-seed SHA-256 restart equivalence and 6-domain necessity in section 10', async () => {
+  const { window, dom } = load();
+  window.AliveRestartEquivalence = {
+    run: async () => ({
+      summary: {
+        exactRestartEquivalenceSeeds: 5,
+        all6DomainsNecessaryOn5Seeds: true,
+        fullRestoreStateL2Drift: { mean: 0 },
+        fullRestoreMaxAbsError: { mean: 0 },
+        fullRestoreMotorL2Drift: { mean: 0 },
+        domainNecessity: {
+          optimizer: { domain: 'optimizer', stateL2DriftWhenOmitted: { mean: 0.401297 }, motorL2DriftWhenOmitted: { mean: 0.044986 }, divergingSeeds: 5 },
+          recurrent: { domain: 'recurrent', stateL2DriftWhenOmitted: { mean: 0.219802 }, motorL2DriftWhenOmitted: { mean: 0.013094 }, divergingSeeds: 5 },
+          replay: { domain: 'replay', stateL2DriftWhenOmitted: { mean: 0.003593 }, motorL2DriftWhenOmitted: { mean: 0.000055 }, divergingSeeds: 5 },
+          rng: { domain: 'rng', stateL2DriftWhenOmitted: { mean: 0.180905 }, motorL2DriftWhenOmitted: { mean: 0.013302 }, divergingSeeds: 5 },
+          curriculum: { domain: 'curriculum', stateL2DriftWhenOmitted: { mean: 2.533151 }, motorL2DriftWhenOmitted: { mean: 0.909875 }, divergingSeeds: 5 },
+          synapticFabric: { domain: 'synapticFabric', stateL2DriftWhenOmitted: { mean: 0.047257 }, motorL2DriftWhenOmitted: { mean: 0.094744 }, divergingSeeds: 5 }
+        }
+      },
+      runs: [
+        {
+          seed: 19013,
+          finalDigestMatch: true,
+          finalRestoredDigestSha256: '24e4ee93d4d3e3fa27dff71efda83a4d4be745b90243eb0eb6e1298a6507d18c',
+          fullRestoreL2Drift: 0,
+          fullRestoreMotorL2Drift: 0,
+          finalCurriculumStage: 'F',
+          finalReplayOccupancy: 12,
+          finalPrngDraws: 228
+        }
+      ]
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runRestartEquivalence();
+  assert.equal(report.summary.exactRestartEquivalenceSeeds, 5);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · exact SHA-256 restart equivalence 5/5')), 'restart equivalence summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('omit-optimizer')), 'leave-one-domain-out rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+

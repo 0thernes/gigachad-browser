@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · State contracts & split-horizon restart equivalence pass 4
+
+- Added the 6-domain state contract and split-horizon restart equivalence verifier ([`systems/alive-restart-equivalence.js`](systems/alive-restart-equivalence.js), [`scripts/alive-restart-equivalence.cjs`](scripts/alive-restart-equivalence.cjs)) covering `optimizer`, `recurrent`, `replay`, `rng`, `curriculum`, and `synapticFabric` across 5 independent seeds (`[19013, 29017, 39023, 49031, 59053]`).
+- Verified bit-exact SHA-256 restart equivalence (`5/5` seeds, `0.0` state L2 drift, `0.0` max abs error, `0.0` motor trajectory drift) across `T1 = 6` warmup steps $\to$ checkpoint & fresh creature hydration $\to$ `T2 = 6` post-checkpoint steps, and verified leave-one-domain-out necessity (`5/5` seeds diverge when any single domain is omitted).
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 10 (`#alive-fabric-restart-eq`, `Run restart check` button, and `runRestartEquivalence()`).
+- Added [Pass 4 report](docs/ALIVE_PASS_04_REPORT.md), [JSON report](docs/reports/alive-restart-equivalence-2026-11-09.json), [SVG chart](docs/reports/alive-restart-equivalence-2026-11-09.svg) and unit tests (`tests/alive-restart-equivalence.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Architecture ablations pass 3
 
 - Extended [`systems/alive-neural-coupling.js`](systems/alive-neural-coupling.js) with runtime source ablation (`setAblatedSources`, `clearAblations`), `ablatedCount`, `diagnosticallyAblated` flags, and per-stream L2 `contributionNorm` telemetry across all 24 coupled streams (`14 brains + 7 precision routes + Ising-56 + Omega Lorenz + Omega Izhikevich`).

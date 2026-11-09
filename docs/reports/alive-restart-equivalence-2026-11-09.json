@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "pass-04-state-contracts-restart-equivalence-v1",
+  "status": "completed",
+  "liveRuntimeModified": false,
+  "protocol": {
+    "seeds": [
+      19013,
+      29017,
+      39023,
+      49031,
+      59053
+    ],
+    "preSteps": 6,
+    "postSteps": 6,
+    "totalSteps": 12,
+    "contractDomains": [
+      "optimizer",
+      "recurrent",
+      "replay",
+      "rng",
+      "curriculum",
+      "synapticFabric"
+    ],
+    "curriculumStages": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "liveRuntimeModified": false
+  },
+  "summary": {
+    "exactRestartEquivalenceSeeds": 5,
+    "all6DomainsNecessaryOn5Seeds": true,
+    "fullRestoreStateL2Drift": {
+      "count": 5,
+      "mean": 0,
+      "sampleStandardDeviation": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "fullRestoreMaxAbsError": {
+      "count": 5,
+      "mean": 0,
+      "sampleStandardDeviation": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "fullRestoreMotorL2Drift": {
+      "count": 5,
+      "mean": 0,
+      "sampleStandardDeviation": 0,
+      "ci95": [
+        0,
+        0
+      ],
+      "method": "Two-sided Student t interval across five independent seeds; df=4"
+    },
+    "domainNecessity": {
+      "optimizer": {
+        "domain": "optimizer",
+        "stateL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.40129660748084134,
+          "sampleStandardDeviation": 0.001813790106015958,
+          "ci95": [
+            0.3990444896059031,
+            0.40354872535577957
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.04498594488249754,
+          "sampleStandardDeviation": 0.003855833308639946,
+          "ci95": [
+            0.040198295480084405,
+            0.049773594284910676
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "divergingSeeds": 5,
+        "exactMatchWhenIncludedSeeds": 5
+      },
+      "recurrent": {
+        "domain": "recurrent",
+        "stateL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.2198020970574765,
+          "sampleStandardDeviation": 0.017205411525462868,
+          "ci95": [
+            0.19843875699202912,
+            0.24116543712292388
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.013094375332313422,
+          "sampleStandardDeviation": 0.0024853825717495526,
+          "ci95": [
+            0.010008365271208913,
+            0.016180385393417932
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "divergingSeeds": 5,
+        "exactMatchWhenIncludedSeeds": 5
+      },
+      "replay": {
+        "domain": "replay",
+        "stateL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.0035931749092421696,
+          "sampleStandardDeviation": 0.0004232368151569338,
+          "ci95": [
+            0.0030676569931473827,
+            0.004118692825336957
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.00005498944412736589,
+          "sampleStandardDeviation": 0.000030223510253221096,
+          "ci95": [
+            0.000017461999546598852,
+            0.00009251688870813293
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "divergingSeeds": 5,
+        "exactMatchWhenIncludedSeeds": 5
+      },
+      "rng": {
+        "domain": "rng",
+        "stateL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.1809046653488508,
+          "sampleStandardDeviation": 0.054677408167984394,
+          "ci95": [
+            0.11301369611157203,
+            0.24879563458612958
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.01330248102369359,
+          "sampleStandardDeviation": 0.005544064448816816,
+          "ci95": [
+            0.006418615793876341,
+            0.020186346253510838
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "divergingSeeds": 5,
+        "exactMatchWhenIncludedSeeds": 5
+      },
+      "curriculum": {
+        "domain": "curriculum",
+        "stateL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 2.533151071830165,
+          "sampleStandardDeviation": 0.005602750236862295,
+          "ci95": [
+            2.5261943385701255,
+            2.5401078050902046
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.9098745517747023,
+          "sampleStandardDeviation": 0.005658576923417086,
+          "ci95": [
+            0.9028485005278287,
+            0.9169006030215759
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "divergingSeeds": 5,
+        "exactMatchWhenIncludedSeeds": 5
+      },
+      "synapticFabric": {
+        "domain": "synapticFabric",
+        "stateL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.047256875751841065,
+          "sampleStandardDeviation": 0.00001875970480736026,
+          "ci95": [
+            0.047233582501764834,
+            0.0472801690019173
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "motorL2DriftWhenOmitted": {
+          "count": 5,
+          "mean": 0.09474391526574708,
+          "sampleStandardDeviation": 0.00035020587652845694,
+          "ci95": [
+            0.0943090772369023,
+            0.09517875329459186
+          ],
+          "method": "Two-sided Student t interval across five independent seeds; df=4"
+        },
+        "divergingSeeds": 5,
+        "exactMatchWhenIncludedSeeds": 5
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 19013,
+      "preSteps": 6,
+      "postSteps": 6,
+      "checkpointDigestSha256": "0fa92e004332c48328e34bd6186e2ef3ca319aea6306fc5a4b9395321850132c",
+      "finalReferenceDigestSha256": "24e4ee93d4d3e3fa27dff71efda83a4d4be745b90243eb0eb6e1298a6507d18c",
+      "finalRestoredDigestSha256": "24e4ee93d4d3e3fa27dff71efda83a4d4be745b90243eb0eb6e1298a6507d18c",
+      "midDigestMatch": true,
+      "finalDigestMatch": true,
+      "domainDigestMatches": {
+        "optimizer": true,
+        "recurrent": true,
+        "replay": true,
+        "rng": true,
+        "curriculum": true,
+        "synapticFabric": true
+      },
+      "fullRestoreL2Drift": 0,
+      "fullRestoreMaxAbsError": 0,
+      "fullRestoreMotorL2Drift": 0,
+      "finalCurriculumStage": "F",
+      "finalReplayOccupancy": 12,
+      "finalPrngDraws": 228,
+      "omittedDomainDrifts": {
+        "optimizer": {
+          "stateL2Drift": 0.40263104627975393,
+          "motorL2Drift": 0.04941328083391203,
+          "digestMismatch": true
+        },
+        "recurrent": {
+          "stateL2Drift": 0.2334694788070117,
+          "motorL2Drift": 0.014554674006462716,
+          "digestMismatch": true
+        },
+        "replay": {
+          "stateL2Drift": 0.004212636350097524,
+          "motorL2Drift": 0.00002686360341792642,
+          "digestMismatch": true
+        },
+        "rng": {
+          "stateL2Drift": 0.17307124283468955,
+          "motorL2Drift": 0.013325331999485122,
+          "digestMismatch": true
+        },
+        "curriculum": {
+          "stateL2Drift": 2.534842413905327,
+          "motorL2Drift": 0.9055733398217309,
+          "digestMismatch": true
+        },
+        "synapticFabric": {
+          "stateL2Drift": 0.04722739264104091,
+          "motorL2Drift": 0.09433895669198084,
+          "digestMismatch": true
+        }
+      }
+    },
+    {
+      "seed": 29017,
+      "preSteps": 6,
+      "postSteps": 6,
+      "checkpointDigestSha256": "e1c8721ac50aa57ccdbc2744dbda4af4ca1bd1a40bd3d641dd7687a9c8400a74",
+      "finalReferenceDigestSha256": "63687d822c3f86a1f2117e396d000a2bb3bfb5518a31d3d2641f56f0c88ede79",
+      "finalRestoredDigestSha256": "63687d822c3f86a1f2117e396d000a2bb3bfb5518a31d3d2641f56f0c88ede79",
+      "midDigestMatch": true,
+      "finalDigestMatch": true,
+      "domainDigestMatches": {
+        "optimizer": true,
+        "recurrent": true,
+        "replay": true,
+        "rng": true,
+        "curriculum": true,
+        "synapticFabric": true
+      },
+      "fullRestoreL2Drift": 0,
+      "fullRestoreMaxAbsError": 0,
+      "fullRestoreMotorL2Drift": 0,
+      "finalCurriculumStage": "F",
+      "finalReplayOccupancy": 12,
+      "finalPrngDraws": 228,
+      "omittedDomainDrifts": {
+        "optimizer": {
+          "stateL2Drift": 0.3983023717989274,
+          "motorL2Drift": 0.04442181022292005,
+          "digestMismatch": true
+        },
+        "recurrent": {
+          "stateL2Drift": 0.21497940941168714,
+          "motorL2Drift": 0.014622792612795943,
+          "digestMismatch": true
+        },
+        "replay": {
+          "stateL2Drift": 0.003521550340628992,
+          "motorL2Drift": 0.00003062836393925447,
+          "digestMismatch": true
+        },
+        "rng": {
+          "stateL2Drift": 0.1670025442824455,
+          "motorL2Drift": 0.014331093625555917,
+          "digestMismatch": true
+        },
+        "curriculum": {
+          "stateL2Drift": 2.541804379023722,
+          "motorL2Drift": 0.9133079711875591,
+          "digestMismatch": true
+        },
+        "synapticFabric": {
+          "stateL2Drift": 0.04726830530626729,
+          "motorL2Drift": 0.09522833848498947,
+          "digestMismatch": true
+        }
+      }
+    },
+    {
+      "seed": 39023,
+      "preSteps": 6,
+      "postSteps": 6,
+      "checkpointDigestSha256": "8f0daafa7149152cb03974cb7c99ab22b2a14765afc3ecb11e1e739a2667f46b",
+      "finalReferenceDigestSha256": "2f83fd2aab078b1d6f9d70b74ffb7a54b9be6a6d49092a50e4ebb935bd926895",
+      "finalRestoredDigestSha256": "2f83fd2aab078b1d6f9d70b74ffb7a54b9be6a6d49092a50e4ebb935bd926895",
+      "midDigestMatch": true,
+      "finalDigestMatch": true,
+      "domainDigestMatches": {
+        "optimizer": true,
+        "recurrent": true,
+        "replay": true,
+        "rng": true,
+        "curriculum": true,
+        "synapticFabric": true
+      },
+      "fullRestoreL2Drift": 0,
+      "fullRestoreMaxAbsError": 0,
+      "fullRestoreMotorL2Drift": 0,
+      "finalCurriculumStage": "F",
+      "finalReplayOccupancy": 12,
+      "finalPrngDraws": 228,
+      "omittedDomainDrifts": {
+        "optimizer": {
+          "stateL2Drift": 0.401019865879233,
+          "motorL2Drift": 0.03974018737561282,
+          "digestMismatch": true
+        },
+        "recurrent": {
+          "stateL2Drift": 0.1968971164090331,
+          "motorL2Drift": 0.009209443823062245,
+          "digestMismatch": true
+        },
+        "replay": {
+          "stateL2Drift": 0.0034545349276461643,
+          "motorL2Drift": 0.00010220839179538755,
+          "digestMismatch": true
+        },
+        "rng": {
+          "stateL2Drift": 0.2653499057440818,
+          "motorL2Drift": 0.010033671874494292,
+          "digestMismatch": true
+        },
+        "curriculum": {
+          "stateL2Drift": 2.531931644396708,
+          "motorL2Drift": 0.9152505430731448,
+          "digestMismatch": true
+        },
+        "synapticFabric": {
+          "stateL2Drift": 0.04726100373904618,
+          "motorL2Drift": 0.09460892907013625,
+          "digestMismatch": true
+        }
+      }
+    },
+    {
+      "seed": 49031,
+      "preSteps": 6,
+      "postSteps": 6,
+      "checkpointDigestSha256": "e997695e94b5a195bf359b73e131ac6bbcb0d04c3ec3a994e123066325f255c0",
+      "finalReferenceDigestSha256": "7446c8189ffafa41e20b4206bdeec2e84090fd58ceb31018a95cbe106fa2ebf5",
+      "finalRestoredDigestSha256": "7446c8189ffafa41e20b4206bdeec2e84090fd58ceb31018a95cbe106fa2ebf5",
+      "midDigestMatch": true,
+      "finalDigestMatch": true,
+      "domainDigestMatches": {
+        "optimizer": true,
+        "recurrent": true,
+        "replay": true,
+        "rng": true,
+        "curriculum": true,
+        "synapticFabric": true
+      },
+      "fullRestoreL2Drift": 0,
+      "fullRestoreMaxAbsError": 0,
+      "fullRestoreMotorL2Drift": 0,
+      "finalCurriculumStage": "F",
+      "finalReplayOccupancy": 12,
+      "finalPrngDraws": 228,
+      "omittedDomainDrifts": {
+        "optimizer": {
+          "stateL2Drift": 0.4017845188343861,
+          "motorL2Drift": 0.04803057674693135,
+          "digestMismatch": true
+        },
+        "recurrent": {
+          "stateL2Drift": 0.24007167263753165,
+          "motorL2Drift": 0.015082885738659168,
+          "digestMismatch": true
+        },
+        "replay": {
+          "stateL2Drift": 0.0037237726446304195,
+          "motorL2Drift": 0.00006121594759755365,
+          "digestMismatch": true
+        },
+        "rng": {
+          "stateL2Drift": 0.18565101300716977,
+          "motorL2Drift": 0.02178491175413124,
+          "digestMismatch": true
+        },
+        "curriculum": {
+          "stateL2Drift": 2.5270553207642568,
+          "motorL2Drift": 0.9022016901936734,
+          "digestMismatch": true
+        },
+        "synapticFabric": {
+          "stateL2Drift": 0.04727595910869532,
+          "motorL2Drift": 0.09458173298652955,
+          "digestMismatch": true
+        }
+      }
+    },
+    {
+      "seed": 59053,
+      "preSteps": 6,
+      "postSteps": 6,
+      "checkpointDigestSha256": "2fa1f37673a85ddfed81cfeb7d50500ff2ca1f8825df5bcd7e7c11eca737f237",
+      "finalReferenceDigestSha256": "e2f2ce7b0c6719ddc03da63afbe17fe2be3ec3aa95f6d6ed256a028f6f9a4ad7",
+      "finalRestoredDigestSha256": "e2f2ce7b0c6719ddc03da63afbe17fe2be3ec3aa95f6d6ed256a028f6f9a4ad7",
+      "midDigestMatch": true,
+      "finalDigestMatch": true,
+      "domainDigestMatches": {
+        "optimizer": true,
+        "recurrent": true,
+        "replay": true,
+        "rng": true,
+        "curriculum": true,
+        "synapticFabric": true
+      },
+      "fullRestoreL2Drift": 0,
+      "fullRestoreMaxAbsError": 0,
+      "fullRestoreMotorL2Drift": 0,
+      "finalCurriculumStage": "F",
+      "finalReplayOccupancy": 12,
+      "finalPrngDraws": 228,
+      "omittedDomainDrifts": {
+        "optimizer": {
+          "stateL2Drift": 0.40274523461190614,
+          "motorL2Drift": 0.04332386923311145,
+          "digestMismatch": true
+        },
+        "recurrent": {
+          "stateL2Drift": 0.21359280802211908,
+          "motorL2Drift": 0.01200208048058704,
+          "digestMismatch": true
+        },
+        "replay": {
+          "stateL2Drift": 0.003053380283207747,
+          "motorL2Drift": 0.00005403091388670734,
+          "digestMismatch": true
+        },
+        "rng": {
+          "stateL2Drift": 0.11344862087586731,
+          "motorL2Drift": 0.007037395864801387,
+          "digestMismatch": true
+        },
+        "curriculum": {
+          "stateL2Drift": 2.5301216010608107,
+          "motorL2Drift": 0.9130392145974037,
+          "digestMismatch": true
+        },
+        "synapticFabric": {
+          "stateL2Drift": 0.047251717964155615,
+          "motorL2Drift": 0.09496161909509931,
+          "digestMismatch": true
+        }
+      }
+    }
+  ],
+  "scope": "Pass 4 split-horizon restart equivalence across optimizer moments, recurrent neural/connectome/AoT-ToT-GoT states, dense replay ring, deterministic 64-bit PRNG, curriculum stages A-F + viscera, and Synaptic Fabric across five independent seeds. Verifies zero post-restore drift when all six domains are restored and non-zero divergence when any single domain is omitted."
+}

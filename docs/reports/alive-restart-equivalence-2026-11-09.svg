@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560">
+  <rect width="100%" height="100%" fill="#060c14" />
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="16" font-weight="700">PASS 4 · 6-DOMAIN STATE CONTRACTS &amp; SPLIT-HORIZON SHA-256 RESTART EQUIVALENCE (5 SEEDS)</text>
+  <text x="24" y="54" fill="#94a3b8" font-family="Consolas, monospace" font-size="11">Seeds: [19013, 29017, 39023, 49031, 59053] · Split: T1=6 warmup -&gt; Checkpoint -&gt; Fresh Hydrate -&gt; T2=6 post · Exact SHA-256 Equivalence: 5/5 · All 6 Domains Necessary: 5/5</text>
+  <text x="24" y="86" fill="#34d399" font-family="Consolas, monospace" font-size="13" font-weight="700">1 · Full 6-Domain Restore vs Uninterrupted Run (5 Seeds)</text>
+  <rect x="24" y="98" width="530" height="220" fill="#0b1520" stroke="#1e293b" rx="4" />
+  <text x="36" y="120" fill="#94a3b8" font-family="Consolas, monospace" font-size="10">SEED    CHKPT SHA-256      FINAL SHA-256      ΔSTATE L2   ΔMOTOR L2   STAGE  REPLAY</text>
+  <rect x="32" y="132" width="514" height="24" fill="#0f1b26" rx="2" />
+  <text x="36" y="148" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">19013   0fa92e004332c4..   24e4ee93d4d3e3..   0.000000    0.000000     F     12/32</text>
+  <rect x="498" y="136" width="40" height="16" fill="#065f46" rx="2" />
+  <text x="518" y="148" text-anchor="middle" fill="#6ee7b7" font-family="Consolas, monospace" font-size="9" font-weight="700">EXACT</text>
+  <rect x="32" y="164" width="514" height="24" fill="#0b1520" rx="2" />
+  <text x="36" y="180" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">29017   e1c8721ac50aa5..   63687d822c3f86..   0.000000    0.000000     F     12/32</text>
+  <rect x="498" y="168" width="40" height="16" fill="#065f46" rx="2" />
+  <text x="518" y="180" text-anchor="middle" fill="#6ee7b7" font-family="Consolas, monospace" font-size="9" font-weight="700">EXACT</text>
+  <rect x="32" y="196" width="514" height="24" fill="#0f1b26" rx="2" />
+  <text x="36" y="212" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">39023   8f0daafa714915..   2f83fd2aab078b..   0.000000    0.000000     F     12/32</text>
+  <rect x="498" y="200" width="40" height="16" fill="#065f46" rx="2" />
+  <text x="518" y="212" text-anchor="middle" fill="#6ee7b7" font-family="Consolas, monospace" font-size="9" font-weight="700">EXACT</text>
+  <rect x="32" y="228" width="514" height="24" fill="#0b1520" rx="2" />
+  <text x="36" y="244" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">49031   e997695e94b5a1..   7446c8189ffafa..   0.000000    0.000000     F     12/32</text>
+  <rect x="498" y="232" width="40" height="16" fill="#065f46" rx="2" />
+  <text x="518" y="244" text-anchor="middle" fill="#6ee7b7" font-family="Consolas, monospace" font-size="9" font-weight="700">EXACT</text>
+  <rect x="32" y="260" width="514" height="24" fill="#0f1b26" rx="2" />
+  <text x="36" y="276" fill="#e2e8f0" font-family="Consolas, monospace" font-size="10">59053   2fa1f37673a85d..   e2f2ce7b0c6719..   0.000000    0.000000     F     12/32</text>
+  <rect x="498" y="264" width="40" height="16" fill="#065f46" rx="2" />
+  <text x="518" y="276" text-anchor="middle" fill="#6ee7b7" font-family="Consolas, monospace" font-size="9" font-weight="700">EXACT</text>
+  <text x="24" y="344" fill="#38bdf8" font-family="Consolas, monospace" font-size="13" font-weight="700">2 · Per-Domain Post-Horizon SHA-256 Contract Match (Across All 5 Seeds)</text>
+  <rect x="24" y="356" width="530" height="164" fill="#0b1520" stroke="#1e293b" rx="4" />
+  <text x="36" y="380" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">optimizer        included=5/5 exact SHA-256   omitted=5/5 diverge</text>
+  <text x="536" y="380" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="10" font-weight="700">5/5 EXACT</text>
+  <text x="36" y="403" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">recurrent        included=5/5 exact SHA-256   omitted=5/5 diverge</text>
+  <text x="536" y="403" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="10" font-weight="700">5/5 EXACT</text>
+  <text x="36" y="426" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">replay           included=5/5 exact SHA-256   omitted=5/5 diverge</text>
+  <text x="536" y="426" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="10" font-weight="700">5/5 EXACT</text>
+  <text x="36" y="449" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">rng              included=5/5 exact SHA-256   omitted=5/5 diverge</text>
+  <text x="536" y="449" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="10" font-weight="700">5/5 EXACT</text>
+  <text x="36" y="472" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">curriculum       included=5/5 exact SHA-256   omitted=5/5 diverge</text>
+  <text x="536" y="472" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="10" font-weight="700">5/5 EXACT</text>
+  <text x="36" y="495" fill="#cbd5e1" font-family="Consolas, monospace" font-size="10">synapticFabric   included=5/5 exact SHA-256   omitted=5/5 diverge</text>
+  <text x="536" y="495" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="10" font-weight="700">5/5 EXACT</text>
+  <text x="584" y="86" fill="#f59e0b" font-family="Consolas, monospace" font-size="13" font-weight="700">3 · Leave-One-Domain-Out Necessity (State ΔL2 &amp; Motor ΔL2 when Omitted)</text>
+  <rect x="584" y="98" width="572" height="422" fill="#0b1520" stroke="#1e293b" rx="4" />
+  <text x="734" y="130" text-anchor="end" fill="#34d399" font-family="Consolas, monospace" font-size="11" font-weight="700">full-6-domains</text>
+  <rect x="744" y="116" width="210" height="20" fill="#0f1b26" rx="2" />
+  <rect x="744" y="118" width="3" height="16" fill="#34d399" rx="1" />
+  <text x="962" y="130" fill="#6ee7b7" font-family="Consolas, monospace" font-size="10">Δstate=0.000000 · Δmotor=0.000000 (5/5 exact)</text>
+  <text x="734" y="174" text-anchor="end" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11" font-weight="700">omit-optimizer</text>
+  <text x="734" y="190" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">diverged 5/5 seeds</text>
+  <rect x="744" y="162" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="164" width="82" height="11" fill="#f59e0b" rx="2" />
+  <text x="962" y="173" fill="#fcd34d" font-family="Consolas, monospace" font-size="10">Δstate L2 = 0.401297 ±0.0018</text>
+  <rect x="744" y="181" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="183" width="46" height="11" fill="#f472b6" rx="2" />
+  <text x="962" y="192" fill="#f9a8d4" font-family="Consolas, monospace" font-size="10">Δmotor L2 = 0.044986 ±0.0039</text>
+  <text x="734" y="230" text-anchor="end" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11" font-weight="700">omit-recurrent</text>
+  <text x="734" y="246" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">diverged 5/5 seeds</text>
+  <rect x="744" y="218" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="220" width="61" height="11" fill="#f59e0b" rx="2" />
+  <text x="962" y="229" fill="#fcd34d" font-family="Consolas, monospace" font-size="10">Δstate L2 = 0.219802 ±0.0172</text>
+  <rect x="744" y="237" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="239" width="25" height="11" fill="#f472b6" rx="2" />
+  <text x="962" y="248" fill="#f9a8d4" font-family="Consolas, monospace" font-size="10">Δmotor L2 = 0.013094 ±0.0025</text>
+  <text x="734" y="286" text-anchor="end" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11" font-weight="700">omit-replay</text>
+  <text x="734" y="302" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">diverged 5/5 seeds</text>
+  <rect x="744" y="274" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="276" width="8" height="11" fill="#f59e0b" rx="2" />
+  <text x="962" y="285" fill="#fcd34d" font-family="Consolas, monospace" font-size="10">Δstate L2 = 0.003593 ±0.0004</text>
+  <rect x="744" y="293" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="295" width="6" height="11" fill="#f472b6" rx="2" />
+  <text x="962" y="304" fill="#f9a8d4" font-family="Consolas, monospace" font-size="10">Δmotor L2 = 0.000055 ±0.0000</text>
+  <text x="734" y="342" text-anchor="end" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11" font-weight="700">omit-rng</text>
+  <text x="734" y="358" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">diverged 5/5 seeds</text>
+  <rect x="744" y="330" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="332" width="55" height="11" fill="#f59e0b" rx="2" />
+  <text x="962" y="341" fill="#fcd34d" font-family="Consolas, monospace" font-size="10">Δstate L2 = 0.180905 ±0.0547</text>
+  <rect x="744" y="349" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="351" width="25" height="11" fill="#f472b6" rx="2" />
+  <text x="962" y="360" fill="#f9a8d4" font-family="Consolas, monospace" font-size="10">Δmotor L2 = 0.013302 ±0.0055</text>
+  <text x="734" y="398" text-anchor="end" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11" font-weight="700">omit-curriculum</text>
+  <text x="734" y="414" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">diverged 5/5 seeds</text>
+  <rect x="744" y="386" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="388" width="206" height="11" fill="#f59e0b" rx="2" />
+  <text x="962" y="397" fill="#fcd34d" font-family="Consolas, monospace" font-size="10">Δstate L2 = 2.533151 ±0.0056</text>
+  <rect x="744" y="405" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="407" width="206" height="11" fill="#f472b6" rx="2" />
+  <text x="962" y="416" fill="#f9a8d4" font-family="Consolas, monospace" font-size="10">Δmotor L2 = 0.909875 ±0.0057</text>
+  <text x="734" y="454" text-anchor="end" fill="#e2e8f0" font-family="Consolas, monospace" font-size="11" font-weight="700">omit-synapticFabric</text>
+  <text x="734" y="470" text-anchor="end" fill="#94a3b8" font-family="Consolas, monospace" font-size="9">diverged 5/5 seeds</text>
+  <rect x="744" y="442" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="444" width="28" height="11" fill="#f59e0b" rx="2" />
+  <text x="962" y="453" fill="#fcd34d" font-family="Consolas, monospace" font-size="10">Δstate L2 = 0.047257 ±0.0000</text>
+  <rect x="744" y="461" width="210" height="15" fill="#0f1b26" rx="2" />
+  <rect x="744" y="463" width="66" height="11" fill="#f472b6" rx="2" />
+  <text x="962" y="472" fill="#f9a8d4" font-family="Consolas, monospace" font-size="10">Δmotor L2 = 0.094744 ±0.0004</text>
+  <text x="24" y="544" fill="#64748b" font-family="Consolas, monospace" font-size="10">Generated by scripts/alive-restart-equivalence.cjs · Deterministic 5-seed split-horizon checkpoint/restore verification across optimizer, recurrent, replay, rng, curriculum &amp; synapticFabric.</text>
+</svg>

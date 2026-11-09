@@ -302,6 +302,7 @@
   // ---------- 7. ghost faculties and creatures (text, measured) ----------
   let latestBenchmark = null, benchmarkBusy = false;
   let latestAblations = null, ablationsBusy = false;
+  let latestRestartEq = null, restartEqBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -324,6 +325,19 @@
       return latestAblations;
     } finally {
       ablationsBusy = false;
+    }
+  }
+  async function runRestartEquivalence() {
+    const runner = root.AliveRestartEquivalence;
+    if (restartEqBusy || typeof runner?.run !== 'function') return latestRestartEq;
+    restartEqBusy = true;
+    try {
+      latestRestartEq = await runner.run();
+      root.__aliveLatestRestartEquivalence = latestRestartEq;
+      draw();
+      return latestRestartEq;
+    } finally {
+      restartEqBusy = false;
     }
   }
 
@@ -505,6 +519,51 @@
     });
   }
 
+  // ---------- 10. Pass 4 state contracts & restart equivalence (5 seeds) ---
+  function drawRestartEquivalence(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestRestartEq || root.__aliveLatestRestartEquivalence;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.domainNecessity) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(restartEqBusy ? 'Running 5-seed split-horizon restart equivalence check…' : 'Click "Run restart check" above to verify 6-domain state contracts and split-horizon restart equivalence across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const splitX = Math.floor(width * 0.44);
+    ctx.fillText(`5 seeds · exact SHA-256 restart equivalence ${s.exactRestartEquivalenceSeeds}/5 · full restore ΔL2=${fmt(s.fullRestoreStateL2Drift?.mean)} · all 6 domains required: ${s.all6DomainsNecessaryOn5Seeds}`, 8, 12);
+
+    // Left: per-seed SHA-256 & trajectory verification
+    (report.runs || []).slice(0, 5).forEach((run, idx) => {
+      const y = 30 + idx * 30;
+      ctx.fillStyle = run.finalDigestMatch ? '#34d399' : '#f43f5e';
+      ctx.fillRect(10, y, 10, 14);
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'left';
+      const digestShort = String(run.finalRestoredDigestSha256 || '').slice(0, 12);
+      ctx.fillText(`seed ${run.seed} · SHA256=${digestShort}… · ΔL2=${run.fullRestoreL2Drift.toFixed(6)} · stg=${run.finalCurriculumStage} · rep=${run.finalReplayOccupancy} · rng=${run.finalPrngDraws}`, 26, y + 8);
+    });
+
+    // Right: Leave-One-Domain-Out necessity bars
+    const domains = Object.values(s.domainNecessity);
+    const maxDrift = Math.max(1e-6, ...domains.map(d => d.stateL2DriftWhenOmitted?.mean || 0));
+    const barW = Math.max(60, width - splitX - 220);
+    domains.forEach((d, idx) => {
+      const y = 28 + idx * 26;
+      const val = d.stateL2DriftWhenOmitted?.mean || 0;
+      const mVal = d.motorL2DriftWhenOmitted?.mean || 0;
+      ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'right';
+      ctx.fillText(`omit-${d.domain}`, splitX + 98, y + 8);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(splitX + 104, y, barW, 14);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(splitX + 104, y + 1, barW * Math.min(1, Math.sqrt(val / maxDrift)), 12);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`Δstate=${val.toFixed(4)} Δmot=${mVal.toFixed(4)} (${d.divergingSeeds}/5)`, splitX + 108 + barW, y + 8);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('left: full 6-domain restore (0.0 drift, identical SHA-256) · right: post-restore trajectory drift when each domain is omitted', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -533,18 +592,22 @@
     const ablateBtn = doc.createElement('button'); ablateBtn.type = 'button'; ablateBtn.textContent = 'Run ablations';
     ablateBtn.title = 'Run 38-condition 5-seed architecture ablations across all 14 brains, 7 precision routes, AoT/ToT/GoT, and specialists';
     ablateBtn.addEventListener('click', () => { runAblations(); });
+    const restartBtn = doc.createElement('button'); restartBtn.type = 'button'; restartBtn.textContent = 'Run restart check';
+    restartBtn.title = 'Run 5-seed split-horizon restart equivalence check across optimizer, recurrent, replay, RNG, curriculum and fabric domains';
+    restartBtn.addEventListener('click', () => { runRestartEquivalence(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
       utility = canvas('alive-fabric-utility', 300), runtimeSeries = canvas('alive-fabric-series', 240), substrate = canvas('alive-fabric-substrate', 260),
-      benchmarkCanvas = canvas('alive-fabric-benchmark', 210), ablationsCanvas = canvas('alive-fabric-ablations', 280);
+      benchmarkCanvas = canvas('alive-fabric-benchmark', 210), ablationsCanvas = canvas('alive-fabric-ablations', 280),
+      restartEqCanvas = canvas('alive-fabric-restart-eq', 200);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -556,7 +619,8 @@
       section('6 · Neural substrate telemetry (1 Hz)', substrate),
       section('7 · Ghost faculties, memory, creatures, fabric log', tables),
       section('8 · Unseen task benchmark (5 seeds) & colony role lenses', benchmarkCanvas),
-      section('9 · Architecture ablations — 14 brains × 7 precision × AoT/ToT/GoT × specialists', ablationsCanvas));
+      section('9 · Architecture ablations — 14 brains × 7 precision × AoT/ToT/GoT × specialists', ablationsCanvas),
+      section('10 · State contracts & restart equivalence — optimizer · recurrent · replay · RNG · curriculum · fabric', restartEqCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -564,7 +628,8 @@
       () => drawSeries(substrate, Array.from(series.keys()).filter(name => name.startsWith('substrate:')).slice(0, 16), ['#60a5fa', '#34d399', '#fbbf24', '#f472b6']),
       () => renderTables(tables),
       () => drawBenchmark(benchmarkCanvas),
-      () => drawAblations(ablationsCanvas));
+      () => drawAblations(ablationsCanvas),
+      () => drawRestartEquivalence(restartEqCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -607,6 +672,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);
