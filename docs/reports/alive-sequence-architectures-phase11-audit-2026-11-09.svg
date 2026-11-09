@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="400" viewBox="0 0 940 400">
+  <rect width="940" height="400" fill="#071018"/>
+  <text x="24" y="34" fill="#67e8f9" font-family="Consolas, monospace" font-size="15" font-weight="bold">ALIVE Pass 60 · Phase XI Sequence &amp; State-Space Architecture Acceptance Matrix (A1..A10)</text>
+  <text x="24" y="56" fill="#cbd5e1" font-family="Consolas, monospace" font-size="12">Verified=10/10 · Score=100% · SHA-256=0fd4ce5f99dcdc3b2284eb51b5445dad…</text>
+  <text x="24" y="88" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A1-Mamba2-SSD-Recurrent-To-Matrix-Duality (Pass 56) · mean=100.0000 · SSD Duality Parity == 100%</text>
+  <text x="24" y="116" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A2-Mamba2-Selective-Associative-Recall (Pass 56) · mean=100.0000 · Selective Recall == 100%</text>
+  <text x="24" y="144" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A3-MLA-Joint-KV-Cache-Reduction (Pass 57) · mean=93.7500 · KV Cache Reduction >= 90%</text>
+  <text x="24" y="172" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A4-MLA-Decoupled-RoPE-Matrix-Absorption (Pass 57) · mean=100.0000 · Matrix Absorption == 100%</text>
+  <text x="24" y="200" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A5-xLSTM-State-Tracking-Parity-Accuracy (Pass 58) · mean=100.0000 · State Tracking == 100%</text>
+  <text x="24" y="228" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A6-xLSTM-Log-Stabilizer-Overflow-Immunity (Pass 58) · mean=100.0000 · Overflow Immunity == 100%</text>
+  <text x="24" y="256" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A7-Griffin-RGLRU-4x-Horizon-Extrapolation (Pass 59) · mean=100.0000 · 4x Extrapolation == 100%</text>
+  <text x="24" y="284" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A8-Griffin-Local-MQA-Exact-Needle-Copy (Pass 59) · mean=100.0000 · Needle Copy == 100%</text>
+  <text x="24" y="312" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A9-RGLRU-Sqrt-Norm-Preserving-Invariance (Pass 59) · mean=100.0000 · Norm Conservation == 100%</text>
+  <text x="24" y="340" fill="#34d399" font-family="Consolas, monospace" font-size="12">[PASS 5/5] A10-Phase11-All-Sequence-Architectures-Verified (Pass 60) · mean=100.0000 · All 4 Sequence Suites == 100.0</text>
+</svg>
