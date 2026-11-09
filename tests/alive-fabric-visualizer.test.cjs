@@ -1189,6 +1189,33 @@ test('runPhase6NeurosymbolicAudit renders 10-row Phase VI Acceptance Matrix (N1.
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runAdversarialDomShield renders 5-seed Adversarial Prompt-Injection & Cloaked-DOM Shield in section 42', async () => {
+  const { window, dom } = load();
+  window.AliveAdversarialPromptDomShield = {
+    run: async () => ({
+      summary: {
+        fullShieldScoreMean: 100.0,
+        injectionBlockRatePctMean: 100.0,
+        exfiltrationPreventionPctMean: 100.0,
+        gainVsRawUnfiltered: 78.75
+      },
+      aggregatedByProfile: {
+        'raw-unfiltered-dom-ingestion': { compositeShieldScore: { mean: 21.25 }, injectionBlockRatePct: { mean: 0 }, cloakedDomQuarantinePct: { mean: 25.0 }, exfiltrationPreventionPct: { mean: 0 }, benignUtilityRetentionPct: { mean: 100 } },
+        'naive-keyword-blocklist-filter': { compositeShieldScore: { mean: 42.5 }, injectionBlockRatePct: { mean: 25.0 }, cloakedDomQuarantinePct: { mean: 50.0 }, exfiltrationPreventionPct: { mean: 25.0 }, benignUtilityRetentionPct: { mean: 100 } },
+        'dom-visibility-only-no-taint-lattice': { compositeShieldScore: { mean: 63.75 }, injectionBlockRatePct: { mean: 50.0 }, cloakedDomQuarantinePct: { mean: 75.0 }, exfiltrationPreventionPct: { mean: 50.0 }, benignUtilityRetentionPct: { mean: 100 } },
+        'full-spotlighting-taint-dom-exfil-shield': { compositeShieldScore: { mean: 100.0 }, injectionBlockRatePct: { mean: 100 }, cloakedDomQuarantinePct: { mean: 100 }, exfiltrationPreventionPct: { mean: 100 }, benignUtilityRetentionPct: { mean: 100 } }
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runAdversarialDomShield();
+  assert.equal(report.summary.fullShieldScoreMean, 100.0);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · Taint+WCAG+Exfil Shield score=100.0')), 'Adversarial Shield summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('full-spotlighting-tain')), 'Adversarial Shield rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 

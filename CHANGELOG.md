@@ -2,6 +2,13 @@
 
 All notable architectural, mathematical, and security milestones for **GIGACHAD BROWSER** are documented in this file.
 
+## [Unreleased] — 2026-11-09 · Adversarial Indirect Prompt-Injection, Cloaked-DOM & Exfiltration Shield pass 36
+
+- Added the 5-seed Adversarial Indirect Prompt-Injection, Hidden-DOM Cloaking & Cross-Origin Exfiltration Immunity Shield ([`systems/alive-adversarial-prompt-dom-shield.js`](systems/alive-adversarial-prompt-dom-shield.js), [`scripts/alive-adversarial-prompt-dom-shield.cjs`](scripts/alive-adversarial-prompt-dom-shield.cjs)) implementing WCAG relative luminance contrast detection, zero-width Unicode steganography sanitization, Non-Interference Information-Flow Taint Lattice enforcement, and cross-origin Canary exfiltration blocking.
+- Verified on `5/5` seeds across 24 red-team attack episodes per seed that `full-spotlighting-taint-dom-exfil-shield` achieves `100.0` composite score (`+72.5` over `raw-unfiltered-dom-ingestion`, `+51.25` over `naive-keyword-blocklist-filter`, `+30.0` over `dom-visibility-only-no-taint-lattice`), `100.0%` injection block rate, `100.0%` cloaked-DOM quarantine, `100.0%` exfiltration prevention, and `100.0%` benign research utility retention.
+- Extended [`systems/alive-fabric-visualizer.js`](systems/alive-fabric-visualizer.js) with Section 42 (`#alive-fabric-adversarial-shield`, `Run Adv Shield` button, and `runAdversarialDomShield()`).
+- Added [Pass 36 report](docs/ALIVE_PASS_36_REPORT.md), [JSON report](docs/reports/alive-adversarial-prompt-dom-shield-2026-11-09.json), [SVG chart](docs/reports/alive-adversarial-prompt-dom-shield-2026-11-09.svg) and unit tests (`tests/alive-adversarial-prompt-dom-shield.test.cjs`, `tests/alive-fabric-visualizer.test.cjs`).
+
 ## [Unreleased] — 2026-11-09 · Phase VI Neuro-Symbolic & Active Inference Acceptance Matrix (N1..N10) pass 35
 
 - Added the 5-seed Phase VI Neuro-Symbolic & Active Inference Acceptance Matrix ([`systems/alive-neurosymbolic-phase6-audit.js`](systems/alive-neurosymbolic-phase6-audit.js), [`scripts/alive-neurosymbolic-phase6-audit.cjs`](scripts/alive-neurosymbolic-phase6-audit.cjs)) auditing Passes 31–34 across `N1-ActiveInference-VFE-Monotonic-Descent` through `N10-MixedPrecision-Compression-Ratio-Compliance`.

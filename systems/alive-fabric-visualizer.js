@@ -334,6 +334,7 @@
   let latestNeurosymbolic = null, neurosymbolicBusy = false;
   let latestMixedPrecision = null, mixedPrecisionBusy = false;
   let latestPhase6Audit = null, phase6AuditBusy = false;
+  let latestAdversarialShield = null, adversarialShieldBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -772,6 +773,19 @@
       return latestPhase6Audit;
     } finally {
       phase6AuditBusy = false;
+    }
+  }
+  async function runAdversarialDomShield() {
+    const runner = root.AliveAdversarialPromptDomShield;
+    if (adversarialShieldBusy || typeof runner?.run !== 'function') return latestAdversarialShield;
+    adversarialShieldBusy = true;
+    try {
+      latestAdversarialShield = await runner.run();
+      root.__aliveLatestAdversarialShield = latestAdversarialShield;
+      draw();
+      return latestAdversarialShield;
+    } finally {
+      adversarialShieldBusy = false;
     }
   }
 
@@ -2288,6 +2302,48 @@
     ctx.fillText('N1..N10: VFE/EFE Active Inference · Poincaré Ball B^8_c · Neuro-Symbolic CEGIS+SMT · 7-Tier Hessian+NF4+EF', 8, height - 6);
   }
 
+  // ---------- 42. Pass 36 Adversarial Indirect Prompt-Injection & DOM Shield
+  function drawAdversarialDomShield(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestAdversarialShield || root.__aliveLatestAdversarialShield;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.aggregatedByProfile) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(adversarialShieldBusy ? 'Running 5-seed Adversarial Prompt-Injection & Cloaked-DOM Shield…' : 'Click "Run Adv Shield" above to evaluate WCAG Contrast + Taint Lattice + Exfiltration Firewall across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary || {};
+    ctx.fillText(`5 seeds · Taint+WCAG+Exfil Shield score=${(s.fullShieldScoreMean || 0).toFixed(1)} · block=${(s.injectionBlockRatePctMean || 0).toFixed(0)}% · exfilGuard=${(s.exfiltrationPreventionPctMean || 0).toFixed(0)}% · vs raw +${(s.gainVsRawUnfiltered || 0).toFixed(1)}`, 8, 12);
+    const modes = ['raw-unfiltered-dom-ingestion', 'naive-keyword-blocklist-filter', 'dom-visibility-only-no-taint-lattice', 'full-spotlighting-taint-dom-exfil-shield'];
+    const colors = {
+      'raw-unfiltered-dom-ingestion': '#f43f5e',
+      'naive-keyword-blocklist-filter': '#f59e0b',
+      'dom-visibility-only-no-taint-lattice': '#38bdf8',
+      'full-spotlighting-taint-dom-exfil-shield': '#34d399'
+    };
+    const barW = Math.max(80, width - 480);
+    modes.forEach((mode, idx) => {
+      const entry = report.aggregatedByProfile[mode];
+      if (!entry) return;
+      const y = 30 + idx * 36;
+      const scr = entry.compositeShieldScore?.mean || 0;
+      const blk = entry.injectionBlockRatePct?.mean || 0;
+      const clk = entry.cloakedDomQuarantinePct?.mean || 0;
+      const exf = entry.exfiltrationPreventionPct?.mean || 0;
+      const bng = entry.benignUtilityRetentionPct?.mean || 0;
+      ctx.fillStyle = '#cbd5e1'; ctx.textAlign = 'right';
+      ctx.fillText(mode.slice(0, 22), 146, y + 10);
+      ctx.fillStyle = '#0f1b26';
+      ctx.fillRect(154, y, barW, 18);
+      ctx.fillStyle = colors[mode] || '#38bdf8';
+      ctx.fillRect(154, y + 2, barW * Math.max(0, Math.min(1, scr / 100)), 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`scr=${scr.toFixed(1)} blk=${blk.toFixed(0)}% cloak=${clk.toFixed(0)}% exfil=${exf.toFixed(0)}% util=${bng.toFixed(0)}%`, 160 + barW, y + 10);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('24 red-team vectors/seed: WCAG contrast C_ratio + zero-width Unicode sanitizer + Non-Interference Taint Lattice + Canary Exfil Guard', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -2412,13 +2468,16 @@
     const phase6AuditBtn = doc.createElement('button'); phase6AuditBtn.type = 'button'; phase6AuditBtn.textContent = 'Run Phase VI Audit';
     phase6AuditBtn.title = 'Run 5-seed Phase VI Neuro-Symbolic & Active Inference Acceptance Matrix (N1..N10)';
     phase6AuditBtn.addEventListener('click', () => { runPhase6NeurosymbolicAudit(); });
+    const advShieldBtn = doc.createElement('button'); advShieldBtn.type = 'button'; advShieldBtn.textContent = 'Run Adv Shield';
+    advShieldBtn.title = 'Run 5-seed Adversarial Indirect Prompt-Injection, Cloaked-DOM & Exfiltration Shield evaluation';
+    advShieldBtn.addEventListener('click', () => { runAdversarialDomShield(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -2439,7 +2498,8 @@
       fishHydroCanvas = canvas('alive-fabric-fish-hydrodynamics', 190), symbioticCanvas = canvas('alive-fabric-symbiotic-coevolution', 190),
       phase5AuditCanvas = canvas('alive-fabric-phase5-audit', 190), activeInfCanvas = canvas('alive-fabric-active-inference', 190),
       hyperbolicCanvas = canvas('alive-fabric-hyperbolic-poincare', 190), neurosymCanvas = canvas('alive-fabric-neurosymbolic-synth', 190),
-      mixedPrecCanvas = canvas('alive-fabric-mixed-precision', 190), phase6AuditCanvas = canvas('alive-fabric-phase6-audit', 190);
+      mixedPrecCanvas = canvas('alive-fabric-mixed-precision', 190), phase6AuditCanvas = canvas('alive-fabric-phase6-audit', 190),
+      advShieldCanvas = canvas('alive-fabric-adversarial-shield', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -2483,7 +2543,8 @@
       section('38 · Hyperbolic Poincaré Ball (B^d_c) Hierarchical Ontology & Citation Tree Embedding (5 seeds)', hyperbolicCanvas),
       section('39 · Neuro-Symbolic DOM/API Extractor Program Synthesis & SMT Invariant Verifier (5 seeds)', neurosymCanvas),
       section('40 · Dynamic Mixed-Precision Tensor Quantization (FP64..Binary) & Error-Feedback (5 seeds)', mixedPrecCanvas),
-      section('41 · Phase VI Neuro-Symbolic Acceptance Matrix (N1..N10) & Cryptographic SHA-256 Freeze (5 seeds)', phase6AuditCanvas));
+      section('41 · Phase VI Neuro-Symbolic Acceptance Matrix (N1..N10) & Cryptographic SHA-256 Freeze (5 seeds)', phase6AuditCanvas),
+      section('42 · Adversarial Indirect Prompt-Injection, Cloaked-DOM & Exfiltration Shield (5 seeds)', advShieldCanvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -2523,7 +2584,8 @@
       () => drawHyperbolicPoincare(hyperbolicCanvas),
       () => drawNeurosymbolicSynth(neurosymCanvas),
       () => drawMixedPrecisionQuantizer(mixedPrecCanvas),
-      () => drawPhase6NeurosymbolicAudit(phase6AuditCanvas));
+      () => drawPhase6NeurosymbolicAudit(phase6AuditCanvas),
+      () => drawAdversarialDomShield(advShieldCanvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -2566,6 +2628,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, runNeurosymbolicSynth, runMixedPrecisionQuantizer, runPhase6NeurosymbolicAudit, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, runNeurosymbolicSynth, runMixedPrecisionQuantizer, runPhase6NeurosymbolicAudit, runAdversarialDomShield, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);
