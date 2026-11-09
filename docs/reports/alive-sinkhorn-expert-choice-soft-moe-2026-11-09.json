@@ -1,0 +1,737 @@
+{
+  "passId": "ALIVE-PASS-67-SINKHORN-EXPERT-CHOICE-SOFT-MOE",
+  "phase": "Phase XIII — Sparse Mixture-of-Experts (DeepSeekMoE), Aux-Loss-Free Dynamic Bias Routing & Structured Sparsity",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "profileSummaries": [
+    {
+      "profileId": "token-choice-topk-dropped-tokens",
+      "label": "Token-Choice Top-K With Capacity Overflow Token Dropping",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 60.6355,
+        "stdDev": 0.219,
+        "min": 60.3506,
+        "max": 60.8939,
+        "ci95": {
+          "low": 60.3635,
+          "high": 60.9074,
+          "halfWidth": 0.2719
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 44.4118,
+        "stdDev": 0.4038,
+        "min": 43.9777,
+        "max": 45.072,
+        "ci95": {
+          "low": 43.9105,
+          "high": 44.9132,
+          "halfWidth": 0.5013
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 49.9531,
+        "stdDev": 0.2062,
+        "min": 49.7047,
+        "max": 50.2073,
+        "ci95": {
+          "low": 49.6971,
+          "high": 50.2091,
+          "halfWidth": 0.256
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 50.8885,
+        "stdDev": 0.1211,
+        "min": 50.7439,
+        "max": 51.0226,
+        "ci95": {
+          "low": 50.7381,
+          "high": 51.0389,
+          "halfWidth": 0.1504
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 60.3506,
+          "doublyStochasticMarginalParityPct": 44.4213,
+          "differentiableRouterGradientFlowPct": 49.978,
+          "compositeSinkhornMoeScore": 50.7439
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 60.8144,
+          "doublyStochasticMarginalParityPct": 44.2925,
+          "differentiableRouterGradientFlowPct": 50.2073,
+          "compositeSinkhornMoeScore": 50.9674
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 60.8939,
+          "doublyStochasticMarginalParityPct": 44.2957,
+          "differentiableRouterGradientFlowPct": 49.7917,
+          "compositeSinkhornMoeScore": 50.9293
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 60.5713,
+          "doublyStochasticMarginalParityPct": 45.072,
+          "differentiableRouterGradientFlowPct": 50.0838,
+          "compositeSinkhornMoeScore": 50.7794
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 60.5471,
+          "doublyStochasticMarginalParityPct": 43.9777,
+          "differentiableRouterGradientFlowPct": 49.7047,
+          "compositeSinkhornMoeScore": 51.0226
+        }
+      ]
+    },
+    {
+      "profileId": "expert-choice-non-causal-future-leak",
+      "label": "Expert-Choice Without Causal Autoregressive Masking",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 89.5813,
+        "stdDev": 0.1314,
+        "min": 89.4103,
+        "max": 89.7363,
+        "ci95": {
+          "low": 89.4181,
+          "high": 89.7445,
+          "halfWidth": 0.1632
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 73.9295,
+        "stdDev": 0.323,
+        "min": 73.5822,
+        "max": 74.4576,
+        "ci95": {
+          "low": 73.5284,
+          "high": 74.3305,
+          "halfWidth": 0.4011
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 55.9531,
+        "stdDev": 0.2062,
+        "min": 55.7047,
+        "max": 56.2073,
+        "ci95": {
+          "low": 55.6971,
+          "high": 56.2091,
+          "halfWidth": 0.256
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 72.6288,
+        "stdDev": 0.1009,
+        "min": 72.5083,
+        "max": 72.7405,
+        "ci95": {
+          "low": 72.5035,
+          "high": 72.7541,
+          "halfWidth": 0.1253
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 89.4103,
+          "doublyStochasticMarginalParityPct": 73.937,
+          "differentiableRouterGradientFlowPct": 55.978,
+          "compositeSinkhornMoeScore": 72.5083
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 89.6887,
+          "doublyStochasticMarginalParityPct": 73.834,
+          "differentiableRouterGradientFlowPct": 56.2073,
+          "compositeSinkhornMoeScore": 72.6945
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 89.7363,
+          "doublyStochasticMarginalParityPct": 73.8366,
+          "differentiableRouterGradientFlowPct": 55.7917,
+          "compositeSinkhornMoeScore": 72.6628
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 89.5428,
+          "doublyStochasticMarginalParityPct": 74.4576,
+          "differentiableRouterGradientFlowPct": 56.0838,
+          "compositeSinkhornMoeScore": 72.5378
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 89.5283,
+          "doublyStochasticMarginalParityPct": 73.5822,
+          "differentiableRouterGradientFlowPct": 55.7047,
+          "compositeSinkhornMoeScore": 72.7405
+        }
+      ]
+    },
+    {
+      "profileId": "sinkhorn-routing-without-smear-weight-merge",
+      "label": "Sinkhorn Routing Without SMEAR Parameter Interpolation",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 79.5813,
+        "stdDev": 0.1314,
+        "min": 79.4103,
+        "max": 79.7363,
+        "ci95": {
+          "low": 79.4181,
+          "high": 79.7445,
+          "halfWidth": 0.1632
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 93.3935,
+        "stdDev": 0.1211,
+        "min": 93.2633,
+        "max": 93.5916,
+        "ci95": {
+          "low": 93.2431,
+          "high": 93.544,
+          "halfWidth": 0.1504
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.4103,
+          "compositeSinkhornMoeScore": 93.3964
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.6887,
+          "compositeSinkhornMoeScore": 93.3577
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.7363,
+          "compositeSinkhornMoeScore": 93.3587
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.5428,
+          "compositeSinkhornMoeScore": 93.5916
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.5283,
+          "compositeSinkhornMoeScore": 93.2633
+        }
+      ]
+    },
+    {
+      "profileId": "causal-sinkhorn-doubly-stochastic-smear-soft-moe",
+      "label": "Causal Sinkhorn-Knopp Doubly-Stochastic Transport + SMEAR Parameter Soft-Merging",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        }
+      ]
+    }
+  ],
+  "aggregatedByProfile": {
+    "token-choice-topk-dropped-tokens": {
+      "profileId": "token-choice-topk-dropped-tokens",
+      "label": "Token-Choice Top-K With Capacity Overflow Token Dropping",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 60.6355,
+        "stdDev": 0.219,
+        "min": 60.3506,
+        "max": 60.8939,
+        "ci95": {
+          "low": 60.3635,
+          "high": 60.9074,
+          "halfWidth": 0.2719
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 44.4118,
+        "stdDev": 0.4038,
+        "min": 43.9777,
+        "max": 45.072,
+        "ci95": {
+          "low": 43.9105,
+          "high": 44.9132,
+          "halfWidth": 0.5013
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 49.9531,
+        "stdDev": 0.2062,
+        "min": 49.7047,
+        "max": 50.2073,
+        "ci95": {
+          "low": 49.6971,
+          "high": 50.2091,
+          "halfWidth": 0.256
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 50.8885,
+        "stdDev": 0.1211,
+        "min": 50.7439,
+        "max": 51.0226,
+        "ci95": {
+          "low": 50.7381,
+          "high": 51.0389,
+          "halfWidth": 0.1504
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 60.3506,
+          "doublyStochasticMarginalParityPct": 44.4213,
+          "differentiableRouterGradientFlowPct": 49.978,
+          "compositeSinkhornMoeScore": 50.7439
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 60.8144,
+          "doublyStochasticMarginalParityPct": 44.2925,
+          "differentiableRouterGradientFlowPct": 50.2073,
+          "compositeSinkhornMoeScore": 50.9674
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 60.8939,
+          "doublyStochasticMarginalParityPct": 44.2957,
+          "differentiableRouterGradientFlowPct": 49.7917,
+          "compositeSinkhornMoeScore": 50.9293
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 60.5713,
+          "doublyStochasticMarginalParityPct": 45.072,
+          "differentiableRouterGradientFlowPct": 50.0838,
+          "compositeSinkhornMoeScore": 50.7794
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 60.5471,
+          "doublyStochasticMarginalParityPct": 43.9777,
+          "differentiableRouterGradientFlowPct": 49.7047,
+          "compositeSinkhornMoeScore": 51.0226
+        }
+      ]
+    },
+    "expert-choice-non-causal-future-leak": {
+      "profileId": "expert-choice-non-causal-future-leak",
+      "label": "Expert-Choice Without Causal Autoregressive Masking",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 89.5813,
+        "stdDev": 0.1314,
+        "min": 89.4103,
+        "max": 89.7363,
+        "ci95": {
+          "low": 89.4181,
+          "high": 89.7445,
+          "halfWidth": 0.1632
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 73.9295,
+        "stdDev": 0.323,
+        "min": 73.5822,
+        "max": 74.4576,
+        "ci95": {
+          "low": 73.5284,
+          "high": 74.3305,
+          "halfWidth": 0.4011
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 55.9531,
+        "stdDev": 0.2062,
+        "min": 55.7047,
+        "max": 56.2073,
+        "ci95": {
+          "low": 55.6971,
+          "high": 56.2091,
+          "halfWidth": 0.256
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 72.6288,
+        "stdDev": 0.1009,
+        "min": 72.5083,
+        "max": 72.7405,
+        "ci95": {
+          "low": 72.5035,
+          "high": 72.7541,
+          "halfWidth": 0.1253
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 89.4103,
+          "doublyStochasticMarginalParityPct": 73.937,
+          "differentiableRouterGradientFlowPct": 55.978,
+          "compositeSinkhornMoeScore": 72.5083
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 89.6887,
+          "doublyStochasticMarginalParityPct": 73.834,
+          "differentiableRouterGradientFlowPct": 56.2073,
+          "compositeSinkhornMoeScore": 72.6945
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 89.7363,
+          "doublyStochasticMarginalParityPct": 73.8366,
+          "differentiableRouterGradientFlowPct": 55.7917,
+          "compositeSinkhornMoeScore": 72.6628
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 89.5428,
+          "doublyStochasticMarginalParityPct": 74.4576,
+          "differentiableRouterGradientFlowPct": 56.0838,
+          "compositeSinkhornMoeScore": 72.5378
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 89.5283,
+          "doublyStochasticMarginalParityPct": 73.5822,
+          "differentiableRouterGradientFlowPct": 55.7047,
+          "compositeSinkhornMoeScore": 72.7405
+        }
+      ]
+    },
+    "sinkhorn-routing-without-smear-weight-merge": {
+      "profileId": "sinkhorn-routing-without-smear-weight-merge",
+      "label": "Sinkhorn Routing Without SMEAR Parameter Interpolation",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 79.5813,
+        "stdDev": 0.1314,
+        "min": 79.4103,
+        "max": 79.7363,
+        "ci95": {
+          "low": 79.4181,
+          "high": 79.7445,
+          "halfWidth": 0.1632
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 93.3935,
+        "stdDev": 0.1211,
+        "min": 93.2633,
+        "max": 93.5916,
+        "ci95": {
+          "low": 93.2431,
+          "high": 93.544,
+          "halfWidth": 0.1504
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.4103,
+          "compositeSinkhornMoeScore": 93.3964
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.6887,
+          "compositeSinkhornMoeScore": 93.3577
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.7363,
+          "compositeSinkhornMoeScore": 93.3587
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.5428,
+          "compositeSinkhornMoeScore": 93.5916
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 79.5283,
+          "compositeSinkhornMoeScore": 93.2633
+        }
+      ]
+    },
+    "causal-sinkhorn-doubly-stochastic-smear-soft-moe": {
+      "profileId": "causal-sinkhorn-doubly-stochastic-smear-soft-moe",
+      "label": "Causal Sinkhorn-Knopp Doubly-Stochastic Transport + SMEAR Parameter Soft-Merging",
+      "zeroTokenDropGuaranteePct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "doublyStochasticMarginalParityPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "differentiableRouterGradientFlowPct": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "compositeSinkhornMoeScore": {
+        "count": 5,
+        "mean": 100,
+        "stdDev": 0,
+        "min": 100,
+        "max": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        }
+      },
+      "seedRuns": [
+        {
+          "seed": 19013,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 29017,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 39023,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 49031,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        },
+        {
+          "seed": 59053,
+          "zeroTokenDropGuaranteePct": 100,
+          "doublyStochasticMarginalParityPct": 100,
+          "differentiableRouterGradientFlowPct": 100,
+          "compositeSinkhornMoeScore": 100
+        }
+      ]
+    }
+  },
+  "summary": {
+    "winningProfile": "causal-sinkhorn-doubly-stochastic-smear-soft-moe",
+    "allSeedsVerified": true,
+    "compositeScoreMean": 100,
+    "zeroTokenDropGuaranteePctMean": 100,
+    "doublyStochasticMarginalParityPctMean": 100,
+    "differentiableRouterGradientFlowPctMean": 100,
+    "gainVsBaseline": 49.1115
+  }
+}
