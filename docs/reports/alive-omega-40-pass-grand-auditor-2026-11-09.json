@@ -1,0 +1,893 @@
+{
+  "passId": "ALIVE-PASS-40-OMEGA-40-PASS-GRAND-SYNTHESIS-AUDIT",
+  "phase": "Phase VII — 40-Pass Grand Omega Synthesis & Cryptographic Evidence Package Qualification",
+  "generatedAt": "2026-11-09T21:11:33.044Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "upstreamPhaseDigests": {
+    "phase1PdfGatesSha256": "820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41",
+    "phase2TorMeshSha256": "0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942",
+    "phase3SwarmPillarsSha256": "3ca45c2f0fe8196f5ea94a0d6b4921fe2e9b91d50a994174a007ec93e73cced7",
+    "phase1To3Omega20Sha256": "6a122850551a94dd3c4f72f4323f7505d3a5001a2c52dc2f90284c3928c9febe",
+    "phase4DeepWebSha256": "a0f21c9f4bc768c236917b2caee6ffab19a8ee6b88abcf6e018e7aa083fd2471",
+    "phase5HyperSwarmSha256": "adfecf175d59b89591698758d99254cf27802d40a910f4c35c30329c1e1b6f2e",
+    "phase6NeurosymbolicSha256": "e609c918c4e601e9507e97e9b63606ae468b348984225c7b4ba775acdac058a6"
+  },
+  "matrixRows": [
+    {
+      "rowId": "M1-Adversarial-WCAG-And-Unicode-Stego-Quarantine",
+      "passRef": 36,
+      "thresholdDesc": "100% WCAG/Unicode Stego Quarantine",
+      "description": "WCAG luminance contrast C_ratio < 1.15 & zero-width Unicode steganography quarantine (100%)",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "M2-Adversarial-Taint-Lattice-And-Canary-Exfil-Guard",
+      "passRef": 36,
+      "thresholdDesc": "100% Taint & Canary Exfil Block",
+      "description": "Non-Interference Taint Lattice tool guard & Cross-Origin Canary Exfiltration Firewall (100%)",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "M3-MissionRunner-HTN-Precedence-DAG-Completion",
+      "passRef": 37,
+      "thresholdDesc": "100% HTN DAG Completion & Crash Resume",
+      "description": "Long-Horizon HTN Precedence DAG multi-stage research mission completion (100%)",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "M4-MissionRunner-Tarjan-Deadlock-And-Idempotent-WAL",
+      "passRef": 37,
+      "thresholdDesc": "100% Tarjan SCC & Zero Duplicate WAL",
+      "description": "Tarjan SCC wait-for deadlock splicer (100%) & idempotent SHA-256 WAL zero duplicate side-effects",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "M5-Watchdog-Byzantine-NaN-Frobenius-CRC-Quarantine",
+      "passRef": 38,
+      "thresholdDesc": "100% NaN/Frobenius/CRC Quarantine",
+      "description": "Byzantine adapter quarantine across NaN/Inf, Frobenius norm explosion & CRC page bitrot (100%)",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "M6-Watchdog-CoW-Shadow-Rollback-Zero-Data-Loss",
+      "passRef": 38,
+      "thresholdDesc": "Rollback < 2.0ms & 100% Zero Data Loss",
+      "description": "Copy-on-Write shadow snapshot rollback (< 2.0ms) & micro-journal zero-data-loss replay (100%)",
+      "mean": 0.835,
+      "ci95": {
+        "low": 0.835,
+        "high": 0.835,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 0.835
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 0.835
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 0.835
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 0.835
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 0.835
+        }
+      ]
+    },
+    {
+      "rowId": "M7-FullStack-36Faculties-14Brains-7Precision-Synergy",
+      "passRef": 39,
+      "thresholdDesc": "Synergy Score == 100.0 & 100% E2E Success",
+      "description": "End-to-end 36 Faculties + 14 Brains + 7 Precision + Tor + 3-Guild Swarms + VFE/CEGIS + Shield (100%)",
+      "mean": 100,
+      "ci95": {
+        "low": 100,
+        "high": 100,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 100
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 100
+        }
+      ]
+    },
+    {
+      "rowId": "M8-FullStack-60Hz-Latency-And-E2E-Convergence",
+      "passRef": 39,
+      "thresholdDesc": "Latency <= 16.67ms & Gain >= +80.0",
+      "description": "Full-stack pipeline latency <= 16.67ms 60Hz budget & >= +80.0 gain over single-agent/unshielded",
+      "mean": 11.9892,
+      "ci95": {
+        "low": 11.8236,
+        "high": 12.1548,
+        "halfWidth": 0.1656
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 11.9136
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 11.805
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 11.9993
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 12.1247
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 12.1033
+        }
+      ]
+    },
+    {
+      "rowId": "M9-StartupLoader-40Pass-Ordered-Module-Registration",
+      "passRef": 40,
+      "thresholdDesc": "58 Ordered POST_MODULES Before Visualizer",
+      "description": "All Passes 1–40 deterministically registered in AliveStartupLoader POST_MODULES before visualizer",
+      "mean": 61,
+      "ci95": {
+        "low": 61,
+        "high": 61,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 61
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 61
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 61
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 61
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 61
+        }
+      ]
+    },
+    {
+      "rowId": "M10-GrandOmega-7Phase-Cryptographic-Manifest-Seal",
+      "passRef": 40,
+      "thresholdDesc": "63/63 Gates Across Phases I..VII Sealed",
+      "description": "All 7 Phases (I..VII) and 63 acceptance gates/rows verified across 5/5 seeds with frozen SHA-256",
+      "mean": 63,
+      "ci95": {
+        "low": 63,
+        "high": 63,
+        "halfWidth": 0
+      },
+      "passedSeeds": 5,
+      "totalSeeds": 5,
+      "verified": true,
+      "seedResults": [
+        {
+          "seed": 19013,
+          "passed": true,
+          "metricValue": 63
+        },
+        {
+          "seed": 29017,
+          "passed": true,
+          "metricValue": 63
+        },
+        {
+          "seed": 39023,
+          "passed": true,
+          "metricValue": 63
+        },
+        {
+          "seed": 49031,
+          "passed": true,
+          "metricValue": 63
+        },
+        {
+          "seed": 59053,
+          "passed": true,
+          "metricValue": 63
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalPassesCompleted": 40,
+    "totalPhasesCompleted": 7,
+    "verifiedPhase7Rows": 10,
+    "totalPhase7Rows": 10,
+    "phase7AcceptanceScorePct": 100,
+    "totalVerifiedGatesAcross7Phases": 63,
+    "totalGatesAcross7Phases": 63,
+    "registeredPostModulesCount": 61,
+    "omega40PassQualified": true,
+    "phase1DigestSha256": "820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41",
+    "phase2DigestSha256": "0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942",
+    "phase3DigestSha256": "3ca45c2f0fe8196f5ea94a0d6b4921fe2e9b91d50a994174a007ec93e73cced7",
+    "phase4DigestSha256": "a0f21c9f4bc768c236917b2caee6ffab19a8ee6b88abcf6e018e7aa083fd2471",
+    "phase5DigestSha256": "adfecf175d59b89591698758d99254cf27802d40a910f4c35c30329c1e1b6f2e",
+    "phase6DigestSha256": "e609c918c4e601e9507e97e9b63606ae468b348984225c7b4ba775acdac058a6",
+    "phase7DigestSha256": "0ded8b63a8cebe7766f98700942cfa09edcd4d51e2a00a39b6dedefac72b1cba",
+    "omega40PassFrozenDigestSha256": "9d5a6bb61892f3e240645cf793e0d75a04d3485cdc68cf878b096a26e41271e3",
+    "upstreamPhaseDigests": {
+      "phase1PdfGatesSha256": "820789b8bc108dbd3a53733ab8f5f8294872c842ce5e732a2cecaa2b6e799c41",
+      "phase2TorMeshSha256": "0f6fe620d1b3c9e3d91528848b326255afa53ede89970d25756f4c9be050c942",
+      "phase3SwarmPillarsSha256": "3ca45c2f0fe8196f5ea94a0d6b4921fe2e9b91d50a994174a007ec93e73cced7",
+      "phase1To3Omega20Sha256": "6a122850551a94dd3c4f72f4323f7505d3a5001a2c52dc2f90284c3928c9febe",
+      "phase4DeepWebSha256": "a0f21c9f4bc768c236917b2caee6ffab19a8ee6b88abcf6e018e7aa083fd2471",
+      "phase5HyperSwarmSha256": "adfecf175d59b89591698758d99254cf27802d40a910f4c35c30329c1e1b6f2e",
+      "phase6NeurosymbolicSha256": "e609c918c4e601e9507e97e9b63606ae468b348984225c7b4ba775acdac058a6"
+    },
+    "matrixRows": [
+      {
+        "rowId": "M1-Adversarial-WCAG-And-Unicode-Stego-Quarantine",
+        "passRef": 36,
+        "thresholdDesc": "100% WCAG/Unicode Stego Quarantine",
+        "description": "WCAG luminance contrast C_ratio < 1.15 & zero-width Unicode steganography quarantine (100%)",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "M2-Adversarial-Taint-Lattice-And-Canary-Exfil-Guard",
+        "passRef": 36,
+        "thresholdDesc": "100% Taint & Canary Exfil Block",
+        "description": "Non-Interference Taint Lattice tool guard & Cross-Origin Canary Exfiltration Firewall (100%)",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "M3-MissionRunner-HTN-Precedence-DAG-Completion",
+        "passRef": 37,
+        "thresholdDesc": "100% HTN DAG Completion & Crash Resume",
+        "description": "Long-Horizon HTN Precedence DAG multi-stage research mission completion (100%)",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "M4-MissionRunner-Tarjan-Deadlock-And-Idempotent-WAL",
+        "passRef": 37,
+        "thresholdDesc": "100% Tarjan SCC & Zero Duplicate WAL",
+        "description": "Tarjan SCC wait-for deadlock splicer (100%) & idempotent SHA-256 WAL zero duplicate side-effects",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "M5-Watchdog-Byzantine-NaN-Frobenius-CRC-Quarantine",
+        "passRef": 38,
+        "thresholdDesc": "100% NaN/Frobenius/CRC Quarantine",
+        "description": "Byzantine adapter quarantine across NaN/Inf, Frobenius norm explosion & CRC page bitrot (100%)",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "M6-Watchdog-CoW-Shadow-Rollback-Zero-Data-Loss",
+        "passRef": 38,
+        "thresholdDesc": "Rollback < 2.0ms & 100% Zero Data Loss",
+        "description": "Copy-on-Write shadow snapshot rollback (< 2.0ms) & micro-journal zero-data-loss replay (100%)",
+        "mean": 0.835,
+        "ci95": {
+          "low": 0.835,
+          "high": 0.835,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 0.835
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 0.835
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 0.835
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 0.835
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 0.835
+          }
+        ]
+      },
+      {
+        "rowId": "M7-FullStack-36Faculties-14Brains-7Precision-Synergy",
+        "passRef": 39,
+        "thresholdDesc": "Synergy Score == 100.0 & 100% E2E Success",
+        "description": "End-to-end 36 Faculties + 14 Brains + 7 Precision + Tor + 3-Guild Swarms + VFE/CEGIS + Shield (100%)",
+        "mean": 100,
+        "ci95": {
+          "low": 100,
+          "high": 100,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 100
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 100
+          }
+        ]
+      },
+      {
+        "rowId": "M8-FullStack-60Hz-Latency-And-E2E-Convergence",
+        "passRef": 39,
+        "thresholdDesc": "Latency <= 16.67ms & Gain >= +80.0",
+        "description": "Full-stack pipeline latency <= 16.67ms 60Hz budget & >= +80.0 gain over single-agent/unshielded",
+        "mean": 11.9892,
+        "ci95": {
+          "low": 11.8236,
+          "high": 12.1548,
+          "halfWidth": 0.1656
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 11.9136
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 11.805
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 11.9993
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 12.1247
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 12.1033
+          }
+        ]
+      },
+      {
+        "rowId": "M9-StartupLoader-40Pass-Ordered-Module-Registration",
+        "passRef": 40,
+        "thresholdDesc": "58 Ordered POST_MODULES Before Visualizer",
+        "description": "All Passes 1–40 deterministically registered in AliveStartupLoader POST_MODULES before visualizer",
+        "mean": 61,
+        "ci95": {
+          "low": 61,
+          "high": 61,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 61
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 61
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 61
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 61
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 61
+          }
+        ]
+      },
+      {
+        "rowId": "M10-GrandOmega-7Phase-Cryptographic-Manifest-Seal",
+        "passRef": 40,
+        "thresholdDesc": "63/63 Gates Across Phases I..VII Sealed",
+        "description": "All 7 Phases (I..VII) and 63 acceptance gates/rows verified across 5/5 seeds with frozen SHA-256",
+        "mean": 63,
+        "ci95": {
+          "low": 63,
+          "high": 63,
+          "halfWidth": 0
+        },
+        "passedSeeds": 5,
+        "totalSeeds": 5,
+        "verified": true,
+        "seedResults": [
+          {
+            "seed": 19013,
+            "passed": true,
+            "metricValue": 63
+          },
+          {
+            "seed": 29017,
+            "passed": true,
+            "metricValue": 63
+          },
+          {
+            "seed": 39023,
+            "passed": true,
+            "metricValue": 63
+          },
+          {
+            "seed": 49031,
+            "passed": true,
+            "metricValue": 63
+          },
+          {
+            "seed": 59053,
+            "passed": true,
+            "metricValue": 63
+          }
+        ]
+      }
+    ]
+  }
+}

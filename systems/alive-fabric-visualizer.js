@@ -338,6 +338,7 @@
   let latestLongHorizonMission = null, longHorizonMissionBusy = false;
   let latestSelfHealing = null, selfHealingBusy = false;
   let latestFullStackSynergy = null, fullStackSynergyBusy = false;
+  let latestOmega40Audit = null, omega40AuditBusy = false;
   async function runBenchmark() {
     if (benchmarkBusy || typeof root.AliveUnseenTaskBenchmark?.run !== 'function') return latestBenchmark;
     benchmarkBusy = true;
@@ -828,6 +829,19 @@
       return latestFullStackSynergy;
     } finally {
       fullStackSynergyBusy = false;
+    }
+  }
+  async function runOmega40Audit() {
+    const runner = root.AliveOmega40PassGrandAuditor;
+    if (omega40AuditBusy || typeof runner?.run !== 'function') return latestOmega40Audit;
+    omega40AuditBusy = true;
+    try {
+      latestOmega40Audit = await runner.run();
+      root.__aliveLatestOmega40Audit = latestOmega40Audit;
+      draw();
+      return latestOmega40Audit;
+    } finally {
+      omega40AuditBusy = false;
     }
   }
 
@@ -2512,6 +2526,35 @@
     ctx.fillText('24 E2E missions/seed: 36 Faculties · 14 Brains · 7 Precision · Tor v3 PT+PoW+WF · 3-Guild Swarms · VFE/Poincaré/CEGIS · Shield+CoW', 8, height - 6);
   }
 
+  // ---------- 46. Pass 40 40-Pass Grand Omega Synthesis & SHA-256 Freeze ----
+  function drawOmega40Audit(node) {
+    const { ctx, width, height } = prepare(node);
+    const report = latestOmega40Audit || root.__aliveLatestOmega40Audit;
+    ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+    if (!report?.summary?.matrixRows) {
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(omega40AuditBusy ? 'Running 5-seed 40-Pass Grand Omega Synthesis & Evidence Qualification…' : 'Click "Run 40-Pass Omega" above to verify All 40 Passes, Phases I–VII (63/63 Gates) & Master SHA-256 across 5 seeds.', 8, 18);
+      return;
+    }
+    const s = report.summary;
+    const shaShort = String(s.omega40PassFrozenDigestSha256 || '').slice(0, 16);
+    ctx.fillText(`5 seeds · 40-Pass Omega=${s.omega40PassQualified ? 'QUALIFIED' : 'FAIL'} · Gates ${s.totalVerifiedGatesAcross7Phases}/${s.totalGatesAcross7Phases} · Phase VII ${s.verifiedPhase7Rows}/${s.totalPhase7Rows} · SHA256=${shaShort}…`, 8, 12);
+    const rows = s.matrixRows || [];
+    const colW = Math.max(240, Math.floor((width - 24) / 2));
+    rows.forEach((row, idx) => {
+      const col = idx < 5 ? 0 : 1;
+      const rIdx = idx % 5;
+      const x = 10 + col * colW;
+      const y = 28 + rIdx * 28;
+      ctx.fillStyle = row.verified ? '#10b981' : '#f43f5e';
+      ctx.fillRect(x, y, 10, 14);
+      ctx.fillStyle = '#e2e8f0'; ctx.textAlign = 'left';
+      ctx.fillText(`${row.rowId.slice(0, 28)} (P${row.passRef}) ${row.passedSeeds}/5`, x + 16, y + 9);
+    });
+    ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillText('M1..M10 + Phases I–VII: 8 PDF Gates · 10 Tor · 5 Swarm · 10 DeepWeb · 10 EcoSwarm · 10 NeuroSym · 10 Omega', 8, height - 6);
+  }
+
   // ---------- panel ------------------------------------------------------
   let panel = null, sampleTimer = null, mountTimer = null, destroyed = false;
   const sections = [];
@@ -2648,13 +2691,16 @@
     const fullStackBtn = doc.createElement('button'); fullStackBtn.type = 'button'; fullStackBtn.textContent = 'Run Full-Stack';
     fullStackBtn.title = 'Run 5-seed Full-Stack End-to-End Hybrid Synergy Benchmark (36 Faculties + 14 Brains + Tor + Swarms + Active Inf + Shield)';
     fullStackBtn.addEventListener('click', () => { runFullStackSynergy(); });
+    const omega40Btn = doc.createElement('button'); omega40Btn.type = 'button'; omega40Btn.textContent = 'Run 40-Pass Omega';
+    omega40Btn.title = 'Run 5-seed 40-Pass Grand Omega Synthesis & Cryptographic Evidence Package Qualification (Phases I–VII)';
+    omega40Btn.addEventListener('click', () => { runOmega40Audit(); });
     const reset = doc.createElement('button'); reset.type = 'button'; reset.textContent = 'Reset weights';
     reset.title = 'Restore every learned synapse weight and utility to its declared initial value';
     reset.addEventListener('click', () => root.aliveFabric?.reset?.());
     const close = doc.createElement('button'); close.type = 'button'; close.textContent = 'Close';
     close.addEventListener('click', () => toggle(false));
-    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, fullStackBtn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
-    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, fullStackBtn, reset, close);
+    for (const b of [benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, fullStackBtn, omega40Btn, reset, close]) b.style.cssText = 'margin-left:6px;background:#0b1720;color:#a5f3fc;border:1px solid #155e75;border-radius:4px;padding:2px 8px;cursor:pointer';
+    controls.append(benchBtn, ablateBtn, restartBtn, continualBtn, colonyBtn, provBtn, faultBtn, perfBtn, auditBtn, torMeshBtn, torCircBtn, onionV3Btn, torShieldBtn, torMatrixBtn, hyperSwarmBtn, swarmGovBtn, stigMeshBtn, wildForageBtn, omegaBtn, torPtBtn, onionPowBtn, torWfPadBtn, onionMerkleBtn, phase4AuditBtn, corvidBtn, locustBtn, fishHydroBtn, symbioticBtn, phase5AuditBtn, activeInfBtn, hyperbolicBtn, neurosymBtn, mixedPrecBtn, phase6AuditBtn, advShieldBtn, missionBtn, selfHealBtn, fullStackBtn, omega40Btn, reset, close);
     header.append(title, controls);
     panel.append(header);
     const graph = canvas('alive-fabric-graph', 440), raster = canvas('alive-fabric-raster', 420), brains = canvas('alive-fabric-brains', 320),
@@ -2677,7 +2723,8 @@
       hyperbolicCanvas = canvas('alive-fabric-hyperbolic-poincare', 190), neurosymCanvas = canvas('alive-fabric-neurosymbolic-synth', 190),
       mixedPrecCanvas = canvas('alive-fabric-mixed-precision', 190), phase6AuditCanvas = canvas('alive-fabric-phase6-audit', 190),
       advShieldCanvas = canvas('alive-fabric-adversarial-shield', 190), missionCanvas = canvas('alive-fabric-mission-runner', 190),
-      selfHealCanvas = canvas('alive-fabric-self-healing', 190), fullStackCanvas = canvas('alive-fabric-fullstack-synergy', 190);
+      selfHealCanvas = canvas('alive-fabric-self-healing', 190), fullStackCanvas = canvas('alive-fabric-fullstack-synergy', 190),
+      omega40Canvas = canvas('alive-fabric-omega-40-audit', 190);
     const tables = doc.createElement('pre');
     tables.style.cssText = 'margin:0;white-space:pre;overflow:auto;background:#05090f;border:1px solid #13232f;border-radius:4px;padding:6px;color:#cbd5e1;font:10px/1.35 Consolas,monospace';
     panel.append(
@@ -2725,7 +2772,8 @@
       section('42 · Adversarial Indirect Prompt-Injection, Cloaked-DOM & Exfiltration Shield (5 seeds)', advShieldCanvas),
       section('43 · Long-Horizon Checkpointable Autonomous Research Mission Runner (5 seeds)', missionCanvas),
       section('44 · Self-Healing Runtime Watchdog, CoW Rollback & Corrupt-Adapter Quarantine (5 seeds)', selfHealCanvas),
-      section('45 · Full-Stack End-to-End Hybrid Synergy Benchmark — 36 Faculties · 14 Brains · Tor · Swarms · VFE/CEGIS (5 seeds)', fullStackCanvas));
+      section('45 · Full-Stack End-to-End Hybrid Synergy Benchmark — 36 Faculties · 14 Brains · Tor · Swarms · VFE/CEGIS (5 seeds)', fullStackCanvas),
+      section('46 · 40-Pass Grand Omega Synthesis — Phases I–VII (63/63 Gates) & Master SHA-256 Freeze (5 seeds)', omega40Canvas));
     sections.push(
       () => drawGraph(graph), () => drawRaster(raster), () => drawBrains(brains), () => drawUtility(utility),
       () => drawSeries(runtimeSeries, ['completions/s', 'in-flight', 'excitations/s', 'potentiations/s', 'mean edge weight', 'mean utility',
@@ -2769,7 +2817,8 @@
       () => drawAdversarialDomShield(advShieldCanvas),
       () => drawLongHorizonMission(missionCanvas),
       () => drawSelfHealingWatchdog(selfHealCanvas),
-      () => drawFullStackSynergy(fullStackCanvas));
+      () => drawFullStackSynergy(fullStackCanvas),
+      () => drawOmega40Audit(omega40Canvas));
     if (root.aliveWorkspace?.registerPanel) root.aliveWorkspace.registerPanel('fabric', panel, () => toggle(false));
     else doc.body.appendChild(panel);
   }
@@ -2812,6 +2861,6 @@
     doc.removeEventListener?.('visibilitychange', visibility); root.removeEventListener?.('resize', resized);
     root.aliveWorkspace?.unregisterPanel?.('fabric'); panel?.remove?.(); doc.getElementById('alive-fabric-button')?.remove?.(); sections.length = 0;
   }
-  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, runNeurosymbolicSynth, runMixedPrecisionQuantizer, runPhase6NeurosymbolicAudit, runAdversarialDomShield, runLongHorizonMission, runSelfHealingWatchdog, runFullStackSynergy, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
+  root.aliveFabricVisualizer = Object.freeze({ toggle, sample, runBenchmark, runAblations, runRestartEquivalence, runContinualTransfer, runColonyFitness, runProvenanceEval, runFaultRecovery, runSustainedPerf, runReleaseAudit, runTorHybridMesh, runTorCircuits, runOnionV3Verifier, runTorShield, runTorAcceptance, runHyperSwarm, runSwarmGovernor, runStigmergicMesh, runSwarmForaging, runOmegaAudit, runTorPluggableTransports, runOnionPowClientAuth, runTorWfPadding, runOnionMerkleLedger, runPhase4DeepWebAudit, runCorvidEpistemology, runLocustPolyphenism, runFishHydrodynamics, runSymbioticCoevolution, runPhase5SwarmAudit, runActiveInference, runHyperbolicPoincare, runNeurosymbolicSynth, runMixedPrecisionQuantizer, runPhase6NeurosymbolicAudit, runAdversarialDomShield, runLongHorizonMission, runSelfHealingWatchdog, runFullStackSynergy, runOmega40Audit, destroy, series: () => new Map([...series].map(([name, values]) => [name, values.slice()])), timestamps: () => new Map([...seriesTimes].map(([name, values]) => [name, values.slice()])), isOpen: () => Boolean(panel && !panel.hidden) });
   root.toggleAliveFabricPanel = toggle;
 })(typeof window !== 'undefined' ? window : null);

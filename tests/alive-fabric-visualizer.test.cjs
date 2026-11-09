@@ -1293,6 +1293,33 @@ test('runFullStackSynergy renders 5-seed Full-Stack End-to-End Hybrid Synergy Be
   window.aliveFabricVisualizer.destroy();
 });
 
+test('runOmega40Audit renders 5-seed 40-Pass Grand Omega Synthesis & SHA-256 Freeze in section 46', async () => {
+  const { window, dom } = load();
+  window.AliveOmega40PassGrandAuditor = {
+    run: async () => ({
+      summary: {
+        omega40PassQualified: true,
+        totalVerifiedGatesAcross7Phases: 63,
+        totalGatesAcross7Phases: 63,
+        verifiedPhase7Rows: 10,
+        totalPhase7Rows: 10,
+        omega40PassFrozenDigestSha256: 'f'.repeat(64),
+        matrixRows: [
+          { rowId: 'M1-wcag-unicode-stego-dom-quarantine', passRef: 36, verified: true, passedSeeds: 5 },
+          { rowId: 'M2-taint-lattice-canary-exfil-block', passRef: 36, verified: true, passedSeeds: 5 }
+        ]
+      }
+    })
+  };
+  window.toggleAliveFabricPanel(true);
+  const report = await window.aliveFabricVisualizer.runOmega40Audit();
+  assert.equal(report.summary.omega40PassQualified, true);
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('5 seeds · 40-Pass Omega=QUALIFIED · Gates 63/63')), '40-Pass Omega summary drawn');
+  assert.ok(dom.calls.some(c => c[0] === 'fillText' && String(c[1]).includes('M1-wcag-unicode-stego-dom-qu')), '40-Pass Omega rows drawn');
+  window.aliveFabricVisualizer.destroy();
+});
+
+
 
 
 
