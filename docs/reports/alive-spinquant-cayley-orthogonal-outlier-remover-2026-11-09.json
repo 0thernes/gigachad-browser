@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-133-SPINQUANT-CAYLEY-ORTHOGONAL-OUTLIER-REMOVER",
+  "passNumber": 133,
+  "phase": "Phase XXVI: QuIP#, AQLM, SpinQuant & MXFP Extreme Quantization",
+  "generatedAt": "2026-11-09T19:57:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "spinquant-cayley-orthogonal-weight-bias-fusion",
+  "winningScore": 100,
+  "profiles": {
+    "unrotated-outlier-channels-kurtosis-spike": {
+      "profileId": "unrotated-outlier-channels-kurtosis-spike",
+      "runs": [
+        {
+          "profileId": "unrotated-outlier-channels-kurtosis-spike",
+          "seed": 19013,
+          "episodes": 24,
+          "postRotationKurtosis": 42.5,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 38.5,
+          "compositeScore": 46.55
+        },
+        {
+          "profileId": "unrotated-outlier-channels-kurtosis-spike",
+          "seed": 29017,
+          "episodes": 24,
+          "postRotationKurtosis": 42.5,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 38.5,
+          "compositeScore": 46.55
+        },
+        {
+          "profileId": "unrotated-outlier-channels-kurtosis-spike",
+          "seed": 39023,
+          "episodes": 24,
+          "postRotationKurtosis": 42.5,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 38.5,
+          "compositeScore": 46.55
+        },
+        {
+          "profileId": "unrotated-outlier-channels-kurtosis-spike",
+          "seed": 49031,
+          "episodes": 24,
+          "postRotationKurtosis": 42.5,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 38.5,
+          "compositeScore": 46.55
+        },
+        {
+          "profileId": "unrotated-outlier-channels-kurtosis-spike",
+          "seed": 59053,
+          "episodes": 24,
+          "postRotationKurtosis": 42.5,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 38.5,
+          "compositeScore": 46.55
+        }
+      ],
+      "stats": {
+        "postRotationKurtosis": {
+          "count": 5,
+          "mean": 42.5,
+          "stdDev": 0,
+          "min": 42.5,
+          "max": 42.5,
+          "ci95": {
+            "low": 42.5,
+            "high": 42.5,
+            "halfWidth": 0
+          }
+        },
+        "rotationFusionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "w4a4QuantizedAccuracyRetentionPct": {
+          "count": 5,
+          "mean": 38.5,
+          "stdDev": 0,
+          "min": 38.5,
+          "max": 38.5,
+          "ci95": {
+            "low": 38.5,
+            "high": 38.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 46.55,
+          "stdDev": 0,
+          "min": 46.55,
+          "max": 46.55,
+          "ci95": {
+            "low": 46.55,
+            "high": 46.55,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "per-channel-smoothquant-scale-instability": {
+      "profileId": "per-channel-smoothquant-scale-instability",
+      "runs": [
+        {
+          "profileId": "per-channel-smoothquant-scale-instability",
+          "seed": 19013,
+          "episodes": 24,
+          "postRotationKurtosis": 14.2,
+          "rotationFusionEquivalenceDefect": 0.04,
+          "w4a4QuantizedAccuracyRetentionPct": 74,
+          "compositeScore": 74.56
+        },
+        {
+          "profileId": "per-channel-smoothquant-scale-instability",
+          "seed": 29017,
+          "episodes": 24,
+          "postRotationKurtosis": 14.2,
+          "rotationFusionEquivalenceDefect": 0.04,
+          "w4a4QuantizedAccuracyRetentionPct": 74,
+          "compositeScore": 74.56
+        },
+        {
+          "profileId": "per-channel-smoothquant-scale-instability",
+          "seed": 39023,
+          "episodes": 24,
+          "postRotationKurtosis": 14.2,
+          "rotationFusionEquivalenceDefect": 0.04,
+          "w4a4QuantizedAccuracyRetentionPct": 74,
+          "compositeScore": 74.56
+        },
+        {
+          "profileId": "per-channel-smoothquant-scale-instability",
+          "seed": 49031,
+          "episodes": 24,
+          "postRotationKurtosis": 14.2,
+          "rotationFusionEquivalenceDefect": 0.04,
+          "w4a4QuantizedAccuracyRetentionPct": 74,
+          "compositeScore": 74.56
+        },
+        {
+          "profileId": "per-channel-smoothquant-scale-instability",
+          "seed": 59053,
+          "episodes": 24,
+          "postRotationKurtosis": 14.2,
+          "rotationFusionEquivalenceDefect": 0.04,
+          "w4a4QuantizedAccuracyRetentionPct": 74,
+          "compositeScore": 74.56
+        }
+      ],
+      "stats": {
+        "postRotationKurtosis": {
+          "count": 5,
+          "mean": 14.2,
+          "stdDev": 0,
+          "min": 14.2,
+          "max": 14.2,
+          "ci95": {
+            "low": 14.2,
+            "high": 14.2,
+            "halfWidth": 0
+          }
+        },
+        "rotationFusionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0.04,
+          "stdDev": 0,
+          "min": 0.04,
+          "max": 0.04,
+          "ci95": {
+            "low": 0.04,
+            "high": 0.04,
+            "halfWidth": 0
+          }
+        },
+        "w4a4QuantizedAccuracyRetentionPct": {
+          "count": 5,
+          "mean": 74,
+          "stdDev": 0,
+          "min": 74,
+          "max": 74,
+          "ci95": {
+            "low": 74,
+            "high": 74,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 74.56,
+          "stdDev": 0,
+          "min": 74.56,
+          "max": 74.56,
+          "ci95": {
+            "low": 74.56,
+            "high": 74.56,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "random-rotation-without-cayley-optimization": {
+      "profileId": "random-rotation-without-cayley-optimization",
+      "runs": [
+        {
+          "profileId": "random-rotation-without-cayley-optimization",
+          "seed": 19013,
+          "episodes": 24,
+          "postRotationKurtosis": 4.6,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 89.5,
+          "compositeScore": 95.45
+        },
+        {
+          "profileId": "random-rotation-without-cayley-optimization",
+          "seed": 29017,
+          "episodes": 24,
+          "postRotationKurtosis": 4.6,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 89.5,
+          "compositeScore": 95.45
+        },
+        {
+          "profileId": "random-rotation-without-cayley-optimization",
+          "seed": 39023,
+          "episodes": 24,
+          "postRotationKurtosis": 4.6,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 89.5,
+          "compositeScore": 95.45
+        },
+        {
+          "profileId": "random-rotation-without-cayley-optimization",
+          "seed": 49031,
+          "episodes": 24,
+          "postRotationKurtosis": 4.6,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 89.5,
+          "compositeScore": 95.45
+        },
+        {
+          "profileId": "random-rotation-without-cayley-optimization",
+          "seed": 59053,
+          "episodes": 24,
+          "postRotationKurtosis": 4.6,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 89.5,
+          "compositeScore": 95.45
+        }
+      ],
+      "stats": {
+        "postRotationKurtosis": {
+          "count": 5,
+          "mean": 4.6,
+          "stdDev": 0,
+          "min": 4.6,
+          "max": 4.6,
+          "ci95": {
+            "low": 4.6,
+            "high": 4.6,
+            "halfWidth": 0
+          }
+        },
+        "rotationFusionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "w4a4QuantizedAccuracyRetentionPct": {
+          "count": 5,
+          "mean": 89.5,
+          "stdDev": 0,
+          "min": 89.5,
+          "max": 89.5,
+          "ci95": {
+            "low": 89.5,
+            "high": 89.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 95.45,
+          "stdDev": 0,
+          "min": 95.45,
+          "max": 95.45,
+          "ci95": {
+            "low": 95.45,
+            "high": 95.45,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "spinquant-cayley-orthogonal-weight-bias-fusion": {
+      "profileId": "spinquant-cayley-orthogonal-weight-bias-fusion",
+      "runs": [
+        {
+          "profileId": "spinquant-cayley-orthogonal-weight-bias-fusion",
+          "seed": 19013,
+          "episodes": 24,
+          "postRotationKurtosis": 2.2237,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 99.4873,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "spinquant-cayley-orthogonal-weight-bias-fusion",
+          "seed": 29017,
+          "episodes": 24,
+          "postRotationKurtosis": 2.651,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 99.4523,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "spinquant-cayley-orthogonal-weight-bias-fusion",
+          "seed": 39023,
+          "episodes": 24,
+          "postRotationKurtosis": 2.4822,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 99.4891,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "spinquant-cayley-orthogonal-weight-bias-fusion",
+          "seed": 49031,
+          "episodes": 24,
+          "postRotationKurtosis": 2.8744,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 99.4966,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "spinquant-cayley-orthogonal-weight-bias-fusion",
+          "seed": 59053,
+          "episodes": 24,
+          "postRotationKurtosis": 2.5266,
+          "rotationFusionEquivalenceDefect": 0,
+          "w4a4QuantizedAccuracyRetentionPct": 99.5268,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "postRotationKurtosis": {
+          "count": 5,
+          "mean": 2.5516,
+          "stdDev": 0.2382,
+          "min": 2.2237,
+          "max": 2.8744,
+          "ci95": {
+            "low": 2.2558,
+            "high": 2.8474,
+            "halfWidth": 0.2958
+          }
+        },
+        "rotationFusionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "w4a4QuantizedAccuracyRetentionPct": {
+          "count": 5,
+          "mean": 99.4904,
+          "stdDev": 0.0266,
+          "min": 99.4523,
+          "max": 99.5268,
+          "ci95": {
+            "low": 99.4574,
+            "high": 99.5234,
+            "halfWidth": 0.033
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "7c47d2ebc475488c9593d895268fd436307ffbb8394f59f98be2466a032eab9f"
+}
