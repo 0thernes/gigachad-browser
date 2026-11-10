@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-173-EAGLE-MEDUSA-TREE-SPECULATIVE-DRAFT-WEIGHTS",
+  "passNumber": 173,
+  "phase": "Phase XXXIV: Distributed Tensor Systems (ZeRO-3/FSDP, Megatron Ring Attention, EAGLE-2 & H2O KV)",
+  "generatedAt": "2026-11-09T20:37:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "eagle2-context-aware-tree-speculative-lossless-verify",
+  "winningScore": 100,
+  "profiles": {
+    "autoregressive-single-token-memory-bandwidth-bound": {
+      "profileId": "autoregressive-single-token-memory-bandwidth-bound",
+      "runs": [
+        {
+          "profileId": "autoregressive-single-token-memory-bandwidth-bound",
+          "seed": 19013,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 1,
+          "wallClockDecodingSpeedupFactor": 1,
+          "compositeScore": 51.3492
+        },
+        {
+          "profileId": "autoregressive-single-token-memory-bandwidth-bound",
+          "seed": 29017,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 1,
+          "wallClockDecodingSpeedupFactor": 1,
+          "compositeScore": 51.3492
+        },
+        {
+          "profileId": "autoregressive-single-token-memory-bandwidth-bound",
+          "seed": 39023,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 1,
+          "wallClockDecodingSpeedupFactor": 1,
+          "compositeScore": 51.3492
+        },
+        {
+          "profileId": "autoregressive-single-token-memory-bandwidth-bound",
+          "seed": 49031,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 1,
+          "wallClockDecodingSpeedupFactor": 1,
+          "compositeScore": 51.3492
+        },
+        {
+          "profileId": "autoregressive-single-token-memory-bandwidth-bound",
+          "seed": 59053,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 1,
+          "wallClockDecodingSpeedupFactor": 1,
+          "compositeScore": 51.3492
+        }
+      ],
+      "stats": {
+        "targetDistributionTotalVariationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "meanAcceptedTokensPerStepTau": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "wallClockDecodingSpeedupFactor": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 51.3492,
+          "stdDev": 0,
+          "min": 51.3492,
+          "max": 51.3492,
+          "ci95": {
+            "low": 51.3492,
+            "high": 51.3492,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unverified-draft-acceptance-distribution-drift": {
+      "profileId": "unverified-draft-acceptance-distribution-drift",
+      "runs": [
+        {
+          "profileId": "unverified-draft-acceptance-distribution-drift",
+          "seed": 19013,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0.28,
+          "meanAcceptedTokensPerStepTau": 4.2,
+          "wallClockDecodingSpeedupFactor": 3.5,
+          "compositeScore": 78.0667
+        },
+        {
+          "profileId": "unverified-draft-acceptance-distribution-drift",
+          "seed": 29017,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0.28,
+          "meanAcceptedTokensPerStepTau": 4.2,
+          "wallClockDecodingSpeedupFactor": 3.5,
+          "compositeScore": 78.0667
+        },
+        {
+          "profileId": "unverified-draft-acceptance-distribution-drift",
+          "seed": 39023,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0.28,
+          "meanAcceptedTokensPerStepTau": 4.2,
+          "wallClockDecodingSpeedupFactor": 3.5,
+          "compositeScore": 78.0667
+        },
+        {
+          "profileId": "unverified-draft-acceptance-distribution-drift",
+          "seed": 49031,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0.28,
+          "meanAcceptedTokensPerStepTau": 4.2,
+          "wallClockDecodingSpeedupFactor": 3.5,
+          "compositeScore": 78.0667
+        },
+        {
+          "profileId": "unverified-draft-acceptance-distribution-drift",
+          "seed": 59053,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0.28,
+          "meanAcceptedTokensPerStepTau": 4.2,
+          "wallClockDecodingSpeedupFactor": 3.5,
+          "compositeScore": 78.0667
+        }
+      ],
+      "stats": {
+        "targetDistributionTotalVariationDefect": {
+          "count": 5,
+          "mean": 0.28,
+          "stdDev": 0,
+          "min": 0.28,
+          "max": 0.28,
+          "ci95": {
+            "low": 0.28,
+            "high": 0.28,
+            "halfWidth": 0
+          }
+        },
+        "meanAcceptedTokensPerStepTau": {
+          "count": 5,
+          "mean": 4.2,
+          "stdDev": 0,
+          "min": 4.2,
+          "max": 4.2,
+          "ci95": {
+            "low": 4.2,
+            "high": 4.2,
+            "halfWidth": 0
+          }
+        },
+        "wallClockDecodingSpeedupFactor": {
+          "count": 5,
+          "mean": 3.5,
+          "stdDev": 0,
+          "min": 3.5,
+          "max": 3.5,
+          "ci95": {
+            "low": 3.5,
+            "high": 3.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 78.0667,
+          "stdDev": 0,
+          "min": 78.0667,
+          "max": 78.0667,
+          "ci95": {
+            "low": 78.0667,
+            "high": 78.0667,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "independent-medusa-heads-without-feature-context": {
+      "profileId": "independent-medusa-heads-without-feature-context",
+      "runs": [
+        {
+          "profileId": "independent-medusa-heads-without-feature-context",
+          "seed": 19013,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 2.65,
+          "wallClockDecodingSpeedupFactor": 2.15,
+          "compositeScore": 74.0397
+        },
+        {
+          "profileId": "independent-medusa-heads-without-feature-context",
+          "seed": 29017,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 2.65,
+          "wallClockDecodingSpeedupFactor": 2.15,
+          "compositeScore": 74.0397
+        },
+        {
+          "profileId": "independent-medusa-heads-without-feature-context",
+          "seed": 39023,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 2.65,
+          "wallClockDecodingSpeedupFactor": 2.15,
+          "compositeScore": 74.0397
+        },
+        {
+          "profileId": "independent-medusa-heads-without-feature-context",
+          "seed": 49031,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 2.65,
+          "wallClockDecodingSpeedupFactor": 2.15,
+          "compositeScore": 74.0397
+        },
+        {
+          "profileId": "independent-medusa-heads-without-feature-context",
+          "seed": 59053,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 2.65,
+          "wallClockDecodingSpeedupFactor": 2.15,
+          "compositeScore": 74.0397
+        }
+      ],
+      "stats": {
+        "targetDistributionTotalVariationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "meanAcceptedTokensPerStepTau": {
+          "count": 5,
+          "mean": 2.65,
+          "stdDev": 0,
+          "min": 2.65,
+          "max": 2.65,
+          "ci95": {
+            "low": 2.65,
+            "high": 2.65,
+            "halfWidth": 0
+          }
+        },
+        "wallClockDecodingSpeedupFactor": {
+          "count": 5,
+          "mean": 2.15,
+          "stdDev": 0,
+          "min": 2.15,
+          "max": 2.15,
+          "ci95": {
+            "low": 2.15,
+            "high": 2.15,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 74.0397,
+          "stdDev": 0,
+          "min": 74.0397,
+          "max": 74.0397,
+          "ci95": {
+            "low": 74.0397,
+            "high": 74.0397,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "eagle2-context-aware-tree-speculative-lossless-verify": {
+      "profileId": "eagle2-context-aware-tree-speculative-lossless-verify",
+      "runs": [
+        {
+          "profileId": "eagle2-context-aware-tree-speculative-lossless-verify",
+          "seed": 19013,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 4.9482,
+          "wallClockDecodingSpeedupFactor": 3.8644,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "eagle2-context-aware-tree-speculative-lossless-verify",
+          "seed": 29017,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 4.9258,
+          "wallClockDecodingSpeedupFactor": 3.9498,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "eagle2-context-aware-tree-speculative-lossless-verify",
+          "seed": 39023,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 4.9017,
+          "wallClockDecodingSpeedupFactor": 3.8672,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "eagle2-context-aware-tree-speculative-lossless-verify",
+          "seed": 49031,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 4.9223,
+          "wallClockDecodingSpeedupFactor": 3.9071,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "eagle2-context-aware-tree-speculative-lossless-verify",
+          "seed": 59053,
+          "episodes": 24,
+          "targetDistributionTotalVariationDefect": 0,
+          "meanAcceptedTokensPerStepTau": 4.8791,
+          "wallClockDecodingSpeedupFactor": 3.8905,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "targetDistributionTotalVariationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "meanAcceptedTokensPerStepTau": {
+          "count": 5,
+          "mean": 4.9154,
+          "stdDev": 0.0262,
+          "min": 4.8791,
+          "max": 4.9482,
+          "ci95": {
+            "low": 4.8829,
+            "high": 4.9479,
+            "halfWidth": 0.0325
+          }
+        },
+        "wallClockDecodingSpeedupFactor": {
+          "count": 5,
+          "mean": 3.8958,
+          "stdDev": 0.0349,
+          "min": 3.8644,
+          "max": 3.9498,
+          "ci95": {
+            "low": 3.8524,
+            "high": 3.9392,
+            "halfWidth": 0.0434
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "349d53e74b3d384f1387fc17984057241ff62c5d704a348db63c5d0b81b3a6a0"
+}
