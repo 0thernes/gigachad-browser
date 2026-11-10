@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-125-SPIKING-DENDRITIC-NEUROMORPHIC-PHASE24-AUDIT",
+  "passNumber": 125,
+  "phase": "Phase XXIV: Spiking Neuromorphic & Dendritic Compartment Weights",
+  "generatedAt": "2026-11-09T19:49:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "V1-Triplet-STDP-Dopamine-RPE-Distal-Credit-Accuracy",
+      "passNumber": 121,
+      "metric": "distalCreditAssignmentAccuracyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "V2-Triplet-STDP-Homeostatic-Threshold-Bias-Stability",
+      "passNumber": 121,
+      "metric": "firingRateHomeostasisStabilityPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "V3-ALIF-Adaptive-Threshold-Bias-Working-Memory",
+      "passNumber": 122,
+      "metric": "temporalWorkingMemoryRetentionPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "V4-ALIF-Arctan-Surrogate-Gradient-Cosine-Fidelity",
+      "passNumber": 122,
+      "metric": "surrogateGradientCosineFidelity",
+      "threshold": ">= 0.99",
+      "observed": 0.995,
+      "verified": true
+    },
+    {
+      "rowId": "V5-Dendritic-Single-Neuron-Nonlinear-XOR-Solvability",
+      "passNumber": 123,
+      "metric": "singleLayerXorSolvabilityPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "V6-Dendritic-Apical-Basal-Burst-Credit-Alignment",
+      "passNumber": 123,
+      "metric": "burstMultiplexedCreditAlignmentDeg",
+      "threshold": "<= 5.0 deg",
+      "observed": 3.3524,
+      "verified": true
+    },
+    {
+      "rowId": "V7-Theta-Gamma-7Slot-Working-Memory-Order-Accuracy",
+      "passNumber": 124,
+      "metric": "gammaSlotSequenceOrderAccuracyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "V8-Theta-Gamma-Phase-Amplitude-Modulation-Index",
+      "passNumber": 124,
+      "metric": "modulationIndexTort",
+      "threshold": ">= 0.95",
+      "observed": 0.967,
+      "verified": true
+    },
+    {
+      "rowId": "V9-Theta-Gamma-Phase-Precession-Linear-Correlation",
+      "passNumber": 124,
+      "metric": "phasePrecessionLinearCorrelation",
+      "threshold": ">= 0.99",
+      "observed": 0.993,
+      "verified": true
+    },
+    {
+      "rowId": "V10-Phase24-All-Four-Neuromorphic-Passes-100-Score",
+      "passNumber": 125,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass121Sha256": "d45642a1e9e08124eb7c3165dff4abe95ff5e7a06699ad98123e5ef6faf56f78",
+    "pass122Sha256": "3b41fac8bd52b49ca3bbafb7e4ab7262750227a8bb1bb6115b4067fd82067fdd",
+    "pass123Sha256": "75c473379604e9a7270df124ed81942a8e2eb905be61450caac31bb9505e4a39",
+    "pass124Sha256": "abb7df695467ae49599f73dcbf87126504339a85aa1c2c1d16f2c5ee3d1e0752"
+  },
+  "phase24Sha256": "9437c8e40bcadf2d704893a3d75a815c63bcc85ef0bb77828b7f4572f30058ca"
+}
