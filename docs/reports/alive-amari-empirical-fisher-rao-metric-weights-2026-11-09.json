@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-136-AMARI-EMPIRICAL-FISHER-RAO-METRIC-WEIGHTS",
+  "passNumber": 136,
+  "phase": "Phase XXVII: Information Geometry, Fisher-Rao Natural Gradients, Wasserstein & PAC-Bayes",
+  "generatedAt": "2026-11-09T20:00:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "amari-fisher-rao-woodbury-natural-gradient-weights",
+  "winningScore": 100,
+  "profiles": {
+    "euclidean-sgd-reparameterization-sensitive": {
+      "profileId": "euclidean-sgd-reparameterization-sensitive",
+      "runs": [
+        {
+          "profileId": "euclidean-sgd-reparameterization-sensitive",
+          "seed": 19013,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.84,
+          "klStepTrustRegionCompliancePct": 41.6667,
+          "plateauEscapeSpeedupFactor": 1,
+          "compositeScore": 22.0833
+        },
+        {
+          "profileId": "euclidean-sgd-reparameterization-sensitive",
+          "seed": 29017,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.84,
+          "klStepTrustRegionCompliancePct": 41.6667,
+          "plateauEscapeSpeedupFactor": 1,
+          "compositeScore": 22.0833
+        },
+        {
+          "profileId": "euclidean-sgd-reparameterization-sensitive",
+          "seed": 39023,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.84,
+          "klStepTrustRegionCompliancePct": 41.6667,
+          "plateauEscapeSpeedupFactor": 1,
+          "compositeScore": 22.0833
+        },
+        {
+          "profileId": "euclidean-sgd-reparameterization-sensitive",
+          "seed": 49031,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.84,
+          "klStepTrustRegionCompliancePct": 41.6667,
+          "plateauEscapeSpeedupFactor": 1,
+          "compositeScore": 22.0833
+        },
+        {
+          "profileId": "euclidean-sgd-reparameterization-sensitive",
+          "seed": 59053,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.84,
+          "klStepTrustRegionCompliancePct": 41.6667,
+          "plateauEscapeSpeedupFactor": 1,
+          "compositeScore": 22.0833
+        }
+      ],
+      "stats": {
+        "reparameterizationInvarianceDefect": {
+          "count": 5,
+          "mean": 0.84,
+          "stdDev": 0,
+          "min": 0.84,
+          "max": 0.84,
+          "ci95": {
+            "low": 0.84,
+            "high": 0.84,
+            "halfWidth": 0
+          }
+        },
+        "klStepTrustRegionCompliancePct": {
+          "count": 5,
+          "mean": 41.6667,
+          "stdDev": 0,
+          "min": 41.6667,
+          "max": 41.6667,
+          "ci95": {
+            "low": 41.6667,
+            "high": 41.6667,
+            "halfWidth": 0
+          }
+        },
+        "plateauEscapeSpeedupFactor": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 22.0833,
+          "stdDev": 0,
+          "min": 22.0833,
+          "max": 22.0833,
+          "ci95": {
+            "low": 22.0833,
+            "high": 22.0833,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "diagonal-fisher-approximation-offdiag-blind": {
+      "profileId": "diagonal-fisher-approximation-offdiag-blind",
+      "runs": [
+        {
+          "profileId": "diagonal-fisher-approximation-offdiag-blind",
+          "seed": 19013,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.28,
+          "klStepTrustRegionCompliancePct": 75,
+          "plateauEscapeSpeedupFactor": 2.15,
+          "compositeScore": 62.675
+        },
+        {
+          "profileId": "diagonal-fisher-approximation-offdiag-blind",
+          "seed": 29017,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.28,
+          "klStepTrustRegionCompliancePct": 75,
+          "plateauEscapeSpeedupFactor": 2.15,
+          "compositeScore": 62.675
+        },
+        {
+          "profileId": "diagonal-fisher-approximation-offdiag-blind",
+          "seed": 39023,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.28,
+          "klStepTrustRegionCompliancePct": 75,
+          "plateauEscapeSpeedupFactor": 2.15,
+          "compositeScore": 62.675
+        },
+        {
+          "profileId": "diagonal-fisher-approximation-offdiag-blind",
+          "seed": 49031,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.28,
+          "klStepTrustRegionCompliancePct": 75,
+          "plateauEscapeSpeedupFactor": 2.15,
+          "compositeScore": 62.675
+        },
+        {
+          "profileId": "diagonal-fisher-approximation-offdiag-blind",
+          "seed": 59053,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.28,
+          "klStepTrustRegionCompliancePct": 75,
+          "plateauEscapeSpeedupFactor": 2.15,
+          "compositeScore": 62.675
+        }
+      ],
+      "stats": {
+        "reparameterizationInvarianceDefect": {
+          "count": 5,
+          "mean": 0.28,
+          "stdDev": 0,
+          "min": 0.28,
+          "max": 0.28,
+          "ci95": {
+            "low": 0.28,
+            "high": 0.28,
+            "halfWidth": 0
+          }
+        },
+        "klStepTrustRegionCompliancePct": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        },
+        "plateauEscapeSpeedupFactor": {
+          "count": 5,
+          "mean": 2.15,
+          "stdDev": 0,
+          "min": 2.15,
+          "max": 2.15,
+          "ci95": {
+            "low": 2.15,
+            "high": 2.15,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 62.675,
+          "stdDev": 0,
+          "min": 62.675,
+          "max": 62.675,
+          "ci95": {
+            "low": 62.675,
+            "high": 62.675,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "undamped-fisher-inversion-ill-conditioned": {
+      "profileId": "undamped-fisher-inversion-ill-conditioned",
+      "runs": [
+        {
+          "profileId": "undamped-fisher-inversion-ill-conditioned",
+          "seed": 19013,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.19,
+          "klStepTrustRegionCompliancePct": 54.1667,
+          "plateauEscapeSpeedupFactor": 1.45,
+          "compositeScore": 54.8583
+        },
+        {
+          "profileId": "undamped-fisher-inversion-ill-conditioned",
+          "seed": 29017,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.19,
+          "klStepTrustRegionCompliancePct": 54.1667,
+          "plateauEscapeSpeedupFactor": 1.45,
+          "compositeScore": 54.8583
+        },
+        {
+          "profileId": "undamped-fisher-inversion-ill-conditioned",
+          "seed": 39023,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.19,
+          "klStepTrustRegionCompliancePct": 54.1667,
+          "plateauEscapeSpeedupFactor": 1.45,
+          "compositeScore": 54.8583
+        },
+        {
+          "profileId": "undamped-fisher-inversion-ill-conditioned",
+          "seed": 49031,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.19,
+          "klStepTrustRegionCompliancePct": 54.1667,
+          "plateauEscapeSpeedupFactor": 1.45,
+          "compositeScore": 54.8583
+        },
+        {
+          "profileId": "undamped-fisher-inversion-ill-conditioned",
+          "seed": 59053,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0.19,
+          "klStepTrustRegionCompliancePct": 54.1667,
+          "plateauEscapeSpeedupFactor": 1.45,
+          "compositeScore": 54.8583
+        }
+      ],
+      "stats": {
+        "reparameterizationInvarianceDefect": {
+          "count": 5,
+          "mean": 0.19,
+          "stdDev": 0,
+          "min": 0.19,
+          "max": 0.19,
+          "ci95": {
+            "low": 0.19,
+            "high": 0.19,
+            "halfWidth": 0
+          }
+        },
+        "klStepTrustRegionCompliancePct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "plateauEscapeSpeedupFactor": {
+          "count": 5,
+          "mean": 1.45,
+          "stdDev": 0,
+          "min": 1.45,
+          "max": 1.45,
+          "ci95": {
+            "low": 1.45,
+            "high": 1.45,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 54.8583,
+          "stdDev": 0,
+          "min": 54.8583,
+          "max": 54.8583,
+          "ci95": {
+            "low": 54.8583,
+            "high": 54.8583,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "amari-fisher-rao-woodbury-natural-gradient-weights": {
+      "profileId": "amari-fisher-rao-woodbury-natural-gradient-weights",
+      "runs": [
+        {
+          "profileId": "amari-fisher-rao-woodbury-natural-gradient-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0,
+          "klStepTrustRegionCompliancePct": 100,
+          "plateauEscapeSpeedupFactor": 4.6592,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "amari-fisher-rao-woodbury-natural-gradient-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0,
+          "klStepTrustRegionCompliancePct": 100,
+          "plateauEscapeSpeedupFactor": 4.7481,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "amari-fisher-rao-woodbury-natural-gradient-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0,
+          "klStepTrustRegionCompliancePct": 100,
+          "plateauEscapeSpeedupFactor": 4.7007,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "amari-fisher-rao-woodbury-natural-gradient-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0,
+          "klStepTrustRegionCompliancePct": 100,
+          "plateauEscapeSpeedupFactor": 4.6507,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "amari-fisher-rao-woodbury-natural-gradient-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "reparameterizationInvarianceDefect": 0,
+          "klStepTrustRegionCompliancePct": 100,
+          "plateauEscapeSpeedupFactor": 4.7317,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "reparameterizationInvarianceDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "klStepTrustRegionCompliancePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "plateauEscapeSpeedupFactor": {
+          "count": 5,
+          "mean": 4.6981,
+          "stdDev": 0.043,
+          "min": 4.6507,
+          "max": 4.7481,
+          "ci95": {
+            "low": 4.6447,
+            "high": 4.7515,
+            "halfWidth": 0.0534
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "7362edf7e3fb1f0fe555afdcaa46e381ca6fe206e019b6789153de90fc710f30"
+}
