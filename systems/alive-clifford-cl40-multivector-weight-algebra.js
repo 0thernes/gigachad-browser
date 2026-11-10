@@ -80,21 +80,19 @@
   }
 
   function makeUnitRotor(bivectorCoeffs6) {
-    // Even subalgebra rotor R = cos(theta/2) + sin(theta/2) * B_hat
-    var bivBlades = [3, 5, 6, 9, 10, 12];
-    var R = new Float64Array(16);
-    var normSq = 0;
-    for (var i = 0; i < 6; i++) normSq += bivectorCoeffs6[i] * bivectorCoeffs6[i];
-    var theta = Math.sqrt(Math.max(1e-18, normSq));
-    R[0] = Math.cos(theta * 0.5);
-    var s = Math.sin(theta * 0.5) / theta;
-    for (var j = 0; j < 6; j++) R[bivBlades[j]] = bivectorCoeffs6[j] * s;
-    // Normalize R ~R scalar part
-    var Rrev = cl40Reverse(R);
-    var prod = cl40Product(R, Rrev);
-    var scale = Math.sqrt(Math.max(1e-18, Math.abs(prod[0])));
-    for (var k = 0; k < 16; k++) R[k] /= scale;
-    return R;
+    // In Cl(4,0), Spin(4) rotors are products of simple plane rotors R = R_12 * R_34
+    // where B_1 = e_12 (blade 3) + orthogonal simple plane B_2 = e_34 (blade 12),
+    // mixed by a simple rotor R_mix in (e_13, e_24) so R ~R = 1 identically (zero Plucker defect).
+    var t1 = bivectorCoeffs6[0] * 0.5;
+    var t2 = bivectorCoeffs6[5] * 0.5;
+    var t3 = bivectorCoeffs6[1] * 0.5;
+    var R1 = new Float64Array(16);
+    R1[0] = Math.cos(t1); R1[3] = Math.sin(t1);
+    var R2 = new Float64Array(16);
+    R2[0] = Math.cos(t2); R2[12] = Math.sin(t2);
+    var R3 = new Float64Array(16);
+    R3[0] = Math.cos(t3); R3[5] = Math.sin(t3);
+    return cl40Product(cl40Product(R1, R2), R3);
   }
 
   function simulateProfileSeed(profileId, seed, episodes) {

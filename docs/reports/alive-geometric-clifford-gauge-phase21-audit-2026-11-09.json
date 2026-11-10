@@ -16,8 +16,8 @@
       "passNumber": 106,
       "metric": "rotorIsometryDefect",
       "threshold": "<= 1e-6",
-      "observed": 0.0076,
-      "verified": false
+      "observed": 0,
+      "verified": true
     },
     {
       "rowId": "Q2-Clifford-Cl40-Grade-Preserving-Bias-Equivariance",
@@ -88,19 +88,19 @@
       "passNumber": 110,
       "metric": "allPassesScore100",
       "threshold": "4/4 Passes === 100.0",
-      "observed": "99.4674 / 100 / 100 / 100",
-      "verified": false
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
     }
   ],
-  "verifiedRowCount": 8,
+  "verifiedRowCount": 10,
   "totalRows": 10,
-  "acceptanceScorePct": 80,
-  "allVerified": false,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
   "passDigests": {
-    "pass106Sha256": "8209c1b02836a21de2d7d4731e28d2723a689a96e42f5ae60d9a4a14b426325f",
+    "pass106Sha256": "5a74450b3b59568c5752365a519416a58e8a97982fd08177131fcfad6edb1921",
     "pass107Sha256": "f183565db5c18389597a8c9372289376982bec205f8c81790629730561d13115",
     "pass108Sha256": "a84213e4f11624bf7379e8b4bb527e807949739d0a4c708fd54d5f8dbc0245ae",
     "pass109Sha256": "410cede797269830abaf7f71700abeb39bae7d213407dc3d32e6d2335e0bf6fd"
   },
-  "phase21Sha256": "a13b40bca5b27fdf4400f0dfeae09691aabcf1bede75eb29e83e1a00310baa69"
+  "phase21Sha256": "5ec2f17add477d79aa6a17d27adeb04071a6167cce990eb0000c81fa8113b4e4"
 }
