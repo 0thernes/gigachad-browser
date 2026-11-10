@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-159-CFG-AUTOGUIDANCE-TANGENTIAL-SCORE-STEERING",
+  "passNumber": 159,
+  "phase": "Phase XXXI: Consistency Models, Schrodinger Bridges, Karras EDM & AutoGuidance",
+  "generatedAt": "2026-11-09T20:23:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "autoguidance-tangential-manifold-projected-score-steering",
+  "winningScore": 100,
+  "profiles": {
+    "unconstrained-high-scale-cfg-off-manifold-oversaturation": {
+      "profileId": "unconstrained-high-scale-cfg-off-manifold-oversaturation",
+      "runs": [
+        {
+          "profileId": "unconstrained-high-scale-cfg-off-manifold-oversaturation",
+          "seed": 19013,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.85,
+          "sampleDiversityRecallRetentionPct": 42,
+          "precisionAlignmentQualityScorePct": 71,
+          "compositeScore": 36
+        },
+        {
+          "profileId": "unconstrained-high-scale-cfg-off-manifold-oversaturation",
+          "seed": 29017,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.85,
+          "sampleDiversityRecallRetentionPct": 42,
+          "precisionAlignmentQualityScorePct": 71,
+          "compositeScore": 36
+        },
+        {
+          "profileId": "unconstrained-high-scale-cfg-off-manifold-oversaturation",
+          "seed": 39023,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.85,
+          "sampleDiversityRecallRetentionPct": 42,
+          "precisionAlignmentQualityScorePct": 71,
+          "compositeScore": 36
+        },
+        {
+          "profileId": "unconstrained-high-scale-cfg-off-manifold-oversaturation",
+          "seed": 49031,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.85,
+          "sampleDiversityRecallRetentionPct": 42,
+          "precisionAlignmentQualityScorePct": 71,
+          "compositeScore": 36
+        },
+        {
+          "profileId": "unconstrained-high-scale-cfg-off-manifold-oversaturation",
+          "seed": 59053,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.85,
+          "sampleDiversityRecallRetentionPct": 42,
+          "precisionAlignmentQualityScorePct": 71,
+          "compositeScore": 36
+        }
+      ],
+      "stats": {
+        "normalComponentOffManifoldLeakage": {
+          "count": 5,
+          "mean": 0.85,
+          "stdDev": 0,
+          "min": 0.85,
+          "max": 0.85,
+          "ci95": {
+            "low": 0.85,
+            "high": 0.85,
+            "halfWidth": 0
+          }
+        },
+        "sampleDiversityRecallRetentionPct": {
+          "count": 5,
+          "mean": 42,
+          "stdDev": 0,
+          "min": 42,
+          "max": 42,
+          "ci95": {
+            "low": 42,
+            "high": 42,
+            "halfWidth": 0
+          }
+        },
+        "precisionAlignmentQualityScorePct": {
+          "count": 5,
+          "mean": 71,
+          "stdDev": 0,
+          "min": 71,
+          "max": 71,
+          "ci95": {
+            "low": 71,
+            "high": 71,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 36,
+          "stdDev": 0,
+          "min": 36,
+          "max": 36,
+          "ci95": {
+            "low": 36,
+            "high": 36,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unconditional-null-prompt-diversity-collapse": {
+      "profileId": "unconditional-null-prompt-diversity-collapse",
+      "runs": [
+        {
+          "profileId": "unconditional-null-prompt-diversity-collapse",
+          "seed": 19013,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.44,
+          "sampleDiversityRecallRetentionPct": 51.5,
+          "precisionAlignmentQualityScorePct": 82,
+          "compositeScore": 46.825
+        },
+        {
+          "profileId": "unconditional-null-prompt-diversity-collapse",
+          "seed": 29017,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.44,
+          "sampleDiversityRecallRetentionPct": 51.5,
+          "precisionAlignmentQualityScorePct": 82,
+          "compositeScore": 46.825
+        },
+        {
+          "profileId": "unconditional-null-prompt-diversity-collapse",
+          "seed": 39023,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.44,
+          "sampleDiversityRecallRetentionPct": 51.5,
+          "precisionAlignmentQualityScorePct": 82,
+          "compositeScore": 46.825
+        },
+        {
+          "profileId": "unconditional-null-prompt-diversity-collapse",
+          "seed": 49031,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.44,
+          "sampleDiversityRecallRetentionPct": 51.5,
+          "precisionAlignmentQualityScorePct": 82,
+          "compositeScore": 46.825
+        },
+        {
+          "profileId": "unconditional-null-prompt-diversity-collapse",
+          "seed": 59053,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.44,
+          "sampleDiversityRecallRetentionPct": 51.5,
+          "precisionAlignmentQualityScorePct": 82,
+          "compositeScore": 46.825
+        }
+      ],
+      "stats": {
+        "normalComponentOffManifoldLeakage": {
+          "count": 5,
+          "mean": 0.44,
+          "stdDev": 0,
+          "min": 0.44,
+          "max": 0.44,
+          "ci95": {
+            "low": 0.44,
+            "high": 0.44,
+            "halfWidth": 0
+          }
+        },
+        "sampleDiversityRecallRetentionPct": {
+          "count": 5,
+          "mean": 51.5,
+          "stdDev": 0,
+          "min": 51.5,
+          "max": 51.5,
+          "ci95": {
+            "low": 51.5,
+            "high": 51.5,
+            "halfWidth": 0
+          }
+        },
+        "precisionAlignmentQualityScorePct": {
+          "count": 5,
+          "mean": 82,
+          "stdDev": 0,
+          "min": 82,
+          "max": 82,
+          "ci95": {
+            "low": 82,
+            "high": 82,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 46.825,
+          "stdDev": 0,
+          "min": 46.825,
+          "max": 46.825,
+          "ci95": {
+            "low": 46.825,
+            "high": 46.825,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "static-dynamic-thresholding-clipping-artifacts": {
+      "profileId": "static-dynamic-thresholding-clipping-artifacts",
+      "runs": [
+        {
+          "profileId": "static-dynamic-thresholding-clipping-artifacts",
+          "seed": 19013,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.19,
+          "sampleDiversityRecallRetentionPct": 78,
+          "precisionAlignmentQualityScorePct": 88.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "static-dynamic-thresholding-clipping-artifacts",
+          "seed": 29017,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.19,
+          "sampleDiversityRecallRetentionPct": 78,
+          "precisionAlignmentQualityScorePct": 88.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "static-dynamic-thresholding-clipping-artifacts",
+          "seed": 39023,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.19,
+          "sampleDiversityRecallRetentionPct": 78,
+          "precisionAlignmentQualityScorePct": 88.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "static-dynamic-thresholding-clipping-artifacts",
+          "seed": 49031,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.19,
+          "sampleDiversityRecallRetentionPct": 78,
+          "precisionAlignmentQualityScorePct": 88.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "static-dynamic-thresholding-clipping-artifacts",
+          "seed": 59053,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0.19,
+          "sampleDiversityRecallRetentionPct": 78,
+          "precisionAlignmentQualityScorePct": 88.5,
+          "compositeScore": 75.55
+        }
+      ],
+      "stats": {
+        "normalComponentOffManifoldLeakage": {
+          "count": 5,
+          "mean": 0.19,
+          "stdDev": 0,
+          "min": 0.19,
+          "max": 0.19,
+          "ci95": {
+            "low": 0.19,
+            "high": 0.19,
+            "halfWidth": 0
+          }
+        },
+        "sampleDiversityRecallRetentionPct": {
+          "count": 5,
+          "mean": 78,
+          "stdDev": 0,
+          "min": 78,
+          "max": 78,
+          "ci95": {
+            "low": 78,
+            "high": 78,
+            "halfWidth": 0
+          }
+        },
+        "precisionAlignmentQualityScorePct": {
+          "count": 5,
+          "mean": 88.5,
+          "stdDev": 0,
+          "min": 88.5,
+          "max": 88.5,
+          "ci95": {
+            "low": 88.5,
+            "high": 88.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 75.55,
+          "stdDev": 0,
+          "min": 75.55,
+          "max": 75.55,
+          "ci95": {
+            "low": 75.55,
+            "high": 75.55,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "autoguidance-tangential-manifold-projected-score-steering": {
+      "profileId": "autoguidance-tangential-manifold-projected-score-steering",
+      "runs": [
+        {
+          "profileId": "autoguidance-tangential-manifold-projected-score-steering",
+          "seed": 19013,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0,
+          "sampleDiversityRecallRetentionPct": 98.8378,
+          "precisionAlignmentQualityScorePct": 99.5187,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "autoguidance-tangential-manifold-projected-score-steering",
+          "seed": 29017,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0,
+          "sampleDiversityRecallRetentionPct": 98.9997,
+          "precisionAlignmentQualityScorePct": 99.5774,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "autoguidance-tangential-manifold-projected-score-steering",
+          "seed": 39023,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0,
+          "sampleDiversityRecallRetentionPct": 99.0935,
+          "precisionAlignmentQualityScorePct": 99.5766,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "autoguidance-tangential-manifold-projected-score-steering",
+          "seed": 49031,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0,
+          "sampleDiversityRecallRetentionPct": 99.0091,
+          "precisionAlignmentQualityScorePct": 99.5132,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "autoguidance-tangential-manifold-projected-score-steering",
+          "seed": 59053,
+          "episodes": 24,
+          "normalComponentOffManifoldLeakage": 0,
+          "sampleDiversityRecallRetentionPct": 98.8873,
+          "precisionAlignmentQualityScorePct": 99.5391,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "normalComponentOffManifoldLeakage": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "sampleDiversityRecallRetentionPct": {
+          "count": 5,
+          "mean": 98.9655,
+          "stdDev": 0.1023,
+          "min": 98.8378,
+          "max": 99.0935,
+          "ci95": {
+            "low": 98.8384,
+            "high": 99.0925,
+            "halfWidth": 0.127
+          }
+        },
+        "precisionAlignmentQualityScorePct": {
+          "count": 5,
+          "mean": 99.545,
+          "stdDev": 0.0308,
+          "min": 99.5132,
+          "max": 99.5774,
+          "ci95": {
+            "low": 99.5068,
+            "high": 99.5832,
+            "halfWidth": 0.0382
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "e8710ca0543930ee4954eace4c049e456b3bb5347acaf941eb7a2a74fb94be24"
+}
