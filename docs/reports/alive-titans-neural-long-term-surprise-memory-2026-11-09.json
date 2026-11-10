@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-126-TITANS-NEURAL-LONG-TERM-SURPRISE-MEMORY",
+  "passNumber": 126,
+  "phase": "Phase XXV: Titans, Gated DeltaNet, RWKV-7 & Fast-Weight Memory",
+  "generatedAt": "2026-11-09T19:50:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "titans-momentum-surprise-persistent-bias-memory",
+  "winningScore": 100,
+  "profiles": {
+    "sliding-window-only-forgets-early-needles": {
+      "profileId": "sliding-window-only-forgets-early-needles",
+      "runs": [
+        {
+          "profileId": "sliding-window-only-forgets-early-needles",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 16.6667,
+          "surpriseTriggeredRetentionRatio": 1,
+          "memoryCapacityUtilizationPct": 35,
+          "compositeScore": 19.3095
+        },
+        {
+          "profileId": "sliding-window-only-forgets-early-needles",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 16.6667,
+          "surpriseTriggeredRetentionRatio": 1,
+          "memoryCapacityUtilizationPct": 35,
+          "compositeScore": 19.3095
+        },
+        {
+          "profileId": "sliding-window-only-forgets-early-needles",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 16.6667,
+          "surpriseTriggeredRetentionRatio": 1,
+          "memoryCapacityUtilizationPct": 35,
+          "compositeScore": 19.3095
+        },
+        {
+          "profileId": "sliding-window-only-forgets-early-needles",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 16.6667,
+          "surpriseTriggeredRetentionRatio": 1,
+          "memoryCapacityUtilizationPct": 35,
+          "compositeScore": 19.3095
+        },
+        {
+          "profileId": "sliding-window-only-forgets-early-needles",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 16.6667,
+          "surpriseTriggeredRetentionRatio": 1,
+          "memoryCapacityUtilizationPct": 35,
+          "compositeScore": 19.3095
+        }
+      ],
+      "stats": {
+        "needleInHaystackRecallPct": {
+          "count": 5,
+          "mean": 16.6667,
+          "stdDev": 0,
+          "min": 16.6667,
+          "max": 16.6667,
+          "ci95": {
+            "low": 16.6667,
+            "high": 16.6667,
+            "halfWidth": 0
+          }
+        },
+        "surpriseTriggeredRetentionRatio": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "memoryCapacityUtilizationPct": {
+          "count": 5,
+          "mean": 35,
+          "stdDev": 0,
+          "min": 35,
+          "max": 35,
+          "ci95": {
+            "low": 35,
+            "high": 35,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 19.3095,
+          "stdDev": 0,
+          "min": 19.3095,
+          "max": 19.3095,
+          "ci95": {
+            "low": 19.3095,
+            "high": 19.3095,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "hebbian-outer-product-memory-saturation": {
+      "profileId": "hebbian-outer-product-memory-saturation",
+      "runs": [
+        {
+          "profileId": "hebbian-outer-product-memory-saturation",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 54.1667,
+          "surpriseTriggeredRetentionRatio": 2.4,
+          "memoryCapacityUtilizationPct": 58,
+          "compositeScore": 44.2095
+        },
+        {
+          "profileId": "hebbian-outer-product-memory-saturation",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 54.1667,
+          "surpriseTriggeredRetentionRatio": 2.4,
+          "memoryCapacityUtilizationPct": 58,
+          "compositeScore": 44.2095
+        },
+        {
+          "profileId": "hebbian-outer-product-memory-saturation",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 54.1667,
+          "surpriseTriggeredRetentionRatio": 2.4,
+          "memoryCapacityUtilizationPct": 58,
+          "compositeScore": 44.2095
+        },
+        {
+          "profileId": "hebbian-outer-product-memory-saturation",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 54.1667,
+          "surpriseTriggeredRetentionRatio": 2.4,
+          "memoryCapacityUtilizationPct": 58,
+          "compositeScore": 44.2095
+        },
+        {
+          "profileId": "hebbian-outer-product-memory-saturation",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 54.1667,
+          "surpriseTriggeredRetentionRatio": 2.4,
+          "memoryCapacityUtilizationPct": 58,
+          "compositeScore": 44.2095
+        }
+      ],
+      "stats": {
+        "needleInHaystackRecallPct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "surpriseTriggeredRetentionRatio": {
+          "count": 5,
+          "mean": 2.4,
+          "stdDev": 0,
+          "min": 2.4,
+          "max": 2.4,
+          "ci95": {
+            "low": 2.4,
+            "high": 2.4,
+            "halfWidth": 0
+          }
+        },
+        "memoryCapacityUtilizationPct": {
+          "count": 5,
+          "mean": 58,
+          "stdDev": 0,
+          "min": 58,
+          "max": 58,
+          "ci95": {
+            "low": 58,
+            "high": 58,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 44.2095,
+          "stdDev": 0,
+          "min": 44.2095,
+          "max": 44.2095,
+          "ci95": {
+            "low": 44.2095,
+            "high": 44.2095,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "titans-without-surprise-momentum-st": {
+      "profileId": "titans-without-surprise-momentum-st",
+      "runs": [
+        {
+          "profileId": "titans-without-surprise-momentum-st",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 83.3333,
+          "surpriseTriggeredRetentionRatio": 7.8,
+          "memoryCapacityUtilizationPct": 84,
+          "compositeScore": 75.2476
+        },
+        {
+          "profileId": "titans-without-surprise-momentum-st",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 83.3333,
+          "surpriseTriggeredRetentionRatio": 7.8,
+          "memoryCapacityUtilizationPct": 84,
+          "compositeScore": 75.2476
+        },
+        {
+          "profileId": "titans-without-surprise-momentum-st",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 83.3333,
+          "surpriseTriggeredRetentionRatio": 7.8,
+          "memoryCapacityUtilizationPct": 84,
+          "compositeScore": 75.2476
+        },
+        {
+          "profileId": "titans-without-surprise-momentum-st",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 83.3333,
+          "surpriseTriggeredRetentionRatio": 7.8,
+          "memoryCapacityUtilizationPct": 84,
+          "compositeScore": 75.2476
+        },
+        {
+          "profileId": "titans-without-surprise-momentum-st",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 83.3333,
+          "surpriseTriggeredRetentionRatio": 7.8,
+          "memoryCapacityUtilizationPct": 84,
+          "compositeScore": 75.2476
+        }
+      ],
+      "stats": {
+        "needleInHaystackRecallPct": {
+          "count": 5,
+          "mean": 83.3333,
+          "stdDev": 0,
+          "min": 83.3333,
+          "max": 83.3333,
+          "ci95": {
+            "low": 83.3333,
+            "high": 83.3333,
+            "halfWidth": 0
+          }
+        },
+        "surpriseTriggeredRetentionRatio": {
+          "count": 5,
+          "mean": 7.8,
+          "stdDev": 0,
+          "min": 7.8,
+          "max": 7.8,
+          "ci95": {
+            "low": 7.8,
+            "high": 7.8,
+            "halfWidth": 0
+          }
+        },
+        "memoryCapacityUtilizationPct": {
+          "count": 5,
+          "mean": 84,
+          "stdDev": 0,
+          "min": 84,
+          "max": 84,
+          "ci95": {
+            "low": 84,
+            "high": 84,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 75.2476,
+          "stdDev": 0,
+          "min": 75.2476,
+          "max": 75.2476,
+          "ci95": {
+            "low": 75.2476,
+            "high": 75.2476,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "titans-momentum-surprise-persistent-bias-memory": {
+      "profileId": "titans-momentum-surprise-persistent-bias-memory",
+      "runs": [
+        {
+          "profileId": "titans-momentum-surprise-persistent-bias-memory",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 100,
+          "surpriseTriggeredRetentionRatio": 16.5629,
+          "memoryCapacityUtilizationPct": 98.7031,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "titans-momentum-surprise-persistent-bias-memory",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 100,
+          "surpriseTriggeredRetentionRatio": 16.6808,
+          "memoryCapacityUtilizationPct": 98.7127,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "titans-momentum-surprise-persistent-bias-memory",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 100,
+          "surpriseTriggeredRetentionRatio": 16.5393,
+          "memoryCapacityUtilizationPct": 98.8721,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "titans-momentum-surprise-persistent-bias-memory",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 100,
+          "surpriseTriggeredRetentionRatio": 16.6892,
+          "memoryCapacityUtilizationPct": 98.7271,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "titans-momentum-surprise-persistent-bias-memory",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackRecallPct": 100,
+          "surpriseTriggeredRetentionRatio": 16.4827,
+          "memoryCapacityUtilizationPct": 98.5417,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "needleInHaystackRecallPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "surpriseTriggeredRetentionRatio": {
+          "count": 5,
+          "mean": 16.591,
+          "stdDev": 0.0907,
+          "min": 16.4827,
+          "max": 16.6892,
+          "ci95": {
+            "low": 16.4784,
+            "high": 16.7036,
+            "halfWidth": 0.1126
+          }
+        },
+        "memoryCapacityUtilizationPct": {
+          "count": 5,
+          "mean": 98.7113,
+          "stdDev": 0.1172,
+          "min": 98.5417,
+          "max": 98.8721,
+          "ci95": {
+            "low": 98.5658,
+            "high": 98.8569,
+            "halfWidth": 0.1455
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "90bb8d8145fbde1acd2fe043bb2d505ade94d46182e2976972c93f676126b705"
+}
