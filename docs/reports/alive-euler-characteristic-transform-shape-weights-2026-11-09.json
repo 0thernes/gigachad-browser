@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-154-EULER-CHARACTERISTIC-TRANSFORM-SHAPE-WEIGHTS",
+  "passNumber": 154,
+  "phase": "Phase XXX: Topological Deep Learning (Simplicial Hodge Laplacians, Cellular Sheaf Networks, Persistent Homology & DECT)",
+  "generatedAt": "2026-11-09T20:18:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "dect-multi-direction-sigmoid-euler-characteristic-weights",
+  "winningScore": 100,
+  "profiles": {
+    "single-direction-height-filtration-non-injective": {
+      "profileId": "single-direction-height-filtration-non-injective",
+      "runs": [
+        {
+          "profileId": "single-direction-height-filtration-non-injective",
+          "seed": 19013,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 54.1667,
+          "dectInjectivityReconstructionAccuracyPct": 62.5,
+          "compositeScore": 72.7083
+        },
+        {
+          "profileId": "single-direction-height-filtration-non-injective",
+          "seed": 29017,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 54.1667,
+          "dectInjectivityReconstructionAccuracyPct": 62.5,
+          "compositeScore": 72.7083
+        },
+        {
+          "profileId": "single-direction-height-filtration-non-injective",
+          "seed": 39023,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 54.1667,
+          "dectInjectivityReconstructionAccuracyPct": 62.5,
+          "compositeScore": 72.7083
+        },
+        {
+          "profileId": "single-direction-height-filtration-non-injective",
+          "seed": 49031,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 54.1667,
+          "dectInjectivityReconstructionAccuracyPct": 62.5,
+          "compositeScore": 72.7083
+        },
+        {
+          "profileId": "single-direction-height-filtration-non-injective",
+          "seed": 59053,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 54.1667,
+          "dectInjectivityReconstructionAccuracyPct": 62.5,
+          "compositeScore": 72.7083
+        }
+      ],
+      "stats": {
+        "eulerPoincareGlobalIdentityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "nonIsomorphic1WlGraphSeparationPct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "dectInjectivityReconstructionAccuracyPct": {
+          "count": 5,
+          "mean": 62.5,
+          "stdDev": 0,
+          "min": 62.5,
+          "max": 62.5,
+          "ci95": {
+            "low": 62.5,
+            "high": 62.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 72.7083,
+          "stdDev": 0,
+          "min": 72.7083,
+          "max": 72.7083,
+          "ci95": {
+            "low": 72.7083,
+            "high": 72.7083,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "hard-step-heaviside-euler-zero-gradient": {
+      "profileId": "hard-step-heaviside-euler-zero-gradient",
+      "runs": [
+        {
+          "profileId": "hard-step-heaviside-euler-zero-gradient",
+          "seed": 19013,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 75,
+          "dectInjectivityReconstructionAccuracyPct": 45.8333,
+          "compositeScore": 75
+        },
+        {
+          "profileId": "hard-step-heaviside-euler-zero-gradient",
+          "seed": 29017,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 75,
+          "dectInjectivityReconstructionAccuracyPct": 45.8333,
+          "compositeScore": 75
+        },
+        {
+          "profileId": "hard-step-heaviside-euler-zero-gradient",
+          "seed": 39023,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 75,
+          "dectInjectivityReconstructionAccuracyPct": 45.8333,
+          "compositeScore": 75
+        },
+        {
+          "profileId": "hard-step-heaviside-euler-zero-gradient",
+          "seed": 49031,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 75,
+          "dectInjectivityReconstructionAccuracyPct": 45.8333,
+          "compositeScore": 75
+        },
+        {
+          "profileId": "hard-step-heaviside-euler-zero-gradient",
+          "seed": 59053,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 75,
+          "dectInjectivityReconstructionAccuracyPct": 45.8333,
+          "compositeScore": 75
+        }
+      ],
+      "stats": {
+        "eulerPoincareGlobalIdentityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "nonIsomorphic1WlGraphSeparationPct": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        },
+        "dectInjectivityReconstructionAccuracyPct": {
+          "count": 5,
+          "mean": 45.8333,
+          "stdDev": 0,
+          "min": 45.8333,
+          "max": 45.8333,
+          "ci95": {
+            "low": 45.8333,
+            "high": 45.8333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "weisfeiler-lehman-1wl-regular-graph-blindness": {
+      "profileId": "weisfeiler-lehman-1wl-regular-graph-blindness",
+      "runs": [
+        {
+          "profileId": "weisfeiler-lehman-1wl-regular-graph-blindness",
+          "seed": 19013,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0.35,
+          "nonIsomorphic1WlGraphSeparationPct": 0,
+          "dectInjectivityReconstructionAccuracyPct": 50,
+          "compositeScore": 25.5
+        },
+        {
+          "profileId": "weisfeiler-lehman-1wl-regular-graph-blindness",
+          "seed": 29017,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0.35,
+          "nonIsomorphic1WlGraphSeparationPct": 0,
+          "dectInjectivityReconstructionAccuracyPct": 50,
+          "compositeScore": 25.5
+        },
+        {
+          "profileId": "weisfeiler-lehman-1wl-regular-graph-blindness",
+          "seed": 39023,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0.35,
+          "nonIsomorphic1WlGraphSeparationPct": 0,
+          "dectInjectivityReconstructionAccuracyPct": 50,
+          "compositeScore": 25.5
+        },
+        {
+          "profileId": "weisfeiler-lehman-1wl-regular-graph-blindness",
+          "seed": 49031,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0.35,
+          "nonIsomorphic1WlGraphSeparationPct": 0,
+          "dectInjectivityReconstructionAccuracyPct": 50,
+          "compositeScore": 25.5
+        },
+        {
+          "profileId": "weisfeiler-lehman-1wl-regular-graph-blindness",
+          "seed": 59053,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0.35,
+          "nonIsomorphic1WlGraphSeparationPct": 0,
+          "dectInjectivityReconstructionAccuracyPct": 50,
+          "compositeScore": 25.5
+        }
+      ],
+      "stats": {
+        "eulerPoincareGlobalIdentityDefect": {
+          "count": 5,
+          "mean": 0.35,
+          "stdDev": 0,
+          "min": 0.35,
+          "max": 0.35,
+          "ci95": {
+            "low": 0.35,
+            "high": 0.35,
+            "halfWidth": 0
+          }
+        },
+        "nonIsomorphic1WlGraphSeparationPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "dectInjectivityReconstructionAccuracyPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 25.5,
+          "stdDev": 0,
+          "min": 25.5,
+          "max": 25.5,
+          "ci95": {
+            "low": 25.5,
+            "high": 25.5,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "dect-multi-direction-sigmoid-euler-characteristic-weights": {
+      "profileId": "dect-multi-direction-sigmoid-euler-characteristic-weights",
+      "runs": [
+        {
+          "profileId": "dect-multi-direction-sigmoid-euler-characteristic-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 100,
+          "dectInjectivityReconstructionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dect-multi-direction-sigmoid-euler-characteristic-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 100,
+          "dectInjectivityReconstructionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dect-multi-direction-sigmoid-euler-characteristic-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 100,
+          "dectInjectivityReconstructionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dect-multi-direction-sigmoid-euler-characteristic-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 100,
+          "dectInjectivityReconstructionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dect-multi-direction-sigmoid-euler-characteristic-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "eulerPoincareGlobalIdentityDefect": 0,
+          "nonIsomorphic1WlGraphSeparationPct": 100,
+          "dectInjectivityReconstructionAccuracyPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "eulerPoincareGlobalIdentityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "nonIsomorphic1WlGraphSeparationPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "dectInjectivityReconstructionAccuracyPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "096b36eeb980abead1edc0eaf3755a01b6886e03abdf75e2ef4c2d3abd965460"
+}
