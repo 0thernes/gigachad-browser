@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-135-EXTREME-QUANTIZATION-E8-SPINQUANT-PHASE26-AUDIT",
+  "passNumber": 135,
+  "phase": "Phase XXVI: QuIP#, AQLM, SpinQuant & MXFP Extreme Quantization",
+  "generatedAt": "2026-11-09T19:59:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "Y1-QuIPSharp-Hadamard-Incoherence-Outlier-Reduction",
+      "passNumber": 131,
+      "metric": "incoherenceMaxRatioReduction",
+      "threshold": ">= 2.0x",
+      "observed": 2.2394,
+      "verified": true
+    },
+    {
+      "rowId": "Y2-QuIPSharp-Gosset-E8-Lattice-2Bit-SQNR",
+      "passNumber": 131,
+      "metric": "e8PackingSignalToQuantNoiseDb",
+      "threshold": ">= 18.0 dB",
+      "observed": 24.6474,
+      "verified": true
+    },
+    {
+      "rowId": "Y3-AQLM-Multi-Codebook-Relative-Reconstruction-Error",
+      "passNumber": 132,
+      "metric": "layerOutputRelativeErrorPct",
+      "threshold": "<= 1.0%",
+      "observed": 0.4352,
+      "verified": true
+    },
+    {
+      "rowId": "Y4-AQLM-Beam-Search-Codeword-Optimality",
+      "passNumber": 132,
+      "metric": "beamSearchCodewordOptimalityPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "Y5-SpinQuant-Cayley-Rotation-Kurtosis-Suppression",
+      "passNumber": 133,
+      "metric": "postRotationKurtosis",
+      "threshold": "<= 3.6",
+      "observed": 2.5516,
+      "verified": true
+    },
+    {
+      "rowId": "Y6-SpinQuant-ZeroOverhead-Weight-Bias-Fusion-Equivalence",
+      "passNumber": 133,
+      "metric": "rotationFusionEquivalenceDefect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "Y7-SpinQuant-W4A4-Accuracy-Retention",
+      "passNumber": 133,
+      "metric": "w4a4QuantizedAccuracyRetentionPct",
+      "threshold": ">= 99.0%",
+      "observed": 99.4904,
+      "verified": true
+    },
+    {
+      "rowId": "Y8-MXFP8-Stochastic-Rounding-Unbiased-Subgrid-Drift",
+      "passNumber": 134,
+      "metric": "stochasticRoundingBiasDrift",
+      "threshold": "<= 0.12",
+      "observed": 0.0278,
+      "verified": true
+    },
+    {
+      "rowId": "Y9-MXFP8-Block32-Shared-Exponent-Dynamic-Range",
+      "passNumber": 134,
+      "metric": "block32DynamicRangeDb",
+      "threshold": ">= 110.0 dB",
+      "observed": 114.3123,
+      "verified": true
+    },
+    {
+      "rowId": "Y10-Phase26-All-Four-Extreme-Quantization-Passes-100-Score",
+      "passNumber": 135,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass131Sha256": "0ae10eeb4684ec717720cd5f31ffdd121c2213d4523d0fd3ea5773b4da20825b",
+    "pass132Sha256": "b19a232143cdb5b04e6fd3fb8403026ee43e4b1cdb14f9c97c9eccc390d7e181",
+    "pass133Sha256": "7c47d2ebc475488c9593d895268fd436307ffbb8394f59f98be2466a032eab9f",
+    "pass134Sha256": "fe700b5d3fb1fc60f19661364f5037585ebe28825d08dcafdd93654482e65eae"
+  },
+  "phase26Sha256": "83cd764eaac03dbb681cadea79c923bf1b02227ea7f2fd5665add0cc0263cfdb"
+}
