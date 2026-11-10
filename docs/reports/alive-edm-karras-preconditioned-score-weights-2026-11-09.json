@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-158-EDM-KARRAS-PRECONDITIONED-SCORE-WEIGHTS",
+  "passNumber": 158,
+  "phase": "Phase XXXI: Consistency Models, Schrodinger Bridges, Karras EDM & AutoGuidance",
+  "generatedAt": "2026-11-09T20:22:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "karras-edm-cskip-cout-cin-unit-variance-preconditioner",
+  "winningScore": 100,
+  "profiles": {
+    "unpreconditioned-raw-score-prediction-scale-explosion": {
+      "profileId": "unpreconditioned-raw-score-prediction-scale-explosion",
+      "runs": [
+        {
+          "profileId": "unpreconditioned-raw-score-prediction-scale-explosion",
+          "seed": 19013,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 64,
+          "targetEffectiveUnitVarianceDeviation": 48,
+          "heun2ndOrderOdeGlobalError": 0.28,
+          "compositeScore": 13.2
+        },
+        {
+          "profileId": "unpreconditioned-raw-score-prediction-scale-explosion",
+          "seed": 29017,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 64,
+          "targetEffectiveUnitVarianceDeviation": 48,
+          "heun2ndOrderOdeGlobalError": 0.28,
+          "compositeScore": 13.2
+        },
+        {
+          "profileId": "unpreconditioned-raw-score-prediction-scale-explosion",
+          "seed": 39023,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 64,
+          "targetEffectiveUnitVarianceDeviation": 48,
+          "heun2ndOrderOdeGlobalError": 0.28,
+          "compositeScore": 13.2
+        },
+        {
+          "profileId": "unpreconditioned-raw-score-prediction-scale-explosion",
+          "seed": 49031,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 64,
+          "targetEffectiveUnitVarianceDeviation": 48,
+          "heun2ndOrderOdeGlobalError": 0.28,
+          "compositeScore": 13.2
+        },
+        {
+          "profileId": "unpreconditioned-raw-score-prediction-scale-explosion",
+          "seed": 59053,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 64,
+          "targetEffectiveUnitVarianceDeviation": 48,
+          "heun2ndOrderOdeGlobalError": 0.28,
+          "compositeScore": 13.2
+        }
+      ],
+      "stats": {
+        "inputUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 64,
+          "stdDev": 0,
+          "min": 64,
+          "max": 64,
+          "ci95": {
+            "low": 64,
+            "high": 64,
+            "halfWidth": 0
+          }
+        },
+        "targetEffectiveUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 48,
+          "stdDev": 0,
+          "min": 48,
+          "max": 48,
+          "ci95": {
+            "low": 48,
+            "high": 48,
+            "halfWidth": 0
+          }
+        },
+        "heun2ndOrderOdeGlobalError": {
+          "count": 5,
+          "mean": 0.28,
+          "stdDev": 0,
+          "min": 0.28,
+          "max": 0.28,
+          "ci95": {
+            "low": 0.28,
+            "high": 0.28,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 13.2,
+          "stdDev": 0,
+          "min": 13.2,
+          "max": 13.2,
+          "ci95": {
+            "low": 13.2,
+            "high": 13.2,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "eps-prediction-only-high-snr-target-amplification": {
+      "profileId": "eps-prediction-only-high-snr-target-amplification",
+      "runs": [
+        {
+          "profileId": "eps-prediction-only-high-snr-target-amplification",
+          "seed": 19013,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 12.5,
+          "heun2ndOrderOdeGlobalError": 0.085,
+          "compositeScore": 59.9
+        },
+        {
+          "profileId": "eps-prediction-only-high-snr-target-amplification",
+          "seed": 29017,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 12.5,
+          "heun2ndOrderOdeGlobalError": 0.085,
+          "compositeScore": 59.9
+        },
+        {
+          "profileId": "eps-prediction-only-high-snr-target-amplification",
+          "seed": 39023,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 12.5,
+          "heun2ndOrderOdeGlobalError": 0.085,
+          "compositeScore": 59.9
+        },
+        {
+          "profileId": "eps-prediction-only-high-snr-target-amplification",
+          "seed": 49031,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 12.5,
+          "heun2ndOrderOdeGlobalError": 0.085,
+          "compositeScore": 59.9
+        },
+        {
+          "profileId": "eps-prediction-only-high-snr-target-amplification",
+          "seed": 59053,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 12.5,
+          "heun2ndOrderOdeGlobalError": 0.085,
+          "compositeScore": 59.9
+        }
+      ],
+      "stats": {
+        "inputUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "targetEffectiveUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 12.5,
+          "stdDev": 0,
+          "min": 12.5,
+          "max": 12.5,
+          "ci95": {
+            "low": 12.5,
+            "high": 12.5,
+            "halfWidth": 0
+          }
+        },
+        "heun2ndOrderOdeGlobalError": {
+          "count": 5,
+          "mean": 0.085,
+          "stdDev": 0,
+          "min": 0.085,
+          "max": 0.085,
+          "ci95": {
+            "low": 0.085,
+            "high": 0.085,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 59.9,
+          "stdDev": 0,
+          "min": 59.9,
+          "max": 59.9,
+          "ci95": {
+            "low": 59.9,
+            "high": 59.9,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "x0-prediction-only-low-snr-vanishing-weight": {
+      "profileId": "x0-prediction-only-low-snr-vanishing-weight",
+      "runs": [
+        {
+          "profileId": "x0-prediction-only-low-snr-vanishing-weight",
+          "seed": 19013,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 8.4,
+          "heun2ndOrderOdeGlobalError": 0.052,
+          "compositeScore": 61.88
+        },
+        {
+          "profileId": "x0-prediction-only-low-snr-vanishing-weight",
+          "seed": 29017,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 8.4,
+          "heun2ndOrderOdeGlobalError": 0.052,
+          "compositeScore": 61.88
+        },
+        {
+          "profileId": "x0-prediction-only-low-snr-vanishing-weight",
+          "seed": 39023,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 8.4,
+          "heun2ndOrderOdeGlobalError": 0.052,
+          "compositeScore": 61.88
+        },
+        {
+          "profileId": "x0-prediction-only-low-snr-vanishing-weight",
+          "seed": 49031,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 8.4,
+          "heun2ndOrderOdeGlobalError": 0.052,
+          "compositeScore": 61.88
+        },
+        {
+          "profileId": "x0-prediction-only-low-snr-vanishing-weight",
+          "seed": 59053,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 8.4,
+          "heun2ndOrderOdeGlobalError": 0.052,
+          "compositeScore": 61.88
+        }
+      ],
+      "stats": {
+        "inputUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "targetEffectiveUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 8.4,
+          "stdDev": 0,
+          "min": 8.4,
+          "max": 8.4,
+          "ci95": {
+            "low": 8.4,
+            "high": 8.4,
+            "halfWidth": 0
+          }
+        },
+        "heun2ndOrderOdeGlobalError": {
+          "count": 5,
+          "mean": 0.052,
+          "stdDev": 0,
+          "min": 0.052,
+          "max": 0.052,
+          "ci95": {
+            "low": 0.052,
+            "high": 0.052,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 61.88,
+          "stdDev": 0,
+          "min": 61.88,
+          "max": 61.88,
+          "ci95": {
+            "low": 61.88,
+            "high": 61.88,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "karras-edm-cskip-cout-cin-unit-variance-preconditioner": {
+      "profileId": "karras-edm-cskip-cout-cin-unit-variance-preconditioner",
+      "runs": [
+        {
+          "profileId": "karras-edm-cskip-cout-cin-unit-variance-preconditioner",
+          "seed": 19013,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 0,
+          "heun2ndOrderOdeGlobalError": 0.00136,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "karras-edm-cskip-cout-cin-unit-variance-preconditioner",
+          "seed": 29017,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 0,
+          "heun2ndOrderOdeGlobalError": 0.001219,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "karras-edm-cskip-cout-cin-unit-variance-preconditioner",
+          "seed": 39023,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 0,
+          "heun2ndOrderOdeGlobalError": 0.001465,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "karras-edm-cskip-cout-cin-unit-variance-preconditioner",
+          "seed": 49031,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 0,
+          "heun2ndOrderOdeGlobalError": 0.001498,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "karras-edm-cskip-cout-cin-unit-variance-preconditioner",
+          "seed": 59053,
+          "episodes": 24,
+          "inputUnitVarianceDeviation": 0,
+          "targetEffectiveUnitVarianceDeviation": 0,
+          "heun2ndOrderOdeGlobalError": 0.001219,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "inputUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "targetEffectiveUnitVarianceDeviation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "heun2ndOrderOdeGlobalError": {
+          "count": 5,
+          "mean": 0.0014,
+          "stdDev": 0.0001,
+          "min": 0.0012,
+          "max": 0.0015,
+          "ci95": {
+            "low": 0.0012,
+            "high": 0.0015,
+            "halfWidth": 0.0002
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "26169368bf24f615be922989dcc7df0629a6390adf77f67235c623c8a1e487ee"
+}
