@@ -4,6 +4,6 @@
 - **Phase:** Phase XXVII: Information Geometry, Fisher-Rao Natural Gradients, Wasserstein & PAC-Bayes
 - **Seeds:** `19013, 29017, 39023, 49031, 59053`
 - **Winning Profile / Score:** `Z1..Z10` (`80`)
-- **SHA-256 Digest:** `e850aa87379e63151ce63bcdc405273a2ca72e7e5f784fbd3b40a23ebeaecc8d`
+- **SHA-256 Digest:** `e03da2e1f6917718b9dc41a19b5031ea5a81711b0abf221498a22427d6c64c4e`
 - **JSON Artifact:** `docs/reports/alive-information-geometry-pacbayes-phase27-audit-2026-11-09.json`
 - **SVG Artifact:** `docs/reports/alive-information-geometry-pacbayes-phase27-audit-2026-11-09.svg`

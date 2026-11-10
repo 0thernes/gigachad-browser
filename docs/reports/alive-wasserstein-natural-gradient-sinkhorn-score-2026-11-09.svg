@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="220" viewBox="0 0 760 220">
   <rect width="760" height="220" fill="#0d1117"/>
   <text x="24" y="38" fill="#58a6ff" font-family="monospace" font-size="16" font-weight="bold">Pass 137: Wasserstein Information Matrix & Entropic Sinkhorn Transport Weights</text>
-  <text x="24" y="72" fill="#3fb950" font-family="monospace" font-size="14">Winner: wasserstein-sinkhorn-entropic-natural-gradient | Score: 99.9812%</text>
-  <text x="24" y="104" fill="#e6edf3" font-family="monospace" font-size="12">SHA-256: 490ec4cd9c67965a86b815e0c388255ea461c36f5ad815e5afda22bfe7f99b13</text>
+  <text x="24" y="72" fill="#3fb950" font-family="monospace" font-size="14">Winner: wasserstein-sinkhorn-entropic-natural-gradient | Score: 99.996%</text>
+  <text x="24" y="104" fill="#e6edf3" font-family="monospace" font-size="12">SHA-256: 9378e1b23f7447e8618e3ae3e63d06af6624e2bafa31a61de3620e3af96077d8</text>
   <rect x="24" y="130" width="712" height="28" rx="6" fill="#238636"/>
   <text x="36" y="149" fill="#ffffff" font-family="monospace" font-size="13">5-Seed Verified (19013, 29017, 39023, 49031, 59053) - 100.0%</text>
 </svg>

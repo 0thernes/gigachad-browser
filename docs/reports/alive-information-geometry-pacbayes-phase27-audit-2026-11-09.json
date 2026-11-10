@@ -32,7 +32,7 @@
       "passNumber": 137,
       "metric": "marginalConservationError",
       "threshold": "<= 1e-6",
-      "observed": 0.0003,
+      "observed": 0.0001,
       "verified": false
     },
     {
@@ -88,7 +88,7 @@
       "passNumber": 140,
       "metric": "allPassesScore100",
       "threshold": "4/4 Passes === 100.0",
-      "observed": "100 / 99.9812 / 100 / 100",
+      "observed": "100 / 99.996 / 100 / 100",
       "verified": false
     }
   ],
@@ -98,9 +98,9 @@
   "allVerified": false,
   "passDigests": {
     "pass136Sha256": "7362edf7e3fb1f0fe555afdcaa46e381ca6fe206e019b6789153de90fc710f30",
-    "pass137Sha256": "490ec4cd9c67965a86b815e0c388255ea461c36f5ad815e5afda22bfe7f99b13",
+    "pass137Sha256": "9378e1b23f7447e8618e3ae3e63d06af6624e2bafa31a61de3620e3af96077d8",
     "pass138Sha256": "65de5d50e78fd810a6d8aa40804ba5401bc9b0e0a7b4b6b52fdbae6528b82017",
     "pass139Sha256": "83ffcb1b40b20054d2114fd70268bf9d67e6974a354c9f1eccc9fed10fb816af"
   },
-  "phase27Sha256": "e850aa87379e63151ce63bcdc405273a2ca72e7e5f784fbd3b40a23ebeaecc8d"
+  "phase27Sha256": "e03da2e1f6917718b9dc41a19b5031ea5a81711b0abf221498a22427d6c64c4e"
 }
