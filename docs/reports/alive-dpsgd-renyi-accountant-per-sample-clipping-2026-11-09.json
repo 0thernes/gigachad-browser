@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-181-DPSGD-RENYI-ACCOUNTANT-PER-SAMPLE-CLIPPING",
+  "passNumber": 181,
+  "phase": "Phase XXXVI: Privacy-Preserving & Cryptographic Weights (DP-SGD, Bulyan/Multi-Krum, Unlearning & Watermarking)",
+  "generatedAt": "2026-11-09T20:45:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "dpsgd-per-sample-clip-renyi-rdp-moments-accountant",
+  "winningScore": 100,
+  "profiles": {
+    "unclipped-sgd-membership-inference-vulnerability": {
+      "profileId": "unclipped-sgd-membership-inference-vulnerability",
+      "runs": [
+        {
+          "profileId": "unclipped-sgd-membership-inference-vulnerability",
+          "seed": 19013,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 4.2,
+          "certifiedPrivacyBudgetEpsilon": 48,
+          "membershipInferenceAttackAdvantage": 0.44,
+          "compositeScore": 3.6
+        },
+        {
+          "profileId": "unclipped-sgd-membership-inference-vulnerability",
+          "seed": 29017,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 4.2,
+          "certifiedPrivacyBudgetEpsilon": 48,
+          "membershipInferenceAttackAdvantage": 0.44,
+          "compositeScore": 3.6
+        },
+        {
+          "profileId": "unclipped-sgd-membership-inference-vulnerability",
+          "seed": 39023,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 4.2,
+          "certifiedPrivacyBudgetEpsilon": 48,
+          "membershipInferenceAttackAdvantage": 0.44,
+          "compositeScore": 3.6
+        },
+        {
+          "profileId": "unclipped-sgd-membership-inference-vulnerability",
+          "seed": 49031,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 4.2,
+          "certifiedPrivacyBudgetEpsilon": 48,
+          "membershipInferenceAttackAdvantage": 0.44,
+          "compositeScore": 3.6
+        },
+        {
+          "profileId": "unclipped-sgd-membership-inference-vulnerability",
+          "seed": 59053,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 4.2,
+          "certifiedPrivacyBudgetEpsilon": 48,
+          "membershipInferenceAttackAdvantage": 0.44,
+          "compositeScore": 3.6
+        }
+      ],
+      "stats": {
+        "perSampleSensitivityBoundViolation": {
+          "count": 5,
+          "mean": 4.2,
+          "stdDev": 0,
+          "min": 4.2,
+          "max": 4.2,
+          "ci95": {
+            "low": 4.2,
+            "high": 4.2,
+            "halfWidth": 0
+          }
+        },
+        "certifiedPrivacyBudgetEpsilon": {
+          "count": 5,
+          "mean": 48,
+          "stdDev": 0,
+          "min": 48,
+          "max": 48,
+          "ci95": {
+            "low": 48,
+            "high": 48,
+            "halfWidth": 0
+          }
+        },
+        "membershipInferenceAttackAdvantage": {
+          "count": 5,
+          "mean": 0.44,
+          "stdDev": 0,
+          "min": 0.44,
+          "max": 0.44,
+          "ci95": {
+            "low": 0.44,
+            "high": 0.44,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 3.6,
+          "stdDev": 0,
+          "min": 3.6,
+          "max": 3.6,
+          "ci95": {
+            "low": 3.6,
+            "high": 3.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "batch-level-clipping- unbounded-single-sample-sensitivity": {
+      "profileId": "batch-level-clipping- unbounded-single-sample-sensitivity",
+      "runs": [
+        {
+          "profileId": "batch-level-clipping- unbounded-single-sample-sensitivity",
+          "seed": 19013,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 1.85,
+          "certifiedPrivacyBudgetEpsilon": 18.5,
+          "membershipInferenceAttackAdvantage": 0.24,
+          "compositeScore": 15.6
+        },
+        {
+          "profileId": "batch-level-clipping- unbounded-single-sample-sensitivity",
+          "seed": 29017,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 1.85,
+          "certifiedPrivacyBudgetEpsilon": 18.5,
+          "membershipInferenceAttackAdvantage": 0.24,
+          "compositeScore": 15.6
+        },
+        {
+          "profileId": "batch-level-clipping- unbounded-single-sample-sensitivity",
+          "seed": 39023,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 1.85,
+          "certifiedPrivacyBudgetEpsilon": 18.5,
+          "membershipInferenceAttackAdvantage": 0.24,
+          "compositeScore": 15.6
+        },
+        {
+          "profileId": "batch-level-clipping- unbounded-single-sample-sensitivity",
+          "seed": 49031,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 1.85,
+          "certifiedPrivacyBudgetEpsilon": 18.5,
+          "membershipInferenceAttackAdvantage": 0.24,
+          "compositeScore": 15.6
+        },
+        {
+          "profileId": "batch-level-clipping- unbounded-single-sample-sensitivity",
+          "seed": 59053,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 1.85,
+          "certifiedPrivacyBudgetEpsilon": 18.5,
+          "membershipInferenceAttackAdvantage": 0.24,
+          "compositeScore": 15.6
+        }
+      ],
+      "stats": {
+        "perSampleSensitivityBoundViolation": {
+          "count": 5,
+          "mean": 1.85,
+          "stdDev": 0,
+          "min": 1.85,
+          "max": 1.85,
+          "ci95": {
+            "low": 1.85,
+            "high": 1.85,
+            "halfWidth": 0
+          }
+        },
+        "certifiedPrivacyBudgetEpsilon": {
+          "count": 5,
+          "mean": 18.5,
+          "stdDev": 0,
+          "min": 18.5,
+          "max": 18.5,
+          "ci95": {
+            "low": 18.5,
+            "high": 18.5,
+            "halfWidth": 0
+          }
+        },
+        "membershipInferenceAttackAdvantage": {
+          "count": 5,
+          "mean": 0.24,
+          "stdDev": 0,
+          "min": 0.24,
+          "max": 0.24,
+          "ci95": {
+            "low": 0.24,
+            "high": 0.24,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 15.6,
+          "stdDev": 0,
+          "min": 15.6,
+          "max": 15.6,
+          "ci95": {
+            "low": 15.6,
+            "high": 15.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "naive-strong-composition-loose-epsilon-explosion": {
+      "profileId": "naive-strong-composition-loose-epsilon-explosion",
+      "runs": [
+        {
+          "profileId": "naive-strong-composition-loose-epsilon-explosion",
+          "seed": 19013,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 9.4,
+          "membershipInferenceAttackAdvantage": 0.03,
+          "compositeScore": 77.48
+        },
+        {
+          "profileId": "naive-strong-composition-loose-epsilon-explosion",
+          "seed": 29017,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 9.4,
+          "membershipInferenceAttackAdvantage": 0.03,
+          "compositeScore": 77.48
+        },
+        {
+          "profileId": "naive-strong-composition-loose-epsilon-explosion",
+          "seed": 39023,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 9.4,
+          "membershipInferenceAttackAdvantage": 0.03,
+          "compositeScore": 77.48
+        },
+        {
+          "profileId": "naive-strong-composition-loose-epsilon-explosion",
+          "seed": 49031,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 9.4,
+          "membershipInferenceAttackAdvantage": 0.03,
+          "compositeScore": 77.48
+        },
+        {
+          "profileId": "naive-strong-composition-loose-epsilon-explosion",
+          "seed": 59053,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 9.4,
+          "membershipInferenceAttackAdvantage": 0.03,
+          "compositeScore": 77.48
+        }
+      ],
+      "stats": {
+        "perSampleSensitivityBoundViolation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "certifiedPrivacyBudgetEpsilon": {
+          "count": 5,
+          "mean": 9.4,
+          "stdDev": 0,
+          "min": 9.4,
+          "max": 9.4,
+          "ci95": {
+            "low": 9.4,
+            "high": 9.4,
+            "halfWidth": 0
+          }
+        },
+        "membershipInferenceAttackAdvantage": {
+          "count": 5,
+          "mean": 0.03,
+          "stdDev": 0,
+          "min": 0.03,
+          "max": 0.03,
+          "ci95": {
+            "low": 0.03,
+            "high": 0.03,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 77.48,
+          "stdDev": 0,
+          "min": 77.48,
+          "max": 77.48,
+          "ci95": {
+            "low": 77.48,
+            "high": 77.48,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "dpsgd-per-sample-clip-renyi-rdp-moments-accountant": {
+      "profileId": "dpsgd-per-sample-clip-renyi-rdp-moments-accountant",
+      "runs": [
+        {
+          "profileId": "dpsgd-per-sample-clip-renyi-rdp-moments-accountant",
+          "seed": 19013,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 1.6888,
+          "membershipInferenceAttackAdvantage": 0.00458,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dpsgd-per-sample-clip-renyi-rdp-moments-accountant",
+          "seed": 29017,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 1.669,
+          "membershipInferenceAttackAdvantage": 0.00422,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dpsgd-per-sample-clip-renyi-rdp-moments-accountant",
+          "seed": 39023,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 1.6694,
+          "membershipInferenceAttackAdvantage": 0.00407,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dpsgd-per-sample-clip-renyi-rdp-moments-accountant",
+          "seed": 49031,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 1.6683,
+          "membershipInferenceAttackAdvantage": 0.00424,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dpsgd-per-sample-clip-renyi-rdp-moments-accountant",
+          "seed": 59053,
+          "episodes": 24,
+          "perSampleSensitivityBoundViolation": 0,
+          "certifiedPrivacyBudgetEpsilon": 1.6663,
+          "membershipInferenceAttackAdvantage": 0.0045,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "perSampleSensitivityBoundViolation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "certifiedPrivacyBudgetEpsilon": {
+          "count": 5,
+          "mean": 1.6724,
+          "stdDev": 0.0093,
+          "min": 1.6663,
+          "max": 1.6888,
+          "ci95": {
+            "low": 1.6609,
+            "high": 1.6839,
+            "halfWidth": 0.0115
+          }
+        },
+        "membershipInferenceAttackAdvantage": {
+          "count": 5,
+          "mean": 0.0043,
+          "stdDev": 0.0002,
+          "min": 0.0041,
+          "max": 0.0046,
+          "ci95": {
+            "low": 0.0041,
+            "high": 0.0046,
+            "halfWidth": 0.0003
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "767438de0f5bcdb43ec567af196c9be95316529ae66263c8c2edf4bfea5d8288"
+}
