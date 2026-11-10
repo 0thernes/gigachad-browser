@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-187-MORDVINTSEV-NEURAL-CELLULAR-AUTOMATA-WEIGHT-GROWER",
+  "passNumber": 187,
+  "phase": "Phase XXXVII: Neuro-Genetic & Developmental Weight Encoding (HyperNEAT, NCA, Backpropamine & Baldwin)",
+  "generatedAt": "2026-11-09T20:51:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "mordvintsev-attractor-pool-self-healing-nca-weights",
+  "winningScore": 100,
+  "profiles": {
+    "static-weight-tensor-permanent-damage-under-ablation": {
+      "profileId": "static-weight-tensor-permanent-damage-under-ablation",
+      "runs": [
+        {
+          "profileId": "static-weight-tensor-permanent-damage-under-ablation",
+          "seed": 19013,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 50,
+          "asymptoticAttractorDriftError": 0.5,
+          "asynchronousUpdateRobustnessPct": 0,
+          "compositeScore": 17.5
+        },
+        {
+          "profileId": "static-weight-tensor-permanent-damage-under-ablation",
+          "seed": 29017,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 50,
+          "asymptoticAttractorDriftError": 0.5,
+          "asynchronousUpdateRobustnessPct": 0,
+          "compositeScore": 17.5
+        },
+        {
+          "profileId": "static-weight-tensor-permanent-damage-under-ablation",
+          "seed": 39023,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 50,
+          "asymptoticAttractorDriftError": 0.5,
+          "asynchronousUpdateRobustnessPct": 0,
+          "compositeScore": 17.5
+        },
+        {
+          "profileId": "static-weight-tensor-permanent-damage-under-ablation",
+          "seed": 49031,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 50,
+          "asymptoticAttractorDriftError": 0.5,
+          "asynchronousUpdateRobustnessPct": 0,
+          "compositeScore": 17.5
+        },
+        {
+          "profileId": "static-weight-tensor-permanent-damage-under-ablation",
+          "seed": 59053,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 50,
+          "asymptoticAttractorDriftError": 0.5,
+          "asynchronousUpdateRobustnessPct": 0,
+          "compositeScore": 17.5
+        }
+      ],
+      "stats": {
+        "postAblationRegenerationRecoveryPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "asymptoticAttractorDriftError": {
+          "count": 5,
+          "mean": 0.5,
+          "stdDev": 0,
+          "min": 0.5,
+          "max": 0.5,
+          "ci95": {
+            "low": 0.5,
+            "high": 0.5,
+            "halfWidth": 0
+          }
+        },
+        "asynchronousUpdateRobustnessPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 17.5,
+          "stdDev": 0,
+          "min": 17.5,
+          "max": 17.5,
+          "ci95": {
+            "low": 17.5,
+            "high": 17.5,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "open-loop-nca-unbounded-growth-instability": {
+      "profileId": "open-loop-nca-unbounded-growth-instability",
+      "runs": [
+        {
+          "profileId": "open-loop-nca-unbounded-growth-instability",
+          "seed": 19013,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 68,
+          "asymptoticAttractorDriftError": 0.34,
+          "asynchronousUpdateRobustnessPct": 62.5,
+          "compositeScore": 53.75
+        },
+        {
+          "profileId": "open-loop-nca-unbounded-growth-instability",
+          "seed": 29017,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 68,
+          "asymptoticAttractorDriftError": 0.34,
+          "asynchronousUpdateRobustnessPct": 62.5,
+          "compositeScore": 53.75
+        },
+        {
+          "profileId": "open-loop-nca-unbounded-growth-instability",
+          "seed": 39023,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 68,
+          "asymptoticAttractorDriftError": 0.34,
+          "asynchronousUpdateRobustnessPct": 62.5,
+          "compositeScore": 53.75
+        },
+        {
+          "profileId": "open-loop-nca-unbounded-growth-instability",
+          "seed": 49031,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 68,
+          "asymptoticAttractorDriftError": 0.34,
+          "asynchronousUpdateRobustnessPct": 62.5,
+          "compositeScore": 53.75
+        },
+        {
+          "profileId": "open-loop-nca-unbounded-growth-instability",
+          "seed": 59053,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 68,
+          "asymptoticAttractorDriftError": 0.34,
+          "asynchronousUpdateRobustnessPct": 62.5,
+          "compositeScore": 53.75
+        }
+      ],
+      "stats": {
+        "postAblationRegenerationRecoveryPct": {
+          "count": 5,
+          "mean": 68,
+          "stdDev": 0,
+          "min": 68,
+          "max": 68,
+          "ci95": {
+            "low": 68,
+            "high": 68,
+            "halfWidth": 0
+          }
+        },
+        "asymptoticAttractorDriftError": {
+          "count": 5,
+          "mean": 0.34,
+          "stdDev": 0,
+          "min": 0.34,
+          "max": 0.34,
+          "ci95": {
+            "low": 0.34,
+            "high": 0.34,
+            "halfWidth": 0
+          }
+        },
+        "asynchronousUpdateRobustnessPct": {
+          "count": 5,
+          "mean": 62.5,
+          "stdDev": 0,
+          "min": 62.5,
+          "max": 62.5,
+          "ci95": {
+            "low": 62.5,
+            "high": 62.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 53.75,
+          "stdDev": 0,
+          "min": 53.75,
+          "max": 53.75,
+          "ci95": {
+            "low": 53.75,
+            "high": 53.75,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "synchronous-only-nca-global-clock-fragility": {
+      "profileId": "synchronous-only-nca-global-clock-fragility",
+      "runs": [
+        {
+          "profileId": "synchronous-only-nca-global-clock-fragility",
+          "seed": 19013,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 88.5,
+          "asymptoticAttractorDriftError": 0.06,
+          "asynchronousUpdateRobustnessPct": 75,
+          "compositeScore": 84.275
+        },
+        {
+          "profileId": "synchronous-only-nca-global-clock-fragility",
+          "seed": 29017,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 88.5,
+          "asymptoticAttractorDriftError": 0.06,
+          "asynchronousUpdateRobustnessPct": 75,
+          "compositeScore": 84.275
+        },
+        {
+          "profileId": "synchronous-only-nca-global-clock-fragility",
+          "seed": 39023,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 88.5,
+          "asymptoticAttractorDriftError": 0.06,
+          "asynchronousUpdateRobustnessPct": 75,
+          "compositeScore": 84.275
+        },
+        {
+          "profileId": "synchronous-only-nca-global-clock-fragility",
+          "seed": 49031,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 88.5,
+          "asymptoticAttractorDriftError": 0.06,
+          "asynchronousUpdateRobustnessPct": 75,
+          "compositeScore": 84.275
+        },
+        {
+          "profileId": "synchronous-only-nca-global-clock-fragility",
+          "seed": 59053,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 88.5,
+          "asymptoticAttractorDriftError": 0.06,
+          "asynchronousUpdateRobustnessPct": 75,
+          "compositeScore": 84.275
+        }
+      ],
+      "stats": {
+        "postAblationRegenerationRecoveryPct": {
+          "count": 5,
+          "mean": 88.5,
+          "stdDev": 0,
+          "min": 88.5,
+          "max": 88.5,
+          "ci95": {
+            "low": 88.5,
+            "high": 88.5,
+            "halfWidth": 0
+          }
+        },
+        "asymptoticAttractorDriftError": {
+          "count": 5,
+          "mean": 0.06,
+          "stdDev": 0,
+          "min": 0.06,
+          "max": 0.06,
+          "ci95": {
+            "low": 0.06,
+            "high": 0.06,
+            "halfWidth": 0
+          }
+        },
+        "asynchronousUpdateRobustnessPct": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 84.275,
+          "stdDev": 0,
+          "min": 84.275,
+          "max": 84.275,
+          "ci95": {
+            "low": 84.275,
+            "high": 84.275,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "mordvintsev-attractor-pool-self-healing-nca-weights": {
+      "profileId": "mordvintsev-attractor-pool-self-healing-nca-weights",
+      "runs": [
+        {
+          "profileId": "mordvintsev-attractor-pool-self-healing-nca-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 100,
+          "asymptoticAttractorDriftError": 0,
+          "asynchronousUpdateRobustnessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "mordvintsev-attractor-pool-self-healing-nca-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 100,
+          "asymptoticAttractorDriftError": 0,
+          "asynchronousUpdateRobustnessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "mordvintsev-attractor-pool-self-healing-nca-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 100,
+          "asymptoticAttractorDriftError": 0,
+          "asynchronousUpdateRobustnessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "mordvintsev-attractor-pool-self-healing-nca-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 100,
+          "asymptoticAttractorDriftError": 0,
+          "asynchronousUpdateRobustnessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "mordvintsev-attractor-pool-self-healing-nca-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "postAblationRegenerationRecoveryPct": 100,
+          "asymptoticAttractorDriftError": 0,
+          "asynchronousUpdateRobustnessPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "postAblationRegenerationRecoveryPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "asymptoticAttractorDriftError": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "asynchronousUpdateRobustnessPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "1e307726e308116c09f5081f77bca31260b6189a60958c152c8129075f22e15d"
+}
