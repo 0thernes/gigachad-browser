@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-155-TOPOLOGICAL-HODGE-SHEAF-PHASE30-AUDIT",
+  "passNumber": 155,
+  "phase": "Phase XXX: Topological Deep Learning (Simplicial Hodge Laplacians, Cellular Sheaf Networks, Persistent Homology & DECT)",
+  "generatedAt": "2026-11-09T20:19:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "T2_1-Simplicial-Boundary-Nilpotency-B1-B2-Zero",
+      "passNumber": 151,
+      "metric": "boundaryNilpotencyDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "T2_2-Hodge-Helmholtz-Gradient-Curl-Orthogonality",
+      "passNumber": 151,
+      "metric": "hodgeOrthogonalityInnerProductDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "T2_3-Cellular-Sheaf-O2-Harmonic-Section-Zero-Coboundary",
+      "passNumber": 152,
+      "metric": "sheafHarmonicSectionDisagreement",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "T2_4-Cellular-Sheaf-64Layer-Dirichlet-Energy-Retention",
+      "passNumber": 152,
+      "metric": "deep64LayerDirichletEnergyRetentionPct",
+      "threshold": ">= 99.0%",
+      "observed": 99.6631,
+      "verified": true
+    },
+    {
+      "rowId": "T2_5-Persistent-Homology-Betti-Number-Exact-Recovery",
+      "passNumber": 153,
+      "metric": "bettiNumberExactMatchPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "T2_6-Persistent-Homology-Bottleneck-Distance",
+      "passNumber": 153,
+      "metric": "persistenceDiagramBottleneckDistance",
+      "threshold": "<= 0.01",
+      "observed": 0.0045,
+      "verified": true
+    },
+    {
+      "rowId": "T2_7-Persistent-Homology-Cycle-Signal-To-Noise-Ratio",
+      "passNumber": 153,
+      "metric": "cycleSignalToTopologicalNoiseRatio",
+      "threshold": ">= 15.0",
+      "observed": 18.7021,
+      "verified": true
+    },
+    {
+      "rowId": "T2_8-DECT-Euler-Poincare-Global-Identity-Preservation",
+      "passNumber": 154,
+      "metric": "eulerPoincareGlobalIdentityDefect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "T2_9-DECT-1WL-Indistinguishable-Graph-Separation",
+      "passNumber": 154,
+      "metric": "nonIsomorphic1WlGraphSeparationPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "T2_10-Phase30-All-Four-Topological-Passes-100-Score",
+      "passNumber": 155,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass151Sha256": "40b6f354215ce840b887b055ea5d8c35317ce47d6f653cafb5638c7c5a3c4599",
+    "pass152Sha256": "dbfada1468155c34edd83ce4a278640c8b707a70fd841a38f77406df0e76d62f",
+    "pass153Sha256": "2e85a259b43beb434e72e3d4e461c0381fd632f794ff33ad5d679b30401295b1",
+    "pass154Sha256": "096b36eeb980abead1edc0eaf3755a01b6886e03abdf75e2ef4c2d3abd965460"
+  },
+  "phase30Sha256": "c647adf2c297a9775eb6f7f31be609833e97218dac31d4ad2e8269a9778846f1"
+}
