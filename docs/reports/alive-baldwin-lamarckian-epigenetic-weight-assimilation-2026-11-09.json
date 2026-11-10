@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-189-BALDWIN-LAMARCKIAN-EPIGENETIC-WEIGHT-ASSIMILATION",
+  "passNumber": 189,
+  "phase": "Phase XXXVII: Neuro-Genetic & Developmental Weight Encoding (HyperNEAT, NCA, Backpropamine & Baldwin)",
+  "generatedAt": "2026-11-09T20:53:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "baldwin-canalized-plasticity-genetic-assimilation-weights",
+  "winningScore": 100,
+  "profiles": {
+    "darwinian-only-needle-in-haystack-zero-gradient": {
+      "profileId": "darwinian-only-needle-in-haystack-zero-gradient",
+      "runs": [
+        {
+          "profileId": "darwinian-only-needle-in-haystack-zero-gradient",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 1,
+          "innateZeroShotAssimilationPct": 0,
+          "epigeneticCanalizationStabilityPct": 50,
+          "compositeScore": 16.4
+        },
+        {
+          "profileId": "darwinian-only-needle-in-haystack-zero-gradient",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 1,
+          "innateZeroShotAssimilationPct": 0,
+          "epigeneticCanalizationStabilityPct": 50,
+          "compositeScore": 16.4
+        },
+        {
+          "profileId": "darwinian-only-needle-in-haystack-zero-gradient",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 1,
+          "innateZeroShotAssimilationPct": 0,
+          "epigeneticCanalizationStabilityPct": 50,
+          "compositeScore": 16.4
+        },
+        {
+          "profileId": "darwinian-only-needle-in-haystack-zero-gradient",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 1,
+          "innateZeroShotAssimilationPct": 0,
+          "epigeneticCanalizationStabilityPct": 50,
+          "compositeScore": 16.4
+        },
+        {
+          "profileId": "darwinian-only-needle-in-haystack-zero-gradient",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 1,
+          "innateZeroShotAssimilationPct": 0,
+          "epigeneticCanalizationStabilityPct": 50,
+          "compositeScore": 16.4
+        }
+      ],
+      "stats": {
+        "needleInHaystackDiscoverySpeedup": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "innateZeroShotAssimilationPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "epigeneticCanalizationStabilityPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 16.4,
+          "stdDev": 0,
+          "min": 16.4,
+          "max": 16.4,
+          "ci95": {
+            "low": 16.4,
+            "high": 16.4,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "direct-lamarckian-inheritance-noisy-environment-overfitting": {
+      "profileId": "direct-lamarckian-inheritance-noisy-environment-overfitting",
+      "runs": [
+        {
+          "profileId": "direct-lamarckian-inheritance-noisy-environment-overfitting",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 12.5,
+          "innateZeroShotAssimilationPct": 79.1667,
+          "epigeneticCanalizationStabilityPct": 42,
+          "compositeScore": 57.8083
+        },
+        {
+          "profileId": "direct-lamarckian-inheritance-noisy-environment-overfitting",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 12.5,
+          "innateZeroShotAssimilationPct": 79.1667,
+          "epigeneticCanalizationStabilityPct": 42,
+          "compositeScore": 57.8083
+        },
+        {
+          "profileId": "direct-lamarckian-inheritance-noisy-environment-overfitting",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 12.5,
+          "innateZeroShotAssimilationPct": 79.1667,
+          "epigeneticCanalizationStabilityPct": 42,
+          "compositeScore": 57.8083
+        },
+        {
+          "profileId": "direct-lamarckian-inheritance-noisy-environment-overfitting",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 12.5,
+          "innateZeroShotAssimilationPct": 79.1667,
+          "epigeneticCanalizationStabilityPct": 42,
+          "compositeScore": 57.8083
+        },
+        {
+          "profileId": "direct-lamarckian-inheritance-noisy-environment-overfitting",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 12.5,
+          "innateZeroShotAssimilationPct": 79.1667,
+          "epigeneticCanalizationStabilityPct": 42,
+          "compositeScore": 57.8083
+        }
+      ],
+      "stats": {
+        "needleInHaystackDiscoverySpeedup": {
+          "count": 5,
+          "mean": 12.5,
+          "stdDev": 0,
+          "min": 12.5,
+          "max": 12.5,
+          "ci95": {
+            "low": 12.5,
+            "high": 12.5,
+            "halfWidth": 0
+          }
+        },
+        "innateZeroShotAssimilationPct": {
+          "count": 5,
+          "mean": 79.1667,
+          "stdDev": 0,
+          "min": 79.1667,
+          "max": 79.1667,
+          "ci95": {
+            "low": 79.1667,
+            "high": 79.1667,
+            "halfWidth": 0
+          }
+        },
+        "epigeneticCanalizationStabilityPct": {
+          "count": 5,
+          "mean": 42,
+          "stdDev": 0,
+          "min": 42,
+          "max": 42,
+          "ci95": {
+            "low": 42,
+            "high": 42,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 57.8083,
+          "stdDev": 0,
+          "min": 57.8083,
+          "max": 57.8083,
+          "ci95": {
+            "low": 57.8083,
+            "high": 57.8083,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unlimited-plasticity-cost-no-genetic-assimilation": {
+      "profileId": "unlimited-plasticity-cost-no-genetic-assimilation",
+      "runs": [
+        {
+          "profileId": "unlimited-plasticity-cost-no-genetic-assimilation",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 14,
+          "innateZeroShotAssimilationPct": 54.1667,
+          "epigeneticCanalizationStabilityPct": 83.3333,
+          "compositeScore": 63.5583
+        },
+        {
+          "profileId": "unlimited-plasticity-cost-no-genetic-assimilation",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 14,
+          "innateZeroShotAssimilationPct": 54.1667,
+          "epigeneticCanalizationStabilityPct": 83.3333,
+          "compositeScore": 63.5583
+        },
+        {
+          "profileId": "unlimited-plasticity-cost-no-genetic-assimilation",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 14,
+          "innateZeroShotAssimilationPct": 54.1667,
+          "epigeneticCanalizationStabilityPct": 83.3333,
+          "compositeScore": 63.5583
+        },
+        {
+          "profileId": "unlimited-plasticity-cost-no-genetic-assimilation",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 14,
+          "innateZeroShotAssimilationPct": 54.1667,
+          "epigeneticCanalizationStabilityPct": 83.3333,
+          "compositeScore": 63.5583
+        },
+        {
+          "profileId": "unlimited-plasticity-cost-no-genetic-assimilation",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 14,
+          "innateZeroShotAssimilationPct": 54.1667,
+          "epigeneticCanalizationStabilityPct": 83.3333,
+          "compositeScore": 63.5583
+        }
+      ],
+      "stats": {
+        "needleInHaystackDiscoverySpeedup": {
+          "count": 5,
+          "mean": 14,
+          "stdDev": 0,
+          "min": 14,
+          "max": 14,
+          "ci95": {
+            "low": 14,
+            "high": 14,
+            "halfWidth": 0
+          }
+        },
+        "innateZeroShotAssimilationPct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "epigeneticCanalizationStabilityPct": {
+          "count": 5,
+          "mean": 83.3333,
+          "stdDev": 0,
+          "min": 83.3333,
+          "max": 83.3333,
+          "ci95": {
+            "low": 83.3333,
+            "high": 83.3333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 63.5583,
+          "stdDev": 0,
+          "min": 63.5583,
+          "max": 63.5583,
+          "ci95": {
+            "low": 63.5583,
+            "high": 63.5583,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "baldwin-canalized-plasticity-genetic-assimilation-weights": {
+      "profileId": "baldwin-canalized-plasticity-genetic-assimilation-weights",
+      "runs": [
+        {
+          "profileId": "baldwin-canalized-plasticity-genetic-assimilation-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 32.7672,
+          "innateZeroShotAssimilationPct": 100,
+          "epigeneticCanalizationStabilityPct": 99.6553,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "baldwin-canalized-plasticity-genetic-assimilation-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 32.532,
+          "innateZeroShotAssimilationPct": 100,
+          "epigeneticCanalizationStabilityPct": 99.6746,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "baldwin-canalized-plasticity-genetic-assimilation-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 32.9422,
+          "innateZeroShotAssimilationPct": 100,
+          "epigeneticCanalizationStabilityPct": 99.6289,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "baldwin-canalized-plasticity-genetic-assimilation-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 32.9969,
+          "innateZeroShotAssimilationPct": 100,
+          "epigeneticCanalizationStabilityPct": 99.6071,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "baldwin-canalized-plasticity-genetic-assimilation-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "needleInHaystackDiscoverySpeedup": 32.5317,
+          "innateZeroShotAssimilationPct": 100,
+          "epigeneticCanalizationStabilityPct": 99.6867,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "needleInHaystackDiscoverySpeedup": {
+          "count": 5,
+          "mean": 32.754,
+          "stdDev": 0.2198,
+          "min": 32.5317,
+          "max": 32.9969,
+          "ci95": {
+            "low": 32.481,
+            "high": 33.027,
+            "halfWidth": 0.273
+          }
+        },
+        "innateZeroShotAssimilationPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "epigeneticCanalizationStabilityPct": {
+          "count": 5,
+          "mean": 99.6505,
+          "stdDev": 0.0327,
+          "min": 99.6071,
+          "max": 99.6867,
+          "ci95": {
+            "low": 99.61,
+            "high": 99.6911,
+            "halfWidth": 0.0405
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "9fb448a357db03955f522bca1f4d7b1bf894775711fb09993222e97a94f0ec72"
+}
