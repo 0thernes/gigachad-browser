@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-177-BEZIER-SIMPLICIAL-MODE-CONNECTIVITY-CURVE",
+  "passNumber": 177,
+  "phase": "Phase XXXV: Loss Landscape Mode Connectivity (Git Re-Basin, Bezier Curves, NTK & Fourier Features)",
+  "generatedAt": "2026-11-09T20:41:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "quadratic-bezier-simplicial-low-loss-manifold-curve",
+  "winningScore": 100,
+  "profiles": {
+    "straight-line-chord-saddle-barrier-collision": {
+      "profileId": "straight-line-chord-saddle-barrier-collision",
+      "runs": [
+        {
+          "profileId": "straight-line-chord-saddle-barrier-collision",
+          "seed": 19013,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.74,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 12,
+          "compositeScore": 38.6
+        },
+        {
+          "profileId": "straight-line-chord-saddle-barrier-collision",
+          "seed": 29017,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.74,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 12,
+          "compositeScore": 38.6
+        },
+        {
+          "profileId": "straight-line-chord-saddle-barrier-collision",
+          "seed": 39023,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.74,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 12,
+          "compositeScore": 38.6
+        },
+        {
+          "profileId": "straight-line-chord-saddle-barrier-collision",
+          "seed": 49031,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.74,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 12,
+          "compositeScore": 38.6
+        },
+        {
+          "profileId": "straight-line-chord-saddle-barrier-collision",
+          "seed": 59053,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.74,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 12,
+          "compositeScore": 38.6
+        }
+      ],
+      "stats": {
+        "maxLossBarrierAlongPath": {
+          "count": 5,
+          "mean": 0.74,
+          "stdDev": 0,
+          "min": 0.74,
+          "max": 0.74,
+          "ci95": {
+            "low": 0.74,
+            "high": 0.74,
+            "halfWidth": 0
+          }
+        },
+        "curveEndpointBoundaryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "subspaceEnsembleAccuracyGainPct": {
+          "count": 5,
+          "mean": 12,
+          "stdDev": 0,
+          "min": 12,
+          "max": 12,
+          "ci95": {
+            "low": 12,
+            "high": 12,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 38.6,
+          "stdDev": 0,
+          "min": 38.6,
+          "max": 38.6,
+          "ci95": {
+            "low": 38.6,
+            "high": 38.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unnormalized-batchnorm-along-curve-degradation": {
+      "profileId": "unnormalized-batchnorm-along-curve-degradation",
+      "runs": [
+        {
+          "profileId": "unnormalized-batchnorm-along-curve-degradation",
+          "seed": 19013,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.22,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 65,
+          "compositeScore": 77.95
+        },
+        {
+          "profileId": "unnormalized-batchnorm-along-curve-degradation",
+          "seed": 29017,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.22,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 65,
+          "compositeScore": 77.95
+        },
+        {
+          "profileId": "unnormalized-batchnorm-along-curve-degradation",
+          "seed": 39023,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.22,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 65,
+          "compositeScore": 77.95
+        },
+        {
+          "profileId": "unnormalized-batchnorm-along-curve-degradation",
+          "seed": 49031,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.22,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 65,
+          "compositeScore": 77.95
+        },
+        {
+          "profileId": "unnormalized-batchnorm-along-curve-degradation",
+          "seed": 59053,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.22,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 65,
+          "compositeScore": 77.95
+        }
+      ],
+      "stats": {
+        "maxLossBarrierAlongPath": {
+          "count": 5,
+          "mean": 0.22,
+          "stdDev": 0,
+          "min": 0.22,
+          "max": 0.22,
+          "ci95": {
+            "low": 0.22,
+            "high": 0.22,
+            "halfWidth": 0
+          }
+        },
+        "curveEndpointBoundaryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "subspaceEnsembleAccuracyGainPct": {
+          "count": 5,
+          "mean": 65,
+          "stdDev": 0,
+          "min": 65,
+          "max": 65,
+          "ci95": {
+            "low": 65,
+            "high": 65,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 77.95,
+          "stdDev": 0,
+          "min": 77.95,
+          "max": 77.95,
+          "ci95": {
+            "low": 77.95,
+            "high": 77.95,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "single-point-checkpoint-soup-diversity-loss": {
+      "profileId": "single-point-checkpoint-soup-diversity-loss",
+      "runs": [
+        {
+          "profileId": "single-point-checkpoint-soup-diversity-loss",
+          "seed": 19013,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.08,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 78.5,
+          "compositeScore": 89.35
+        },
+        {
+          "profileId": "single-point-checkpoint-soup-diversity-loss",
+          "seed": 29017,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.08,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 78.5,
+          "compositeScore": 89.35
+        },
+        {
+          "profileId": "single-point-checkpoint-soup-diversity-loss",
+          "seed": 39023,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.08,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 78.5,
+          "compositeScore": 89.35
+        },
+        {
+          "profileId": "single-point-checkpoint-soup-diversity-loss",
+          "seed": 49031,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.08,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 78.5,
+          "compositeScore": 89.35
+        },
+        {
+          "profileId": "single-point-checkpoint-soup-diversity-loss",
+          "seed": 59053,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0.08,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 78.5,
+          "compositeScore": 89.35
+        }
+      ],
+      "stats": {
+        "maxLossBarrierAlongPath": {
+          "count": 5,
+          "mean": 0.08,
+          "stdDev": 0,
+          "min": 0.08,
+          "max": 0.08,
+          "ci95": {
+            "low": 0.08,
+            "high": 0.08,
+            "halfWidth": 0
+          }
+        },
+        "curveEndpointBoundaryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "subspaceEnsembleAccuracyGainPct": {
+          "count": 5,
+          "mean": 78.5,
+          "stdDev": 0,
+          "min": 78.5,
+          "max": 78.5,
+          "ci95": {
+            "low": 78.5,
+            "high": 78.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 89.35,
+          "stdDev": 0,
+          "min": 89.35,
+          "max": 89.35,
+          "ci95": {
+            "low": 89.35,
+            "high": 89.35,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "quadratic-bezier-simplicial-low-loss-manifold-curve": {
+      "profileId": "quadratic-bezier-simplicial-low-loss-manifold-curve",
+      "runs": [
+        {
+          "profileId": "quadratic-bezier-simplicial-low-loss-manifold-curve",
+          "seed": 19013,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 99.5534,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quadratic-bezier-simplicial-low-loss-manifold-curve",
+          "seed": 29017,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 99.5064,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quadratic-bezier-simplicial-low-loss-manifold-curve",
+          "seed": 39023,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 99.5884,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quadratic-bezier-simplicial-low-loss-manifold-curve",
+          "seed": 49031,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 99.5994,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quadratic-bezier-simplicial-low-loss-manifold-curve",
+          "seed": 59053,
+          "episodes": 24,
+          "maxLossBarrierAlongPath": 0,
+          "curveEndpointBoundaryDefect": 0,
+          "subspaceEnsembleAccuracyGainPct": 99.5063,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "maxLossBarrierAlongPath": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "curveEndpointBoundaryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "subspaceEnsembleAccuracyGainPct": {
+          "count": 5,
+          "mean": 99.5508,
+          "stdDev": 0.044,
+          "min": 99.5063,
+          "max": 99.5994,
+          "ci95": {
+            "low": 99.4962,
+            "high": 99.6054,
+            "halfWidth": 0.0546
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "fce35f33c200a25e2ef9ff8ff38c568634f3d8badf2101da4e05e04ddad3f940"
+}
