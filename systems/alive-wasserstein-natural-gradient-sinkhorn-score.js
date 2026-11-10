@@ -87,7 +87,7 @@
             cost[r * 4 + c] = d * d;
           }
         }
-        var P = sinkhornPlan4x4(cost, pMarg, qMarg, 0.1, 80);
+        var P = sinkhornPlan4x4(cost, pMarg, qMarg, 0.5, 60);
         for (var r2 = 0; r2 < 4; r2++) {
           var rowSum = 0;
           for (var c2 = 0; c2 < 4; c2++) rowSum += P[r2 * 4 + c2];

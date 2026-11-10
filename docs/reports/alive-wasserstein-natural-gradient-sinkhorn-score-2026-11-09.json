@@ -12,7 +12,7 @@
   ],
   "episodesPerSeed": 24,
   "winningProfileId": "wasserstein-sinkhorn-entropic-natural-gradient",
-  "winningScore": 99.996,
+  "winningScore": 100,
   "profiles": {
     "kl-divergence-disjoint-support-explosion": {
       "profileId": "kl-divergence-disjoint-support-explosion",
@@ -321,58 +321,58 @@
           "profileId": "wasserstein-sinkhorn-entropic-natural-gradient",
           "seed": 19013,
           "episodes": 24,
-          "marginalConservationError": 0.000067185,
+          "marginalConservationError": 5.51e-7,
           "disjointSupportGradientFinitenessPct": 100,
           "wassersteinGeodesicTransportEfficiencyPct": 98.9078,
-          "compositeScore": 99.9953
+          "compositeScore": 100
         },
         {
           "profileId": "wasserstein-sinkhorn-entropic-natural-gradient",
           "seed": 29017,
           "episodes": 24,
-          "marginalConservationError": 0.000059104,
+          "marginalConservationError": 7.4e-7,
           "disjointSupportGradientFinitenessPct": 100,
           "wassersteinGeodesicTransportEfficiencyPct": 99.0665,
-          "compositeScore": 99.9959
+          "compositeScore": 100
         },
         {
           "profileId": "wasserstein-sinkhorn-entropic-natural-gradient",
           "seed": 39023,
           "episodes": 24,
-          "marginalConservationError": 0.000055136,
+          "marginalConservationError": 7.5e-7,
           "disjointSupportGradientFinitenessPct": 100,
           "wassersteinGeodesicTransportEfficiencyPct": 98.975,
-          "compositeScore": 99.9961
+          "compositeScore": 100
         },
         {
           "profileId": "wasserstein-sinkhorn-entropic-natural-gradient",
           "seed": 49031,
           "episodes": 24,
-          "marginalConservationError": 0.000054193,
+          "marginalConservationError": 9.83e-7,
           "disjointSupportGradientFinitenessPct": 100,
           "wassersteinGeodesicTransportEfficiencyPct": 99.093,
-          "compositeScore": 99.9962
+          "compositeScore": 100
         },
         {
           "profileId": "wasserstein-sinkhorn-entropic-natural-gradient",
           "seed": 59053,
           "episodes": 24,
-          "marginalConservationError": 0.000052457,
+          "marginalConservationError": 8.68e-7,
           "disjointSupportGradientFinitenessPct": 100,
           "wassersteinGeodesicTransportEfficiencyPct": 98.9104,
-          "compositeScore": 99.9963
+          "compositeScore": 100
         }
       ],
       "stats": {
         "marginalConservationError": {
           "count": 5,
-          "mean": 0.0001,
+          "mean": 0,
           "stdDev": 0,
-          "min": 0.0001,
-          "max": 0.0001,
+          "min": 0,
+          "max": 0,
           "ci95": {
-            "low": 0.0001,
-            "high": 0.0001,
+            "low": 0,
+            "high": 0,
             "halfWidth": 0
           }
         },
@@ -402,18 +402,18 @@
         },
         "compositeScore": {
           "count": 5,
-          "mean": 99.996,
-          "stdDev": 0.0004,
-          "min": 99.9953,
-          "max": 99.9963,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
           "ci95": {
-            "low": 99.9955,
-            "high": 99.9965,
-            "halfWidth": 0.0005
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
           }
         }
       }
     }
   },
-  "sha256": "9378e1b23f7447e8618e3ae3e63d06af6624e2bafa31a61de3620e3af96077d8"
+  "sha256": "625d6be42d195c1dd075d0d283807635ccd1e56aa2e6df9a3963468cbee7b984"
 }
