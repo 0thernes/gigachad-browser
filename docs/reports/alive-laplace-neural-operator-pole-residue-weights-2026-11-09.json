@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-118-LAPLACE-NEURAL-OPERATOR-POLE-RESIDUE-WEIGHTS",
+  "passNumber": 118,
+  "phase": "Phase XXIII: Spectral, Wavelet & Laplace Neural Operators",
+  "generatedAt": "2026-11-09T19:42:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "hurwitz-pole-residue-laplace-neural-operator",
+  "winningScore": 100,
+  "profiles": {
+    "periodic-fourier-transient-mismatch": {
+      "profileId": "periodic-fourier-transient-mismatch",
+      "runs": [
+        {
+          "profileId": "periodic-fourier-transient-mismatch",
+          "seed": 19013,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 45.8333,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.350689,
+          "compositeScore": 60.0003
+        },
+        {
+          "profileId": "periodic-fourier-transient-mismatch",
+          "seed": 29017,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 45.8333,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.341282,
+          "compositeScore": 60.5647
+        },
+        {
+          "profileId": "periodic-fourier-transient-mismatch",
+          "seed": 39023,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 45.8333,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.357689,
+          "compositeScore": 59.5803
+        },
+        {
+          "profileId": "periodic-fourier-transient-mismatch",
+          "seed": 49031,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 45.8333,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.359875,
+          "compositeScore": 59.4492
+        },
+        {
+          "profileId": "periodic-fourier-transient-mismatch",
+          "seed": 59053,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 45.8333,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.341268,
+          "compositeScore": 60.5656
+        }
+      ],
+      "stats": {
+        "transientPlusSteadyAccuracyPct": {
+          "count": 5,
+          "mean": 45.8333,
+          "stdDev": 0,
+          "min": 45.8333,
+          "max": 45.8333,
+          "ci95": {
+            "low": 45.8333,
+            "high": 45.8333,
+            "halfWidth": 0
+          }
+        },
+        "hurwitzPoleStabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "stiffDecayTrackingRmse": {
+          "count": 5,
+          "mean": 0.3502,
+          "stdDev": 0.0088,
+          "min": 0.3413,
+          "max": 0.3599,
+          "ci95": {
+            "low": 0.3392,
+            "high": 0.3611,
+            "halfWidth": 0.0109
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 60.032,
+          "stdDev": 0.5275,
+          "min": 59.4492,
+          "max": 60.5656,
+          "ci95": {
+            "low": 59.377,
+            "high": 60.687,
+            "halfWidth": 0.655
+          }
+        }
+      }
+    },
+    "unconstrained-poles-unstable-rhp": {
+      "profileId": "unconstrained-poles-unstable-rhp",
+      "runs": [
+        {
+          "profileId": "unconstrained-poles-unstable-rhp",
+          "seed": 19013,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 37.5,
+          "hurwitzPoleStabilityPct": 50,
+          "stiffDecayTrackingRmse": 0.876722,
+          "compositeScore": 30.625
+        },
+        {
+          "profileId": "unconstrained-poles-unstable-rhp",
+          "seed": 29017,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 37.5,
+          "hurwitzPoleStabilityPct": 50,
+          "stiffDecayTrackingRmse": 0.853204,
+          "compositeScore": 30.625
+        },
+        {
+          "profileId": "unconstrained-poles-unstable-rhp",
+          "seed": 39023,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 37.5,
+          "hurwitzPoleStabilityPct": 50,
+          "stiffDecayTrackingRmse": 0.894223,
+          "compositeScore": 30.625
+        },
+        {
+          "profileId": "unconstrained-poles-unstable-rhp",
+          "seed": 49031,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 37.5,
+          "hurwitzPoleStabilityPct": 50,
+          "stiffDecayTrackingRmse": 0.899687,
+          "compositeScore": 30.625
+        },
+        {
+          "profileId": "unconstrained-poles-unstable-rhp",
+          "seed": 59053,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 37.5,
+          "hurwitzPoleStabilityPct": 50,
+          "stiffDecayTrackingRmse": 0.85317,
+          "compositeScore": 30.625
+        }
+      ],
+      "stats": {
+        "transientPlusSteadyAccuracyPct": {
+          "count": 5,
+          "mean": 37.5,
+          "stdDev": 0,
+          "min": 37.5,
+          "max": 37.5,
+          "ci95": {
+            "low": 37.5,
+            "high": 37.5,
+            "halfWidth": 0
+          }
+        },
+        "hurwitzPoleStabilityPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "stiffDecayTrackingRmse": {
+          "count": 5,
+          "mean": 0.8754,
+          "stdDev": 0.022,
+          "min": 0.8532,
+          "max": 0.8997,
+          "ci95": {
+            "low": 0.8481,
+            "high": 0.9027,
+            "halfWidth": 0.0273
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 30.625,
+          "stdDev": 0,
+          "min": 30.625,
+          "max": 30.625,
+          "ci95": {
+            "low": 30.625,
+            "high": 30.625,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "steady-state-only-no-transient-residues": {
+      "profileId": "steady-state-only-no-transient-residues",
+      "runs": [
+        {
+          "profileId": "steady-state-only-no-transient-residues",
+          "seed": 19013,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 66.6667,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.165344,
+          "compositeScore": 78.4127
+        },
+        {
+          "profileId": "steady-state-only-no-transient-residues",
+          "seed": 29017,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 66.6667,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.160641,
+          "compositeScore": 78.6949
+        },
+        {
+          "profileId": "steady-state-only-no-transient-residues",
+          "seed": 39023,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 66.6667,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.168845,
+          "compositeScore": 78.2027
+        },
+        {
+          "profileId": "steady-state-only-no-transient-residues",
+          "seed": 49031,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 66.6667,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.169937,
+          "compositeScore": 78.1371
+        },
+        {
+          "profileId": "steady-state-only-no-transient-residues",
+          "seed": 59053,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 66.6667,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.160634,
+          "compositeScore": 78.6953
+        }
+      ],
+      "stats": {
+        "transientPlusSteadyAccuracyPct": {
+          "count": 5,
+          "mean": 66.6667,
+          "stdDev": 0,
+          "min": 66.6667,
+          "max": 66.6667,
+          "ci95": {
+            "low": 66.6667,
+            "high": 66.6667,
+            "halfWidth": 0
+          }
+        },
+        "hurwitzPoleStabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "stiffDecayTrackingRmse": {
+          "count": 5,
+          "mean": 0.1651,
+          "stdDev": 0.0044,
+          "min": 0.1606,
+          "max": 0.1699,
+          "ci95": {
+            "low": 0.1596,
+            "high": 0.1705,
+            "halfWidth": 0.0055
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 78.4285,
+          "stdDev": 0.2638,
+          "min": 78.1371,
+          "max": 78.6953,
+          "ci95": {
+            "low": 78.101,
+            "high": 78.7561,
+            "halfWidth": 0.3275
+          }
+        }
+      }
+    },
+    "hurwitz-pole-residue-laplace-neural-operator": {
+      "profileId": "hurwitz-pole-residue-laplace-neural-operator",
+      "runs": [
+        {
+          "profileId": "hurwitz-pole-residue-laplace-neural-operator",
+          "seed": 19013,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 100,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.001307,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hurwitz-pole-residue-laplace-neural-operator",
+          "seed": 29017,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 100,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.001213,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hurwitz-pole-residue-laplace-neural-operator",
+          "seed": 39023,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 100,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.001377,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hurwitz-pole-residue-laplace-neural-operator",
+          "seed": 49031,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 100,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.001399,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hurwitz-pole-residue-laplace-neural-operator",
+          "seed": 59053,
+          "episodes": 24,
+          "transientPlusSteadyAccuracyPct": 100,
+          "hurwitzPoleStabilityPct": 100,
+          "stiffDecayTrackingRmse": 0.001213,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "transientPlusSteadyAccuracyPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "hurwitzPoleStabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "stiffDecayTrackingRmse": {
+          "count": 5,
+          "mean": 0.0013,
+          "stdDev": 0.0001,
+          "min": 0.0012,
+          "max": 0.0014,
+          "ci95": {
+            "low": 0.0012,
+            "high": 0.0014,
+            "halfWidth": 0.0001
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "4992390ce297eb377173bfbd117f3ce12ab807afcea5ab91d0f6df651c1dc165"
+}
