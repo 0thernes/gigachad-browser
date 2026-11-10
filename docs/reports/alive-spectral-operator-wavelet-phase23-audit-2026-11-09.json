@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-120-SPECTRAL-OPERATOR-WAVELET-PHASE23-AUDIT",
+  "passNumber": 120,
+  "phase": "Phase XXIII: Spectral, Wavelet & Laplace Neural Operators",
+  "generatedAt": "2026-11-09T19:44:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "F1-FNO-ZeroShot-4x-SuperResolution-L2-Error",
+      "passNumber": 116,
+      "metric": "superResolutionErrorL2",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "F2-FNO-Parseval-Spectral-Energy-Conservation",
+      "passNumber": 116,
+      "metric": "parsevalEnergyConservationPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "F3-WNO-Orthogonal-Haar-DWT-Perfect-Reconstruction",
+      "passNumber": 117,
+      "metric": "perfectReconstructionDefect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "F4-WNO-Shock-Discontinuity-Wavelet-Localization",
+      "passNumber": 117,
+      "metric": "shockDiscontinuityLocalizationPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "F5-LNO-Hurwitz-Left-Half-Plane-Pole-Bias-Stability",
+      "passNumber": 118,
+      "metric": "hurwitzPoleStabilityPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "F6-LNO-Transient-And-SteadyState-Stiff-Tracking-RMSE",
+      "passNumber": 118,
+      "metric": "stiffDecayTrackingRmse",
+      "threshold": "<= 0.005",
+      "observed": 0.0013,
+      "verified": true
+    },
+    {
+      "rowId": "F7-ChebNet-Strict-KHop-Spatial-Support-Localization",
+      "passNumber": 119,
+      "metric": "khopLocalizationExactnessPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "F8-CayleyNet-Spectral-Band-Selectivity-Ratio",
+      "passNumber": 119,
+      "metric": "spectralBandSelectivityRatio",
+      "threshold": ">= 15.0",
+      "observed": 18.7032,
+      "verified": true
+    },
+    {
+      "rowId": "F9-ChebNet-Anti-Oversmoothing-Dirichlet-Energy",
+      "passNumber": 119,
+      "metric": "dirichletEnergyPreservationPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "F10-Phase23-All-Four-Spectral-Operator-Passes-100-Score",
+      "passNumber": 120,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass116Sha256": "63533e2150f79cf9921ccaed263f95dff390c678284ff6e26d95337e26948816",
+    "pass117Sha256": "693fd8e87005703e3a0b970dbde459c89b549d90059864a862d64b52e98842c2",
+    "pass118Sha256": "4992390ce297eb377173bfbd117f3ce12ab807afcea5ab91d0f6df651c1dc165",
+    "pass119Sha256": "91f4f1753eb529d27ac6f109cc9a9aa78351e69465f5042cecaac56c9cbad16b"
+  },
+  "phase23Sha256": "a50e2da13b2a376de3bef463f70d203d290797b24d77a86e899d65b4bfb94a4c"
+}
