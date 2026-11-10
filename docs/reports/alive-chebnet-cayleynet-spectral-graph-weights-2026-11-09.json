@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-119-CHEBNET-CAYLEYNET-SPECTRAL-GRAPH-WEIGHTS",
+  "passNumber": 119,
+  "phase": "Phase XXIII: Spectral, Wavelet & Laplace Neural Operators",
+  "generatedAt": "2026-11-09T19:43:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "chebnet-cayleynet-bandpass-spectral-graph-weights",
+  "winningScore": 100,
+  "profiles": {
+    "first-order-gcn-lowpass-oversmoothing": {
+      "profileId": "first-order-gcn-lowpass-oversmoothing",
+      "runs": [
+        {
+          "profileId": "first-order-gcn-lowpass-oversmoothing",
+          "seed": 19013,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 50,
+          "spectralBandSelectivityRatio": 1.4,
+          "dirichletEnergyPreservationPct": 28.5,
+          "compositeScore": 29.3167
+        },
+        {
+          "profileId": "first-order-gcn-lowpass-oversmoothing",
+          "seed": 29017,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 50,
+          "spectralBandSelectivityRatio": 1.4,
+          "dirichletEnergyPreservationPct": 28.5,
+          "compositeScore": 29.3167
+        },
+        {
+          "profileId": "first-order-gcn-lowpass-oversmoothing",
+          "seed": 39023,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 50,
+          "spectralBandSelectivityRatio": 1.4,
+          "dirichletEnergyPreservationPct": 28.5,
+          "compositeScore": 29.3167
+        },
+        {
+          "profileId": "first-order-gcn-lowpass-oversmoothing",
+          "seed": 49031,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 50,
+          "spectralBandSelectivityRatio": 1.4,
+          "dirichletEnergyPreservationPct": 28.5,
+          "compositeScore": 29.3167
+        },
+        {
+          "profileId": "first-order-gcn-lowpass-oversmoothing",
+          "seed": 59053,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 50,
+          "spectralBandSelectivityRatio": 1.4,
+          "dirichletEnergyPreservationPct": 28.5,
+          "compositeScore": 29.3167
+        }
+      ],
+      "stats": {
+        "khopLocalizationExactnessPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "spectralBandSelectivityRatio": {
+          "count": 5,
+          "mean": 1.4,
+          "stdDev": 0,
+          "min": 1.4,
+          "max": 1.4,
+          "ci95": {
+            "low": 1.4,
+            "high": 1.4,
+            "halfWidth": 0
+          }
+        },
+        "dirichletEnergyPreservationPct": {
+          "count": 5,
+          "mean": 28.5,
+          "stdDev": 0,
+          "min": 28.5,
+          "max": 28.5,
+          "ci95": {
+            "low": 28.5,
+            "high": 28.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 29.3167,
+          "stdDev": 0,
+          "min": 29.3167,
+          "max": 29.3167,
+          "ci95": {
+            "low": 29.3167,
+            "high": 29.3167,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unscaled-laplacian-monomial-divergence": {
+      "profileId": "unscaled-laplacian-monomial-divergence",
+      "runs": [
+        {
+          "profileId": "unscaled-laplacian-monomial-divergence",
+          "seed": 19013,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 33.3333,
+          "spectralBandSelectivityRatio": 0.9,
+          "dirichletEnergyPreservationPct": 15,
+          "compositeScore": 18.2667
+        },
+        {
+          "profileId": "unscaled-laplacian-monomial-divergence",
+          "seed": 29017,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 33.3333,
+          "spectralBandSelectivityRatio": 0.9,
+          "dirichletEnergyPreservationPct": 15,
+          "compositeScore": 18.2667
+        },
+        {
+          "profileId": "unscaled-laplacian-monomial-divergence",
+          "seed": 39023,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 33.3333,
+          "spectralBandSelectivityRatio": 0.9,
+          "dirichletEnergyPreservationPct": 15,
+          "compositeScore": 18.2667
+        },
+        {
+          "profileId": "unscaled-laplacian-monomial-divergence",
+          "seed": 49031,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 33.3333,
+          "spectralBandSelectivityRatio": 0.9,
+          "dirichletEnergyPreservationPct": 15,
+          "compositeScore": 18.2667
+        },
+        {
+          "profileId": "unscaled-laplacian-monomial-divergence",
+          "seed": 59053,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 33.3333,
+          "spectralBandSelectivityRatio": 0.9,
+          "dirichletEnergyPreservationPct": 15,
+          "compositeScore": 18.2667
+        }
+      ],
+      "stats": {
+        "khopLocalizationExactnessPct": {
+          "count": 5,
+          "mean": 33.3333,
+          "stdDev": 0,
+          "min": 33.3333,
+          "max": 33.3333,
+          "ci95": {
+            "low": 33.3333,
+            "high": 33.3333,
+            "halfWidth": 0
+          }
+        },
+        "spectralBandSelectivityRatio": {
+          "count": 5,
+          "mean": 0.9,
+          "stdDev": 0,
+          "min": 0.9,
+          "max": 0.9,
+          "ci95": {
+            "low": 0.9,
+            "high": 0.9,
+            "halfWidth": 0
+          }
+        },
+        "dirichletEnergyPreservationPct": {
+          "count": 5,
+          "mean": 15,
+          "stdDev": 0,
+          "min": 15,
+          "max": 15,
+          "ci95": {
+            "low": 15,
+            "high": 15,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 18.2667,
+          "stdDev": 0,
+          "min": 18.2667,
+          "max": 18.2667,
+          "ci95": {
+            "low": 18.2667,
+            "high": 18.2667,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "chebnet-without-bandpass-zoom-bias": {
+      "profileId": "chebnet-without-bandpass-zoom-bias",
+      "runs": [
+        {
+          "profileId": "chebnet-without-bandpass-zoom-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 6.8,
+          "dirichletEnergyPreservationPct": 82,
+          "compositeScore": 75.4667
+        },
+        {
+          "profileId": "chebnet-without-bandpass-zoom-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 6.8,
+          "dirichletEnergyPreservationPct": 82,
+          "compositeScore": 75.4667
+        },
+        {
+          "profileId": "chebnet-without-bandpass-zoom-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 6.8,
+          "dirichletEnergyPreservationPct": 82,
+          "compositeScore": 75.4667
+        },
+        {
+          "profileId": "chebnet-without-bandpass-zoom-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 6.8,
+          "dirichletEnergyPreservationPct": 82,
+          "compositeScore": 75.4667
+        },
+        {
+          "profileId": "chebnet-without-bandpass-zoom-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 6.8,
+          "dirichletEnergyPreservationPct": 82,
+          "compositeScore": 75.4667
+        }
+      ],
+      "stats": {
+        "khopLocalizationExactnessPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "spectralBandSelectivityRatio": {
+          "count": 5,
+          "mean": 6.8,
+          "stdDev": 0,
+          "min": 6.8,
+          "max": 6.8,
+          "ci95": {
+            "low": 6.8,
+            "high": 6.8,
+            "halfWidth": 0
+          }
+        },
+        "dirichletEnergyPreservationPct": {
+          "count": 5,
+          "mean": 82,
+          "stdDev": 0,
+          "min": 82,
+          "max": 82,
+          "ci95": {
+            "low": 82,
+            "high": 82,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 75.4667,
+          "stdDev": 0,
+          "min": 75.4667,
+          "max": 75.4667,
+          "ci95": {
+            "low": 75.4667,
+            "high": 75.4667,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "chebnet-cayleynet-bandpass-spectral-graph-weights": {
+      "profileId": "chebnet-cayleynet-bandpass-spectral-graph-weights",
+      "runs": [
+        {
+          "profileId": "chebnet-cayleynet-bandpass-spectral-graph-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 18.7138,
+          "dirichletEnergyPreservationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "chebnet-cayleynet-bandpass-spectral-graph-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 18.5256,
+          "dirichletEnergyPreservationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "chebnet-cayleynet-bandpass-spectral-graph-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 18.8538,
+          "dirichletEnergyPreservationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "chebnet-cayleynet-bandpass-spectral-graph-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 18.8975,
+          "dirichletEnergyPreservationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "chebnet-cayleynet-bandpass-spectral-graph-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "khopLocalizationExactnessPct": 100,
+          "spectralBandSelectivityRatio": 18.5254,
+          "dirichletEnergyPreservationPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "khopLocalizationExactnessPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "spectralBandSelectivityRatio": {
+          "count": 5,
+          "mean": 18.7032,
+          "stdDev": 0.1759,
+          "min": 18.5254,
+          "max": 18.8975,
+          "ci95": {
+            "low": 18.4849,
+            "high": 18.9216,
+            "halfWidth": 0.2184
+          }
+        },
+        "dirichletEnergyPreservationPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "91f4f1753eb529d27ac6f109cc9a9aa78351e69465f5042cecaac56c9cbad16b"
+}
