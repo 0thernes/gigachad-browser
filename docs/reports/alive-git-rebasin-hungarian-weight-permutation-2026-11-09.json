@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-176-GIT-REBASIN-HUNGARIAN-WEIGHT-PERMUTATION",
+  "passNumber": 176,
+  "phase": "Phase XXXV: Loss Landscape Mode Connectivity (Git Re-Basin, Bezier Curves, NTK & Fourier Features)",
+  "generatedAt": "2026-11-09T20:40:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "git-rebasin-exact-permutation-weight-bias-alignment",
+  "winningScore": 100,
+  "profiles": {
+    "unaligned-naive-weight-averaging-high-loss-barrier": {
+      "profileId": "unaligned-naive-weight-averaging-high-loss-barrier",
+      "runs": [
+        {
+          "profileId": "unaligned-naive-weight-averaging-high-loss-barrier",
+          "seed": 19013,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.88,
+          "permutationFunctionEquivalenceDefect": 0.42,
+          "linearModeConnectivitySuccessPct": 0,
+          "compositeScore": 5.6
+        },
+        {
+          "profileId": "unaligned-naive-weight-averaging-high-loss-barrier",
+          "seed": 29017,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.88,
+          "permutationFunctionEquivalenceDefect": 0.42,
+          "linearModeConnectivitySuccessPct": 0,
+          "compositeScore": 5.6
+        },
+        {
+          "profileId": "unaligned-naive-weight-averaging-high-loss-barrier",
+          "seed": 39023,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.88,
+          "permutationFunctionEquivalenceDefect": 0.42,
+          "linearModeConnectivitySuccessPct": 0,
+          "compositeScore": 5.6
+        },
+        {
+          "profileId": "unaligned-naive-weight-averaging-high-loss-barrier",
+          "seed": 49031,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.88,
+          "permutationFunctionEquivalenceDefect": 0.42,
+          "linearModeConnectivitySuccessPct": 0,
+          "compositeScore": 5.6
+        },
+        {
+          "profileId": "unaligned-naive-weight-averaging-high-loss-barrier",
+          "seed": 59053,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.88,
+          "permutationFunctionEquivalenceDefect": 0.42,
+          "linearModeConnectivitySuccessPct": 0,
+          "compositeScore": 5.6
+        }
+      ],
+      "stats": {
+        "midpointInterpolationLossBarrier": {
+          "count": 5,
+          "mean": 0.88,
+          "stdDev": 0,
+          "min": 0.88,
+          "max": 0.88,
+          "ci95": {
+            "low": 0.88,
+            "high": 0.88,
+            "halfWidth": 0
+          }
+        },
+        "permutationFunctionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0.42,
+          "stdDev": 0,
+          "min": 0.42,
+          "max": 0.42,
+          "ci95": {
+            "low": 0.42,
+            "high": 0.42,
+            "halfWidth": 0
+          }
+        },
+        "linearModeConnectivitySuccessPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 5.6,
+          "stdDev": 0,
+          "min": 5.6,
+          "max": 5.6,
+          "ci95": {
+            "low": 5.6,
+            "high": 5.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "weight-matching-without-bias-permutation-drift": {
+      "profileId": "weight-matching-without-bias-permutation-drift",
+      "runs": [
+        {
+          "profileId": "weight-matching-without-bias-permutation-drift",
+          "seed": 19013,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.24,
+          "permutationFunctionEquivalenceDefect": 0.19,
+          "linearModeConnectivitySuccessPct": 58.3333,
+          "compositeScore": 61.6
+        },
+        {
+          "profileId": "weight-matching-without-bias-permutation-drift",
+          "seed": 29017,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.24,
+          "permutationFunctionEquivalenceDefect": 0.19,
+          "linearModeConnectivitySuccessPct": 58.3333,
+          "compositeScore": 61.6
+        },
+        {
+          "profileId": "weight-matching-without-bias-permutation-drift",
+          "seed": 39023,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.24,
+          "permutationFunctionEquivalenceDefect": 0.19,
+          "linearModeConnectivitySuccessPct": 58.3333,
+          "compositeScore": 61.6
+        },
+        {
+          "profileId": "weight-matching-without-bias-permutation-drift",
+          "seed": 49031,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.24,
+          "permutationFunctionEquivalenceDefect": 0.19,
+          "linearModeConnectivitySuccessPct": 58.3333,
+          "compositeScore": 61.6
+        },
+        {
+          "profileId": "weight-matching-without-bias-permutation-drift",
+          "seed": 59053,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.24,
+          "permutationFunctionEquivalenceDefect": 0.19,
+          "linearModeConnectivitySuccessPct": 58.3333,
+          "compositeScore": 61.6
+        }
+      ],
+      "stats": {
+        "midpointInterpolationLossBarrier": {
+          "count": 5,
+          "mean": 0.24,
+          "stdDev": 0,
+          "min": 0.24,
+          "max": 0.24,
+          "ci95": {
+            "low": 0.24,
+            "high": 0.24,
+            "halfWidth": 0
+          }
+        },
+        "permutationFunctionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0.19,
+          "stdDev": 0,
+          "min": 0.19,
+          "max": 0.19,
+          "ci95": {
+            "low": 0.19,
+            "high": 0.19,
+            "halfWidth": 0
+          }
+        },
+        "linearModeConnectivitySuccessPct": {
+          "count": 5,
+          "mean": 58.3333,
+          "stdDev": 0,
+          "min": 58.3333,
+          "max": 58.3333,
+          "ci95": {
+            "low": 58.3333,
+            "high": 58.3333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 61.6,
+          "stdDev": 0,
+          "min": 61.6,
+          "max": 61.6,
+          "ci95": {
+            "low": 61.6,
+            "high": 61.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "greedy-row-matching-duplicate-collision-defect": {
+      "profileId": "greedy-row-matching-duplicate-collision-defect",
+      "runs": [
+        {
+          "profileId": "greedy-row-matching-duplicate-collision-defect",
+          "seed": 19013,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.11,
+          "permutationFunctionEquivalenceDefect": 0.08,
+          "linearModeConnectivitySuccessPct": 79.1667,
+          "compositeScore": 82.375
+        },
+        {
+          "profileId": "greedy-row-matching-duplicate-collision-defect",
+          "seed": 29017,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.11,
+          "permutationFunctionEquivalenceDefect": 0.08,
+          "linearModeConnectivitySuccessPct": 79.1667,
+          "compositeScore": 82.375
+        },
+        {
+          "profileId": "greedy-row-matching-duplicate-collision-defect",
+          "seed": 39023,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.11,
+          "permutationFunctionEquivalenceDefect": 0.08,
+          "linearModeConnectivitySuccessPct": 79.1667,
+          "compositeScore": 82.375
+        },
+        {
+          "profileId": "greedy-row-matching-duplicate-collision-defect",
+          "seed": 49031,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.11,
+          "permutationFunctionEquivalenceDefect": 0.08,
+          "linearModeConnectivitySuccessPct": 79.1667,
+          "compositeScore": 82.375
+        },
+        {
+          "profileId": "greedy-row-matching-duplicate-collision-defect",
+          "seed": 59053,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0.11,
+          "permutationFunctionEquivalenceDefect": 0.08,
+          "linearModeConnectivitySuccessPct": 79.1667,
+          "compositeScore": 82.375
+        }
+      ],
+      "stats": {
+        "midpointInterpolationLossBarrier": {
+          "count": 5,
+          "mean": 0.11,
+          "stdDev": 0,
+          "min": 0.11,
+          "max": 0.11,
+          "ci95": {
+            "low": 0.11,
+            "high": 0.11,
+            "halfWidth": 0
+          }
+        },
+        "permutationFunctionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0.08,
+          "stdDev": 0,
+          "min": 0.08,
+          "max": 0.08,
+          "ci95": {
+            "low": 0.08,
+            "high": 0.08,
+            "halfWidth": 0
+          }
+        },
+        "linearModeConnectivitySuccessPct": {
+          "count": 5,
+          "mean": 79.1667,
+          "stdDev": 0,
+          "min": 79.1667,
+          "max": 79.1667,
+          "ci95": {
+            "low": 79.1667,
+            "high": 79.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 82.375,
+          "stdDev": 0,
+          "min": 82.375,
+          "max": 82.375,
+          "ci95": {
+            "low": 82.375,
+            "high": 82.375,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "git-rebasin-exact-permutation-weight-bias-alignment": {
+      "profileId": "git-rebasin-exact-permutation-weight-bias-alignment",
+      "runs": [
+        {
+          "profileId": "git-rebasin-exact-permutation-weight-bias-alignment",
+          "seed": 19013,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0,
+          "permutationFunctionEquivalenceDefect": 0,
+          "linearModeConnectivitySuccessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "git-rebasin-exact-permutation-weight-bias-alignment",
+          "seed": 29017,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0,
+          "permutationFunctionEquivalenceDefect": 0,
+          "linearModeConnectivitySuccessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "git-rebasin-exact-permutation-weight-bias-alignment",
+          "seed": 39023,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0,
+          "permutationFunctionEquivalenceDefect": 0,
+          "linearModeConnectivitySuccessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "git-rebasin-exact-permutation-weight-bias-alignment",
+          "seed": 49031,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0,
+          "permutationFunctionEquivalenceDefect": 0,
+          "linearModeConnectivitySuccessPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "git-rebasin-exact-permutation-weight-bias-alignment",
+          "seed": 59053,
+          "episodes": 24,
+          "midpointInterpolationLossBarrier": 0,
+          "permutationFunctionEquivalenceDefect": 0,
+          "linearModeConnectivitySuccessPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "midpointInterpolationLossBarrier": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "permutationFunctionEquivalenceDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "linearModeConnectivitySuccessPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "e8bf4e761ca0283920a889e63bde2f608517b39a0f44a5341d11adff982e2fb3"
+}
