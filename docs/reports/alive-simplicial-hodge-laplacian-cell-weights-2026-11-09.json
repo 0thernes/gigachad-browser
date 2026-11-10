@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-151-SIMPLICIAL-HODGE-LAPLACIAN-CELL-WEIGHTS",
+  "passNumber": 151,
+  "phase": "Phase XXX: Topological Deep Learning (Simplicial Hodge Laplacians, Cellular Sheaf Networks, Persistent Homology & DECT)",
+  "generatedAt": "2026-11-09T20:15:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights",
+  "winningScore": 100,
+  "profiles": {
+    "node-only-gcn-blind-to-higher-order-cycles": {
+      "profileId": "node-only-gcn-blind-to-higher-order-cycles",
+      "runs": [
+        {
+          "profileId": "node-only-gcn-blind-to-higher-order-cycles",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.65,
+          "hodgeOrthogonalityInnerProductDefect": 0.52,
+          "harmonicCycleBetti1DetectionAccuracyPct": 25,
+          "compositeScore": 7.5
+        },
+        {
+          "profileId": "node-only-gcn-blind-to-higher-order-cycles",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.65,
+          "hodgeOrthogonalityInnerProductDefect": 0.52,
+          "harmonicCycleBetti1DetectionAccuracyPct": 25,
+          "compositeScore": 7.5
+        },
+        {
+          "profileId": "node-only-gcn-blind-to-higher-order-cycles",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.65,
+          "hodgeOrthogonalityInnerProductDefect": 0.52,
+          "harmonicCycleBetti1DetectionAccuracyPct": 25,
+          "compositeScore": 7.5
+        },
+        {
+          "profileId": "node-only-gcn-blind-to-higher-order-cycles",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.65,
+          "hodgeOrthogonalityInnerProductDefect": 0.52,
+          "harmonicCycleBetti1DetectionAccuracyPct": 25,
+          "compositeScore": 7.5
+        },
+        {
+          "profileId": "node-only-gcn-blind-to-higher-order-cycles",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.65,
+          "hodgeOrthogonalityInnerProductDefect": 0.52,
+          "harmonicCycleBetti1DetectionAccuracyPct": 25,
+          "compositeScore": 7.5
+        }
+      ],
+      "stats": {
+        "boundaryNilpotencyDefect": {
+          "count": 5,
+          "mean": 0.65,
+          "stdDev": 0,
+          "min": 0.65,
+          "max": 0.65,
+          "ci95": {
+            "low": 0.65,
+            "high": 0.65,
+            "halfWidth": 0
+          }
+        },
+        "hodgeOrthogonalityInnerProductDefect": {
+          "count": 5,
+          "mean": 0.52,
+          "stdDev": 0,
+          "min": 0.52,
+          "max": 0.52,
+          "ci95": {
+            "low": 0.52,
+            "high": 0.52,
+            "halfWidth": 0
+          }
+        },
+        "harmonicCycleBetti1DetectionAccuracyPct": {
+          "count": 5,
+          "mean": 25,
+          "stdDev": 0,
+          "min": 25,
+          "max": 25,
+          "ci95": {
+            "low": 25,
+            "high": 25,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 7.5,
+          "stdDev": 0,
+          "min": 7.5,
+          "max": 7.5,
+          "ci95": {
+            "low": 7.5,
+            "high": 7.5,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unoriented-edge-conv-boundary-violation": {
+      "profileId": "unoriented-edge-conv-boundary-violation",
+      "runs": [
+        {
+          "profileId": "unoriented-edge-conv-boundary-violation",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.48,
+          "hodgeOrthogonalityInnerProductDefect": 0.34,
+          "harmonicCycleBetti1DetectionAccuracyPct": 58.3333,
+          "compositeScore": 30.1
+        },
+        {
+          "profileId": "unoriented-edge-conv-boundary-violation",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.48,
+          "hodgeOrthogonalityInnerProductDefect": 0.34,
+          "harmonicCycleBetti1DetectionAccuracyPct": 58.3333,
+          "compositeScore": 30.1
+        },
+        {
+          "profileId": "unoriented-edge-conv-boundary-violation",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.48,
+          "hodgeOrthogonalityInnerProductDefect": 0.34,
+          "harmonicCycleBetti1DetectionAccuracyPct": 58.3333,
+          "compositeScore": 30.1
+        },
+        {
+          "profileId": "unoriented-edge-conv-boundary-violation",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.48,
+          "hodgeOrthogonalityInnerProductDefect": 0.34,
+          "harmonicCycleBetti1DetectionAccuracyPct": 58.3333,
+          "compositeScore": 30.1
+        },
+        {
+          "profileId": "unoriented-edge-conv-boundary-violation",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0.48,
+          "hodgeOrthogonalityInnerProductDefect": 0.34,
+          "harmonicCycleBetti1DetectionAccuracyPct": 58.3333,
+          "compositeScore": 30.1
+        }
+      ],
+      "stats": {
+        "boundaryNilpotencyDefect": {
+          "count": 5,
+          "mean": 0.48,
+          "stdDev": 0,
+          "min": 0.48,
+          "max": 0.48,
+          "ci95": {
+            "low": 0.48,
+            "high": 0.48,
+            "halfWidth": 0
+          }
+        },
+        "hodgeOrthogonalityInnerProductDefect": {
+          "count": 5,
+          "mean": 0.34,
+          "stdDev": 0,
+          "min": 0.34,
+          "max": 0.34,
+          "ci95": {
+            "low": 0.34,
+            "high": 0.34,
+            "halfWidth": 0
+          }
+        },
+        "harmonicCycleBetti1DetectionAccuracyPct": {
+          "count": 5,
+          "mean": 58.3333,
+          "stdDev": 0,
+          "min": 58.3333,
+          "max": 58.3333,
+          "ci95": {
+            "low": 58.3333,
+            "high": 58.3333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 30.1,
+          "stdDev": 0,
+          "min": 30.1,
+          "max": 30.1,
+          "ci95": {
+            "low": 30.1,
+            "high": 30.1,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "lower-laplacian-only-curl-blind": {
+      "profileId": "lower-laplacian-only-curl-blind",
+      "runs": [
+        {
+          "profileId": "lower-laplacian-only-curl-blind",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0.19,
+          "harmonicCycleBetti1DetectionAccuracyPct": 75,
+          "compositeScore": 79.2
+        },
+        {
+          "profileId": "lower-laplacian-only-curl-blind",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0.19,
+          "harmonicCycleBetti1DetectionAccuracyPct": 75,
+          "compositeScore": 79.2
+        },
+        {
+          "profileId": "lower-laplacian-only-curl-blind",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0.19,
+          "harmonicCycleBetti1DetectionAccuracyPct": 75,
+          "compositeScore": 79.2
+        },
+        {
+          "profileId": "lower-laplacian-only-curl-blind",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0.19,
+          "harmonicCycleBetti1DetectionAccuracyPct": 75,
+          "compositeScore": 79.2
+        },
+        {
+          "profileId": "lower-laplacian-only-curl-blind",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0.19,
+          "harmonicCycleBetti1DetectionAccuracyPct": 75,
+          "compositeScore": 79.2
+        }
+      ],
+      "stats": {
+        "boundaryNilpotencyDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "hodgeOrthogonalityInnerProductDefect": {
+          "count": 5,
+          "mean": 0.19,
+          "stdDev": 0,
+          "min": 0.19,
+          "max": 0.19,
+          "ci95": {
+            "low": 0.19,
+            "high": 0.19,
+            "halfWidth": 0
+          }
+        },
+        "harmonicCycleBetti1DetectionAccuracyPct": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 79.2,
+          "stdDev": 0,
+          "min": 79.2,
+          "max": 79.2,
+          "ci95": {
+            "low": 79.2,
+            "high": 79.2,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights": {
+      "profileId": "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights",
+      "runs": [
+        {
+          "profileId": "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0,
+          "harmonicCycleBetti1DetectionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0,
+          "harmonicCycleBetti1DetectionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0,
+          "harmonicCycleBetti1DetectionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0,
+          "harmonicCycleBetti1DetectionAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "simplicial-hodge-helmholtz-gradient-curl-harmonic-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryNilpotencyDefect": 0,
+          "hodgeOrthogonalityInnerProductDefect": 0,
+          "harmonicCycleBetti1DetectionAccuracyPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "boundaryNilpotencyDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "hodgeOrthogonalityInnerProductDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "harmonicCycleBetti1DetectionAccuracyPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "40b6f354215ce840b887b055ea5d8c35317ce47d6f653cafb5638c7c5a3c4599"
+}
