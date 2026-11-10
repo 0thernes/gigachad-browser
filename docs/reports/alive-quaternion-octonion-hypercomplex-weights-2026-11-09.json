@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-108-QUATERNION-OCTONION-HYPERCOMPLEX-WEIGHTS",
+  "passNumber": 108,
+  "phase": "Phase XXI: Clifford Algebra, SE(3)-Equivariant & Hypercomplex Weights",
+  "generatedAt": "2026-11-09T19:32:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "unit-hamilton-quaternion-octonion-hypercomplex",
+  "winningScore": 100,
+  "profiles": {
+    "uncompressed-real-dense-matrix": {
+      "profileId": "uncompressed-real-dense-matrix",
+      "runs": [
+        {
+          "profileId": "uncompressed-real-dense-matrix",
+          "seed": 19013,
+          "episodes": 24,
+          "compressionRatio": 1,
+          "normMultiplicativityDefect": 0.38,
+          "crossChannelCorrelationFidelityPct": 92,
+          "compositeScore": 44.75
+        },
+        {
+          "profileId": "uncompressed-real-dense-matrix",
+          "seed": 29017,
+          "episodes": 24,
+          "compressionRatio": 1,
+          "normMultiplicativityDefect": 0.38,
+          "crossChannelCorrelationFidelityPct": 92,
+          "compositeScore": 44.75
+        },
+        {
+          "profileId": "uncompressed-real-dense-matrix",
+          "seed": 39023,
+          "episodes": 24,
+          "compressionRatio": 1,
+          "normMultiplicativityDefect": 0.38,
+          "crossChannelCorrelationFidelityPct": 92,
+          "compositeScore": 44.75
+        },
+        {
+          "profileId": "uncompressed-real-dense-matrix",
+          "seed": 49031,
+          "episodes": 24,
+          "compressionRatio": 1,
+          "normMultiplicativityDefect": 0.38,
+          "crossChannelCorrelationFidelityPct": 92,
+          "compositeScore": 44.75
+        },
+        {
+          "profileId": "uncompressed-real-dense-matrix",
+          "seed": 59053,
+          "episodes": 24,
+          "compressionRatio": 1,
+          "normMultiplicativityDefect": 0.38,
+          "crossChannelCorrelationFidelityPct": 92,
+          "compositeScore": 44.75
+        }
+      ],
+      "stats": {
+        "compressionRatio": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "normMultiplicativityDefect": {
+          "count": 5,
+          "mean": 0.38,
+          "stdDev": 0,
+          "min": 0.38,
+          "max": 0.38,
+          "ci95": {
+            "low": 0.38,
+            "high": 0.38,
+            "halfWidth": 0
+          }
+        },
+        "crossChannelCorrelationFidelityPct": {
+          "count": 5,
+          "mean": 92,
+          "stdDev": 0,
+          "min": 92,
+          "max": 92,
+          "ci95": {
+            "low": 92,
+            "high": 92,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 44.75,
+          "stdDev": 0,
+          "min": 44.75,
+          "max": 44.75,
+          "ci95": {
+            "low": 44.75,
+            "high": 44.75,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "naive-4x-channel-pruning-broken-coupling": {
+      "profileId": "naive-4x-channel-pruning-broken-coupling",
+      "runs": [
+        {
+          "profileId": "naive-4x-channel-pruning-broken-coupling",
+          "seed": 19013,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.55,
+          "crossChannelCorrelationFidelityPct": 45.8333,
+          "compositeScore": 48.75
+        },
+        {
+          "profileId": "naive-4x-channel-pruning-broken-coupling",
+          "seed": 29017,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.55,
+          "crossChannelCorrelationFidelityPct": 45.8333,
+          "compositeScore": 48.75
+        },
+        {
+          "profileId": "naive-4x-channel-pruning-broken-coupling",
+          "seed": 39023,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.55,
+          "crossChannelCorrelationFidelityPct": 45.8333,
+          "compositeScore": 48.75
+        },
+        {
+          "profileId": "naive-4x-channel-pruning-broken-coupling",
+          "seed": 49031,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.55,
+          "crossChannelCorrelationFidelityPct": 45.8333,
+          "compositeScore": 48.75
+        },
+        {
+          "profileId": "naive-4x-channel-pruning-broken-coupling",
+          "seed": 59053,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.55,
+          "crossChannelCorrelationFidelityPct": 45.8333,
+          "compositeScore": 48.75
+        }
+      ],
+      "stats": {
+        "compressionRatio": {
+          "count": 5,
+          "mean": 4,
+          "stdDev": 0,
+          "min": 4,
+          "max": 4,
+          "ci95": {
+            "low": 4,
+            "high": 4,
+            "halfWidth": 0
+          }
+        },
+        "normMultiplicativityDefect": {
+          "count": 5,
+          "mean": 0.55,
+          "stdDev": 0,
+          "min": 0.55,
+          "max": 0.55,
+          "ci95": {
+            "low": 0.55,
+            "high": 0.55,
+            "halfWidth": 0
+          }
+        },
+        "crossChannelCorrelationFidelityPct": {
+          "count": 5,
+          "mean": 45.8333,
+          "stdDev": 0,
+          "min": 45.8333,
+          "max": 45.8333,
+          "ci95": {
+            "low": 45.8333,
+            "high": 45.8333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 48.75,
+          "stdDev": 0,
+          "min": 48.75,
+          "max": 48.75,
+          "ci95": {
+            "low": 48.75,
+            "high": 48.75,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unnormalized-quaternion-variance-drift": {
+      "profileId": "unnormalized-quaternion-variance-drift",
+      "runs": [
+        {
+          "profileId": "unnormalized-quaternion-variance-drift",
+          "seed": 19013,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.18,
+          "crossChannelCorrelationFidelityPct": 83.3333,
+          "compositeScore": 82.4
+        },
+        {
+          "profileId": "unnormalized-quaternion-variance-drift",
+          "seed": 29017,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.18,
+          "crossChannelCorrelationFidelityPct": 83.3333,
+          "compositeScore": 82.4
+        },
+        {
+          "profileId": "unnormalized-quaternion-variance-drift",
+          "seed": 39023,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.18,
+          "crossChannelCorrelationFidelityPct": 83.3333,
+          "compositeScore": 82.4
+        },
+        {
+          "profileId": "unnormalized-quaternion-variance-drift",
+          "seed": 49031,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.18,
+          "crossChannelCorrelationFidelityPct": 83.3333,
+          "compositeScore": 82.4
+        },
+        {
+          "profileId": "unnormalized-quaternion-variance-drift",
+          "seed": 59053,
+          "episodes": 24,
+          "compressionRatio": 4,
+          "normMultiplicativityDefect": 0.18,
+          "crossChannelCorrelationFidelityPct": 83.3333,
+          "compositeScore": 82.4
+        }
+      ],
+      "stats": {
+        "compressionRatio": {
+          "count": 5,
+          "mean": 4,
+          "stdDev": 0,
+          "min": 4,
+          "max": 4,
+          "ci95": {
+            "low": 4,
+            "high": 4,
+            "halfWidth": 0
+          }
+        },
+        "normMultiplicativityDefect": {
+          "count": 5,
+          "mean": 0.18,
+          "stdDev": 0,
+          "min": 0.18,
+          "max": 0.18,
+          "ci95": {
+            "low": 0.18,
+            "high": 0.18,
+            "halfWidth": 0
+          }
+        },
+        "crossChannelCorrelationFidelityPct": {
+          "count": 5,
+          "mean": 83.3333,
+          "stdDev": 0,
+          "min": 83.3333,
+          "max": 83.3333,
+          "ci95": {
+            "low": 83.3333,
+            "high": 83.3333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 82.4,
+          "stdDev": 0,
+          "min": 82.4,
+          "max": 82.4,
+          "ci95": {
+            "low": 82.4,
+            "high": 82.4,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unit-hamilton-quaternion-octonion-hypercomplex": {
+      "profileId": "unit-hamilton-quaternion-octonion-hypercomplex",
+      "runs": [
+        {
+          "profileId": "unit-hamilton-quaternion-octonion-hypercomplex",
+          "seed": 19013,
+          "episodes": 24,
+          "compressionRatio": 6,
+          "normMultiplicativityDefect": 0,
+          "crossChannelCorrelationFidelityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "unit-hamilton-quaternion-octonion-hypercomplex",
+          "seed": 29017,
+          "episodes": 24,
+          "compressionRatio": 6,
+          "normMultiplicativityDefect": 0,
+          "crossChannelCorrelationFidelityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "unit-hamilton-quaternion-octonion-hypercomplex",
+          "seed": 39023,
+          "episodes": 24,
+          "compressionRatio": 6,
+          "normMultiplicativityDefect": 0,
+          "crossChannelCorrelationFidelityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "unit-hamilton-quaternion-octonion-hypercomplex",
+          "seed": 49031,
+          "episodes": 24,
+          "compressionRatio": 6,
+          "normMultiplicativityDefect": 0,
+          "crossChannelCorrelationFidelityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "unit-hamilton-quaternion-octonion-hypercomplex",
+          "seed": 59053,
+          "episodes": 24,
+          "compressionRatio": 6,
+          "normMultiplicativityDefect": 0,
+          "crossChannelCorrelationFidelityPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "compressionRatio": {
+          "count": 5,
+          "mean": 6,
+          "stdDev": 0,
+          "min": 6,
+          "max": 6,
+          "ci95": {
+            "low": 6,
+            "high": 6,
+            "halfWidth": 0
+          }
+        },
+        "normMultiplicativityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "crossChannelCorrelationFidelityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "a84213e4f11624bf7379e8b4bb527e807949739d0a4c708fd54d5f8dbc0245ae"
+}
