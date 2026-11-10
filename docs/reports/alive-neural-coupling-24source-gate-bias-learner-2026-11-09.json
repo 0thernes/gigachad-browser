@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-103-NEURAL-COUPLING-24SOURCE-GATE-BIAS-LEARNER",
+  "passNumber": 103,
+  "phase": "Phase XX: Core Brain, 1.245M Cortex & 59-Tensor Hub Weight/Bias Programming",
+  "generatedAt": "2026-11-09T19:27:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "natural-gradient-eligibility-24source-coupler",
+  "winningScore": 100,
+  "profiles": {
+    "unweighted-equal-24source-average": {
+      "profileId": "unweighted-equal-24source-average",
+      "runs": [
+        {
+          "profileId": "unweighted-equal-24source-average",
+          "seed": 19013,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 3.1,
+          "noisySourceSuppressionPct": 0,
+          "predictionReductionPct": 0,
+          "compositeScore": 4.34
+        },
+        {
+          "profileId": "unweighted-equal-24source-average",
+          "seed": 29017,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 3.1,
+          "noisySourceSuppressionPct": 0,
+          "predictionReductionPct": 0,
+          "compositeScore": 4.34
+        },
+        {
+          "profileId": "unweighted-equal-24source-average",
+          "seed": 39023,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 3.1,
+          "noisySourceSuppressionPct": 0,
+          "predictionReductionPct": 0,
+          "compositeScore": 4.34
+        },
+        {
+          "profileId": "unweighted-equal-24source-average",
+          "seed": 49031,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 3.1,
+          "noisySourceSuppressionPct": 0,
+          "predictionReductionPct": 0,
+          "compositeScore": 4.34
+        },
+        {
+          "profileId": "unweighted-equal-24source-average",
+          "seed": 59053,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 3.1,
+          "noisySourceSuppressionPct": 0,
+          "predictionReductionPct": 0,
+          "compositeScore": 4.34
+        }
+      ],
+      "stats": {
+        "signalToNoiseRatioDb": {
+          "count": 5,
+          "mean": 3.1,
+          "stdDev": 0,
+          "min": 3.1,
+          "max": 3.1,
+          "ci95": {
+            "low": 3.1,
+            "high": 3.1,
+            "halfWidth": 0
+          }
+        },
+        "noisySourceSuppressionPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "predictionReductionPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 4.34,
+          "stdDev": 0,
+          "min": 4.34,
+          "max": 4.34,
+          "ci95": {
+            "low": 4.34,
+            "high": 4.34,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "static-sine-coupling-no-gate-bias": {
+      "profileId": "static-sine-coupling-no-gate-bias",
+      "runs": [
+        {
+          "profileId": "static-sine-coupling-no-gate-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 8.5533,
+          "noisySourceSuppressionPct": 33.3333,
+          "predictionReductionPct": 25,
+          "compositeScore": 31.1412
+        },
+        {
+          "profileId": "static-sine-coupling-no-gate-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 8.695,
+          "noisySourceSuppressionPct": 33.3333,
+          "predictionReductionPct": 25,
+          "compositeScore": 31.3397
+        },
+        {
+          "profileId": "static-sine-coupling-no-gate-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 8.4857,
+          "noisySourceSuppressionPct": 33.3333,
+          "predictionReductionPct": 25,
+          "compositeScore": 31.0467
+        },
+        {
+          "profileId": "static-sine-coupling-no-gate-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 8.446,
+          "noisySourceSuppressionPct": 33.3333,
+          "predictionReductionPct": 25,
+          "compositeScore": 30.9911
+        },
+        {
+          "profileId": "static-sine-coupling-no-gate-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 8.4752,
+          "noisySourceSuppressionPct": 33.3333,
+          "predictionReductionPct": 25,
+          "compositeScore": 31.0319
+        }
+      ],
+      "stats": {
+        "signalToNoiseRatioDb": {
+          "count": 5,
+          "mean": 8.531,
+          "stdDev": 0.0997,
+          "min": 8.446,
+          "max": 8.695,
+          "ci95": {
+            "low": 8.4072,
+            "high": 8.6549,
+            "halfWidth": 0.1238
+          }
+        },
+        "noisySourceSuppressionPct": {
+          "count": 5,
+          "mean": 33.3333,
+          "stdDev": 0,
+          "min": 33.3333,
+          "max": 33.3333,
+          "ci95": {
+            "low": 33.3333,
+            "high": 33.3333,
+            "halfWidth": 0
+          }
+        },
+        "predictionReductionPct": {
+          "count": 5,
+          "mean": 25,
+          "stdDev": 0,
+          "min": 25,
+          "max": 25,
+          "ci95": {
+            "low": 25,
+            "high": 25,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 31.1101,
+          "stdDev": 0.1396,
+          "min": 30.9911,
+          "max": 31.3397,
+          "ci95": {
+            "low": 30.9368,
+            "high": 31.2835,
+            "halfWidth": 0.1734
+          }
+        }
+      }
+    },
+    "first-order-hebbian-no-fisher-preconditioner": {
+      "profileId": "first-order-hebbian-no-fisher-preconditioner",
+      "runs": [
+        {
+          "profileId": "first-order-hebbian-no-fisher-preconditioner",
+          "seed": 19013,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 16.4554,
+          "noisySourceSuppressionPct": 78.5,
+          "predictionReductionPct": 0,
+          "compositeScore": 50.5126
+        },
+        {
+          "profileId": "first-order-hebbian-no-fisher-preconditioner",
+          "seed": 29017,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 16.6917,
+          "noisySourceSuppressionPct": 78.5,
+          "predictionReductionPct": 0,
+          "compositeScore": 50.8434
+        },
+        {
+          "profileId": "first-order-hebbian-no-fisher-preconditioner",
+          "seed": 39023,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 16.3429,
+          "noisySourceSuppressionPct": 78.5,
+          "predictionReductionPct": 0,
+          "compositeScore": 50.355
+        },
+        {
+          "profileId": "first-order-hebbian-no-fisher-preconditioner",
+          "seed": 49031,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 16.2767,
+          "noisySourceSuppressionPct": 78.5,
+          "predictionReductionPct": 0,
+          "compositeScore": 50.2624
+        },
+        {
+          "profileId": "first-order-hebbian-no-fisher-preconditioner",
+          "seed": 59053,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 16.3253,
+          "noisySourceSuppressionPct": 78.5,
+          "predictionReductionPct": 0,
+          "compositeScore": 50.3304
+        }
+      ],
+      "stats": {
+        "signalToNoiseRatioDb": {
+          "count": 5,
+          "mean": 16.4184,
+          "stdDev": 0.1662,
+          "min": 16.2767,
+          "max": 16.6917,
+          "ci95": {
+            "low": 16.212,
+            "high": 16.6248,
+            "halfWidth": 0.2064
+          }
+        },
+        "noisySourceSuppressionPct": {
+          "count": 5,
+          "mean": 78.5,
+          "stdDev": 0,
+          "min": 78.5,
+          "max": 78.5,
+          "ci95": {
+            "low": 78.5,
+            "high": 78.5,
+            "halfWidth": 0
+          }
+        },
+        "predictionReductionPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 50.4608,
+          "stdDev": 0.2327,
+          "min": 50.2624,
+          "max": 50.8434,
+          "ci95": {
+            "low": 50.1718,
+            "high": 50.7497,
+            "halfWidth": 0.289
+          }
+        }
+      }
+    },
+    "natural-gradient-eligibility-24source-coupler": {
+      "profileId": "natural-gradient-eligibility-24source-coupler",
+      "runs": [
+        {
+          "profileId": "natural-gradient-eligibility-24source-coupler",
+          "seed": 19013,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 28.6043,
+          "noisySourceSuppressionPct": 100,
+          "predictionReductionPct": 97.5007,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "natural-gradient-eligibility-24source-coupler",
+          "seed": 29017,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 28.7934,
+          "noisySourceSuppressionPct": 100,
+          "predictionReductionPct": 97.5364,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "natural-gradient-eligibility-24source-coupler",
+          "seed": 39023,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 28.5143,
+          "noisySourceSuppressionPct": 100,
+          "predictionReductionPct": 97.5422,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "natural-gradient-eligibility-24source-coupler",
+          "seed": 49031,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 28.4614,
+          "noisySourceSuppressionPct": 100,
+          "predictionReductionPct": 97.5914,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "natural-gradient-eligibility-24source-coupler",
+          "seed": 59053,
+          "episodes": 24,
+          "signalToNoiseRatioDb": 28.5002,
+          "noisySourceSuppressionPct": 100,
+          "predictionReductionPct": 97.5698,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "signalToNoiseRatioDb": {
+          "count": 5,
+          "mean": 28.5747,
+          "stdDev": 0.133,
+          "min": 28.4614,
+          "max": 28.7934,
+          "ci95": {
+            "low": 28.4096,
+            "high": 28.7398,
+            "halfWidth": 0.1651
+          }
+        },
+        "noisySourceSuppressionPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "predictionReductionPct": {
+          "count": 5,
+          "mean": 97.5481,
+          "stdDev": 0.0345,
+          "min": 97.5007,
+          "max": 97.5914,
+          "ci95": {
+            "low": 97.5052,
+            "high": 97.591,
+            "halfWidth": 0.0429
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "7426ab2ebca7cf615efc1ca45202a3bb3952d57d9176a70f5274929a401d2f75"
+}

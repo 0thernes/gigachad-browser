@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="220" viewBox="0 0 760 220">
+  <rect width="760" height="220" fill="#0d1117"/>
+  <text x="24" y="38" fill="#58a6ff" font-family="monospace" font-size="16" font-weight="bold">Pass 103: 24-Source Neural Coupling Weight & Gate Bias Learner</text>
+  <text x="24" y="72" fill="#3fb950" font-family="monospace" font-size="14">Winner: natural-gradient-eligibility-24source-coupler | Score: 100%</text>
+  <text x="24" y="104" fill="#e6edf3" font-family="monospace" font-size="12">SHA-256: 7426ab2ebca7cf615efc1ca45202a3bb3952d57d9176a70f5274929a401d2f75</text>
+  <rect x="24" y="130" width="712" height="28" rx="6" fill="#238636"/>
+  <text x="36" y="149" fill="#ffffff" font-family="monospace" font-size="13">5-Seed Verified (19013, 29017, 39023, 49031, 59053) - 100.0%</text>
+</svg>
