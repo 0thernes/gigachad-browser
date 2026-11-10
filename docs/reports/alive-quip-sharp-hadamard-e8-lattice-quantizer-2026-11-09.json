@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-131-QUIP-SHARP-HADAMARD-E8-LATTICE-QUANTIZER",
+  "passNumber": 131,
+  "phase": "Phase XXVI: QuIP#, AQLM, SpinQuant & MXFP Extreme Quantization",
+  "generatedAt": "2026-11-09T19:55:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "quip-sharp-hadamard-e8-lattice-2bit-quantizer",
+  "winningScore": 100,
+  "profiles": {
+    "scalar-round-to-nearest-2bit-collapse": {
+      "profileId": "scalar-round-to-nearest-2bit-collapse",
+      "runs": [
+        {
+          "profileId": "scalar-round-to-nearest-2bit-collapse",
+          "seed": 19013,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 5.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 58
+        },
+        {
+          "profileId": "scalar-round-to-nearest-2bit-collapse",
+          "seed": 29017,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 5.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 58
+        },
+        {
+          "profileId": "scalar-round-to-nearest-2bit-collapse",
+          "seed": 39023,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 5.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 58
+        },
+        {
+          "profileId": "scalar-round-to-nearest-2bit-collapse",
+          "seed": 49031,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 5.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 58
+        },
+        {
+          "profileId": "scalar-round-to-nearest-2bit-collapse",
+          "seed": 59053,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 5.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 58
+        }
+      ],
+      "stats": {
+        "incoherenceMaxRatioReduction": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "e8PackingSignalToQuantNoiseDb": {
+          "count": 5,
+          "mean": 5.4,
+          "stdDev": 0,
+          "min": 5.4,
+          "max": 5.4,
+          "ci95": {
+            "low": 5.4,
+            "high": 5.4,
+            "halfWidth": 0
+          }
+        },
+        "bitCompressionFactor": {
+          "count": 5,
+          "mean": 16,
+          "stdDev": 0,
+          "min": 16,
+          "max": 16,
+          "ci95": {
+            "low": 16,
+            "high": 16,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 58,
+          "stdDev": 0,
+          "min": 58,
+          "max": 58,
+          "ci95": {
+            "low": 58,
+            "high": 58,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "hadamard-incoherence-scalar-2bit-no-e8": {
+      "profileId": "hadamard-incoherence-scalar-2bit-no-e8",
+      "runs": [
+        {
+          "profileId": "hadamard-incoherence-scalar-2bit-no-e8",
+          "seed": 19013,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.65,
+          "e8PackingSignalToQuantNoiseDb": 11.8,
+          "bitCompressionFactor": 16,
+          "compositeScore": 87.9444
+        },
+        {
+          "profileId": "hadamard-incoherence-scalar-2bit-no-e8",
+          "seed": 29017,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.65,
+          "e8PackingSignalToQuantNoiseDb": 11.8,
+          "bitCompressionFactor": 16,
+          "compositeScore": 87.9444
+        },
+        {
+          "profileId": "hadamard-incoherence-scalar-2bit-no-e8",
+          "seed": 39023,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.65,
+          "e8PackingSignalToQuantNoiseDb": 11.8,
+          "bitCompressionFactor": 16,
+          "compositeScore": 87.9444
+        },
+        {
+          "profileId": "hadamard-incoherence-scalar-2bit-no-e8",
+          "seed": 49031,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.65,
+          "e8PackingSignalToQuantNoiseDb": 11.8,
+          "bitCompressionFactor": 16,
+          "compositeScore": 87.9444
+        },
+        {
+          "profileId": "hadamard-incoherence-scalar-2bit-no-e8",
+          "seed": 59053,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.65,
+          "e8PackingSignalToQuantNoiseDb": 11.8,
+          "bitCompressionFactor": 16,
+          "compositeScore": 87.9444
+        }
+      ],
+      "stats": {
+        "incoherenceMaxRatioReduction": {
+          "count": 5,
+          "mean": 2.65,
+          "stdDev": 0,
+          "min": 2.65,
+          "max": 2.65,
+          "ci95": {
+            "low": 2.65,
+            "high": 2.65,
+            "halfWidth": 0
+          }
+        },
+        "e8PackingSignalToQuantNoiseDb": {
+          "count": 5,
+          "mean": 11.8,
+          "stdDev": 0,
+          "min": 11.8,
+          "max": 11.8,
+          "ci95": {
+            "low": 11.8,
+            "high": 11.8,
+            "halfWidth": 0
+          }
+        },
+        "bitCompressionFactor": {
+          "count": 5,
+          "mean": 16,
+          "stdDev": 0,
+          "min": 16,
+          "max": 16,
+          "ci95": {
+            "low": 16,
+            "high": 16,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 87.9444,
+          "stdDev": 0,
+          "min": 87.9444,
+          "max": 87.9444,
+          "ci95": {
+            "low": 87.9444,
+            "high": 87.9444,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "e8-lattice-without-hadamard-incoherence": {
+      "profileId": "e8-lattice-without-hadamard-incoherence",
+      "runs": [
+        {
+          "profileId": "e8-lattice-without-hadamard-incoherence",
+          "seed": 19013,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 12.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 71.6111
+        },
+        {
+          "profileId": "e8-lattice-without-hadamard-incoherence",
+          "seed": 29017,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 12.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 71.6111
+        },
+        {
+          "profileId": "e8-lattice-without-hadamard-incoherence",
+          "seed": 39023,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 12.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 71.6111
+        },
+        {
+          "profileId": "e8-lattice-without-hadamard-incoherence",
+          "seed": 49031,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 12.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 71.6111
+        },
+        {
+          "profileId": "e8-lattice-without-hadamard-incoherence",
+          "seed": 59053,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 1,
+          "e8PackingSignalToQuantNoiseDb": 12.4,
+          "bitCompressionFactor": 16,
+          "compositeScore": 71.6111
+        }
+      ],
+      "stats": {
+        "incoherenceMaxRatioReduction": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "e8PackingSignalToQuantNoiseDb": {
+          "count": 5,
+          "mean": 12.4,
+          "stdDev": 0,
+          "min": 12.4,
+          "max": 12.4,
+          "ci95": {
+            "low": 12.4,
+            "high": 12.4,
+            "halfWidth": 0
+          }
+        },
+        "bitCompressionFactor": {
+          "count": 5,
+          "mean": 16,
+          "stdDev": 0,
+          "min": 16,
+          "max": 16,
+          "ci95": {
+            "low": 16,
+            "high": 16,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 71.6111,
+          "stdDev": 0,
+          "min": 71.6111,
+          "max": 71.6111,
+          "ci95": {
+            "low": 71.6111,
+            "high": 71.6111,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "quip-sharp-hadamard-e8-lattice-2bit-quantizer": {
+      "profileId": "quip-sharp-hadamard-e8-lattice-2bit-quantizer",
+      "runs": [
+        {
+          "profileId": "quip-sharp-hadamard-e8-lattice-2bit-quantizer",
+          "seed": 19013,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.2434,
+          "e8PackingSignalToQuantNoiseDb": 24.7741,
+          "bitCompressionFactor": 16,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quip-sharp-hadamard-e8-lattice-2bit-quantizer",
+          "seed": 29017,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.218,
+          "e8PackingSignalToQuantNoiseDb": 25.183,
+          "bitCompressionFactor": 16,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quip-sharp-hadamard-e8-lattice-2bit-quantizer",
+          "seed": 39023,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.2039,
+          "e8PackingSignalToQuantNoiseDb": 24.1923,
+          "bitCompressionFactor": 16,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quip-sharp-hadamard-e8-lattice-2bit-quantizer",
+          "seed": 49031,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.2852,
+          "e8PackingSignalToQuantNoiseDb": 24.4762,
+          "bitCompressionFactor": 16,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "quip-sharp-hadamard-e8-lattice-2bit-quantizer",
+          "seed": 59053,
+          "episodes": 24,
+          "incoherenceMaxRatioReduction": 2.2467,
+          "e8PackingSignalToQuantNoiseDb": 24.6115,
+          "bitCompressionFactor": 16,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "incoherenceMaxRatioReduction": {
+          "count": 5,
+          "mean": 2.2394,
+          "stdDev": 0.0312,
+          "min": 2.2039,
+          "max": 2.2852,
+          "ci95": {
+            "low": 2.2007,
+            "high": 2.2781,
+            "halfWidth": 0.0387
+          }
+        },
+        "e8PackingSignalToQuantNoiseDb": {
+          "count": 5,
+          "mean": 24.6474,
+          "stdDev": 0.3676,
+          "min": 24.1923,
+          "max": 25.183,
+          "ci95": {
+            "low": 24.1909,
+            "high": 25.1039,
+            "halfWidth": 0.4565
+          }
+        },
+        "bitCompressionFactor": {
+          "count": 5,
+          "mean": 16,
+          "stdDev": 0,
+          "min": 16,
+          "max": 16,
+          "ci95": {
+            "low": 16,
+            "high": 16,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "0ae10eeb4684ec717720cd5f31ffdd121c2213d4523d0fd3ea5773b4da20825b"
+}
