@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-106-CLIFFORD-CL40-MULTIVECTOR-WEIGHT-ALGEBRA",
+  "passNumber": 106,
+  "phase": "Phase XXI: Clifford Algebra, SE(3)-Equivariant & Hypercomplex Weights",
+  "generatedAt": "2026-11-09T19:30:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "cl40-16blade-rotor-grade-bias-algebra",
+  "winningScore": 99.4674,
+  "profiles": {
+    "unstructured-dense-16x16-ignore-grades": {
+      "profileId": "unstructured-dense-16x16-ignore-grades",
+      "runs": [
+        {
+          "profileId": "unstructured-dense-16x16-ignore-grades",
+          "seed": 19013,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.45603329,
+          "gradeEquivariancePct": 18.75,
+          "bivectorTorquePrecisionPct": 37.5,
+          "compositeScore": 20.8902
+        },
+        {
+          "profileId": "unstructured-dense-16x16-ignore-grades",
+          "seed": 29017,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.44192269,
+          "gradeEquivariancePct": 18.75,
+          "bivectorTorquePrecisionPct": 37.5,
+          "compositeScore": 21.8779
+        },
+        {
+          "profileId": "unstructured-dense-16x16-ignore-grades",
+          "seed": 39023,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.46653396,
+          "gradeEquivariancePct": 18.75,
+          "bivectorTorquePrecisionPct": 37.5,
+          "compositeScore": 20.1551
+        },
+        {
+          "profileId": "unstructured-dense-16x16-ignore-grades",
+          "seed": 49031,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.46981193,
+          "gradeEquivariancePct": 18.75,
+          "bivectorTorquePrecisionPct": 37.5,
+          "compositeScore": 19.9257
+        },
+        {
+          "profileId": "unstructured-dense-16x16-ignore-grades",
+          "seed": 59053,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.44190189,
+          "gradeEquivariancePct": 18.75,
+          "bivectorTorquePrecisionPct": 37.5,
+          "compositeScore": 21.8794
+        }
+      ],
+      "stats": {
+        "rotorIsometryDefect": {
+          "count": 5,
+          "mean": 0.4552,
+          "stdDev": 0.0132,
+          "min": 0.4419,
+          "max": 0.4698,
+          "ci95": {
+            "low": 0.4389,
+            "high": 0.4716,
+            "halfWidth": 0.0164
+          }
+        },
+        "gradeEquivariancePct": {
+          "count": 5,
+          "mean": 18.75,
+          "stdDev": 0,
+          "min": 18.75,
+          "max": 18.75,
+          "ci95": {
+            "low": 18.75,
+            "high": 18.75,
+            "halfWidth": 0
+          }
+        },
+        "bivectorTorquePrecisionPct": {
+          "count": 5,
+          "mean": 37.5,
+          "stdDev": 0,
+          "min": 37.5,
+          "max": 37.5,
+          "ci95": {
+            "low": 37.5,
+            "high": 37.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 20.9457,
+          "stdDev": 0.9232,
+          "min": 19.9257,
+          "max": 21.8794,
+          "ci95": {
+            "low": 19.7993,
+            "high": 22.092,
+            "halfWidth": 1.1463
+          }
+        }
+      }
+    },
+    "scalar-vector-only-truncate-bivectors": {
+      "profileId": "scalar-vector-only-truncate-bivectors",
+      "runs": [
+        {
+          "profileId": "scalar-vector-only-truncate-bivectors",
+          "seed": 19013,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.22068886,
+          "gradeEquivariancePct": 50,
+          "bivectorTorquePrecisionPct": 0,
+          "compositeScore": 37.0518
+        },
+        {
+          "profileId": "scalar-vector-only-truncate-bivectors",
+          "seed": 29017,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.21128179,
+          "gradeEquivariancePct": 50,
+          "bivectorTorquePrecisionPct": 0,
+          "compositeScore": 37.7103
+        },
+        {
+          "profileId": "scalar-vector-only-truncate-bivectors",
+          "seed": 39023,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.2276893,
+          "gradeEquivariancePct": 50,
+          "bivectorTorquePrecisionPct": 0,
+          "compositeScore": 36.5617
+        },
+        {
+          "profileId": "scalar-vector-only-truncate-bivectors",
+          "seed": 49031,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.22987462,
+          "gradeEquivariancePct": 50,
+          "bivectorTorquePrecisionPct": 0,
+          "compositeScore": 36.4088
+        },
+        {
+          "profileId": "scalar-vector-only-truncate-bivectors",
+          "seed": 59053,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.21126793,
+          "gradeEquivariancePct": 50,
+          "bivectorTorquePrecisionPct": 0,
+          "compositeScore": 37.7112
+        }
+      ],
+      "stats": {
+        "rotorIsometryDefect": {
+          "count": 5,
+          "mean": 0.2202,
+          "stdDev": 0.0088,
+          "min": 0.2113,
+          "max": 0.2299,
+          "ci95": {
+            "low": 0.2092,
+            "high": 0.2311,
+            "halfWidth": 0.0109
+          }
+        },
+        "gradeEquivariancePct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "bivectorTorquePrecisionPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 37.0888,
+          "stdDev": 0.6155,
+          "min": 36.4088,
+          "max": 37.7112,
+          "ci95": {
+            "low": 36.3245,
+            "high": 37.853,
+            "halfWidth": 0.7642
+          }
+        }
+      }
+    },
+    "clifford-product-without-rotor-normalization": {
+      "profileId": "clifford-product-without-rotor-normalization",
+      "runs": [
+        {
+          "profileId": "clifford-product-without-rotor-normalization",
+          "seed": 19013,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.14801665,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 79.1667,
+          "compositeScore": 83.3888
+        },
+        {
+          "profileId": "clifford-product-without-rotor-normalization",
+          "seed": 29017,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.14096134,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 79.1667,
+          "compositeScore": 83.8827
+        },
+        {
+          "profileId": "clifford-product-without-rotor-normalization",
+          "seed": 39023,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.15326698,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 79.1667,
+          "compositeScore": 83.0213
+        },
+        {
+          "profileId": "clifford-product-without-rotor-normalization",
+          "seed": 49031,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.15490597,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 79.1667,
+          "compositeScore": 82.9066
+        },
+        {
+          "profileId": "clifford-product-without-rotor-normalization",
+          "seed": 59053,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.14095094,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 79.1667,
+          "compositeScore": 83.8834
+        }
+      ],
+      "stats": {
+        "rotorIsometryDefect": {
+          "count": 5,
+          "mean": 0.1476,
+          "stdDev": 0.0066,
+          "min": 0.141,
+          "max": 0.1549,
+          "ci95": {
+            "low": 0.1394,
+            "high": 0.1558,
+            "halfWidth": 0.0082
+          }
+        },
+        "gradeEquivariancePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "bivectorTorquePrecisionPct": {
+          "count": 5,
+          "mean": 79.1667,
+          "stdDev": 0,
+          "min": 79.1667,
+          "max": 79.1667,
+          "ci95": {
+            "low": 79.1667,
+            "high": 79.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 83.4166,
+          "stdDev": 0.4616,
+          "min": 82.9066,
+          "max": 83.8834,
+          "ci95": {
+            "low": 82.8434,
+            "high": 83.9897,
+            "halfWidth": 0.5731
+          }
+        }
+      }
+    },
+    "cl40-16blade-rotor-grade-bias-algebra": {
+      "profileId": "cl40-16blade-rotor-grade-bias-algebra",
+      "runs": [
+        {
+          "profileId": "cl40-16blade-rotor-grade-bias-algebra",
+          "seed": 19013,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.00766804,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 100,
+          "compositeScore": 99.4632
+        },
+        {
+          "profileId": "cl40-16blade-rotor-grade-bias-algebra",
+          "seed": 29017,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.00798945,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 100,
+          "compositeScore": 99.4407
+        },
+        {
+          "profileId": "cl40-16blade-rotor-grade-bias-algebra",
+          "seed": 39023,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.00783145,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 100,
+          "compositeScore": 99.4518
+        },
+        {
+          "profileId": "cl40-16blade-rotor-grade-bias-algebra",
+          "seed": 49031,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.00562501,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 100,
+          "compositeScore": 99.6062
+        },
+        {
+          "profileId": "cl40-16blade-rotor-grade-bias-algebra",
+          "seed": 59053,
+          "episodes": 24,
+          "rotorIsometryDefect": 0.00892448,
+          "gradeEquivariancePct": 100,
+          "bivectorTorquePrecisionPct": 100,
+          "compositeScore": 99.3753
+        }
+      ],
+      "stats": {
+        "rotorIsometryDefect": {
+          "count": 5,
+          "mean": 0.0076,
+          "stdDev": 0.0012,
+          "min": 0.0056,
+          "max": 0.0089,
+          "ci95": {
+            "low": 0.0061,
+            "high": 0.0091,
+            "halfWidth": 0.0015
+          }
+        },
+        "gradeEquivariancePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "bivectorTorquePrecisionPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 99.4674,
+          "stdDev": 0.0847,
+          "min": 99.3753,
+          "max": 99.6062,
+          "ci95": {
+            "low": 99.3622,
+            "high": 99.5727,
+            "halfWidth": 0.1052
+          }
+        }
+      }
+    }
+  },
+  "sha256": "8209c1b02836a21de2d7d4731e28d2723a689a96e42f5ae60d9a4a14b426325f"
+}
