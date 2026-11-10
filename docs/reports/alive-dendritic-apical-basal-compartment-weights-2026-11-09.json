@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-123-DENDRITIC-APICAL-BASAL-COMPARTMENT-WEIGHTS",
+  "passNumber": 123,
+  "phase": "Phase XXIV: Spiking Neuromorphic & Dendritic Compartment Weights",
+  "generatedAt": "2026-11-09T19:47:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "three-compartment-apical-basal-nmda-plateau-bias",
+  "winningScore": 100,
+  "profiles": {
+    "point-neuron-single-compartment-mlp": {
+      "profileId": "point-neuron-single-compartment-mlp",
+      "runs": [
+        {
+          "profileId": "point-neuron-single-compartment-mlp",
+          "seed": 19013,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 68.5,
+          "contextGatedRoutingAccuracyPct": 54.1667,
+          "compositeScore": 33.75
+        },
+        {
+          "profileId": "point-neuron-single-compartment-mlp",
+          "seed": 29017,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 68.5,
+          "contextGatedRoutingAccuracyPct": 54.1667,
+          "compositeScore": 33.75
+        },
+        {
+          "profileId": "point-neuron-single-compartment-mlp",
+          "seed": 39023,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 68.5,
+          "contextGatedRoutingAccuracyPct": 54.1667,
+          "compositeScore": 33.75
+        },
+        {
+          "profileId": "point-neuron-single-compartment-mlp",
+          "seed": 49031,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 68.5,
+          "contextGatedRoutingAccuracyPct": 54.1667,
+          "compositeScore": 33.75
+        },
+        {
+          "profileId": "point-neuron-single-compartment-mlp",
+          "seed": 59053,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 68.5,
+          "contextGatedRoutingAccuracyPct": 54.1667,
+          "compositeScore": 33.75
+        }
+      ],
+      "stats": {
+        "singleLayerXorSolvabilityPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "burstMultiplexedCreditAlignmentDeg": {
+          "count": 5,
+          "mean": 68.5,
+          "stdDev": 0,
+          "min": 68.5,
+          "max": 68.5,
+          "ci95": {
+            "low": 68.5,
+            "high": 68.5,
+            "halfWidth": 0
+          }
+        },
+        "contextGatedRoutingAccuracyPct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 33.75,
+          "stdDev": 0,
+          "min": 33.75,
+          "max": 33.75,
+          "ci95": {
+            "low": 33.75,
+            "high": 33.75,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "linear-apical-basal-sum-no-nmda-gate": {
+      "profileId": "linear-apical-basal-sum-no-nmda-gate",
+      "runs": [
+        {
+          "profileId": "linear-apical-basal-sum-no-nmda-gate",
+          "seed": 19013,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 42,
+          "contextGatedRoutingAccuracyPct": 66.6667,
+          "compositeScore": 50.45
+        },
+        {
+          "profileId": "linear-apical-basal-sum-no-nmda-gate",
+          "seed": 29017,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 42,
+          "contextGatedRoutingAccuracyPct": 66.6667,
+          "compositeScore": 50.45
+        },
+        {
+          "profileId": "linear-apical-basal-sum-no-nmda-gate",
+          "seed": 39023,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 42,
+          "contextGatedRoutingAccuracyPct": 66.6667,
+          "compositeScore": 50.45
+        },
+        {
+          "profileId": "linear-apical-basal-sum-no-nmda-gate",
+          "seed": 49031,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 42,
+          "contextGatedRoutingAccuracyPct": 66.6667,
+          "compositeScore": 50.45
+        },
+        {
+          "profileId": "linear-apical-basal-sum-no-nmda-gate",
+          "seed": 59053,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 50,
+          "burstMultiplexedCreditAlignmentDeg": 42,
+          "contextGatedRoutingAccuracyPct": 66.6667,
+          "compositeScore": 50.45
+        }
+      ],
+      "stats": {
+        "singleLayerXorSolvabilityPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "burstMultiplexedCreditAlignmentDeg": {
+          "count": 5,
+          "mean": 42,
+          "stdDev": 0,
+          "min": 42,
+          "max": 42,
+          "ci95": {
+            "low": 42,
+            "high": 42,
+            "halfWidth": 0
+          }
+        },
+        "contextGatedRoutingAccuracyPct": {
+          "count": 5,
+          "mean": 66.6667,
+          "stdDev": 0,
+          "min": 66.6667,
+          "max": 66.6667,
+          "ci95": {
+            "low": 66.6667,
+            "high": 66.6667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 50.45,
+          "stdDev": 0,
+          "min": 50.45,
+          "max": 50.45,
+          "ci95": {
+            "low": 50.45,
+            "high": 50.45,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "random-feedback-alignment-uncalibrated": {
+      "profileId": "random-feedback-alignment-uncalibrated",
+      "runs": [
+        {
+          "profileId": "random-feedback-alignment-uncalibrated",
+          "seed": 19013,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 79.1667,
+          "burstMultiplexedCreditAlignmentDeg": 28.4,
+          "contextGatedRoutingAccuracyPct": 79.1667,
+          "compositeScore": 71.5484
+        },
+        {
+          "profileId": "random-feedback-alignment-uncalibrated",
+          "seed": 29017,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 79.1667,
+          "burstMultiplexedCreditAlignmentDeg": 28.4,
+          "contextGatedRoutingAccuracyPct": 79.1667,
+          "compositeScore": 71.5484
+        },
+        {
+          "profileId": "random-feedback-alignment-uncalibrated",
+          "seed": 39023,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 79.1667,
+          "burstMultiplexedCreditAlignmentDeg": 28.4,
+          "contextGatedRoutingAccuracyPct": 79.1667,
+          "compositeScore": 71.5484
+        },
+        {
+          "profileId": "random-feedback-alignment-uncalibrated",
+          "seed": 49031,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 79.1667,
+          "burstMultiplexedCreditAlignmentDeg": 28.4,
+          "contextGatedRoutingAccuracyPct": 79.1667,
+          "compositeScore": 71.5484
+        },
+        {
+          "profileId": "random-feedback-alignment-uncalibrated",
+          "seed": 59053,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 79.1667,
+          "burstMultiplexedCreditAlignmentDeg": 28.4,
+          "contextGatedRoutingAccuracyPct": 79.1667,
+          "compositeScore": 71.5484
+        }
+      ],
+      "stats": {
+        "singleLayerXorSolvabilityPct": {
+          "count": 5,
+          "mean": 79.1667,
+          "stdDev": 0,
+          "min": 79.1667,
+          "max": 79.1667,
+          "ci95": {
+            "low": 79.1667,
+            "high": 79.1667,
+            "halfWidth": 0
+          }
+        },
+        "burstMultiplexedCreditAlignmentDeg": {
+          "count": 5,
+          "mean": 28.4,
+          "stdDev": 0,
+          "min": 28.4,
+          "max": 28.4,
+          "ci95": {
+            "low": 28.4,
+            "high": 28.4,
+            "halfWidth": 0
+          }
+        },
+        "contextGatedRoutingAccuracyPct": {
+          "count": 5,
+          "mean": 79.1667,
+          "stdDev": 0,
+          "min": 79.1667,
+          "max": 79.1667,
+          "ci95": {
+            "low": 79.1667,
+            "high": 79.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 71.5484,
+          "stdDev": 0,
+          "min": 71.5484,
+          "max": 71.5484,
+          "ci95": {
+            "low": 71.5484,
+            "high": 71.5484,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "three-compartment-apical-basal-nmda-plateau-bias": {
+      "profileId": "three-compartment-apical-basal-nmda-plateau-bias",
+      "runs": [
+        {
+          "profileId": "three-compartment-apical-basal-nmda-plateau-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 100,
+          "burstMultiplexedCreditAlignmentDeg": 3.3603,
+          "contextGatedRoutingAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "three-compartment-apical-basal-nmda-plateau-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 100,
+          "burstMultiplexedCreditAlignmentDeg": 3.2192,
+          "contextGatedRoutingAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "three-compartment-apical-basal-nmda-plateau-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 100,
+          "burstMultiplexedCreditAlignmentDeg": 3.4653,
+          "contextGatedRoutingAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "three-compartment-apical-basal-nmda-plateau-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 100,
+          "burstMultiplexedCreditAlignmentDeg": 3.4981,
+          "contextGatedRoutingAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "three-compartment-apical-basal-nmda-plateau-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "singleLayerXorSolvabilityPct": 100,
+          "burstMultiplexedCreditAlignmentDeg": 3.219,
+          "contextGatedRoutingAccuracyPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "singleLayerXorSolvabilityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "burstMultiplexedCreditAlignmentDeg": {
+          "count": 5,
+          "mean": 3.3524,
+          "stdDev": 0.1319,
+          "min": 3.219,
+          "max": 3.4981,
+          "ci95": {
+            "low": 3.1886,
+            "high": 3.5161,
+            "halfWidth": 0.1638
+          }
+        },
+        "contextGatedRoutingAccuracyPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "75c473379604e9a7270df124ed81942a8e2eb905be61450caac31bb9505e4a39"
+}
