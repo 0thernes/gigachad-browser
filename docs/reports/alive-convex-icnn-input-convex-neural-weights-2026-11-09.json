@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-149-CONVEX-ICNN-INPUT-CONVEX-NEURAL-WEIGHTS",
+  "passNumber": 149,
+  "phase": "Phase XXIX: Differentiable Optimization Layers (OptNet QP KKT, SoftSort Sinkhorn, SATNet & ICNN)",
+  "generatedAt": "2026-11-09T20:13:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "icnn-softplus-nonnegative-wz-passthrough-wx-convex",
+  "winningScore": 100,
+  "profiles": {
+    "unconstrained-mlp-nonconvex-spurious-minima": {
+      "profileId": "unconstrained-mlp-nonconvex-spurious-minima",
+      "runs": [
+        {
+          "profileId": "unconstrained-mlp-nonconvex-spurious-minima",
+          "seed": 19013,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.42,
+          "globalOptimumUniquenessPct": 37.5,
+          "BrenierPotentialApproximationR2": 0.82,
+          "compositeScore": 43.325
+        },
+        {
+          "profileId": "unconstrained-mlp-nonconvex-spurious-minima",
+          "seed": 29017,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.42,
+          "globalOptimumUniquenessPct": 37.5,
+          "BrenierPotentialApproximationR2": 0.82,
+          "compositeScore": 43.325
+        },
+        {
+          "profileId": "unconstrained-mlp-nonconvex-spurious-minima",
+          "seed": 39023,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.42,
+          "globalOptimumUniquenessPct": 37.5,
+          "BrenierPotentialApproximationR2": 0.82,
+          "compositeScore": 43.325
+        },
+        {
+          "profileId": "unconstrained-mlp-nonconvex-spurious-minima",
+          "seed": 49031,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.42,
+          "globalOptimumUniquenessPct": 37.5,
+          "BrenierPotentialApproximationR2": 0.82,
+          "compositeScore": 43.325
+        },
+        {
+          "profileId": "unconstrained-mlp-nonconvex-spurious-minima",
+          "seed": 59053,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.42,
+          "globalOptimumUniquenessPct": 37.5,
+          "BrenierPotentialApproximationR2": 0.82,
+          "compositeScore": 43.325
+        }
+      ],
+      "stats": {
+        "jensenConvexityViolationDefect": {
+          "count": 5,
+          "mean": 0.42,
+          "stdDev": 0,
+          "min": 0.42,
+          "max": 0.42,
+          "ci95": {
+            "low": 0.42,
+            "high": 0.42,
+            "halfWidth": 0
+          }
+        },
+        "globalOptimumUniquenessPct": {
+          "count": 5,
+          "mean": 37.5,
+          "stdDev": 0,
+          "min": 37.5,
+          "max": 37.5,
+          "ci95": {
+            "low": 37.5,
+            "high": 37.5,
+            "halfWidth": 0
+          }
+        },
+        "BrenierPotentialApproximationR2": {
+          "count": 5,
+          "mean": 0.82,
+          "stdDev": 0,
+          "min": 0.82,
+          "max": 0.82,
+          "ci95": {
+            "low": 0.82,
+            "high": 0.82,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 43.325,
+          "stdDev": 0,
+          "min": 43.325,
+          "max": 43.325,
+          "ci95": {
+            "low": 43.325,
+            "high": 43.325,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "icnn-without-passthrough-skip-weights-expressivity-loss": {
+      "profileId": "icnn-without-passthrough-skip-weights-expressivity-loss",
+      "runs": [
+        {
+          "profileId": "icnn-without-passthrough-skip-weights-expressivity-loss",
+          "seed": 19013,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.68,
+          "compositeScore": 90.4
+        },
+        {
+          "profileId": "icnn-without-passthrough-skip-weights-expressivity-loss",
+          "seed": 29017,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.68,
+          "compositeScore": 90.4
+        },
+        {
+          "profileId": "icnn-without-passthrough-skip-weights-expressivity-loss",
+          "seed": 39023,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.68,
+          "compositeScore": 90.4
+        },
+        {
+          "profileId": "icnn-without-passthrough-skip-weights-expressivity-loss",
+          "seed": 49031,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.68,
+          "compositeScore": 90.4
+        },
+        {
+          "profileId": "icnn-without-passthrough-skip-weights-expressivity-loss",
+          "seed": 59053,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.68,
+          "compositeScore": 90.4
+        }
+      ],
+      "stats": {
+        "jensenConvexityViolationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "globalOptimumUniquenessPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "BrenierPotentialApproximationR2": {
+          "count": 5,
+          "mean": 0.68,
+          "stdDev": 0,
+          "min": 0.68,
+          "max": 0.68,
+          "ci95": {
+            "low": 0.68,
+            "high": 0.68,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 90.4,
+          "stdDev": 0,
+          "min": 90.4,
+          "max": 90.4,
+          "ci95": {
+            "low": 90.4,
+            "high": 90.4,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "nonmonotonic-activation-convexity-violation": {
+      "profileId": "nonmonotonic-activation-convexity-violation",
+      "runs": [
+        {
+          "profileId": "nonmonotonic-activation-convexity-violation",
+          "seed": 19013,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.19,
+          "globalOptimumUniquenessPct": 62.5,
+          "BrenierPotentialApproximationR2": 0.88,
+          "compositeScore": 69.975
+        },
+        {
+          "profileId": "nonmonotonic-activation-convexity-violation",
+          "seed": 29017,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.19,
+          "globalOptimumUniquenessPct": 62.5,
+          "BrenierPotentialApproximationR2": 0.88,
+          "compositeScore": 69.975
+        },
+        {
+          "profileId": "nonmonotonic-activation-convexity-violation",
+          "seed": 39023,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.19,
+          "globalOptimumUniquenessPct": 62.5,
+          "BrenierPotentialApproximationR2": 0.88,
+          "compositeScore": 69.975
+        },
+        {
+          "profileId": "nonmonotonic-activation-convexity-violation",
+          "seed": 49031,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.19,
+          "globalOptimumUniquenessPct": 62.5,
+          "BrenierPotentialApproximationR2": 0.88,
+          "compositeScore": 69.975
+        },
+        {
+          "profileId": "nonmonotonic-activation-convexity-violation",
+          "seed": 59053,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0.19,
+          "globalOptimumUniquenessPct": 62.5,
+          "BrenierPotentialApproximationR2": 0.88,
+          "compositeScore": 69.975
+        }
+      ],
+      "stats": {
+        "jensenConvexityViolationDefect": {
+          "count": 5,
+          "mean": 0.19,
+          "stdDev": 0,
+          "min": 0.19,
+          "max": 0.19,
+          "ci95": {
+            "low": 0.19,
+            "high": 0.19,
+            "halfWidth": 0
+          }
+        },
+        "globalOptimumUniquenessPct": {
+          "count": 5,
+          "mean": 62.5,
+          "stdDev": 0,
+          "min": 62.5,
+          "max": 62.5,
+          "ci95": {
+            "low": 62.5,
+            "high": 62.5,
+            "halfWidth": 0
+          }
+        },
+        "BrenierPotentialApproximationR2": {
+          "count": 5,
+          "mean": 0.88,
+          "stdDev": 0,
+          "min": 0.88,
+          "max": 0.88,
+          "ci95": {
+            "low": 0.88,
+            "high": 0.88,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 69.975,
+          "stdDev": 0,
+          "min": 69.975,
+          "max": 69.975,
+          "ci95": {
+            "low": 69.975,
+            "high": 69.975,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "icnn-softplus-nonnegative-wz-passthrough-wx-convex": {
+      "profileId": "icnn-softplus-nonnegative-wz-passthrough-wx-convex",
+      "runs": [
+        {
+          "profileId": "icnn-softplus-nonnegative-wz-passthrough-wx-convex",
+          "seed": 19013,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.9967,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icnn-softplus-nonnegative-wz-passthrough-wx-convex",
+          "seed": 29017,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.997,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icnn-softplus-nonnegative-wz-passthrough-wx-convex",
+          "seed": 39023,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.9975,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icnn-softplus-nonnegative-wz-passthrough-wx-convex",
+          "seed": 49031,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.9969,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icnn-softplus-nonnegative-wz-passthrough-wx-convex",
+          "seed": 59053,
+          "episodes": 24,
+          "jensenConvexityViolationDefect": 0,
+          "globalOptimumUniquenessPct": 100,
+          "BrenierPotentialApproximationR2": 0.9976,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "jensenConvexityViolationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "globalOptimumUniquenessPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "BrenierPotentialApproximationR2": {
+          "count": 5,
+          "mean": 0.9971,
+          "stdDev": 0.0004,
+          "min": 0.9967,
+          "max": 0.9976,
+          "ci95": {
+            "low": 0.9967,
+            "high": 0.9976,
+            "halfWidth": 0.0005
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "0fb6bf220c9f7d8d93cd22eac9c191636de994d43439058333b075cc1a74d220"
+}
