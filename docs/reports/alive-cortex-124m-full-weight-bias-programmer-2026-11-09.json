@@ -1,0 +1,527 @@
+{
+  "passId": "ALIVE-PASS-101-CORTEX-124M-WEIGHT-BIAS-PROGRAMMER",
+  "passNumber": 101,
+  "phase": "Phase XX: Core Brain, 1.245M Cortex & 59-Tensor Hub Weight/Bias Programming",
+  "generatedAt": "2026-11-09T19:25:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "stiefel-chrono-bias-124m-cortex-programmer",
+  "winningScore": 100,
+  "profiles": {
+    "uninitialized-zero-cortex-weights": {
+      "profileId": "uninitialized-zero-cortex-weights",
+      "runs": [
+        {
+          "profileId": "uninitialized-zero-cortex-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "orthogonalityDefect": 1,
+          "rssmSpectralRadius": 0,
+          "rssmReconstructionRatePct": 0,
+          "moeBalancePct": 12.5,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 2.5
+        },
+        {
+          "profileId": "uninitialized-zero-cortex-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "orthogonalityDefect": 1,
+          "rssmSpectralRadius": 0,
+          "rssmReconstructionRatePct": 0,
+          "moeBalancePct": 12.5,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 2.5
+        },
+        {
+          "profileId": "uninitialized-zero-cortex-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "orthogonalityDefect": 1,
+          "rssmSpectralRadius": 0,
+          "rssmReconstructionRatePct": 0,
+          "moeBalancePct": 12.5,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 2.5
+        },
+        {
+          "profileId": "uninitialized-zero-cortex-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "orthogonalityDefect": 1,
+          "rssmSpectralRadius": 0,
+          "rssmReconstructionRatePct": 0,
+          "moeBalancePct": 12.5,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 2.5
+        },
+        {
+          "profileId": "uninitialized-zero-cortex-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "orthogonalityDefect": 1,
+          "rssmSpectralRadius": 0,
+          "rssmReconstructionRatePct": 0,
+          "moeBalancePct": 12.5,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 2.5
+        }
+      ],
+      "stats": {
+        "orthogonalityDefect": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "rssmSpectralRadius": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "rssmReconstructionRatePct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "moeBalancePct": {
+          "count": 5,
+          "mean": 12.5,
+          "stdDev": 0,
+          "min": 12.5,
+          "max": 12.5,
+          "ci95": {
+            "low": 12.5,
+            "high": 12.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 2.5,
+          "stdDev": 0,
+          "min": 2.5,
+          "max": 2.5,
+          "ci95": {
+            "low": 2.5,
+            "high": 2.5,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "iid-gaussian-unconditioned-cortex": {
+      "profileId": "iid-gaussian-unconditioned-cortex",
+      "runs": [
+        {
+          "profileId": "iid-gaussian-unconditioned-cortex",
+          "seed": 19013,
+          "episodes": 24,
+          "orthogonalityDefect": 0.420418,
+          "rssmSpectralRadius": 1.7192,
+          "rssmReconstructionRatePct": 54.1667,
+          "moeBalancePct": 58.4304,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 33.4272
+        },
+        {
+          "profileId": "iid-gaussian-unconditioned-cortex",
+          "seed": 29017,
+          "episodes": 24,
+          "orthogonalityDefect": 0.43397,
+          "rssmSpectralRadius": 1.7042,
+          "rssmReconstructionRatePct": 54.1667,
+          "moeBalancePct": 58.8705,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 33.1503
+        },
+        {
+          "profileId": "iid-gaussian-unconditioned-cortex",
+          "seed": 39023,
+          "episodes": 24,
+          "orthogonalityDefect": 0.433386,
+          "rssmSpectralRadius": 1.6807,
+          "rssmReconstructionRatePct": 54.1667,
+          "moeBalancePct": 58.4913,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 33.8149
+        },
+        {
+          "profileId": "iid-gaussian-unconditioned-cortex",
+          "seed": 49031,
+          "episodes": 24,
+          "orthogonalityDefect": 0.428143,
+          "rssmSpectralRadius": 1.6922,
+          "rssmReconstructionRatePct": 54.1667,
+          "moeBalancePct": 60.0854,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 34.1053
+        },
+        {
+          "profileId": "iid-gaussian-unconditioned-cortex",
+          "seed": 59053,
+          "episodes": 24,
+          "orthogonalityDefect": 0.439327,
+          "rssmSpectralRadius": 1.702,
+          "rssmReconstructionRatePct": 54.1667,
+          "moeBalancePct": 59.1053,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 32.9439
+        }
+      ],
+      "stats": {
+        "orthogonalityDefect": {
+          "count": 5,
+          "mean": 0.431,
+          "stdDev": 0.0071,
+          "min": 0.4204,
+          "max": 0.4393,
+          "ci95": {
+            "low": 0.4222,
+            "high": 0.4399,
+            "halfWidth": 0.0089
+          }
+        },
+        "rssmSpectralRadius": {
+          "count": 5,
+          "mean": 1.6997,
+          "stdDev": 0.0143,
+          "min": 1.6807,
+          "max": 1.7192,
+          "ci95": {
+            "low": 1.6818,
+            "high": 1.7175,
+            "halfWidth": 0.0178
+          }
+        },
+        "rssmReconstructionRatePct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "moeBalancePct": {
+          "count": 5,
+          "mean": 58.9966,
+          "stdDev": 0.6688,
+          "min": 58.4304,
+          "max": 60.0854,
+          "ci95": {
+            "low": 58.1662,
+            "high": 59.827,
+            "halfWidth": 0.8304
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 33.4883,
+          "stdDev": 0.4748,
+          "min": 32.9439,
+          "max": 34.1053,
+          "ci95": {
+            "low": 32.8988,
+            "high": 34.0779,
+            "halfWidth": 0.5895
+          }
+        }
+      }
+    },
+    "stiefel-weights-zero-biases-no-moe-balance": {
+      "profileId": "stiefel-weights-zero-biases-no-moe-balance",
+      "runs": [
+        {
+          "profileId": "stiefel-weights-zero-biases-no-moe-balance",
+          "seed": 19013,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 83.3333,
+          "moeBalancePct": 77.3017,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 91.2937
+        },
+        {
+          "profileId": "stiefel-weights-zero-biases-no-moe-balance",
+          "seed": 29017,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 83.3333,
+          "moeBalancePct": 76.5961,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 91.1526
+        },
+        {
+          "profileId": "stiefel-weights-zero-biases-no-moe-balance",
+          "seed": 39023,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 83.3333,
+          "moeBalancePct": 77.8267,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 91.3987
+        },
+        {
+          "profileId": "stiefel-weights-zero-biases-no-moe-balance",
+          "seed": 49031,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 83.3333,
+          "moeBalancePct": 77.9906,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 91.4314
+        },
+        {
+          "profileId": "stiefel-weights-zero-biases-no-moe-balance",
+          "seed": 59053,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 83.3333,
+          "moeBalancePct": 76.5951,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 91.1523
+        }
+      ],
+      "stats": {
+        "orthogonalityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "rssmSpectralRadius": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "rssmReconstructionRatePct": {
+          "count": 5,
+          "mean": 83.3333,
+          "stdDev": 0,
+          "min": 83.3333,
+          "max": 83.3333,
+          "ci95": {
+            "low": 83.3333,
+            "high": 83.3333,
+            "halfWidth": 0
+          }
+        },
+        "moeBalancePct": {
+          "count": 5,
+          "mean": 77.262,
+          "stdDev": 0.6595,
+          "min": 76.5951,
+          "max": 77.9906,
+          "ci95": {
+            "low": 76.4432,
+            "high": 78.0809,
+            "halfWidth": 0.8188
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 91.2857,
+          "stdDev": 0.1319,
+          "min": 91.1523,
+          "max": 91.4314,
+          "ci95": {
+            "low": 91.122,
+            "high": 91.4495,
+            "halfWidth": 0.1638
+          }
+        }
+      }
+    },
+    "stiefel-chrono-bias-124m-cortex-programmer": {
+      "profileId": "stiefel-chrono-bias-124m-cortex-programmer",
+      "runs": [
+        {
+          "profileId": "stiefel-chrono-bias-124m-cortex-programmer",
+          "seed": 19013,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 100,
+          "moeBalancePct": 99.4371,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stiefel-chrono-bias-124m-cortex-programmer",
+          "seed": 29017,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 100,
+          "moeBalancePct": 99.2724,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stiefel-chrono-bias-124m-cortex-programmer",
+          "seed": 39023,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 100,
+          "moeBalancePct": 99.5596,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stiefel-chrono-bias-124m-cortex-programmer",
+          "seed": 49031,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 100,
+          "moeBalancePct": 99.5978,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stiefel-chrono-bias-124m-cortex-programmer",
+          "seed": 59053,
+          "episodes": 24,
+          "orthogonalityDefect": 0,
+          "rssmSpectralRadius": 1,
+          "rssmReconstructionRatePct": 100,
+          "moeBalancePct": 99.2722,
+          "totalParamsVerified": 1245184,
+          "totalSynapsesVerified": 262144,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "orthogonalityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "rssmSpectralRadius": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "rssmReconstructionRatePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "moeBalancePct": {
+          "count": 5,
+          "mean": 99.4278,
+          "stdDev": 0.1539,
+          "min": 99.2722,
+          "max": 99.5978,
+          "ci95": {
+            "low": 99.2368,
+            "high": 99.6189,
+            "halfWidth": 0.1911
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "eb5019b83116b5011d956c1957743093b1661c25b445422fb1b919f1bd021b43"
+}
