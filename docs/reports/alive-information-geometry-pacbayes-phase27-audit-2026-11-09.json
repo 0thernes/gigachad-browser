@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-140-INFORMATION-GEOMETRY-PACBAYES-PHASE27-AUDIT",
+  "passNumber": 140,
+  "phase": "Phase XXVII: Information Geometry, Fisher-Rao Natural Gradients, Wasserstein & PAC-Bayes",
+  "generatedAt": "2026-11-09T20:04:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "Z1-Amari-Fisher-Rao-Reparameterization-Invariance",
+      "passNumber": 136,
+      "metric": "reparameterizationInvarianceDefect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "Z2-Amari-Fisher-Rao-Plateau-Escape-Speedup",
+      "passNumber": 136,
+      "metric": "plateauEscapeSpeedupFactor",
+      "threshold": ">= 4.0x",
+      "observed": 4.6981,
+      "verified": true
+    },
+    {
+      "rowId": "Z3-Wasserstein-Sinkhorn-Doubly-Stochastic-Marginal-Conservation",
+      "passNumber": 137,
+      "metric": "marginalConservationError",
+      "threshold": "<= 1e-6",
+      "observed": 0.0003,
+      "verified": false
+    },
+    {
+      "rowId": "Z4-Wasserstein-Disjoint-Support-Gradient-Finiteness",
+      "passNumber": 137,
+      "metric": "disjointSupportGradientFinitenessPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "Z5-Bregman-Mirror-Descent-Simplex-Feasibility-Preservation",
+      "passNumber": 138,
+      "metric": "simplexBregmanFeasibilityDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "Z6-Hyperspherical-Geodesic-Retraction-Unit-Norm-Invariance",
+      "passNumber": 138,
+      "metric": "hypersphericalNormDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "Z7-Bregman-Logarithmic-HighDim-Regret-Bound-Gain",
+      "passNumber": 138,
+      "metric": "highDimSimplexRegretBoundGain",
+      "threshold": ">= 3.5x",
+      "observed": 3.85,
+      "verified": true
+    },
+    {
+      "rowId": "Z8-PAC-Bayes-NonVacuous-Generalization-Risk-Upper-Bound",
+      "passNumber": 139,
+      "metric": "pacBayesNonVacuousUpperBound",
+      "threshold": "<= 0.08",
+      "observed": 0.0602,
+      "verified": true
+    },
+    {
+      "rowId": "Z9-PAC-Bayes-Empirical-To-True-Risk-Gap",
+      "passNumber": 139,
+      "metric": "empiricalToTrueRiskGap",
+      "threshold": "<= 0.02",
+      "observed": 0.0116,
+      "verified": true
+    },
+    {
+      "rowId": "Z10-Phase27-All-Four-Information-Geometry-Passes-100-Score",
+      "passNumber": 140,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 99.9812 / 100 / 100",
+      "verified": false
+    }
+  ],
+  "verifiedRowCount": 8,
+  "totalRows": 10,
+  "acceptanceScorePct": 80,
+  "allVerified": false,
+  "passDigests": {
+    "pass136Sha256": "7362edf7e3fb1f0fe555afdcaa46e381ca6fe206e019b6789153de90fc710f30",
+    "pass137Sha256": "490ec4cd9c67965a86b815e0c388255ea461c36f5ad815e5afda22bfe7f99b13",
+    "pass138Sha256": "65de5d50e78fd810a6d8aa40804ba5401bc9b0e0a7b4b6b52fdbae6528b82017",
+    "pass139Sha256": "83ffcb1b40b20054d2114fd70268bf9d67e6974a354c9f1eccc9fed10fb816af"
+  },
+  "phase27Sha256": "e850aa87379e63151ce63bcdc405273a2ca72e7e5f784fbd3b40a23ebeaecc8d"
+}
