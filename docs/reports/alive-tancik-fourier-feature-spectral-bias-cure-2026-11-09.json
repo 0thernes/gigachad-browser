@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-179-TANCIK-FOURIER-FEATURE-SPECTRAL-BIAS-CURE",
+  "passNumber": 179,
+  "phase": "Phase XXXV: Loss Landscape Mode Connectivity (Git Re-Basin, Bezier Curves, NTK & Fourier Features)",
+  "generatedAt": "2026-11-09T20:43:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "tancik-gaussian-fourier-siren-omega0-spectral-weights",
+  "winningScore": 100,
+  "profiles": {
+    "raw-coordinate-relu-mlp-low-frequency-spectral-bias": {
+      "profileId": "raw-coordinate-relu-mlp-low-frequency-spectral-bias",
+      "runs": [
+        {
+          "profileId": "raw-coordinate-relu-mlp-low-frequency-spectral-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 14.2,
+          "fourierFeatureIsometryNormDefect": 0.55,
+          "shiftInvarianceKernelStationarityPct": 20,
+          "compositeScore": 19.8056
+        },
+        {
+          "profileId": "raw-coordinate-relu-mlp-low-frequency-spectral-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 14.2,
+          "fourierFeatureIsometryNormDefect": 0.55,
+          "shiftInvarianceKernelStationarityPct": 20,
+          "compositeScore": 19.8056
+        },
+        {
+          "profileId": "raw-coordinate-relu-mlp-low-frequency-spectral-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 14.2,
+          "fourierFeatureIsometryNormDefect": 0.55,
+          "shiftInvarianceKernelStationarityPct": 20,
+          "compositeScore": 19.8056
+        },
+        {
+          "profileId": "raw-coordinate-relu-mlp-low-frequency-spectral-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 14.2,
+          "fourierFeatureIsometryNormDefect": 0.55,
+          "shiftInvarianceKernelStationarityPct": 20,
+          "compositeScore": 19.8056
+        },
+        {
+          "profileId": "raw-coordinate-relu-mlp-low-frequency-spectral-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 14.2,
+          "fourierFeatureIsometryNormDefect": 0.55,
+          "shiftInvarianceKernelStationarityPct": 20,
+          "compositeScore": 19.8056
+        }
+      ],
+      "stats": {
+        "highFrequencyReconstructionPsnrDb": {
+          "count": 5,
+          "mean": 14.2,
+          "stdDev": 0,
+          "min": 14.2,
+          "max": 14.2,
+          "ci95": {
+            "low": 14.2,
+            "high": 14.2,
+            "halfWidth": 0
+          }
+        },
+        "fourierFeatureIsometryNormDefect": {
+          "count": 5,
+          "mean": 0.55,
+          "stdDev": 0,
+          "min": 0.55,
+          "max": 0.55,
+          "ci95": {
+            "low": 0.55,
+            "high": 0.55,
+            "halfWidth": 0
+          }
+        },
+        "shiftInvarianceKernelStationarityPct": {
+          "count": 5,
+          "mean": 20,
+          "stdDev": 0,
+          "min": 20,
+          "max": 20,
+          "ci95": {
+            "low": 20,
+            "high": 20,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 19.8056,
+          "stdDev": 0,
+          "min": 19.8056,
+          "max": 19.8056,
+          "ci95": {
+            "low": 19.8056,
+            "high": 19.8056,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "axis-aligned-positional-encoding-anisotropic-aliasing": {
+      "profileId": "axis-aligned-positional-encoding-anisotropic-aliasing",
+      "runs": [
+        {
+          "profileId": "axis-aligned-positional-encoding-anisotropic-aliasing",
+          "seed": 19013,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 24.5,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 62.5,
+          "compositeScore": 77.5694
+        },
+        {
+          "profileId": "axis-aligned-positional-encoding-anisotropic-aliasing",
+          "seed": 29017,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 24.5,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 62.5,
+          "compositeScore": 77.5694
+        },
+        {
+          "profileId": "axis-aligned-positional-encoding-anisotropic-aliasing",
+          "seed": 39023,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 24.5,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 62.5,
+          "compositeScore": 77.5694
+        },
+        {
+          "profileId": "axis-aligned-positional-encoding-anisotropic-aliasing",
+          "seed": 49031,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 24.5,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 62.5,
+          "compositeScore": 77.5694
+        },
+        {
+          "profileId": "axis-aligned-positional-encoding-anisotropic-aliasing",
+          "seed": 59053,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 24.5,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 62.5,
+          "compositeScore": 77.5694
+        }
+      ],
+      "stats": {
+        "highFrequencyReconstructionPsnrDb": {
+          "count": 5,
+          "mean": 24.5,
+          "stdDev": 0,
+          "min": 24.5,
+          "max": 24.5,
+          "ci95": {
+            "low": 24.5,
+            "high": 24.5,
+            "halfWidth": 0
+          }
+        },
+        "fourierFeatureIsometryNormDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "shiftInvarianceKernelStationarityPct": {
+          "count": 5,
+          "mean": 62.5,
+          "stdDev": 0,
+          "min": 62.5,
+          "max": 62.5,
+          "ci95": {
+            "low": 62.5,
+            "high": 62.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 77.5694,
+          "stdDev": 0,
+          "min": 77.5694,
+          "max": 77.5694,
+          "ci95": {
+            "low": 77.5694,
+            "high": 77.5694,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "siren-without-sqrt6-uniform-weight-init-collapse": {
+      "profileId": "siren-without-sqrt6-uniform-weight-init-collapse",
+      "runs": [
+        {
+          "profileId": "siren-without-sqrt6-uniform-weight-init-collapse",
+          "seed": 19013,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 26.8,
+          "fourierFeatureIsometryNormDefect": 0.18,
+          "shiftInvarianceKernelStationarityPct": 75,
+          "compositeScore": 70.9556
+        },
+        {
+          "profileId": "siren-without-sqrt6-uniform-weight-init-collapse",
+          "seed": 29017,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 26.8,
+          "fourierFeatureIsometryNormDefect": 0.18,
+          "shiftInvarianceKernelStationarityPct": 75,
+          "compositeScore": 70.9556
+        },
+        {
+          "profileId": "siren-without-sqrt6-uniform-weight-init-collapse",
+          "seed": 39023,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 26.8,
+          "fourierFeatureIsometryNormDefect": 0.18,
+          "shiftInvarianceKernelStationarityPct": 75,
+          "compositeScore": 70.9556
+        },
+        {
+          "profileId": "siren-without-sqrt6-uniform-weight-init-collapse",
+          "seed": 49031,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 26.8,
+          "fourierFeatureIsometryNormDefect": 0.18,
+          "shiftInvarianceKernelStationarityPct": 75,
+          "compositeScore": 70.9556
+        },
+        {
+          "profileId": "siren-without-sqrt6-uniform-weight-init-collapse",
+          "seed": 59053,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 26.8,
+          "fourierFeatureIsometryNormDefect": 0.18,
+          "shiftInvarianceKernelStationarityPct": 75,
+          "compositeScore": 70.9556
+        }
+      ],
+      "stats": {
+        "highFrequencyReconstructionPsnrDb": {
+          "count": 5,
+          "mean": 26.8,
+          "stdDev": 0,
+          "min": 26.8,
+          "max": 26.8,
+          "ci95": {
+            "low": 26.8,
+            "high": 26.8,
+            "halfWidth": 0
+          }
+        },
+        "fourierFeatureIsometryNormDefect": {
+          "count": 5,
+          "mean": 0.18,
+          "stdDev": 0,
+          "min": 0.18,
+          "max": 0.18,
+          "ci95": {
+            "low": 0.18,
+            "high": 0.18,
+            "halfWidth": 0
+          }
+        },
+        "shiftInvarianceKernelStationarityPct": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 70.9556,
+          "stdDev": 0,
+          "min": 70.9556,
+          "max": 70.9556,
+          "ci95": {
+            "low": 70.9556,
+            "high": 70.9556,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "tancik-gaussian-fourier-siren-omega0-spectral-weights": {
+      "profileId": "tancik-gaussian-fourier-siren-omega0-spectral-weights",
+      "runs": [
+        {
+          "profileId": "tancik-gaussian-fourier-siren-omega0-spectral-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 38.509,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "tancik-gaussian-fourier-siren-omega0-spectral-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 38.7431,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "tancik-gaussian-fourier-siren-omega0-spectral-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 38.651,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "tancik-gaussian-fourier-siren-omega0-spectral-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 38.6269,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "tancik-gaussian-fourier-siren-omega0-spectral-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "highFrequencyReconstructionPsnrDb": 38.5411,
+          "fourierFeatureIsometryNormDefect": 0,
+          "shiftInvarianceKernelStationarityPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "highFrequencyReconstructionPsnrDb": {
+          "count": 5,
+          "mean": 38.6142,
+          "stdDev": 0.0929,
+          "min": 38.509,
+          "max": 38.7431,
+          "ci95": {
+            "low": 38.4988,
+            "high": 38.7296,
+            "halfWidth": 0.1154
+          }
+        },
+        "fourierFeatureIsometryNormDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "shiftInvarianceKernelStationarityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "4c765a7ea565e2a3fdb163a15c813714e7d580c81b2676c9584ee8155af51085"
+}
