@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-156-CONSISTENCY-MODEL-SINGLE-STEP-DISTILLATION",
+  "passNumber": 156,
+  "phase": "Phase XXXI: Consistency Models, Schrodinger Bridges, Karras EDM & AutoGuidance",
+  "generatedAt": "2026-11-09T20:20:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "consistency-model-cskip-cout-pseudo-huber-single-step",
+  "winningScore": 100,
+  "profiles": {
+    "multistep-ddpm-1000nfe-latency-bottleneck": {
+      "profileId": "multistep-ddpm-1000nfe-latency-bottleneck",
+      "runs": [
+        {
+          "profileId": "multistep-ddpm-1000nfe-latency-bottleneck",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.08,
+          "singleStepNfeSpeedupFactor": 1,
+          "compositeScore": 65
+        },
+        {
+          "profileId": "multistep-ddpm-1000nfe-latency-bottleneck",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.08,
+          "singleStepNfeSpeedupFactor": 1,
+          "compositeScore": 65
+        },
+        {
+          "profileId": "multistep-ddpm-1000nfe-latency-bottleneck",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.08,
+          "singleStepNfeSpeedupFactor": 1,
+          "compositeScore": 65
+        },
+        {
+          "profileId": "multistep-ddpm-1000nfe-latency-bottleneck",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.08,
+          "singleStepNfeSpeedupFactor": 1,
+          "compositeScore": 65
+        },
+        {
+          "profileId": "multistep-ddpm-1000nfe-latency-bottleneck",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.08,
+          "singleStepNfeSpeedupFactor": 1,
+          "compositeScore": 65
+        }
+      ],
+      "stats": {
+        "boundaryIdentityConditionDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "trajectorySelfConsistencyDiscrepancy": {
+          "count": 5,
+          "mean": 0.08,
+          "stdDev": 0,
+          "min": 0.08,
+          "max": 0.08,
+          "ci95": {
+            "low": 0.08,
+            "high": 0.08,
+            "halfWidth": 0
+          }
+        },
+        "singleStepNfeSpeedupFactor": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 65,
+          "stdDev": 0,
+          "min": 65,
+          "max": 65,
+          "ci95": {
+            "low": 65,
+            "high": 65,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unparameterized-direct-denoiser-boundary-violation": {
+      "profileId": "unparameterized-direct-denoiser-boundary-violation",
+      "runs": [
+        {
+          "profileId": "unparameterized-direct-denoiser-boundary-violation",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0.44,
+          "trajectorySelfConsistencyDiscrepancy": 0.31,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 47.5
+        },
+        {
+          "profileId": "unparameterized-direct-denoiser-boundary-violation",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0.44,
+          "trajectorySelfConsistencyDiscrepancy": 0.31,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 47.5
+        },
+        {
+          "profileId": "unparameterized-direct-denoiser-boundary-violation",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0.44,
+          "trajectorySelfConsistencyDiscrepancy": 0.31,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 47.5
+        },
+        {
+          "profileId": "unparameterized-direct-denoiser-boundary-violation",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0.44,
+          "trajectorySelfConsistencyDiscrepancy": 0.31,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 47.5
+        },
+        {
+          "profileId": "unparameterized-direct-denoiser-boundary-violation",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0.44,
+          "trajectorySelfConsistencyDiscrepancy": 0.31,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 47.5
+        }
+      ],
+      "stats": {
+        "boundaryIdentityConditionDefect": {
+          "count": 5,
+          "mean": 0.44,
+          "stdDev": 0,
+          "min": 0.44,
+          "max": 0.44,
+          "ci95": {
+            "low": 0.44,
+            "high": 0.44,
+            "halfWidth": 0
+          }
+        },
+        "trajectorySelfConsistencyDiscrepancy": {
+          "count": 5,
+          "mean": 0.31,
+          "stdDev": 0,
+          "min": 0.31,
+          "max": 0.31,
+          "ci95": {
+            "low": 0.31,
+            "high": 0.31,
+            "halfWidth": 0
+          }
+        },
+        "singleStepNfeSpeedupFactor": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 47.5,
+          "stdDev": 0,
+          "min": 47.5,
+          "max": 47.5,
+          "ci95": {
+            "low": 47.5,
+            "high": 47.5,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "l2-distillation-outlier-sensitivity": {
+      "profileId": "l2-distillation-outlier-sensitivity",
+      "runs": [
+        {
+          "profileId": "l2-distillation-outlier-sensitivity",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.045,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 96.85
+        },
+        {
+          "profileId": "l2-distillation-outlier-sensitivity",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.045,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 96.85
+        },
+        {
+          "profileId": "l2-distillation-outlier-sensitivity",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.045,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 96.85
+        },
+        {
+          "profileId": "l2-distillation-outlier-sensitivity",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.045,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 96.85
+        },
+        {
+          "profileId": "l2-distillation-outlier-sensitivity",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.045,
+          "singleStepNfeSpeedupFactor": 50,
+          "compositeScore": 96.85
+        }
+      ],
+      "stats": {
+        "boundaryIdentityConditionDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "trajectorySelfConsistencyDiscrepancy": {
+          "count": 5,
+          "mean": 0.045,
+          "stdDev": 0,
+          "min": 0.045,
+          "max": 0.045,
+          "ci95": {
+            "low": 0.045,
+            "high": 0.045,
+            "halfWidth": 0
+          }
+        },
+        "singleStepNfeSpeedupFactor": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 96.85,
+          "stdDev": 0,
+          "min": 96.85,
+          "max": 96.85,
+          "ci95": {
+            "low": 96.85,
+            "high": 96.85,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "consistency-model-cskip-cout-pseudo-huber-single-step": {
+      "profileId": "consistency-model-cskip-cout-pseudo-huber-single-step",
+      "runs": [
+        {
+          "profileId": "consistency-model-cskip-cout-pseudo-huber-single-step",
+          "seed": 19013,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.000413,
+          "singleStepNfeSpeedupFactor": 64,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "consistency-model-cskip-cout-pseudo-huber-single-step",
+          "seed": 29017,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.000414,
+          "singleStepNfeSpeedupFactor": 64,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "consistency-model-cskip-cout-pseudo-huber-single-step",
+          "seed": 39023,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.000445,
+          "singleStepNfeSpeedupFactor": 64,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "consistency-model-cskip-cout-pseudo-huber-single-step",
+          "seed": 49031,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.000442,
+          "singleStepNfeSpeedupFactor": 64,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "consistency-model-cskip-cout-pseudo-huber-single-step",
+          "seed": 59053,
+          "episodes": 24,
+          "boundaryIdentityConditionDefect": 0,
+          "trajectorySelfConsistencyDiscrepancy": 0.000477,
+          "singleStepNfeSpeedupFactor": 64,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "boundaryIdentityConditionDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "trajectorySelfConsistencyDiscrepancy": {
+          "count": 5,
+          "mean": 0.0004,
+          "stdDev": 0,
+          "min": 0.0004,
+          "max": 0.0005,
+          "ci95": {
+            "low": 0.0004,
+            "high": 0.0005,
+            "halfWidth": 0
+          }
+        },
+        "singleStepNfeSpeedupFactor": {
+          "count": 5,
+          "mean": 64,
+          "stdDev": 0,
+          "min": 64,
+          "max": 64,
+          "ci95": {
+            "low": 64,
+            "high": 64,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "6e6de80e3d81064081576454d4cb9511013efa639183256c66dee602f8c366ba"
+}
