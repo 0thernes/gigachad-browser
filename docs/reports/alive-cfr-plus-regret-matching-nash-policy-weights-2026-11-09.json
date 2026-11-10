@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-161-CFR-PLUS-REGRET-MATCHING-NASH-POLICY-WEIGHTS",
+  "passNumber": 161,
+  "phase": "Phase XXXII: Multi-Agent Game-Theoretic Equilibrium Weights (CFR+, Stackelberg, Mean-Field & VCG)",
+  "generatedAt": "2026-11-09T20:25:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "cfr-plus-nonnegative-regret-matching-linear-nash-weights",
+  "winningScore": 100,
+  "profiles": {
+    "myopic-best-response-rock-paper-scissors-cycling": {
+      "profileId": "myopic-best-response-rock-paper-scissors-cycling",
+      "runs": [
+        {
+          "profileId": "myopic-best-response-rock-paper-scissors-cycling",
+          "seed": 19013,
+          "episodes": 24,
+          "nashConvExploitability": 1,
+          "negativeRegretAccumulationLeak": 0.65,
+          "convergenceSpeedupVsVanillaCfr": 0.1,
+          "compositeScore": 1.475
+        },
+        {
+          "profileId": "myopic-best-response-rock-paper-scissors-cycling",
+          "seed": 29017,
+          "episodes": 24,
+          "nashConvExploitability": 1,
+          "negativeRegretAccumulationLeak": 0.65,
+          "convergenceSpeedupVsVanillaCfr": 0.1,
+          "compositeScore": 1.475
+        },
+        {
+          "profileId": "myopic-best-response-rock-paper-scissors-cycling",
+          "seed": 39023,
+          "episodes": 24,
+          "nashConvExploitability": 1,
+          "negativeRegretAccumulationLeak": 0.65,
+          "convergenceSpeedupVsVanillaCfr": 0.1,
+          "compositeScore": 1.475
+        },
+        {
+          "profileId": "myopic-best-response-rock-paper-scissors-cycling",
+          "seed": 49031,
+          "episodes": 24,
+          "nashConvExploitability": 1,
+          "negativeRegretAccumulationLeak": 0.65,
+          "convergenceSpeedupVsVanillaCfr": 0.1,
+          "compositeScore": 1.475
+        },
+        {
+          "profileId": "myopic-best-response-rock-paper-scissors-cycling",
+          "seed": 59053,
+          "episodes": 24,
+          "nashConvExploitability": 1,
+          "negativeRegretAccumulationLeak": 0.65,
+          "convergenceSpeedupVsVanillaCfr": 0.1,
+          "compositeScore": 1.475
+        }
+      ],
+      "stats": {
+        "nashConvExploitability": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "negativeRegretAccumulationLeak": {
+          "count": 5,
+          "mean": 0.65,
+          "stdDev": 0,
+          "min": 0.65,
+          "max": 0.65,
+          "ci95": {
+            "low": 0.65,
+            "high": 0.65,
+            "halfWidth": 0
+          }
+        },
+        "convergenceSpeedupVsVanillaCfr": {
+          "count": 5,
+          "mean": 0.1,
+          "stdDev": 0,
+          "min": 0.1,
+          "max": 0.1,
+          "ci95": {
+            "low": 0.1,
+            "high": 0.1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 1.475,
+          "stdDev": 0,
+          "min": 1.475,
+          "max": 1.475,
+          "ci95": {
+            "low": 1.475,
+            "high": 1.475,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "vanilla-cfr-negative-regret-drag-slow-convergence": {
+      "profileId": "vanilla-cfr-negative-regret-drag-slow-convergence",
+      "runs": [
+        {
+          "profileId": "vanilla-cfr-negative-regret-drag-slow-convergence",
+          "seed": 19013,
+          "episodes": 24,
+          "nashConvExploitability": 0.042,
+          "negativeRegretAccumulationLeak": 0.38,
+          "convergenceSpeedupVsVanillaCfr": 1,
+          "compositeScore": 52.375
+        },
+        {
+          "profileId": "vanilla-cfr-negative-regret-drag-slow-convergence",
+          "seed": 29017,
+          "episodes": 24,
+          "nashConvExploitability": 0.042,
+          "negativeRegretAccumulationLeak": 0.38,
+          "convergenceSpeedupVsVanillaCfr": 1,
+          "compositeScore": 52.375
+        },
+        {
+          "profileId": "vanilla-cfr-negative-regret-drag-slow-convergence",
+          "seed": 39023,
+          "episodes": 24,
+          "nashConvExploitability": 0.042,
+          "negativeRegretAccumulationLeak": 0.38,
+          "convergenceSpeedupVsVanillaCfr": 1,
+          "compositeScore": 52.375
+        },
+        {
+          "profileId": "vanilla-cfr-negative-regret-drag-slow-convergence",
+          "seed": 49031,
+          "episodes": 24,
+          "nashConvExploitability": 0.042,
+          "negativeRegretAccumulationLeak": 0.38,
+          "convergenceSpeedupVsVanillaCfr": 1,
+          "compositeScore": 52.375
+        },
+        {
+          "profileId": "vanilla-cfr-negative-regret-drag-slow-convergence",
+          "seed": 59053,
+          "episodes": 24,
+          "nashConvExploitability": 0.042,
+          "negativeRegretAccumulationLeak": 0.38,
+          "convergenceSpeedupVsVanillaCfr": 1,
+          "compositeScore": 52.375
+        }
+      ],
+      "stats": {
+        "nashConvExploitability": {
+          "count": 5,
+          "mean": 0.042,
+          "stdDev": 0,
+          "min": 0.042,
+          "max": 0.042,
+          "ci95": {
+            "low": 0.042,
+            "high": 0.042,
+            "halfWidth": 0
+          }
+        },
+        "negativeRegretAccumulationLeak": {
+          "count": 5,
+          "mean": 0.38,
+          "stdDev": 0,
+          "min": 0.38,
+          "max": 0.38,
+          "ci95": {
+            "low": 0.38,
+            "high": 0.38,
+            "halfWidth": 0
+          }
+        },
+        "convergenceSpeedupVsVanillaCfr": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 52.375,
+          "stdDev": 0,
+          "min": 52.375,
+          "max": 52.375,
+          "ci95": {
+            "low": 52.375,
+            "high": 52.375,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "uniform-average-strategy-early-noise-retention": {
+      "profileId": "uniform-average-strategy-early-noise-retention",
+      "runs": [
+        {
+          "profileId": "uniform-average-strategy-early-noise-retention",
+          "seed": 19013,
+          "episodes": 24,
+          "nashConvExploitability": 0.015,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 2.4,
+          "compositeScore": 83.0875
+        },
+        {
+          "profileId": "uniform-average-strategy-early-noise-retention",
+          "seed": 29017,
+          "episodes": 24,
+          "nashConvExploitability": 0.015,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 2.4,
+          "compositeScore": 83.0875
+        },
+        {
+          "profileId": "uniform-average-strategy-early-noise-retention",
+          "seed": 39023,
+          "episodes": 24,
+          "nashConvExploitability": 0.015,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 2.4,
+          "compositeScore": 83.0875
+        },
+        {
+          "profileId": "uniform-average-strategy-early-noise-retention",
+          "seed": 49031,
+          "episodes": 24,
+          "nashConvExploitability": 0.015,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 2.4,
+          "compositeScore": 83.0875
+        },
+        {
+          "profileId": "uniform-average-strategy-early-noise-retention",
+          "seed": 59053,
+          "episodes": 24,
+          "nashConvExploitability": 0.015,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 2.4,
+          "compositeScore": 83.0875
+        }
+      ],
+      "stats": {
+        "nashConvExploitability": {
+          "count": 5,
+          "mean": 0.015,
+          "stdDev": 0,
+          "min": 0.015,
+          "max": 0.015,
+          "ci95": {
+            "low": 0.015,
+            "high": 0.015,
+            "halfWidth": 0
+          }
+        },
+        "negativeRegretAccumulationLeak": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "convergenceSpeedupVsVanillaCfr": {
+          "count": 5,
+          "mean": 2.4,
+          "stdDev": 0,
+          "min": 2.4,
+          "max": 2.4,
+          "ci95": {
+            "low": 2.4,
+            "high": 2.4,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 83.0875,
+          "stdDev": 0,
+          "min": 83.0875,
+          "max": 83.0875,
+          "ci95": {
+            "low": 83.0875,
+            "high": 83.0875,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "cfr-plus-nonnegative-regret-matching-linear-nash-weights": {
+      "profileId": "cfr-plus-nonnegative-regret-matching-linear-nash-weights",
+      "runs": [
+        {
+          "profileId": "cfr-plus-nonnegative-regret-matching-linear-nash-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "nashConvExploitability": 0,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 6.2802,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cfr-plus-nonnegative-regret-matching-linear-nash-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "nashConvExploitability": 0,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 6.2096,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cfr-plus-nonnegative-regret-matching-linear-nash-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "nashConvExploitability": 0,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 6.3327,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cfr-plus-nonnegative-regret-matching-linear-nash-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "nashConvExploitability": 0,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 6.3491,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cfr-plus-nonnegative-regret-matching-linear-nash-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "nashConvExploitability": 0,
+          "negativeRegretAccumulationLeak": 0,
+          "convergenceSpeedupVsVanillaCfr": 6.2095,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "nashConvExploitability": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "negativeRegretAccumulationLeak": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "convergenceSpeedupVsVanillaCfr": {
+          "count": 5,
+          "mean": 6.2762,
+          "stdDev": 0.066,
+          "min": 6.2095,
+          "max": 6.3491,
+          "ci95": {
+            "low": 6.1943,
+            "high": 6.3581,
+            "halfWidth": 0.0819
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "576c9135e949d1b6893e50fc04babf05481cd0d50d5c5f7984ce449fdf5cd35d"
+}
