@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-142-IRM-VREX-INVARIANT-CAUSAL-PREDICTOR-WEIGHTS",
+  "passNumber": 142,
+  "phase": "Phase XXVIII: Causal Representation Learning (NOTEARS/DAGMA, IRM/V-REx, GFlowNets & ICM)",
+  "generatedAt": "2026-11-09T20:06:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "irm-vrex-joint-invariant-causal-predictor-weights",
+  "winningScore": 100,
+  "profiles": {
+    "pooled-erm-spurious-shortcut-collapse": {
+      "profileId": "pooled-erm-spurious-shortcut-collapse",
+      "runs": [
+        {
+          "profileId": "pooled-erm-spurious-shortcut-collapse",
+          "seed": 19013,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.88,
+          "crossEnvironmentRiskVariance": 0.42,
+          "oodAntiCorrelatedTestAccuracyPct": 14.5,
+          "compositeScore": 4.35
+        },
+        {
+          "profileId": "pooled-erm-spurious-shortcut-collapse",
+          "seed": 29017,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.88,
+          "crossEnvironmentRiskVariance": 0.42,
+          "oodAntiCorrelatedTestAccuracyPct": 14.5,
+          "compositeScore": 4.35
+        },
+        {
+          "profileId": "pooled-erm-spurious-shortcut-collapse",
+          "seed": 39023,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.88,
+          "crossEnvironmentRiskVariance": 0.42,
+          "oodAntiCorrelatedTestAccuracyPct": 14.5,
+          "compositeScore": 4.35
+        },
+        {
+          "profileId": "pooled-erm-spurious-shortcut-collapse",
+          "seed": 49031,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.88,
+          "crossEnvironmentRiskVariance": 0.42,
+          "oodAntiCorrelatedTestAccuracyPct": 14.5,
+          "compositeScore": 4.35
+        },
+        {
+          "profileId": "pooled-erm-spurious-shortcut-collapse",
+          "seed": 59053,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.88,
+          "crossEnvironmentRiskVariance": 0.42,
+          "oodAntiCorrelatedTestAccuracyPct": 14.5,
+          "compositeScore": 4.35
+        }
+      ],
+      "stats": {
+        "spuriousFeatureWeightLeakage": {
+          "count": 5,
+          "mean": 0.88,
+          "stdDev": 0,
+          "min": 0.88,
+          "max": 0.88,
+          "ci95": {
+            "low": 0.88,
+            "high": 0.88,
+            "halfWidth": 0
+          }
+        },
+        "crossEnvironmentRiskVariance": {
+          "count": 5,
+          "mean": 0.42,
+          "stdDev": 0,
+          "min": 0.42,
+          "max": 0.42,
+          "ci95": {
+            "low": 0.42,
+            "high": 0.42,
+            "halfWidth": 0
+          }
+        },
+        "oodAntiCorrelatedTestAccuracyPct": {
+          "count": 5,
+          "mean": 14.5,
+          "stdDev": 0,
+          "min": 14.5,
+          "max": 14.5,
+          "ci95": {
+            "low": 14.5,
+            "high": 14.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 4.35,
+          "stdDev": 0,
+          "min": 4.35,
+          "max": 4.35,
+          "ci95": {
+            "low": 4.35,
+            "high": 4.35,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "domain-adversarial-dann-conditional-shift-failure": {
+      "profileId": "domain-adversarial-dann-conditional-shift-failure",
+      "runs": [
+        {
+          "profileId": "domain-adversarial-dann-conditional-shift-failure",
+          "seed": 19013,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.34,
+          "crossEnvironmentRiskVariance": 0.16,
+          "oodAntiCorrelatedTestAccuracyPct": 62,
+          "compositeScore": 46.32
+        },
+        {
+          "profileId": "domain-adversarial-dann-conditional-shift-failure",
+          "seed": 29017,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.34,
+          "crossEnvironmentRiskVariance": 0.16,
+          "oodAntiCorrelatedTestAccuracyPct": 62,
+          "compositeScore": 46.32
+        },
+        {
+          "profileId": "domain-adversarial-dann-conditional-shift-failure",
+          "seed": 39023,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.34,
+          "crossEnvironmentRiskVariance": 0.16,
+          "oodAntiCorrelatedTestAccuracyPct": 62,
+          "compositeScore": 46.32
+        },
+        {
+          "profileId": "domain-adversarial-dann-conditional-shift-failure",
+          "seed": 49031,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.34,
+          "crossEnvironmentRiskVariance": 0.16,
+          "oodAntiCorrelatedTestAccuracyPct": 62,
+          "compositeScore": 46.32
+        },
+        {
+          "profileId": "domain-adversarial-dann-conditional-shift-failure",
+          "seed": 59053,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.34,
+          "crossEnvironmentRiskVariance": 0.16,
+          "oodAntiCorrelatedTestAccuracyPct": 62,
+          "compositeScore": 46.32
+        }
+      ],
+      "stats": {
+        "spuriousFeatureWeightLeakage": {
+          "count": 5,
+          "mean": 0.34,
+          "stdDev": 0,
+          "min": 0.34,
+          "max": 0.34,
+          "ci95": {
+            "low": 0.34,
+            "high": 0.34,
+            "halfWidth": 0
+          }
+        },
+        "crossEnvironmentRiskVariance": {
+          "count": 5,
+          "mean": 0.16,
+          "stdDev": 0,
+          "min": 0.16,
+          "max": 0.16,
+          "ci95": {
+            "low": 0.16,
+            "high": 0.16,
+            "halfWidth": 0
+          }
+        },
+        "oodAntiCorrelatedTestAccuracyPct": {
+          "count": 5,
+          "mean": 62,
+          "stdDev": 0,
+          "min": 62,
+          "max": 62,
+          "ci95": {
+            "low": 62,
+            "high": 62,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 46.32,
+          "stdDev": 0,
+          "min": 46.32,
+          "max": 46.32,
+          "ci95": {
+            "low": 46.32,
+            "high": 46.32,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "irmv1-only-without-vrex-risk-variance-control": {
+      "profileId": "irmv1-only-without-vrex-risk-variance-control",
+      "runs": [
+        {
+          "profileId": "irmv1-only-without-vrex-risk-variance-control",
+          "seed": 19013,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.04,
+          "crossEnvironmentRiskVariance": 0.035,
+          "oodAntiCorrelatedTestAccuracyPct": 91.5,
+          "compositeScore": 89.645
+        },
+        {
+          "profileId": "irmv1-only-without-vrex-risk-variance-control",
+          "seed": 29017,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.04,
+          "crossEnvironmentRiskVariance": 0.035,
+          "oodAntiCorrelatedTestAccuracyPct": 91.5,
+          "compositeScore": 89.645
+        },
+        {
+          "profileId": "irmv1-only-without-vrex-risk-variance-control",
+          "seed": 39023,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.04,
+          "crossEnvironmentRiskVariance": 0.035,
+          "oodAntiCorrelatedTestAccuracyPct": 91.5,
+          "compositeScore": 89.645
+        },
+        {
+          "profileId": "irmv1-only-without-vrex-risk-variance-control",
+          "seed": 49031,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.04,
+          "crossEnvironmentRiskVariance": 0.035,
+          "oodAntiCorrelatedTestAccuracyPct": 91.5,
+          "compositeScore": 89.645
+        },
+        {
+          "profileId": "irmv1-only-without-vrex-risk-variance-control",
+          "seed": 59053,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0.04,
+          "crossEnvironmentRiskVariance": 0.035,
+          "oodAntiCorrelatedTestAccuracyPct": 91.5,
+          "compositeScore": 89.645
+        }
+      ],
+      "stats": {
+        "spuriousFeatureWeightLeakage": {
+          "count": 5,
+          "mean": 0.04,
+          "stdDev": 0,
+          "min": 0.04,
+          "max": 0.04,
+          "ci95": {
+            "low": 0.04,
+            "high": 0.04,
+            "halfWidth": 0
+          }
+        },
+        "crossEnvironmentRiskVariance": {
+          "count": 5,
+          "mean": 0.035,
+          "stdDev": 0,
+          "min": 0.035,
+          "max": 0.035,
+          "ci95": {
+            "low": 0.035,
+            "high": 0.035,
+            "halfWidth": 0
+          }
+        },
+        "oodAntiCorrelatedTestAccuracyPct": {
+          "count": 5,
+          "mean": 91.5,
+          "stdDev": 0,
+          "min": 91.5,
+          "max": 91.5,
+          "ci95": {
+            "low": 91.5,
+            "high": 91.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 89.645,
+          "stdDev": 0,
+          "min": 89.645,
+          "max": 89.645,
+          "ci95": {
+            "low": 89.645,
+            "high": 89.645,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "irm-vrex-joint-invariant-causal-predictor-weights": {
+      "profileId": "irm-vrex-joint-invariant-causal-predictor-weights",
+      "runs": [
+        {
+          "profileId": "irm-vrex-joint-invariant-causal-predictor-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0,
+          "crossEnvironmentRiskVariance": 2.7e-7,
+          "oodAntiCorrelatedTestAccuracyPct": 99.4134,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "irm-vrex-joint-invariant-causal-predictor-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0,
+          "crossEnvironmentRiskVariance": 2.2e-7,
+          "oodAntiCorrelatedTestAccuracyPct": 99.4356,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "irm-vrex-joint-invariant-causal-predictor-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0,
+          "crossEnvironmentRiskVariance": 3e-7,
+          "oodAntiCorrelatedTestAccuracyPct": 99.4592,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "irm-vrex-joint-invariant-causal-predictor-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0,
+          "crossEnvironmentRiskVariance": 2.7e-7,
+          "oodAntiCorrelatedTestAccuracyPct": 99.4735,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "irm-vrex-joint-invariant-causal-predictor-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "spuriousFeatureWeightLeakage": 0,
+          "crossEnvironmentRiskVariance": 2.2e-7,
+          "oodAntiCorrelatedTestAccuracyPct": 99.4669,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "spuriousFeatureWeightLeakage": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "crossEnvironmentRiskVariance": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "oodAntiCorrelatedTestAccuracyPct": {
+          "count": 5,
+          "mean": 99.4497,
+          "stdDev": 0.0248,
+          "min": 99.4134,
+          "max": 99.4735,
+          "ci95": {
+            "low": 99.4189,
+            "high": 99.4806,
+            "halfWidth": 0.0308
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "25cfe98c0b4a2fc5e63c1e8b1814dddf7d642fb6e904546eefc5c542f7fa230b"
+}
