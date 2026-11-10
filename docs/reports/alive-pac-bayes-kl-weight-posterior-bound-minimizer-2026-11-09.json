@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-139-PAC-BAYES-KL-WEIGHT-POSTERIOR-BOUND-MINIMIZER",
+  "passNumber": 139,
+  "phase": "Phase XXVII: Information Geometry, Fisher-Rao Natural Gradients, Wasserstein & PAC-Bayes",
+  "generatedAt": "2026-11-09T20:03:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "pac-bayes-kl-posterior-variance-bound-minimizer",
+  "winningScore": 100,
+  "profiles": {
+    "unregularized-erm-vacuous-generalization-bound": {
+      "profileId": "unregularized-erm-vacuous-generalization-bound",
+      "runs": [
+        {
+          "profileId": "unregularized-erm-vacuous-generalization-bound",
+          "seed": 19013,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 1.45,
+          "empiricalToTrueRiskGap": 0.24,
+          "flatnessAwarePosteriorCalibrationPct": 20,
+          "compositeScore": 20
+        },
+        {
+          "profileId": "unregularized-erm-vacuous-generalization-bound",
+          "seed": 29017,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 1.45,
+          "empiricalToTrueRiskGap": 0.24,
+          "flatnessAwarePosteriorCalibrationPct": 20,
+          "compositeScore": 20
+        },
+        {
+          "profileId": "unregularized-erm-vacuous-generalization-bound",
+          "seed": 39023,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 1.45,
+          "empiricalToTrueRiskGap": 0.24,
+          "flatnessAwarePosteriorCalibrationPct": 20,
+          "compositeScore": 20
+        },
+        {
+          "profileId": "unregularized-erm-vacuous-generalization-bound",
+          "seed": 49031,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 1.45,
+          "empiricalToTrueRiskGap": 0.24,
+          "flatnessAwarePosteriorCalibrationPct": 20,
+          "compositeScore": 20
+        },
+        {
+          "profileId": "unregularized-erm-vacuous-generalization-bound",
+          "seed": 59053,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 1.45,
+          "empiricalToTrueRiskGap": 0.24,
+          "flatnessAwarePosteriorCalibrationPct": 20,
+          "compositeScore": 20
+        }
+      ],
+      "stats": {
+        "pacBayesNonVacuousUpperBound": {
+          "count": 5,
+          "mean": 1.45,
+          "stdDev": 0,
+          "min": 1.45,
+          "max": 1.45,
+          "ci95": {
+            "low": 1.45,
+            "high": 1.45,
+            "halfWidth": 0
+          }
+        },
+        "empiricalToTrueRiskGap": {
+          "count": 5,
+          "mean": 0.24,
+          "stdDev": 0,
+          "min": 0.24,
+          "max": 0.24,
+          "ci95": {
+            "low": 0.24,
+            "high": 0.24,
+            "halfWidth": 0
+          }
+        },
+        "flatnessAwarePosteriorCalibrationPct": {
+          "count": 5,
+          "mean": 20,
+          "stdDev": 0,
+          "min": 20,
+          "max": 20,
+          "ci95": {
+            "low": 20,
+            "high": 20,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 20,
+          "stdDev": 0,
+          "min": 20,
+          "max": 20,
+          "ci95": {
+            "low": 20,
+            "high": 20,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "isotropic-weight-decay-uniform-variance": {
+      "profileId": "isotropic-weight-decay-uniform-variance",
+      "runs": [
+        {
+          "profileId": "isotropic-weight-decay-uniform-variance",
+          "seed": 19013,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.34,
+          "empiricalToTrueRiskGap": 0.085,
+          "flatnessAwarePosteriorCalibrationPct": 66.6667,
+          "compositeScore": 71.6425
+        },
+        {
+          "profileId": "isotropic-weight-decay-uniform-variance",
+          "seed": 29017,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.34,
+          "empiricalToTrueRiskGap": 0.085,
+          "flatnessAwarePosteriorCalibrationPct": 66.6667,
+          "compositeScore": 71.6425
+        },
+        {
+          "profileId": "isotropic-weight-decay-uniform-variance",
+          "seed": 39023,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.34,
+          "empiricalToTrueRiskGap": 0.085,
+          "flatnessAwarePosteriorCalibrationPct": 66.6667,
+          "compositeScore": 71.6425
+        },
+        {
+          "profileId": "isotropic-weight-decay-uniform-variance",
+          "seed": 49031,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.34,
+          "empiricalToTrueRiskGap": 0.085,
+          "flatnessAwarePosteriorCalibrationPct": 66.6667,
+          "compositeScore": 71.6425
+        },
+        {
+          "profileId": "isotropic-weight-decay-uniform-variance",
+          "seed": 59053,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.34,
+          "empiricalToTrueRiskGap": 0.085,
+          "flatnessAwarePosteriorCalibrationPct": 66.6667,
+          "compositeScore": 71.6425
+        }
+      ],
+      "stats": {
+        "pacBayesNonVacuousUpperBound": {
+          "count": 5,
+          "mean": 0.34,
+          "stdDev": 0,
+          "min": 0.34,
+          "max": 0.34,
+          "ci95": {
+            "low": 0.34,
+            "high": 0.34,
+            "halfWidth": 0
+          }
+        },
+        "empiricalToTrueRiskGap": {
+          "count": 5,
+          "mean": 0.085,
+          "stdDev": 0,
+          "min": 0.085,
+          "max": 0.085,
+          "ci95": {
+            "low": 0.085,
+            "high": 0.085,
+            "halfWidth": 0
+          }
+        },
+        "flatnessAwarePosteriorCalibrationPct": {
+          "count": 5,
+          "mean": 66.6667,
+          "stdDev": 0,
+          "min": 66.6667,
+          "max": 66.6667,
+          "ci95": {
+            "low": 66.6667,
+            "high": 66.6667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 71.6425,
+          "stdDev": 0,
+          "min": 71.6425,
+          "max": 71.6425,
+          "ci95": {
+            "low": 71.6425,
+            "high": 71.6425,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "data-independent-random-prior-loose-bound": {
+      "profileId": "data-independent-random-prior-loose-bound",
+      "runs": [
+        {
+          "profileId": "data-independent-random-prior-loose-bound",
+          "seed": 19013,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.22,
+          "empiricalToTrueRiskGap": 0.052,
+          "flatnessAwarePosteriorCalibrationPct": 79.1667,
+          "compositeScore": 83.32
+        },
+        {
+          "profileId": "data-independent-random-prior-loose-bound",
+          "seed": 29017,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.22,
+          "empiricalToTrueRiskGap": 0.052,
+          "flatnessAwarePosteriorCalibrationPct": 79.1667,
+          "compositeScore": 83.32
+        },
+        {
+          "profileId": "data-independent-random-prior-loose-bound",
+          "seed": 39023,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.22,
+          "empiricalToTrueRiskGap": 0.052,
+          "flatnessAwarePosteriorCalibrationPct": 79.1667,
+          "compositeScore": 83.32
+        },
+        {
+          "profileId": "data-independent-random-prior-loose-bound",
+          "seed": 49031,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.22,
+          "empiricalToTrueRiskGap": 0.052,
+          "flatnessAwarePosteriorCalibrationPct": 79.1667,
+          "compositeScore": 83.32
+        },
+        {
+          "profileId": "data-independent-random-prior-loose-bound",
+          "seed": 59053,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.22,
+          "empiricalToTrueRiskGap": 0.052,
+          "flatnessAwarePosteriorCalibrationPct": 79.1667,
+          "compositeScore": 83.32
+        }
+      ],
+      "stats": {
+        "pacBayesNonVacuousUpperBound": {
+          "count": 5,
+          "mean": 0.22,
+          "stdDev": 0,
+          "min": 0.22,
+          "max": 0.22,
+          "ci95": {
+            "low": 0.22,
+            "high": 0.22,
+            "halfWidth": 0
+          }
+        },
+        "empiricalToTrueRiskGap": {
+          "count": 5,
+          "mean": 0.052,
+          "stdDev": 0,
+          "min": 0.052,
+          "max": 0.052,
+          "ci95": {
+            "low": 0.052,
+            "high": 0.052,
+            "halfWidth": 0
+          }
+        },
+        "flatnessAwarePosteriorCalibrationPct": {
+          "count": 5,
+          "mean": 79.1667,
+          "stdDev": 0,
+          "min": 79.1667,
+          "max": 79.1667,
+          "ci95": {
+            "low": 79.1667,
+            "high": 79.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 83.32,
+          "stdDev": 0,
+          "min": 83.32,
+          "max": 83.32,
+          "ci95": {
+            "low": 83.32,
+            "high": 83.32,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "pac-bayes-kl-posterior-variance-bound-minimizer": {
+      "profileId": "pac-bayes-kl-posterior-variance-bound-minimizer",
+      "runs": [
+        {
+          "profileId": "pac-bayes-kl-posterior-variance-bound-minimizer",
+          "seed": 19013,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.06017,
+          "empiricalToTrueRiskGap": 0.01218,
+          "flatnessAwarePosteriorCalibrationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "pac-bayes-kl-posterior-variance-bound-minimizer",
+          "seed": 29017,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.06015,
+          "empiricalToTrueRiskGap": 0.01129,
+          "flatnessAwarePosteriorCalibrationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "pac-bayes-kl-posterior-variance-bound-minimizer",
+          "seed": 39023,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.06026,
+          "empiricalToTrueRiskGap": 0.01191,
+          "flatnessAwarePosteriorCalibrationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "pac-bayes-kl-posterior-variance-bound-minimizer",
+          "seed": 49031,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.06009,
+          "empiricalToTrueRiskGap": 0.01162,
+          "flatnessAwarePosteriorCalibrationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "pac-bayes-kl-posterior-variance-bound-minimizer",
+          "seed": 59053,
+          "episodes": 24,
+          "pacBayesNonVacuousUpperBound": 0.06011,
+          "empiricalToTrueRiskGap": 0.01111,
+          "flatnessAwarePosteriorCalibrationPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "pacBayesNonVacuousUpperBound": {
+          "count": 5,
+          "mean": 0.0602,
+          "stdDev": 0.0001,
+          "min": 0.0601,
+          "max": 0.0603,
+          "ci95": {
+            "low": 0.0601,
+            "high": 0.0602,
+            "halfWidth": 0.0001
+          }
+        },
+        "empiricalToTrueRiskGap": {
+          "count": 5,
+          "mean": 0.0116,
+          "stdDev": 0.0004,
+          "min": 0.0111,
+          "max": 0.0122,
+          "ci95": {
+            "low": 0.0111,
+            "high": 0.0122,
+            "halfWidth": 0.0005
+          }
+        },
+        "flatnessAwarePosteriorCalibrationPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "83ffcb1b40b20054d2114fd70268bf9d67e6974a354c9f1eccc9fed10fb816af"
+}
