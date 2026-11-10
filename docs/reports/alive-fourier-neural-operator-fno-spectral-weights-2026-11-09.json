@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-116-FOURIER-NEURAL-OPERATOR-FNO-SPECTRAL-WEIGHTS",
+  "passNumber": 116,
+  "phase": "Phase XXIII: Spectral, Wavelet & Laplace Neural Operators",
+  "generatedAt": "2026-11-09T19:40:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "fno-complex-kmode-weights-plus-bypass-bias",
+  "winningScore": 100,
+  "profiles": {
+    "grid-dependent-finite-difference-cnn": {
+      "profileId": "grid-dependent-finite-difference-cnn",
+      "runs": [
+        {
+          "profileId": "grid-dependent-finite-difference-cnn",
+          "seed": 19013,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.396033291,
+          "parsevalEnergyConservationPct": 45,
+          "pdeOperatorConvergenceRatePct": 54.1667,
+          "compositeScore": 39.2777
+        },
+        {
+          "profileId": "grid-dependent-finite-difference-cnn",
+          "seed": 29017,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.3819226881,
+          "parsevalEnergyConservationPct": 45,
+          "pdeOperatorConvergenceRatePct": 54.1667,
+          "compositeScore": 40.2654
+        },
+        {
+          "profileId": "grid-dependent-finite-difference-cnn",
+          "seed": 39023,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.406533956,
+          "parsevalEnergyConservationPct": 45,
+          "pdeOperatorConvergenceRatePct": 54.1667,
+          "compositeScore": 38.5426
+        },
+        {
+          "profileId": "grid-dependent-finite-difference-cnn",
+          "seed": 49031,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.4098119331,
+          "parsevalEnergyConservationPct": 45,
+          "pdeOperatorConvergenceRatePct": 54.1667,
+          "compositeScore": 38.3132
+        },
+        {
+          "profileId": "grid-dependent-finite-difference-cnn",
+          "seed": 59053,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.3819018878,
+          "parsevalEnergyConservationPct": 45,
+          "pdeOperatorConvergenceRatePct": 54.1667,
+          "compositeScore": 40.2669
+        }
+      ],
+      "stats": {
+        "superResolutionErrorL2": {
+          "count": 5,
+          "mean": 0.3952,
+          "stdDev": 0.0132,
+          "min": 0.3819,
+          "max": 0.4098,
+          "ci95": {
+            "low": 0.3789,
+            "high": 0.4116,
+            "halfWidth": 0.0164
+          }
+        },
+        "parsevalEnergyConservationPct": {
+          "count": 5,
+          "mean": 45,
+          "stdDev": 0,
+          "min": 45,
+          "max": 45,
+          "ci95": {
+            "low": 45,
+            "high": 45,
+            "halfWidth": 0
+          }
+        },
+        "pdeOperatorConvergenceRatePct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 39.3332,
+          "stdDev": 0.9232,
+          "min": 38.3132,
+          "max": 40.2669,
+          "ci95": {
+            "low": 38.1868,
+            "high": 40.4795,
+            "halfWidth": 1.1463
+          }
+        }
+      }
+    },
+    "spectral-conv-without-local-bypass-weight": {
+      "profileId": "spectral-conv-without-local-bypass-weight",
+      "runs": [
+        {
+          "profileId": "spectral-conv-without-local-bypass-weight",
+          "seed": 19013,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.1280166455,
+          "parsevalEnergyConservationPct": 88,
+          "pdeOperatorConvergenceRatePct": 79.1667,
+          "compositeScore": 80.5888
+        },
+        {
+          "profileId": "spectral-conv-without-local-bypass-weight",
+          "seed": 29017,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.1209613441,
+          "parsevalEnergyConservationPct": 88,
+          "pdeOperatorConvergenceRatePct": 79.1667,
+          "compositeScore": 81.0827
+        },
+        {
+          "profileId": "spectral-conv-without-local-bypass-weight",
+          "seed": 39023,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.133266978,
+          "parsevalEnergyConservationPct": 88,
+          "pdeOperatorConvergenceRatePct": 79.1667,
+          "compositeScore": 80.2213
+        },
+        {
+          "profileId": "spectral-conv-without-local-bypass-weight",
+          "seed": 49031,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.1349059666,
+          "parsevalEnergyConservationPct": 88,
+          "pdeOperatorConvergenceRatePct": 79.1667,
+          "compositeScore": 80.1066
+        },
+        {
+          "profileId": "spectral-conv-without-local-bypass-weight",
+          "seed": 59053,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.1209509439,
+          "parsevalEnergyConservationPct": 88,
+          "pdeOperatorConvergenceRatePct": 79.1667,
+          "compositeScore": 81.0834
+        }
+      ],
+      "stats": {
+        "superResolutionErrorL2": {
+          "count": 5,
+          "mean": 0.1276,
+          "stdDev": 0.0066,
+          "min": 0.121,
+          "max": 0.1349,
+          "ci95": {
+            "low": 0.1194,
+            "high": 0.1358,
+            "halfWidth": 0.0082
+          }
+        },
+        "parsevalEnergyConservationPct": {
+          "count": 5,
+          "mean": 88,
+          "stdDev": 0,
+          "min": 88,
+          "max": 88,
+          "ci95": {
+            "low": 88,
+            "high": 88,
+            "halfWidth": 0
+          }
+        },
+        "pdeOperatorConvergenceRatePct": {
+          "count": 5,
+          "mean": 79.1667,
+          "stdDev": 0,
+          "min": 79.1667,
+          "max": 79.1667,
+          "ci95": {
+            "low": 79.1667,
+            "high": 79.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 80.6166,
+          "stdDev": 0.4616,
+          "min": 80.1066,
+          "max": 81.0834,
+          "ci95": {
+            "low": 80.0434,
+            "high": 81.1897,
+            "halfWidth": 0.5731
+          }
+        }
+      }
+    },
+    "unfiltered-nyquist-aliasing-fno": {
+      "profileId": "unfiltered-nyquist-aliasing-fno",
+      "runs": [
+        {
+          "profileId": "unfiltered-nyquist-aliasing-fno",
+          "seed": 19013,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.2006888607,
+          "parsevalEnergyConservationPct": 72,
+          "pdeOperatorConvergenceRatePct": 70.8333,
+          "compositeScore": 67.4018
+        },
+        {
+          "profileId": "unfiltered-nyquist-aliasing-fno",
+          "seed": 29017,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.1912817921,
+          "parsevalEnergyConservationPct": 72,
+          "pdeOperatorConvergenceRatePct": 70.8333,
+          "compositeScore": 68.0603
+        },
+        {
+          "profileId": "unfiltered-nyquist-aliasing-fno",
+          "seed": 39023,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.207689304,
+          "parsevalEnergyConservationPct": 72,
+          "pdeOperatorConvergenceRatePct": 70.8333,
+          "compositeScore": 66.9117
+        },
+        {
+          "profileId": "unfiltered-nyquist-aliasing-fno",
+          "seed": 49031,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.2098746221,
+          "parsevalEnergyConservationPct": 72,
+          "pdeOperatorConvergenceRatePct": 70.8333,
+          "compositeScore": 66.7588
+        },
+        {
+          "profileId": "unfiltered-nyquist-aliasing-fno",
+          "seed": 59053,
+          "episodes": 24,
+          "superResolutionErrorL2": 0.1912679252,
+          "parsevalEnergyConservationPct": 72,
+          "pdeOperatorConvergenceRatePct": 70.8333,
+          "compositeScore": 68.0612
+        }
+      ],
+      "stats": {
+        "superResolutionErrorL2": {
+          "count": 5,
+          "mean": 0.2002,
+          "stdDev": 0.0088,
+          "min": 0.1913,
+          "max": 0.2099,
+          "ci95": {
+            "low": 0.1892,
+            "high": 0.2111,
+            "halfWidth": 0.0109
+          }
+        },
+        "parsevalEnergyConservationPct": {
+          "count": 5,
+          "mean": 72,
+          "stdDev": 0,
+          "min": 72,
+          "max": 72,
+          "ci95": {
+            "low": 72,
+            "high": 72,
+            "halfWidth": 0
+          }
+        },
+        "pdeOperatorConvergenceRatePct": {
+          "count": 5,
+          "mean": 70.8333,
+          "stdDev": 0,
+          "min": 70.8333,
+          "max": 70.8333,
+          "ci95": {
+            "low": 70.8333,
+            "high": 70.8333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 67.4388,
+          "stdDev": 0.6155,
+          "min": 66.7588,
+          "max": 68.0612,
+          "ci95": {
+            "low": 66.6745,
+            "high": 68.203,
+            "halfWidth": 0.7642
+          }
+        }
+      }
+    },
+    "fno-complex-kmode-weights-plus-bypass-bias": {
+      "profileId": "fno-complex-kmode-weights-plus-bypass-bias",
+      "runs": [
+        {
+          "profileId": "fno-complex-kmode-weights-plus-bypass-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "superResolutionErrorL2": 0,
+          "parsevalEnergyConservationPct": 100,
+          "pdeOperatorConvergenceRatePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "fno-complex-kmode-weights-plus-bypass-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "superResolutionErrorL2": 0,
+          "parsevalEnergyConservationPct": 100,
+          "pdeOperatorConvergenceRatePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "fno-complex-kmode-weights-plus-bypass-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "superResolutionErrorL2": 0,
+          "parsevalEnergyConservationPct": 100,
+          "pdeOperatorConvergenceRatePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "fno-complex-kmode-weights-plus-bypass-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "superResolutionErrorL2": 0,
+          "parsevalEnergyConservationPct": 100,
+          "pdeOperatorConvergenceRatePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "fno-complex-kmode-weights-plus-bypass-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "superResolutionErrorL2": 0,
+          "parsevalEnergyConservationPct": 100,
+          "pdeOperatorConvergenceRatePct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "superResolutionErrorL2": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "parsevalEnergyConservationPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "pdeOperatorConvergenceRatePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "63533e2150f79cf9921ccaed263f95dff390c678284ff6e26d95337e26948816"
+}
