@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-186-HYPERNEAT-CPPN-GEOMETRIC-SUBSTRATE-WEIGHTS",
+  "passNumber": 186,
+  "phase": "Phase XXXVII: Neuro-Genetic & Developmental Weight Encoding (HyperNEAT, NCA, Backpropamine & Baldwin)",
+  "generatedAt": "2026-11-09T20:50:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "hyperneat-cppn-bilateral-radial-resolution-invariant-weights",
+  "winningScore": 100,
+  "profiles": {
+    "direct-weight-genome-curse-of-dimensionality": {
+      "profileId": "direct-weight-genome-curse-of-dimensionality",
+      "runs": [
+        {
+          "profileId": "direct-weight-genome-curse-of-dimensionality",
+          "seed": 19013,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.68,
+          "genomeToPhenotypeCompressionRatio": 1,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 0,
+          "compositeScore": 0.175
+        },
+        {
+          "profileId": "direct-weight-genome-curse-of-dimensionality",
+          "seed": 29017,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.68,
+          "genomeToPhenotypeCompressionRatio": 1,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 0,
+          "compositeScore": 0.175
+        },
+        {
+          "profileId": "direct-weight-genome-curse-of-dimensionality",
+          "seed": 39023,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.68,
+          "genomeToPhenotypeCompressionRatio": 1,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 0,
+          "compositeScore": 0.175
+        },
+        {
+          "profileId": "direct-weight-genome-curse-of-dimensionality",
+          "seed": 49031,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.68,
+          "genomeToPhenotypeCompressionRatio": 1,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 0,
+          "compositeScore": 0.175
+        },
+        {
+          "profileId": "direct-weight-genome-curse-of-dimensionality",
+          "seed": 59053,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.68,
+          "genomeToPhenotypeCompressionRatio": 1,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 0,
+          "compositeScore": 0.175
+        }
+      ],
+      "stats": {
+        "bilateralSymmetryViolationDefect": {
+          "count": 5,
+          "mean": 0.68,
+          "stdDev": 0,
+          "min": 0.68,
+          "max": 0.68,
+          "ci95": {
+            "low": 0.68,
+            "high": 0.68,
+            "halfWidth": 0
+          }
+        },
+        "genomeToPhenotypeCompressionRatio": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "zeroShot2xSubstrateSuperResolutionFidelityPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0.175,
+          "stdDev": 0,
+          "min": 0.175,
+          "max": 0.175,
+          "ci95": {
+            "low": 0.175,
+            "high": 0.175,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "cppn-without-symmetric-gaussian-abs-primitives": {
+      "profileId": "cppn-without-symmetric-gaussian-abs-primitives",
+      "runs": [
+        {
+          "profileId": "cppn-without-symmetric-gaussian-abs-primitives",
+          "seed": 19013,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.34,
+          "genomeToPhenotypeCompressionRatio": 128,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 78.5,
+          "compositeScore": 57.15
+        },
+        {
+          "profileId": "cppn-without-symmetric-gaussian-abs-primitives",
+          "seed": 29017,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.34,
+          "genomeToPhenotypeCompressionRatio": 128,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 78.5,
+          "compositeScore": 57.15
+        },
+        {
+          "profileId": "cppn-without-symmetric-gaussian-abs-primitives",
+          "seed": 39023,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.34,
+          "genomeToPhenotypeCompressionRatio": 128,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 78.5,
+          "compositeScore": 57.15
+        },
+        {
+          "profileId": "cppn-without-symmetric-gaussian-abs-primitives",
+          "seed": 49031,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.34,
+          "genomeToPhenotypeCompressionRatio": 128,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 78.5,
+          "compositeScore": 57.15
+        },
+        {
+          "profileId": "cppn-without-symmetric-gaussian-abs-primitives",
+          "seed": 59053,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0.34,
+          "genomeToPhenotypeCompressionRatio": 128,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 78.5,
+          "compositeScore": 57.15
+        }
+      ],
+      "stats": {
+        "bilateralSymmetryViolationDefect": {
+          "count": 5,
+          "mean": 0.34,
+          "stdDev": 0,
+          "min": 0.34,
+          "max": 0.34,
+          "ci95": {
+            "low": 0.34,
+            "high": 0.34,
+            "halfWidth": 0
+          }
+        },
+        "genomeToPhenotypeCompressionRatio": {
+          "count": 5,
+          "mean": 128,
+          "stdDev": 0,
+          "min": 128,
+          "max": 128,
+          "ci95": {
+            "low": 128,
+            "high": 128,
+            "halfWidth": 0
+          }
+        },
+        "zeroShot2xSubstrateSuperResolutionFidelityPct": {
+          "count": 5,
+          "mean": 78.5,
+          "stdDev": 0,
+          "min": 78.5,
+          "max": 78.5,
+          "ci95": {
+            "low": 78.5,
+            "high": 78.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 57.15,
+          "stdDev": 0,
+          "min": 57.15,
+          "max": 57.15,
+          "ci95": {
+            "low": 57.15,
+            "high": 57.15,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "fixed-grid-lookup-resolution-aliasing-error": {
+      "profileId": "fixed-grid-lookup-resolution-aliasing-error",
+      "runs": [
+        {
+          "profileId": "fixed-grid-lookup-resolution-aliasing-error",
+          "seed": 19013,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 64,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 62,
+          "compositeScore": 64.8
+        },
+        {
+          "profileId": "fixed-grid-lookup-resolution-aliasing-error",
+          "seed": 29017,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 64,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 62,
+          "compositeScore": 64.8
+        },
+        {
+          "profileId": "fixed-grid-lookup-resolution-aliasing-error",
+          "seed": 39023,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 64,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 62,
+          "compositeScore": 64.8
+        },
+        {
+          "profileId": "fixed-grid-lookup-resolution-aliasing-error",
+          "seed": 49031,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 64,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 62,
+          "compositeScore": 64.8
+        },
+        {
+          "profileId": "fixed-grid-lookup-resolution-aliasing-error",
+          "seed": 59053,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 64,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 62,
+          "compositeScore": 64.8
+        }
+      ],
+      "stats": {
+        "bilateralSymmetryViolationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "genomeToPhenotypeCompressionRatio": {
+          "count": 5,
+          "mean": 64,
+          "stdDev": 0,
+          "min": 64,
+          "max": 64,
+          "ci95": {
+            "low": 64,
+            "high": 64,
+            "halfWidth": 0
+          }
+        },
+        "zeroShot2xSubstrateSuperResolutionFidelityPct": {
+          "count": 5,
+          "mean": 62,
+          "stdDev": 0,
+          "min": 62,
+          "max": 62,
+          "ci95": {
+            "low": 62,
+            "high": 62,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 64.8,
+          "stdDev": 0,
+          "min": 64.8,
+          "max": 64.8,
+          "ci95": {
+            "low": 64.8,
+            "high": 64.8,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "hyperneat-cppn-bilateral-radial-resolution-invariant-weights": {
+      "profileId": "hyperneat-cppn-bilateral-radial-resolution-invariant-weights",
+      "runs": [
+        {
+          "profileId": "hyperneat-cppn-bilateral-radial-resolution-invariant-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 256,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 99.6134,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hyperneat-cppn-bilateral-radial-resolution-invariant-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 256,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 99.614,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hyperneat-cppn-bilateral-radial-resolution-invariant-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 256,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 99.6452,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hyperneat-cppn-bilateral-radial-resolution-invariant-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 256,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 99.6423,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "hyperneat-cppn-bilateral-radial-resolution-invariant-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "bilateralSymmetryViolationDefect": 0,
+          "genomeToPhenotypeCompressionRatio": 256,
+          "zeroShot2xSubstrateSuperResolutionFidelityPct": 99.6767,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "bilateralSymmetryViolationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "genomeToPhenotypeCompressionRatio": {
+          "count": 5,
+          "mean": 256,
+          "stdDev": 0,
+          "min": 256,
+          "max": 256,
+          "ci95": {
+            "low": 256,
+            "high": 256,
+            "halfWidth": 0
+          }
+        },
+        "zeroShot2xSubstrateSuperResolutionFidelityPct": {
+          "count": 5,
+          "mean": 99.6383,
+          "stdDev": 0.0262,
+          "min": 99.6134,
+          "max": 99.6767,
+          "ci95": {
+            "low": 99.6058,
+            "high": 99.6709,
+            "halfWidth": 0.0325
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "1551b3ba6a944070234a19c18fdb042313be389143e9af2d03b62ccbf73f0258"
+}
