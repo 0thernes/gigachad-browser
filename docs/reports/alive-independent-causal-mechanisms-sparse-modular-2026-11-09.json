@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-144-INDEPENDENT-CAUSAL-MECHANISMS-SPARSE-MODULAR",
+  "passNumber": 144,
+  "phase": "Phase XXVIII: Causal Representation Learning (NOTEARS/DAGMA, IRM/V-REx, GFlowNets & ICM)",
+  "generatedAt": "2026-11-09T20:08:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "icm-sparse-intervention-isolated-modular-weights",
+  "winningScore": 100,
+  "profiles": {
+    "monolithic-entangled-mlp-global-adaptation-cascade": {
+      "profileId": "monolithic-entangled-mlp-global-adaptation-cascade",
+      "runs": [
+        {
+          "profileId": "monolithic-entangled-mlp-global-adaptation-cascade",
+          "seed": 19013,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.78,
+          "singleMechanismAdaptationSteps": 64,
+          "algorithmicIndependenceMutualInfo": 0.62,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "monolithic-entangled-mlp-global-adaptation-cascade",
+          "seed": 29017,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.78,
+          "singleMechanismAdaptationSteps": 64,
+          "algorithmicIndependenceMutualInfo": 0.62,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "monolithic-entangled-mlp-global-adaptation-cascade",
+          "seed": 39023,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.78,
+          "singleMechanismAdaptationSteps": 64,
+          "algorithmicIndependenceMutualInfo": 0.62,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "monolithic-entangled-mlp-global-adaptation-cascade",
+          "seed": 49031,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.78,
+          "singleMechanismAdaptationSteps": 64,
+          "algorithmicIndependenceMutualInfo": 0.62,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "monolithic-entangled-mlp-global-adaptation-cascade",
+          "seed": 59053,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.78,
+          "singleMechanismAdaptationSteps": 64,
+          "algorithmicIndependenceMutualInfo": 0.62,
+          "compositeScore": 0
+        }
+      ],
+      "stats": {
+        "nonIntervenedMechanismWeightDrift": {
+          "count": 5,
+          "mean": 0.78,
+          "stdDev": 0,
+          "min": 0.78,
+          "max": 0.78,
+          "ci95": {
+            "low": 0.78,
+            "high": 0.78,
+            "halfWidth": 0
+          }
+        },
+        "singleMechanismAdaptationSteps": {
+          "count": 5,
+          "mean": 64,
+          "stdDev": 0,
+          "min": 64,
+          "max": 64,
+          "ci95": {
+            "low": 64,
+            "high": 64,
+            "halfWidth": 0
+          }
+        },
+        "algorithmicIndependenceMutualInfo": {
+          "count": 5,
+          "mean": 0.62,
+          "stdDev": 0,
+          "min": 0.62,
+          "max": 0.62,
+          "ci95": {
+            "low": 0.62,
+            "high": 0.62,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "soft-mixture-of-experts-dense-gate-bleed": {
+      "profileId": "soft-mixture-of-experts-dense-gate-bleed",
+      "runs": [
+        {
+          "profileId": "soft-mixture-of-experts-dense-gate-bleed",
+          "seed": 19013,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.24,
+          "singleMechanismAdaptationSteps": 28,
+          "algorithmicIndependenceMutualInfo": 0.19,
+          "compositeScore": 60.6
+        },
+        {
+          "profileId": "soft-mixture-of-experts-dense-gate-bleed",
+          "seed": 29017,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.24,
+          "singleMechanismAdaptationSteps": 28,
+          "algorithmicIndependenceMutualInfo": 0.19,
+          "compositeScore": 60.6
+        },
+        {
+          "profileId": "soft-mixture-of-experts-dense-gate-bleed",
+          "seed": 39023,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.24,
+          "singleMechanismAdaptationSteps": 28,
+          "algorithmicIndependenceMutualInfo": 0.19,
+          "compositeScore": 60.6
+        },
+        {
+          "profileId": "soft-mixture-of-experts-dense-gate-bleed",
+          "seed": 49031,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.24,
+          "singleMechanismAdaptationSteps": 28,
+          "algorithmicIndependenceMutualInfo": 0.19,
+          "compositeScore": 60.6
+        },
+        {
+          "profileId": "soft-mixture-of-experts-dense-gate-bleed",
+          "seed": 59053,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.24,
+          "singleMechanismAdaptationSteps": 28,
+          "algorithmicIndependenceMutualInfo": 0.19,
+          "compositeScore": 60.6
+        }
+      ],
+      "stats": {
+        "nonIntervenedMechanismWeightDrift": {
+          "count": 5,
+          "mean": 0.24,
+          "stdDev": 0,
+          "min": 0.24,
+          "max": 0.24,
+          "ci95": {
+            "low": 0.24,
+            "high": 0.24,
+            "halfWidth": 0
+          }
+        },
+        "singleMechanismAdaptationSteps": {
+          "count": 5,
+          "mean": 28,
+          "stdDev": 0,
+          "min": 28,
+          "max": 28,
+          "ci95": {
+            "low": 28,
+            "high": 28,
+            "halfWidth": 0
+          }
+        },
+        "algorithmicIndependenceMutualInfo": {
+          "count": 5,
+          "mean": 0.19,
+          "stdDev": 0,
+          "min": 0.19,
+          "max": 0.19,
+          "ci95": {
+            "low": 0.19,
+            "high": 0.19,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 60.6,
+          "stdDev": 0,
+          "min": 60.6,
+          "max": 60.6,
+          "ci95": {
+            "low": 60.6,
+            "high": 60.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unregularized-modular-shared-bias-coupling": {
+      "profileId": "unregularized-modular-shared-bias-coupling",
+      "runs": [
+        {
+          "profileId": "unregularized-modular-shared-bias-coupling",
+          "seed": 19013,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.08,
+          "singleMechanismAdaptationSteps": 16,
+          "algorithmicIndependenceMutualInfo": 0.07,
+          "compositeScore": 84.6
+        },
+        {
+          "profileId": "unregularized-modular-shared-bias-coupling",
+          "seed": 29017,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.08,
+          "singleMechanismAdaptationSteps": 16,
+          "algorithmicIndependenceMutualInfo": 0.07,
+          "compositeScore": 84.6
+        },
+        {
+          "profileId": "unregularized-modular-shared-bias-coupling",
+          "seed": 39023,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.08,
+          "singleMechanismAdaptationSteps": 16,
+          "algorithmicIndependenceMutualInfo": 0.07,
+          "compositeScore": 84.6
+        },
+        {
+          "profileId": "unregularized-modular-shared-bias-coupling",
+          "seed": 49031,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.08,
+          "singleMechanismAdaptationSteps": 16,
+          "algorithmicIndependenceMutualInfo": 0.07,
+          "compositeScore": 84.6
+        },
+        {
+          "profileId": "unregularized-modular-shared-bias-coupling",
+          "seed": 59053,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0.08,
+          "singleMechanismAdaptationSteps": 16,
+          "algorithmicIndependenceMutualInfo": 0.07,
+          "compositeScore": 84.6
+        }
+      ],
+      "stats": {
+        "nonIntervenedMechanismWeightDrift": {
+          "count": 5,
+          "mean": 0.08,
+          "stdDev": 0,
+          "min": 0.08,
+          "max": 0.08,
+          "ci95": {
+            "low": 0.08,
+            "high": 0.08,
+            "halfWidth": 0
+          }
+        },
+        "singleMechanismAdaptationSteps": {
+          "count": 5,
+          "mean": 16,
+          "stdDev": 0,
+          "min": 16,
+          "max": 16,
+          "ci95": {
+            "low": 16,
+            "high": 16,
+            "halfWidth": 0
+          }
+        },
+        "algorithmicIndependenceMutualInfo": {
+          "count": 5,
+          "mean": 0.07,
+          "stdDev": 0,
+          "min": 0.07,
+          "max": 0.07,
+          "ci95": {
+            "low": 0.07,
+            "high": 0.07,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 84.6,
+          "stdDev": 0,
+          "min": 84.6,
+          "max": 84.6,
+          "ci95": {
+            "low": 84.6,
+            "high": 84.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "icm-sparse-intervention-isolated-modular-weights": {
+      "profileId": "icm-sparse-intervention-isolated-modular-weights",
+      "runs": [
+        {
+          "profileId": "icm-sparse-intervention-isolated-modular-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0,
+          "singleMechanismAdaptationSteps": 4,
+          "algorithmicIndependenceMutualInfo": 0.001348,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icm-sparse-intervention-isolated-modular-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0,
+          "singleMechanismAdaptationSteps": 4,
+          "algorithmicIndependenceMutualInfo": 0.001366,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icm-sparse-intervention-isolated-modular-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0,
+          "singleMechanismAdaptationSteps": 4,
+          "algorithmicIndependenceMutualInfo": 0.001523,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icm-sparse-intervention-isolated-modular-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0,
+          "singleMechanismAdaptationSteps": 4,
+          "algorithmicIndependenceMutualInfo": 0.001347,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "icm-sparse-intervention-isolated-modular-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "nonIntervenedMechanismWeightDrift": 0,
+          "singleMechanismAdaptationSteps": 4,
+          "algorithmicIndependenceMutualInfo": 0.001256,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "nonIntervenedMechanismWeightDrift": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "singleMechanismAdaptationSteps": {
+          "count": 5,
+          "mean": 4,
+          "stdDev": 0,
+          "min": 4,
+          "max": 4,
+          "ci95": {
+            "low": 4,
+            "high": 4,
+            "halfWidth": 0
+          }
+        },
+        "algorithmicIndependenceMutualInfo": {
+          "count": 5,
+          "mean": 0.0014,
+          "stdDev": 0.0001,
+          "min": 0.0013,
+          "max": 0.0015,
+          "ci95": {
+            "low": 0.0012,
+            "high": 0.0015,
+            "halfWidth": 0.0001
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "6a822b20504e9d81a00330d9ef85698004695d8ab05bbddf262734b25736840d"
+}
