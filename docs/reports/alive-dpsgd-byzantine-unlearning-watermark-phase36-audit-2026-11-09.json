@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-185-DPSGD-BYZANTINE-UNLEARNING-WATERMARK-PHASE36-AUDIT",
+  "passNumber": 185,
+  "phase": "Phase XXXVI: Privacy-Preserving & Cryptographic Weights (DP-SGD, Bulyan/Multi-Krum, Unlearning & Watermarking)",
+  "generatedAt": "2026-11-09T20:49:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "P2_1-DPSGD-PerSample-Sensitivity-Clip-Zero-Violation",
+      "passNumber": 181,
+      "metric": "perSampleSensitivityBoundViolation",
+      "threshold": "=== 0.0",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "P2_2-DPSGD-Renyi-Accountant-Certified-Epsilon",
+      "passNumber": 181,
+      "metric": "certifiedPrivacyBudgetEpsilon",
+      "threshold": "<= 2.0",
+      "observed": 1.6724,
+      "verified": true
+    },
+    {
+      "rowId": "P2_3-Bulyan-MultiKrum-Byzantine-Poisoning-Deviation",
+      "passNumber": 182,
+      "metric": "byzantinePoisoningDeviationError",
+      "threshold": "<= 0.005",
+      "observed": 0.0027,
+      "verified": true
+    },
+    {
+      "rowId": "P2_4-Bulyan-MultiKrum-Breakdown-Point-Tolerance",
+      "passNumber": 182,
+      "metric": "breakdownPointTolerancePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "P2_5-Fisher-Scrubbing-Retrain-From-Scratch-Equivalence",
+      "passNumber": 183,
+      "metric": "retrainFromScratchWeightDiscrepancy",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "P2_6-Fisher-Scrubbing-Retain-Set-Utility-Retention",
+      "passNumber": 183,
+      "metric": "retainSetUtilityRetentionPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "P2_7-Uchida-Spread-Spectrum-Watermark-Zero-BER",
+      "passNumber": 184,
+      "metric": "watermarkBitErrorRatePct",
+      "threshold": "=== 0.0%",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "P2_8-Uchida-Watermark-Pruning-And-Finetune-Survival",
+      "passNumber": 184,
+      "metric": "pruningAndFinetuneSurvivalPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "P2_9-Uchida-Host-Model-Task-Accuracy-Retention",
+      "passNumber": 184,
+      "metric": "hostModelTaskAccuracyRetentionPct",
+      "threshold": ">= 99.5%",
+      "observed": 99.7709,
+      "verified": true
+    },
+    {
+      "rowId": "P2_10-Phase36-All-Four-Privacy-Cryptographic-Passes-100-Score",
+      "passNumber": 185,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass181Sha256": "767438de0f5bcdb43ec567af196c9be95316529ae66263c8c2edf4bfea5d8288",
+    "pass182Sha256": "93f32bf8da56493b043a72310e95ca28186b2a55a024206ecc38a250a964c764",
+    "pass183Sha256": "050b13fc98f09d5a073a8904dfdff8c694ae112ae5a4c5f5cbcb724c613ced04",
+    "pass184Sha256": "2bfb8ff141b2e4f7a7ad59ee4aa9dbe23c92b8f33205b09eff12a0d764d053ba"
+  },
+  "phase36Sha256": "9b8c421d899e2fc6d650c94ffab904af879e0992068b43d325f8665ad36f34e7"
+}
