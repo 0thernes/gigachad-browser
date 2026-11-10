@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="220" viewBox="0 0 760 220">
+  <rect width="760" height="220" fill="#0d1117"/>
+  <text x="24" y="38" fill="#58a6ff" font-family="monospace" font-size="16" font-weight="bold">Pass 138: Bregman Mirror Descent & Hyperspherical Geodesic Weight Retraction</text>
+  <text x="24" y="72" fill="#3fb950" font-family="monospace" font-size="14">Winner: bregman-entropic-mirror-hyperspherical-geodesic | Score: 100%</text>
+  <text x="24" y="104" fill="#e6edf3" font-family="monospace" font-size="12">SHA-256: 65de5d50e78fd810a6d8aa40804ba5401bc9b0e0a7b4b6b52fdbae6528b82017</text>
+  <rect x="24" y="130" width="712" height="28" rx="6" fill="#238636"/>
+  <text x="36" y="149" fill="#ffffff" font-family="monospace" font-size="13">5-Seed Verified (19013, 29017, 39023, 49031, 59053) - 100.0%</text>
+</svg>
