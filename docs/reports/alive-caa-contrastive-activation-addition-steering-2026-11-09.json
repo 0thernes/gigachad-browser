@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-168-CAA-CONTRASTIVE-ACTIVATION-ADDITION-STEERING",
+  "passNumber": 168,
+  "phase": "Phase XXXIII: Preference Optimization (DPO/SimPO, KTO), CAA Steering & Circuit Breakers",
+  "generatedAt": "2026-11-09T20:32:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "caa-mean-difference-norm-preserving-midlayer-steering-bias",
+  "winningScore": 100,
+  "profiles": {
+    "single-pair-actadd-high-prompt-noise": {
+      "profileId": "single-pair-actadd-high-prompt-noise",
+      "runs": [
+        {
+          "profileId": "single-pair-actadd-high-prompt-noise",
+          "seed": 19013,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.28,
+          "targetConceptLinearProbeScorePct": 68,
+          "generalCapabilityPerplexityRetentionPct": 79,
+          "compositeScore": 62.9
+        },
+        {
+          "profileId": "single-pair-actadd-high-prompt-noise",
+          "seed": 29017,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.28,
+          "targetConceptLinearProbeScorePct": 68,
+          "generalCapabilityPerplexityRetentionPct": 79,
+          "compositeScore": 62.9
+        },
+        {
+          "profileId": "single-pair-actadd-high-prompt-noise",
+          "seed": 39023,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.28,
+          "targetConceptLinearProbeScorePct": 68,
+          "generalCapabilityPerplexityRetentionPct": 79,
+          "compositeScore": 62.9
+        },
+        {
+          "profileId": "single-pair-actadd-high-prompt-noise",
+          "seed": 49031,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.28,
+          "targetConceptLinearProbeScorePct": 68,
+          "generalCapabilityPerplexityRetentionPct": 79,
+          "compositeScore": 62.9
+        },
+        {
+          "profileId": "single-pair-actadd-high-prompt-noise",
+          "seed": 59053,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.28,
+          "targetConceptLinearProbeScorePct": 68,
+          "generalCapabilityPerplexityRetentionPct": 79,
+          "compositeScore": 62.9
+        }
+      ],
+      "stats": {
+        "residualNormPreservationDefect": {
+          "count": 5,
+          "mean": 0.28,
+          "stdDev": 0,
+          "min": 0.28,
+          "max": 0.28,
+          "ci95": {
+            "low": 0.28,
+            "high": 0.28,
+            "halfWidth": 0
+          }
+        },
+        "targetConceptLinearProbeScorePct": {
+          "count": 5,
+          "mean": 68,
+          "stdDev": 0,
+          "min": 68,
+          "max": 68,
+          "ci95": {
+            "low": 68,
+            "high": 68,
+            "halfWidth": 0
+          }
+        },
+        "generalCapabilityPerplexityRetentionPct": {
+          "count": 5,
+          "mean": 79,
+          "stdDev": 0,
+          "min": 79,
+          "max": 79,
+          "ci95": {
+            "low": 79,
+            "high": 79,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 62.9,
+          "stdDev": 0,
+          "min": 62.9,
+          "max": 62.9,
+          "ci95": {
+            "low": 62.9,
+            "high": 62.9,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unnormalized-caa-residual-norm-inflation": {
+      "profileId": "unnormalized-caa-residual-norm-inflation",
+      "runs": [
+        {
+          "profileId": "unnormalized-caa-residual-norm-inflation",
+          "seed": 19013,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.45,
+          "targetConceptLinearProbeScorePct": 92,
+          "generalCapabilityPerplexityRetentionPct": 72.5,
+          "compositeScore": 57.45
+        },
+        {
+          "profileId": "unnormalized-caa-residual-norm-inflation",
+          "seed": 29017,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.45,
+          "targetConceptLinearProbeScorePct": 92,
+          "generalCapabilityPerplexityRetentionPct": 72.5,
+          "compositeScore": 57.45
+        },
+        {
+          "profileId": "unnormalized-caa-residual-norm-inflation",
+          "seed": 39023,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.45,
+          "targetConceptLinearProbeScorePct": 92,
+          "generalCapabilityPerplexityRetentionPct": 72.5,
+          "compositeScore": 57.45
+        },
+        {
+          "profileId": "unnormalized-caa-residual-norm-inflation",
+          "seed": 49031,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.45,
+          "targetConceptLinearProbeScorePct": 92,
+          "generalCapabilityPerplexityRetentionPct": 72.5,
+          "compositeScore": 57.45
+        },
+        {
+          "profileId": "unnormalized-caa-residual-norm-inflation",
+          "seed": 59053,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0.45,
+          "targetConceptLinearProbeScorePct": 92,
+          "generalCapabilityPerplexityRetentionPct": 72.5,
+          "compositeScore": 57.45
+        }
+      ],
+      "stats": {
+        "residualNormPreservationDefect": {
+          "count": 5,
+          "mean": 0.45,
+          "stdDev": 0,
+          "min": 0.45,
+          "max": 0.45,
+          "ci95": {
+            "low": 0.45,
+            "high": 0.45,
+            "halfWidth": 0
+          }
+        },
+        "targetConceptLinearProbeScorePct": {
+          "count": 5,
+          "mean": 92,
+          "stdDev": 0,
+          "min": 92,
+          "max": 92,
+          "ci95": {
+            "low": 92,
+            "high": 92,
+            "halfWidth": 0
+          }
+        },
+        "generalCapabilityPerplexityRetentionPct": {
+          "count": 5,
+          "mean": 72.5,
+          "stdDev": 0,
+          "min": 72.5,
+          "max": 72.5,
+          "ci95": {
+            "low": 72.5,
+            "high": 72.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 57.45,
+          "stdDev": 0,
+          "min": 57.45,
+          "max": 57.45,
+          "ci95": {
+            "low": 57.45,
+            "high": 57.45,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "final-layer-only-steering-late-intervention": {
+      "profileId": "final-layer-only-steering-late-intervention",
+      "runs": [
+        {
+          "profileId": "final-layer-only-steering-late-intervention",
+          "seed": 19013,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 74.5,
+          "generalCapabilityPerplexityRetentionPct": 95,
+          "compositeScore": 89.575
+        },
+        {
+          "profileId": "final-layer-only-steering-late-intervention",
+          "seed": 29017,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 74.5,
+          "generalCapabilityPerplexityRetentionPct": 95,
+          "compositeScore": 89.575
+        },
+        {
+          "profileId": "final-layer-only-steering-late-intervention",
+          "seed": 39023,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 74.5,
+          "generalCapabilityPerplexityRetentionPct": 95,
+          "compositeScore": 89.575
+        },
+        {
+          "profileId": "final-layer-only-steering-late-intervention",
+          "seed": 49031,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 74.5,
+          "generalCapabilityPerplexityRetentionPct": 95,
+          "compositeScore": 89.575
+        },
+        {
+          "profileId": "final-layer-only-steering-late-intervention",
+          "seed": 59053,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 74.5,
+          "generalCapabilityPerplexityRetentionPct": 95,
+          "compositeScore": 89.575
+        }
+      ],
+      "stats": {
+        "residualNormPreservationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "targetConceptLinearProbeScorePct": {
+          "count": 5,
+          "mean": 74.5,
+          "stdDev": 0,
+          "min": 74.5,
+          "max": 74.5,
+          "ci95": {
+            "low": 74.5,
+            "high": 74.5,
+            "halfWidth": 0
+          }
+        },
+        "generalCapabilityPerplexityRetentionPct": {
+          "count": 5,
+          "mean": 95,
+          "stdDev": 0,
+          "min": 95,
+          "max": 95,
+          "ci95": {
+            "low": 95,
+            "high": 95,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 89.575,
+          "stdDev": 0,
+          "min": 89.575,
+          "max": 89.575,
+          "ci95": {
+            "low": 89.575,
+            "high": 89.575,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "caa-mean-difference-norm-preserving-midlayer-steering-bias": {
+      "profileId": "caa-mean-difference-norm-preserving-midlayer-steering-bias",
+      "runs": [
+        {
+          "profileId": "caa-mean-difference-norm-preserving-midlayer-steering-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 99.6039,
+          "generalCapabilityPerplexityRetentionPct": 99.512,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "caa-mean-difference-norm-preserving-midlayer-steering-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 99.6833,
+          "generalCapabilityPerplexityRetentionPct": 99.5341,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "caa-mean-difference-norm-preserving-midlayer-steering-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 99.6375,
+          "generalCapabilityPerplexityRetentionPct": 99.5657,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "caa-mean-difference-norm-preserving-midlayer-steering-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 99.6965,
+          "generalCapabilityPerplexityRetentionPct": 99.5035,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "caa-mean-difference-norm-preserving-midlayer-steering-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "residualNormPreservationDefect": 0,
+          "targetConceptLinearProbeScorePct": 99.6052,
+          "generalCapabilityPerplexityRetentionPct": 99.5655,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "residualNormPreservationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "targetConceptLinearProbeScorePct": {
+          "count": 5,
+          "mean": 99.6453,
+          "stdDev": 0.0432,
+          "min": 99.6039,
+          "max": 99.6965,
+          "ci95": {
+            "low": 99.5917,
+            "high": 99.6989,
+            "halfWidth": 0.0536
+          }
+        },
+        "generalCapabilityPerplexityRetentionPct": {
+          "count": 5,
+          "mean": 99.5362,
+          "stdDev": 0.0291,
+          "min": 99.5035,
+          "max": 99.5657,
+          "ci95": {
+            "low": 99.5,
+            "high": 99.5723,
+            "halfWidth": 0.0361
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "77ed39ff50a6552084544b26d37fe3ed0f4789ca9f814b7c73ee9cdf9bc31a27"
+}
