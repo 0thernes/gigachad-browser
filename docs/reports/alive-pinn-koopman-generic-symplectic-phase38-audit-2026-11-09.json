@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-195-PINN-KOOPMAN-GENERIC-SYMPLECTIC-PHASE38-AUDIT",
+  "passNumber": 195,
+  "phase": "Phase XXXVIII: Physics-Informed & Conservation-Law Neural Networks (PINN, Koopman, GENERIC & Symplectic SRNN)",
+  "generatedAt": "2026-11-09T20:59:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "C2_1-PINN-Curl-Potential-Exact-Divergence-Free-Continuity",
+      "passNumber": 191,
+      "metric": "continuityDivergenceFreeDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_2-PINN-NTK-Balanced-PDE-Relative-L2-Solution-Error",
+      "passNumber": 191,
+      "metric": "pdeRelativeL2SolutionErrorPct",
+      "threshold": "<= 0.5%",
+      "observed": 0.1953,
+      "verified": true
+    },
+    {
+      "rowId": "C2_3-Koopman-Modal-Semigroup-Consistency-K_dt_N",
+      "passNumber": 192,
+      "metric": "multiStepsemigroupConsistencyDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_4-Koopman-Hurwitz-Spectral-Radius-Stability",
+      "passNumber": 192,
+      "metric": "spectralRadiusHurwitzBoundViolation",
+      "threshold": "=== 0.0",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_5-GENERIC-First-Law-Exact-Energy-Conservation",
+      "passNumber": 193,
+      "metric": "firstLawEnergyConservationDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_6-GENERIC-Second-Law-NonNegative-Entropy-Production",
+      "passNumber": 193,
+      "metric": "secondLawNegativeEntropyViolation",
+      "threshold": "=== 0.0",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_7-GENERIC-Degeneracy-Orthogonality-Defect",
+      "passNumber": 193,
+      "metric": "degeneracyOrthogonalityDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_8-Symplectic-Verlet-Liouville-Volume-Preservation-DetJ",
+      "passNumber": 194,
+      "metric": "liouvilleJacobianDeterminantDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_9-Symplectic-Verlet-Time-Reversibility-Symmetry",
+      "passNumber": 194,
+      "metric": "timeReversibilitySymmetryDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "C2_10-Phase38-All-Four-Physics-Informed-Passes-100-Score",
+      "passNumber": 195,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass191Sha256": "ecccb6dc384fe5b4ad506f986aae30d6f8ff59bef3b757d27d39dfd6d027952a",
+    "pass192Sha256": "cdda12ee2119efdec479a8d1b6919890ca76209ae2b602e509935257b14dcee0",
+    "pass193Sha256": "1be64a35cdc2f13e3632867d618e6b5bb4a6cf0e5c8b2dfd789d1e6c536bc5c0",
+    "pass194Sha256": "3d4ebdfc0cd7e33f3c00ff6b7f2dcf868ec32ac0d751b9244ac99205a214a90c"
+  },
+  "phase38Sha256": "5ecad45b4956d7e2c2a9fb729a33f6722d13dc9a844bdf5157e2764d48a73204"
+}

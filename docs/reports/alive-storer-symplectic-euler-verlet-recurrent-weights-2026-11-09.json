@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-194-STORER-SYMPLECTIC-EULER-VERLET-RECURRENT-WEIGHTS",
+  "passNumber": 194,
+  "phase": "Phase XXXVIII: Physics-Informed & Conservation-Law Neural Networks (PINN, Koopman, GENERIC & Symplectic SRNN)",
+  "generatedAt": "2026-11-09T20:58:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "stormer-verlet-leapfrog-symplectic-srnn-weights",
+  "winningScore": 100,
+  "profiles": {
+    "explicit-euler-rnn-spiral-outward-energy-explosion": {
+      "profileId": "explicit-euler-rnn-spiral-outward-energy-explosion",
+      "runs": [
+        {
+          "profileId": "explicit-euler-rnn-spiral-outward-energy-explosion",
+          "seed": 19013,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.04,
+          "step1000ShadowHamiltonianDrift": 54,
+          "timeReversibilitySymmetryDefect": 0.42,
+          "compositeScore": 37
+        },
+        {
+          "profileId": "explicit-euler-rnn-spiral-outward-energy-explosion",
+          "seed": 29017,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.04,
+          "step1000ShadowHamiltonianDrift": 54,
+          "timeReversibilitySymmetryDefect": 0.42,
+          "compositeScore": 37
+        },
+        {
+          "profileId": "explicit-euler-rnn-spiral-outward-energy-explosion",
+          "seed": 39023,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.04,
+          "step1000ShadowHamiltonianDrift": 54,
+          "timeReversibilitySymmetryDefect": 0.42,
+          "compositeScore": 37
+        },
+        {
+          "profileId": "explicit-euler-rnn-spiral-outward-energy-explosion",
+          "seed": 49031,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.04,
+          "step1000ShadowHamiltonianDrift": 54,
+          "timeReversibilitySymmetryDefect": 0.42,
+          "compositeScore": 37
+        },
+        {
+          "profileId": "explicit-euler-rnn-spiral-outward-energy-explosion",
+          "seed": 59053,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.04,
+          "step1000ShadowHamiltonianDrift": 54,
+          "timeReversibilitySymmetryDefect": 0.42,
+          "compositeScore": 37
+        }
+      ],
+      "stats": {
+        "liouvilleJacobianDeterminantDefect": {
+          "count": 5,
+          "mean": 0.04,
+          "stdDev": 0,
+          "min": 0.04,
+          "max": 0.04,
+          "ci95": {
+            "low": 0.04,
+            "high": 0.04,
+            "halfWidth": 0
+          }
+        },
+        "step1000ShadowHamiltonianDrift": {
+          "count": 5,
+          "mean": 54,
+          "stdDev": 0,
+          "min": 54,
+          "max": 54,
+          "ci95": {
+            "low": 54,
+            "high": 54,
+            "halfWidth": 0
+          }
+        },
+        "timeReversibilitySymmetryDefect": {
+          "count": 5,
+          "mean": 0.42,
+          "stdDev": 0,
+          "min": 0.42,
+          "max": 0.42,
+          "ci95": {
+            "low": 0.42,
+            "high": 0.42,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 37,
+          "stdDev": 0,
+          "min": 37,
+          "max": 37,
+          "ci95": {
+            "low": 37,
+            "high": 37,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "implicit-euler-rnn-artificial-numerical-damping": {
+      "profileId": "implicit-euler-rnn-artificial-numerical-damping",
+      "runs": [
+        {
+          "profileId": "implicit-euler-rnn-artificial-numerical-damping",
+          "seed": 19013,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.038,
+          "step1000ShadowHamiltonianDrift": 0.95,
+          "timeReversibilitySymmetryDefect": 0.38,
+          "compositeScore": 39.54
+        },
+        {
+          "profileId": "implicit-euler-rnn-artificial-numerical-damping",
+          "seed": 29017,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.038,
+          "step1000ShadowHamiltonianDrift": 0.95,
+          "timeReversibilitySymmetryDefect": 0.38,
+          "compositeScore": 39.54
+        },
+        {
+          "profileId": "implicit-euler-rnn-artificial-numerical-damping",
+          "seed": 39023,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.038,
+          "step1000ShadowHamiltonianDrift": 0.95,
+          "timeReversibilitySymmetryDefect": 0.38,
+          "compositeScore": 39.54
+        },
+        {
+          "profileId": "implicit-euler-rnn-artificial-numerical-damping",
+          "seed": 49031,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.038,
+          "step1000ShadowHamiltonianDrift": 0.95,
+          "timeReversibilitySymmetryDefect": 0.38,
+          "compositeScore": 39.54
+        },
+        {
+          "profileId": "implicit-euler-rnn-artificial-numerical-damping",
+          "seed": 59053,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.038,
+          "step1000ShadowHamiltonianDrift": 0.95,
+          "timeReversibilitySymmetryDefect": 0.38,
+          "compositeScore": 39.54
+        }
+      ],
+      "stats": {
+        "liouvilleJacobianDeterminantDefect": {
+          "count": 5,
+          "mean": 0.038,
+          "stdDev": 0,
+          "min": 0.038,
+          "max": 0.038,
+          "ci95": {
+            "low": 0.038,
+            "high": 0.038,
+            "halfWidth": 0
+          }
+        },
+        "step1000ShadowHamiltonianDrift": {
+          "count": 5,
+          "mean": 0.95,
+          "stdDev": 0,
+          "min": 0.95,
+          "max": 0.95,
+          "ci95": {
+            "low": 0.95,
+            "high": 0.95,
+            "halfWidth": 0
+          }
+        },
+        "timeReversibilitySymmetryDefect": {
+          "count": 5,
+          "mean": 0.38,
+          "stdDev": 0,
+          "min": 0.38,
+          "max": 0.38,
+          "ci95": {
+            "low": 0.38,
+            "high": 0.38,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 39.54,
+          "stdDev": 0,
+          "min": 39.54,
+          "max": 39.54,
+          "ci95": {
+            "low": 39.54,
+            "high": 39.54,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "rk4-non-symplectic-secular-phase-space-drift": {
+      "profileId": "rk4-non-symplectic-secular-phase-space-drift",
+      "runs": [
+        {
+          "profileId": "rk4-non-symplectic-secular-phase-space-drift",
+          "seed": 19013,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.002,
+          "step1000ShadowHamiltonianDrift": 0.085,
+          "timeReversibilitySymmetryDefect": 0.04,
+          "compositeScore": 91.51
+        },
+        {
+          "profileId": "rk4-non-symplectic-secular-phase-space-drift",
+          "seed": 29017,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.002,
+          "step1000ShadowHamiltonianDrift": 0.085,
+          "timeReversibilitySymmetryDefect": 0.04,
+          "compositeScore": 91.51
+        },
+        {
+          "profileId": "rk4-non-symplectic-secular-phase-space-drift",
+          "seed": 39023,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.002,
+          "step1000ShadowHamiltonianDrift": 0.085,
+          "timeReversibilitySymmetryDefect": 0.04,
+          "compositeScore": 91.51
+        },
+        {
+          "profileId": "rk4-non-symplectic-secular-phase-space-drift",
+          "seed": 49031,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.002,
+          "step1000ShadowHamiltonianDrift": 0.085,
+          "timeReversibilitySymmetryDefect": 0.04,
+          "compositeScore": 91.51
+        },
+        {
+          "profileId": "rk4-non-symplectic-secular-phase-space-drift",
+          "seed": 59053,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0.002,
+          "step1000ShadowHamiltonianDrift": 0.085,
+          "timeReversibilitySymmetryDefect": 0.04,
+          "compositeScore": 91.51
+        }
+      ],
+      "stats": {
+        "liouvilleJacobianDeterminantDefect": {
+          "count": 5,
+          "mean": 0.002,
+          "stdDev": 0,
+          "min": 0.002,
+          "max": 0.002,
+          "ci95": {
+            "low": 0.002,
+            "high": 0.002,
+            "halfWidth": 0
+          }
+        },
+        "step1000ShadowHamiltonianDrift": {
+          "count": 5,
+          "mean": 0.085,
+          "stdDev": 0,
+          "min": 0.085,
+          "max": 0.085,
+          "ci95": {
+            "low": 0.085,
+            "high": 0.085,
+            "halfWidth": 0
+          }
+        },
+        "timeReversibilitySymmetryDefect": {
+          "count": 5,
+          "mean": 0.04,
+          "stdDev": 0,
+          "min": 0.04,
+          "max": 0.04,
+          "ci95": {
+            "low": 0.04,
+            "high": 0.04,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 91.51,
+          "stdDev": 0,
+          "min": 91.51,
+          "max": 91.51,
+          "ci95": {
+            "low": 91.51,
+            "high": 91.51,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "stormer-verlet-leapfrog-symplectic-srnn-weights": {
+      "profileId": "stormer-verlet-leapfrog-symplectic-srnn-weights",
+      "runs": [
+        {
+          "profileId": "stormer-verlet-leapfrog-symplectic-srnn-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0,
+          "step1000ShadowHamiltonianDrift": 0.000339,
+          "timeReversibilitySymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stormer-verlet-leapfrog-symplectic-srnn-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0,
+          "step1000ShadowHamiltonianDrift": 0.000377,
+          "timeReversibilitySymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stormer-verlet-leapfrog-symplectic-srnn-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0,
+          "step1000ShadowHamiltonianDrift": 0.000326,
+          "timeReversibilitySymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stormer-verlet-leapfrog-symplectic-srnn-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0,
+          "step1000ShadowHamiltonianDrift": 0.000395,
+          "timeReversibilitySymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "stormer-verlet-leapfrog-symplectic-srnn-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "liouvilleJacobianDeterminantDefect": 0,
+          "step1000ShadowHamiltonianDrift": 0.000378,
+          "timeReversibilitySymmetryDefect": 0,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "liouvilleJacobianDeterminantDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "step1000ShadowHamiltonianDrift": {
+          "count": 5,
+          "mean": 0.0004,
+          "stdDev": 0,
+          "min": 0.0003,
+          "max": 0.0004,
+          "ci95": {
+            "low": 0.0003,
+            "high": 0.0004,
+            "halfWidth": 0
+          }
+        },
+        "timeReversibilitySymmetryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "3d4ebdfc0cd7e33f3c00ff6b7f2dcf868ec32ac0d751b9244ac99205a214a90c"
+}
