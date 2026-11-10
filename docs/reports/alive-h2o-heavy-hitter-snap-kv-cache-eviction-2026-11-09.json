@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-174-H2O-HEAVY-HITTER-SNAP-KV-CACHE-EVICTION",
+  "passNumber": 174,
+  "phase": "Phase XXXIV: Distributed Tensor Systems (ZeRO-3/FSDP, Megatron Ring Attention, EAGLE-2 & H2O KV)",
+  "generatedAt": "2026-11-09T20:38:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "h2o-snapkv-attention-sink-heavy-hitter-eviction",
+  "winningScore": 100,
+  "profiles": {
+    "sliding-window-evict-sink-tokens-perplexity-explosion": {
+      "profileId": "sliding-window-evict-sink-tokens-perplexity-explosion",
+      "runs": [
+        {
+          "profileId": "sliding-window-evict-sink-tokens-perplexity-explosion",
+          "seed": 19013,
+          "episodes": 24,
+          "retainedAttentionMassPct": 28.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 12.5,
+          "compositeScore": 48.725
+        },
+        {
+          "profileId": "sliding-window-evict-sink-tokens-perplexity-explosion",
+          "seed": 29017,
+          "episodes": 24,
+          "retainedAttentionMassPct": 28.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 12.5,
+          "compositeScore": 48.725
+        },
+        {
+          "profileId": "sliding-window-evict-sink-tokens-perplexity-explosion",
+          "seed": 39023,
+          "episodes": 24,
+          "retainedAttentionMassPct": 28.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 12.5,
+          "compositeScore": 48.725
+        },
+        {
+          "profileId": "sliding-window-evict-sink-tokens-perplexity-explosion",
+          "seed": 49031,
+          "episodes": 24,
+          "retainedAttentionMassPct": 28.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 12.5,
+          "compositeScore": 48.725
+        },
+        {
+          "profileId": "sliding-window-evict-sink-tokens-perplexity-explosion",
+          "seed": 59053,
+          "episodes": 24,
+          "retainedAttentionMassPct": 28.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 12.5,
+          "compositeScore": 48.725
+        }
+      ],
+      "stats": {
+        "retainedAttentionMassPct": {
+          "count": 5,
+          "mean": 28.5,
+          "stdDev": 0,
+          "min": 28.5,
+          "max": 28.5,
+          "ci95": {
+            "low": 28.5,
+            "high": 28.5,
+            "halfWidth": 0
+          }
+        },
+        "kvMemoryFootprintCompressionFactor": {
+          "count": 5,
+          "mean": 5,
+          "stdDev": 0,
+          "min": 5,
+          "max": 5,
+          "ci95": {
+            "low": 5,
+            "high": 5,
+            "halfWidth": 0
+          }
+        },
+        "needleInHaystackRetrievalAccuracyPct": {
+          "count": 5,
+          "mean": 12.5,
+          "stdDev": 0,
+          "min": 12.5,
+          "max": 12.5,
+          "ci95": {
+            "low": 12.5,
+            "high": 12.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 48.725,
+          "stdDev": 0,
+          "min": 48.725,
+          "max": 48.725,
+          "ci95": {
+            "low": 48.725,
+            "high": 48.725,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "random-kv-eviction-heavy-hitter-loss": {
+      "profileId": "random-kv-eviction-heavy-hitter-loss",
+      "runs": [
+        {
+          "profileId": "random-kv-eviction-heavy-hitter-loss",
+          "seed": 19013,
+          "episodes": 24,
+          "retainedAttentionMassPct": 20,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 25,
+          "compositeScore": 49.5
+        },
+        {
+          "profileId": "random-kv-eviction-heavy-hitter-loss",
+          "seed": 29017,
+          "episodes": 24,
+          "retainedAttentionMassPct": 20,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 25,
+          "compositeScore": 49.5
+        },
+        {
+          "profileId": "random-kv-eviction-heavy-hitter-loss",
+          "seed": 39023,
+          "episodes": 24,
+          "retainedAttentionMassPct": 20,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 25,
+          "compositeScore": 49.5
+        },
+        {
+          "profileId": "random-kv-eviction-heavy-hitter-loss",
+          "seed": 49031,
+          "episodes": 24,
+          "retainedAttentionMassPct": 20,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 25,
+          "compositeScore": 49.5
+        },
+        {
+          "profileId": "random-kv-eviction-heavy-hitter-loss",
+          "seed": 59053,
+          "episodes": 24,
+          "retainedAttentionMassPct": 20,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 25,
+          "compositeScore": 49.5
+        }
+      ],
+      "stats": {
+        "retainedAttentionMassPct": {
+          "count": 5,
+          "mean": 20,
+          "stdDev": 0,
+          "min": 20,
+          "max": 20,
+          "ci95": {
+            "low": 20,
+            "high": 20,
+            "halfWidth": 0
+          }
+        },
+        "kvMemoryFootprintCompressionFactor": {
+          "count": 5,
+          "mean": 5,
+          "stdDev": 0,
+          "min": 5,
+          "max": 5,
+          "ci95": {
+            "low": 5,
+            "high": 5,
+            "halfWidth": 0
+          }
+        },
+        "needleInHaystackRetrievalAccuracyPct": {
+          "count": 5,
+          "mean": 25,
+          "stdDev": 0,
+          "min": 25,
+          "max": 25,
+          "ci95": {
+            "low": 25,
+            "high": 25,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 49.5,
+          "stdDev": 0,
+          "min": 49.5,
+          "max": 49.5,
+          "ci95": {
+            "low": 49.5,
+            "high": 49.5,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "h2o-without-observation-window-snapkv-pool": {
+      "profileId": "h2o-without-observation-window-snapkv-pool",
+      "runs": [
+        {
+          "profileId": "h2o-without-observation-window-snapkv-pool",
+          "seed": 19013,
+          "episodes": 24,
+          "retainedAttentionMassPct": 88.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 87.5,
+          "compositeScore": 92.225
+        },
+        {
+          "profileId": "h2o-without-observation-window-snapkv-pool",
+          "seed": 29017,
+          "episodes": 24,
+          "retainedAttentionMassPct": 88.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 87.5,
+          "compositeScore": 92.225
+        },
+        {
+          "profileId": "h2o-without-observation-window-snapkv-pool",
+          "seed": 39023,
+          "episodes": 24,
+          "retainedAttentionMassPct": 88.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 87.5,
+          "compositeScore": 92.225
+        },
+        {
+          "profileId": "h2o-without-observation-window-snapkv-pool",
+          "seed": 49031,
+          "episodes": 24,
+          "retainedAttentionMassPct": 88.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 87.5,
+          "compositeScore": 92.225
+        },
+        {
+          "profileId": "h2o-without-observation-window-snapkv-pool",
+          "seed": 59053,
+          "episodes": 24,
+          "retainedAttentionMassPct": 88.5,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 87.5,
+          "compositeScore": 92.225
+        }
+      ],
+      "stats": {
+        "retainedAttentionMassPct": {
+          "count": 5,
+          "mean": 88.5,
+          "stdDev": 0,
+          "min": 88.5,
+          "max": 88.5,
+          "ci95": {
+            "low": 88.5,
+            "high": 88.5,
+            "halfWidth": 0
+          }
+        },
+        "kvMemoryFootprintCompressionFactor": {
+          "count": 5,
+          "mean": 5,
+          "stdDev": 0,
+          "min": 5,
+          "max": 5,
+          "ci95": {
+            "low": 5,
+            "high": 5,
+            "halfWidth": 0
+          }
+        },
+        "needleInHaystackRetrievalAccuracyPct": {
+          "count": 5,
+          "mean": 87.5,
+          "stdDev": 0,
+          "min": 87.5,
+          "max": 87.5,
+          "ci95": {
+            "low": 87.5,
+            "high": 87.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 92.225,
+          "stdDev": 0,
+          "min": 92.225,
+          "max": 92.225,
+          "ci95": {
+            "low": 92.225,
+            "high": 92.225,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "h2o-snapkv-attention-sink-heavy-hitter-eviction": {
+      "profileId": "h2o-snapkv-attention-sink-heavy-hitter-eviction",
+      "runs": [
+        {
+          "profileId": "h2o-snapkv-attention-sink-heavy-hitter-eviction",
+          "seed": 19013,
+          "episodes": 24,
+          "retainedAttentionMassPct": 99.8003,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "h2o-snapkv-attention-sink-heavy-hitter-eviction",
+          "seed": 29017,
+          "episodes": 24,
+          "retainedAttentionMassPct": 99.8079,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "h2o-snapkv-attention-sink-heavy-hitter-eviction",
+          "seed": 39023,
+          "episodes": 24,
+          "retainedAttentionMassPct": 99.8049,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "h2o-snapkv-attention-sink-heavy-hitter-eviction",
+          "seed": 49031,
+          "episodes": 24,
+          "retainedAttentionMassPct": 99.8063,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "h2o-snapkv-attention-sink-heavy-hitter-eviction",
+          "seed": 59053,
+          "episodes": 24,
+          "retainedAttentionMassPct": 99.8054,
+          "kvMemoryFootprintCompressionFactor": 5,
+          "needleInHaystackRetrievalAccuracyPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "retainedAttentionMassPct": {
+          "count": 5,
+          "mean": 99.805,
+          "stdDev": 0.0028,
+          "min": 99.8003,
+          "max": 99.8079,
+          "ci95": {
+            "low": 99.8014,
+            "high": 99.8085,
+            "halfWidth": 0.0035
+          }
+        },
+        "kvMemoryFootprintCompressionFactor": {
+          "count": 5,
+          "mean": 5,
+          "stdDev": 0,
+          "min": 5,
+          "max": 5,
+          "ci95": {
+            "low": 5,
+            "high": 5,
+            "halfWidth": 0
+          }
+        },
+        "needleInHaystackRetrievalAccuracyPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "ab9e7f988f39b330140eb26812d9069ea372da167b108e2962f6ce6026b2c921"
+}
