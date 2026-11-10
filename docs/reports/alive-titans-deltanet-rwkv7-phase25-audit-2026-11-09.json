@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-130-TITANS-DELTANET-RWKV7-PHASE25-AUDIT",
+  "passNumber": 130,
+  "phase": "Phase XXV: Titans, Gated DeltaNet, RWKV-7 & Fast-Weight Memory",
+  "generatedAt": "2026-11-09T19:54:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "J1-Titans-Surprise-Gradient-Needle-Recall-Accuracy",
+      "passNumber": 126,
+      "metric": "needleInHaystackRecallPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "J2-Titans-Momentum-Surprise-Retention-Ratio",
+      "passNumber": 126,
+      "metric": "surpriseTriggeredRetentionRatio",
+      "threshold": ">= 14.0x",
+      "observed": 16.591,
+      "verified": true
+    },
+    {
+      "rowId": "J3-Gated-DeltaNet-Selective-Key-Overwrite-Zero-Crosstalk",
+      "passNumber": 127,
+      "metric": "selectiveKeyOverwriteAccuracyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "J4-Gated-DeltaNet-Beta2-Householder-Reflection-Isometry",
+      "passNumber": 127,
+      "metric": "householderUnitarityAtBeta2Defect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "J5-RWKV7-Goose-NonDiagonal-S5-Permutation-Tracking",
+      "passNumber": 128,
+      "metric": "s5SymmetricGroupTrackingPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "J6-RWKV7-Goose-O1-Constant-State-Memory-Guarantee",
+      "passNumber": 128,
+      "metric": "constantMemoryO1InferencePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "J7-GSA-Bounded-Slot-KV-Compression-Ratio",
+      "passNumber": 129,
+      "metric": "slotCompressionRatio",
+      "threshold": ">= 16.0x",
+      "observed": 16,
+      "verified": true
+    },
+    {
+      "rowId": "J8-GSA-Chrono-Forget-Gate-Bias-Multi-Needle-Recall",
+      "passNumber": 129,
+      "metric": "multiNeedleRecallAccuracyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "J9-GSA-Two-Pass-Softmax-Readout-Stability",
+      "passNumber": 129,
+      "metric": "softmaxBoundedOutputStabilityPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "J10-Phase25-All-Four-Fast-Weight-Memory-Passes-100-Score",
+      "passNumber": 130,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass126Sha256": "90bb8d8145fbde1acd2fe043bb2d505ade94d46182e2976972c93f676126b705",
+    "pass127Sha256": "0f068c27c1445887845d60fc5fc47a6df248f90479245c8aa2aa33316e0de6e0",
+    "pass128Sha256": "9caac3050664aeb277ecbb9c6e1fd87d4a39676cb7fd3860f021d111b20a7e46",
+    "pass129Sha256": "2e4fe220d2c943c0b6471a7ae156fff96605cd3a620c5596c760c341ac8baa7f"
+  },
+  "phase25Sha256": "d9b535527e3d39e1cd4f86299c50ca538a9507f482deae20effa5387980b70cf"
+}
