@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-171-ZERO3-FSDP-SHARDED-WEIGHT-BIAS-GATHER-ENGINE",
+  "passNumber": 171,
+  "phase": "Phase XXXIV: Distributed Tensor Systems (ZeRO-3/FSDP, Megatron Ring Attention, EAGLE-2 & H2O KV)",
+  "generatedAt": "2026-11-09T20:35:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "zero3-fsdp-sharded-weights-double-buffered-prefetch",
+  "winningScore": 100,
+  "profiles": {
+    "replicated-ddp-redundant-memory-oom": {
+      "profileId": "replicated-ddp-redundant-memory-oom",
+      "runs": [
+        {
+          "profileId": "replicated-ddp-redundant-memory-oom",
+          "seed": 19013,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 1,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 55,
+          "compositeScore": 55.875
+        },
+        {
+          "profileId": "replicated-ddp-redundant-memory-oom",
+          "seed": 29017,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 1,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 55,
+          "compositeScore": 55.875
+        },
+        {
+          "profileId": "replicated-ddp-redundant-memory-oom",
+          "seed": 39023,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 1,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 55,
+          "compositeScore": 55.875
+        },
+        {
+          "profileId": "replicated-ddp-redundant-memory-oom",
+          "seed": 49031,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 1,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 55,
+          "compositeScore": 55.875
+        },
+        {
+          "profileId": "replicated-ddp-redundant-memory-oom",
+          "seed": 59053,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 1,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 55,
+          "compositeScore": 55.875
+        }
+      ],
+      "stats": {
+        "perRankMemoryReductionFactor": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "shardedVsMonolithicParityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "commComputeOverlapEfficiencyPct": {
+          "count": 5,
+          "mean": 55,
+          "stdDev": 0,
+          "min": 55,
+          "max": 55,
+          "ci95": {
+            "low": 55,
+            "high": 55,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 55.875,
+          "stdDev": 0,
+          "min": 55.875,
+          "max": 55.875,
+          "ci95": {
+            "low": 55.875,
+            "high": 55.875,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "zero1-optimizer-only-sharding-weight-duplication": {
+      "profileId": "zero1-optimizer-only-sharding-weight-duplication",
+      "runs": [
+        {
+          "profileId": "zero1-optimizer-only-sharding-weight-duplication",
+          "seed": 19013,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 2.8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 72,
+          "compositeScore": 68.85
+        },
+        {
+          "profileId": "zero1-optimizer-only-sharding-weight-duplication",
+          "seed": 29017,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 2.8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 72,
+          "compositeScore": 68.85
+        },
+        {
+          "profileId": "zero1-optimizer-only-sharding-weight-duplication",
+          "seed": 39023,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 2.8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 72,
+          "compositeScore": 68.85
+        },
+        {
+          "profileId": "zero1-optimizer-only-sharding-weight-duplication",
+          "seed": 49031,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 2.8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 72,
+          "compositeScore": 68.85
+        },
+        {
+          "profileId": "zero1-optimizer-only-sharding-weight-duplication",
+          "seed": 59053,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 2.8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 72,
+          "compositeScore": 68.85
+        }
+      ],
+      "stats": {
+        "perRankMemoryReductionFactor": {
+          "count": 5,
+          "mean": 2.8,
+          "stdDev": 0,
+          "min": 2.8,
+          "max": 2.8,
+          "ci95": {
+            "low": 2.8,
+            "high": 2.8,
+            "halfWidth": 0
+          }
+        },
+        "shardedVsMonolithicParityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "commComputeOverlapEfficiencyPct": {
+          "count": 5,
+          "mean": 72,
+          "stdDev": 0,
+          "min": 72,
+          "max": 72,
+          "ci95": {
+            "low": 72,
+            "high": 72,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 68.85,
+          "stdDev": 0,
+          "min": 68.85,
+          "max": 68.85,
+          "ci95": {
+            "low": 68.85,
+            "high": 68.85,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "blocking-allgather-zero3-communication-stall": {
+      "profileId": "blocking-allgather-zero3-communication-stall",
+      "runs": [
+        {
+          "profileId": "blocking-allgather-zero3-communication-stall",
+          "seed": 19013,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 48,
+          "compositeScore": 84.4
+        },
+        {
+          "profileId": "blocking-allgather-zero3-communication-stall",
+          "seed": 29017,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 48,
+          "compositeScore": 84.4
+        },
+        {
+          "profileId": "blocking-allgather-zero3-communication-stall",
+          "seed": 39023,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 48,
+          "compositeScore": 84.4
+        },
+        {
+          "profileId": "blocking-allgather-zero3-communication-stall",
+          "seed": 49031,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 48,
+          "compositeScore": 84.4
+        },
+        {
+          "profileId": "blocking-allgather-zero3-communication-stall",
+          "seed": 59053,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 48,
+          "compositeScore": 84.4
+        }
+      ],
+      "stats": {
+        "perRankMemoryReductionFactor": {
+          "count": 5,
+          "mean": 8,
+          "stdDev": 0,
+          "min": 8,
+          "max": 8,
+          "ci95": {
+            "low": 8,
+            "high": 8,
+            "halfWidth": 0
+          }
+        },
+        "shardedVsMonolithicParityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "commComputeOverlapEfficiencyPct": {
+          "count": 5,
+          "mean": 48,
+          "stdDev": 0,
+          "min": 48,
+          "max": 48,
+          "ci95": {
+            "low": 48,
+            "high": 48,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 84.4,
+          "stdDev": 0,
+          "min": 84.4,
+          "max": 84.4,
+          "ci95": {
+            "low": 84.4,
+            "high": 84.4,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "zero3-fsdp-sharded-weights-double-buffered-prefetch": {
+      "profileId": "zero3-fsdp-sharded-weights-double-buffered-prefetch",
+      "runs": [
+        {
+          "profileId": "zero3-fsdp-sharded-weights-double-buffered-prefetch",
+          "seed": 19013,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 99.0447,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "zero3-fsdp-sharded-weights-double-buffered-prefetch",
+          "seed": 29017,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 99.0585,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "zero3-fsdp-sharded-weights-double-buffered-prefetch",
+          "seed": 39023,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 98.8956,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "zero3-fsdp-sharded-weights-double-buffered-prefetch",
+          "seed": 49031,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 98.8643,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "zero3-fsdp-sharded-weights-double-buffered-prefetch",
+          "seed": 59053,
+          "episodes": 24,
+          "perRankMemoryReductionFactor": 8,
+          "shardedVsMonolithicParityDefect": 0,
+          "commComputeOverlapEfficiencyPct": 98.816,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "perRankMemoryReductionFactor": {
+          "count": 5,
+          "mean": 8,
+          "stdDev": 0,
+          "min": 8,
+          "max": 8,
+          "ci95": {
+            "low": 8,
+            "high": 8,
+            "halfWidth": 0
+          }
+        },
+        "shardedVsMonolithicParityDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "commComputeOverlapEfficiencyPct": {
+          "count": 5,
+          "mean": 98.9358,
+          "stdDev": 0.1095,
+          "min": 98.816,
+          "max": 99.0585,
+          "ci95": {
+            "low": 98.7998,
+            "high": 99.0718,
+            "halfWidth": 0.136
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "5a246b01f196a4d0a35069d22785989dc841ce245e90e26d29c5fb8cf786abb9"
+}
