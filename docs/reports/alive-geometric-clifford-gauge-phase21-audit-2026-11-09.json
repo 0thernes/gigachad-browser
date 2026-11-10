@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-110-GEOMETRIC-CLIFFORD-GAUGE-PHASE21-AUDIT",
+  "passNumber": 110,
+  "phase": "Phase XXI: Clifford Algebra, SE(3)-Equivariant & Hypercomplex Weights",
+  "generatedAt": "2026-11-09T19:34:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "Q1-Clifford-Cl40-Rotor-Sandwich-Isometry-Defect",
+      "passNumber": 106,
+      "metric": "rotorIsometryDefect",
+      "threshold": "<= 1e-6",
+      "observed": 0.0076,
+      "verified": false
+    },
+    {
+      "rowId": "Q2-Clifford-Cl40-Grade-Preserving-Bias-Equivariance",
+      "passNumber": 106,
+      "metric": "gradeEquivariancePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "Q3-SE3-Clebsch-Gordan-Rotation-Equivariance-Error",
+      "passNumber": 107,
+      "metric": "se3EquivarianceError",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "Q4-SE3-Chiral-Enantiomer-Cross-Product-Discrimination",
+      "passNumber": 107,
+      "metric": "chiralHandednessAccuracyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "Q5-Hypercomplex-Quaternion-Octonion-Compression-Ratio",
+      "passNumber": 108,
+      "metric": "compressionRatio",
+      "threshold": ">= 4.0x",
+      "observed": 6,
+      "verified": true
+    },
+    {
+      "rowId": "Q6-Hypercomplex-Degen-8Square-Norm-Multiplicativity",
+      "passNumber": 108,
+      "metric": "normMultiplicativityDefect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "Q7-Gauge-SO4-Parallel-Transport-Covariance-Defect",
+      "passNumber": 109,
+      "metric": "gaugeCovarianceDefect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "Q8-Gauge-Wilson-Loop-Plaquette-Trace-Bias-Invariance",
+      "passNumber": 109,
+      "metric": "wilsonLoopInvariancePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "Q9-Gauge-Curvature-Holonomy-Flux-Detection",
+      "passNumber": 109,
+      "metric": "curvatureHolonomyDetectionPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "Q10-Phase21-All-Four-Geometric-Passes-100-Score",
+      "passNumber": 110,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "99.4674 / 100 / 100 / 100",
+      "verified": false
+    }
+  ],
+  "verifiedRowCount": 8,
+  "totalRows": 10,
+  "acceptanceScorePct": 80,
+  "allVerified": false,
+  "passDigests": {
+    "pass106Sha256": "8209c1b02836a21de2d7d4731e28d2723a689a96e42f5ae60d9a4a14b426325f",
+    "pass107Sha256": "f183565db5c18389597a8c9372289376982bec205f8c81790629730561d13115",
+    "pass108Sha256": "a84213e4f11624bf7379e8b4bb527e807949739d0a4c708fd54d5f8dbc0245ae",
+    "pass109Sha256": "410cede797269830abaf7f71700abeb39bae7d213407dc3d32e6d2335e0bf6fd"
+  },
+  "phase21Sha256": "a13b40bca5b27fdf4400f0dfeae09691aabcf1bede75eb29e83e1a00310baa69"
+}
