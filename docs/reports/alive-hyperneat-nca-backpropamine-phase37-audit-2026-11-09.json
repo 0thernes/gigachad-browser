@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-190-HYPERNEAT-NCA-BACKPROPAMINE-PHASE37-AUDIT",
+  "passNumber": 190,
+  "phase": "Phase XXXVII: Neuro-Genetic & Developmental Weight Encoding (HyperNEAT, NCA, Backpropamine & Baldwin)",
+  "generatedAt": "2026-11-09T20:54:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "G2_1-HyperNEAT-CPPN-Exact-Bilateral-Symmetry-Preservation",
+      "passNumber": 186,
+      "metric": "bilateralSymmetryViolationDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "G2_2-HyperNEAT-CPPN-Genome-To-Phenotype-Compression",
+      "passNumber": 186,
+      "metric": "genomeToPhenotypeCompressionRatio",
+      "threshold": ">= 200.0x",
+      "observed": 256,
+      "verified": true
+    },
+    {
+      "rowId": "G2_3-Mordvintsev-NCA-50Pct-Ablation-Self-Healing-Recovery",
+      "passNumber": 187,
+      "metric": "postAblationRegenerationRecoveryPct",
+      "threshold": ">= 99.5%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "G2_4-Mordvintsev-NCA-Asymptotic-Attractor-Drift-Error",
+      "passNumber": 187,
+      "metric": "asymptoticAttractorDriftError",
+      "threshold": "<= 1e-4",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "G2_5-Backpropamine-OneShot-Cue-Reward-Associative-Recall",
+      "passNumber": 188,
+      "metric": "oneShotCueRewardRecallAccuracyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "G2_6-Backpropamine-Neuromodulated-Distractor-Resistance",
+      "passNumber": 188,
+      "metric": "distractorInterferenceResistancePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "G2_7-Backpropamine-Oja-Trace-Norm-Stability",
+      "passNumber": 188,
+      "metric": "ojaTraceNormStabilityDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "G2_8-Baldwin-Effect-Needle-In-Haystack-Discovery-Speedup",
+      "passNumber": 189,
+      "metric": "needleInHaystackDiscoverySpeedup",
+      "threshold": ">= 25.0x",
+      "observed": 32.754,
+      "verified": true
+    },
+    {
+      "rowId": "G2_9-Baldwin-Effect-Innate-ZeroShot-Genetic-Assimilation",
+      "passNumber": 189,
+      "metric": "innateZeroShotAssimilationPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "G2_10-Phase37-All-Four-Neuro-Genetic-Developmental-Passes-100-Score",
+      "passNumber": 190,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass186Sha256": "1551b3ba6a944070234a19c18fdb042313be389143e9af2d03b62ccbf73f0258",
+    "pass187Sha256": "1e307726e308116c09f5081f77bca31260b6189a60958c152c8129075f22e15d",
+    "pass188Sha256": "99f086440c8dbbc80cac7542813725f9b65d4b696b7d083b724188a618fcee69",
+    "pass189Sha256": "9fb448a357db03955f522bca1f4d7b1bf894775711fb09993222e97a94f0ec72"
+  },
+  "phase37Sha256": "7394678bbbc9119fefaf1b91e683200b8a8a4c8db1559506580428689d642598"
+}
