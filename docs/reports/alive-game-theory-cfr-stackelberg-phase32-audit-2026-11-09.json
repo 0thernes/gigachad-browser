@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-165-GAME-THEORY-CFR-STACKELBERG-PHASE32-AUDIT",
+  "passNumber": 165,
+  "phase": "Phase XXXII: Multi-Agent Game-Theoretic Equilibrium Weights (CFR+, Stackelberg, Mean-Field & VCG)",
+  "generatedAt": "2026-11-09T20:29:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "M2_1-CFRPlus-NashConv-Exploitability-Bound",
+      "passNumber": 161,
+      "metric": "nashConvExploitability",
+      "threshold": "<= 1e-4",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "M2_2-CFRPlus-Zero-Negative-Regret-Accumulation",
+      "passNumber": 161,
+      "metric": "negativeRegretAccumulationLeak",
+      "threshold": "=== 0.0",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "M2_3-Stackelberg-Total-Derivative-Stationarity-Defect",
+      "passNumber": 162,
+      "metric": "stackelbergStationarityGradientDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "M2_4-Stackelberg-Leader-Utility-Advantage-Over-Naive",
+      "passNumber": 162,
+      "metric": "leaderUtilityAdvantageOverNaivePct",
+      "threshold": ">= 40.0%",
+      "observed": 60.125,
+      "verified": true
+    },
+    {
+      "rowId": "M2_5-MeanField-FPK-Probability-Mass-Conservation-Defect",
+      "passNumber": 163,
+      "metric": "fpkProbabilityMassConservationDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "M2_6-MeanField-HJB-Bellman-Optimality-Residual",
+      "passNumber": 163,
+      "metric": "hjbBellmanOptimalityResidual",
+      "threshold": "<= 0.001",
+      "observed": 0.0004,
+      "verified": true
+    },
+    {
+      "rowId": "M2_7-VCG-Clarke-Pivot-DSIC-Zero-Profitable-Misreport",
+      "passNumber": 164,
+      "metric": "profitableMisreportGainDefect",
+      "threshold": "=== 0.0",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "M2_8-VCG-Clarke-Pivot-Individual-Rationality",
+      "passNumber": 164,
+      "metric": "individualRationalitySatisfactionPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "M2_9-VCG-Allocative-Social-Welfare-Efficiency",
+      "passNumber": 164,
+      "metric": "allocativeSocialWelfareEfficiencyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "M2_10-Phase32-All-Four-Game-Theory-Passes-100-Score",
+      "passNumber": 165,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass161Sha256": "576c9135e949d1b6893e50fc04babf05481cd0d50d5c5f7984ce449fdf5cd35d",
+    "pass162Sha256": "9f54eb0cb3b3c967dd11aa980c76a8ee1ca308dc047d6e06e53f67f2d420a23b",
+    "pass163Sha256": "73ffee73484260a70452270f70c0ea33e9a7cba0ea21652bf0a97bd25d2f48e0",
+    "pass164Sha256": "a14ec07afda64e44a1a9d450d441c12babbbbd65876defde02f09cae5dcf129a"
+  },
+  "phase32Sha256": "c0a0b63f8951334d47102de0b8b2188e5ac91ae0c48496a5ef54aaa02beb4ee2"
+}
