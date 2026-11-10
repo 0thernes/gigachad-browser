@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-175-DISTRIBUTED-ZERO3-SPECULATIVE-KV-PHASE34-AUDIT",
+  "passNumber": 175,
+  "phase": "Phase XXXIV: Distributed Tensor Systems (ZeRO-3/FSDP, Megatron Ring Attention, EAGLE-2 & H2O KV)",
+  "generatedAt": "2026-11-09T20:39:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "E2_1-ZeRO3-FSDP-8Rank-Memory-Reduction-Factor",
+      "passNumber": 171,
+      "metric": "perRankMemoryReductionFactor",
+      "threshold": ">= 8.0x",
+      "observed": 8,
+      "verified": true
+    },
+    {
+      "rowId": "E2_2-ZeRO3-FSDP-Sharded-Vs-Monolithic-Parity-Defect",
+      "passNumber": 171,
+      "metric": "shardedVsMonolithicParityDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "E2_3-Megatron-Ring-Attention-Online-LSE-Softmax-Equivalence",
+      "passNumber": 172,
+      "metric": "ringAttentionOnlineSoftmaxDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "E2_4-Megatron-Col-Row-Tensor-Parallel-AllReduce-Savings",
+      "passNumber": 172,
+      "metric": "allReduceCommunicationSavingsPct",
+      "threshold": ">= 50.0%",
+      "observed": 50,
+      "verified": true
+    },
+    {
+      "rowId": "E2_5-EAGLE2-Speculative-Lossless-Rejection-Sampling-TV-Defect",
+      "passNumber": 173,
+      "metric": "targetDistributionTotalVariationDefect",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "E2_6-EAGLE2-Mean-Accepted-Tokens-Per-Step-Tau",
+      "passNumber": 173,
+      "metric": "meanAcceptedTokensPerStepTau",
+      "threshold": ">= 4.5",
+      "observed": 4.9154,
+      "verified": true
+    },
+    {
+      "rowId": "E2_7-H2O-SnapKV-20Pct-Budget-Retained-Attention-Mass",
+      "passNumber": 174,
+      "metric": "retainedAttentionMassPct",
+      "threshold": ">= 99.0%",
+      "observed": 99.805,
+      "verified": true
+    },
+    {
+      "rowId": "E2_8-H2O-SnapKV-Memory-Compression-Factor",
+      "passNumber": 174,
+      "metric": "kvMemoryFootprintCompressionFactor",
+      "threshold": ">= 5.0x",
+      "observed": 5,
+      "verified": true
+    },
+    {
+      "rowId": "E2_9-H2O-SnapKV-Needle-In-Haystack-Retrieval-Accuracy",
+      "passNumber": 174,
+      "metric": "needleInHaystackRetrievalAccuracyPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "E2_10-Phase34-All-Four-Distributed-Speculative-KV-Passes-100-Score",
+      "passNumber": 175,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass171Sha256": "5a246b01f196a4d0a35069d22785989dc841ce245e90e26d29c5fb8cf786abb9",
+    "pass172Sha256": "117bf03a83c5ecb35aa226f74417a400f74398fdeea391a493ac9b00359ad1a8",
+    "pass173Sha256": "349d53e74b3d384f1387fc17984057241ff62c5d704a348db63c5d0b81b3a6a0",
+    "pass174Sha256": "ab9e7f988f39b330140eb26812d9069ea372da167b108e2962f6ce6026b2c921"
+  },
+  "phase34Sha256": "f280c4b4a68d0f3cbefa6b434f6a6d728759956d7c8e30ff2245856339636234"
+}
