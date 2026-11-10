@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-109-GAUGE-COVARIANT-PARALLEL-TRANSPORT-WEIGHTS",
+  "passNumber": 109,
+  "phase": "Phase XXI: Clifford Algebra, SE(3)-Equivariant & Hypercomplex Weights",
+  "generatedAt": "2026-11-09T19:33:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "cayley-so4-gauge-covariant-wilson-loop-transport",
+  "winningScore": 100,
+  "profiles": {
+    "gauge-dependent-global-frame-gnn": {
+      "profileId": "gauge-dependent-global-frame-gnn",
+      "runs": [
+        {
+          "profileId": "gauge-dependent-global-frame-gnn",
+          "seed": 19013,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.6013777214,
+          "wilsonLoopInvariancePct": 0,
+          "curvatureHolonomyDetectionPct": 29.1667,
+          "compositeScore": 8.75
+        },
+        {
+          "profileId": "gauge-dependent-global-frame-gnn",
+          "seed": 29017,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.5825635842,
+          "wilsonLoopInvariancePct": 0,
+          "curvatureHolonomyDetectionPct": 29.1667,
+          "compositeScore": 8.75
+        },
+        {
+          "profileId": "gauge-dependent-global-frame-gnn",
+          "seed": 39023,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.615378608,
+          "wilsonLoopInvariancePct": 0,
+          "curvatureHolonomyDetectionPct": 29.1667,
+          "compositeScore": 8.75
+        },
+        {
+          "profileId": "gauge-dependent-global-frame-gnn",
+          "seed": 49031,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.6197492442,
+          "wilsonLoopInvariancePct": 0,
+          "curvatureHolonomyDetectionPct": 29.1667,
+          "compositeScore": 8.75
+        },
+        {
+          "profileId": "gauge-dependent-global-frame-gnn",
+          "seed": 59053,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.5825358504,
+          "wilsonLoopInvariancePct": 0,
+          "curvatureHolonomyDetectionPct": 29.1667,
+          "compositeScore": 8.75
+        }
+      ],
+      "stats": {
+        "gaugeCovarianceDefect": {
+          "count": 5,
+          "mean": 0.6003,
+          "stdDev": 0.0176,
+          "min": 0.5825,
+          "max": 0.6197,
+          "ci95": {
+            "low": 0.5785,
+            "high": 0.6222,
+            "halfWidth": 0.0218
+          }
+        },
+        "wilsonLoopInvariancePct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "curvatureHolonomyDetectionPct": {
+          "count": 5,
+          "mean": 29.1667,
+          "stdDev": 0,
+          "min": 29.1667,
+          "max": 29.1667,
+          "ci95": {
+            "low": 29.1667,
+            "high": 29.1667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 8.75,
+          "stdDev": 0,
+          "min": 8.75,
+          "max": 8.75,
+          "ci95": {
+            "low": 8.75,
+            "high": 8.75,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unconstrained-non-orthogonal-edge-transport": {
+      "profileId": "unconstrained-non-orthogonal-edge-transport",
+      "runs": [
+        {
+          "profileId": "unconstrained-non-orthogonal-edge-transport",
+          "seed": 19013,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.2506888607,
+          "wilsonLoopInvariancePct": 54.1667,
+          "curvatureHolonomyDetectionPct": 66.6667,
+          "compositeScore": 56.4101
+        },
+        {
+          "profileId": "unconstrained-non-orthogonal-edge-transport",
+          "seed": 29017,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.2412817921,
+          "wilsonLoopInvariancePct": 54.1667,
+          "curvatureHolonomyDetectionPct": 66.6667,
+          "compositeScore": 57.0686
+        },
+        {
+          "profileId": "unconstrained-non-orthogonal-edge-transport",
+          "seed": 39023,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.257689304,
+          "wilsonLoopInvariancePct": 54.1667,
+          "curvatureHolonomyDetectionPct": 66.6667,
+          "compositeScore": 55.9201
+        },
+        {
+          "profileId": "unconstrained-non-orthogonal-edge-transport",
+          "seed": 49031,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.2598746221,
+          "wilsonLoopInvariancePct": 54.1667,
+          "curvatureHolonomyDetectionPct": 66.6667,
+          "compositeScore": 55.7671
+        },
+        {
+          "profileId": "unconstrained-non-orthogonal-edge-transport",
+          "seed": 59053,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0.2412679252,
+          "wilsonLoopInvariancePct": 54.1667,
+          "curvatureHolonomyDetectionPct": 66.6667,
+          "compositeScore": 57.0696
+        }
+      ],
+      "stats": {
+        "gaugeCovarianceDefect": {
+          "count": 5,
+          "mean": 0.2502,
+          "stdDev": 0.0088,
+          "min": 0.2413,
+          "max": 0.2599,
+          "ci95": {
+            "low": 0.2392,
+            "high": 0.2611,
+            "halfWidth": 0.0109
+          }
+        },
+        "wilsonLoopInvariancePct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "curvatureHolonomyDetectionPct": {
+          "count": 5,
+          "mean": 66.6667,
+          "stdDev": 0,
+          "min": 66.6667,
+          "max": 66.6667,
+          "ci95": {
+            "low": 66.6667,
+            "high": 66.6667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 56.4471,
+          "stdDev": 0.6155,
+          "min": 55.7671,
+          "max": 57.0696,
+          "ci95": {
+            "low": 55.6829,
+            "high": 57.2113,
+            "halfWidth": 0.7642
+          }
+        }
+      }
+    },
+    "parallel-transport-without-wilson-loop-bias": {
+      "profileId": "parallel-transport-without-wilson-loop-bias",
+      "runs": [
+        {
+          "profileId": "parallel-transport-without-wilson-loop-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 75,
+          "curvatureHolonomyDetectionPct": 62.5,
+          "compositeScore": 80
+        },
+        {
+          "profileId": "parallel-transport-without-wilson-loop-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 75,
+          "curvatureHolonomyDetectionPct": 62.5,
+          "compositeScore": 80
+        },
+        {
+          "profileId": "parallel-transport-without-wilson-loop-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 75,
+          "curvatureHolonomyDetectionPct": 62.5,
+          "compositeScore": 80
+        },
+        {
+          "profileId": "parallel-transport-without-wilson-loop-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 75,
+          "curvatureHolonomyDetectionPct": 62.5,
+          "compositeScore": 80
+        },
+        {
+          "profileId": "parallel-transport-without-wilson-loop-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 75,
+          "curvatureHolonomyDetectionPct": 62.5,
+          "compositeScore": 80
+        }
+      ],
+      "stats": {
+        "gaugeCovarianceDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "wilsonLoopInvariancePct": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        },
+        "curvatureHolonomyDetectionPct": {
+          "count": 5,
+          "mean": 62.5,
+          "stdDev": 0,
+          "min": 62.5,
+          "max": 62.5,
+          "ci95": {
+            "low": 62.5,
+            "high": 62.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 80,
+          "stdDev": 0,
+          "min": 80,
+          "max": 80,
+          "ci95": {
+            "low": 80,
+            "high": 80,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "cayley-so4-gauge-covariant-wilson-loop-transport": {
+      "profileId": "cayley-so4-gauge-covariant-wilson-loop-transport",
+      "runs": [
+        {
+          "profileId": "cayley-so4-gauge-covariant-wilson-loop-transport",
+          "seed": 19013,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 100,
+          "curvatureHolonomyDetectionPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cayley-so4-gauge-covariant-wilson-loop-transport",
+          "seed": 29017,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 100,
+          "curvatureHolonomyDetectionPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cayley-so4-gauge-covariant-wilson-loop-transport",
+          "seed": 39023,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 100,
+          "curvatureHolonomyDetectionPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cayley-so4-gauge-covariant-wilson-loop-transport",
+          "seed": 49031,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 100,
+          "curvatureHolonomyDetectionPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "cayley-so4-gauge-covariant-wilson-loop-transport",
+          "seed": 59053,
+          "episodes": 24,
+          "gaugeCovarianceDefect": 0,
+          "wilsonLoopInvariancePct": 100,
+          "curvatureHolonomyDetectionPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "gaugeCovarianceDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "wilsonLoopInvariancePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "curvatureHolonomyDetectionPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "410cede797269830abaf7f71700abeb39bae7d213407dc3d32e6d2335e0bf6fd"
+}
