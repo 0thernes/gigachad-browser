@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-178-EMPIRICAL-NTK-EIGENVALUE-CONDITION-GOVERNOR",
+  "passNumber": 178,
+  "phase": "Phase XXXV: Loss Landscape Mode Connectivity (Git Re-Basin, Bezier Curves, NTK & Fourier Features)",
+  "generatedAt": "2026-11-09T20:42:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "ntk-preconditioned-whitened-jacobian-condition-governor",
+  "winningScore": 100,
+  "profiles": {
+    "standard-parameterization-ill-conditioned-ntk-spectrum": {
+      "profileId": "standard-parameterization-ill-conditioned-ntk-spectrum",
+      "runs": [
+        {
+          "profileId": "standard-parameterization-ill-conditioned-ntk-spectrum",
+          "seed": 19013,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 420,
+          "slowestEigenmodeConvergenceRatePct": 18.5,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 36.475
+        },
+        {
+          "profileId": "standard-parameterization-ill-conditioned-ntk-spectrum",
+          "seed": 29017,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 420,
+          "slowestEigenmodeConvergenceRatePct": 18.5,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 36.475
+        },
+        {
+          "profileId": "standard-parameterization-ill-conditioned-ntk-spectrum",
+          "seed": 39023,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 420,
+          "slowestEigenmodeConvergenceRatePct": 18.5,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 36.475
+        },
+        {
+          "profileId": "standard-parameterization-ill-conditioned-ntk-spectrum",
+          "seed": 49031,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 420,
+          "slowestEigenmodeConvergenceRatePct": 18.5,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 36.475
+        },
+        {
+          "profileId": "standard-parameterization-ill-conditioned-ntk-spectrum",
+          "seed": 59053,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 420,
+          "slowestEigenmodeConvergenceRatePct": 18.5,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 36.475
+        }
+      ],
+      "stats": {
+        "ntkSpectralConditionNumber": {
+          "count": 5,
+          "mean": 420,
+          "stdDev": 0,
+          "min": 420,
+          "max": 420,
+          "ci95": {
+            "low": 420,
+            "high": 420,
+            "halfWidth": 0
+          }
+        },
+        "slowestEigenmodeConvergenceRatePct": {
+          "count": 5,
+          "mean": 18.5,
+          "stdDev": 0,
+          "min": 18.5,
+          "max": 18.5,
+          "ci95": {
+            "low": 18.5,
+            "high": 18.5,
+            "halfWidth": 0
+          }
+        },
+        "jacobianGramSymmetryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 36.475,
+          "stdDev": 0,
+          "min": 36.475,
+          "max": 36.475,
+          "ci95": {
+            "low": 36.475,
+            "high": 36.475,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "unscaled-bias-jacobian-rank1-dominance": {
+      "profileId": "unscaled-bias-jacobian-rank1-dominance",
+      "runs": [
+        {
+          "profileId": "unscaled-bias-jacobian-rank1-dominance",
+          "seed": 19013,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 185,
+          "slowestEigenmodeConvergenceRatePct": 42,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 44.7
+        },
+        {
+          "profileId": "unscaled-bias-jacobian-rank1-dominance",
+          "seed": 29017,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 185,
+          "slowestEigenmodeConvergenceRatePct": 42,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 44.7
+        },
+        {
+          "profileId": "unscaled-bias-jacobian-rank1-dominance",
+          "seed": 39023,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 185,
+          "slowestEigenmodeConvergenceRatePct": 42,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 44.7
+        },
+        {
+          "profileId": "unscaled-bias-jacobian-rank1-dominance",
+          "seed": 49031,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 185,
+          "slowestEigenmodeConvergenceRatePct": 42,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 44.7
+        },
+        {
+          "profileId": "unscaled-bias-jacobian-rank1-dominance",
+          "seed": 59053,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 185,
+          "slowestEigenmodeConvergenceRatePct": 42,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 44.7
+        }
+      ],
+      "stats": {
+        "ntkSpectralConditionNumber": {
+          "count": 5,
+          "mean": 185,
+          "stdDev": 0,
+          "min": 185,
+          "max": 185,
+          "ci95": {
+            "low": 185,
+            "high": 185,
+            "halfWidth": 0
+          }
+        },
+        "slowestEigenmodeConvergenceRatePct": {
+          "count": 5,
+          "mean": 42,
+          "stdDev": 0,
+          "min": 42,
+          "max": 42,
+          "ci95": {
+            "low": 42,
+            "high": 42,
+            "halfWidth": 0
+          }
+        },
+        "jacobianGramSymmetryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 44.7,
+          "stdDev": 0,
+          "min": 44.7,
+          "max": 44.7,
+          "ci95": {
+            "low": 44.7,
+            "high": 44.7,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "lazy-regime-frozen-features-high-condition-number": {
+      "profileId": "lazy-regime-frozen-features-high-condition-number",
+      "runs": [
+        {
+          "profileId": "lazy-regime-frozen-features-high-condition-number",
+          "seed": 19013,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 48,
+          "slowestEigenmodeConvergenceRatePct": 74,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 55.9
+        },
+        {
+          "profileId": "lazy-regime-frozen-features-high-condition-number",
+          "seed": 29017,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 48,
+          "slowestEigenmodeConvergenceRatePct": 74,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 55.9
+        },
+        {
+          "profileId": "lazy-regime-frozen-features-high-condition-number",
+          "seed": 39023,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 48,
+          "slowestEigenmodeConvergenceRatePct": 74,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 55.9
+        },
+        {
+          "profileId": "lazy-regime-frozen-features-high-condition-number",
+          "seed": 49031,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 48,
+          "slowestEigenmodeConvergenceRatePct": 74,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 55.9
+        },
+        {
+          "profileId": "lazy-regime-frozen-features-high-condition-number",
+          "seed": 59053,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 48,
+          "slowestEigenmodeConvergenceRatePct": 74,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 55.9
+        }
+      ],
+      "stats": {
+        "ntkSpectralConditionNumber": {
+          "count": 5,
+          "mean": 48,
+          "stdDev": 0,
+          "min": 48,
+          "max": 48,
+          "ci95": {
+            "low": 48,
+            "high": 48,
+            "halfWidth": 0
+          }
+        },
+        "slowestEigenmodeConvergenceRatePct": {
+          "count": 5,
+          "mean": 74,
+          "stdDev": 0,
+          "min": 74,
+          "max": 74,
+          "ci95": {
+            "low": 74,
+            "high": 74,
+            "halfWidth": 0
+          }
+        },
+        "jacobianGramSymmetryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 55.9,
+          "stdDev": 0,
+          "min": 55.9,
+          "max": 55.9,
+          "ci95": {
+            "low": 55.9,
+            "high": 55.9,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "ntk-preconditioned-whitened-jacobian-condition-governor": {
+      "profileId": "ntk-preconditioned-whitened-jacobian-condition-governor",
+      "runs": [
+        {
+          "profileId": "ntk-preconditioned-whitened-jacobian-condition-governor",
+          "seed": 19013,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 1.1014,
+          "slowestEigenmodeConvergenceRatePct": 99.6553,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "ntk-preconditioned-whitened-jacobian-condition-governor",
+          "seed": 29017,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 1.0826,
+          "slowestEigenmodeConvergenceRatePct": 99.6746,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "ntk-preconditioned-whitened-jacobian-condition-governor",
+          "seed": 39023,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 1.1154,
+          "slowestEigenmodeConvergenceRatePct": 99.6289,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "ntk-preconditioned-whitened-jacobian-condition-governor",
+          "seed": 49031,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 1.1197,
+          "slowestEigenmodeConvergenceRatePct": 99.6071,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "ntk-preconditioned-whitened-jacobian-condition-governor",
+          "seed": 59053,
+          "episodes": 24,
+          "ntkSpectralConditionNumber": 1.0825,
+          "slowestEigenmodeConvergenceRatePct": 99.6867,
+          "jacobianGramSymmetryDefect": 0,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "ntkSpectralConditionNumber": {
+          "count": 5,
+          "mean": 1.1003,
+          "stdDev": 0.0176,
+          "min": 1.0825,
+          "max": 1.1197,
+          "ci95": {
+            "low": 1.0785,
+            "high": 1.1221,
+            "halfWidth": 0.0218
+          }
+        },
+        "slowestEigenmodeConvergenceRatePct": {
+          "count": 5,
+          "mean": 99.6505,
+          "stdDev": 0.0327,
+          "min": 99.6071,
+          "max": 99.6867,
+          "ci95": {
+            "low": 99.61,
+            "high": 99.6911,
+            "halfWidth": 0.0405
+          }
+        },
+        "jacobianGramSymmetryDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "78f37642ec38d60e0b0ad1888ca276e292688759600cdd852a8621f61a5d27ee"
+}
