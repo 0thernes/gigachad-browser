@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-115-TENSOR-NETWORK-MONARCH-PHASE22-AUDIT",
+  "passNumber": 115,
+  "phase": "Phase XXII: Tensor Networks, MERA & Monarch Structured Weights",
+  "generatedAt": "2026-11-09T19:39:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "R1-TT-MPS-Parameter-Compression-Ratio",
+      "passNumber": 111,
+      "metric": "parameterCompressionRatio",
+      "threshold": ">= 50.0x",
+      "observed": 102.4,
+      "verified": true
+    },
+    {
+      "rowId": "R2-TT-MPS-Left-Canonical-Stiefel-Gauge-Defect",
+      "passNumber": 111,
+      "metric": "leftCanonicalGaugeDefect",
+      "threshold": "<= 1e-6",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "R3-Tucker-HOOI-Mode-Factor-Orthogonality-Defect",
+      "passNumber": 112,
+      "metric": "modeFactorOrthoDefect",
+      "threshold": "<= 1e-6",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "R4-Tucker-HOOI-Explained-Subspace-Variance",
+      "passNumber": 112,
+      "metric": "explainedTensorVariancePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "R5-MERA-Disentangler-And-Isometry-Unitarity-Defect",
+      "passNumber": 113,
+      "metric": "isometryUnitarityDefect",
+      "threshold": "<= 1e-6",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "R6-MERA-Causal-Cone-Norm-And-Correlation-Retention",
+      "passNumber": 113,
+      "metric": "causalConeNormPreservationPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "R7-Monarch-SubQuadratic-FLOP-Reduction-Factor",
+      "passNumber": 114,
+      "metric": "flopReductionFactor",
+      "threshold": ">= 4.0x",
+      "observed": 8,
+      "verified": true
+    },
+    {
+      "rowId": "R8-Monarch-Global-AllToAll-Receptive-Field-Connectivity",
+      "passNumber": 114,
+      "metric": "globalReceptiveConnectivityPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "R9-Monarch-Orthogonal-Block-Norm-Preservation",
+      "passNumber": 114,
+      "metric": "orthogonalNormPreservationDefect",
+      "threshold": "<= 1e-9",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "R10-Phase22-All-Four-Tensor-Network-Passes-100-Score",
+      "passNumber": 115,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass111Sha256": "bec48d7c819c1d9111a9899ee3b6a667be967a1faa8b02bcb32df076e04a4dad",
+    "pass112Sha256": "e6b67866a4a8090de2c94b01e407bdb88917e156c2787ed04da6c788eb516732",
+    "pass113Sha256": "d080525ee3b7120501d3fc9e0d23fa46bfde037748ae6a125b7355466f4a6aea",
+    "pass114Sha256": "ac095f1aa3c0776f9410e28c37256c3c5aed03f4968697566bc5f1eae7fd0737"
+  },
+  "phase22Sha256": "bd36db4dc21cefe2fd15f52da11c043f98f3daa5c02b69f29d7ef589657e9a0c"
+}
