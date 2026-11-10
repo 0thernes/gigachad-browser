@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-141-NOTEARS-DAGMA-ACYCLIC-CAUSAL-WEIGHT-LEARNER",
+  "passNumber": 141,
+  "phase": "Phase XXVIII: Causal Representation Learning (NOTEARS/DAGMA, IRM/V-REx, GFlowNets & ICM)",
+  "generatedAt": "2026-11-09T20:05:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "dagma-logdet-mmatrix-augmented-lagrangian-dag",
+  "winningScore": 100,
+  "profiles": {
+    "unconstrained-dense-weights-cyclic-feedback": {
+      "profileId": "unconstrained-dense-weights-cyclic-feedback",
+      "runs": [
+        {
+          "profileId": "unconstrained-dense-weights-cyclic-feedback",
+          "seed": 19013,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 1.85,
+          "structuralHammingDistance": 7.4,
+          "causalEdgeF1ScorePct": 42,
+          "compositeScore": 12.6
+        },
+        {
+          "profileId": "unconstrained-dense-weights-cyclic-feedback",
+          "seed": 29017,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 1.85,
+          "structuralHammingDistance": 7.4,
+          "causalEdgeF1ScorePct": 42,
+          "compositeScore": 12.6
+        },
+        {
+          "profileId": "unconstrained-dense-weights-cyclic-feedback",
+          "seed": 39023,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 1.85,
+          "structuralHammingDistance": 7.4,
+          "causalEdgeF1ScorePct": 42,
+          "compositeScore": 12.6
+        },
+        {
+          "profileId": "unconstrained-dense-weights-cyclic-feedback",
+          "seed": 49031,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 1.85,
+          "structuralHammingDistance": 7.4,
+          "causalEdgeF1ScorePct": 42,
+          "compositeScore": 12.6
+        },
+        {
+          "profileId": "unconstrained-dense-weights-cyclic-feedback",
+          "seed": 59053,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 1.85,
+          "structuralHammingDistance": 7.4,
+          "causalEdgeF1ScorePct": 42,
+          "compositeScore": 12.6
+        }
+      ],
+      "stats": {
+        "acyclicityConstraintDefect": {
+          "count": 5,
+          "mean": 1.85,
+          "stdDev": 0,
+          "min": 1.85,
+          "max": 1.85,
+          "ci95": {
+            "low": 1.85,
+            "high": 1.85,
+            "halfWidth": 0
+          }
+        },
+        "structuralHammingDistance": {
+          "count": 5,
+          "mean": 7.4,
+          "stdDev": 0,
+          "min": 7.4,
+          "max": 7.4,
+          "ci95": {
+            "low": 7.4,
+            "high": 7.4,
+            "halfWidth": 0
+          }
+        },
+        "causalEdgeF1ScorePct": {
+          "count": 5,
+          "mean": 42,
+          "stdDev": 0,
+          "min": 42,
+          "max": 42,
+          "ci95": {
+            "low": 42,
+            "high": 42,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 12.6,
+          "stdDev": 0,
+          "min": 12.6,
+          "max": 12.6,
+          "ci95": {
+            "low": 12.6,
+            "high": 12.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "combinatorial-greedy-hill-climbing-local-minima": {
+      "profileId": "combinatorial-greedy-hill-climbing-local-minima",
+      "runs": [
+        {
+          "profileId": "combinatorial-greedy-hill-climbing-local-minima",
+          "seed": 19013,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 3.2,
+          "causalEdgeF1ScorePct": 74.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "combinatorial-greedy-hill-climbing-local-minima",
+          "seed": 29017,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 3.2,
+          "causalEdgeF1ScorePct": 74.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "combinatorial-greedy-hill-climbing-local-minima",
+          "seed": 39023,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 3.2,
+          "causalEdgeF1ScorePct": 74.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "combinatorial-greedy-hill-climbing-local-minima",
+          "seed": 49031,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 3.2,
+          "causalEdgeF1ScorePct": 74.5,
+          "compositeScore": 75.55
+        },
+        {
+          "profileId": "combinatorial-greedy-hill-climbing-local-minima",
+          "seed": 59053,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 3.2,
+          "causalEdgeF1ScorePct": 74.5,
+          "compositeScore": 75.55
+        }
+      ],
+      "stats": {
+        "acyclicityConstraintDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "structuralHammingDistance": {
+          "count": 5,
+          "mean": 3.2,
+          "stdDev": 0,
+          "min": 3.2,
+          "max": 3.2,
+          "ci95": {
+            "low": 3.2,
+            "high": 3.2,
+            "halfWidth": 0
+          }
+        },
+        "causalEdgeF1ScorePct": {
+          "count": 5,
+          "mean": 74.5,
+          "stdDev": 0,
+          "min": 74.5,
+          "max": 74.5,
+          "ci95": {
+            "low": 74.5,
+            "high": 74.5,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 75.55,
+          "stdDev": 0,
+          "min": 75.55,
+          "max": 75.55,
+          "ci95": {
+            "low": 75.55,
+            "high": 75.55,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "notears-trace-exp-ill-conditioned-high-degree": {
+      "profileId": "notears-trace-exp-ill-conditioned-high-degree",
+      "runs": [
+        {
+          "profileId": "notears-trace-exp-ill-conditioned-high-degree",
+          "seed": 19013,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0.0001,
+          "structuralHammingDistance": 1.1,
+          "causalEdgeF1ScorePct": 91.2,
+          "compositeScore": 91.578
+        },
+        {
+          "profileId": "notears-trace-exp-ill-conditioned-high-degree",
+          "seed": 29017,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0.0001,
+          "structuralHammingDistance": 1.1,
+          "causalEdgeF1ScorePct": 91.2,
+          "compositeScore": 91.578
+        },
+        {
+          "profileId": "notears-trace-exp-ill-conditioned-high-degree",
+          "seed": 39023,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0.0001,
+          "structuralHammingDistance": 1.1,
+          "causalEdgeF1ScorePct": 91.2,
+          "compositeScore": 91.578
+        },
+        {
+          "profileId": "notears-trace-exp-ill-conditioned-high-degree",
+          "seed": 49031,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0.0001,
+          "structuralHammingDistance": 1.1,
+          "causalEdgeF1ScorePct": 91.2,
+          "compositeScore": 91.578
+        },
+        {
+          "profileId": "notears-trace-exp-ill-conditioned-high-degree",
+          "seed": 59053,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0.0001,
+          "structuralHammingDistance": 1.1,
+          "causalEdgeF1ScorePct": 91.2,
+          "compositeScore": 91.578
+        }
+      ],
+      "stats": {
+        "acyclicityConstraintDefect": {
+          "count": 5,
+          "mean": 0.0001,
+          "stdDev": 0,
+          "min": 0.0001,
+          "max": 0.0001,
+          "ci95": {
+            "low": 0.0001,
+            "high": 0.0001,
+            "halfWidth": 0
+          }
+        },
+        "structuralHammingDistance": {
+          "count": 5,
+          "mean": 1.1,
+          "stdDev": 0,
+          "min": 1.1,
+          "max": 1.1,
+          "ci95": {
+            "low": 1.1,
+            "high": 1.1,
+            "halfWidth": 0
+          }
+        },
+        "causalEdgeF1ScorePct": {
+          "count": 5,
+          "mean": 91.2,
+          "stdDev": 0,
+          "min": 91.2,
+          "max": 91.2,
+          "ci95": {
+            "low": 91.2,
+            "high": 91.2,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 91.578,
+          "stdDev": 0,
+          "min": 91.578,
+          "max": 91.578,
+          "ci95": {
+            "low": 91.578,
+            "high": 91.578,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "dagma-logdet-mmatrix-augmented-lagrangian-dag": {
+      "profileId": "dagma-logdet-mmatrix-augmented-lagrangian-dag",
+      "runs": [
+        {
+          "profileId": "dagma-logdet-mmatrix-augmented-lagrangian-dag",
+          "seed": 19013,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 0,
+          "causalEdgeF1ScorePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dagma-logdet-mmatrix-augmented-lagrangian-dag",
+          "seed": 29017,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 0,
+          "causalEdgeF1ScorePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dagma-logdet-mmatrix-augmented-lagrangian-dag",
+          "seed": 39023,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 0,
+          "causalEdgeF1ScorePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dagma-logdet-mmatrix-augmented-lagrangian-dag",
+          "seed": 49031,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 0,
+          "causalEdgeF1ScorePct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "dagma-logdet-mmatrix-augmented-lagrangian-dag",
+          "seed": 59053,
+          "episodes": 24,
+          "acyclicityConstraintDefect": 0,
+          "structuralHammingDistance": 0,
+          "causalEdgeF1ScorePct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "acyclicityConstraintDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "structuralHammingDistance": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "causalEdgeF1ScorePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "4f90fd4e4a7e1f43997890bc8aaa26472a3f6fe491293259a733badc0b2202ba"
+}
