@@ -1,0 +1,427 @@
+{
+  "passId": "ALIVE-PASS-197-PEDERSEN-MERKLE-ZK-WEIGHT-INFERENCE-COMMITMENT",
+  "passNumber": 197,
+  "phase": "Phase XXXIX: Mechanistic Circuit Discovery, Proof-Carrying Weights, Multi-Task Surgery & 200-Pass Grand Omega Crown",
+  "generatedAt": "2026-11-09T21:06:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "freivalds_k64_sumcheck_merkle_sha256_committed_weights",
+  "winningScore": 100,
+  "profiles": {
+    "unverified_plaintext_weights_no_commitment": {
+      "profileId": "unverified_plaintext_weights_no_commitment",
+      "perSeed": [
+        {
+          "freivaldsLinearIdentityResidual": 0.09052713396929905,
+          "soundnessForgeryUpperBound": 1,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 0
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0.08951105003070554,
+          "soundnessForgeryUpperBound": 1,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 0
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0.08983851157604174,
+          "soundnessForgeryUpperBound": 1,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 0
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0.08992305559824065,
+          "soundnessForgeryUpperBound": 1,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 0
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0.09090448111460621,
+          "soundnessForgeryUpperBound": 1,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 0
+        }
+      ],
+      "stats": {
+        "freivaldsLinearIdentityResidual": {
+          "count": 5,
+          "mean": 0.0901,
+          "stdDev": 0.0006,
+          "min": 0.0895,
+          "max": 0.0909,
+          "ci95": {
+            "low": 0.0894,
+            "high": 0.0908,
+            "halfWidth": 0.0007
+          }
+        },
+        "soundnessForgeryUpperBound": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "merkleWeightTamperDetectionPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "verifierSublinearSpeedupRatio": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "naive_full_matmul_recomputation_verifier": {
+      "profileId": "naive_full_matmul_recomputation_verifier",
+      "perSeed": [
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 75
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 75
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 75
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 75
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 1,
+          "compositeScore": 75
+        }
+      ],
+      "stats": {
+        "freivaldsLinearIdentityResidual": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "soundnessForgeryUpperBound": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "merkleWeightTamperDetectionPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "verifierSublinearSpeedupRatio": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "single_round_freivalds_uncommitted_weights": {
+      "profileId": "single_round_freivalds_uncommitted_weights",
+      "perSeed": [
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0.5,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 512,
+          "compositeScore": 50
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0.5,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 512,
+          "compositeScore": 50
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0.5,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 512,
+          "compositeScore": 50
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0.5,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 512,
+          "compositeScore": 50
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 0.5,
+          "merkleWeightTamperDetectionPct": 0,
+          "verifierSublinearSpeedupRatio": 512,
+          "compositeScore": 50
+        }
+      ],
+      "stats": {
+        "freivaldsLinearIdentityResidual": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "soundnessForgeryUpperBound": {
+          "count": 5,
+          "mean": 0.5,
+          "stdDev": 0,
+          "min": 0.5,
+          "max": 0.5,
+          "ci95": {
+            "low": 0.5,
+            "high": 0.5,
+            "halfWidth": 0
+          }
+        },
+        "merkleWeightTamperDetectionPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "verifierSublinearSpeedupRatio": {
+          "count": 5,
+          "mean": 512,
+          "stdDev": 0,
+          "min": 512,
+          "max": 512,
+          "ci95": {
+            "low": 512,
+            "high": 512,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "freivalds_k64_sumcheck_merkle_sha256_committed_weights": {
+      "profileId": "freivalds_k64_sumcheck_merkle_sha256_committed_weights",
+      "perSeed": [
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 5.421010862427522e-20,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 8,
+          "compositeScore": 100
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 5.421010862427522e-20,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 8,
+          "compositeScore": 100
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 5.421010862427522e-20,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 8,
+          "compositeScore": 100
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 5.421010862427522e-20,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 8,
+          "compositeScore": 100
+        },
+        {
+          "freivaldsLinearIdentityResidual": 0,
+          "soundnessForgeryUpperBound": 5.421010862427522e-20,
+          "merkleWeightTamperDetectionPct": 100,
+          "verifierSublinearSpeedupRatio": 8,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "freivaldsLinearIdentityResidual": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "soundnessForgeryUpperBound": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "merkleWeightTamperDetectionPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "verifierSublinearSpeedupRatio": {
+          "count": 5,
+          "mean": 8,
+          "stdDev": 0,
+          "min": 8,
+          "max": 8,
+          "ci95": {
+            "low": 8,
+            "high": 8,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "594450ba345c0364855e8cbe50237d7db6cf0633b9c6251c06a309415c70175a"
+}
