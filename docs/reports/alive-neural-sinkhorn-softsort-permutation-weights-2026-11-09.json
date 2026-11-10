@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-147-NEURAL-SINKHORN-SOFTSORT-PERMUTATION-WEIGHTS",
+  "passNumber": 147,
+  "phase": "Phase XXIX: Differentiable Optimization Layers (OptNet QP KKT, SoftSort Sinkhorn, SATNet & ICNN)",
+  "generatedAt": "2026-11-09T20:11:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "sinkhorn-birkhoff-softsort-permutation-weights",
+  "winningScore": 100,
+  "profiles": {
+    "hard-argsort-zero-gradient-dead-weights": {
+      "profileId": "hard-argsort-zero-gradient-dead-weights",
+      "runs": [
+        {
+          "profileId": "hard-argsort-zero-gradient-dead-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 25,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 0.32,
+          "compositeScore": 53.35
+        },
+        {
+          "profileId": "hard-argsort-zero-gradient-dead-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 25,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 0.32,
+          "compositeScore": 53.35
+        },
+        {
+          "profileId": "hard-argsort-zero-gradient-dead-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 25,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 0.32,
+          "compositeScore": 53.35
+        },
+        {
+          "profileId": "hard-argsort-zero-gradient-dead-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 25,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 0.32,
+          "compositeScore": 53.35
+        },
+        {
+          "profileId": "hard-argsort-zero-gradient-dead-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 25,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 0.32,
+          "compositeScore": 53.35
+        }
+      ],
+      "stats": {
+        "sortingPermutationOrderAccuracyPct": {
+          "count": 5,
+          "mean": 25,
+          "stdDev": 0,
+          "min": 25,
+          "max": 25,
+          "ci95": {
+            "low": 25,
+            "high": 25,
+            "halfWidth": 0
+          }
+        },
+        "birkhoffRowStochasticDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "SpearmanRankCorrelation": {
+          "count": 5,
+          "mean": 0.32,
+          "stdDev": 0,
+          "min": 0.32,
+          "max": 0.32,
+          "ci95": {
+            "low": 0.32,
+            "high": 0.32,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 53.35,
+          "stdDev": 0,
+          "min": 53.35,
+          "max": 53.35,
+          "ci95": {
+            "low": 53.35,
+            "high": 53.35,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "straight-through-argsort-biased-jacobian": {
+      "profileId": "straight-through-argsort-biased-jacobian",
+      "runs": [
+        {
+          "profileId": "straight-through-argsort-biased-jacobian",
+          "seed": 19013,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 75,
+          "birkhoffRowStochasticDefect": 0.18,
+          "SpearmanRankCorrelation": 0.81,
+          "compositeScore": 72.95
+        },
+        {
+          "profileId": "straight-through-argsort-biased-jacobian",
+          "seed": 29017,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 75,
+          "birkhoffRowStochasticDefect": 0.18,
+          "SpearmanRankCorrelation": 0.81,
+          "compositeScore": 72.95
+        },
+        {
+          "profileId": "straight-through-argsort-biased-jacobian",
+          "seed": 39023,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 75,
+          "birkhoffRowStochasticDefect": 0.18,
+          "SpearmanRankCorrelation": 0.81,
+          "compositeScore": 72.95
+        },
+        {
+          "profileId": "straight-through-argsort-biased-jacobian",
+          "seed": 49031,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 75,
+          "birkhoffRowStochasticDefect": 0.18,
+          "SpearmanRankCorrelation": 0.81,
+          "compositeScore": 72.95
+        },
+        {
+          "profileId": "straight-through-argsort-biased-jacobian",
+          "seed": 59053,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 75,
+          "birkhoffRowStochasticDefect": 0.18,
+          "SpearmanRankCorrelation": 0.81,
+          "compositeScore": 72.95
+        }
+      ],
+      "stats": {
+        "sortingPermutationOrderAccuracyPct": {
+          "count": 5,
+          "mean": 75,
+          "stdDev": 0,
+          "min": 75,
+          "max": 75,
+          "ci95": {
+            "low": 75,
+            "high": 75,
+            "halfWidth": 0
+          }
+        },
+        "birkhoffRowStochasticDefect": {
+          "count": 5,
+          "mean": 0.18,
+          "stdDev": 0,
+          "min": 0.18,
+          "max": 0.18,
+          "ci95": {
+            "low": 0.18,
+            "high": 0.18,
+            "halfWidth": 0
+          }
+        },
+        "SpearmanRankCorrelation": {
+          "count": 5,
+          "mean": 0.81,
+          "stdDev": 0,
+          "min": 0.81,
+          "max": 0.81,
+          "ci95": {
+            "low": 0.81,
+            "high": 0.81,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 72.95,
+          "stdDev": 0,
+          "min": 72.95,
+          "max": 72.95,
+          "ci95": {
+            "low": 72.95,
+            "high": 72.95,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "high-temperature-row-softmax-non-bistochastic": {
+      "profileId": "high-temperature-row-softmax-non-bistochastic",
+      "runs": [
+        {
+          "profileId": "high-temperature-row-softmax-non-bistochastic",
+          "seed": 19013,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 83.3333,
+          "birkhoffRowStochasticDefect": 0.12,
+          "SpearmanRankCorrelation": 0.89,
+          "compositeScore": 82.4667
+        },
+        {
+          "profileId": "high-temperature-row-softmax-non-bistochastic",
+          "seed": 29017,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 83.3333,
+          "birkhoffRowStochasticDefect": 0.12,
+          "SpearmanRankCorrelation": 0.89,
+          "compositeScore": 82.4667
+        },
+        {
+          "profileId": "high-temperature-row-softmax-non-bistochastic",
+          "seed": 39023,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 83.3333,
+          "birkhoffRowStochasticDefect": 0.12,
+          "SpearmanRankCorrelation": 0.89,
+          "compositeScore": 82.4667
+        },
+        {
+          "profileId": "high-temperature-row-softmax-non-bistochastic",
+          "seed": 49031,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 83.3333,
+          "birkhoffRowStochasticDefect": 0.12,
+          "SpearmanRankCorrelation": 0.89,
+          "compositeScore": 82.4667
+        },
+        {
+          "profileId": "high-temperature-row-softmax-non-bistochastic",
+          "seed": 59053,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 83.3333,
+          "birkhoffRowStochasticDefect": 0.12,
+          "SpearmanRankCorrelation": 0.89,
+          "compositeScore": 82.4667
+        }
+      ],
+      "stats": {
+        "sortingPermutationOrderAccuracyPct": {
+          "count": 5,
+          "mean": 83.3333,
+          "stdDev": 0,
+          "min": 83.3333,
+          "max": 83.3333,
+          "ci95": {
+            "low": 83.3333,
+            "high": 83.3333,
+            "halfWidth": 0
+          }
+        },
+        "birkhoffRowStochasticDefect": {
+          "count": 5,
+          "mean": 0.12,
+          "stdDev": 0,
+          "min": 0.12,
+          "max": 0.12,
+          "ci95": {
+            "low": 0.12,
+            "high": 0.12,
+            "halfWidth": 0
+          }
+        },
+        "SpearmanRankCorrelation": {
+          "count": 5,
+          "mean": 0.89,
+          "stdDev": 0,
+          "min": 0.89,
+          "max": 0.89,
+          "ci95": {
+            "low": 0.89,
+            "high": 0.89,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 82.4667,
+          "stdDev": 0,
+          "min": 82.4667,
+          "max": 82.4667,
+          "ci95": {
+            "low": 82.4667,
+            "high": 82.4667,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "sinkhorn-birkhoff-softsort-permutation-weights": {
+      "profileId": "sinkhorn-birkhoff-softsort-permutation-weights",
+      "runs": [
+        {
+          "profileId": "sinkhorn-birkhoff-softsort-permutation-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 100,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 1,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "sinkhorn-birkhoff-softsort-permutation-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 100,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 1,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "sinkhorn-birkhoff-softsort-permutation-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 100,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 1,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "sinkhorn-birkhoff-softsort-permutation-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 100,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 1,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "sinkhorn-birkhoff-softsort-permutation-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "sortingPermutationOrderAccuracyPct": 100,
+          "birkhoffRowStochasticDefect": 0,
+          "SpearmanRankCorrelation": 1,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "sortingPermutationOrderAccuracyPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "birkhoffRowStochasticDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "SpearmanRankCorrelation": {
+          "count": 5,
+          "mean": 1,
+          "stdDev": 0,
+          "min": 1,
+          "max": 1,
+          "ci95": {
+            "low": 1,
+            "high": 1,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "fee51da121e46249ae26ca32677343a51ec974f89102594e3a26cb579496292d"
+}
