@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-128-RWKV7-GOOSE-DYNAMIC-STATE-EVOLUTION-WEIGHTS",
+  "passNumber": 128,
+  "phase": "Phase XXV: Titans, Gated DeltaNet, RWKV-7 & Fast-Weight Memory",
+  "generatedAt": "2026-11-09T19:52:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "rwkv7-goose-generalized-state-evolution-weights",
+  "winningScore": 100,
+  "profiles": {
+    "rwkv4-scalar-wkv-cannot-track-s5-permutations": {
+      "profileId": "rwkv4-scalar-wkv-cannot-track-s5-permutations",
+      "runs": [
+        {
+          "profileId": "rwkv4-scalar-wkv-cannot-track-s5-permutations",
+          "seed": 19013,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 20.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 33.3333,
+          "compositeScore": 48.3333
+        },
+        {
+          "profileId": "rwkv4-scalar-wkv-cannot-track-s5-permutations",
+          "seed": 29017,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 20.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 33.3333,
+          "compositeScore": 48.3333
+        },
+        {
+          "profileId": "rwkv4-scalar-wkv-cannot-track-s5-permutations",
+          "seed": 39023,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 20.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 33.3333,
+          "compositeScore": 48.3333
+        },
+        {
+          "profileId": "rwkv4-scalar-wkv-cannot-track-s5-permutations",
+          "seed": 49031,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 20.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 33.3333,
+          "compositeScore": 48.3333
+        },
+        {
+          "profileId": "rwkv4-scalar-wkv-cannot-track-s5-permutations",
+          "seed": 59053,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 20.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 33.3333,
+          "compositeScore": 48.3333
+        }
+      ],
+      "stats": {
+        "s5SymmetricGroupTrackingPct": {
+          "count": 5,
+          "mean": 20.8333,
+          "stdDev": 0,
+          "min": 20.8333,
+          "max": 20.8333,
+          "ci95": {
+            "low": 20.8333,
+            "high": 20.8333,
+            "halfWidth": 0
+          }
+        },
+        "constantMemoryO1InferencePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "inContextLearningRateAdaptationPct": {
+          "count": 5,
+          "mean": 33.3333,
+          "stdDev": 0,
+          "min": 33.3333,
+          "max": 33.3333,
+          "ci95": {
+            "low": 33.3333,
+            "high": 33.3333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 48.3333,
+          "stdDev": 0,
+          "min": 48.3333,
+          "max": 48.3333,
+          "ci95": {
+            "low": 48.3333,
+            "high": 48.3333,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "diagonal-only-decay-rwkv6-limited-transition": {
+      "profileId": "diagonal-only-decay-rwkv6-limited-transition",
+      "runs": [
+        {
+          "profileId": "diagonal-only-decay-rwkv6-limited-transition",
+          "seed": 19013,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 45.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 66.6667,
+          "compositeScore": 68.3333
+        },
+        {
+          "profileId": "diagonal-only-decay-rwkv6-limited-transition",
+          "seed": 29017,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 45.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 66.6667,
+          "compositeScore": 68.3333
+        },
+        {
+          "profileId": "diagonal-only-decay-rwkv6-limited-transition",
+          "seed": 39023,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 45.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 66.6667,
+          "compositeScore": 68.3333
+        },
+        {
+          "profileId": "diagonal-only-decay-rwkv6-limited-transition",
+          "seed": 49031,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 45.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 66.6667,
+          "compositeScore": 68.3333
+        },
+        {
+          "profileId": "diagonal-only-decay-rwkv6-limited-transition",
+          "seed": 59053,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 45.8333,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 66.6667,
+          "compositeScore": 68.3333
+        }
+      ],
+      "stats": {
+        "s5SymmetricGroupTrackingPct": {
+          "count": 5,
+          "mean": 45.8333,
+          "stdDev": 0,
+          "min": 45.8333,
+          "max": 45.8333,
+          "ci95": {
+            "low": 45.8333,
+            "high": 45.8333,
+            "halfWidth": 0
+          }
+        },
+        "constantMemoryO1InferencePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "inContextLearningRateAdaptationPct": {
+          "count": 5,
+          "mean": 66.6667,
+          "stdDev": 0,
+          "min": 66.6667,
+          "max": 66.6667,
+          "ci95": {
+            "low": 66.6667,
+            "high": 66.6667,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 68.3333,
+          "stdDev": 0,
+          "min": 68.3333,
+          "max": 68.3333,
+          "ci95": {
+            "low": 68.3333,
+            "high": 68.3333,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "rwkv7-without-token-shift-lerp-biases": {
+      "profileId": "rwkv7-without-token-shift-lerp-biases",
+      "runs": [
+        {
+          "profileId": "rwkv7-without-token-shift-lerp-biases",
+          "seed": 19013,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 87.5,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 83.3333,
+          "compositeScore": 90
+        },
+        {
+          "profileId": "rwkv7-without-token-shift-lerp-biases",
+          "seed": 29017,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 87.5,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 83.3333,
+          "compositeScore": 90
+        },
+        {
+          "profileId": "rwkv7-without-token-shift-lerp-biases",
+          "seed": 39023,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 87.5,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 83.3333,
+          "compositeScore": 90
+        },
+        {
+          "profileId": "rwkv7-without-token-shift-lerp-biases",
+          "seed": 49031,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 87.5,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 83.3333,
+          "compositeScore": 90
+        },
+        {
+          "profileId": "rwkv7-without-token-shift-lerp-biases",
+          "seed": 59053,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 87.5,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 83.3333,
+          "compositeScore": 90
+        }
+      ],
+      "stats": {
+        "s5SymmetricGroupTrackingPct": {
+          "count": 5,
+          "mean": 87.5,
+          "stdDev": 0,
+          "min": 87.5,
+          "max": 87.5,
+          "ci95": {
+            "low": 87.5,
+            "high": 87.5,
+            "halfWidth": 0
+          }
+        },
+        "constantMemoryO1InferencePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "inContextLearningRateAdaptationPct": {
+          "count": 5,
+          "mean": 83.3333,
+          "stdDev": 0,
+          "min": 83.3333,
+          "max": 83.3333,
+          "ci95": {
+            "low": 83.3333,
+            "high": 83.3333,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 90,
+          "stdDev": 0,
+          "min": 90,
+          "max": 90,
+          "ci95": {
+            "low": 90,
+            "high": 90,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "rwkv7-goose-generalized-state-evolution-weights": {
+      "profileId": "rwkv7-goose-generalized-state-evolution-weights",
+      "runs": [
+        {
+          "profileId": "rwkv7-goose-generalized-state-evolution-weights",
+          "seed": 19013,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 100,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rwkv7-goose-generalized-state-evolution-weights",
+          "seed": 29017,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 100,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rwkv7-goose-generalized-state-evolution-weights",
+          "seed": 39023,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 100,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rwkv7-goose-generalized-state-evolution-weights",
+          "seed": 49031,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 100,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rwkv7-goose-generalized-state-evolution-weights",
+          "seed": 59053,
+          "episodes": 24,
+          "s5SymmetricGroupTrackingPct": 100,
+          "constantMemoryO1InferencePct": 100,
+          "inContextLearningRateAdaptationPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "s5SymmetricGroupTrackingPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "constantMemoryO1InferencePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "inContextLearningRateAdaptationPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "9caac3050664aeb277ecbb9c6e1fd87d4a39676cb7fd3860f021d111b20a7e46"
+}
