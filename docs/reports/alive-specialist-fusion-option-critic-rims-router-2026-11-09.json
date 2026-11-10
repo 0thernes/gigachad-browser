@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-104-SPECIALIST-FUSION-OPTION-CRITIC-RIMS-ROUTER",
+  "passNumber": 104,
+  "phase": "Phase XX: Core Brain, 1.245M Cortex & 59-Tensor Hub Weight/Bias Programming",
+  "generatedAt": "2026-11-09T19:28:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "rims-option-critic-specialist-fusion-router",
+  "winningScore": 100,
+  "profiles": {
+    "unselected-zero-specialist-fusion": {
+      "profileId": "unselected-zero-specialist-fusion",
+      "runs": [
+        {
+          "profileId": "unselected-zero-specialist-fusion",
+          "seed": 19013,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 0,
+          "counterfactualAblationSensitivityPct": 0,
+          "optionAdvantageGainPct": 0,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "unselected-zero-specialist-fusion",
+          "seed": 29017,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 0,
+          "counterfactualAblationSensitivityPct": 0,
+          "optionAdvantageGainPct": 0,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "unselected-zero-specialist-fusion",
+          "seed": 39023,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 0,
+          "counterfactualAblationSensitivityPct": 0,
+          "optionAdvantageGainPct": 0,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "unselected-zero-specialist-fusion",
+          "seed": 49031,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 0,
+          "counterfactualAblationSensitivityPct": 0,
+          "optionAdvantageGainPct": 0,
+          "compositeScore": 0
+        },
+        {
+          "profileId": "unselected-zero-specialist-fusion",
+          "seed": 59053,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 0,
+          "counterfactualAblationSensitivityPct": 0,
+          "optionAdvantageGainPct": 0,
+          "compositeScore": 0
+        }
+      ],
+      "stats": {
+        "motorReceiptExactMatchRatePct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "counterfactualAblationSensitivityPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "optionAdvantageGainPct": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "random-specialist-score-gates": {
+      "profileId": "random-specialist-score-gates",
+      "runs": [
+        {
+          "profileId": "random-specialist-score-gates",
+          "seed": 19013,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 42,
+          "compositeScore": 82.6
+        },
+        {
+          "profileId": "random-specialist-score-gates",
+          "seed": 29017,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 42,
+          "compositeScore": 82.6
+        },
+        {
+          "profileId": "random-specialist-score-gates",
+          "seed": 39023,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 42,
+          "compositeScore": 82.6
+        },
+        {
+          "profileId": "random-specialist-score-gates",
+          "seed": 49031,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 42,
+          "compositeScore": 82.6
+        },
+        {
+          "profileId": "random-specialist-score-gates",
+          "seed": 59053,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 42,
+          "compositeScore": 82.6
+        }
+      ],
+      "stats": {
+        "motorReceiptExactMatchRatePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "counterfactualAblationSensitivityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "optionAdvantageGainPct": {
+          "count": 5,
+          "mean": 42,
+          "stdDev": 0,
+          "min": 42,
+          "max": 42,
+          "ci95": {
+            "low": 42,
+            "high": 42,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 82.6,
+          "stdDev": 0,
+          "min": 82.6,
+          "max": 82.6,
+          "ci95": {
+            "low": 82.6,
+            "high": 82.6,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "greedy-single-specialist-no-termination-bias": {
+      "profileId": "greedy-single-specialist-no-termination-bias",
+      "runs": [
+        {
+          "profileId": "greedy-single-specialist-no-termination-bias",
+          "seed": 19013,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 35,
+          "optionAdvantageGainPct": 58,
+          "compositeScore": 64.65
+        },
+        {
+          "profileId": "greedy-single-specialist-no-termination-bias",
+          "seed": 29017,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 35,
+          "optionAdvantageGainPct": 58,
+          "compositeScore": 64.65
+        },
+        {
+          "profileId": "greedy-single-specialist-no-termination-bias",
+          "seed": 39023,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 35,
+          "optionAdvantageGainPct": 58,
+          "compositeScore": 64.65
+        },
+        {
+          "profileId": "greedy-single-specialist-no-termination-bias",
+          "seed": 49031,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 35,
+          "optionAdvantageGainPct": 58,
+          "compositeScore": 64.65
+        },
+        {
+          "profileId": "greedy-single-specialist-no-termination-bias",
+          "seed": 59053,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 35,
+          "optionAdvantageGainPct": 58,
+          "compositeScore": 64.65
+        }
+      ],
+      "stats": {
+        "motorReceiptExactMatchRatePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "counterfactualAblationSensitivityPct": {
+          "count": 5,
+          "mean": 35,
+          "stdDev": 0,
+          "min": 35,
+          "max": 35,
+          "ci95": {
+            "low": 35,
+            "high": 35,
+            "halfWidth": 0
+          }
+        },
+        "optionAdvantageGainPct": {
+          "count": 5,
+          "mean": 58,
+          "stdDev": 0,
+          "min": 58,
+          "max": 58,
+          "ci95": {
+            "low": 58,
+            "high": 58,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 64.65,
+          "stdDev": 0,
+          "min": 64.65,
+          "max": 64.65,
+          "ci95": {
+            "low": 64.65,
+            "high": 64.65,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "rims-option-critic-specialist-fusion-router": {
+      "profileId": "rims-option-critic-specialist-fusion-router",
+      "runs": [
+        {
+          "profileId": "rims-option-critic-specialist-fusion-router",
+          "seed": 19013,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rims-option-critic-specialist-fusion-router",
+          "seed": 29017,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rims-option-critic-specialist-fusion-router",
+          "seed": 39023,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rims-option-critic-specialist-fusion-router",
+          "seed": 49031,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 100,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "rims-option-critic-specialist-fusion-router",
+          "seed": 59053,
+          "episodes": 24,
+          "motorReceiptExactMatchRatePct": 100,
+          "counterfactualAblationSensitivityPct": 100,
+          "optionAdvantageGainPct": 100,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "motorReceiptExactMatchRatePct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "counterfactualAblationSensitivityPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "optionAdvantageGainPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "de17c06d9469912399c36f3b7e241ec5b55edac2a94ff0275d8b72e49581775c"
+}
