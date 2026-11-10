@@ -1,0 +1,419 @@
+{
+  "passId": "ALIVE-PASS-122-ARCTANGENT-FAST-SIGMOID-SURROGATE-SPIKING",
+  "passNumber": 122,
+  "phase": "Phase XXIV: Spiking Neuromorphic & Dendritic Compartment Weights",
+  "generatedAt": "2026-11-09T19:46:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "alif-adaptive-threshold-bias-arctan-surrogate",
+  "winningScore": 100,
+  "profiles": {
+    "heaviside-step-dead-zero-gradient": {
+      "profileId": "heaviside-step-dead-zero-gradient",
+      "runs": [
+        {
+          "profileId": "heaviside-step-dead-zero-gradient",
+          "seed": 19013,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 12.5,
+          "surrogateGradientCosineFidelity": 0,
+          "spikeEnergySparsityPct": 50,
+          "compositeScore": 21.0417
+        },
+        {
+          "profileId": "heaviside-step-dead-zero-gradient",
+          "seed": 29017,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 12.5,
+          "surrogateGradientCosineFidelity": 0,
+          "spikeEnergySparsityPct": 50,
+          "compositeScore": 21.0417
+        },
+        {
+          "profileId": "heaviside-step-dead-zero-gradient",
+          "seed": 39023,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 12.5,
+          "surrogateGradientCosineFidelity": 0,
+          "spikeEnergySparsityPct": 50,
+          "compositeScore": 21.0417
+        },
+        {
+          "profileId": "heaviside-step-dead-zero-gradient",
+          "seed": 49031,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 12.5,
+          "surrogateGradientCosineFidelity": 0,
+          "spikeEnergySparsityPct": 50,
+          "compositeScore": 21.0417
+        },
+        {
+          "profileId": "heaviside-step-dead-zero-gradient",
+          "seed": 59053,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 12.5,
+          "surrogateGradientCosineFidelity": 0,
+          "spikeEnergySparsityPct": 50,
+          "compositeScore": 21.0417
+        }
+      ],
+      "stats": {
+        "temporalWorkingMemoryRetentionPct": {
+          "count": 5,
+          "mean": 12.5,
+          "stdDev": 0,
+          "min": 12.5,
+          "max": 12.5,
+          "ci95": {
+            "low": 12.5,
+            "high": 12.5,
+            "halfWidth": 0
+          }
+        },
+        "surrogateGradientCosineFidelity": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "spikeEnergySparsityPct": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 21.0417,
+          "stdDev": 0,
+          "min": 21.0417,
+          "max": 21.0417,
+          "ci95": {
+            "low": 21.0417,
+            "high": 21.0417,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "fixed-threshold-lif-short-memory": {
+      "profileId": "fixed-threshold-lif-short-memory",
+      "runs": [
+        {
+          "profileId": "fixed-threshold-lif-short-memory",
+          "seed": 19013,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 54.1667,
+          "surrogateGradientCosineFidelity": 0.84,
+          "spikeEnergySparsityPct": 68,
+          "compositeScore": 71.025
+        },
+        {
+          "profileId": "fixed-threshold-lif-short-memory",
+          "seed": 29017,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 54.1667,
+          "surrogateGradientCosineFidelity": 0.84,
+          "spikeEnergySparsityPct": 68,
+          "compositeScore": 71.025
+        },
+        {
+          "profileId": "fixed-threshold-lif-short-memory",
+          "seed": 39023,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 54.1667,
+          "surrogateGradientCosineFidelity": 0.84,
+          "spikeEnergySparsityPct": 68,
+          "compositeScore": 71.025
+        },
+        {
+          "profileId": "fixed-threshold-lif-short-memory",
+          "seed": 49031,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 54.1667,
+          "surrogateGradientCosineFidelity": 0.84,
+          "spikeEnergySparsityPct": 68,
+          "compositeScore": 71.025
+        },
+        {
+          "profileId": "fixed-threshold-lif-short-memory",
+          "seed": 59053,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 54.1667,
+          "surrogateGradientCosineFidelity": 0.84,
+          "spikeEnergySparsityPct": 68,
+          "compositeScore": 71.025
+        }
+      ],
+      "stats": {
+        "temporalWorkingMemoryRetentionPct": {
+          "count": 5,
+          "mean": 54.1667,
+          "stdDev": 0,
+          "min": 54.1667,
+          "max": 54.1667,
+          "ci95": {
+            "low": 54.1667,
+            "high": 54.1667,
+            "halfWidth": 0
+          }
+        },
+        "surrogateGradientCosineFidelity": {
+          "count": 5,
+          "mean": 0.84,
+          "stdDev": 0,
+          "min": 0.84,
+          "max": 0.84,
+          "ci95": {
+            "low": 0.84,
+            "high": 0.84,
+            "halfWidth": 0
+          }
+        },
+        "spikeEnergySparsityPct": {
+          "count": 5,
+          "mean": 68,
+          "stdDev": 0,
+          "min": 68,
+          "max": 68,
+          "ci95": {
+            "low": 68,
+            "high": 68,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 71.025,
+          "stdDev": 0,
+          "min": 71.025,
+          "max": 71.025,
+          "ci95": {
+            "low": 71.025,
+            "high": 71.025,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "boxcar-surrogate-exploding-bptt": {
+      "profileId": "boxcar-surrogate-exploding-bptt",
+      "runs": [
+        {
+          "profileId": "boxcar-surrogate-exploding-bptt",
+          "seed": 19013,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 70.8333,
+          "surrogateGradientCosineFidelity": 0.72,
+          "spikeEnergySparsityPct": 62,
+          "compositeScore": 70.6583
+        },
+        {
+          "profileId": "boxcar-surrogate-exploding-bptt",
+          "seed": 29017,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 70.8333,
+          "surrogateGradientCosineFidelity": 0.72,
+          "spikeEnergySparsityPct": 62,
+          "compositeScore": 70.6583
+        },
+        {
+          "profileId": "boxcar-surrogate-exploding-bptt",
+          "seed": 39023,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 70.8333,
+          "surrogateGradientCosineFidelity": 0.72,
+          "spikeEnergySparsityPct": 62,
+          "compositeScore": 70.6583
+        },
+        {
+          "profileId": "boxcar-surrogate-exploding-bptt",
+          "seed": 49031,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 70.8333,
+          "surrogateGradientCosineFidelity": 0.72,
+          "spikeEnergySparsityPct": 62,
+          "compositeScore": 70.6583
+        },
+        {
+          "profileId": "boxcar-surrogate-exploding-bptt",
+          "seed": 59053,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 70.8333,
+          "surrogateGradientCosineFidelity": 0.72,
+          "spikeEnergySparsityPct": 62,
+          "compositeScore": 70.6583
+        }
+      ],
+      "stats": {
+        "temporalWorkingMemoryRetentionPct": {
+          "count": 5,
+          "mean": 70.8333,
+          "stdDev": 0,
+          "min": 70.8333,
+          "max": 70.8333,
+          "ci95": {
+            "low": 70.8333,
+            "high": 70.8333,
+            "halfWidth": 0
+          }
+        },
+        "surrogateGradientCosineFidelity": {
+          "count": 5,
+          "mean": 0.72,
+          "stdDev": 0,
+          "min": 0.72,
+          "max": 0.72,
+          "ci95": {
+            "low": 0.72,
+            "high": 0.72,
+            "halfWidth": 0
+          }
+        },
+        "spikeEnergySparsityPct": {
+          "count": 5,
+          "mean": 62,
+          "stdDev": 0,
+          "min": 62,
+          "max": 62,
+          "ci95": {
+            "low": 62,
+            "high": 62,
+            "halfWidth": 0
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 70.6583,
+          "stdDev": 0,
+          "min": 70.6583,
+          "max": 70.6583,
+          "ci95": {
+            "low": 70.6583,
+            "high": 70.6583,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "alif-adaptive-threshold-bias-arctan-surrogate": {
+      "profileId": "alif-adaptive-threshold-bias-arctan-surrogate",
+      "runs": [
+        {
+          "profileId": "alif-adaptive-threshold-bias-arctan-surrogate",
+          "seed": 19013,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 100,
+          "surrogateGradientCosineFidelity": 0.9951,
+          "spikeEnergySparsityPct": 92.7765,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "alif-adaptive-threshold-bias-arctan-surrogate",
+          "seed": 29017,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 100,
+          "surrogateGradientCosineFidelity": 0.9941,
+          "spikeEnergySparsityPct": 92.873,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "alif-adaptive-threshold-bias-arctan-surrogate",
+          "seed": 39023,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 100,
+          "surrogateGradientCosineFidelity": 0.9958,
+          "spikeEnergySparsityPct": 92.6444,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "alif-adaptive-threshold-bias-arctan-surrogate",
+          "seed": 49031,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 100,
+          "surrogateGradientCosineFidelity": 0.996,
+          "spikeEnergySparsityPct": 92.5356,
+          "compositeScore": 100
+        },
+        {
+          "profileId": "alif-adaptive-threshold-bias-arctan-surrogate",
+          "seed": 59053,
+          "episodes": 24,
+          "temporalWorkingMemoryRetentionPct": 100,
+          "surrogateGradientCosineFidelity": 0.9941,
+          "spikeEnergySparsityPct": 92.9335,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "temporalWorkingMemoryRetentionPct": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        },
+        "surrogateGradientCosineFidelity": {
+          "count": 5,
+          "mean": 0.995,
+          "stdDev": 0.0009,
+          "min": 0.9941,
+          "max": 0.996,
+          "ci95": {
+            "low": 0.9939,
+            "high": 0.9961,
+            "halfWidth": 0.0011
+          }
+        },
+        "spikeEnergySparsityPct": {
+          "count": 5,
+          "mean": 92.7526,
+          "stdDev": 0.1632,
+          "min": 92.5356,
+          "max": 92.9335,
+          "ci95": {
+            "low": 92.5499,
+            "high": 92.9553,
+            "halfWidth": 0.2027
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "3b41fac8bd52b49ca3bbafb7e4ab7262750227a8bb1bb6115b4067fd82067fdd"
+}
