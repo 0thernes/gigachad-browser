@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-105-CORE-BRAIN-PROGRAMMING-PHASE20-AUDIT",
+  "passNumber": 105,
+  "phase": "Phase XX: Core Brain, 1.245M Cortex & 59-Tensor Hub Weight/Bias Programming",
+  "generatedAt": "2026-11-09T19:29:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "U1-Cortex-124M-Unit-Stiefel-Orthogonality-Defect",
+      "passNumber": 101,
+      "metric": "orthogonalityDefect",
+      "threshold": "<= 1e-5",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "U2-Cortex-RSSM-Recurrent-Spectral-Radius-Stability",
+      "passNumber": 101,
+      "metric": "rssmSpectralRadius",
+      "threshold": "in [0.95, 1.05]",
+      "observed": 1,
+      "verified": true
+    },
+    {
+      "rowId": "U3-Cortex-8Expert-MoE-And-Connectome-Forward-Reconstruction",
+      "passNumber": 101,
+      "metric": "rssmReconstructionRatePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "U4-Hub-59Tensor-Stiefel-Autoencoder-Reconstruction-Cosine",
+      "passNumber": 102,
+      "metric": "autoencCosineSim",
+      "threshold": ">= 0.999",
+      "observed": 1,
+      "verified": true
+    },
+    {
+      "rowId": "U5-Hub-Cosine-DDPM-AlphaBar-Monotonic-Schedule",
+      "passNumber": 102,
+      "metric": "ddpmScheduleMonotonicPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "U6-Hub-BitNet-b158-Ternary-Morphism-Entropy",
+      "passNumber": 102,
+      "metric": "ternaryEntropyBits",
+      "threshold": ">= 1.50 bits",
+      "observed": 1.5807,
+      "verified": true
+    },
+    {
+      "rowId": "U7-Coupling-24Source-Natural-Gradient-SNR-Gain",
+      "passNumber": 103,
+      "metric": "signalToNoiseRatioDb",
+      "threshold": ">= 25.0 dB",
+      "observed": 28.5747,
+      "verified": true
+    },
+    {
+      "rowId": "U8-Coupling-Noisy-Distractor-Gate-Bias-Suppression",
+      "passNumber": 103,
+      "metric": "noisySourceSuppressionPct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "U9-Specialist-Fusion-Motor-Float32-Receipt-Equivalence",
+      "passNumber": 104,
+      "metric": "motorReceiptExactMatchRatePct",
+      "threshold": "=== 100.0%",
+      "observed": 100,
+      "verified": true
+    },
+    {
+      "rowId": "U10-Phase20-All-Four-Core-Brain-Passes-100-Score",
+      "passNumber": 105,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass101Sha256": "eb5019b83116b5011d956c1957743093b1661c25b445422fb1b919f1bd021b43",
+    "pass102Sha256": "46db1935f523b270c33e273086b00f6189f853fe1c0afedc8681d3e976767085",
+    "pass103Sha256": "7426ab2ebca7cf615efc1ca45202a3bb3952d57d9176a70f5274929a401d2f75",
+    "pass104Sha256": "de17c06d9469912399c36f3b7e241ec5b55edac2a94ff0275d8b72e49581775c"
+  },
+  "phase20Sha256": "a224fb92dd3b3700bf2fef3cad1541e4d618c6982302a7d0e3ac9afe9b8b2fa4"
+}
