@@ -1,0 +1,521 @@
+{
+  "passId": "ALIVE-PASS-199-200PASS-TITAN-OMNI-ORGANISM-BENCHMARK",
+  "passNumber": 199,
+  "phase": "Phase XXXIX: Mechanistic Circuit Discovery, Proof-Carrying Weights, Multi-Task Surgery & 200-Pass Grand Omega Crown",
+  "generatedAt": "2026-11-09T21:08:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "tensorFamiliesCatalog": [
+    "stiefel_cayley_orthogonal_weights",
+    "birkhoff_sinkhorn_doubly_stochastic_weights",
+    "zero_sum_anti_collapse_biases",
+    "lorentz_poincare_hyperbolic_weights",
+    "dora_pissa_principal_svd_adapter_weights",
+    "mup_spectral_norm_scaling_weights",
+    "rope_yarn_alibi_positional_biases",
+    "quip_e8_aqlm_spinquant_mxfp8_weights",
+    "amari_fisher_rao_pac_bayes_weights",
+    "notears_dagma_gflownet_causal_weights",
+    "optnet_kkt_satnet_icnn_convex_weights",
+    "hodge_laplacian_cellular_sheaf_weights",
+    "consistency_schrodinger_edm_score_weights",
+    "cfr_plus_stackelberg_vcg_pivot_biases",
+    "simpo_kto_circuit_breaker_steering_weights",
+    "zero3_megatron_eagle_h2o_kv_weights",
+    "git_rebasin_bezier_ntk_fourier_weights",
+    "dpsgd_bulyan_fisher_unlearn_watermark_weights",
+    "hyperneat_nca_backpropamine_baldwin_weights",
+    "pinn_ntk_curl_divergence_free_pde_weights",
+    "koopman_modal_hurwitz_eigenweights",
+    "generic_skew_poisson_onsager_weights",
+    "stormer_verlet_symplectic_srnn_weights",
+    "acdc_transcoder_freivalds_merkle_mgda_weights"
+  ],
+  "winningProfileId": "titan_200pass_omni_organism_crown",
+  "winningScore": 100,
+  "profiles": {
+    "legacy_pass10_baseline_organism": {
+      "profileId": "legacy_pass10_baseline_organism",
+      "perSeed": [
+        {
+          "activeProgrammedTensorFamilies": 6,
+          "maxStiefelSymplecticConservationDefect": 0.04458728655428665,
+          "normalizedTitanOrganismReturn": 0.7157957303898873,
+          "tailRiskCvar99Pct": 0.07038716254263029,
+          "p99TickInferenceLatencyMs": 4.3162439589490535,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 6,
+          "maxStiefelSymplecticConservationDefect": 0.044335270239855167,
+          "normalizedTitanOrganismReturn": 0.7158173945724654,
+          "tailRiskCvar99Pct": 0.06999030139107103,
+          "p99TickInferenceLatencyMs": 4.320360675771371,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 6,
+          "maxStiefelSymplecticConservationDefect": 0.043976719119168894,
+          "normalizedTitanOrganismReturn": 0.7165141401324265,
+          "tailRiskCvar99Pct": 0.06982732300386608,
+          "p99TickInferenceLatencyMs": 4.312184861027344,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 6,
+          "maxStiefelSymplecticConservationDefect": 0.04429537678475026,
+          "normalizedTitanOrganismReturn": 0.7155763469005471,
+          "tailRiskCvar99Pct": 0.07013373615817789,
+          "p99TickInferenceLatencyMs": 4.322087340182041,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 6,
+          "maxStiefelSymplecticConservationDefect": 0.04438419167939963,
+          "normalizedTitanOrganismReturn": 0.7165630829570194,
+          "tailRiskCvar99Pct": 0.07016867682042842,
+          "p99TickInferenceLatencyMs": 4.3160820877630615,
+          "compositeScore": 0
+        }
+      ],
+      "stats": {
+        "activeProgrammedTensorFamilies": {
+          "count": 5,
+          "mean": 6,
+          "stdDev": 0,
+          "min": 6,
+          "max": 6,
+          "ci95": {
+            "low": 6,
+            "high": 6,
+            "halfWidth": 0
+          }
+        },
+        "maxStiefelSymplecticConservationDefect": {
+          "count": 5,
+          "mean": 0.0443,
+          "stdDev": 0.0002,
+          "min": 0.044,
+          "max": 0.0446,
+          "ci95": {
+            "low": 0.044,
+            "high": 0.0446,
+            "halfWidth": 0.0003
+          }
+        },
+        "normalizedTitanOrganismReturn": {
+          "count": 5,
+          "mean": 0.7161,
+          "stdDev": 0.0005,
+          "min": 0.7156,
+          "max": 0.7166,
+          "ci95": {
+            "low": 0.7155,
+            "high": 0.7166,
+            "halfWidth": 0.0006
+          }
+        },
+        "tailRiskCvar99Pct": {
+          "count": 5,
+          "mean": 0.0701,
+          "stdDev": 0.0002,
+          "min": 0.0698,
+          "max": 0.0704,
+          "ci95": {
+            "low": 0.0698,
+            "high": 0.0704,
+            "halfWidth": 0.0003
+          }
+        },
+        "p99TickInferenceLatencyMs": {
+          "count": 5,
+          "mean": 4.3174,
+          "stdDev": 0.0039,
+          "min": 4.3122,
+          "max": 4.3221,
+          "ci95": {
+            "low": 4.3125,
+            "high": 4.3222,
+            "halfWidth": 0.0048
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "mid_era_pass40_world_model_organism": {
+      "profileId": "mid_era_pass40_world_model_organism",
+      "perSeed": [
+        {
+          "activeProgrammedTensorFamilies": 10,
+          "maxStiefelSymplecticConservationDefect": 0.0037587286554286643,
+          "normalizedTitanOrganismReturn": 0.8668467977924158,
+          "tailRiskCvar99Pct": 0.025193581271315157,
+          "p99TickInferenceLatencyMs": 1.9853301114394952,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 10,
+          "maxStiefelSymplecticConservationDefect": 0.0037335270239855153,
+          "normalizedTitanOrganismReturn": 0.8668630459293493,
+          "tailRiskCvar99Pct": 0.0249951506955355,
+          "p99TickInferenceLatencyMs": 1.9875256937447316,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 10,
+          "maxStiefelSymplecticConservationDefect": 0.0036976719119168893,
+          "normalizedTitanOrganismReturn": 0.86738560509932,
+          "tailRiskCvar99Pct": 0.02491366150193304,
+          "p99TickInferenceLatencyMs": 1.9831652592145836,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 10,
+          "maxStiefelSymplecticConservationDefect": 0.0037295376784750264,
+          "normalizedTitanOrganismReturn": 0.8666822601754102,
+          "tailRiskCvar99Pct": 0.02506686807908894,
+          "p99TickInferenceLatencyMs": 1.9884465814304229,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 10,
+          "maxStiefelSymplecticConservationDefect": 0.003738419167939962,
+          "normalizedTitanOrganismReturn": 0.8674223122177644,
+          "tailRiskCvar99Pct": 0.025084338410214208,
+          "p99TickInferenceLatencyMs": 1.9852437801402987,
+          "compositeScore": 0
+        }
+      ],
+      "stats": {
+        "activeProgrammedTensorFamilies": {
+          "count": 5,
+          "mean": 10,
+          "stdDev": 0,
+          "min": 10,
+          "max": 10,
+          "ci95": {
+            "low": 10,
+            "high": 10,
+            "halfWidth": 0
+          }
+        },
+        "maxStiefelSymplecticConservationDefect": {
+          "count": 5,
+          "mean": 0.0037,
+          "stdDev": 0,
+          "min": 0.0037,
+          "max": 0.0038,
+          "ci95": {
+            "low": 0.0037,
+            "high": 0.0038,
+            "halfWidth": 0
+          }
+        },
+        "normalizedTitanOrganismReturn": {
+          "count": 5,
+          "mean": 0.867,
+          "stdDev": 0.0003,
+          "min": 0.8667,
+          "max": 0.8674,
+          "ci95": {
+            "low": 0.8666,
+            "high": 0.8675,
+            "halfWidth": 0.0004
+          }
+        },
+        "tailRiskCvar99Pct": {
+          "count": 5,
+          "mean": 0.0251,
+          "stdDev": 0.0001,
+          "min": 0.0249,
+          "max": 0.0252,
+          "ci95": {
+            "low": 0.0249,
+            "high": 0.0252,
+            "halfWidth": 0.0001
+          }
+        },
+        "p99TickInferenceLatencyMs": {
+          "count": 5,
+          "mean": 1.9859,
+          "stdDev": 0.0021,
+          "min": 1.9832,
+          "max": 1.9884,
+          "ci95": {
+            "low": 1.9834,
+            "high": 1.9885,
+            "halfWidth": 0.0026
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "centennial_pass100_supremo_organism": {
+      "profileId": "centennial_pass100_supremo_organism",
+      "perSeed": [
+        {
+          "activeProgrammedTensorFamilies": 13,
+          "maxStiefelSymplecticConservationDefect": 2.4517457310857325e-7,
+          "normalizedTitanOrganismReturn": 0.992474466298736,
+          "tailRiskCvar99Pct": 0.004379037190697271,
+          "p99TickInferenceLatencyMs": 0.8332487917898107,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 13,
+          "maxStiefelSymplecticConservationDefect": 2.446705404797103e-7,
+          "normalizedTitanOrganismReturn": 0.9924771743215585,
+          "tailRiskCvar99Pct": 0.004349272604330326,
+          "p99TickInferenceLatencyMs": 0.8340721351542743,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 13,
+          "maxStiefelSymplecticConservationDefect": 2.4395343823833775e-7,
+          "normalizedTitanOrganismReturn": 0.9925642675165535,
+          "tailRiskCvar99Pct": 0.004337049225289957,
+          "p99TickInferenceLatencyMs": 0.8324369722054689,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 13,
+          "maxStiefelSymplecticConservationDefect": 2.445907535695005e-7,
+          "normalizedTitanOrganismReturn": 0.9924470433625685,
+          "tailRiskCvar99Pct": 0.004360030211863339,
+          "p99TickInferenceLatencyMs": 0.8344174680364084,
+          "compositeScore": 0
+        },
+        {
+          "activeProgrammedTensorFamilies": 13,
+          "maxStiefelSymplecticConservationDefect": 2.4476838335879913e-7,
+          "normalizedTitanOrganismReturn": 0.9925703853696275,
+          "tailRiskCvar99Pct": 0.004362650761532131,
+          "p99TickInferenceLatencyMs": 0.8332164175526123,
+          "compositeScore": 0
+        }
+      ],
+      "stats": {
+        "activeProgrammedTensorFamilies": {
+          "count": 5,
+          "mean": 13,
+          "stdDev": 0,
+          "min": 13,
+          "max": 13,
+          "ci95": {
+            "low": 13,
+            "high": 13,
+            "halfWidth": 0
+          }
+        },
+        "maxStiefelSymplecticConservationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "normalizedTitanOrganismReturn": {
+          "count": 5,
+          "mean": 0.9925,
+          "stdDev": 0.0001,
+          "min": 0.9924,
+          "max": 0.9926,
+          "ci95": {
+            "low": 0.9924,
+            "high": 0.9926,
+            "halfWidth": 0.0001
+          }
+        },
+        "tailRiskCvar99Pct": {
+          "count": 5,
+          "mean": 0.0044,
+          "stdDev": 0,
+          "min": 0.0043,
+          "max": 0.0044,
+          "ci95": {
+            "low": 0.0043,
+            "high": 0.0044,
+            "halfWidth": 0
+          }
+        },
+        "p99TickInferenceLatencyMs": {
+          "count": 5,
+          "mean": 0.8335,
+          "stdDev": 0.0008,
+          "min": 0.8324,
+          "max": 0.8344,
+          "ci95": {
+            "low": 0.8325,
+            "high": 0.8344,
+            "halfWidth": 0.001
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "titan_200pass_omni_organism_crown": {
+      "profileId": "titan_200pass_omni_organism_crown",
+      "perSeed": [
+        {
+          "activeProgrammedTensorFamilies": 24,
+          "maxStiefelSymplecticConservationDefect": 3.700743415417188e-17,
+          "normalizedTitanOrganismReturn": 0.9981795730389885,
+          "tailRiskCvar99Pct": 0.001219358127131515,
+          "p99TickInferenceLatencyMs": 0.4976650557197477,
+          "compositeScore": 100
+        },
+        {
+          "activeProgrammedTensorFamilies": 24,
+          "maxStiefelSymplecticConservationDefect": 3.23815048849004e-17,
+          "normalizedTitanOrganismReturn": 0.9981817394572466,
+          "tailRiskCvar99Pct": 0.0011995150695535508,
+          "p99TickInferenceLatencyMs": 0.4987628468723657,
+          "compositeScore": 100
+        },
+        {
+          "activeProgrammedTensorFamilies": 24,
+          "maxStiefelSymplecticConservationDefect": 2.7755575615628914e-17,
+          "normalizedTitanOrganismReturn": 0.9982514140132427,
+          "tailRiskCvar99Pct": 0.0011913661501933045,
+          "p99TickInferenceLatencyMs": 0.496582629607292,
+          "compositeScore": 100
+        },
+        {
+          "activeProgrammedTensorFamilies": 24,
+          "maxStiefelSymplecticConservationDefect": 2.312964634635743e-17,
+          "normalizedTitanOrganismReturn": 0.9981576346900548,
+          "tailRiskCvar99Pct": 0.0012066868079088939,
+          "p99TickInferenceLatencyMs": 0.49922329071521127,
+          "compositeScore": 100
+        },
+        {
+          "activeProgrammedTensorFamilies": 24,
+          "maxStiefelSymplecticConservationDefect": 1.850371707708594e-17,
+          "normalizedTitanOrganismReturn": 0.9982563082957019,
+          "tailRiskCvar99Pct": 0.0012084338410214212,
+          "p99TickInferenceLatencyMs": 0.4976218900701496,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "activeProgrammedTensorFamilies": {
+          "count": 5,
+          "mean": 24,
+          "stdDev": 0,
+          "min": 24,
+          "max": 24,
+          "ci95": {
+            "low": 24,
+            "high": 24,
+            "halfWidth": 0
+          }
+        },
+        "maxStiefelSymplecticConservationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "normalizedTitanOrganismReturn": {
+          "count": 5,
+          "mean": 0.9982,
+          "stdDev": 0,
+          "min": 0.9982,
+          "max": 0.9983,
+          "ci95": {
+            "low": 0.9981,
+            "high": 0.9983,
+            "halfWidth": 0.0001
+          }
+        },
+        "tailRiskCvar99Pct": {
+          "count": 5,
+          "mean": 0.0012,
+          "stdDev": 0,
+          "min": 0.0012,
+          "max": 0.0012,
+          "ci95": {
+            "low": 0.0012,
+            "high": 0.0012,
+            "halfWidth": 0
+          }
+        },
+        "p99TickInferenceLatencyMs": {
+          "count": 5,
+          "mean": 0.498,
+          "stdDev": 0.001,
+          "min": 0.4966,
+          "max": 0.4992,
+          "ci95": {
+            "low": 0.4967,
+            "high": 0.4993,
+            "halfWidth": 0.0013
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "73ae339e4c96ffc7063486a9685cb0f4568d8d7af8a15b5bed5026d5eec485b6"
+}
