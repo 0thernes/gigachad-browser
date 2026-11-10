@@ -1,0 +1,427 @@
+{
+  "passId": "ALIVE-PASS-198-PARETO-MULTI-OBJECTIVE-MGDA-PCGRAD-WEIGHT-SURGEON",
+  "passNumber": 198,
+  "phase": "Phase XXXIX: Mechanistic Circuit Discovery, Proof-Carrying Weights, Multi-Task Surgery & 200-Pass Grand Omega Crown",
+  "generatedAt": "2026-11-09T21:07:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "episodesPerSeed": 24,
+  "winningProfileId": "hybrid_pcgrad_mgda_frank_wolfe_pareto_surgeon",
+  "winningScore": 100,
+  "profiles": {
+    "uniform_linear_scalarization_conflicting_grads": {
+      "profileId": "uniform_linear_scalarization_conflicting_grads",
+      "perSeed": [
+        {
+          "conflictingGradientNegativeCosineCount": 4.958333333333333,
+          "simplexConvexHullConservationDefect": 0.14999999999999994,
+          "paretoDescentPositivityViolation": 0.42,
+          "paretoHypervolumeNormalizedScore": 0.5713473360340382,
+          "compositeScore": 0
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 4.958333333333333,
+          "simplexConvexHullConservationDefect": 0.14999999999999994,
+          "paretoDescentPositivityViolation": 0.42,
+          "paretoHypervolumeNormalizedScore": 0.5702222914340866,
+          "compositeScore": 0
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 4.875,
+          "simplexConvexHullConservationDefect": 0.14999999999999994,
+          "paretoDescentPositivityViolation": 0.42,
+          "paretoHypervolumeNormalizedScore": 0.5708306923747296,
+          "compositeScore": 0
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 4.875,
+          "simplexConvexHullConservationDefect": 0.14999999999999994,
+          "paretoDescentPositivityViolation": 0.42,
+          "paretoHypervolumeNormalizedScore": 0.5705982492054075,
+          "compositeScore": 0
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 4.916666666666667,
+          "simplexConvexHullConservationDefect": 0.14999999999999994,
+          "paretoDescentPositivityViolation": 0.42,
+          "paretoHypervolumeNormalizedScore": 0.5697767275777489,
+          "compositeScore": 0
+        }
+      ],
+      "stats": {
+        "conflictingGradientNegativeCosineCount": {
+          "count": 5,
+          "mean": 4.9167,
+          "stdDev": 0.0417,
+          "min": 4.875,
+          "max": 4.9583,
+          "ci95": {
+            "low": 4.8649,
+            "high": 4.9684,
+            "halfWidth": 0.0517
+          }
+        },
+        "simplexConvexHullConservationDefect": {
+          "count": 5,
+          "mean": 0.15,
+          "stdDev": 0,
+          "min": 0.15,
+          "max": 0.15,
+          "ci95": {
+            "low": 0.15,
+            "high": 0.15,
+            "halfWidth": 0
+          }
+        },
+        "paretoDescentPositivityViolation": {
+          "count": 5,
+          "mean": 0.42,
+          "stdDev": 0,
+          "min": 0.42,
+          "max": 0.42,
+          "ci95": {
+            "low": 0.42,
+            "high": 0.42,
+            "halfWidth": 0
+          }
+        },
+        "paretoHypervolumeNormalizedScore": {
+          "count": 5,
+          "mean": 0.5706,
+          "stdDev": 0.0006,
+          "min": 0.5698,
+          "max": 0.5713,
+          "ci95": {
+            "low": 0.5698,
+            "high": 0.5713,
+            "halfWidth": 0.0007
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "pcgrad_pairwise_projection_only": {
+      "profileId": "pcgrad_pairwise_projection_only",
+      "perSeed": [
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 0.08000000000000003,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8170778688272308,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 0.08000000000000003,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8161778331472692,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 0.08000000000000003,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8166645538997837,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 0.08000000000000003,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8164785993643261,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 0.08000000000000003,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8158213820621993,
+          "compositeScore": 50
+        }
+      ],
+      "stats": {
+        "conflictingGradientNegativeCosineCount": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "simplexConvexHullConservationDefect": {
+          "count": 5,
+          "mean": 0.08,
+          "stdDev": 0,
+          "min": 0.08,
+          "max": 0.08,
+          "ci95": {
+            "low": 0.08,
+            "high": 0.08,
+            "halfWidth": 0
+          }
+        },
+        "paretoDescentPositivityViolation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "paretoHypervolumeNormalizedScore": {
+          "count": 5,
+          "mean": 0.8164,
+          "stdDev": 0.0005,
+          "min": 0.8158,
+          "max": 0.8171,
+          "ci95": {
+            "low": 0.8159,
+            "high": 0.817,
+            "halfWidth": 0.0006
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "mgda_frank_wolfe_without_conflict_surgery": {
+      "profileId": "mgda_frank_wolfe_without_conflict_surgery",
+      "perSeed": [
+        {
+          "conflictingGradientNegativeCosineCount": 2,
+          "simplexConvexHullConservationDefect": 0,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8690778688272306,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 2,
+          "simplexConvexHullConservationDefect": 0,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.868177833147269,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 2,
+          "simplexConvexHullConservationDefect": 0,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8686645538997837,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 2,
+          "simplexConvexHullConservationDefect": 0,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.8684785993643261,
+          "compositeScore": 50
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 2,
+          "simplexConvexHullConservationDefect": 0,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.867821382062199,
+          "compositeScore": 50
+        }
+      ],
+      "stats": {
+        "conflictingGradientNegativeCosineCount": {
+          "count": 5,
+          "mean": 2,
+          "stdDev": 0,
+          "min": 2,
+          "max": 2,
+          "ci95": {
+            "low": 2,
+            "high": 2,
+            "halfWidth": 0
+          }
+        },
+        "simplexConvexHullConservationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "paretoDescentPositivityViolation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "paretoHypervolumeNormalizedScore": {
+          "count": 5,
+          "mean": 0.8684,
+          "stdDev": 0.0005,
+          "min": 0.8678,
+          "max": 0.8691,
+          "ci95": {
+            "low": 0.8679,
+            "high": 0.869,
+            "halfWidth": 0.0006
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 50,
+          "stdDev": 0,
+          "min": 50,
+          "max": 50,
+          "ci95": {
+            "low": 50,
+            "high": 50,
+            "halfWidth": 0
+          }
+        }
+      }
+    },
+    "hybrid_pcgrad_mgda_frank_wolfe_pareto_surgeon": {
+      "profileId": "hybrid_pcgrad_mgda_frank_wolfe_pareto_surgeon",
+      "perSeed": [
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 1.3877787807814457e-17,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.9791736680170192,
+          "compositeScore": 100
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 6.013708050052931e-17,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.9786111457170432,
+          "compositeScore": 100
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 3.700743415417188e-17,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.9789153461873649,
+          "compositeScore": 100
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 3.700743415417188e-17,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.978799124602704,
+          "compositeScore": 100
+        },
+        {
+          "conflictingGradientNegativeCosineCount": 0,
+          "simplexConvexHullConservationDefect": 3.23815048849004e-17,
+          "paretoDescentPositivityViolation": 0,
+          "paretoHypervolumeNormalizedScore": 0.9783883637888745,
+          "compositeScore": 100
+        }
+      ],
+      "stats": {
+        "conflictingGradientNegativeCosineCount": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "simplexConvexHullConservationDefect": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "paretoDescentPositivityViolation": {
+          "count": 5,
+          "mean": 0,
+          "stdDev": 0,
+          "min": 0,
+          "max": 0,
+          "ci95": {
+            "low": 0,
+            "high": 0,
+            "halfWidth": 0
+          }
+        },
+        "paretoHypervolumeNormalizedScore": {
+          "count": 5,
+          "mean": 0.9788,
+          "stdDev": 0.0003,
+          "min": 0.9784,
+          "max": 0.9792,
+          "ci95": {
+            "low": 0.9784,
+            "high": 0.9791,
+            "halfWidth": 0.0004
+          }
+        },
+        "compositeScore": {
+          "count": 5,
+          "mean": 100,
+          "stdDev": 0,
+          "min": 100,
+          "max": 100,
+          "ci95": {
+            "low": 100,
+            "high": 100,
+            "halfWidth": 0
+          }
+        }
+      }
+    }
+  },
+  "sha256": "38b5511d20823bcf77a0e3e17c510bce4e243804ed4962772597c32f0b1a7fa1"
+}
