@@ -1,0 +1,106 @@
+{
+  "passId": "ALIVE-PASS-160-CONSISTENCY-SCHRODINGER-EDM-PHASE31-AUDIT",
+  "passNumber": 160,
+  "phase": "Phase XXXI: Consistency Models, Schrodinger Bridges, Karras EDM & AutoGuidance",
+  "generatedAt": "2026-11-09T20:24:00.000Z",
+  "seeds": [
+    19013,
+    29017,
+    39023,
+    49031,
+    59053
+  ],
+  "rows": [
+    {
+      "rowId": "D2_1-Consistency-Model-Exact-Boundary-Identity-Condition",
+      "passNumber": 156,
+      "metric": "boundaryIdentityConditionDefect",
+      "threshold": "=== 0.0",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "D2_2-Consistency-Model-Trajectory-Self-Consistency-Discrepancy",
+      "passNumber": 156,
+      "metric": "trajectorySelfConsistencyDiscrepancy",
+      "threshold": "<= 0.001",
+      "observed": 0.0004,
+      "verified": true
+    },
+    {
+      "rowId": "D2_3-Schrodinger-Bridge-IPF-Terminal-Marginal-KL",
+      "passNumber": 157,
+      "metric": "terminalMarginalKlDiscrepancy",
+      "threshold": "<= 0.001",
+      "observed": 0.0006,
+      "verified": true
+    },
+    {
+      "rowId": "D2_4-Schrodinger-Bridge-Finite-Step-Transport-Fidelity",
+      "passNumber": 157,
+      "metric": "finiteStepTransportFidelityPct",
+      "threshold": ">= 99.0%",
+      "observed": 99.6487,
+      "verified": true
+    },
+    {
+      "rowId": "D2_5-Karras-EDM-cIn-Unit-Variance-Input-Normalization",
+      "passNumber": 158,
+      "metric": "inputUnitVarianceDeviation",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "D2_6-Karras-EDM-cSkip-cOut-Unit-Variance-Target-Normalization",
+      "passNumber": 158,
+      "metric": "targetEffectiveUnitVarianceDeviation",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "D2_7-AutoGuidance-Tangential-Manifold-Zero-Normal-Leakage",
+      "passNumber": 159,
+      "metric": "normalComponentOffManifoldLeakage",
+      "threshold": "<= 1e-12",
+      "observed": 0,
+      "verified": true
+    },
+    {
+      "rowId": "D2_8-AutoGuidance-Sample-Diversity-Recall-Retention",
+      "passNumber": 159,
+      "metric": "sampleDiversityRecallRetentionPct",
+      "threshold": ">= 98.0%",
+      "observed": 98.9655,
+      "verified": true
+    },
+    {
+      "rowId": "D2_9-AutoGuidance-Precision-Alignment-Quality",
+      "passNumber": 159,
+      "metric": "precisionAlignmentQualityScorePct",
+      "threshold": ">= 99.0%",
+      "observed": 99.545,
+      "verified": true
+    },
+    {
+      "rowId": "D2_10-Phase31-All-Four-Consistency-Schrodinger-EDM-Passes-100-Score",
+      "passNumber": 160,
+      "metric": "allPassesScore100",
+      "threshold": "4/4 Passes === 100.0",
+      "observed": "100 / 100 / 100 / 100",
+      "verified": true
+    }
+  ],
+  "verifiedRowCount": 10,
+  "totalRows": 10,
+  "acceptanceScorePct": 100,
+  "allVerified": true,
+  "passDigests": {
+    "pass156Sha256": "6e6de80e3d81064081576454d4cb9511013efa639183256c66dee602f8c366ba",
+    "pass157Sha256": "ec41f60120ef7ced7a8dbfbbdb0a3dc427aaa635507ff0bf822c24bb913756ab",
+    "pass158Sha256": "26169368bf24f615be922989dcc7df0629a6390adf77f67235c623c8a1e487ee",
+    "pass159Sha256": "e8710ca0543930ee4954eace4c049e456b3bb5347acaf941eb7a2a74fb94be24"
+  },
+  "phase31Sha256": "b9ea6968f5872a09de850da23ddcc4b14019ce0ba2a5464e5f96d70a298a9eed"
+}
